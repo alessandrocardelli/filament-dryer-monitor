@@ -1,0 +1,231 @@
+(footprint "IND-SMD_L7.0-W6.6_ZD0650-100M"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -4 0)
+		(layer "F.SilkS")
+		(uuid "8a5e5898-0e54-455c-bc74-5ac4e413bd71")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "IND-SMD_L7.0-W6.6_ZD0650-100M"
+		(at 0 4 0)
+		(layer "F.Fab")
+		(uuid "730b7385-5a21-470c-8dff-72c6217fde4a")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d2fe6dd6-425f-4ab6-85f7-309bc5463a49")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "3a16a2f3-3054-4e32-9c12-f41ce8ce5925")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "LCSC Part" "C48031458"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d9de1db0-e4c6-4e30-9c0c-1841432dfc2b")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -3.56 -3.3)
+		(end 3.56 -3.3)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "cd23c84b-05bd-4a95-9b14-68fece5a1384")
+	)
+	(fp_line
+		(start -3.56 -1.98)
+		(end -3.56 -3.3)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "9ab7e6a2-031e-4d1d-b8bc-cfa7a6e2d546")
+	)
+	(fp_line
+		(start -3.56 3.3)
+		(end -3.56 1.98)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "a764719a-894f-4286-a5b2-e3c2ddcbbe90")
+	)
+	(fp_line
+		(start 3.56 -3.3)
+		(end 3.56 -1.98)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "1f3bffa0-db5a-434e-9bb5-a8d5c2bdea9c")
+	)
+	(fp_line
+		(start 3.56 1.98)
+		(end 3.56 3.3)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "cf115b7d-ffb3-4da1-8ccc-f2c4818b5f08")
+	)
+	(fp_line
+		(start 3.56 3.3)
+		(end -3.56 3.3)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "cc8f6a48-84f7-4c4a-9bc7-f14e96a8fbb5")
+	)
+	(fp_circle
+		(center -3.5 3.3)
+		(end -3.47 3.3)
+		(stroke
+			(width 0.06)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "ef58e00f-7c88-4cb5-a999-436953fbf1ea")
+	)
+	(fp_line
+		(start -3.5 -3.3)
+		(end 3.5 -3.3)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "8db73a43-23d4-4abe-bfcf-e22462b4075e")
+	)
+	(fp_line
+		(start -3.5 3.3)
+		(end -3.5 -3.3)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "4d6c02bc-5739-4c09-a4db-ae4ab48402ad")
+	)
+	(fp_line
+		(start 3.5 -3.3)
+		(end 3.5 3.3)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "3923c097-7271-4c23-bf6e-4317fa0fb88e")
+	)
+	(fp_line
+		(start 3.5 3.3)
+		(end -3.5 3.3)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "5deca570-d765-43f5-ad0a-9f9e1d473572")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "a360bd67-afd5-4429-abd3-6270d632d04c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at -3.03 0)
+		(size 2.4 3.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "6cecf9a5-c04f-4693-bf63-6e43cf546456")
+	)
+	(pad "2" smd rect
+		(at 3.03 0)
+		(size 2.4 3.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "07732c2e-2ebe-4852-8c78-5086668d76ce")
+	)
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/Users/utente/Documents/KiCad/10.0/projects/Filament_Dryer_Monitor/libs/JLCPCB.3dshapes/IND-SMD_L7.0-W6.6_ZD0650-100M.wrl"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+	(model "${KIPRJMOD}/libs/JLCPCB.3dshapes/IND-SMD_L7.0-W6.6_ZD0650-100M.wrl"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+	(model "${KIPRJMOD}/libs/JLCPCB.3dshapes/IND-SMD_L7.0-W6.6_ZD0650-100M.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

@@ -1,0 +1,152 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "ec014e20-abe2-47eb-baf0-3a9eae5bda3f")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 69.215 81.28)
+		(size 38.1 52.07)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "0e3f9383-1659-4b52-a038-79c57390c0e1")
+		(property "Sheetname" "Power"
+			(at 69.215 80.5684 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Power.kicad_sch"
+			(at 69.215 133.9346 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "Filament_Dryer_Monitor"
+				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 121.285 81.28)
+		(size 38.1 52.07)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "65de997d-f9e3-4a49-8760-31d73ce5b93f")
+		(property "Sheetname" "MCU"
+			(at 121.285 80.5684 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "MCU.kicad_sch"
+			(at 121.285 133.9346 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "Filament_Dryer_Monitor"
+				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 175.26 81.28)
+		(size 36.83 52.705)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "8ea3583c-4bf9-4d9f-826f-a898c1c22896")
+		(property "Sheetname" "IO_Power"
+			(at 175.26 80.5684 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "IO_Power.kicad_sch"
+			(at 175.26 134.5696 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "Filament_Dryer_Monitor"
+				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
