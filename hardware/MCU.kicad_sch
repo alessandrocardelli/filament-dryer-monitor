@@ -3943,6 +3943,12 @@
 		(uuid "35081f42-9b8d-4e29-89fd-821abc9d68b1")
 	)
 	(junction
+		(at 90.17 168.91)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "375243d5-e61e-4449-881b-22a398e9ddb7")
+	)
+	(junction
 		(at 165.1 49.53)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4009,10 +4015,10 @@
 		(uuid "aeb59546-c8d7-4bd0-8161-ef107ce6d743")
 	)
 	(junction
-		(at 90.17 166.37)
+		(at 90.17 163.83)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "b0f63a95-8b35-4659-9a8a-57a9530e0644")
+		(uuid "b4b60ae0-e9ff-442e-8bee-396e61635f88")
 	)
 	(junction
 		(at 217.17 102.87)
@@ -4043,12 +4049,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "e6fbed9f-6164-408d-8aa6-8690b74f71fa")
-	)
-	(junction
-		(at 90.17 161.29)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "f1872a6c-e0a5-48c8-a0d4-88352df43f54")
 	)
 	(junction
 		(at 228.6 86.36)
@@ -4230,16 +4230,6 @@
 	)
 	(wire
 		(pts
-			(xy 91.44 168.91) (xy 91.44 161.29)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "242104d7-44ca-4a5a-aba4-76c0bfec1efa")
-	)
-	(wire
-		(pts
 			(xy 199.39 97.79) (xy 210.82 97.79)
 		)
 		(stroke
@@ -4277,16 +4267,6 @@
 			(type default)
 		)
 		(uuid "29947b64-eca4-48a2-b8d5-1fb36f7c6aaa")
-	)
-	(wire
-		(pts
-			(xy 90.17 166.37) (xy 97.79 166.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2ad4d119-1a2d-4c0b-b067-522c1d9ca42f")
 	)
 	(wire
 		(pts
@@ -4470,7 +4450,7 @@
 	)
 	(wire
 		(pts
-			(xy 91.44 161.29) (xy 90.17 161.29)
+			(xy 91.44 163.83) (xy 90.17 163.83)
 		)
 		(stroke
 			(width 0)
@@ -4697,6 +4677,16 @@
 			(type default)
 		)
 		(uuid "84e4dc13-3557-4958-b47b-836b8e3af3ee")
+	)
+	(wire
+		(pts
+			(xy 91.44 163.83) (xy 91.44 166.37)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "87458d54-143f-4abd-b42e-52dfb68491f0")
 	)
 	(wire
 		(pts
@@ -4930,7 +4920,7 @@
 	)
 	(wire
 		(pts
-			(xy 91.44 168.91) (xy 97.79 168.91)
+			(xy 91.44 166.37) (xy 97.79 166.37)
 		)
 		(stroke
 			(width 0)
@@ -5280,6 +5270,16 @@
 	)
 	(wire
 		(pts
+			(xy 90.17 168.91) (xy 97.79 168.91)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f266ad70-1cc9-44c9-aba0-056fe7a4e554")
+	)
+	(wire
+		(pts
 			(xy 199.39 100.33) (xy 228.6 100.33)
 		)
 		(stroke
@@ -5409,7 +5409,7 @@
 		(uuid "69eccfeb-a69a-420d-a800-2540da260ca8")
 	)
 	(label "USB_DP"
-		(at 107.95 166.37 0)
+		(at 107.95 168.91 0)
 		(effects
 			(font
 				(size 1.016 1.016)
@@ -5479,7 +5479,7 @@
 		(uuid "c4344ff4-898d-4669-87bf-602b9933c9d1")
 	)
 	(label "USB_DM"
-		(at 107.95 168.91 0)
+		(at 107.95 166.37 0)
 		(effects
 			(font
 				(size 1.016 1.016)
@@ -5812,7 +5812,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "07a79240-6243-4404-b1be-b94d90437c23")
-		(property "Reference" "TP5"
+		(property "Reference" "TP6"
 			(at 238.76 44.9579 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5867,13 +5867,24 @@
 				)
 			)
 		)
+		(property "Function" "TP5"
+			(at 236.22 49.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "3bf75569-5eb0-4dcb-a5a6-c6f29263bdba")
 		)
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "TP5")
+					(reference "TP6")
 					(unit 1)
 				)
 			)
@@ -5970,7 +5981,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2d83f5bb-a791-4213-9790-63574ac364ca")
-		(property "Reference" "U4"
+		(property "Reference" "U3"
 			(at 104.5211 158.75 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6028,6 +6039,17 @@
 				)
 			)
 		)
+		(property "Function" "U4"
+			(at 102.87 166.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "b063e836-c7bd-46a0-9356-7e030988f508")
 		)
@@ -6049,7 +6071,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "U4")
+					(reference "U3")
 					(unit 1)
 				)
 			)
@@ -6067,7 +6089,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "367b715d-c5aa-43ec-ab0d-ac902f84e251")
-		(property "Reference" "#PWR018"
+		(property "Reference" "#PWR024"
 			(at 175.26 57.15 0)
 			(hide yes)
 			(show_name no)
@@ -6128,7 +6150,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "#PWR018")
+					(reference "#PWR024")
 					(unit 1)
 				)
 			)
@@ -6146,7 +6168,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "38ac524e-f581-4cf6-b03b-a594048b75ac")
-		(property "Reference" "U3"
+		(property "Reference" "U2"
 			(at 75.8033 124.46 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6198,6 +6220,17 @@
 			(effects
 				(font
 					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Function" "U3"
+			(at 73.66 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -6291,7 +6324,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "U3")
+					(reference "U2")
 					(unit 1)
 				)
 			)
@@ -6364,6 +6397,17 @@
 				)
 			)
 		)
+		(property "Function" "TP4"
+			(at 154.94 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "141f5cb9-72f7-485e-8442-aac20c20f630")
 		)
@@ -6388,7 +6432,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3feab093-dba1-4ea3-8d7a-b70739b290fc")
-		(property "Reference" "#PWR022"
+		(property "Reference" "#PWR015"
 			(at 48.26 90.17 0)
 			(hide yes)
 			(show_name no)
@@ -6449,7 +6493,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "#PWR022")
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -6467,7 +6511,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "445886cb-bbea-4870-8d1f-11ad9427147b")
-		(property "Reference" "#PWR017"
+		(property "Reference" "#PWR023"
 			(at 154.94 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -6528,7 +6572,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "#PWR017")
+					(reference "#PWR023")
 					(unit 1)
 				)
 			)
@@ -6546,7 +6590,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "48254f4d-cf93-46b5-a8a3-f3929b82d73a")
-		(property "Reference" "#PWR016"
+		(property "Reference" "#PWR022"
 			(at 143.51 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -6607,7 +6651,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "#PWR016")
+					(reference "#PWR022")
 					(unit 1)
 				)
 			)
@@ -6625,7 +6669,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4b345a54-5e89-4ada-ba9c-12bec7963fd2")
-		(property "Reference" "#PWR06"
+		(property "Reference" "#PWR025"
 			(at 184.15 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -6686,7 +6730,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "#PWR06")
+					(reference "#PWR025")
 					(unit 1)
 				)
 			)
@@ -6703,7 +6747,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4ce69f07-6db5-4f1e-a5f4-81a3b3f97676")
-		(property "Reference" "R_pu_sda1"
+		(property "Reference" "R14"
 			(at 218.44 90.424 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6758,6 +6802,17 @@
 				)
 			)
 		)
+		(property "Function" "R_pu_sda1"
+			(at 217.17 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "dbd54b4f-e2bb-4c89-ba6a-4c258e339372")
 		)
@@ -6767,7 +6822,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "R_pu_sda1")
+					(reference "R14")
 					(unit 1)
 				)
 			)
@@ -6864,7 +6919,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "51da8f74-6a2b-4e04-9a60-646af61b6424")
-		(property "Reference" "R_io0"
+		(property "Reference" "R13"
 			(at 208.28 50.7999 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6919,6 +6974,17 @@
 				)
 			)
 		)
+		(property "Function" "R_io0"
+			(at 205.74 52.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "221ab378-e5db-4160-a930-5bf73b3b3f56")
 		)
@@ -6928,7 +6994,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "R_io0")
+					(reference "R13")
 					(unit 1)
 				)
 			)
@@ -6946,7 +7012,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5ec609ca-6d5b-4dcf-b5b4-4328cf9493a6")
-		(property "Reference" "#PWR023"
+		(property "Reference" "#PWR017"
 			(at 74.93 194.31 0)
 			(hide yes)
 			(show_name no)
@@ -7007,7 +7073,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "#PWR023")
+					(reference "#PWR017")
 					(unit 1)
 				)
 			)
@@ -7025,7 +7091,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "65043bee-9ce8-4569-b90a-7ec22f381daf")
-		(property "Reference" "#PWR025"
+		(property "Reference" "#PWR021"
 			(at 129.54 166.37 0)
 			(hide yes)
 			(show_name no)
@@ -7086,7 +7152,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "#PWR025")
+					(reference "#PWR021")
 					(unit 1)
 				)
 			)
@@ -7104,7 +7170,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "69b42d48-6861-4a9a-a5eb-13d553f84d18")
-		(property "Reference" "R_rst1"
+		(property "Reference" "R9"
 			(at 58.42 53.3399 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7159,6 +7225,17 @@
 				)
 			)
 		)
+		(property "Function" "R_rst1"
+			(at 55.88 54.61 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "c17bc3c4-2299-4711-9536-8e10d384cdac")
 		)
@@ -7168,7 +7245,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "R_rst1")
+					(reference "R9")
 					(unit 1)
 				)
 			)
@@ -7186,7 +7263,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6b1a5275-2e34-496d-9e40-cb0497465a18")
-		(property "Reference" "C_vdd2"
+		(property "Reference" "C13"
 			(at 92.71 48.2662 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7241,6 +7318,17 @@
 				)
 			)
 		)
+		(property "Function" "C_vdd2"
+			(at 90.17 49.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "5e67a9f2-ed53-4fae-8275-67e3b40bc307")
 		)
@@ -7250,7 +7338,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "C_vdd2")
+					(reference "C13")
 					(unit 1)
 				)
 			)
@@ -7268,7 +7356,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6e4bc047-0045-4515-a149-92cd3ee823b2")
-		(property "Reference" "TP6"
+		(property "Reference" "TP7"
 			(at 251.46 44.9579 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7323,13 +7411,24 @@
 				)
 			)
 		)
+		(property "Function" "TP6"
+			(at 248.92 49.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "0e8251dd-e80c-4363-9b06-5c17ab7f5d7e")
 		)
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "TP6")
+					(reference "TP7")
 					(unit 1)
 				)
 			)
@@ -7397,6 +7496,17 @@
 			(effects
 				(font
 					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Function" "J2"
+			(at 74.93 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -7471,7 +7581,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "820e194c-7b9c-451d-a5cf-1706c60a964f")
-		(property "Reference" "R_led1"
+		(property "Reference" "R18"
 			(at 250.952 68.58 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7524,6 +7634,17 @@
 				)
 			)
 		)
+		(property "Function" "R_led1"
+			(at 255.27 68.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "d147a01e-dcf1-460c-b65d-783a243dcab9")
 		)
@@ -7533,7 +7654,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "R_led1")
+					(reference "R18")
 					(unit 1)
 				)
 			)
@@ -7551,7 +7672,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "90f95d2f-9efb-4c72-9dfa-d4cb80aa9f3e")
-		(property "Reference" "#PWR024"
+		(property "Reference" "#PWR020"
 			(at 120.65 168.91 0)
 			(hide yes)
 			(show_name no)
@@ -7612,7 +7733,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "#PWR024")
+					(reference "#PWR020")
 					(unit 1)
 				)
 			)
@@ -7685,6 +7806,17 @@
 				)
 			)
 		)
+		(property "Function" "SW2"
+			(at 215.9 68.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "1c304ebb-fcfc-41c8-9d88-f18c35948d14")
 		)
@@ -7712,7 +7844,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a5d4be08-9b08-44ae-8174-70860650f818")
-		(property "Reference" "R_pu_scl1"
+		(property "Reference" "R15"
 			(at 231.14 90.1699 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7767,6 +7899,17 @@
 				)
 			)
 		)
+		(property "Function" "R_pu_scl1"
+			(at 228.6 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "e198e7c2-1569-4bbf-b010-22bd265a8bfb")
 		)
@@ -7776,7 +7919,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "R_pu_scl1")
+					(reference "R15")
 					(unit 1)
 				)
 			)
@@ -7794,7 +7937,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a6e17dc8-6d31-4790-8433-ce63997aea9a")
-		(property "Reference" "U1"
+		(property "Reference" "U4"
 			(at 186.2933 54.61 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7846,6 +7989,17 @@
 			(effects
 				(font
 					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Function" "U1"
+			(at 184.15 92.71 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -7960,7 +8114,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "U1")
+					(reference "U4")
 					(unit 1)
 				)
 			)
@@ -7978,7 +8132,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a97e7c93-013f-49c6-a8e6-2386ed7fc946")
-		(property "Reference" "C_en1"
+		(property "Reference" "C15"
 			(at 146.05 67.3162 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8033,6 +8187,17 @@
 				)
 			)
 		)
+		(property "Function" "C_en1"
+			(at 143.51 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "a4942ad6-60e2-4cb7-b2b5-324ec66a5241")
 		)
@@ -8042,7 +8207,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "C_en1")
+					(reference "C15")
 					(unit 1)
 				)
 			)
@@ -8060,7 +8225,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b06f3968-da53-49ad-9ca5-48c3b8b97876")
-		(property "Reference" "C_reg1"
+		(property "Reference" "C14"
 			(at 104.14 48.2662 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8115,6 +8280,17 @@
 				)
 			)
 		)
+		(property "Function" "C_reg1"
+			(at 101.6 49.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "1a235e13-8689-495c-9176-84ebc1dd11d5")
 		)
@@ -8124,7 +8300,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "C_reg1")
+					(reference "C14")
 					(unit 1)
 				)
 			)
@@ -8142,7 +8318,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b5693b78-3ab0-4b68-a44e-bf97b7ad8c7e")
-		(property "Reference" "R_vbus_bot1"
+		(property "Reference" "R8"
 			(at 45.72 78.7399 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8197,6 +8373,17 @@
 				)
 			)
 		)
+		(property "Function" "R_vbus_bot1"
+			(at 48.26 80.01 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "7770fd39-b83e-46ac-a823-f53f107a917a")
 		)
@@ -8206,7 +8393,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "R_vbus_bot1")
+					(reference "R8")
 					(unit 1)
 				)
 			)
@@ -8224,7 +8411,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bc7e8918-b456-44c2-97db-896d5b11866b")
-		(property "Reference" "R_en1"
+		(property "Reference" "R12"
 			(at 146.05 50.7999 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8279,6 +8466,17 @@
 				)
 			)
 		)
+		(property "Function" "R_en1"
+			(at 143.51 52.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "938d1852-b007-44ca-b803-cde7f730749c")
 		)
@@ -8288,7 +8486,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "R_en1")
+					(reference "R12")
 					(unit 1)
 				)
 			)
@@ -8306,7 +8504,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c058a2db-336b-4356-80f9-48aa50ae8beb")
-		(property "Reference" "C_esp2"
+		(property "Reference" "C17"
 			(at 167.64 44.4562 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8361,6 +8559,17 @@
 				)
 			)
 		)
+		(property "Function" "C_esp2"
+			(at 165.1 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "04fe2eb9-9f23-4365-bc2f-d738e5d43674")
 		)
@@ -8370,7 +8579,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "C_esp2")
+					(reference "C17")
 					(unit 1)
 				)
 			)
@@ -8388,7 +8597,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c6c9cfcb-806f-4a9b-9690-a2a29deba4d9")
-		(property "Reference" "C_esp3"
+		(property "Reference" "C18"
 			(at 177.8 44.4562 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8443,6 +8652,17 @@
 				)
 			)
 		)
+		(property "Function" "C_esp3"
+			(at 175.26 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "1fa7c5b9-7f24-453c-8842-c23084e54535")
 		)
@@ -8452,7 +8672,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "C_esp3")
+					(reference "C18")
 					(unit 1)
 				)
 			)
@@ -8470,7 +8690,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "cda4c67a-b058-49e7-92c3-dee691ca9083")
-		(property "Reference" "J_sens1"
+		(property "Reference" "J3"
 			(at 259.08 102.8701 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8525,6 +8745,17 @@
 				)
 			)
 		)
+		(property "Function" "J_sens1"
+			(at 256.54 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "4"
 			(uuid "3c151e17-6439-43cb-9b38-4293baff461d")
 		)
@@ -8540,7 +8771,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "J_sens1")
+					(reference "J3")
 					(unit 1)
 				)
 			)
@@ -8558,7 +8789,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d1d942af-ca7b-401a-a1b5-6be18735affc")
-		(property "Reference" "Q_boot1"
+		(property "Reference" "Q2"
 			(at 121.92 48.2599 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8635,6 +8866,17 @@
 				)
 			)
 		)
+		(property "Function" "Q_boot1"
+			(at 116.84 49.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "6524f8e5-4981-47f4-a6cd-1ef3e8008c7d")
 		)
@@ -8647,7 +8889,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "Q_boot1")
+					(reference "Q2")
 					(unit 1)
 				)
 			)
@@ -8665,7 +8907,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d47779c6-65e6-44f1-9b4a-3b636f8519d1")
-		(property "Reference" "#PWR019"
+		(property "Reference" "#PWR026"
 			(at 215.9 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -8726,7 +8968,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "#PWR019")
+					(reference "#PWR026")
 					(unit 1)
 				)
 			)
@@ -8744,7 +8986,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "db4cc20f-5d6f-4c21-b0ce-d39f0ad8f436")
-		(property "Reference" "#PWR020"
+		(property "Reference" "#PWR016"
 			(at 73.66 130.81 0)
 			(hide yes)
 			(show_name no)
@@ -8805,7 +9047,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "#PWR020")
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
@@ -8822,7 +9064,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "deb755cb-f6de-47f8-8c5d-7cfbb89c78ac")
-		(property "Reference" "R_cc2"
+		(property "Reference" "R10"
 			(at 123.19 158.7499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8877,6 +9119,17 @@
 				)
 			)
 		)
+		(property "Function" "R_cc2"
+			(at 120.65 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "ccda56df-8f03-4cbd-8583-42f2f62ab0f7")
 		)
@@ -8886,7 +9139,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "R_cc2")
+					(reference "R10")
 					(unit 1)
 				)
 			)
@@ -8904,7 +9157,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e14eb96a-aecb-4d97-97be-1721ffeb72d7")
-		(property "Reference" "D_led1"
+		(property "Reference" "D3"
 			(at 257.81 76.1364 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8970,6 +9223,17 @@
 				)
 			)
 		)
+		(property "Function" "D_led1"
+			(at 255.27 76.2 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "3548d50a-e913-4a5b-b6d3-6cc01f359357")
 		)
@@ -8979,7 +9243,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "D_led1")
+					(reference "D3")
 					(unit 1)
 				)
 			)
@@ -8997,7 +9261,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e1dadcff-40f0-4b3f-9fa2-6f875e637ddb")
-		(property "Reference" "Q_rst1"
+		(property "Reference" "Q3"
 			(at 130.81 67.3099 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9074,6 +9338,17 @@
 				)
 			)
 		)
+		(property "Function" "Q_rst1"
+			(at 125.73 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "1a1271d8-869e-4e5a-9c1d-37812117e1da")
 		)
@@ -9086,7 +9361,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "Q_rst1")
+					(reference "Q3")
 					(unit 1)
 				)
 			)
@@ -9183,7 +9458,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e60323d4-1233-484f-bc8c-3d3c52e24393")
-		(property "Reference" "R_s_sda1"
+		(property "Reference" "R17"
 			(at 242.57 106.934 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9236,6 +9511,17 @@
 				)
 			)
 		)
+		(property "Function" "R_s_sda1"
+			(at 242.57 102.87 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "52e67f7d-2d6b-4263-ab3c-19e1b2731b81")
 		)
@@ -9245,7 +9531,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "R_s_sda1")
+					(reference "R17")
 					(unit 1)
 				)
 			)
@@ -9263,7 +9549,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e9943c56-6bf2-4794-a024-3a014b97f07f")
-		(property "Reference" "C_vdd1"
+		(property "Reference" "C12"
 			(at 82.55 48.2662 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9318,6 +9604,17 @@
 				)
 			)
 		)
+		(property "Function" "C_vdd1"
+			(at 80.01 49.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "67721d11-56cb-4c89-aa72-d64b58f8cd52")
 		)
@@ -9327,7 +9624,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "C_vdd1")
+					(reference "C12")
 					(unit 1)
 				)
 			)
@@ -9400,6 +9697,17 @@
 				)
 			)
 		)
+		(property "Function" "SW1"
+			(at 154.94 68.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "9f612ad7-844d-413d-83bd-3a059f99ba7c")
 		)
@@ -9426,7 +9734,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "f183ec2b-d483-4081-ae35-1f68b86f7aa8")
-		(property "Reference" "R_cc1"
+		(property "Reference" "R11"
 			(at 132.08 156.2099 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9481,6 +9789,17 @@
 				)
 			)
 		)
+		(property "Function" "R_cc1"
+			(at 129.54 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "6aa51159-2628-4cc5-a60f-af07d541fd1b")
 		)
@@ -9490,7 +9809,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "R_cc1")
+					(reference "R11")
 					(unit 1)
 				)
 			)
@@ -9508,7 +9827,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f3538638-eb30-49d4-b0e3-416f70e28c3f")
-		(property "Reference" "TP7"
+		(property "Reference" "TP5"
 			(at 218.44 23.3679 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9563,13 +9882,24 @@
 				)
 			)
 		)
+		(property "Function" "TP7"
+			(at 215.9 27.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "f8a2d481-dee8-47d8-9487-6692a9614814")
 		)
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "TP7")
+					(reference "TP5")
 					(unit 1)
 				)
 			)
@@ -9587,7 +9917,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "f49fb243-4491-44f1-925c-7b5f7c6f0f71")
-		(property "Reference" "R_vbus_top1"
+		(property "Reference" "R7"
 			(at 45.72 71.1199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9642,6 +9972,17 @@
 				)
 			)
 		)
+		(property "Function" "R_vbus_top1"
+			(at 48.26 72.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "47a927ed-933a-4903-b454-6a3f66e92228")
 		)
@@ -9651,7 +9992,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "R_vbus_top1")
+					(reference "R7")
 					(unit 1)
 				)
 			)
@@ -9668,7 +10009,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "f52a6b8d-5dc9-4ee4-a05e-83c5cc342b89")
-		(property "Reference" "R_s_scl1"
+		(property "Reference" "R16"
 			(at 234.95 96.012 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9721,6 +10062,17 @@
 				)
 			)
 		)
+		(property "Function" "R_s_scl1"
+			(at 234.95 100.33 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "442f854d-1fdd-4552-beba-63f40dc264c0")
 		)
@@ -9730,7 +10082,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "R_s_scl1")
+					(reference "R16")
 					(unit 1)
 				)
 			)
@@ -9748,7 +10100,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f8b015ad-8392-4df4-9788-279d36c0021c")
-		(property "Reference" "#PWR021"
+		(property "Reference" "#PWR018"
 			(at 90.17 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -9809,7 +10161,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "#PWR021")
+					(reference "#PWR018")
 					(unit 1)
 				)
 			)
@@ -9827,7 +10179,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "fa042845-eb97-4eaf-8f33-00b2d86690f5")
-		(property "Reference" "J_display1"
+		(property "Reference" "J4"
 			(at 259.08 119.3801 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9882,6 +10234,17 @@
 				)
 			)
 		)
+		(property "Function" "J_display1"
+			(at 256.54 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "4"
 			(uuid "a66993a0-804a-4b23-b0db-f9b8edd93bdc")
 		)
@@ -9897,7 +10260,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "J_display1")
+					(reference "J4")
 					(unit 1)
 				)
 			)
@@ -9915,7 +10278,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fa3993cb-9b05-402f-aba8-0476379a7aa7")
-		(property "Reference" "C_esp1"
+		(property "Reference" "C16"
 			(at 157.48 44.4562 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9970,6 +10333,17 @@
 				)
 			)
 		)
+		(property "Function" "C_esp1"
+			(at 154.94 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "52e2a37d-9482-4e94-a579-e6fec944e008")
 		)
@@ -9979,7 +10353,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "C_esp1")
+					(reference "C16")
 					(unit 1)
 				)
 			)
@@ -9997,7 +10371,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fa643a09-5fa7-4f44-8ab8-7b653e232369")
-		(property "Reference" "#PWR026"
+		(property "Reference" "#PWR019"
 			(at 102.87 180.34 0)
 			(hide yes)
 			(show_name no)
@@ -10058,7 +10432,7 @@
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "#PWR026")
+					(reference "#PWR019")
 					(unit 1)
 				)
 			)

@@ -659,7 +659,7 @@
       "exclude_dnp": false,
       "fields_ordered": [
         {
-          "group_by": false,
+          "group_by": true,
           "label": "Reference",
           "name": "Reference",
           "show": true
@@ -668,43 +668,43 @@
           "group_by": false,
           "label": "Qty",
           "name": "${QUANTITY}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
           "label": "Value",
           "name": "Value",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
           "label": "DNP",
           "name": "${DNP}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
           "label": "Exclude from BOM",
           "name": "${EXCLUDE_FROM_BOM}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
           "label": "Exclude from Board",
           "name": "${EXCLUDE_FROM_BOARD}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
           "label": "Footprint",
           "name": "Footprint",
-          "show": true
+          "show": false
         },
         {
           "group_by": false,
           "label": "Datasheet",
           "name": "Datasheet",
-          "show": true
+          "show": false
         },
         {
           "group_by": false,
@@ -717,10 +717,58 @@
           "label": "#",
           "name": "${ITEM_NUMBER}",
           "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MFR",
+          "name": "MFR",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MPN",
+          "name": "MPN",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Device",
+          "name": "Sim.Device",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Pins",
+          "name": "Sim.Pins",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "LCSC",
+          "name": "LCSC",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "LCSC Part",
+          "name": "LCSC Part",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Manufacturer",
+          "name": "Manufacturer",
+          "show": false
+        },
+        {
+          "group_by": true,
+          "label": "Function",
+          "name": "Function",
+          "show": true
         }
       ],
       "filter_string": "",
-      "group_symbols": true,
+      "group_symbols": false,
       "include_excluded_from_bom": true,
       "name": "",
       "sort_asc": true,
@@ -767,7 +815,7 @@
         "uuid": "ec014e20-abe2-47eb-baf0-3a9eae5bda3f"
       }
     ],
-    "used_designators": "R_g_fan1,F1,Q1-3,R1,SW_up1,R_en1-2,J1-3,Cin1-4,D1-2,Rfb_bot1,#PWR1-40,C1,U1-4,R_pd_fan1,Ren_top1-2,R_g_heat1-2,Q_fan1,SW_onoff1,L1,Dz1,Cbst1,Cvcc1,Cout1-5,D_heat1,FB1,Cff1,R_s_scl1-2,Cmcu1,Cen1,Ren_bot1,Rfb_top1,Rg1,Rpg1,C_en1-3,TVS1,J_display1,TP1-7,SW1-3,C_esp4-5,R_ntc1,R_rst1-2,C_vdd3,R_vbus_bot1-3,R_pu_scl1,R_vbus_top1,Q_boot1,D_fan1,Q_rst1,R_pu_sda1-2,J_heat1-2,R_s_sda1,J_sens1,D_led1,R_led1,Q_heat1-2,R_pd_heat1-2,J_ntc1,J_fan1-2,SW_m1,C_ntc1,J_dc1,R_btn2-4,SW_down1,BUZZER1,D_buz1,R_buz1,#FLG1-2",
+    "used_designators": "R_g_fan1,F1,Q1-6,R1-28,SW_up1,R_en1-2,J1-7,Cin1-4,D1-6,Rfb_bot1,#PWR1-40,C1-19,U1-4,R_pd_fan1,Ren_top1-2,R_g_heat1-2,Q_fan1,SW_onoff1,L1,C_reg1,Dz1,Cbst1,Cvcc1,Cout1-5,D_heat1,FB1,Cff1,R_s_scl1-2,Cmcu1,Cen1,Ren_bot1,Rfb_top1,Rg1,Rpg1,C_en1-3,TVS1,J_display1,TP1-7,SW1-6,C_esp1-5,R_ntc1,R_rst1-2,C_vdd1-3,R_vbus_bot1-3,R_pu_scl1,R_vbus_top1,Q_boot1,D_fan1,Q_rst1,R_pu_sda1-2,J_heat1-2,R_s_sda1,J_sens1,D_led1,R_led1,Q_heat1-2,R_pd_heat1-2,J_ntc1,J_fan1-2,SW_m1,C_ntc1,J_dc1,R_btn1-4,SW_down1,BUZZER1,D_buz1,R_buz1,#FLG1-2,Q_buz1,R_cc1-2,R_io1",
     "variants": []
   },
   "sheets": [
