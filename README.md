@@ -15,7 +15,7 @@ face of the board, all the electronics on the back.
 
 - **SHT45** humidity/temperature sensor (I²C) for accurate chamber readings
 - **NTC thermistor** on the heating element for the safety layer
-- **1.54" SSD1309 OLED** (128×64, I²C) + 4 tactile buttons for local control
+- **1.54" SSD1309 OLED** (128×64, I²C) + 4 front-panel buttons for local control
 - **PWM heater control** with hardware and firmware safety cutoffs
 - **PWM fan control** (25 kHz, inaudible)
 - **CSV logging** to internal flash (LittleFS)
@@ -40,8 +40,10 @@ Heating is a hazard, and this design treats it as one. Three independent layers:
 
 ## Hardware
 
-4-layer PCB, 81.5 × 48 mm. Designed in **KiCad 10**, targeted at **JLCPCB/LCSC** fabrication
-and assembly.
+4-layer PCB. Designed in **KiCad 10**, targeted at **JLCPCB/LCSC** fabrication and assembly.
+The board *is* the front panel, so its outline is set by the dryer's mechanics.
+
+> The board outline is currently being revised (enlarged) — dimensions not yet final.
 
 ### Main blocks
 
@@ -51,7 +53,7 @@ and assembly.
 | Buck converter | AP66200 | 24 V → 3.3 V |
 | USB-UART | CP2102N | With auto-program (DTR/RTS) circuit |
 | Humidity/temp | SHT45 (Adafruit #6174) | I²C `0x44`, via STEMMA QT cable |
-| Display | SSD1309 OLED 128×64 | I²C `0x3C` |
+| Display | SSD1309 OLED 128×64 | I²C `0x3C`, on-board on the front face |
 | Heater driver | N-MOSFET, DPAK | ~1.6 A continuous, flyback diode |
 | Fan driver | DMN6140L (SOT-23) | 24 V fan, 0.2 A |
 | Element temp | NTC thermistor | ADC1, 11 dB attenuation |
@@ -85,17 +87,22 @@ Power-class vias: 0.8 mm drill / 0.4 mm annular ring.
 | UART TX0 / RX0 | IO1 / IO3 |
 | BOOT / RESET | IO0 / EN |
 | Status LED | IO26 |
-| Fan PWM | IO25 |
+| Fan PWM | IO16 |
 | Buzzer | IO33 |
 | Heater PWM | IO19 |
 | NTC (ADC1) | IO34 |
 | Button ON/OFF | IO35 |
 | Button M | IO32 |
-| Button UP | IO39 |
-| Button DOWN | IO4 |
+| Button UP | IO14 |
+| Button DOWN | IO27 |
 
-All buttons: external 10 k pull-up to 3V3, button to GND, pressed = LOW.
-IO12 is deliberately left unloaded (strapping pin).
+The four front-panel buttons (ON/OFF, M, UP, DOWN) each use an external 10 k pull-up
+to 3V3 with the button to GND, so a press reads LOW. IO35 is input-only and has no
+internal pull, so its external pull-up is mandatory. BOOT and RESET are two additional
+service buttons for the WROOM (programming and reset), not part of the user interface.
+
+NTC must stay on ADC1: ADC2 is unusable while Wi-Fi is active.
+IO12 is deliberately left unloaded (strapping pin — it sets the flash voltage at boot).
 
 ### Reference designators
 
