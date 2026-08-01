@@ -2,4 +2,5 @@
 	(version 7)
 	(lib (name "JLCPCB") (type "KiCad") (uri "${KIPRJMOD}/libs/JLCPCB.pretty") (options "") (descr ""))
 	(lib (name "FilamentDryer") (type "KiCad") (uri "${KIPRJMOD}/libs/FilamentDryer.pretty") (options "") (descr ""))
+	(lib (name "Slewform") (type "KiCad") (uri "C:/Users/utente/Documents/KiCad/10.0/projects/Slewform.pretty") (options "") (descr ""))
 )

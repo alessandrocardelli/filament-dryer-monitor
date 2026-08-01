@@ -4312,7 +4312,7 @@
 				)
 			)
 		)
-		(property "Value" "T3A/63V"
+		(property "Value" "T3A5/63V"
 			(at 90.17 59.69 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4322,7 +4322,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Fuse:Fuse_1812_4532Metric"
+		(property "Footprint" "Fuse:Fuse_1206_3216Metric_Pad1.42x1.75mm_HandSolder"
 			(at 90.17 65.278 90)
 			(hide yes)
 			(show_name no)
@@ -4356,6 +4356,17 @@
 			)
 		)
 		(property "Function" "F1"
+			(at 90.17 63.5 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C54934567"
 			(at 90.17 63.5 90)
 			(hide yes)
 			(show_name no)
