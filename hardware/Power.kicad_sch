@@ -3640,7 +3640,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DFN_QFN:QFN-16-1EP_4x4mm_P0.65mm_EP2.5x2.5mm"
+		(property "Footprint" "FilamentDryer:AP66200_U-QFN4040-16_EP2.6x2.6mm_P0.65mm"
 			(at 106.68 128.27 0)
 			(hide yes)
 			(show_name no)
