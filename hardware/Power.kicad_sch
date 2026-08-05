@@ -4807,7 +4807,7 @@
 				)
 			)
 		)
-		(property "Value" "T3A5/63V"
+		(property "Value" "T3A/63V"
 			(at 90.17 59.69 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4861,7 +4861,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C54934516"
+		(property "LCSC" "C354897"
 			(at 90.17 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -4927,7 +4927,7 @@
 				)
 			)
 		)
-		(property "MPN" "JFC1206-1300TS"
+		(property "MPN" "1206T3A63V"
 			(at 90.17 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -4938,7 +4938,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Shenzhen JDT Fuse"
+		(property "Manufacturer" "Walter Elec"
 			(at 90.17 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -9211,7 +9211,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "Panasonic"
 			(at 144.78 69.85 0)
 			(hide yes)
 			(show_name no)

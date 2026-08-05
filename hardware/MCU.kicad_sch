@@ -6282,7 +6282,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "CP2102N-A02-GQFN28"
+		(property "Value" "CP2102N-A02-GQFN28R"
 			(at 75.8033 127 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6392,7 +6392,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C1550553"
+		(property "LCSC" "C964632"
 			(at 73.66 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -6403,7 +6403,7 @@
 				)
 			)
 		)
-		(property "MPN" "CP2102N-A02-GQFN28"
+		(property "MPN" "CP2102N-A02-GQFN28R"
 			(at 73.66 91.44 0)
 			(hide yes)
 			(show_name no)

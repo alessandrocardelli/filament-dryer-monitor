@@ -3469,7 +3469,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C3313013"
+		(property "LCSC" "C81598"
 			(at 224.79 132.08 90)
 			(hide yes)
 			(show_name no)
@@ -3480,7 +3480,7 @@
 				)
 			)
 		)
-		(property "MPN" "1N4148W-G3-18"
+		(property "MPN" "1N4148W"
 			(at 224.79 132.08 90)
 			(hide yes)
 			(show_name no)
@@ -3491,7 +3491,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Vishay Intertech"
+		(property "Manufacturer" "ST(Semtech)"
 			(at 224.79 132.08 90)
 			(hide yes)
 			(show_name no)
