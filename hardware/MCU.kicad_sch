@@ -8591,7 +8591,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "SW_BOOT"
+		(property "Value" ""
 			(at 217.17 69.8499 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8635,7 +8635,7 @@
 				)
 			)
 		)
-		(property "Function" "SW2"
+		(property "Function" "SW_BOOT"
 			(at 215.9 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -10306,9 +10306,9 @@
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom no)
+		(in_bom yes)
 		(on_board yes)
-		(in_pos_files no)
+		(in_pos_files yes)
 		(dnp no)
 		(uuid "cda4c67a-b058-49e7-92c3-dee691ca9083")
 		(property "Reference" "J3"
@@ -11890,7 +11890,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "SW_RST"
+		(property "Value" ""
 			(at 156.21 69.8499 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11934,7 +11934,7 @@
 				)
 			)
 		)
-		(property "Function" "SW1"
+		(property "Function" "SW_RST"
 			(at 154.94 68.58 90)
 			(hide yes)
 			(show_name no)

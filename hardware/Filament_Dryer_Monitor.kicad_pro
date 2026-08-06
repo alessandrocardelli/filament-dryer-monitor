@@ -745,7 +745,7 @@
           "group_by": false,
           "label": "Function",
           "name": "Function",
-          "show": false
+          "show": true
         },
         {
           "group_by": false,
