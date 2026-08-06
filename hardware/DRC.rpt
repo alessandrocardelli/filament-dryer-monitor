@@ -1,0 +1,22 @@
+** Drc report for Filament_Dryer_Monitor.kicad_pcb **
+** Created on 2026-08-06T21:18:01 **
+** Report includes: Errors, Warnings, Exclusions **
+
+** Found 1 DRC violations **
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1500 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(100.0000 mm, 81.0000 mm): Segment on Edge.Cuts
+    @(100.3520 mm, 108.8660 mm): Polygon of U4 on B.Silkscreen
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** Ignored checks **
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - Footprint component type doesn't match footprint pads
+
+** End of Report **

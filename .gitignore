@@ -11,9 +11,6 @@ fp-info-cache
 *-cache.lib
 
 # KiCad - output generati
-*.net
-ERC.rpt
-DRC.rpt
 *.dsn
 *.ses
 *.bck
