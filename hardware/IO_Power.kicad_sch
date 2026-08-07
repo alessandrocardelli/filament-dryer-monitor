@@ -2751,6 +2751,16 @@
 		)
 		(uuid "fd8c0fc9-87ae-4635-a629-9525b92d637b")
 	)
+	(label "HEATER_SW"
+		(at 87.63 81.28 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "08b963af-d991-482d-87e6-de9474cedd01")
+	)
 	(global_label "BTN_DOWN"
 		(shape passive)
 		(at 138.43 137.16 180)
