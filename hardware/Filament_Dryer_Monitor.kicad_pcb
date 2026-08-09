@@ -8099,7 +8099,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "47k"
 			(at 0 -1.43 270)
 			(layer "B.Fab")
 			(uuid "c0f42694-5127-4960-b317-609f5c28896c")
@@ -8176,7 +8176,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "0603WAF4702T5E"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -8218,7 +8218,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" "C25819"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -25236,10 +25236,10 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "NTD5865NLT4G"
+		(property "Value" "IRLR3636TRPBF"
 			(at 0 -4.5 180)
 			(layer "B.Fab")
-			(uuid "2a8f1855-e822-4bfc-a3bf-4d7796a0c04e")
+			(uuid "9aa5039f-2ba0-49f7-abb2-7a7fd081253e")
 			(effects
 				(font
 					(size 1 1)
@@ -25248,11 +25248,11 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" "kicad-embed://NTD5865NLT4G.pdf"
+		(property "Datasheet" "kicad-embed://IRLR3636TRPBF.pdf"
 			(at 0 0 180)
 			(layer "B.Fab")
 			(hide yes)
-			(uuid "13986ac8-6948-41cf-8295-6cf6b086d42e")
+			(uuid "597d60c3-b786-43ee-a590-2d5271cc11d6")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -25313,7 +25313,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MPN" "NTD5865NLT4G"
+		(property "MPN" "IRLR3636TRPBF"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -25327,7 +25327,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C145546"
+		(property "LCSC" "C67279"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")

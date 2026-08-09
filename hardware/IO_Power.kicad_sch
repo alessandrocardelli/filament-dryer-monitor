@@ -5860,7 +5860,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "47k"
 			(at 222.25 74.9299 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5915,7 +5915,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "0603WAF4702T5E"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -5948,7 +5948,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" "C25819"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -7337,7 +7337,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "NTD5865NLT4G"
+		(property "Value" "IRLR3636TRPBF"
 			(at 91.44 88.8999 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7359,7 +7359,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "kicad-embed://NTD5865NLT4G.pdf"
+		(property "Datasheet" "kicad-embed://IRLR3636TRPBF.pdf"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7403,7 +7403,7 @@
 				)
 			)
 		)
-		(property "MPN" "NTD5865NLT4G"
+		(property "MPN" "IRLR3636TRPBF"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7414,7 +7414,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C145546"
+		(property "LCSC" "C67279"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
