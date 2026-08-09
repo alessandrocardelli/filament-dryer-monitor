@@ -1,136 +1,51 @@
-ERC report (2026-08-06T21:17:51, Encoding UTF8)
-Report includes: Errors
+ERC report (2026-08-09T17:32:20, Encoding UTF8)
+Report includes: Errors, Warnings
 
 ***** Sheet /
+[unconnected_wire_endpoint]: Unconnected wire endpoint
+    ; warning
+    @(1900 mils, 2350 mils): Vertical Wire, length 400 mils
+[unconnected_wire_endpoint]: Unconnected wire endpoint
+    ; warning
+    @(2150 mils, 3100 mils): Horizontal Wire, length 250 mils
+[unconnected_wire_endpoint]: Unconnected wire endpoint
+    ; warning
+    @(2150 mils, 3200 mils): Horizontal Wire, length 250 mils
+[unconnected_wire_endpoint]: Unconnected wire endpoint
+    ; warning
+    @(3400 mils, 2500 mils): Horizontal Wire, length 350 mils
+[unconnected_wire_endpoint]: Unconnected wire endpoint
+    ; warning
+    @(3400 mils, 2600 mils): Horizontal Wire, length 350 mils
+[unconnected_wire_endpoint]: Unconnected wire endpoint
+    ; warning
+    @(4250 mils, 6550 mils): Horizontal Wire, length 250 mils
+[unconnected_wire_endpoint]: Unconnected wire endpoint
+    ; warning
+    @(4250 mils, 6650 mils): Horizontal Wire, length 250 mils
 
 ***** Sheet /Power/
 [power_pin_not_driven]: Input Power pin not driven by any Output Power pins
     ; error
     @(2700 mils, 5100 mils): Symbol #PWR01 Pin 1 [Power input, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(2750 mils, 2600 mils): Symbol J1 Pin 2 [Pin_2, Passive, Line]
 [pin_to_pin]: Pins of type Power output and Power output are connected
     ; error
     @(4650 mils, 4500 mils): Symbol U1 Pin 6 [SW, Power output, Line]
     @(4650 mils, 4700 mils): Symbol U1 Pin 7 [SW, Power output, Line]
 
 ***** Sheet /MCU/
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 2800 mils): Symbol U2 Pin 23 [~{CTS}, Input, Line]
-[pin_not_driven]: Input pin not driven by any Output pins
-    ; error
-    @(3400 mils, 2800 mils): Symbol U2 Pin 23 [~{CTS}, Input, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 2900 mils): Symbol U2 Pin 27 [~{DSR}, Input, Line]
-[pin_not_driven]: Input pin not driven by any Output pins
-    ; error
-    @(3400 mils, 2900 mils): Symbol U2 Pin 27 [~{DSR}, Input, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 3100 mils): Symbol U2 Pin 1 [~{DCD}, Input, Line]
-[pin_not_driven]: Input pin not driven by any Output pins
-    ; error
-    @(3400 mils, 3100 mils): Symbol U2 Pin 1 [~{DCD}, Input, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 3200 mils): Symbol U2 Pin 2 [~{RI}/CLK, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 3400 mils): Symbol U2 Pin 12 [SUSPEND, Output, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 3500 mils): Symbol U2 Pin 11 [~{SUSPEND}, Output, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 3700 mils): Symbol U2 Pin 19 [~{TXT}/GPIO.0, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 3800 mils): Symbol U2 Pin 18 [~{RXT}/GPIO.1, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 3900 mils): Symbol U2 Pin 17 [RS485/GPIO.2, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 4000 mils): Symbol U2 Pin 16 [~{WAKEUP}/GPIO.3, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 4100 mils): Symbol U2 Pin 22 [GPIO.4, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 4200 mils): Symbol U2 Pin 21 [GPIO.5, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 4300 mils): Symbol U2 Pin 20 [GPIO.6, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 4500 mils): Symbol U2 Pin 13 [CHREN, Output, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 4600 mils): Symbol U2 Pin 15 [CHR0, Output, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3400 mils, 4700 mils): Symbol U2 Pin 14 [CHR1, Output, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3550 mils, 6950 mils): Symbol J2 Pin A8 [SBU1, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(3550 mils, 7050 mils): Symbol J2 Pin B8 [SBU2, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(6650 mils, 2650 mils): Symbol U4 Pin 4 [SENSOR_VP, Input, Line]
-[pin_not_driven]: Input pin not driven by any Output pins
-    ; error
-    @(6650 mils, 2650 mils): Symbol U4 Pin 4 [SENSOR_VP, Input, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(6650 mils, 2750 mils): Symbol U4 Pin 5 [SENSOR_VN, Input, Line]
-[pin_not_driven]: Input pin not driven by any Output pins
-    ; error
-    @(6650 mils, 2750 mils): Symbol U4 Pin 5 [SENSOR_VN, Input, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(7850 mils, 2650 mils): Symbol U4 Pin 24 [IO2, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(7850 mils, 2850 mils): Symbol U4 Pin 26 [IO4, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(7850 mils, 2950 mils): Symbol U4 Pin 29 [IO5, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(7850 mils, 3050 mils): Symbol U4 Pin 14 [IO12, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(7850 mils, 3150 mils): Symbol U4 Pin 16 [IO13, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(7850 mils, 3350 mils): Symbol U4 Pin 23 [IO15, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(7850 mils, 3550 mils): Symbol U4 Pin 28 [IO17, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(7850 mils, 3650 mils): Symbol U4 Pin 30 [IO18, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(7850 mils, 4050 mils): Symbol U4 Pin 37 [IO23, Bidirectional, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(7850 mils, 4150 mils): Symbol U4 Pin 10 [IO25, Bidirectional, Line]
 
 ***** Sheet /IO_Power/
-[pin_not_connected]: Pin not connected
-    ; error
-    @(9450 mils, 5500 mils): Symbol BZ1 Pin 3 [3, Unspecified, Line]
-[pin_not_connected]: Pin not connected
-    ; error
-    @(9500 mils, 5500 mils): Symbol BZ1 Pin 4 [4, Unspecified, Line]
+[pin_to_pin]: Pins of type Unspecified and Passive are connected
+    ; warning
+    @(9300 mils, 5150 mils): Symbol BZ1 Pin 1 [+, Unspecified, Line]
+    @(8850 mils, 5050 mils): Symbol D6 Pin 1 [K, Passive, Line]
+[pin_to_pin]: Pins of type Unspecified and Passive are connected
+    ; warning
+    @(9300 mils, 5250 mils): Symbol BZ1 Pin 2 [2, Unspecified, Line]
+    @(9150 mils, 5550 mils): Symbol Q6 Pin 3 [C, Passive, Line]
 
- ** ERC messages: 40  Errors 40  Warnings 0
+ ** ERC messages: 11  Errors 2  Warnings 9
 
  ** Ignored checks:
     - Global label only appears once in the schematic

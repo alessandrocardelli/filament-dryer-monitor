@@ -6,15 +6,16 @@ closed-loop humidity/temperature control, a local OLED interface, data logging a
 The PCB physically replaces the original front panel: display and buttons sit on the front
 face of the board, all the electronics on the back.
 
-> **Status: work in progress.** The schematic is complete and ERC-clean; the PCB layout and
-> most of the firmware are still under development. See [`docs/TODO.md`](docs/TODO.md).
+> **Status: work in progress.** The schematic and PCB layout are complete for the first
+> prototype revision. Final manufacturing checks and most of the firmware are still in
+> development.
 
 ---
 
 ## Features
 
 - **SHT45** humidity/temperature sensor (I²C) for accurate chamber readings
-- **NTC thermistor** on the heating element for the safety layer
+- **Characterized NTC thermistor** integrated into the heating element for the safety layer
 - **1.54" SSD1309 OLED** (128×64, I²C) + 4 front-panel buttons for local control
 - **PWM heater control** with hardware and firmware safety cutoffs
 - **PWM fan control** (25 kHz, inaudible)
@@ -28,9 +29,12 @@ Heating is a hazard, and this design treats it as one. Three independent layers:
 
 1. **Hardware TCO** — a thermal cutoff (~100–110 °C) wired in series on the `HEATER+` line
    at the heating element. Off-board, purely mechanical, works even if the MCU is dead.
+
 2. **Firmware safety loop** — runs every cycle, independent of the UI state machine.
-   Fail-safe by design: if the NTC is disconnected, the ADC node is pulled toward 3V3 and
-   reads as "hot", so an open sensor shuts the heater off rather than leaving it on.
+   Fail-safe by design: if the NTC is disconnected, the ADC node is pulled toward 3V3.
+   An out-of-range/open-sensor condition is treated as a fault and immediately disables
+   the heater.
+
 3. **Compile-time gate** — `NTC_CALIBRATED` must be defined before the heater can be driven
    at all, preventing operation with placeholder thermistor coefficients.
 
@@ -41,9 +45,9 @@ Heating is a hazard, and this design treats it as one. Three independent layers:
 ## Hardware
 
 4-layer PCB. Designed in **KiCad 10**, targeted at **JLCPCB/LCSC** fabrication and assembly.
-The board *is* the front panel, so its outline is set by the dryer's mechanics.
 
-> The board outline is currently being revised (enlarged) — dimensions not yet final.
+The board itself forms the dryer's replacement front panel, so its outline and component
+placement are constrained by the original enclosure mechanics.
 
 ### Main blocks
 
@@ -51,13 +55,53 @@ The board *is* the front panel, so its outline is set by the dryer's mechanics.
 |---|---|---|
 | MCU | ESP32-WROOM-32E | Wi-Fi, antenna keepout respected on all copper layers |
 | Buck converter | AP66200 | 24 V → 3.3 V |
-| USB-UART | CP2102N | With auto-program (DTR/RTS) circuit |
-| Humidity/temp | SHT45 (Adafruit #6174) | I²C `0x44`, via STEMMA QT cable |
-| Display | SSD1309 OLED 128×64 | I²C `0x3C`, on-board on the front face |
-| Heater driver | N-MOSFET, DPAK | ~1.6 A continuous, flyback diode |
-| Fan driver | DMN6140L (SOT-23) | 24 V fan, 0.2 A |
-| Element temp | NTC thermistor | ADC1, 11 dB attenuation |
+| USB-UART | CP2102N | USB used for programming/debug only, with DTR/RTS auto-program circuit |
+| Humidity/temp | SHT45 (Adafruit #6174) | I²C `0x44` |
+| Display | SSD1309 OLED 128×64 | I²C `0x3C`, mounted on the front face |
+| Heater driver | IRLR3636TRPBF (DPAK) | 60 V logic-level N-MOSFET, ~1.6 A heater load, LCSC C67279 |
+| Fan driver | CJ2310 (SOT-23) | 24 V fan, ~0.2 A |
+| Element temp | Integrated ~82 kΩ NTC | ADC1, 47 kΩ divider resistor, 100 nF filtering |
 | Buzzer | Passive + NPN driver | |
+
+### Heater NTC characterization
+
+The original eSUN flexible heater incorporates an NTC thermistor that cannot be removed
+independently from the heater assembly.
+
+The thermistor was therefore characterized **in situ**. The original dryer controller was
+used to heat the assembly, after which power was removed and the NTC JST connector was
+disconnected from the original electronics. Temperature and NTC resistance were then
+recorded during natural cooldown.
+
+Measured values:
+
+| Temperature | NTC resistance |
+|---:|---:|
+| 25 °C | 82.5 kΩ |
+| 28 °C | 75.5 kΩ |
+| 30 °C | 67.4 kΩ |
+| 35 °C | 51.7 kΩ |
+| 40 °C | 43.6 kΩ |
+| 44 °C | 35.93 kΩ |
+| 50 °C | 28.8 kΩ |
+
+The measurements are consistent with an NTC of approximately **82 kΩ at 25 °C**, with a
+single-beta approximation of roughly **β ≈ 4100 K** over the measured temperature range.
+
+Because the original thermistor manufacturer and exact part number are unknown, these values
+should be considered an **empirical characterization**, not manufacturer specifications.
+
+The PCB uses:
+
+- **R28 = 47 kΩ, 1%** as the fixed divider resistor
+- **C19 = 100 nF** for ADC input filtering
+- **GPIO34 / ADC1** for the temperature measurement
+
+The 47 kΩ divider value was selected to provide better ADC voltage span across the useful
+heater-temperature range than the original 100 kΩ design.
+
+Final temperature conversion and safety thresholds will be calibrated in firmware using the
+measured thermistor data.
 
 ### Layer stackup
 
@@ -96,18 +140,24 @@ Power-class vias: 0.8 mm drill / 0.4 mm annular ring.
 | Button UP | IO14 |
 | Button DOWN | IO27 |
 
-The four front-panel buttons (ON/OFF, M, UP, DOWN) each use an external 10 k pull-up
-to 3V3 with the button to GND, so a press reads LOW. IO35 is input-only and has no
-internal pull, so its external pull-up is mandatory. BOOT and RESET are two additional
-service buttons for the WROOM (programming and reset), not part of the user interface.
+The four front-panel buttons (ON/OFF, M, UP, DOWN) each use an external 10 kΩ pull-up
+to 3V3 with the button to GND, so a press reads LOW.
 
-NTC must stay on ADC1: ADC2 is unusable while Wi-Fi is active.
-IO12 is deliberately left unloaded (strapping pin — it sets the flash voltage at boot).
+IO35 is input-only and has no internal pull-up, so its external pull-up is mandatory.
+
+BOOT and RESET are two additional service buttons for the ESP32-WROOM module
+(programming and reset), not part of the normal user interface.
+
+The NTC is connected to **ADC1** because ADC2 cannot be used reliably while Wi-Fi is active.
+
+IO12 is deliberately left unloaded because it is an ESP32 strapping pin that affects flash
+voltage selection during boot.
 
 ### Reference designators
 
 This project uses **functional reference designators** where they carry meaning
 (`Q_heat`, `Rfb_top`, `J_sens`) and sequential numbering for generic passives.
+
 When re-annotating in KiCad, always choose **"Keep existing annotations"** — a full
 re-annotation will destroy these names.
 
@@ -115,15 +165,16 @@ re-annotation will destroy these names.
 
 ## Firmware
 
-Written with the **Arduino IDE** (ESP32 Arduino core 3.x), structured as modular blocks.
-The main loop is cooperative and `millis()`-based — no blocking `delay()` calls outside
-the SHT45 driver.
+The firmware is based on the **ESP32 Arduino core 3.x** and is structured as modular blocks.
+
+The main loop is intended to remain cooperative and `millis()`-based, with no blocking
+delays in normal operation.
 
 | Block | Status |
 |---|---|
 | SHT45 driver (hand-written I²C, CRC-8, cmd `0xFD`) | Done |
 | Fan PWM (LEDC, 25 kHz, 10-bit) | Done — kickstart and duty floor provisional |
-| Heater + NTC safety | Blocked on NTC characterization |
+| Heater + NTC safety | NTC characterized — conversion, calibration and safety implementation pending |
 | OLED (U8g2, SSD1309-specific constructor) | Pending |
 | Buttons + UI state machine (STANDBY / DRYING / DONE / FAULT) | Pending |
 | LittleFS + CSV logging | Pending |
@@ -135,26 +186,31 @@ the SHT45 driver.
 
 ## Repository layout
 
+```text
+hardware/
+├── 3dmodels/          3D models used by KiCad
+├── docs/
+│   └── datasheets/    Component datasheets
+├── libs/              Custom symbols, footprints and imported libraries
+├── production/        JLCPCB production exports (BOM, positions, netlist)
+├── review/            Hardware review files
+├── *.kicad_sch        Hierarchical KiCad schematics
+├── *.kicad_pcb        PCB layout
+└── *.kicad_pro        KiCad project
 ```
-hardware/     KiCad project, custom symbol and footprint libraries,
-              3D models, generated gerbers
-firmware/     Arduino sketch and modular headers
-docs/         Datasheets, circuit explanation, TODO list
-```
+
+Firmware development is ongoing and will be added to the repository as it is finalized.
+
+---
 
 ## Building the hardware
 
-1. Open `hardware/Filament_Dryer_Monitor.kicad_pro` in KiCad 10 or newer.
-2. Custom libraries resolve through `${KIPRJMOD}`, so the project is portable —
-   no library setup needed after cloning.
-3. Gerbers for the current revision are in `hardware/gerbers/`.
-
-## Building the firmware
-
-1. Install the ESP32 board support package (Arduino core 3.x) in the Arduino IDE.
-2. Install the `U8g2` library.
-3. Select **ESP32 Dev Module** as the board.
-4. Open `firmware/firmware.ino` and flash over USB.
+1. Open `hardware/Filament_Dryer_Monitor.kicad_pro` in **KiCad 10** or newer.
+2. Custom libraries resolve through `${KIPRJMOD}`, so the project is portable and requires
+   no machine-specific absolute library paths.
+3. Production BOM and component-position files are stored in `hardware/production/`.
+4. Always regenerate and review fabrication/assembly outputs from the current KiCad revision
+   before ordering boards.
 
 ---
 
