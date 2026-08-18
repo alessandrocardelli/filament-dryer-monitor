@@ -1,0 +1,15 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP NE555DR
+D Single Precision Timer
+K
+F http://www.ti.com/lit/ds/symlink/ne555.pdf
+$ENDCMP
+#
+$CMP CSS-I4B20-SMT-TR
+D 8.5 mm, 3.6 Vo-p, 90 dB, Surface Mount (SMT), Magnetic Audio Transducer Buzzer
+K
+F https://www.sameskydevices.com/product/resource/css-i4b20-smt-tr.pdf
+$ENDCMP
+#
+#End Doc Library

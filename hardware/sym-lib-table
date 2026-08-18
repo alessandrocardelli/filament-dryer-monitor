@@ -2,4 +2,5 @@
 	(version 7)
 	(lib (name "Filament_Dryer_Custom") (type "KiCad") (uri "${KIPRJMOD}/Filament_Dryer_Custom.kicad_sym") (options "") (descr ""))
 	(lib (name "JLCPCB") (type "KiCad") (uri "${KIPRJMOD}/libs/JLCPCB.kicad_sym") (options "") (descr ""))
+	(lib (name "SamacSys_Parts") (type "KiCad") (uri "${KIPRJMOD}/libs/SamacSys_Parts.kicad_sym") (options "") (descr ""))
 )
