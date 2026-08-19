@@ -128,719 +128,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Connector:USB_C_Receptacle_USB2.0_16P"
-			(pin_names
-				(offset 1.016)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "J"
-				(at 0 22.225 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "USB_C_Receptacle_USB2.0_16P"
-				(at 0 19.685 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 3.81 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" "https://www.usb.org/sites/default/files/documents/usb_type-c.zip"
-				(at 3.81 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "USB 2.0-only 16P Type-C Receptacle connector"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "usb universal serial bus type-C USB2.0"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_fp_filters" "USB*C*Receptacle*"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "USB_C_Receptacle_USB2.0_16P_0_0"
-				(rectangle
-					(start -0.254 -17.78)
-					(end 0.254 -16.764)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 10.16 15.494)
-					(end 9.144 14.986)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 10.16 10.414)
-					(end 9.144 9.906)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 10.16 7.874)
-					(end 9.144 7.366)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 10.16 2.794)
-					(end 9.144 2.286)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 10.16 0.254)
-					(end 9.144 -0.254)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 10.16 -2.286)
-					(end 9.144 -2.794)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 10.16 -4.826)
-					(end 9.144 -5.334)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 10.16 -12.446)
-					(end 9.144 -12.954)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 10.16 -14.986)
-					(end 9.144 -15.494)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "USB_C_Receptacle_USB2.0_16P_0_1"
-				(rectangle
-					(start -10.16 17.78)
-					(end 10.16 -17.78)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(polyline
-					(pts
-						(xy -8.89 -3.81) (xy -8.89 3.81)
-					)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -7.62 -3.81)
-					(end -6.35 3.81)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(arc
-					(start -7.62 3.81)
-					(mid -6.985 4.4423)
-					(end -6.35 3.81)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start -7.62 3.81)
-					(mid -6.985 4.4423)
-					(end -6.35 3.81)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(arc
-					(start -8.89 3.81)
-					(mid -6.985 5.7067)
-					(end -5.08 3.81)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start -5.08 -3.81)
-					(mid -6.985 -5.7067)
-					(end -8.89 -3.81)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start -6.35 -3.81)
-					(mid -6.985 -4.4423)
-					(end -7.62 -3.81)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start -6.35 -3.81)
-					(mid -6.985 -4.4423)
-					(end -7.62 -3.81)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy -5.08 3.81) (xy -5.08 -3.81)
-					)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center -2.54 1.143)
-					(radius 0.635)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy -1.27 4.318) (xy 0 6.858) (xy 1.27 4.318) (xy -1.27 4.318)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 -2.032) (xy 2.54 0.508) (xy 2.54 1.778)
-					)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 -3.302) (xy -2.54 -0.762) (xy -2.54 0.508)
-					)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 -5.842) (xy 0 4.318)
-					)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 0 -5.842)
-					(radius 1.27)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(rectangle
-					(start 1.905 1.778)
-					(end 3.175 3.048)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-			)
-			(symbol "USB_C_Receptacle_USB2.0_16P_1_1"
-				(pin passive line
-					(at 0 -22.86 90)
-					(length 5.08)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "A1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 15.24 15.24 180)
-					(length 5.08)
-					(name "VBUS"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "A4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 15.24 10.16 180)
-					(length 5.08)
-					(name "CC1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "A5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 15.24 -2.54 180)
-					(length 5.08)
-					(name "D+"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "A6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 15.24 2.54 180)
-					(length 5.08)
-					(name "D-"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "A7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 15.24 -12.7 180)
-					(length 5.08)
-					(name "SBU1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "A8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 15.24 15.24 180)
-					(length 5.08)
-					(hide yes)
-					(name "VBUS"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "A9"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -22.86 90)
-					(length 5.08)
-					(hide yes)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "A12"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -22.86 90)
-					(length 5.08)
-					(hide yes)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "B1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 15.24 15.24 180)
-					(length 5.08)
-					(hide yes)
-					(name "VBUS"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "B4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 15.24 7.62 180)
-					(length 5.08)
-					(name "CC2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "B5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 15.24 -5.08 180)
-					(length 5.08)
-					(name "D+"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "B6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 15.24 0 180)
-					(length 5.08)
-					(name "D-"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "B7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 15.24 -15.24 180)
-					(length 5.08)
-					(name "SBU2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "B8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 15.24 15.24 180)
-					(length 5.08)
-					(hide yes)
-					(name "VBUS"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "B9"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -22.86 90)
-					(length 5.08)
-					(hide yes)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "B12"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -7.62 -22.86 90)
-					(length 5.08)
-					(name "SHIELD"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "SH"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Connector_Generic:Conn_01x04"
 			(pin_names
 				(offset 1.016)
@@ -3397,6 +2684,764 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "SamacSys_Parts:USB4216-03-A"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 0 23.622 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify top)
+				)
+			)
+			(property "Value" "USB4216-03-A"
+				(at 0 21.082 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify top)
+				)
+			)
+			(property "Footprint" "USB421603A"
+				(at 29.21 -94.92 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Datasheet" "https://eu.mouser.com/datasheet/2/837/usb4216-3577180.pdf"
+				(at 29.21 -194.92 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Description" "USB Connectors USB C Receptacle, Short Body, USB2.0, 16Pin, Horizontal, SMT"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Height" ""
+				(at 29.21 -394.92 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Manufacturer_Name" "GCT (GLOBAL CONNECTOR TECHNOLOGY)"
+				(at 29.21 -494.92 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Manufacturer_Part_Number" "USB4216-03-A"
+				(at 29.21 -594.92 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Mouser Part Number" "640-USB4216-03-A"
+				(at 29.21 -694.92 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/GCT/USB4216-03-A?qs=Tc%252BHE9vUsnv1G2UWLFIexA%3D%3D"
+				(at 29.21 -794.92 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Arrow Part Number" ""
+				(at 29.21 -894.92 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Arrow Price/Stock" ""
+				(at 29.21 -994.92 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(symbol "USB4216-03-A_0_0"
+				(rectangle
+					(start -0.254 -17.78)
+					(end 0.254 -16.764)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 10.16 15.494)
+					(end 9.144 14.986)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 10.16 10.414)
+					(end 9.144 9.906)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 10.16 7.874)
+					(end 9.144 7.366)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 10.16 2.794)
+					(end 9.144 2.286)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 10.16 0.254)
+					(end 9.144 -0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 10.16 -2.286)
+					(end 9.144 -2.794)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 10.16 -4.826)
+					(end 9.144 -5.334)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 10.16 -12.446)
+					(end 9.144 -12.954)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 10.16 -14.986)
+					(end 9.144 -15.494)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "USB4216-03-A_0_1"
+				(rectangle
+					(start -10.16 17.78)
+					(end 10.16 -17.78)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy -8.89 -3.81) (xy -8.89 3.81)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -7.62 -3.81)
+					(end -6.35 3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(arc
+					(start -7.62 3.81)
+					(mid -6.985 4.4423)
+					(end -6.35 3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -7.62 3.81)
+					(mid -6.985 4.4423)
+					(end -6.35 3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(arc
+					(start -8.89 3.81)
+					(mid -6.985 5.7067)
+					(end -5.08 3.81)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -5.08 -3.81)
+					(mid -6.985 -5.7067)
+					(end -8.89 -3.81)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -6.35 -3.81)
+					(mid -6.985 -4.4423)
+					(end -7.62 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -6.35 -3.81)
+					(mid -6.985 -4.4423)
+					(end -7.62 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy -5.08 3.81) (xy -5.08 -3.81)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -2.54 1.143)
+					(radius 0.635)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 4.318) (xy 0 6.858) (xy 1.27 4.318) (xy -1.27 4.318)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -2.032) (xy 2.54 0.508) (xy 2.54 1.778)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -3.302) (xy -2.54 -0.762) (xy -2.54 0.508)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -5.842) (xy 0 4.318)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 -5.842)
+					(radius 1.27)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 1.905 1.778)
+					(end 3.175 3.048)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+			)
+			(symbol "USB4216-03-A_1_1"
+				(pin passive line
+					(at 0 -22.86 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "A1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 15.24 15.24 180)
+					(length 5.08)
+					(name "VBUS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "A4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 10.16 180)
+					(length 5.08)
+					(name "CC1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "A5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 -2.54 180)
+					(length 5.08)
+					(name "D+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "A6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 2.54 180)
+					(length 5.08)
+					(name "D-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "A7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 -12.7 180)
+					(length 5.08)
+					(name "SBU1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "A8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -22.86 90)
+					(length 5.08)
+					(hide yes)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 15.24 15.24 180)
+					(length 5.08)
+					(hide yes)
+					(name "VBUS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 7.62 180)
+					(length 5.08)
+					(name "CC2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 -5.08 180)
+					(length 5.08)
+					(name "D+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 0 180)
+					(length 5.08)
+					(name "D-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 -15.24 180)
+					(length 5.08)
+					(name "SBU2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -22.86 90)
+					(length 5.08)
+					(hide yes)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "G1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -22.86 90)
+					(length 5.08)
+					(hide yes)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "G2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -22.86 90)
+					(length 5.08)
+					(hide yes)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "G3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -22.86 90)
+					(length 5.08)
+					(hide yes)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "G4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Switch:SW_Push"
 			(pin_numbers
 				(hide yes)
@@ -3919,6 +3964,12 @@
 		(uuid "1b9e9e82-ec55-4c6a-ba6c-ff28d84d817e")
 	)
 	(junction
+		(at 90.17 163.83)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1dcd5109-460a-4d8b-baa7-3a227168efec")
+	)
+	(junction
 		(at 90.17 53.34)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3931,22 +3982,10 @@
 		(uuid "31cfda52-93e2-4803-9bf0-e7010e39552d")
 	)
 	(junction
-		(at 74.93 186.69)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "32eff861-669e-4a97-8c79-acf1a28140bf")
-	)
-	(junction
 		(at 205.74 62.23)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "35081f42-9b8d-4e29-89fd-821abc9d68b1")
-	)
-	(junction
-		(at 90.17 168.91)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "375243d5-e61e-4449-881b-22a398e9ddb7")
 	)
 	(junction
 		(at 165.1 49.53)
@@ -4015,12 +4054,6 @@
 		(uuid "aeb59546-c8d7-4bd0-8161-ef107ce6d743")
 	)
 	(junction
-		(at 90.17 163.83)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "b4b60ae0-e9ff-442e-8bee-396e61635f88")
-	)
-	(junction
 		(at 217.17 102.87)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4043,6 +4076,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d1c6ef50-07d5-439c-9226-5949c92b31a9")
+	)
+	(junction
+		(at 90.17 168.91)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "dfee7edd-26dd-4078-a7b2-41c194d15252")
 	)
 	(junction
 		(at 48.26 76.2)
@@ -4807,16 +4846,6 @@
 			(type default)
 		)
 		(uuid "8c5a8037-7a89-48a2-be9a-335eadf5e8e6")
-	)
-	(wire
-		(pts
-			(xy 67.31 186.69) (xy 74.93 186.69)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8ea82975-bad3-4fad-8d95-947286683b79")
 	)
 	(wire
 		(pts
@@ -6021,6 +6050,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "TP6")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -6296,6 +6328,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "U3")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -6637,6 +6672,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "U2")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -6782,6 +6820,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "TP4")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -7168,7 +7209,7 @@
 				)
 			)
 		)
-		(property "Function" "R_pu_sda1"
+		(property "Function" "R_btn1"
 			(at 217.17 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -7179,7 +7220,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 217.17 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -7190,7 +7231,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 217.17 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -7278,6 +7319,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "R14")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -7384,7 +7428,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "330"
 			(at 208.28 53.3399 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7428,7 +7472,7 @@
 				)
 			)
 		)
-		(property "Function" "R_io0"
+		(property "Function" "R_led1"
 			(at 205.74 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -7439,7 +7483,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-07330RL"
 			(at 205.74 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -7450,7 +7494,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 205.74 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -7472,7 +7516,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" "C23138"
 			(at 205.74 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -7538,6 +7582,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "R13")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -7723,7 +7770,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k"
+		(property "Value" "10k"
 			(at 58.42 55.8799 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7767,7 +7814,7 @@
 				)
 			)
 		)
-		(property "Function" "R_rst1"
+		(property "Function" "R_pu_sda1"
 			(at 55.88 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -7778,7 +7825,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1001T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 55.88 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -7789,7 +7836,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 55.88 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -7811,7 +7858,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C21190"
+		(property "LCSC" "C25804"
 			(at 55.88 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -7877,6 +7924,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "R9")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -7904,7 +7954,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "1u"
 			(at 92.71 50.8062 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7948,7 +7998,7 @@
 				)
 			)
 		)
-		(property "Function" "C_vdd2"
+		(property "Function" "C_en1"
 			(at 90.17 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -7959,7 +8009,7 @@
 				)
 			)
 		)
-		(property "MPN" "CC0603KRX7R9BB104"
+		(property "MPN" "GCM188R71E105KA64J"
 			(at 90.17 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -7970,7 +8020,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "Murata Electronics"
 			(at 90.17 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -7992,7 +8042,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C5199872"
 			(at 90.17 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -8014,7 +8064,7 @@
 				)
 			)
 		)
-		(property "Voltage" "50V"
+		(property "Voltage" "25V"
 			(at 90.17 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -8058,6 +8108,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "C13")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -8203,230 +8256,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "TP7")
 					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:USB_C_Receptacle_USB2.0_16P")
-		(at 74.93 163.83 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "7569def5-7167-44fe-b391-bd4e276851f1")
-		(property "Reference" "J2"
-			(at 74.93 140.97 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Value" "USB_C_Receptacle_USB2.0_16P"
-			(at 74.93 143.51 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Footprint" "FilamentDryer:USB_C_Receptacle_HRO_TYPE-C-31-M-12"
-			(at 78.74 163.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.usb.org/sites/default/files/documents/usb_type-c.zip"
-			(at 78.74 163.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "USB 2.0-only 16P Type-C Receptacle connector"
-			(at 74.93 163.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Function" "J2"
-			(at 74.93 163.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Dielectric" ""
-			(at 74.93 163.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Tolerance" ""
-			(at 74.93 163.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Voltage" ""
-			(at 74.93 163.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Power" ""
-			(at 74.93 163.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "TCR" ""
-			(at 74.93 163.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C165948"
-			(at 74.93 163.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "TYPE-C-31-M-12"
-			(at 74.93 163.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "Korean Hroparts Elec"
-			(at 74.93 163.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "A12"
-			(uuid "b92acb8d-9dc8-4ee9-a32a-717f5c3147bf")
-		)
-		(pin "B8"
-			(uuid "1e07137d-1bb1-4371-a261-2810dcb51198")
-		)
-		(pin "A5"
-			(uuid "b5c75511-38da-46eb-8859-c75ae46f3e53")
-		)
-		(pin "A7"
-			(uuid "0bc8ace2-4189-40a7-b917-8685eae28ffc")
-		)
-		(pin "B7"
-			(uuid "a137c0ab-606c-4fa1-b21c-c16cb4431e2e")
-		)
-		(pin "A1"
-			(uuid "c9284776-3f39-40e8-9f4d-489a64752665")
-		)
-		(pin "A4"
-			(uuid "fb77e482-b445-4ee4-8d77-922ba5422233")
-		)
-		(pin "A8"
-			(uuid "07b6effd-8541-4854-b8ae-2543ed083313")
-		)
-		(pin "A9"
-			(uuid "bef75612-c1d5-4728-a854-fba3bc815e3f")
-		)
-		(pin "B1"
-			(uuid "5990499d-7b34-43b5-9aad-2de3091a252c")
-		)
-		(pin "A6"
-			(uuid "6b62bc43-f9d8-4b82-93be-8b5a56eda975")
-		)
-		(pin "B4"
-			(uuid "a39fac36-e94f-41ab-855a-1f5ba175ded2")
-		)
-		(pin "B5"
-			(uuid "909f422c-7472-427f-bb1e-943faa7deff5")
-		)
-		(pin "B6"
-			(uuid "c0831895-139a-41ca-8433-fa9b2e278cce")
-		)
-		(pin "B12"
-			(uuid "a70bb1c2-1b54-4353-9cfc-02c5b3a67729")
-		)
-		(pin "B9"
-			(uuid "c4f3b4ae-4b1f-4487-97b9-dd35bc3d0212")
-		)
-		(pin "SH"
-			(uuid "8a33e4e9-8127-42fa-a877-e65a9090e8c2")
-		)
-		(instances
-			(project "Filament_Dryer_Monitor"
-				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "J2")
-					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -8452,7 +8284,7 @@
 				)
 			)
 		)
-		(property "Value" "330"
+		(property "Value" "10k"
 			(at 252.73 68.58 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8495,7 +8327,7 @@
 				)
 			)
 		)
-		(property "Function" "R_led1"
+		(property "Function" "R_btn3"
 			(at 255.27 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8506,7 +8338,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF3300T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 255.27 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8517,7 +8349,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 255.27 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8539,7 +8371,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C23138"
+		(property "LCSC" "C25804"
 			(at 255.27 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8605,6 +8437,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "R18")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -8711,7 +8546,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" ""
+		(property "Value" "AP66200Q"
 			(at 217.17 69.8499 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8722,7 +8557,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "JLCPCB:SW-SMD_L3.9-W3.0-P4.45"
+		(property "Footprint" "FilamentDryer:AP66200_U-QFN4040-16_EP2.6x2.6mm_P0.65mm"
 			(at 210.82 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -8744,7 +8579,7 @@
 				)
 			)
 		)
-		(property "Description" "Push button switch, generic, two pins"
+		(property "Description" ""
 			(at 215.9 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -8755,7 +8590,7 @@
 				)
 			)
 		)
-		(property "Function" "SW_BOOT"
+		(property "Function" "U2"
 			(at 215.9 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8821,7 +8656,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C720477"
+		(property "LCSC" "C6741205"
 			(at 215.9 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8832,7 +8667,7 @@
 				)
 			)
 		)
-		(property "MPN" "TS-1088-AR02016"
+		(property "MPN" "AP66200QFVBW-13"
 			(at 215.9 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8843,7 +8678,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "XUNPU"
+		(property "Manufacturer" "Diodes Incorporated"
 			(at 215.9 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8865,6 +8700,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "SW2")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -8892,7 +8730,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "100"
 			(at 231.14 92.7099 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8936,7 +8774,7 @@
 				)
 			)
 		)
-		(property "Function" "R_pu_scl1"
+		(property "Function" "R_g_heat1"
 			(at 228.6 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -8947,7 +8785,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "CR0603-FX-1000ELF"
 			(at 228.6 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -8958,7 +8796,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "Bourns"
 			(at 228.6 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -8980,7 +8818,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" "C22775"
 			(at 228.6 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -9046,6 +8884,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "R15")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -9329,6 +9170,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "U4")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -9400,7 +9244,7 @@
 				)
 			)
 		)
-		(property "Function" "C_en1"
+		(property "Function" "C_esp2"
 			(at 143.51 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -9411,7 +9255,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL10B105KB8NQNC"
+		(property "MPN" "GCM188R71E105KA64J"
 			(at 143.51 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -9422,7 +9266,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "Murata Electronics"
 			(at 143.51 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -9466,7 +9310,7 @@
 				)
 			)
 		)
-		(property "Voltage" "50V"
+		(property "Voltage" "25V"
 			(at 143.51 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -9510,6 +9354,251 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "C15")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "SamacSys_Parts:USB4216-03-A")
+		(at 74.93 163.83 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "ac4e38ba-6060-48ed-9d9a-e10309ce0fb8")
+		(property "Reference" "J2"
+			(at 74.93 141.605 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Heater Connector"
+			(at 74.93 144.145 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
+			(at 104.14 258.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Datasheet" ""
+			(at 104.14 358.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 74.93 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Height" ""
+			(at 104.14 558.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Manufacturer_Part_Number" "USB4216-03-A"
+			(at 104.14 758.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Mouser Part Number" "640-USB4216-03-A"
+			(at 104.14 858.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/GCT/USB4216-03-A?qs=Tc%252BHE9vUsnv1G2UWLFIexA%3D%3D"
+			(at 104.14 958.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Arrow Part Number" ""
+			(at 104.14 1058.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Arrow Price/Stock" ""
+			(at 104.14 1158.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Manufacturer" "HALJIA"
+			(at 74.93 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Function" "J_heat1"
+			(at 74.93 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C158012"
+			(at 74.93 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Kit HALJIA XH-compatible 2P"
+			(at 74.93 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "B7"
+			(uuid "adf2a5c7-6758-45d2-999e-8cb48beb3360")
+		)
+		(pin "B4"
+			(uuid "2aab1b27-bbe9-450e-92ad-e12f2cd2d757")
+		)
+		(pin "A5"
+			(uuid "9fdaf0dd-f9c8-493d-b2d9-0012375ef019")
+		)
+		(pin "B5"
+			(uuid "c295749d-b9e0-4df3-9888-ca6095bc06f3")
+		)
+		(pin "A6"
+			(uuid "054a60df-d18f-464e-b354-1e655ba24894")
+		)
+		(pin "B1"
+			(uuid "6bd729e2-075f-4f22-af65-b9e70232927e")
+		)
+		(pin "B8"
+			(uuid "02ed69dd-e6be-4088-8846-420b466afde1")
+		)
+		(pin "G2"
+			(uuid "44eab5db-0496-4471-a424-9bca9fc7103b")
+		)
+		(pin "G4"
+			(uuid "12efb5c6-cacf-40a0-a889-d885693b796e")
+		)
+		(pin "A7"
+			(uuid "c8ad0990-bbbb-4d42-9883-b3a08d1a235e")
+		)
+		(pin "A4"
+			(uuid "4c97590f-9b82-432a-99c5-02b4858b5e68")
+		)
+		(pin "G1"
+			(uuid "df612973-4c39-4c9a-81e2-cb06e4a69cff")
+		)
+		(pin "A8"
+			(uuid "77996916-090d-4542-9389-25567e52e006")
+		)
+		(pin "A1"
+			(uuid "76c37452-0b2d-435e-bcae-92d12d0d2189")
+		)
+		(pin "G3"
+			(uuid "868700f0-bd4d-4c55-9364-e4da3ac60df4")
+		)
+		(pin "B6"
+			(uuid "6bbe997b-bdb1-42b9-98ef-89ae1f13715d")
+		)
+		(instances
+			(project "Filament_Dryer_Monitor"
+				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
+					(reference "J2")
+					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -9537,7 +9626,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "10u"
 			(at 104.14 50.8062 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9548,7 +9637,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9581,7 +9670,7 @@
 				)
 			)
 		)
-		(property "Function" "C_reg1"
+		(property "Function" "C_esp1"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9592,7 +9681,7 @@
 				)
 			)
 		)
-		(property "MPN" "CC0603KRX7R9BB104"
+		(property "MPN" "CC0805KRX5R8BB106"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9603,7 +9692,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "YAGEO"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9614,7 +9703,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "X7R"
+		(property "Dielectric" "X5R"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9625,7 +9714,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C15850"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9647,7 +9736,7 @@
 				)
 			)
 		)
-		(property "Voltage" "50V"
+		(property "Voltage" "25V"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9691,6 +9780,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "C14")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -9718,7 +9810,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "47k5"
+		(property "Value" "10k"
 			(at 45.72 81.2799 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9762,7 +9854,7 @@
 				)
 			)
 		)
-		(property "Function" "R_vbus_bot1"
+		(property "Function" "R_io0"
 			(at 48.26 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -9773,7 +9865,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF4752T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 48.26 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -9784,7 +9876,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 48.26 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -9806,7 +9898,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C23061"
+		(property "LCSC" "C25804"
 			(at 48.26 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -9872,6 +9964,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "R8")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -9899,7 +9994,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "33"
 			(at 146.05 53.3399 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9943,7 +10038,7 @@
 				)
 			)
 		)
-		(property "Function" "R_en1"
+		(property "Function" "R_s_sda1"
 			(at 143.51 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -9954,7 +10049,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0733RL"
 			(at 143.51 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -9965,7 +10060,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 143.51 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -9987,7 +10082,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" "C23140"
 			(at 143.51 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -10053,6 +10148,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "R12")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -10080,7 +10178,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1u"
+		(property "Value" "100n"
 			(at 167.64 46.9962 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10124,7 +10222,7 @@
 				)
 			)
 		)
-		(property "Function" "C_esp2"
+		(property "Function" "C_ntc1"
 			(at 165.1 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10135,7 +10233,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL10B105KB8NQNC"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 165.1 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10146,7 +10244,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "YAGEO"
 			(at 165.1 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10168,7 +10266,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C5199872"
+		(property "LCSC" "C14663"
 			(at 165.1 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10234,6 +10332,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "C17")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -10261,7 +10362,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "BZX84C15"
 			(at 177.8 46.9962 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10272,7 +10373,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 175.26 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10294,7 +10395,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor, small symbol"
+		(property "Description" "Zener diode"
 			(at 175.26 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10305,7 +10406,7 @@
 				)
 			)
 		)
-		(property "Function" "C_esp3"
+		(property "Function" "Dz1"
 			(at 175.26 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10316,7 +10417,7 @@
 				)
 			)
 		)
-		(property "MPN" "CC0603KRX7R9BB104"
+		(property "MPN" "BZX84C15-7-F"
 			(at 175.26 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10327,7 +10428,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "Diodes Incorporated"
 			(at 175.26 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10349,7 +10450,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C500789"
 			(at 175.26 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10415,6 +10516,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "C18")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -10442,7 +10546,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Sensor"
+		(property "Value" "Fan Connector"
 			(at 259.08 100.3301 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10453,7 +10557,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "FilamentDryer:JST_PH_B4B-PH-SM4-TB_1x04-1MP_P2.00mm_Vertical"
+		(property "Footprint" "FilamentDryer:JST_PH_B2B-PH-SM4-TB_1x02-1MP_P2.00mm_Vertical"
 			(at 256.54 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -10475,7 +10579,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
 			(at 256.54 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -10486,7 +10590,7 @@
 				)
 			)
 		)
-		(property "Function" "J_sens1"
+		(property "Function" "J_fan2"
 			(at 256.54 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -10552,7 +10656,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C160354"
+		(property "LCSC" "C160352"
 			(at 256.54 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -10563,7 +10667,7 @@
 				)
 			)
 		)
-		(property "MPN" "B4B-PH-SM4-TB(LF)(SN)"
+		(property "MPN" "B2B-PH-SM4-TB(LF)(SN)"
 			(at 256.54 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -10602,6 +10706,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "J3")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -10629,7 +10736,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MMBT3904"
+		(property "Value" "DMN6140L-13"
 			(at 121.92 50.7999 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10662,7 +10769,7 @@
 				)
 			)
 		)
-		(property "Description" "NPN transistor, base/emitter/collector"
+		(property "Description" "N-MOSFET transistor, gate/drain/source"
 			(at 116.84 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -10695,7 +10802,7 @@
 				)
 			)
 		)
-		(property "Function" "Q_boot1"
+		(property "Function" "Q_fan1"
 			(at 116.84 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -10761,7 +10868,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C94514"
+		(property "LCSC" "C75882"
 			(at 116.84 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -10772,7 +10879,7 @@
 				)
 			)
 		)
-		(property "MPN" "MMBT3904-7-F"
+		(property "MPN" "DMN6140L-13"
 			(at 116.84 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -10808,6 +10915,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "Q2")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -10992,7 +11102,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "5k1"
+		(property "Value" "10k"
 			(at 123.19 161.2899 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11036,7 +11146,7 @@
 				)
 			)
 		)
-		(property "Function" "R_cc2"
+		(property "Function" "R_pu_scl1"
 			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -11047,7 +11157,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF5101T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -11058,7 +11168,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -11080,7 +11190,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C23186"
+		(property "LCSC" "C25804"
 			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -11146,6 +11256,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "R10")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -11173,7 +11286,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "LED_Small"
+		(property "Value" "PMEG6020ER"
 			(at 251.46 76.1365 0)
 			(hide yes)
 			(show_name no)
@@ -11184,7 +11297,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
+		(property "Footprint" "Diode_SMD:Nexperia_CFP3_SOD-123W"
 			(at 255.27 76.2 90)
 			(hide yes)
 			(show_name no)
@@ -11206,7 +11319,7 @@
 				)
 			)
 		)
-		(property "Description" "Light emitting diode, small symbol"
+		(property "Description" "Schottky diode, small symbol"
 			(at 255.27 76.2 0)
 			(hide yes)
 			(show_name no)
@@ -11228,7 +11341,7 @@
 				)
 			)
 		)
-		(property "Function" "D_led1"
+		(property "Function" "D_fan1"
 			(at 255.27 76.2 90)
 			(hide yes)
 			(show_name no)
@@ -11294,7 +11407,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C5569446"
+		(property "LCSC" "C98663"
 			(at 255.27 76.2 90)
 			(hide yes)
 			(show_name no)
@@ -11305,7 +11418,7 @@
 				)
 			)
 		)
-		(property "MPN" "APT2012LZGCK"
+		(property "MPN" "PMEG6020ER-QX"
 			(at 255.27 76.2 90)
 			(hide yes)
 			(show_name no)
@@ -11316,7 +11429,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Kingbright"
+		(property "Manufacturer" "Nexperia"
 			(at 255.27 76.2 90)
 			(hide yes)
 			(show_name no)
@@ -11338,6 +11451,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "D3")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -11387,7 +11503,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf"
 			(at 125.73 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -11398,7 +11514,7 @@
 				)
 			)
 		)
-		(property "Description" "NPN transistor, base/emitter/collector"
+		(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"
 			(at 125.73 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -11431,7 +11547,7 @@
 				)
 			)
 		)
-		(property "Function" "Q_rst1"
+		(property "Function" "Q_buz1"
 			(at 125.73 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -11544,6 +11660,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "Q3")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -11649,7 +11768,7 @@
 				)
 			)
 		)
-		(property "Value" "33"
+		(property "Value" "10k"
 			(at 242.57 105.41 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11692,7 +11811,7 @@
 				)
 			)
 		)
-		(property "Function" "R_s_sda1"
+		(property "Function" "R_btn2"
 			(at 242.57 102.87 90)
 			(hide yes)
 			(show_name no)
@@ -11703,7 +11822,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF330JT5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 242.57 102.87 90)
 			(hide yes)
 			(show_name no)
@@ -11714,7 +11833,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 242.57 102.87 90)
 			(hide yes)
 			(show_name no)
@@ -11736,7 +11855,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C23140"
+		(property "LCSC" "C25804"
 			(at 242.57 102.87 90)
 			(hide yes)
 			(show_name no)
@@ -11802,6 +11921,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "R17")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -11829,7 +11951,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4u7"
+		(property "Value" "100n"
 			(at 82.55 50.8062 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11873,7 +11995,7 @@
 				)
 			)
 		)
-		(property "Function" "C_vdd1"
+		(property "Function" "C_reg1"
 			(at 80.01 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -11884,7 +12006,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL10A475KO8NNNC"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 80.01 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -11895,7 +12017,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "YAGEO"
 			(at 80.01 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -11906,7 +12028,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "X5R"
+		(property "Dielectric" "X7R"
 			(at 80.01 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -11917,7 +12039,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C19666"
+		(property "LCSC" "C14663"
 			(at 80.01 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -11939,7 +12061,7 @@
 				)
 			)
 		)
-		(property "Voltage" "16V"
+		(property "Voltage" "50V"
 			(at 80.01 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -11983,187 +12105,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "C12")
 					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 154.94 68.58 90)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "eca4e24b-a8c8-4e68-b6db-939a9193f50b")
-		(property "Reference" "SW1"
-			(at 156.21 67.3099 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" ""
-			(at 156.21 69.8499 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "JLCPCB:SW-SMD_L3.9-W3.0-P4.45"
-			(at 149.86 68.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 149.86 68.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Push button switch, generic, two pins"
-			(at 154.94 68.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Function" "SW_RST"
-			(at 154.94 68.58 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Dielectric" ""
-			(at 154.94 68.58 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Tolerance" ""
-			(at 154.94 68.58 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Voltage" ""
-			(at 154.94 68.58 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Power" ""
-			(at 154.94 68.58 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "TCR" ""
-			(at 154.94 68.58 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C720477"
-			(at 154.94 68.58 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "TS-1088-AR02016"
-			(at 154.94 68.58 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "XUNPU"
-			(at 154.94 68.58 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "9f612ad7-844d-413d-83bd-3a059f99ba7c")
-		)
-		(pin "2"
-			(uuid "928cad91-cd42-425f-b23e-7f4e6104db84")
-		)
-		(instances
-			(project "Filament_Dryer_Monitor"
-				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
-					(reference "SW1")
-					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -12190,7 +12134,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "5k1"
+		(property "Value" "33"
 			(at 132.08 158.7499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12234,7 +12178,7 @@
 				)
 			)
 		)
-		(property "Function" "R_cc1"
+		(property "Function" "R_s_scl1"
 			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
@@ -12245,7 +12189,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF5101T5E"
+		(property "MPN" "RC0603FR-0733RL"
 			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
@@ -12256,7 +12200,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
@@ -12278,7 +12222,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C23186"
+		(property "LCSC" "C23140"
 			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
@@ -12344,6 +12288,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "R11")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -12489,6 +12436,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "TP5")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -12516,7 +12466,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "22k1"
+		(property "Value" "10k"
 			(at 45.72 73.6599 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12560,7 +12510,7 @@
 				)
 			)
 		)
-		(property "Function" "R_vbus_top1"
+		(property "Function" "R_en1"
 			(at 48.26 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -12571,7 +12521,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF2212T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 48.26 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -12582,7 +12532,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 48.26 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -12604,7 +12554,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25961"
+		(property "LCSC" "C25804"
 			(at 48.26 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -12670,6 +12620,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "R7")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -12695,7 +12648,7 @@
 				)
 			)
 		)
-		(property "Value" "33"
+		(property "Value" "100k"
 			(at 234.95 97.79 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12738,7 +12691,7 @@
 				)
 			)
 		)
-		(property "Function" "R_s_scl1"
+		(property "Function" "R_pd_heat1"
 			(at 234.95 100.33 90)
 			(hide yes)
 			(show_name no)
@@ -12749,7 +12702,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF330JT5E"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 234.95 100.33 90)
 			(hide yes)
 			(show_name no)
@@ -12760,7 +12713,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 234.95 100.33 90)
 			(hide yes)
 			(show_name no)
@@ -12782,7 +12735,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C23140"
+		(property "LCSC" "C25803"
 			(at 234.95 100.33 90)
 			(hide yes)
 			(show_name no)
@@ -12848,6 +12801,193 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "R16")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 154.94 68.58 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f728ae59-dc88-4144-8be0-0c583557fd41")
+		(property "Reference" "SW1"
+			(at 156.21 67.3099 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" ""
+			(at 156.21 69.8499 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "SWT0110020010SSA"
+			(at 149.86 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
+			(at 149.86 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
+			(at 154.94 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Function" "SW_BOOT"
+			(at 154.94 68.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Dielectric" ""
+			(at 154.94 68.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 154.94 68.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage" ""
+			(at 154.94 68.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Power" ""
+			(at 154.94 68.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "TCR" ""
+			(at 154.94 68.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" ""
+			(at 154.94 68.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "SWT0110-020010SSA"
+			(at 154.94 68.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "GCT"
+			(at 154.94 68.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a7ffca87-3d1e-4ce5-bab2-e1832467d2ec")
+		)
+		(pin "2"
+			(uuid "53fb56fd-a75b-464e-8d86-e8aa96c5c67b")
+		)
+		(instances
+			(project "Filament_Dryer_Monitor"
+				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
+					(reference "SW1")
+					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -12954,7 +13094,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Display"
+		(property "Value" "NTC Connector"
 			(at 259.08 116.8401 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12965,7 +13105,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "FilamentDryer:Oled 1.54 Inch SSD1309 TZT"
+		(property "Footprint" "Connector_JST:JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical"
 			(at 256.54 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -12987,7 +13127,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
 			(at 256.54 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -12998,7 +13138,7 @@
 				)
 			)
 		)
-		(property "Function" "J_display1"
+		(property "Function" "J_ntc1"
 			(at 256.54 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -13064,6 +13204,39 @@
 				)
 			)
 		)
+		(property "LCSC" "C161690"
+			(at 256.54 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Kit HALJIA XH-compatible 2P"
+			(at 256.54 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "HALJIA"
+			(at 256.54 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "4"
 			(uuid "a66993a0-804a-4b23-b0db-f9b8edd93bdc")
 		)
@@ -13081,6 +13254,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "J4")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -13108,7 +13284,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u"
+		(property "Value" "100n"
 			(at 157.48 46.9962 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13119,7 +13295,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -13152,7 +13328,7 @@
 				)
 			)
 		)
-		(property "Function" "C_esp1"
+		(property "Function" "C_esp3"
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -13163,7 +13339,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL21A106KAYNNNE"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -13174,7 +13350,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "YAGEO"
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -13185,7 +13361,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "X5R"
+		(property "Dielectric" "X7R"
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -13196,7 +13372,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C15850"
+		(property "LCSC" "C14663"
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -13218,7 +13394,7 @@
 				)
 			)
 		)
-		(property "Voltage" "25V"
+		(property "Voltage" "50V"
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -13262,6 +13438,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/65de997d-f9e3-4a49-8760-31d73ce5b93f"
 					(reference "C16")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)

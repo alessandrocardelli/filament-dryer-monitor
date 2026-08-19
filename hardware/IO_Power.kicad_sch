@@ -3219,7 +3219,7 @@
 				)
 			)
 		)
-		(property "Function" "R_btn1"
+		(property "Function" "R_btn4"
 			(at 69.85 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3230,7 +3230,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 69.85 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3241,7 +3241,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 69.85 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3329,6 +3329,193 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "R19")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 69.85 143.51 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "00bb5977-5e8e-4fd9-993e-45c962465035")
+		(property "Reference" "SW3"
+			(at 71.12 142.2399 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "CP2102N-A02-GQFN28R"
+			(at 71.12 144.7799 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "FilamentDryer:CP2102N_GQFN28_5x5mm_P0.5mm_EP3.35x3.35mm"
+			(at 64.77 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf"
+			(at 64.77 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Description" "USB to UART master bridge, QFN-28"
+			(at 69.85 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Function" "U3"
+			(at 69.85 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Dielectric" ""
+			(at 69.85 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 69.85 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage" ""
+			(at 69.85 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Power" ""
+			(at 69.85 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "TCR" ""
+			(at 69.85 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C964632"
+			(at 69.85 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CP2102N-A02-GQFN28R"
+			(at 69.85 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Silicon Labs"
+			(at 69.85 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "4631adc8-bfe2-42c1-9937-ac608435b1ae")
+		)
+		(pin "2"
+			(uuid "1e82e7e1-a705-4f83-b3c2-742e8b9f8444")
+		)
+		(instances
+			(project "Filament_Dryer_Monitor"
+				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
+					(reference "SW3")
+					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -3355,7 +3542,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "1N4148W"
+		(property "Value" "HCB3216KF-601T30"
 			(at 222.25 133.3499 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3366,7 +3553,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SOD-123"
+		(property "Footprint" "Inductor_SMD:L_1206_3216Metric"
 			(at 220.345 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3377,7 +3564,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.vishay.com/docs/85748/1n4148w.pdf"
+		(property "Datasheet" ""
 			(at 224.79 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3388,7 +3575,7 @@
 				)
 			)
 		)
-		(property "Description" "75V 0.15A Fast Switching Diode, SOD-123"
+		(property "Description" "Ferrite bead"
 			(at 224.79 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3421,7 +3608,7 @@
 				)
 			)
 		)
-		(property "Function" "D_buz1"
+		(property "Function" "FB1"
 			(at 224.79 132.08 90)
 			(hide yes)
 			(show_name no)
@@ -3487,7 +3674,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C81598"
+		(property "LCSC" "C357023 "
 			(at 224.79 132.08 90)
 			(hide yes)
 			(show_name no)
@@ -3498,7 +3685,7 @@
 				)
 			)
 		)
-		(property "MPN" "1N4148W"
+		(property "MPN" "BLM31KN601SH1L"
 			(at 224.79 132.08 90)
 			(hide yes)
 			(show_name no)
@@ -3509,7 +3696,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "ST(Semtech)"
+		(property "Manufacturer" "Murata Electronics"
 			(at 224.79 132.08 90)
 			(hide yes)
 			(show_name no)
@@ -3531,6 +3718,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "D6")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -3636,7 +3826,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "PMEG6020ER"
+		(property "Value" "1N4148W"
 			(at 77.47 72.1359 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3647,7 +3837,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Diode_SMD:Nexperia_CFP3_SOD-123W"
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 80.01 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -3658,7 +3848,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.vishay.com/docs/85748/1n4148w.pdf"
 			(at 80.01 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -3669,7 +3859,7 @@
 				)
 			)
 		)
-		(property "Description" "Schottky diode, small symbol"
+		(property "Description" "75V 0.15A Fast Switching Diode, SOD-123"
 			(at 80.01 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -3680,7 +3870,7 @@
 				)
 			)
 		)
-		(property "Function" "D_heat1"
+		(property "Function" "D_buz1"
 			(at 80.01 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -3746,7 +3936,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C98663"
+		(property "LCSC" "C81598"
 			(at 80.01 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -3757,7 +3947,7 @@
 				)
 			)
 		)
-		(property "MPN" "PMEG6020ER,115"
+		(property "MPN" "1N4148W-7-F"
 			(at 80.01 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -3768,7 +3958,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Nexperia"
+		(property "Manufacturer" "Diodes Incorporated"
 			(at 80.01 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -3790,6 +3980,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "D4")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -3816,7 +4009,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "47k"
 			(at 120.65 133.3499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3860,7 +4053,7 @@
 				)
 			)
 		)
-		(property "Function" "R_btn3"
+		(property "Function" "R_ntc1"
 			(at 118.11 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3871,7 +4064,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "CRCW060347K0FKEA"
 			(at 118.11 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3882,7 +4075,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "Vishay"
 			(at 118.11 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3904,7 +4097,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" "C25819"
 			(at 118.11 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3970,6 +4163,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "R23")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -3997,7 +4193,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "CJ2310"
+		(property "Value" "100k"
 			(at 163.83 88.8999 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4008,7 +4204,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 162.56 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -4030,7 +4226,7 @@
 				)
 			)
 		)
-		(property "Description" "N-MOSFET transistor, gate/drain/source"
+		(property "Description" "Resistor"
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4041,7 +4237,7 @@
 				)
 			)
 		)
-		(property "Function" "Q_fan1"
+		(property "Function" "Rg1"
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4063,7 +4259,7 @@
 				)
 			)
 		)
-		(property "Tolerance" ""
+		(property "Tolerance" "1%"
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4085,7 +4281,7 @@
 				)
 			)
 		)
-		(property "Power" ""
+		(property "Power" "100mW"
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4107,7 +4303,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C75882"
+		(property "LCSC" "C25803"
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4118,7 +4314,7 @@
 				)
 			)
 		)
-		(property "MPN" "CJ2310"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4129,7 +4325,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Jiangsu Changjing Electronics Technology Co., Ltd."
+		(property "Manufacturer" "YAGEO"
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4154,6 +4350,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "Q5")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -4181,7 +4380,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" ""
 			(at 148.59 95.2499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4192,7 +4391,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "SWT0110020010SSA"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4203,7 +4402,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4214,7 +4413,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor, small symbol"
+		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4225,7 +4424,7 @@
 				)
 			)
 		)
-		(property "Function" "R_pd_fan1"
+		(property "Function" "SW_BOOT"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4236,7 +4435,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "SWT0110-020010SSA"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4247,7 +4446,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "GCT"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4269,7 +4468,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" ""
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4335,6 +4534,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "R26")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -4361,7 +4563,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "470"
 			(at 96.52 133.3499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4405,7 +4607,7 @@
 				)
 			)
 		)
-		(property "Function" "R_btn2"
+		(property "Function" "R_buz1"
 			(at 93.98 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4416,7 +4618,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-07470RL"
 			(at 93.98 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4427,7 +4629,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 93.98 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4449,7 +4651,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" "C23179"
 			(at 93.98 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4515,6 +4717,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "R22")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -4530,7 +4735,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "32b8dd78-1a87-4ef5-8e63-8e0585ea31da")
+		(uuid "354edd13-eabc-4bee-87c8-6a442a63fa81")
 		(property "Reference" "SW6"
 			(at 143.51 142.2399 90)
 			(show_name no)
@@ -4553,7 +4758,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "JLCPCB:SW-SMD_L3.9-W3.0-P4.45"
+		(property "Footprint" "SWT0110020010SSA"
 			(at 137.16 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -4564,7 +4769,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 137.16 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -4575,7 +4780,7 @@
 				)
 			)
 		)
-		(property "Description" "Push button switch, generic, two pins"
+		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
 			(at 142.24 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -4586,7 +4791,7 @@
 				)
 			)
 		)
-		(property "Function" "Down"
+		(property "Function" "SW_BOOT"
 			(at 142.24 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -4652,7 +4857,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C720477"
+		(property "LCSC" ""
 			(at 142.24 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -4663,7 +4868,7 @@
 				)
 			)
 		)
-		(property "MPN" "TS-1088-AR02016"
+		(property "MPN" "SWT0110-020010SSA"
 			(at 142.24 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -4674,7 +4879,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "XUNPU"
+		(property "Manufacturer" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
 			(at 142.24 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -4686,16 +4891,19 @@
 			)
 		)
 		(pin "1"
-			(uuid "40967694-ed14-4357-845f-ca1c663dc3c3")
+			(uuid "2634906f-be71-4192-a152-d4c8911c4f4f")
 		)
 		(pin "2"
-			(uuid "1b6fb0b9-fe9c-4eda-b9f9-894dda77305c")
+			(uuid "70b6155a-817f-4071-8714-b9be5570a9f3")
 		)
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "SW6")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -4880,7 +5088,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" ""
 			(at 144.78 133.3499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4891,7 +5099,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "SWT0110020010SSA"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4902,7 +5110,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4913,7 +5121,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor, small symbol"
+		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4924,7 +5132,7 @@
 				)
 			)
 		)
-		(property "Function" "R_btn4"
+		(property "Function" "SW_BOOT"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4935,7 +5143,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "SWT0110-020010SSA"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4946,7 +5154,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "GCT"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4968,7 +5176,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" ""
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -5034,6 +5242,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "R24")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -5061,7 +5272,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MLT-8530"
+		(property "Value" "CSS-I4B20-SMT-TR"
 			(at 245.11 133.3499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5072,7 +5283,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "JLCPCB:BUZ-SMD_4P-L8.5-W8.5-P8.50-BR"
+		(property "Footprint" "CSSI4B20SMTTR"
 			(at 240.03 147.32 0)
 			(hide yes)
 			(show_name no)
@@ -5083,7 +5294,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Buzzers_MLT-8530_C94599.html"
+		(property "Datasheet" "https://www.sameskydevices.com/product/resource/css-i4b20-smt-tr.pdf"
 			(at 240.03 149.86 0)
 			(hide yes)
 			(show_name no)
@@ -5094,7 +5305,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "8.5 mm, 3.6 Vo-p, 90 dB, Surface Mount (SMT), Magnetic Audio Transducer Buzzer"
 			(at 240.03 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -5105,7 +5316,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Jiangsu Huaneng Elec"
+		(property "Manufacturer" "Same Sky"
 			(at 240.03 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -5116,7 +5327,7 @@
 				)
 			)
 		)
-		(property "MPN" "MLT-8530"
+		(property "MPN" "CSS-I4B20-SMT-TR"
 			(at 240.03 154.94 0)
 			(hide yes)
 			(show_name no)
@@ -5221,6 +5432,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "BZ1")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -5305,187 +5519,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 93.98 143.51 90)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "4f6cb164-3c62-4dd4-83be-b4f19af97447")
-		(property "Reference" "SW4"
-			(at 95.25 142.2399 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" ""
-			(at 95.25 144.7799 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "JLCPCB:SW-SMD_L3.9-W3.0-P4.45"
-			(at 88.9 143.51 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 88.9 143.51 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Push button switch, generic, two pins"
-			(at 93.98 143.51 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Function" "Mode"
-			(at 93.98 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Dielectric" ""
-			(at 93.98 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Tolerance" ""
-			(at 93.98 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Voltage" ""
-			(at 93.98 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Power" ""
-			(at 93.98 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "TCR" ""
-			(at 93.98 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C720477"
-			(at 93.98 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "TS-1088-AR02016"
-			(at 93.98 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "XUNPU"
-			(at 93.98 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "bee2f669-27f0-42df-841c-76c6e1f32bfa")
-		)
-		(pin "2"
-			(uuid "d9c7ee72-9cae-4d8c-9761-aa761ff52d7d")
-		)
-		(instances
-			(project "Filament_Dryer_Monitor"
-				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
-					(reference "SW4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Connector_Generic:Conn_01x02")
 		(at 229.87 82.55 0)
 		(mirror x)
@@ -5508,7 +5541,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "NTC Connector"
+		(property "Value" "MMBT3904"
 			(at 232.41 80.0101 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5519,7 +5552,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 229.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -5541,7 +5574,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "NPN transistor, base/emitter/collector"
 			(at 229.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -5552,7 +5585,7 @@
 				)
 			)
 		)
-		(property "Function" "J_ntc1"
+		(property "Function" "Q_boot1"
 			(at 229.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -5618,7 +5651,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C161690"
+		(property "LCSC" "C94514"
 			(at 229.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -5629,7 +5662,7 @@
 				)
 			)
 		)
-		(property "MPN" "BM02B-GHS-TBT(LF)(SN)"
+		(property "MPN" "MMBT3904-7-F"
 			(at 229.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -5640,7 +5673,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "JST"
+		(property "Manufacturer" "Diodes Incorporated"
 			(at 229.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -5662,6 +5695,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "J7")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -5688,7 +5724,7 @@
 				)
 			)
 		)
-		(property "Value" "470"
+		(property "Value" ""
 			(at 220.98 143.51 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5698,7 +5734,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "SWT0110020010SSA"
 			(at 220.98 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -5709,7 +5745,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 220.98 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -5720,7 +5756,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor, small symbol"
+		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
 			(at 220.98 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -5731,7 +5767,7 @@
 				)
 			)
 		)
-		(property "Function" "R_buz1"
+		(property "Function" "SW_BOOT"
 			(at 220.98 146.05 90)
 			(hide yes)
 			(show_name no)
@@ -5742,7 +5778,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF4700T5E"
+		(property "MPN" "SWT0110-020010SSA"
 			(at 220.98 146.05 90)
 			(hide yes)
 			(show_name no)
@@ -5753,7 +5789,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "GCT"
 			(at 220.98 146.05 90)
 			(hide yes)
 			(show_name no)
@@ -5775,7 +5811,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C23179"
+		(property "LCSC" ""
 			(at 220.98 146.05 90)
 			(hide yes)
 			(show_name no)
@@ -5841,6 +5877,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "R27")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -5868,7 +5907,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "47k"
+		(property "Value" ""
 			(at 222.25 74.9299 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5879,7 +5918,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "SWT0110020010SSA"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -5890,7 +5929,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -5901,7 +5940,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor, small symbol"
+		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -5912,7 +5951,7 @@
 				)
 			)
 		)
-		(property "Function" "R_ntc1"
+		(property "Function" "SW_BOOT"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -5923,7 +5962,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF4702T5E"
+		(property "MPN" "SWT0110-020010SSA"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -5934,7 +5973,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "GCT"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -5956,7 +5995,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25819"
+		(property "LCSC" ""
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -6022,6 +6061,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "R28")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -6037,7 +6079,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "650c427d-cc32-4acf-81d7-d84c374eb914")
+		(uuid "660d924d-d080-4799-973c-5316d9a5804b")
 		(property "Reference" "SW5"
 			(at 119.38 142.2399 90)
 			(show_name no)
@@ -6049,7 +6091,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" ""
+		(property "Value" "ESP32-WROOM-32E-N4"
 			(at 119.38 144.7799 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6060,7 +6102,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "JLCPCB:SW-SMD_L3.9-W3.0-P4.45"
+		(property "Footprint" "RF_Module:ESP32-WROOM-32E"
 			(at 113.03 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -6071,7 +6113,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf"
 			(at 113.03 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -6082,7 +6124,7 @@
 				)
 			)
 		)
-		(property "Description" "Push button switch, generic, two pins"
+		(property "Description" "RF Module, ESP32-D0WD-V3 SoC, without PSRAM, Wi-Fi 802.11b/g/n, Bluetooth, BLE, 32-bit, 2.7-3.6V, onboard antenna, SMD"
 			(at 118.11 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -6093,7 +6135,7 @@
 				)
 			)
 		)
-		(property "Function" "Up"
+		(property "Function" "U1"
 			(at 118.11 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6159,7 +6201,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C720477"
+		(property "LCSC" "C701341"
 			(at 118.11 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6170,7 +6212,7 @@
 				)
 			)
 		)
-		(property "MPN" "TS-1088-AR02016"
+		(property "MPN" "ESP32-WROOM-32E-N4"
 			(at 118.11 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6181,7 +6223,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "XUNPU"
+		(property "Manufacturer" "Espressif Systems"
 			(at 118.11 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6193,16 +6235,203 @@
 			)
 		)
 		(pin "1"
-			(uuid "b2369233-c105-4e09-aa57-7e721642c5c3")
+			(uuid "e4e0ea33-beef-419a-9349-703fd82b182b")
 		)
 		(pin "2"
-			(uuid "99935ef8-88b8-424e-9a2c-9f9c79130438")
+			(uuid "13e3e689-72be-4e0d-8f70-c3c1769bbd99")
 		)
 		(instances
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "SW5")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 93.98 143.51 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "774b3079-b61f-4757-9047-8cfc15b7df87")
+		(property "Reference" "SW4"
+			(at 95.25 142.2399 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "82400102"
+			(at 95.25 144.7799 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
+			(at 88.9 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.st.com/resource/en/datasheet/usblc6-2.pdf"
+			(at 88.9 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Description" "Very low capacitance ESD protection diode, 2 data-line, SOT-23-6"
+			(at 93.98 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Function" "U4"
+			(at 93.98 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Dielectric" ""
+			(at 93.98 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 93.98 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage" ""
+			(at 93.98 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Power" ""
+			(at 93.98 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "TCR" ""
+			(at 93.98 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C7519"
+			(at 93.98 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "82400102"
+			(at 93.98 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Würth Elektronik"
+			(at 93.98 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6ef5eeaa-3407-4488-9c1b-9d67420115a9")
+		)
+		(pin "2"
+			(uuid "71524adf-bf4b-4c5f-8f11-aac31c91aab4")
+		)
+		(instances
+			(project "Filament_Dryer_Monitor"
+				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
+					(reference "SW4")
+					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -6229,7 +6458,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "SMBJ28A"
 			(at 215.9 87.6362 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6240,7 +6469,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Diode_SMD:D_SMB"
 			(at 218.44 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -6262,7 +6491,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor, small symbol"
+		(property "Description" "Zener diode"
 			(at 218.44 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -6273,7 +6502,7 @@
 				)
 			)
 		)
-		(property "Function" "C_ntc1"
+		(property "Function" "TVS1"
 			(at 218.44 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -6284,7 +6513,7 @@
 				)
 			)
 		)
-		(property "MPN" "CC0603KRX7R9BB104"
+		(property "MPN" "SMBJ28A"
 			(at 218.44 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -6295,7 +6524,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "Littelfuse"
 			(at 218.44 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -6317,7 +6546,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C96335"
 			(at 218.44 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -6383,6 +6612,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "C19")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -6610,7 +6842,7 @@
 				)
 			)
 		)
-		(property "Function" "R_g_heat1"
+		(property "Function" "R_g_fan1"
 			(at 73.66 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -6621,7 +6853,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1000T5E"
+		(property "MPN" "CR0603-FX-1000ELF"
 			(at 73.66 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -6632,7 +6864,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "Bourns"
 			(at 73.66 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -6720,6 +6952,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "R20")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -6949,7 +7184,7 @@
 				)
 			)
 		)
-		(property "Function" "R_pd_heat1"
+		(property "Function" "R_pd_fan1"
 			(at 78.74 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -6960,7 +7195,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 78.74 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -6971,7 +7206,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 78.74 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -7059,6 +7294,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "R21")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -7085,7 +7323,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "PMEG6020ER"
+		(property "Value" "T3A/63V"
 			(at 149.86 72.1359 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7096,7 +7334,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Diode_SMD:Nexperia_CFP3_SOD-123W"
+		(property "Footprint" "Fuse:Fuse_1206_3216Metric_Pad1.42x1.75mm_HandSolder"
 			(at 152.4 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -7118,7 +7356,7 @@
 				)
 			)
 		)
-		(property "Description" "Schottky diode, small symbol"
+		(property "Description" "Fuse"
 			(at 152.4 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -7129,7 +7367,7 @@
 				)
 			)
 		)
-		(property "Function" "D_fan1"
+		(property "Function" "F1"
 			(at 152.4 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -7195,7 +7433,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C98663"
+		(property "LCSC" "C354897"
 			(at 152.4 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -7206,7 +7444,7 @@
 				)
 			)
 		)
-		(property "MPN" "PMEG6020ER,115"
+		(property "MPN" "SF-1206S300W-2"
 			(at 152.4 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -7217,7 +7455,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Nexperia"
+		(property "Manufacturer" "Bourns"
 			(at 152.4 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -7239,6 +7477,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "D5")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -7345,7 +7586,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "IRLR3636TRPBF"
+		(property "Value" "100k"
 			(at 91.44 88.8999 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7356,7 +7597,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:TO-252-2"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 90.17 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -7367,7 +7608,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "kicad-embed://IRLR3636TRPBF.pdf"
+		(property "Datasheet" ""
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7378,7 +7619,7 @@
 				)
 			)
 		)
-		(property "Description" "N-MOSFET transistor, gate/drain/source"
+		(property "Description" "Resistor"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7389,7 +7630,7 @@
 				)
 			)
 		)
-		(property "Function" "Q_heat1"
+		(property "Function" "Ren_top1"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7400,7 +7641,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "onsemi"
+		(property "Manufacturer" "YAGEO"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7411,7 +7652,7 @@
 				)
 			)
 		)
-		(property "MPN" "IRLR3636TRPBF"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7422,7 +7663,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C67279"
+		(property "LCSC" "C25803"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7444,7 +7685,7 @@
 				)
 			)
 		)
-		(property "Tolerance" ""
+		(property "Tolerance" "1%"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7466,7 +7707,7 @@
 				)
 			)
 		)
-		(property "Power" ""
+		(property "Power" "100mW"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7502,6 +7743,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "Q4")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -7529,7 +7773,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Heater Connector"
+		(property "Value" "8u2"
 			(at 95.25 69.8501 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7540,7 +7784,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
+		(property "Footprint" "FilamentDryer:XAL4040-822MEC_HandSolder"
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7551,7 +7795,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.coilcraft.com/pdfs/xal4000.pdf"
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7562,7 +7806,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "COILCRAFT - XAL4040-822MEC - INDUCTOR, 8.2UH, 3.4A, 20%, PWR, 27MHZ"
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7573,7 +7817,7 @@
 				)
 			)
 		)
-		(property "Function" "J_heat1"
+		(property "Function" "L1"
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7639,7 +7883,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C158012"
+		(property "LCSC" ""
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7650,7 +7894,7 @@
 				)
 			)
 		)
-		(property "MPN" "B2B-XH-A(LF)(SN)"
+		(property "MPN" "XAL4040-822MEC"
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7661,7 +7905,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "JST"
+		(property "Manufacturer" "Coilcraft"
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7683,6 +7927,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "J5")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -7767,187 +8014,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 69.85 143.51 90)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ca8ffebc-7525-447b-91a8-f75035454688")
-		(property "Reference" "SW3"
-			(at 71.12 142.2399 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" ""
-			(at 71.12 144.7799 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "JLCPCB:SW-SMD_L3.9-W3.0-P4.45"
-			(at 64.77 143.51 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 64.77 143.51 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Push button switch, generic, two pins"
-			(at 69.85 143.51 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Function" "On/Off"
-			(at 69.85 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Dielectric" ""
-			(at 69.85 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Tolerance" ""
-			(at 69.85 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Voltage" ""
-			(at 69.85 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Power" ""
-			(at 69.85 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "TCR" ""
-			(at 69.85 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C720477"
-			(at 69.85 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "TS-1088-AR02016"
-			(at 69.85 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "XUNPU"
-			(at 69.85 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "979df94d-933b-486a-83b5-bd69d604add9")
-		)
-		(pin "2"
-			(uuid "b9c57138-ae6a-4416-a48e-0810b134a8e1")
-		)
-		(instances
-			(project "Filament_Dryer_Monitor"
-				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
-					(reference "SW3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Connector_Generic:Conn_01x02")
 		(at 165.1 72.39 0)
 		(mirror x)
@@ -7970,7 +8036,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Fan Connector"
+		(property "Value" "DMP6180SK3-13"
 			(at 167.64 69.8501 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7981,7 +8047,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "FilamentDryer:JST_PH_B2B-PH-SM4-TB_1x02-1MP_P2.00mm_Vertical"
+		(property "Footprint" "Package_TO_SOT_SMD:TO-252-2"
 			(at 165.1 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8003,7 +8069,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "P-MOSFET transistor, gate/drain/source"
 			(at 165.1 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8014,7 +8080,7 @@
 				)
 			)
 		)
-		(property "Function" "J_fan2"
+		(property "Function" "Q1"
 			(at 165.1 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8080,7 +8146,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C160352"
+		(property "LCSC" "C93034"
 			(at 165.1 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8091,7 +8157,7 @@
 				)
 			)
 		)
-		(property "MPN" "B2B-PH-SM4-TB(LF)(SN)"
+		(property "MPN" "DMP6180SK3-13"
 			(at 165.1 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8102,7 +8168,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "JST"
+		(property "Manufacturer" "Diodes Incorporated"
 			(at 165.1 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8124,6 +8190,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "J6")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -8229,7 +8298,7 @@
 				)
 			)
 		)
-		(property "Value" "100"
+		(property "Value" ""
 			(at 146.05 85.09 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8239,7 +8308,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "SWT0110020010SSA"
 			(at 146.05 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -8250,7 +8319,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 146.05 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -8261,7 +8330,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor, small symbol"
+		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
 			(at 146.05 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -8272,7 +8341,7 @@
 				)
 			)
 		)
-		(property "Function" "R_g_fan1"
+		(property "Function" "SW_BOOT"
 			(at 146.05 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -8283,7 +8352,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1000T5E"
+		(property "MPN" "SWT0110-020010SSA"
 			(at 146.05 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -8294,7 +8363,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "GCT"
 			(at 146.05 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -8316,7 +8385,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C22775"
+		(property "LCSC" ""
 			(at 146.05 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -8382,6 +8451,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "R25")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -8409,7 +8481,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MMBT3904"
+		(property "Value" "100k"
 			(at 234.95 147.3199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8420,7 +8492,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 234.95 147.955 0)
 			(hide yes)
 			(show_name no)
@@ -8433,7 +8505,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf"
+		(property "Datasheet" ""
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8445,7 +8517,7 @@
 				(justify left)
 			)
 		)
-		(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"
+		(property "Description" "Resistor"
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8478,7 +8550,7 @@
 				)
 			)
 		)
-		(property "Function" "Q_buz1"
+		(property "Function" "Rfb_top1"
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8500,7 +8572,7 @@
 				)
 			)
 		)
-		(property "Tolerance" ""
+		(property "Tolerance" "1%"
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8522,7 +8594,7 @@
 				)
 			)
 		)
-		(property "Power" ""
+		(property "Power" "100mW"
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8544,7 +8616,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C94514"
+		(property "LCSC" "C25803"
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8555,7 +8627,7 @@
 				)
 			)
 		)
-		(property "MPN" "MMBT3904-7-F"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8566,7 +8638,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Diodes Incorporated"
+		(property "Manufacturer" "YAGEO"
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8591,6 +8663,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "Q6")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)

@@ -3937,6 +3937,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "U1")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -3964,7 +3967,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "47k5"
 			(at 115.57 81.2799 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3997,7 +4000,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "Resistor, small symbol"
 			(at 113.03 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -4008,7 +4011,7 @@
 				)
 			)
 		)
-		(property "Function" "Rg1"
+		(property "Function" "R_vbus_bot1"
 			(at 113.03 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -4019,7 +4022,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-0747K5L"
 			(at 113.03 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -4030,7 +4033,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 113.03 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -4052,7 +4055,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" "C23061"
 			(at 113.03 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -4118,6 +4121,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "R3")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -4143,7 +4149,7 @@
 				)
 			)
 		)
-		(property "Value" "DC Connector"
+		(property "Value" "Sensor"
 			(at 64.516 59.436 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4153,7 +4159,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
+		(property "Footprint" "FilamentDryer:JST_PH_B4B-PH-SM4-TB_1x04-1MP_P2.00mm_Vertical"
 			(at 64.77 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4175,7 +4181,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
 			(at 64.77 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4186,7 +4192,7 @@
 				)
 			)
 		)
-		(property "Function" "J_dc1"
+		(property "Function" "J_sens1"
 			(at 64.77 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4252,7 +4258,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C144394"
+		(property "LCSC" "C160354"
 			(at 64.77 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4263,7 +4269,7 @@
 				)
 			)
 		)
-		(property "MPN" "B3B-XH-A(LF)(SN)"
+		(property "MPN" "B4B-PH-SM4-TB(LF)(SN)"
 			(at 64.77 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4299,6 +4305,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "J1")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -4484,7 +4493,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "22u"
+		(property "Value" "100n"
 			(at 216.408 120.904 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4495,7 +4504,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 212.3948 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -4506,7 +4515,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "16V X7R"
+		(property "Datasheet" ""
 			(at 216.408 123.19 0)
 			(hide yes)
 			(show_name no)
@@ -4518,7 +4527,7 @@
 				(justify right)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "Unpolarized capacitor, small symbol"
 			(at 213.36 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -4529,7 +4538,7 @@
 				)
 			)
 		)
-		(property "Function" "Cmcu1"
+		(property "Function" "C_vdd2"
 			(at 213.36 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -4540,7 +4549,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL21A226MAQNNNE"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 213.36 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -4551,7 +4560,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "YAGEO"
 			(at 213.36 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -4562,7 +4571,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "X5R"
+		(property "Dielectric" "X7R"
 			(at 213.36 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -4573,7 +4582,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C45783"
+		(property "LCSC" "C14663"
 			(at 213.36 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -4584,7 +4593,7 @@
 				)
 			)
 		)
-		(property "Tolerance" "20%"
+		(property "Tolerance" "10%"
 			(at 213.36 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -4595,7 +4604,7 @@
 				)
 			)
 		)
-		(property "Voltage" "25V"
+		(property "Voltage" "50V"
 			(at 213.36 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -4639,6 +4648,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "C11")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -4665,7 +4677,7 @@
 				)
 			)
 		)
-		(property "Value" "DMP6180SK3-13"
+		(property "Value" "IRLR3636TRPBF"
 			(at 113.03 59.69 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4686,7 +4698,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "kicad-embed://IRLR3636TRPBF.pdf"
 			(at 113.03 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4697,7 +4709,7 @@
 				)
 			)
 		)
-		(property "Description" "P-MOSFET transistor, gate/drain/source"
+		(property "Description" "N-MOSFET transistor, gate/drain/source"
 			(at 113.03 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4708,7 +4720,7 @@
 				)
 			)
 		)
-		(property "Function" "Q1"
+		(property "Function" "Q_heat1"
 			(at 113.03 66.04 90)
 			(hide yes)
 			(show_name no)
@@ -4774,7 +4786,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C93034"
+		(property "LCSC" "C67279"
 			(at 113.03 66.04 90)
 			(hide yes)
 			(show_name no)
@@ -4785,7 +4797,7 @@
 				)
 			)
 		)
-		(property "MPN" "DMP6180SK3-13"
+		(property "MPN" "IRLR3636TRPBF"
 			(at 113.03 66.04 90)
 			(hide yes)
 			(show_name no)
@@ -4796,7 +4808,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Diodes Incorporated"
+		(property "Manufacturer" "Infineon"
 			(at 113.03 66.04 90)
 			(hide yes)
 			(show_name no)
@@ -4821,6 +4833,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "Q1")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -4848,7 +4863,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "7k87"
+		(property "Value" "22k1"
 			(at 69.85 125.7299 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4881,7 +4896,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "Resistor, small symbol"
 			(at 72.39 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -4892,7 +4907,7 @@
 				)
 			)
 		)
-		(property "Function" "Ren_bot1"
+		(property "Function" "R_vbus_top1"
 			(at 72.39 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -4914,7 +4929,7 @@
 				)
 			)
 		)
-		(property "Tolerance" ""
+		(property "Tolerance" "1%"
 			(at 72.39 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -4936,7 +4951,7 @@
 				)
 			)
 		)
-		(property "Power" ""
+		(property "Power" "100mW"
 			(at 72.39 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -4958,6 +4973,39 @@
 				)
 			)
 		)
+		(property "LCSC" "C25961"
+			(at 72.39 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-1322K1L"
+			(at 72.39 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 72.39 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "407e6003-bca3-4b7e-8bba-f692673c1f67")
 		)
@@ -4969,6 +5017,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "R2")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -4995,7 +5046,7 @@
 				)
 			)
 		)
-		(property "Value" "T3A/63V"
+		(property "Value" "DC Connector"
 			(at 90.17 59.69 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5005,7 +5056,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Fuse:Fuse_1206_3216Metric_Pad1.42x1.75mm_HandSolder"
+		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
 			(at 90.17 65.278 90)
 			(hide yes)
 			(show_name no)
@@ -5027,7 +5078,7 @@
 				)
 			)
 		)
-		(property "Description" "Fuse"
+		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
 			(at 90.17 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -5038,7 +5089,7 @@
 				)
 			)
 		)
-		(property "Function" "F1"
+		(property "Function" "J_dc1"
 			(at 90.17 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -5049,7 +5100,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C354897"
+		(property "LCSC" "C144394"
 			(at 90.17 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -5115,7 +5166,7 @@
 				)
 			)
 		)
-		(property "MPN" "1206T3A63V"
+		(property "MPN" "B3B-XH-A(LF)(SN)"
 			(at 90.17 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -5126,7 +5177,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Walter Elec"
+		(property "Manufacturer" "JST"
 			(at 90.17 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -5148,6 +5199,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "F1")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -5253,7 +5307,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u"
+		(property "Value" "22u"
 			(at 167.64 71.1199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5264,7 +5318,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 164.7952 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -5275,7 +5329,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "16V X7R"
 			(at 163.83 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -5297,7 +5351,7 @@
 				)
 			)
 		)
-		(property "Function" "Cin2"
+		(property "Function" "Cout2"
 			(at 163.83 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -5308,7 +5362,7 @@
 				)
 			)
 		)
-		(property "MPN" "GRM32ER71J106KA12L"
+		(property "MPN" "CC0805MKX5R8BB226"
 			(at 163.83 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -5319,7 +5373,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "YAGEO"
 			(at 163.83 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -5330,7 +5384,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "X7R"
+		(property "Dielectric" "X5R"
 			(at 163.83 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -5341,7 +5395,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C437568"
+		(property "LCSC" "C45783"
 			(at 163.83 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -5352,7 +5406,7 @@
 				)
 			)
 		)
-		(property "Tolerance" "10%"
+		(property "Tolerance" "20%"
 			(at 163.83 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -5363,7 +5417,7 @@
 				)
 			)
 		)
-		(property "Voltage" "63V"
+		(property "Voltage" "25V"
 			(at 163.83 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -5407,6 +5461,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "C7")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -5511,7 +5568,7 @@
 				)
 			)
 		)
-		(property "Value" "HCB3216KF-601T30"
+		(property "Value" "USB4216-03-A"
 			(at 207.01 107.442 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5521,7 +5578,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_1206_3216Metric"
+		(property "Footprint" "USB421603A"
 			(at 207.01 116.078 90)
 			(hide yes)
 			(show_name no)
@@ -5532,7 +5589,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://eu.mouser.com/datasheet/2/837/usb4216-3577180.pdf"
 			(at 207.01 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -5543,7 +5600,7 @@
 				)
 			)
 		)
-		(property "Description" "Ferrite bead"
+		(property "Description" "USB Connectors USB C Receptacle, Short Body, USB2.0, 16Pin, Horizontal, SMT"
 			(at 207.01 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -5554,7 +5611,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C357023 "
+		(property "LCSC" ""
 			(at 207.01 114.3 90)
 			(hide yes)
 			(show_name no)
@@ -5565,7 +5622,7 @@
 				)
 			)
 		)
-		(property "Function" "FB1"
+		(property "Function" ""
 			(at 207.01 114.3 90)
 			(hide yes)
 			(show_name no)
@@ -5631,7 +5688,7 @@
 				)
 			)
 		)
-		(property "MPN" "HCB3216KF-601T30"
+		(property "MPN" "USB4216-03-A"
 			(at 207.01 114.3 90)
 			(hide yes)
 			(show_name no)
@@ -5642,7 +5699,18 @@
 				)
 			)
 		)
-		(property "Manufacturer" "TAI-TECH"
+		(property "Manufacturer" "GCT"
+			(at 207.01 114.3 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" "640-USB4216-03-A"
 			(at 207.01 114.3 90)
 			(hide yes)
 			(show_name no)
@@ -5664,6 +5732,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "FB1")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -5691,7 +5762,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "1u"
 			(at 60.96 125.7299 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5713,7 +5784,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "16V X7R"
 			(at 64.77 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -5735,7 +5806,7 @@
 				)
 			)
 		)
-		(property "Function" "Cen1"
+		(property "Function" "Cvcc1"
 			(at 64.77 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -5746,7 +5817,7 @@
 				)
 			)
 		)
-		(property "Dielectric" ""
+		(property "Dielectric" "X7R"
 			(at 64.77 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -5757,7 +5828,7 @@
 				)
 			)
 		)
-		(property "Tolerance" ""
+		(property "Tolerance" "10%"
 			(at 64.77 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -5768,7 +5839,7 @@
 				)
 			)
 		)
-		(property "Voltage" ""
+		(property "Voltage" "25V"
 			(at 64.77 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -5801,6 +5872,39 @@
 				)
 			)
 		)
+		(property "LCSC" "C5199872"
+			(at 64.77 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "GCM188R71E105KA64J"
+			(at 64.77 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Murata Electronics"
+			(at 64.77 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "7e76d223-389c-4dff-ad66-ce2de88096ef")
 		)
@@ -5812,6 +5916,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "C1")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -6076,7 +6183,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "470u"
+		(property "Value" "4u7"
 			(at 200.66 121.0309 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6087,7 +6194,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:CP_Elec_8x10"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 197.8152 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -6109,7 +6216,7 @@
 				)
 			)
 		)
-		(property "Description" "Polarized capacitor"
+		(property "Description" "Unpolarized capacitor, small symbol"
 			(at 196.85 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6120,7 +6227,7 @@
 				)
 			)
 		)
-		(property "Function" "Cout3"
+		(property "Function" "C_vdd1"
 			(at 196.85 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6131,7 +6238,7 @@
 				)
 			)
 		)
-		(property "Dielectric" ""
+		(property "Dielectric" "X5R"
 			(at 196.85 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6142,7 +6249,7 @@
 				)
 			)
 		)
-		(property "Tolerance" ""
+		(property "Tolerance" "10%"
 			(at 196.85 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6153,7 +6260,7 @@
 				)
 			)
 		)
-		(property "Voltage" ""
+		(property "Voltage" "16V"
 			(at 196.85 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6186,6 +6293,39 @@
 				)
 			)
 		)
+		(property "LCSC" "C19666"
+			(at 196.85 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL10A475KO8NNNC"
+			(at 196.85 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 196.85 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "a82df116-d94d-4c98-8696-a35633206706")
 		)
@@ -6197,6 +6337,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "C10")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -6342,6 +6485,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "TP3")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -6487,6 +6633,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "TP2")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -6750,7 +6899,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "22u"
+		(property "Value" "10u"
 			(at 164.338 120.904 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6761,7 +6910,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
 			(at 160.3248 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -6772,7 +6921,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "16V X7R"
+		(property "Datasheet" ""
 			(at 164.338 123.19 0)
 			(hide yes)
 			(show_name no)
@@ -6795,7 +6944,7 @@
 				)
 			)
 		)
-		(property "Function" "Cout1"
+		(property "Function" "Cin2"
 			(at 161.29 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6806,7 +6955,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL21A226MAQNNNE"
+		(property "MPN" "CL32B106KMVNNWE"
 			(at 161.29 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6817,7 +6966,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 161.29 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6828,7 +6977,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "X5R"
+		(property "Dielectric" "X7R"
 			(at 161.29 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6839,7 +6988,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C45783"
+		(property "LCSC" "C437568"
 			(at 161.29 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6850,7 +6999,7 @@
 				)
 			)
 		)
-		(property "Tolerance" "20%"
+		(property "Tolerance" "10%"
 			(at 161.29 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6861,7 +7010,7 @@
 				)
 			)
 		)
-		(property "Voltage" "25V"
+		(property "Voltage" "63V"
 			(at 161.29 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6905,6 +7054,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "C6")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -7089,7 +7241,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "47p"
+		(property "Value" "100u"
 			(at 135.89 121.9199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7100,7 +7252,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "SamacSys_Parts:EEE0JA331XP"
 			(at 138.7348 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -7111,7 +7263,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "http://industrial.panasonic.com/cdbs/www-data/pdf/RDE0000/ABA0000C1240.pdf"
 			(at 139.7 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7122,7 +7274,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "Aluminum Electrolytic Capacitors - SMD 100uF 50volts 6.3x7.7mm SMD"
 			(at 139.7 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7133,7 +7285,7 @@
 				)
 			)
 		)
-		(property "Function" "Cff1"
+		(property "Function" "Cin1"
 			(at 139.7 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7144,7 +7296,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL10C470JB8NNNC"
+		(property "MPN" "EEE-FTH101XAP"
 			(at 139.7 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7155,7 +7307,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "Panasonic"
 			(at 139.7 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7166,7 +7318,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "C0G"
+		(property "Dielectric" "Aluminum Electrolytic"
 			(at 139.7 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7177,7 +7329,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C1671"
+		(property "LCSC" "C401753"
 			(at 139.7 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7188,7 +7340,7 @@
 				)
 			)
 		)
-		(property "Tolerance" "5%"
+		(property "Tolerance" "20%"
 			(at 139.7 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7243,6 +7395,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "C4")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -7427,7 +7582,7 @@
 				)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "1k"
 			(at 127 147.32 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7459,7 +7614,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "Resistor, small symbol"
 			(at 127 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -7470,7 +7625,7 @@
 				)
 			)
 		)
-		(property "Function" "Rpg1"
+		(property "Function" "R_rst1"
 			(at 127 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -7536,6 +7691,39 @@
 				)
 			)
 		)
+		(property "LCSC" "C21190"
+			(at 127 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-071KL"
+			(at 127 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 127 143.51 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "d2914c35-f316-4a0a-9cbd-367ad182faae")
 		)
@@ -7547,6 +7735,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "R4")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -7574,7 +7765,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "SMBJ28A"
+		(property "Value" "PMEG6020ER"
 			(at 134.62 81.2799 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7585,7 +7776,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMB"
+		(property "Footprint" "Diode_SMD:Nexperia_CFP3_SOD-123W"
 			(at 132.08 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -7607,7 +7798,7 @@
 				)
 			)
 		)
-		(property "Description" "Zener diode"
+		(property "Description" "Schottky diode, small symbol"
 			(at 132.08 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -7618,7 +7809,7 @@
 				)
 			)
 		)
-		(property "Function" "TVS1"
+		(property "Function" "D_heat1"
 			(at 132.08 80.01 90)
 			(hide yes)
 			(show_name no)
@@ -7684,7 +7875,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C96335"
+		(property "LCSC" "C98663"
 			(at 132.08 80.01 90)
 			(hide yes)
 			(show_name no)
@@ -7695,7 +7886,7 @@
 				)
 			)
 		)
-		(property "MPN" "SMBJ28A-TR"
+		(property "MPN" "PMEG6020ER-QX"
 			(at 132.08 80.01 90)
 			(hide yes)
 			(show_name no)
@@ -7706,7 +7897,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "STMicroelectronics"
+		(property "Manufacturer" "Nexperia"
 			(at 132.08 80.01 90)
 			(hide yes)
 			(show_name no)
@@ -7728,6 +7919,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "D2")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -7873,6 +8067,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "TP1")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -7899,7 +8096,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "1u"
+		(property "Value" "100n"
 			(at 79.502 134.874 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7921,7 +8118,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "16V X7R"
+		(property "Datasheet" ""
 			(at 79.502 137.16 0)
 			(hide yes)
 			(show_name no)
@@ -7944,7 +8141,7 @@
 				)
 			)
 		)
-		(property "Function" "Cvcc1"
+		(property "Function" "Cbst1"
 			(at 82.55 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -7955,7 +8152,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL10B105KB8NQNC"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 82.55 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -8021,7 +8218,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C5199872"
+		(property "LCSC" "C14663"
 			(at 82.55 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -8032,7 +8229,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "YAGEO"
 			(at 82.55 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -8054,6 +8251,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "C2")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -8081,7 +8281,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "31k6"
+		(property "Value" "5k1"
 			(at 149.86 134.6199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8114,7 +8314,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "Resistor, small symbol"
 			(at 152.4 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -8125,7 +8325,7 @@
 				)
 			)
 		)
-		(property "Function" "Rfb_bot1"
+		(property "Function" "R_cc1"
 			(at 152.4 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -8136,7 +8336,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF3162T5E"
+		(property "MPN" "RC0603FR-075K1L"
 			(at 152.4 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -8147,7 +8347,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 152.4 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -8169,7 +8369,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25967"
+		(property "LCSC" "C23186"
 			(at 152.4 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -8235,6 +8435,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "R6")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -8261,7 +8464,7 @@
 				)
 			)
 		)
-		(property "Value" "BZX84C15"
+		(property "Value" "LED_Small"
 			(at 121.92 69.85 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8271,7 +8474,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
 			(at 121.92 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -8293,7 +8496,7 @@
 				)
 			)
 		)
-		(property "Description" "Zener diode"
+		(property "Description" "Light emitting diode, small symbol"
 			(at 121.92 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -8304,7 +8507,7 @@
 				)
 			)
 		)
-		(property "Function" "Dz1"
+		(property "Function" "D_led1"
 			(at 121.92 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -8370,7 +8573,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C500789"
+		(property "LCSC" "C5569446"
 			(at 121.92 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -8381,7 +8584,7 @@
 				)
 			)
 		)
-		(property "MPN" "BZX84C15-7-F"
+		(property "MPN" "HSMG-C170"
 			(at 121.92 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -8392,7 +8595,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Diodes Incorporated"
+		(property "Manufacturer" "Broadcom"
 			(at 121.92 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -8414,6 +8617,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "D1")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -8599,7 +8805,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "31k6"
 			(at 69.85 115.5699 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8643,7 +8849,7 @@
 				)
 			)
 		)
-		(property "Function" "Ren_top1"
+		(property "Function" "Rfb_bot1"
 			(at 72.39 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -8654,7 +8860,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-1331K6L"
 			(at 72.39 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -8665,7 +8871,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 72.39 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -8687,7 +8893,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" "C25967"
 			(at 72.39 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -8753,6 +8959,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "R1")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -8779,7 +8988,7 @@
 				)
 			)
 		)
-		(property "Value" "8u2"
+		(property "Value" "MMBT3904"
 			(at 130.81 111.76 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8789,7 +8998,7 @@
 				)
 			)
 		)
-		(property "Footprint" "JLCPCB:IND-SMD_L7.0-W6.6_ZD0650-100M"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 130.81 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -8800,7 +9009,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "ZD0650-8R2M"
+		(property "Datasheet" ""
 			(at 130.81 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -8811,7 +9020,7 @@
 				)
 			)
 		)
-		(property "Description" "Inductor"
+		(property "Description" "NPN transistor, base/emitter/collector"
 			(at 130.81 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -8822,7 +9031,7 @@
 				)
 			)
 		)
-		(property "Function" "L1"
+		(property "Function" "Q_rst1"
 			(at 130.81 114.3 90)
 			(hide yes)
 			(show_name no)
@@ -8833,7 +9042,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C48031458"
+		(property "LCSC" "C94514"
 			(at 130.81 114.3 90)
 			(hide yes)
 			(show_name no)
@@ -8844,7 +9053,7 @@
 				)
 			)
 		)
-		(property "MPN" "ZD0650-8R2M"
+		(property "MPN" "MMBT3904-7-F"
 			(at 130.81 114.3 90)
 			(hide yes)
 			(show_name no)
@@ -8855,7 +9064,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "zoomdo electronics"
+		(property "Manufacturer" "Diodes Incorporated"
 			(at 130.81 114.3 90)
 			(hide yes)
 			(show_name no)
@@ -8932,6 +9141,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "L1")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -8959,7 +9171,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "5k1"
 			(at 149.86 121.9199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8992,7 +9204,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "Resistor, small symbol"
 			(at 152.4 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9003,7 +9215,7 @@
 				)
 			)
 		)
-		(property "Function" "Rfb_top1"
+		(property "Function" "R_cc2"
 			(at 152.4 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9014,7 +9226,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-075K1L"
 			(at 152.4 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9025,7 +9237,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 152.4 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9047,7 +9259,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" "C23186"
 			(at 152.4 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9113,6 +9325,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "R5")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -9140,7 +9355,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "22u"
+		(property "Value" "100n"
 			(at 182.118 120.904 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9151,7 +9366,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 178.1048 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -9162,7 +9377,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "16V X7R"
+		(property "Datasheet" ""
 			(at 182.118 123.19 0)
 			(hide yes)
 			(show_name no)
@@ -9185,7 +9400,7 @@
 				)
 			)
 		)
-		(property "Function" "Cout2"
+		(property "Function" "Cin3"
 			(at 179.07 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9196,7 +9411,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL21A226MAQNNNE"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 179.07 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9207,7 +9422,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "YAGEO"
 			(at 179.07 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9218,7 +9433,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "X5R"
+		(property "Dielectric" "X7R"
 			(at 179.07 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9229,7 +9444,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C45783"
+		(property "LCSC" "C14663"
 			(at 179.07 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9240,7 +9455,7 @@
 				)
 			)
 		)
-		(property "Tolerance" "20%"
+		(property "Tolerance" "10%"
 			(at 179.07 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9251,7 +9466,7 @@
 				)
 			)
 		)
-		(property "Voltage" "25V"
+		(property "Voltage" "50V"
 			(at 179.07 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9295,6 +9510,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "C8")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -9322,7 +9540,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100u"
+		(property "Value" "22u"
 			(at 148.59 70.2309 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9333,7 +9551,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "JLCPCB:CAP-SMD_BD8.0-L8.3-W8.3-FD"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 145.7452 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -9344,7 +9562,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "16V X7R"
 			(at 144.78 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9355,7 +9573,7 @@
 				)
 			)
 		)
-		(property "Description" "Polarized capacitor"
+		(property "Description" "Unpolarized capacitor"
 			(at 144.78 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9366,7 +9584,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C401753"
+		(property "LCSC" "C45783"
 			(at 144.78 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9377,7 +9595,7 @@
 				)
 			)
 		)
-		(property "Function" "Cin1"
+		(property "Function" "Cout1"
 			(at 144.78 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9388,7 +9606,7 @@
 				)
 			)
 		)
-		(property "MPN" "EEEFP1H101AP"
+		(property "MPN" "CC0805MKX5R8BB226"
 			(at 144.78 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9399,7 +9617,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Panasonic"
+		(property "Manufacturer" "YAGEO"
 			(at 144.78 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9410,7 +9628,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "Aluminum Electrolytic"
+		(property "Dielectric" "X5R"
 			(at 144.78 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9432,7 +9650,7 @@
 				)
 			)
 		)
-		(property "Voltage" "50V"
+		(property "Voltage" "25V"
 			(at 144.78 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9476,6 +9694,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "C5")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -9582,7 +9803,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "47p"
 			(at 127 120.6499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9626,7 +9847,7 @@
 				)
 			)
 		)
-		(property "Function" "Cbst1"
+		(property "Function" "Cff1"
 			(at 123.19 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -9637,7 +9858,7 @@
 				)
 			)
 		)
-		(property "MPN" "CC0603KRX7R9BB104"
+		(property "MPN" "CL10C470JC8NNNC"
 			(at 123.19 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -9648,7 +9869,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 123.19 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -9659,7 +9880,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "X7R"
+		(property "Dielectric" "C0G"
 			(at 123.19 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -9670,7 +9891,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C1671"
 			(at 123.19 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -9681,7 +9902,7 @@
 				)
 			)
 		)
-		(property "Tolerance" "10%"
+		(property "Tolerance" "5%"
 			(at 123.19 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -9692,7 +9913,7 @@
 				)
 			)
 		)
-		(property "Voltage" "50V"
+		(property "Voltage" "100V"
 			(at 123.19 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -9736,6 +9957,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "C3")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)
@@ -9763,7 +9987,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "22u"
 			(at 191.77 71.1199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9774,7 +9998,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 188.9252 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -9785,7 +10009,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "16V X7R"
 			(at 187.96 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9807,7 +10031,7 @@
 				)
 			)
 		)
-		(property "Function" "Cin3"
+		(property "Function" "Cmcu1"
 			(at 187.96 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9818,7 +10042,7 @@
 				)
 			)
 		)
-		(property "MPN" "CC0603KRX7R9BB104"
+		(property "MPN" "CC0805MKX5R8BB226"
 			(at 187.96 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9829,7 +10053,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "YAGEO"
 			(at 187.96 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9840,7 +10064,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "X7R"
+		(property "Dielectric" "X5R"
 			(at 187.96 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9851,7 +10075,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C45783"
 			(at 187.96 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9862,7 +10086,7 @@
 				)
 			)
 		)
-		(property "Tolerance" "10%"
+		(property "Tolerance" "20%"
 			(at 187.96 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9873,7 +10097,7 @@
 				)
 			)
 		)
-		(property "Voltage" "50V"
+		(property "Voltage" "25V"
 			(at 187.96 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -9917,6 +10141,9 @@
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "C9")
 					(unit 1)
+					(variant
+						(name "Mouser")
+					)
 				)
 			)
 		)

@@ -12,4 +12,28 @@ K
 F https://www.sameskydevices.com/product/resource/css-i4b20-smt-tr.pdf
 $ENDCMP
 #
+$CMP EEE-FTH101XAP
+D Aluminum Electrolytic Capacitors - SMD 100uF 50volts 6.3x7.7mm SMD
+K
+F http://industrial.panasonic.com/cdbs/www-data/pdf/RDE0000/ABA0000C1240.pdf
+$ENDCMP
+#
+$CMP USB4216-03-A
+D USB Connectors USB C Receptacle, Short Body, USB2.0, 16Pin, Horizontal, SMT
+K
+F https://eu.mouser.com/datasheet/2/837/usb4216-3577180.pdf
+$ENDCMP
+#
+$CMP XAL4040-822MEC
+D COILCRAFT - XAL4040-822MEC - INDUCTOR, 8.2UH, 3.4A, 20%, PWR, 27MHZ
+K
+F https://www.coilcraft.com/pdfs/xal4000.pdf
+$ENDCMP
+#
+$CMP SWT0110-020010SSA
+D Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT
+K
+F https://gct.co/files/drawings/swt0110.pdf
+$ENDCMP
+#
 #End Doc Library
