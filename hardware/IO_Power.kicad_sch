@@ -3219,7 +3219,7 @@
 				)
 			)
 		)
-		(property "Function" "R_btn4"
+		(property "Function" "R_btn1"
 			(at 69.85 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3263,7 +3263,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" ""
 			(at 69.85 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3359,7 +3359,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "CP2102N-A02-GQFN28R"
+		(property "Value" ""
 			(at 71.12 144.7799 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3370,7 +3370,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "FilamentDryer:CP2102N_GQFN28_5x5mm_P0.5mm_EP3.35x3.35mm"
+		(property "Footprint" "SamacSys_Parts:SWT0110020010SSA"
 			(at 64.77 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -3381,7 +3381,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf"
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 64.77 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -3392,7 +3392,7 @@
 				)
 			)
 		)
-		(property "Description" "USB to UART master bridge, QFN-28"
+		(property "Description" "GCT SWT0110 tactile switch, SPST-NO, SMT, 2.0 mm actuator height"
 			(at 69.85 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -3403,7 +3403,7 @@
 				)
 			)
 		)
-		(property "Function" "U3"
+		(property "Function" "On/Off"
 			(at 69.85 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -3469,7 +3469,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C964632"
+		(property "LCSC" ""
 			(at 69.85 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -3480,7 +3480,7 @@
 				)
 			)
 		)
-		(property "MPN" "CP2102N-A02-GQFN28R"
+		(property "MPN" "SWT0110-020010SSA"
 			(at 69.85 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -3491,7 +3491,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Silicon Labs"
+		(property "Manufacturer" "GCT"
 			(at 69.85 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -3542,7 +3542,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "HCB3216KF-601T30"
+		(property "Value" "1N4148W"
 			(at 222.25 133.3499 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3553,7 +3553,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_1206_3216Metric"
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 220.345 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3564,7 +3564,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.vishay.com/docs/85748/1n4148w.pdf"
 			(at 224.79 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3575,7 +3575,7 @@
 				)
 			)
 		)
-		(property "Description" "Ferrite bead"
+		(property "Description" "75V 0.15A Fast Switching Diode, SOD-123"
 			(at 224.79 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3608,7 +3608,7 @@
 				)
 			)
 		)
-		(property "Function" "FB1"
+		(property "Function" "D_buz1"
 			(at 224.79 132.08 90)
 			(hide yes)
 			(show_name no)
@@ -3674,7 +3674,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C357023 "
+		(property "LCSC" ""
 			(at 224.79 132.08 90)
 			(hide yes)
 			(show_name no)
@@ -3685,7 +3685,7 @@
 				)
 			)
 		)
-		(property "MPN" "BLM31KN601SH1L"
+		(property "MPN" "1N4148W-7-F"
 			(at 224.79 132.08 90)
 			(hide yes)
 			(show_name no)
@@ -3696,7 +3696,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Murata Electronics"
+		(property "Manufacturer" "Diodes Incorporated"
 			(at 224.79 132.08 90)
 			(hide yes)
 			(show_name no)
@@ -3781,7 +3781,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 224.79 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -3826,7 +3826,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "1N4148W"
+		(property "Value" "PMEG6020ER"
 			(at 77.47 72.1359 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3837,7 +3837,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SOD-123"
+		(property "Footprint" "Diode_SMD:Nexperia_CFP3_SOD-123W"
 			(at 80.01 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -3848,7 +3848,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.vishay.com/docs/85748/1n4148w.pdf"
+		(property "Datasheet" ""
 			(at 80.01 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -3859,7 +3859,7 @@
 				)
 			)
 		)
-		(property "Description" "75V 0.15A Fast Switching Diode, SOD-123"
+		(property "Description" "Schottky diode, small symbol"
 			(at 80.01 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -3870,7 +3870,7 @@
 				)
 			)
 		)
-		(property "Function" "D_buz1"
+		(property "Function" "D_heat1"
 			(at 80.01 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -3936,7 +3936,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C81598"
+		(property "LCSC" ""
 			(at 80.01 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -3947,7 +3947,7 @@
 				)
 			)
 		)
-		(property "MPN" "1N4148W-7-F"
+		(property "MPN" "PMEG6020ER-QX"
 			(at 80.01 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -3958,7 +3958,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Diodes Incorporated"
+		(property "Manufacturer" "Nexperia"
 			(at 80.01 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -4009,7 +4009,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "47k"
+		(property "Value" "10k"
 			(at 120.65 133.3499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4053,7 +4053,7 @@
 				)
 			)
 		)
-		(property "Function" "R_ntc1"
+		(property "Function" "R_btn3"
 			(at 118.11 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4064,7 +4064,7 @@
 				)
 			)
 		)
-		(property "MPN" "CRCW060347K0FKEA"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 118.11 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4075,7 +4075,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Vishay"
+		(property "Manufacturer" "YAGEO"
 			(at 118.11 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4097,7 +4097,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25819"
+		(property "LCSC" ""
 			(at 118.11 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4193,7 +4193,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "DMN6140L-13"
 			(at 163.83 88.8999 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4204,7 +4204,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 162.56 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -4226,7 +4226,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "N-MOSFET transistor, gate/drain/source"
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4237,7 +4237,7 @@
 				)
 			)
 		)
-		(property "Function" "Rg1"
+		(property "Function" "Q_fan1"
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4259,7 +4259,7 @@
 				)
 			)
 		)
-		(property "Tolerance" "1%"
+		(property "Tolerance" ""
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4281,7 +4281,7 @@
 				)
 			)
 		)
-		(property "Power" "100mW"
+		(property "Power" ""
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4303,7 +4303,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" ""
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4314,7 +4314,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-07100KL"
+		(property "MPN" "DMN6140L-13"
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4325,7 +4325,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "YAGEO"
+		(property "Manufacturer" "Diodes Incorporated"
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4380,7 +4380,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" ""
+		(property "Value" "100k"
 			(at 148.59 95.2499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4391,7 +4391,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "SWT0110020010SSA"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4402,7 +4402,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
+		(property "Datasheet" ""
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4413,7 +4413,7 @@
 				)
 			)
 		)
-		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
+		(property "Description" "Resistor, small symbol"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4424,7 +4424,7 @@
 				)
 			)
 		)
-		(property "Function" "SW_BOOT"
+		(property "Function" "R_pd_fan1"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4435,7 +4435,7 @@
 				)
 			)
 		)
-		(property "MPN" "SWT0110-020010SSA"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4446,7 +4446,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "GCT"
+		(property "Manufacturer" "YAGEO"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4563,7 +4563,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "470"
+		(property "Value" "10k"
 			(at 96.52 133.3499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4607,7 +4607,7 @@
 				)
 			)
 		)
-		(property "Function" "R_buz1"
+		(property "Function" "R_btn2"
 			(at 93.98 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4618,7 +4618,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-07470RL"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 93.98 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4651,7 +4651,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C23179"
+		(property "LCSC" ""
 			(at 93.98 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4758,7 +4758,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "SWT0110020010SSA"
+		(property "Footprint" "SamacSys_Parts:SWT0110020010SSA"
 			(at 137.16 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -4780,7 +4780,7 @@
 				)
 			)
 		)
-		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
+		(property "Description" "GCT SWT0110 tactile switch, SPST-NO, SMT, 2.0 mm actuator height"
 			(at 142.24 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -4791,7 +4791,7 @@
 				)
 			)
 		)
-		(property "Function" "SW_BOOT"
+		(property "Function" "Down"
 			(at 142.24 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -4879,7 +4879,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
+		(property "Manufacturer" "GCT"
 			(at 142.24 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -4964,7 +4964,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 151.13 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -5043,7 +5043,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 93.98 149.86 0)
 			(hide yes)
 			(show_name no)
@@ -5088,7 +5088,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" ""
+		(property "Value" "10k"
 			(at 144.78 133.3499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5099,7 +5099,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "SWT0110020010SSA"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -5110,7 +5110,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
+		(property "Datasheet" ""
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -5121,7 +5121,7 @@
 				)
 			)
 		)
-		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
+		(property "Description" "Resistor, small symbol"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -5132,7 +5132,7 @@
 				)
 			)
 		)
-		(property "Function" "SW_BOOT"
+		(property "Function" "R_btn4"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -5143,7 +5143,7 @@
 				)
 			)
 		)
-		(property "MPN" "SWT0110-020010SSA"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -5154,7 +5154,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "GCT"
+		(property "Manufacturer" "YAGEO"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -5283,7 +5283,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "CSSI4B20SMTTR"
+		(property "Footprint" "SamacSys_Parts:CSSI4B20SMTTR"
 			(at 240.03 147.32 0)
 			(hide yes)
 			(show_name no)
@@ -5305,7 +5305,7 @@
 				)
 			)
 		)
-		(property "Description" "8.5 mm, 3.6 Vo-p, 90 dB, Surface Mount (SMT), Magnetic Audio Transducer Buzzer"
+		(property "Description" "8.5 mm surface-mount magnetic audio transducer buzzer"
 			(at 240.03 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -5349,7 +5349,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C94599"
+		(property "LCSC" ""
 			(at 240.03 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -5495,7 +5495,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 142.24 149.86 0)
 			(hide yes)
 			(show_name no)
@@ -5541,7 +5541,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MMBT3904"
+		(property "Value" "NTC Connector"
 			(at 232.41 80.0101 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5552,7 +5552,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
 			(at 229.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -5574,7 +5574,7 @@
 				)
 			)
 		)
-		(property "Description" "NPN transistor, base/emitter/collector"
+		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
 			(at 229.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -5585,7 +5585,7 @@
 				)
 			)
 		)
-		(property "Function" "Q_boot1"
+		(property "Function" "J_ntc1"
 			(at 229.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -5651,7 +5651,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C94514"
+		(property "LCSC" ""
 			(at 229.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -5662,7 +5662,7 @@
 				)
 			)
 		)
-		(property "MPN" "MMBT3904-7-F"
+		(property "MPN" "Kit HALJIA XH-compatible 2P"
 			(at 229.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -5673,7 +5673,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Diodes Incorporated"
+		(property "Manufacturer" "HALJIA"
 			(at 229.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -5724,7 +5724,7 @@
 				)
 			)
 		)
-		(property "Value" ""
+		(property "Value" "470"
 			(at 220.98 143.51 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5734,7 +5734,7 @@
 				)
 			)
 		)
-		(property "Footprint" "SWT0110020010SSA"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 220.98 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -5745,7 +5745,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
+		(property "Datasheet" ""
 			(at 220.98 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -5756,7 +5756,7 @@
 				)
 			)
 		)
-		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
+		(property "Description" "Resistor, small symbol"
 			(at 220.98 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -5767,7 +5767,7 @@
 				)
 			)
 		)
-		(property "Function" "SW_BOOT"
+		(property "Function" "R_buz1"
 			(at 220.98 146.05 90)
 			(hide yes)
 			(show_name no)
@@ -5778,7 +5778,7 @@
 				)
 			)
 		)
-		(property "MPN" "SWT0110-020010SSA"
+		(property "MPN" "RC0603FR-07470RL"
 			(at 220.98 146.05 90)
 			(hide yes)
 			(show_name no)
@@ -5789,7 +5789,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "GCT"
+		(property "Manufacturer" "YAGEO"
 			(at 220.98 146.05 90)
 			(hide yes)
 			(show_name no)
@@ -5907,7 +5907,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" ""
+		(property "Value" "47k"
 			(at 222.25 74.9299 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5918,7 +5918,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "SWT0110020010SSA"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -5929,7 +5929,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
+		(property "Datasheet" ""
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -5940,7 +5940,7 @@
 				)
 			)
 		)
-		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
+		(property "Description" "Resistor, small symbol"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -5951,7 +5951,7 @@
 				)
 			)
 		)
-		(property "Function" "SW_BOOT"
+		(property "Function" "R_ntc1"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -5962,7 +5962,7 @@
 				)
 			)
 		)
-		(property "MPN" "SWT0110-020010SSA"
+		(property "MPN" "CRCW060347K0FKEA"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -5973,7 +5973,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "GCT"
+		(property "Manufacturer" "Vishay"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -6091,7 +6091,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "ESP32-WROOM-32E-N4"
+		(property "Value" ""
 			(at 119.38 144.7799 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6102,7 +6102,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "RF_Module:ESP32-WROOM-32E"
+		(property "Footprint" "SamacSys_Parts:SWT0110020010SSA"
 			(at 113.03 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -6113,7 +6113,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf"
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 113.03 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -6124,7 +6124,7 @@
 				)
 			)
 		)
-		(property "Description" "RF Module, ESP32-D0WD-V3 SoC, without PSRAM, Wi-Fi 802.11b/g/n, Bluetooth, BLE, 32-bit, 2.7-3.6V, onboard antenna, SMD"
+		(property "Description" "GCT SWT0110 tactile switch, SPST-NO, SMT, 2.0 mm actuator height"
 			(at 118.11 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -6135,7 +6135,7 @@
 				)
 			)
 		)
-		(property "Function" "U1"
+		(property "Function" "Up"
 			(at 118.11 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6201,7 +6201,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C701341"
+		(property "LCSC" ""
 			(at 118.11 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6212,7 +6212,7 @@
 				)
 			)
 		)
-		(property "MPN" "ESP32-WROOM-32E-N4"
+		(property "MPN" "SWT0110-020010SSA"
 			(at 118.11 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6223,7 +6223,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Espressif Systems"
+		(property "Manufacturer" "GCT"
 			(at 118.11 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6275,7 +6275,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "82400102"
+		(property "Value" ""
 			(at 95.25 144.7799 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6286,7 +6286,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
+		(property "Footprint" "SamacSys_Parts:SWT0110020010SSA"
 			(at 88.9 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -6297,7 +6297,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.st.com/resource/en/datasheet/usblc6-2.pdf"
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 88.9 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -6308,7 +6308,7 @@
 				)
 			)
 		)
-		(property "Description" "Very low capacitance ESD protection diode, 2 data-line, SOT-23-6"
+		(property "Description" "GCT SWT0110 tactile switch, SPST-NO, SMT, 2.0 mm actuator height"
 			(at 93.98 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -6319,7 +6319,7 @@
 				)
 			)
 		)
-		(property "Function" "U4"
+		(property "Function" "Mode"
 			(at 93.98 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6385,7 +6385,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C7519"
+		(property "LCSC" ""
 			(at 93.98 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6396,7 +6396,7 @@
 				)
 			)
 		)
-		(property "MPN" "82400102"
+		(property "MPN" "SWT0110-020010SSA"
 			(at 93.98 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6407,7 +6407,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Würth Elektronik"
+		(property "Manufacturer" "GCT"
 			(at 93.98 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6458,7 +6458,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "SMBJ28A"
+		(property "Value" "100n"
 			(at 215.9 87.6362 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6469,7 +6469,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMB"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 218.44 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -6491,7 +6491,7 @@
 				)
 			)
 		)
-		(property "Description" "Zener diode"
+		(property "Description" "Unpolarized capacitor, small symbol"
 			(at 218.44 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -6502,7 +6502,7 @@
 				)
 			)
 		)
-		(property "Function" "TVS1"
+		(property "Function" "C_ntc1"
 			(at 218.44 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -6513,7 +6513,7 @@
 				)
 			)
 		)
-		(property "MPN" "SMBJ28A"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 218.44 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -6524,7 +6524,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Littelfuse"
+		(property "Manufacturer" "YAGEO"
 			(at 218.44 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -6546,7 +6546,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C96335"
+		(property "LCSC" "C14663"
 			(at 218.44 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -6675,7 +6675,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 78.74 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -6754,7 +6754,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 69.85 149.86 0)
 			(hide yes)
 			(show_name no)
@@ -6842,7 +6842,7 @@
 				)
 			)
 		)
-		(property "Function" "R_g_fan1"
+		(property "Function" "R_g_heat1"
 			(at 73.66 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -6886,7 +6886,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C22775"
+		(property "LCSC" ""
 			(at 73.66 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -7015,7 +7015,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 87.63 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -7094,7 +7094,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 232.41 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -7184,7 +7184,7 @@
 				)
 			)
 		)
-		(property "Function" "R_pd_fan1"
+		(property "Function" "R_pd_heat1"
 			(at 78.74 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -7228,7 +7228,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" ""
 			(at 78.74 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -7323,7 +7323,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "T3A/63V"
+		(property "Value" "PMEG6020ER"
 			(at 149.86 72.1359 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7334,7 +7334,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Fuse:Fuse_1206_3216Metric_Pad1.42x1.75mm_HandSolder"
+		(property "Footprint" "Diode_SMD:Nexperia_CFP3_SOD-123W"
 			(at 152.4 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -7356,7 +7356,7 @@
 				)
 			)
 		)
-		(property "Description" "Fuse"
+		(property "Description" "Schottky diode, small symbol"
 			(at 152.4 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -7367,7 +7367,7 @@
 				)
 			)
 		)
-		(property "Function" "F1"
+		(property "Function" "D_fan1"
 			(at 152.4 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -7433,7 +7433,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C354897"
+		(property "LCSC" ""
 			(at 152.4 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -7444,7 +7444,7 @@
 				)
 			)
 		)
-		(property "MPN" "SF-1206S300W-2"
+		(property "MPN" "PMEG6020ER-QX"
 			(at 152.4 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -7455,7 +7455,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Bourns"
+		(property "Manufacturer" "Nexperia"
 			(at 152.4 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -7540,7 +7540,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 160.02 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -7586,7 +7586,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "IRLR3636TRPBF"
 			(at 91.44 88.8999 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7597,7 +7597,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Package_TO_SOT_SMD:TO-252-2"
 			(at 90.17 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -7608,7 +7608,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "kicad-embed://IRLR3636TRPBF.pdf"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7619,7 +7619,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "N-MOSFET transistor, gate/drain/source"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7630,7 +7630,7 @@
 				)
 			)
 		)
-		(property "Function" "Ren_top1"
+		(property "Function" "Q_heat1"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7641,7 +7641,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "YAGEO"
+		(property "Manufacturer" "Infineon"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7652,7 +7652,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-07100KL"
+		(property "MPN" "IRLR3636TRPBF"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7663,7 +7663,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" "C67279"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7685,7 +7685,7 @@
 				)
 			)
 		)
-		(property "Tolerance" "1%"
+		(property "Tolerance" ""
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7707,7 +7707,7 @@
 				)
 			)
 		)
-		(property "Power" "100mW"
+		(property "Power" ""
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7773,7 +7773,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "8u2"
+		(property "Value" "Heater Connector"
 			(at 95.25 69.8501 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7784,7 +7784,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "FilamentDryer:XAL4040-822MEC_HandSolder"
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7795,7 +7795,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.coilcraft.com/pdfs/xal4000.pdf"
+		(property "Datasheet" ""
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7806,7 +7806,7 @@
 				)
 			)
 		)
-		(property "Description" "COILCRAFT - XAL4040-822MEC - INDUCTOR, 8.2UH, 3.4A, 20%, PWR, 27MHZ"
+		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7817,7 +7817,7 @@
 				)
 			)
 		)
-		(property "Function" "L1"
+		(property "Function" "J_heat1"
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7894,7 +7894,7 @@
 				)
 			)
 		)
-		(property "MPN" "XAL4040-822MEC"
+		(property "MPN" "Kit HALJIA XH-compatible 2P"
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7905,7 +7905,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Coilcraft"
+		(property "Manufacturer" "HALJIA"
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7990,7 +7990,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 118.11 149.86 0)
 			(hide yes)
 			(show_name no)
@@ -8036,7 +8036,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "DMP6180SK3-13"
+		(property "Value" "Fan Connector"
 			(at 167.64 69.8501 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8047,7 +8047,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:TO-252-2"
+		(property "Footprint" "FilamentDryer:JST_PH_B2B-PH-SM4-TB_1x02-1MP_P2.00mm_Vertical"
 			(at 165.1 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8069,7 +8069,7 @@
 				)
 			)
 		)
-		(property "Description" "P-MOSFET transistor, gate/drain/source"
+		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
 			(at 165.1 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8080,7 +8080,7 @@
 				)
 			)
 		)
-		(property "Function" "Q1"
+		(property "Function" "J_fan2"
 			(at 165.1 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8146,7 +8146,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C93034"
+		(property "LCSC" "C160352"
 			(at 165.1 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8157,7 +8157,7 @@
 				)
 			)
 		)
-		(property "MPN" "DMP6180SK3-13"
+		(property "MPN" "B2B-PH-SM4-TB(LF)(SN)"
 			(at 165.1 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8168,7 +8168,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Diodes Incorporated"
+		(property "Manufacturer" "JST"
 			(at 165.1 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8253,7 +8253,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 218.44 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -8298,7 +8298,7 @@
 				)
 			)
 		)
-		(property "Value" ""
+		(property "Value" "100"
 			(at 146.05 85.09 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8308,7 +8308,7 @@
 				)
 			)
 		)
-		(property "Footprint" "SWT0110020010SSA"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 146.05 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -8319,7 +8319,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
+		(property "Datasheet" ""
 			(at 146.05 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -8330,7 +8330,7 @@
 				)
 			)
 		)
-		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
+		(property "Description" "Resistor, small symbol"
 			(at 146.05 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -8341,7 +8341,7 @@
 				)
 			)
 		)
-		(property "Function" "SW_BOOT"
+		(property "Function" "R_g_fan1"
 			(at 146.05 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -8352,7 +8352,7 @@
 				)
 			)
 		)
-		(property "MPN" "SWT0110-020010SSA"
+		(property "MPN" "CR0603-FX-1000ELF"
 			(at 146.05 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -8363,7 +8363,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "GCT"
+		(property "Manufacturer" "Bourns"
 			(at 146.05 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -8481,7 +8481,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "MMBT3904"
 			(at 234.95 147.3199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8492,7 +8492,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 234.95 147.955 0)
 			(hide yes)
 			(show_name no)
@@ -8505,7 +8505,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf"
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8517,7 +8517,7 @@
 				(justify left)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8550,7 +8550,7 @@
 				)
 			)
 		)
-		(property "Function" "Rfb_top1"
+		(property "Function" "Q_buz1"
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8572,7 +8572,7 @@
 				)
 			)
 		)
-		(property "Tolerance" "1%"
+		(property "Tolerance" ""
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8594,7 +8594,7 @@
 				)
 			)
 		)
-		(property "Power" "100mW"
+		(property "Power" ""
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8616,7 +8616,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" "C94514"
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8627,7 +8627,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-07100KL"
+		(property "MPN" "MMBT3904-7-F"
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8638,7 +8638,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "YAGEO"
+		(property "Manufacturer" "Diodes Incorporated"
 			(at 229.87 146.05 0)
 			(hide yes)
 			(show_name no)

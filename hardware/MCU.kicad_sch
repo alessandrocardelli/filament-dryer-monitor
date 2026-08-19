@@ -6113,7 +6113,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 251.46 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -6159,7 +6159,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "USBLC6-2SC6"
+		(property "Value" "82400102"
 			(at 104.5211 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6183,7 +6183,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://www.st.com/resource/en/datasheet/usblc6-2.pdf"
+		(property "Datasheet" ""
 			(at 104.14 174.625 0)
 			(hide yes)
 			(show_name no)
@@ -6272,7 +6272,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C7519"
+		(property "LCSC" ""
 			(at 102.87 166.37 0)
 			(hide yes)
 			(show_name no)
@@ -6283,7 +6283,7 @@
 				)
 			)
 		)
-		(property "MPN" "USBLC6-2SC6"
+		(property "MPN" "82400102"
 			(at 102.87 166.37 0)
 			(hide yes)
 			(show_name no)
@@ -6294,7 +6294,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "STMicroelectronics"
+		(property "Manufacturer" "Würth Elektronik"
 			(at 102.87 166.37 0)
 			(hide yes)
 			(show_name no)
@@ -6391,7 +6391,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 175.26 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -6569,7 +6569,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Skyworks / Silicon Labs"
+		(property "Manufacturer" "Silicon Labs"
 			(at 73.66 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -6883,7 +6883,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 48.26 83.82 0)
 			(hide yes)
 			(show_name no)
@@ -6962,7 +6962,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 154.94 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -7041,7 +7041,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 143.51 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -7120,7 +7120,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 184.15 128.27 0)
 			(hide yes)
 			(show_name no)
@@ -7209,7 +7209,7 @@
 				)
 			)
 		)
-		(property "Function" "R_btn1"
+		(property "Function" "R_pu_sda1"
 			(at 217.17 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -7253,7 +7253,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" ""
 			(at 217.17 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -7382,7 +7382,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 255.27 78.74 0)
 			(hide yes)
 			(show_name no)
@@ -7428,7 +7428,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "330"
+		(property "Value" "10k"
 			(at 208.28 53.3399 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7472,7 +7472,7 @@
 				)
 			)
 		)
-		(property "Function" "R_led1"
+		(property "Function" "R_io0"
 			(at 205.74 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -7483,7 +7483,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-07330RL"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 205.74 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -7516,7 +7516,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C23138"
+		(property "LCSC" ""
 			(at 205.74 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -7645,7 +7645,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 74.93 187.96 0)
 			(hide yes)
 			(show_name no)
@@ -7724,7 +7724,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 129.54 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -7770,7 +7770,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "1k"
 			(at 58.42 55.8799 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7814,7 +7814,7 @@
 				)
 			)
 		)
-		(property "Function" "R_pu_sda1"
+		(property "Function" "R_rst1"
 			(at 55.88 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -7825,7 +7825,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-0710KL"
+		(property "MPN" "RC0603FR-071KL"
 			(at 55.88 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -7858,7 +7858,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" ""
 			(at 55.88 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -7954,7 +7954,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1u"
+		(property "Value" "100n"
 			(at 92.71 50.8062 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7998,7 +7998,7 @@
 				)
 			)
 		)
-		(property "Function" "C_en1"
+		(property "Function" "C_vdd2"
 			(at 90.17 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -8009,7 +8009,7 @@
 				)
 			)
 		)
-		(property "MPN" "GCM188R71E105KA64J"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 90.17 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -8020,7 +8020,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Murata Electronics"
+		(property "Manufacturer" "YAGEO"
 			(at 90.17 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -8042,7 +8042,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C5199872"
+		(property "LCSC" "C14663"
 			(at 90.17 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -8064,7 +8064,7 @@
 				)
 			)
 		)
-		(property "Voltage" "25V"
+		(property "Voltage" "50V"
 			(at 90.17 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -8284,7 +8284,7 @@
 				)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "330"
 			(at 252.73 68.58 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8327,7 +8327,7 @@
 				)
 			)
 		)
-		(property "Function" "R_btn3"
+		(property "Function" "R_led1"
 			(at 255.27 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8338,7 +8338,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-0710KL"
+		(property "MPN" "RC0603FR-07330RL"
 			(at 255.27 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8371,7 +8371,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" ""
 			(at 255.27 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8500,7 +8500,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 120.65 162.56 0)
 			(hide yes)
 			(show_name no)
@@ -8546,7 +8546,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "AP66200Q"
+		(property "Value" ""
 			(at 217.17 69.8499 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8557,7 +8557,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "FilamentDryer:AP66200_U-QFN4040-16_EP2.6x2.6mm_P0.65mm"
+		(property "Footprint" "SamacSys_Parts:SWT0110020010SSA"
 			(at 210.82 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -8568,7 +8568,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 210.82 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -8579,7 +8579,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "GCT SWT0110 tactile switch, SPST-NO, SMT, 2.0 mm actuator height"
 			(at 215.9 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -8590,7 +8590,7 @@
 				)
 			)
 		)
-		(property "Function" "U2"
+		(property "Function" "SW_BOOT"
 			(at 215.9 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8656,7 +8656,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C6741205"
+		(property "LCSC" ""
 			(at 215.9 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8667,7 +8667,7 @@
 				)
 			)
 		)
-		(property "MPN" "AP66200QFVBW-13"
+		(property "MPN" "SWT0110-020010SSA"
 			(at 215.9 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8678,7 +8678,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Diodes Incorporated"
+		(property "Manufacturer" "GCT"
 			(at 215.9 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -8730,7 +8730,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100"
+		(property "Value" "10k"
 			(at 231.14 92.7099 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8774,7 +8774,7 @@
 				)
 			)
 		)
-		(property "Function" "R_g_heat1"
+		(property "Function" "R_pu_scl1"
 			(at 228.6 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -8785,7 +8785,7 @@
 				)
 			)
 		)
-		(property "MPN" "CR0603-FX-1000ELF"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 228.6 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -8796,7 +8796,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Bourns"
+		(property "Manufacturer" "YAGEO"
 			(at 228.6 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -8818,7 +8818,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C22775"
+		(property "LCSC" ""
 			(at 228.6 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -9244,7 +9244,7 @@
 				)
 			)
 		)
-		(property "Function" "C_esp2"
+		(property "Function" "C_en1"
 			(at 143.51 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -9288,7 +9288,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C5199872"
+		(property "LCSC" ""
 			(at 143.51 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -9382,7 +9382,7 @@
 				)
 			)
 		)
-		(property "Value" "Heater Connector"
+		(property "Value" "USB4216-03-A"
 			(at 74.93 144.145 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9392,7 +9392,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
+		(property "Footprint" "SamacSys_Parts:USB421603A"
 			(at 104.14 258.75 0)
 			(hide yes)
 			(show_name no)
@@ -9404,7 +9404,7 @@
 				(justify left top)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://eu.mouser.com/datasheet/2/837/usb4216-3577180.pdf"
 			(at 104.14 358.75 0)
 			(hide yes)
 			(show_name no)
@@ -9416,7 +9416,7 @@
 				(justify left top)
 			)
 		)
-		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "USB-C receptacle, USB 2.0, 16-pin, horizontal SMT"
 			(at 74.93 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -9499,7 +9499,7 @@
 				(justify left top)
 			)
 		)
-		(property "Manufacturer" "HALJIA"
+		(property "Manufacturer" "GCT"
 			(at 74.93 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -9510,7 +9510,7 @@
 				)
 			)
 		)
-		(property "Function" "J_heat1"
+		(property "Function" "J2"
 			(at 74.93 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -9521,7 +9521,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C158012"
+		(property "LCSC" ""
 			(at 74.93 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -9532,7 +9532,7 @@
 				)
 			)
 		)
-		(property "MPN" "Kit HALJIA XH-compatible 2P"
+		(property "MPN" "USB4216-03-A"
 			(at 74.93 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -9626,7 +9626,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u"
+		(property "Value" "100n"
 			(at 104.14 50.8062 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9637,7 +9637,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9670,7 +9670,7 @@
 				)
 			)
 		)
-		(property "Function" "C_esp1"
+		(property "Function" "C_reg1"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9681,7 +9681,7 @@
 				)
 			)
 		)
-		(property "MPN" "CC0805KRX5R8BB106"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9703,7 +9703,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "X5R"
+		(property "Dielectric" "X7R"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9714,7 +9714,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C15850"
+		(property "LCSC" "C14663"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9736,7 +9736,7 @@
 				)
 			)
 		)
-		(property "Voltage" "25V"
+		(property "Voltage" "50V"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9810,7 +9810,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "47k5"
 			(at 45.72 81.2799 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9854,7 +9854,7 @@
 				)
 			)
 		)
-		(property "Function" "R_io0"
+		(property "Function" "R_vbus_bot1"
 			(at 48.26 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -9865,7 +9865,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-0710KL"
+		(property "MPN" "RC0603FR-0747K5L"
 			(at 48.26 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -9898,7 +9898,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" ""
 			(at 48.26 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -9994,7 +9994,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "33"
+		(property "Value" "10k"
 			(at 146.05 53.3399 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10038,7 +10038,7 @@
 				)
 			)
 		)
-		(property "Function" "R_s_sda1"
+		(property "Function" "R_en1"
 			(at 143.51 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -10049,7 +10049,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-0733RL"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 143.51 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -10082,7 +10082,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C23140"
+		(property "LCSC" ""
 			(at 143.51 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -10178,7 +10178,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "1u"
 			(at 167.64 46.9962 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10222,7 +10222,7 @@
 				)
 			)
 		)
-		(property "Function" "C_ntc1"
+		(property "Function" "C_esp2"
 			(at 165.1 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10233,7 +10233,7 @@
 				)
 			)
 		)
-		(property "MPN" "CC0603KRX7R9BB104"
+		(property "MPN" "GCM188R71E105KA64J"
 			(at 165.1 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10244,7 +10244,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "YAGEO"
+		(property "Manufacturer" "Murata Electronics"
 			(at 165.1 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10266,7 +10266,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" ""
 			(at 165.1 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10288,7 +10288,7 @@
 				)
 			)
 		)
-		(property "Voltage" "50V"
+		(property "Voltage" "25V"
 			(at 165.1 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10362,7 +10362,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "BZX84C15"
+		(property "Value" "100n"
 			(at 177.8 46.9962 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10373,7 +10373,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 175.26 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10395,7 +10395,7 @@
 				)
 			)
 		)
-		(property "Description" "Zener diode"
+		(property "Description" "Unpolarized capacitor, small symbol"
 			(at 175.26 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10406,7 +10406,7 @@
 				)
 			)
 		)
-		(property "Function" "Dz1"
+		(property "Function" "C_esp3"
 			(at 175.26 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10417,7 +10417,7 @@
 				)
 			)
 		)
-		(property "MPN" "BZX84C15-7-F"
+		(property "MPN" "CC0603KRX7R9BB104"
 			(at 175.26 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10428,7 +10428,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Diodes Incorporated"
+		(property "Manufacturer" "YAGEO"
 			(at 175.26 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10450,7 +10450,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C500789"
+		(property "LCSC" "C14663"
 			(at 175.26 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10546,7 +10546,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Fan Connector"
+		(property "Value" "Sensor"
 			(at 259.08 100.3301 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10557,7 +10557,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "FilamentDryer:JST_PH_B2B-PH-SM4-TB_1x02-1MP_P2.00mm_Vertical"
+		(property "Footprint" "FilamentDryer:JST_PH_B4B-PH-SM4-TB_1x04-1MP_P2.00mm_Vertical"
 			(at 256.54 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -10579,7 +10579,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
 			(at 256.54 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -10590,7 +10590,7 @@
 				)
 			)
 		)
-		(property "Function" "J_fan2"
+		(property "Function" "J_sens1"
 			(at 256.54 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -10656,7 +10656,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C160352"
+		(property "LCSC" "C160354"
 			(at 256.54 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -10667,7 +10667,7 @@
 				)
 			)
 		)
-		(property "MPN" "B2B-PH-SM4-TB(LF)(SN)"
+		(property "MPN" "B4B-PH-SM4-TB(LF)(SN)"
 			(at 256.54 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -10736,7 +10736,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "DMN6140L-13"
+		(property "Value" "MMBT3904"
 			(at 121.92 50.7999 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10769,7 +10769,7 @@
 				)
 			)
 		)
-		(property "Description" "N-MOSFET transistor, gate/drain/source"
+		(property "Description" "NPN transistor, base/emitter/collector"
 			(at 116.84 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -10802,7 +10802,7 @@
 				)
 			)
 		)
-		(property "Function" "Q_fan1"
+		(property "Function" "Q_boot1"
 			(at 116.84 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -10868,7 +10868,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C75882"
+		(property "LCSC" "C94514"
 			(at 116.84 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -10879,7 +10879,7 @@
 				)
 			)
 		)
-		(property "MPN" "DMN6140L-13"
+		(property "MPN" "MMBT3904-7-F"
 			(at 116.84 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -10978,7 +10978,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 215.9 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -11057,7 +11057,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 73.66 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -11102,7 +11102,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "5k1"
 			(at 123.19 161.2899 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11146,7 +11146,7 @@
 				)
 			)
 		)
-		(property "Function" "R_pu_scl1"
+		(property "Function" "R_cc2"
 			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -11157,7 +11157,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-0710KL"
+		(property "MPN" "RC0603FR-075K1L"
 			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -11190,7 +11190,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" ""
 			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -11286,7 +11286,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "PMEG6020ER"
+		(property "Value" "LED_Small"
 			(at 251.46 76.1365 0)
 			(hide yes)
 			(show_name no)
@@ -11297,7 +11297,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:Nexperia_CFP3_SOD-123W"
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
 			(at 255.27 76.2 90)
 			(hide yes)
 			(show_name no)
@@ -11319,7 +11319,7 @@
 				)
 			)
 		)
-		(property "Description" "Schottky diode, small symbol"
+		(property "Description" "Light emitting diode, small symbol"
 			(at 255.27 76.2 0)
 			(hide yes)
 			(show_name no)
@@ -11341,7 +11341,7 @@
 				)
 			)
 		)
-		(property "Function" "D_fan1"
+		(property "Function" "D_led1"
 			(at 255.27 76.2 90)
 			(hide yes)
 			(show_name no)
@@ -11407,7 +11407,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C98663"
+		(property "LCSC" ""
 			(at 255.27 76.2 90)
 			(hide yes)
 			(show_name no)
@@ -11418,7 +11418,7 @@
 				)
 			)
 		)
-		(property "MPN" "PMEG6020ER-QX"
+		(property "MPN" "HSMG-C170"
 			(at 255.27 76.2 90)
 			(hide yes)
 			(show_name no)
@@ -11429,7 +11429,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Nexperia"
+		(property "Manufacturer" "Broadcom"
 			(at 255.27 76.2 90)
 			(hide yes)
 			(show_name no)
@@ -11503,7 +11503,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf"
+		(property "Datasheet" ""
 			(at 125.73 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -11514,7 +11514,7 @@
 				)
 			)
 		)
-		(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"
+		(property "Description" "NPN transistor, base/emitter/collector"
 			(at 125.73 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -11547,7 +11547,7 @@
 				)
 			)
 		)
-		(property "Function" "Q_buz1"
+		(property "Function" "Q_rst1"
 			(at 125.73 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -11723,7 +11723,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 251.46 106.68 0)
 			(hide yes)
 			(show_name no)
@@ -11768,7 +11768,7 @@
 				)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "33"
 			(at 242.57 105.41 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11811,7 +11811,7 @@
 				)
 			)
 		)
-		(property "Function" "R_btn2"
+		(property "Function" "R_s_sda1"
 			(at 242.57 102.87 90)
 			(hide yes)
 			(show_name no)
@@ -11822,7 +11822,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-0710KL"
+		(property "MPN" "RC0603FR-0733RL"
 			(at 242.57 102.87 90)
 			(hide yes)
 			(show_name no)
@@ -11855,7 +11855,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" ""
 			(at 242.57 102.87 90)
 			(hide yes)
 			(show_name no)
@@ -11951,7 +11951,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "4u7"
 			(at 82.55 50.8062 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11995,7 +11995,7 @@
 				)
 			)
 		)
-		(property "Function" "C_reg1"
+		(property "Function" "C_vdd1"
 			(at 80.01 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -12006,7 +12006,7 @@
 				)
 			)
 		)
-		(property "MPN" "CC0603KRX7R9BB104"
+		(property "MPN" "CL10A475KO8NNNC"
 			(at 80.01 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -12017,7 +12017,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "YAGEO"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 80.01 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -12028,7 +12028,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "X7R"
+		(property "Dielectric" "X5R"
 			(at 80.01 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -12039,7 +12039,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C19666"
 			(at 80.01 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -12061,7 +12061,7 @@
 				)
 			)
 		)
-		(property "Voltage" "50V"
+		(property "Voltage" "16V"
 			(at 80.01 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -12134,7 +12134,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "33"
+		(property "Value" "5k1"
 			(at 132.08 158.7499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12178,7 +12178,7 @@
 				)
 			)
 		)
-		(property "Function" "R_s_scl1"
+		(property "Function" "R_cc1"
 			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
@@ -12189,7 +12189,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-0733RL"
+		(property "MPN" "RC0603FR-075K1L"
 			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
@@ -12222,7 +12222,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C23140"
+		(property "LCSC" ""
 			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
@@ -12466,7 +12466,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "22k1"
 			(at 45.72 73.6599 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12510,7 +12510,7 @@
 				)
 			)
 		)
-		(property "Function" "R_en1"
+		(property "Function" "R_vbus_top1"
 			(at 48.26 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -12521,7 +12521,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-0710KL"
+		(property "MPN" "RC0603FR-1322K1L"
 			(at 48.26 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -12554,7 +12554,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" ""
 			(at 48.26 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -12648,7 +12648,7 @@
 				)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "33"
 			(at 234.95 97.79 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12691,7 +12691,7 @@
 				)
 			)
 		)
-		(property "Function" "R_pd_heat1"
+		(property "Function" "R_s_scl1"
 			(at 234.95 100.33 90)
 			(hide yes)
 			(show_name no)
@@ -12702,7 +12702,7 @@
 				)
 			)
 		)
-		(property "MPN" "RC0603FR-07100KL"
+		(property "MPN" "RC0603FR-0733RL"
 			(at 234.95 100.33 90)
 			(hide yes)
 			(show_name no)
@@ -12735,7 +12735,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" ""
 			(at 234.95 100.33 90)
 			(hide yes)
 			(show_name no)
@@ -12842,7 +12842,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "SWT0110020010SSA"
+		(property "Footprint" "SamacSys_Parts:SWT0110020010SSA"
 			(at 149.86 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -12864,7 +12864,7 @@
 				)
 			)
 		)
-		(property "Description" "Tactile Switches Tactile Switch, SPST-NO, 3.9 x 2.93mm, Top act 2.0mm high, 100g, SMT"
+		(property "Description" "GCT SWT0110 tactile switch, SPST-NO, SMT, 2.0 mm actuator height"
 			(at 154.94 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -12875,7 +12875,7 @@
 				)
 			)
 		)
-		(property "Function" "SW_BOOT"
+		(property "Function" "SW_RST"
 			(at 154.94 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -13048,7 +13048,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 90.17 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -13094,7 +13094,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "NTC Connector"
+		(property "Value" "Display"
 			(at 259.08 116.8401 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13105,7 +13105,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical"
+		(property "Footprint" "FilamentDryer:Oled 1.54 Inch SSD1309 TZT"
 			(at 256.54 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -13127,7 +13127,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
 			(at 256.54 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -13138,7 +13138,7 @@
 				)
 			)
 		)
-		(property "Function" "J_ntc1"
+		(property "Function" "J_display1"
 			(at 256.54 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -13204,7 +13204,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C161690"
+		(property "LCSC" ""
 			(at 256.54 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -13215,7 +13215,7 @@
 				)
 			)
 		)
-		(property "MPN" "Kit HALJIA XH-compatible 2P"
+		(property "MPN" ""
 			(at 256.54 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -13226,7 +13226,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "HALJIA"
+		(property "Manufacturer" ""
 			(at 256.54 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -13284,7 +13284,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "10u"
 			(at 157.48 46.9962 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13295,7 +13295,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -13328,7 +13328,7 @@
 				)
 			)
 		)
-		(property "Function" "C_esp3"
+		(property "Function" "C_esp1"
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -13339,7 +13339,7 @@
 				)
 			)
 		)
-		(property "MPN" "CC0603KRX7R9BB104"
+		(property "MPN" "CC0805KRX5R8BB106"
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -13361,7 +13361,7 @@
 				)
 			)
 		)
-		(property "Dielectric" "X7R"
+		(property "Dielectric" "X5R"
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -13372,7 +13372,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" ""
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -13394,7 +13394,7 @@
 				)
 			)
 		)
-		(property "Voltage" "50V"
+		(property "Voltage" "25V"
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -13501,7 +13501,7 @@
 				)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+		(property "Description" "Power symbol creates a global label with name \\\"GND\\\" , ground"
 			(at 102.87 173.99 0)
 			(hide yes)
 			(show_name no)

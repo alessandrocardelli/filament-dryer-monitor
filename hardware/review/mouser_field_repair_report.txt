@@ -1,0 +1,128 @@
+Mouser symbol-field repair
+==========================
+Baseline: origin/main, matched strictly by Reference
+Current variant geometry/wiring/library IDs preserved
+
+Power.kicad_sch U1: Value, MPN, LCSC
+Power.kicad_sch R3: Value, Description, Function, MPN, LCSC
+Power.kicad_sch J1: Value, Footprint, Description, Function, MPN, LCSC
+Power.kicad_sch #PWR013: Description
+Power.kicad_sch C11: Value, Footprint, Datasheet, Description, Function, MPN, LCSC, Voltage, Tolerance, Dielectric
+Power.kicad_sch Q1: Value, Datasheet, Description, Function, MPN, LCSC, Manufacturer
+Power.kicad_sch R2: Value, Description, Function, MPN, LCSC, Manufacturer, Tolerance, Power
+Power.kicad_sch F1: Value, Footprint, Description, Function, MPN, LCSC, Manufacturer
+Power.kicad_sch #PWR06: Description
+Power.kicad_sch C7: Value, Footprint, Datasheet, Function, MPN, LCSC, Manufacturer, Voltage, Tolerance, Dielectric
+Power.kicad_sch #PWR09: Description
+Power.kicad_sch FB1: Value, Footprint, Datasheet, Description, Function, MPN, Manufacturer, Mouser Part Number
+Power.kicad_sch C1: Value, Datasheet, Function, MPN, LCSC, Manufacturer, Voltage, Tolerance, Dielectric
+Power.kicad_sch #PWR01: Description
+Power.kicad_sch #PWR010: Description
+Power.kicad_sch #PWR04: Description
+Power.kicad_sch C10: Value, Footprint, Description, Function, MPN, LCSC, Manufacturer, Voltage, Tolerance, Dielectric
+Power.kicad_sch #PWR02: Description
+Power.kicad_sch #PWR03: Description
+Power.kicad_sch #PWR011: Description
+Power.kicad_sch C6: Value, Footprint, Datasheet, Function, MPN, LCSC, Manufacturer, Voltage, Tolerance, Dielectric
+Power.kicad_sch #PWR07: Description
+Power.kicad_sch C4: Value, Footprint, Datasheet, Description, Function, MPN, LCSC, Manufacturer, Voltage, Tolerance, Dielectric
+Power.kicad_sch #PWR012: Description
+Power.kicad_sch R4: Value, Description, Function, MPN, LCSC, Manufacturer
+Power.kicad_sch D2: Value, Footprint, Description, Function, MPN, LCSC, Manufacturer
+Power.kicad_sch C2: Value, Datasheet, Function, MPN, LCSC, Manufacturer, Voltage
+Power.kicad_sch R6: Value, Description, Function, MPN, LCSC
+Power.kicad_sch D1: Value, Footprint, Description, Function, MPN, LCSC, Manufacturer
+Power.kicad_sch #PWR014: Description
+Power.kicad_sch #PWR05: Description
+Power.kicad_sch R1: Value, Function, MPN, LCSC
+Power.kicad_sch L1: Value, Footprint, Datasheet, Description, Function, MPN, LCSC, Manufacturer
+Power.kicad_sch R5: Value, Description, Function, MPN, LCSC
+Power.kicad_sch C8: Value, Footprint, Datasheet, Function, MPN, LCSC, Voltage, Tolerance, Dielectric
+Power.kicad_sch C5: Value, Footprint, Datasheet, Description, Function, MPN, LCSC, Manufacturer, Voltage, Dielectric
+Power.kicad_sch #PWR08: Description
+Power.kicad_sch C3: Value, Function, MPN, LCSC, Manufacturer, Voltage, Tolerance, Dielectric
+Power.kicad_sch C9: Value, Footprint, Datasheet, Function, MPN, LCSC, Voltage, Tolerance, Dielectric
+MCU.kicad_sch #PWR028: Description
+MCU.kicad_sch U3: Value, Datasheet, MPN, LCSC, Manufacturer
+MCU.kicad_sch #PWR024: Description
+MCU.kicad_sch U2: Manufacturer
+MCU.kicad_sch #PWR015: Description
+MCU.kicad_sch #PWR023: Description
+MCU.kicad_sch #PWR022: Description
+MCU.kicad_sch #PWR025: Description
+MCU.kicad_sch R14: Function, LCSC
+MCU.kicad_sch #PWR029: Description
+MCU.kicad_sch R13: Value, Function, MPN, LCSC
+MCU.kicad_sch #PWR017: Description
+MCU.kicad_sch #PWR021: Description
+MCU.kicad_sch R9: Value, Function, MPN, LCSC
+MCU.kicad_sch C13: Value, Function, MPN, LCSC, Manufacturer, Voltage
+MCU.kicad_sch R18: Value, Function, MPN, LCSC
+MCU.kicad_sch #PWR020: Description
+MCU.kicad_sch SW2: Value, Footprint, Datasheet, Description, Function, MPN, LCSC, Manufacturer
+MCU.kicad_sch R15: Value, Function, MPN, LCSC, Manufacturer
+MCU.kicad_sch C15: Function, LCSC
+MCU.kicad_sch J2: Value, Footprint, Datasheet, Description, Function, MPN, LCSC, Manufacturer
+MCU.kicad_sch C14: Value, Footprint, Function, MPN, LCSC, Voltage, Dielectric
+MCU.kicad_sch R8: Value, Function, MPN, LCSC
+MCU.kicad_sch R12: Value, Function, MPN, LCSC
+MCU.kicad_sch C17: Value, Function, MPN, LCSC, Manufacturer, Voltage
+MCU.kicad_sch C18: Value, Footprint, Description, Function, MPN, LCSC, Manufacturer
+MCU.kicad_sch J3: Value, Footprint, Description, Function, MPN, LCSC
+MCU.kicad_sch Q2: Value, Description, Function, MPN, LCSC
+MCU.kicad_sch #PWR026: Description
+MCU.kicad_sch #PWR016: Description
+MCU.kicad_sch R10: Value, Function, MPN, LCSC
+MCU.kicad_sch D3: Value, Footprint, Description, Function, MPN, LCSC, Manufacturer
+MCU.kicad_sch Q3: Datasheet, Description, Function
+MCU.kicad_sch #PWR027: Description
+MCU.kicad_sch R17: Value, Function, MPN, LCSC
+MCU.kicad_sch C12: Value, Function, MPN, LCSC, Manufacturer, Voltage, Dielectric
+MCU.kicad_sch R11: Value, Function, MPN, LCSC
+MCU.kicad_sch R7: Value, Function, MPN, LCSC
+MCU.kicad_sch R16: Value, Function, MPN, LCSC
+MCU.kicad_sch SW1: Footprint, Description, Function
+MCU.kicad_sch #PWR018: Description
+MCU.kicad_sch J4: Value, Footprint, Description, Function, MPN, LCSC, Manufacturer
+MCU.kicad_sch C16: Value, Footprint, Function, MPN, LCSC, Voltage, Dielectric
+MCU.kicad_sch #PWR019: Description
+IO_Power.kicad_sch R19: Function, LCSC
+IO_Power.kicad_sch SW3: Value, Footprint, Datasheet, Description, Function, MPN, LCSC, Manufacturer
+IO_Power.kicad_sch D6: Value, Footprint, Datasheet, Description, Function, MPN, LCSC, Manufacturer
+IO_Power.kicad_sch #PWR039: Description
+IO_Power.kicad_sch D4: Value, Footprint, Datasheet, Description, Function, MPN, LCSC, Manufacturer
+IO_Power.kicad_sch R23: Value, Function, MPN, LCSC, Manufacturer
+IO_Power.kicad_sch Q5: Value, Footprint, Description, Function, MPN, LCSC, Manufacturer, Tolerance, Power
+IO_Power.kicad_sch R26: Value, Footprint, Datasheet, Description, Function, MPN, Manufacturer
+IO_Power.kicad_sch R22: Value, Function, MPN, LCSC
+IO_Power.kicad_sch SW6: Footprint, Description, Function, Manufacturer
+IO_Power.kicad_sch #PWR036: Description
+IO_Power.kicad_sch #PWR033: Description
+IO_Power.kicad_sch R24: Value, Footprint, Datasheet, Description, Function, MPN, Manufacturer
+IO_Power.kicad_sch BZ1: Footprint, Description, LCSC
+IO_Power.kicad_sch #PWR035: Description
+IO_Power.kicad_sch J7: Value, Footprint, Description, Function, MPN, LCSC, Manufacturer
+IO_Power.kicad_sch R27: Value, Footprint, Datasheet, Description, Function, MPN, Manufacturer
+IO_Power.kicad_sch R28: Value, Footprint, Datasheet, Description, Function, MPN, Manufacturer
+IO_Power.kicad_sch SW5: Value, Footprint, Datasheet, Description, Function, MPN, LCSC, Manufacturer
+IO_Power.kicad_sch SW4: Value, Footprint, Datasheet, Description, Function, MPN, LCSC, Manufacturer
+IO_Power.kicad_sch C19: Value, Footprint, Description, Function, MPN, LCSC, Manufacturer
+IO_Power.kicad_sch #PWR031: Description
+IO_Power.kicad_sch #PWR030: Description
+IO_Power.kicad_sch R20: Function, LCSC
+IO_Power.kicad_sch #PWR032: Description
+IO_Power.kicad_sch #PWR040: Description
+IO_Power.kicad_sch R21: Function, LCSC
+IO_Power.kicad_sch D5: Value, Footprint, Description, Function, MPN, LCSC, Manufacturer
+IO_Power.kicad_sch #PWR037: Description
+IO_Power.kicad_sch Q4: Value, Footprint, Datasheet, Description, Function, MPN, LCSC, Manufacturer, Tolerance, Power
+IO_Power.kicad_sch J5: Value, Footprint, Datasheet, Description, Function, MPN, Manufacturer
+IO_Power.kicad_sch #PWR034: Description
+IO_Power.kicad_sch J6: Value, Footprint, Description, Function, MPN, LCSC, Manufacturer
+IO_Power.kicad_sch #PWR038: Description
+IO_Power.kicad_sch R25: Value, Footprint, Datasheet, Description, Function, MPN, Manufacturer
+IO_Power.kicad_sch Q6: Value, Footprint, Datasheet, Description, Function, MPN, LCSC, Manufacturer, Tolerance, Power
+
+Verified final MPN/manufacturer pairs: 75 references
+PCB file intentionally untouched.
+Generated netlist/ERC/DRC/production BOM intentionally not regenerated (KiCad CLI unavailable in this repair job).
