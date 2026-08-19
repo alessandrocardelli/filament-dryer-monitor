@@ -1,0 +1,35 @@
+name: Repair Mouser symbol fields
+
+on:
+  push:
+    branches:
+      - variant/mouser-footprints
+    paths:
+      - .github/workflows/repair-mouser-symbol-fields.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout variant
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Repair fields by reference
+        run: python3 .github/scripts/repair_mouser_symbol_fields.py
+
+      - name: Commit repaired schematic fields
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add hardware/Power.kicad_sch hardware/MCU.kicad_sch hardware/IO_Power.kicad_sch hardware/Filament_Dryer_Monitor.csv hardware/review/mouser_field_repair_report.txt
+          if git diff --cached --quiet; then
+            echo "No repair changes required."
+          else
+            git commit -m "Repair symbol fields after CSV import"
+            git push
+          fi
