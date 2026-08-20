@@ -209,18 +209,6 @@
 				)
 			)
 		)
-		(property "KiLib_Generator" "package/gullwing"
-			(at 0 0 90)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "35caadb7-559d-4d93-a3ce-1f6917633ddc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(property "Sim.Device" "NPN"
 			(at 0 0 90)
 			(unlocked yes)
@@ -253,19 +241,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "58824560-3e68-4851-8763-2a9ad921200f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "97cc3077-5979-48ad-a397-d747882ca41b")
 			(effects
 				(font
 					(size 1 1)
@@ -331,19 +306,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "381aa56f-4533-4f61-b060-9e949102ae9e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC" "C94514"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3413f9b7-23e7-4e40-a108-18f5631cd22f")
 			(effects
 				(font
 					(size 1 1)
@@ -847,19 +809,6 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b0a8b053-0fa3-4135-baee-65ff11f519d1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(property "Dielectric" ""
 			(at 0 0 90)
 			(unlocked yes)
@@ -925,20 +874,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C81598"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ac6d6b5a-1f22-4f44-8dde-7ea5559a2929")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "MPN" "1N4148W"
+		(property "MPN" "1N4148W-7-F"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -951,7 +887,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "ST(Semtech)"
+		(property "Manufacturer" "Diodes Incorporated"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -1269,19 +1205,6 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8fcf3750-a313-4b97-a882-0f1c0d5f4fa9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(property "Dielectric" ""
 			(at 0 0 0)
 			(unlocked yes)
@@ -1340,6 +1263,32 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "8b1c483e-7144-450f-819c-42053dd94fed")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "bc0adef8-9554-47c2-80fa-ca411f8707b3")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e1eb4d8a-c0c1-4645-a68c-fbd2d1a109a2")
 			(effects
 				(font
 					(size 1 1)
@@ -1746,7 +1695,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
@@ -1757,7 +1706,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "GCT SWT0110 tactile switch, SPST-NO, SMT, 2.0 mm actuator height"
 			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
@@ -1768,9 +1717,119 @@
 				)
 			)
 		)
+		(property "Function" "Down"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9faf129b-1341-4b53-9fab-b2c231d454e9")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Dielectric" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "339f5924-808c-47f6-8c14-37345e5905b4")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "037b8a3a-cb61-4af0-a940-9f168c1d1511")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Voltage" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a405a547-a33b-4823-809a-65fd29e77c31")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Power" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "af71f0ea-1bb2-481f-86ad-a2a89df869d3")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "TCR" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "d69e3992-4493-49d8-9aef-1a8034e62990")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "SWT0110-020010SSA"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "717490eb-1fd4-48c8-96f1-c32fa5253807")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "GCT"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ce28fa8e-9bf7-42ce-ba58-c8ff99d710d1")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/8ea3583c-4bf9-4d9f-826f-a898c1c22896/354edd13-eabc-4bee-87c8-6a442a63fa81")
 		(sheetname "/IO_Power/")
 		(sheetfile "IO_Power.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "2")
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -1957,7 +2016,7 @@
 				)
 			)
 		)
-		(property "Description" "8.5 mm, 3.6 Vo-p, 90 dB, Surface Mount (SMT), Magnetic Audio Transducer Buzzer"
+		(property "Description" "8.5 mm surface-mount magnetic audio transducer buzzer"
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -2000,19 +2059,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "1be129ec-c644-40e9-b3e5-5f19f626f95a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC" "C94599"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b06c5aef-372b-4498-ae10-aff40159f3b8")
 			(effects
 				(font
 					(size 1 1)
@@ -2088,6 +2134,12 @@
 		(path "/8ea3583c-4bf9-4d9f-826f-a898c1c22896/4775792c-a6ba-4a01-8fe2-9a1c9aa9c05a")
 		(sheetname "/IO_Power/")
 		(sheetfile "IO_Power.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "2" "3" "4")
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -2323,7 +2375,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
@@ -2334,7 +2386,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "GCT SWT0110 tactile switch, SPST-NO, SMT, 2.0 mm actuator height"
 			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
@@ -2345,9 +2397,119 @@
 				)
 			)
 		)
+		(property "Function" "Mode"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "dd99e106-384a-4473-a8aa-5151f6ae331d")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Dielectric" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8ba88e54-a45a-4a53-a17d-bc5f91adfe31")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2c1235ee-044f-4de7-bbd3-f54d5195d3c5")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Voltage" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "7a623d0b-ecfb-43ef-80f0-9cee9453a973")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Power" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3a90a775-8b9f-49c8-97f9-34365d9598a3")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "TCR" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "83ac90f0-24ac-4866-b827-19aa1375d8e9")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "SWT0110-020010SSA"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "f76c35ab-abbd-4e07-8cd6-6d74d025c18f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "GCT"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6250beca-826f-400a-81e4-4f7a53a33b04")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/8ea3583c-4bf9-4d9f-826f-a898c1c22896/774b3079-b61f-4757-9047-8cfc15b7df87")
 		(sheetname "/IO_Power/")
 		(sheetfile "IO_Power.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "2")
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -2544,18 +2706,6 @@
 				)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "974a2fc0-01e5-4410-9eda-91ff95ae1cd7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(property "Function" "R_btn4"
 			(at 0 0 0)
 			(unlocked yes)
@@ -2569,20 +2719,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2725463b-714b-42e5-8f28-5d068a03d11e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2595,7 +2732,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2614,19 +2751,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "92bfad04-ed5b-4669-badc-34cfb539295e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "bdaaff2c-58fc-47db-8305-26450e8c1255")
 			(effects
 				(font
 					(size 1 1)
@@ -2832,18 +2956,6 @@
 				)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "0e20f452-2295-48fe-814b-ddd20dc21b8e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(property "Function" "R_buz1"
 			(at 0 0 0)
 			(unlocked yes)
@@ -2857,20 +2969,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9bc4bd2b-c922-4ea6-b58b-65dbc94bb480")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "MPN" "0603WAF4700T5E"
+		(property "MPN" "RC0603FR-07470RL"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2883,7 +2982,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2902,19 +3001,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "7db5d16e-9b55-47db-bec9-c1a18ef7faf3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC" "C23179"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "1662dc66-2ed6-4e17-8551-6cb33bb44a18")
 			(effects
 				(font
 					(size 1 1)
@@ -3120,18 +3206,6 @@
 				)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "36d6d1ef-c1bd-43d1-9616-5fa8e65bf508")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(property "Function" "R_btn1"
 			(at 0 0 0)
 			(unlocked yes)
@@ -3145,20 +3219,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6283c869-d926-44e2-9d20-c5b338b4781c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3171,7 +3232,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3190,19 +3251,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "3b2311c5-2dcb-4bb8-970e-1957c74224dc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e5e60847-d591-4bdb-a79e-91226f9c07a5")
 			(effects
 				(font
 					(size 1 1)
@@ -3387,7 +3435,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
@@ -3398,7 +3446,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "GCT SWT0110 tactile switch, SPST-NO, SMT, 2.0 mm actuator height"
 			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
@@ -3409,9 +3457,119 @@
 				)
 			)
 		)
+		(property "Function" "On/Off"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a366c91f-83de-439a-8ffb-7eec2d7f6e4b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Dielectric" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a02e5fa6-8327-46a7-9ec5-c969fe8ee4ec")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2c8c0dec-b907-421c-b00e-6f9febd23b6b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Voltage" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b99e63d8-e584-4370-8b98-2f7462db71ad")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Power" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "cd39a817-c167-4c57-a0d2-2f7cc5f50674")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "TCR" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e96f8d3e-3fd7-4a44-b015-dd5a3b62af0d")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "SWT0110-020010SSA"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8942a0a1-3138-4db2-ad43-ca4ddc21bf48")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "GCT"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "878ed1dd-67e2-4f80-bdf3-f93dcbe339cd")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/8ea3583c-4bf9-4d9f-826f-a898c1c22896/00bb5977-5e8e-4fd9-993e-45c962465035")
 		(sheetname "/IO_Power/")
 		(sheetfile "IO_Power.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "2")
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -3608,18 +3766,6 @@
 				)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "7147a792-42fe-4fbf-9e24-d18df2355374")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(property "Function" "R_btn2"
 			(at 0 0 0)
 			(unlocked yes)
@@ -3633,20 +3779,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ec2d2799-d2d2-46e0-8d2d-5de307560b45")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3659,7 +3792,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3678,19 +3811,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "e76d24dc-5a01-4166-88c6-40f1a151ae50")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4c2fffc7-14c1-4d20-aea8-c849b2f5aa9d")
 			(effects
 				(font
 					(size 1 1)
@@ -3875,7 +3995,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
@@ -3886,7 +4006,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "GCT SWT0110 tactile switch, SPST-NO, SMT, 2.0 mm actuator height"
 			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
@@ -3897,9 +4017,119 @@
 				)
 			)
 		)
+		(property "Function" "Up"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "f3a8be5e-8d00-4bf1-94d4-7b58a3d4af32")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Dielectric" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6fb0b8c1-bbaa-49a1-856b-7956b2f10be0")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ec360b07-0f4e-47bf-ad85-4b47b2cb2c6b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Voltage" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "d5a1a699-2c0d-484c-847f-325a1e8c8fd0")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Power" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "58e5b5d1-e3db-4db5-a885-70fb8b9e7fcc")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "TCR" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "edcfa8fe-658d-4d81-bdc9-2a34a8eb7076")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "SWT0110-020010SSA"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "878049a8-6e19-4244-b6fb-9ab8ebea7246")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "GCT"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a1f36c18-3cfb-49e2-9c47-b36ab5f2c894")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/8ea3583c-4bf9-4d9f-826f-a898c1c22896/660d924d-d080-4799-973c-5316d9a5804b")
 		(sheetname "/IO_Power/")
 		(sheetfile "IO_Power.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "2")
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -4096,18 +4326,6 @@
 				)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "298be3fd-c735-4901-a448-8d4616082f20")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(property "Function" "R_btn3"
 			(at 0 0 0)
 			(unlocked yes)
@@ -4121,20 +4339,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d669f965-75e8-4bc2-9cfd-e2f91d335a05")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -4147,7 +4352,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -4166,19 +4371,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "bf72e532-590d-4e6c-ab80-c5673ace74f9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "de65c183-0775-4ef2-860c-f00e45bd3acc")
 			(effects
 				(font
 					(size 1 1)
@@ -4463,20 +4655,6 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "3e0b9604-2b32-4afa-a659-3ffde8daaa6e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Dielectric" ""
 			(at 0 0 180)
 			(unlocked yes)
@@ -4716,19 +4894,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "a9176196-2bb5-4003-af5b-0ed1051ffde4")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_en1"
 			(at 0 0 270)
 			(unlocked yes)
@@ -4743,21 +4908,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "d06f89e7-59dc-4831-81dd-69b2dd98ab91")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -4771,7 +4922,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -4791,20 +4942,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "306795a2-45cd-4335-924e-7eed510866a5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "e86df175-a9a6-4243-b388-af94fa1bc2dd")
 			(effects
 				(font
 					(size 1 1)
@@ -5020,19 +5157,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "431a0a02-8f12-49cb-8ae6-0ef6aaf1be1d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_io0"
 			(at 0 0 0)
 			(unlocked yes)
@@ -5047,21 +5171,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "ea2305cb-badd-4bc5-8cac-92c9e181fd5a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -5075,7 +5185,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -5095,20 +5205,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "b2248e9c-7d63-4e35-94d1-66463cf811e5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "3ddccffa-8e49-4301-9d39-cee4e4e14f51")
 			(effects
 				(font
 					(size 1 1)
@@ -5324,39 +5420,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "c5969ed1-112d-4486-b1e2-2cd4cdac212f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Ren_bot1"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "a520020a-ccd8-4f7f-90cd-5bc1268dc608")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "a0588d78-591c-49e3-bb0e-ea199dd73dfc")
 			(effects
 				(font
 					(size 1 1)
@@ -5427,6 +5496,34 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "c4ae195d-39c6-4c0e-8746-d9c14ae12ef0")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MPN" ""
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "e2053248-f294-4181-85e0-4bc93288c984")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "b901e56b-93a0-40ad-9873-3ceb51df4862")
 			(effects
 				(font
 					(size 1 1)
@@ -5586,19 +5683,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "0b7079ce-f537-4e33-9636-f8b5615edd21")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_cc2"
 			(at 0 0 180)
 			(unlocked yes)
@@ -5613,21 +5697,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "ad3193ef-7f4c-4060-9fa6-5a38ee45aefd")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF5101T5E"
+		(property "MPN" "RC0603FR-075K1L"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -5641,7 +5711,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -5661,20 +5731,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "7aa65a14-131e-411a-9ab7-6dd9f067c52b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C23186"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "6e94fb3b-1a8f-40dc-9b5b-c68e1b33ee7c")
 			(effects
 				(font
 					(size 1 1)
@@ -5890,39 +5946,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "connector/SMD_single_row_plus_mounting_pad"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "02c942f3-aeb7-4366-a854-668f4f3b877f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "J_ntc1"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "7a26ed36-bb4c-4153-b538-7f19f8168f35")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "a48ab486-4201-4ec4-a6ca-05791d3f15a0")
 			(effects
 				(font
 					(size 1 1)
@@ -6001,21 +6030,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C161690"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "0165d552-7400-4edc-93ab-777d5e59806e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "BM02B-GHS-TBT(LF)(SN)"
+		(property "MPN" "Kit HALJIA XH-compatible 2P"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -6029,7 +6044,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "JST"
+		(property "Manufacturer" "HALJIA"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -6047,6 +6062,12 @@
 		(path "/8ea3583c-4bf9-4d9f-826f-a898c1c22896/557a6d09-a335-4ef0-b33c-924f10a2f5af")
 		(sheetname "/IO_Power/")
 		(sheetfile "IO_Power.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "2")
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -6317,19 +6338,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "4e544951-ac56-49ba-ac70-cd6db694301e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_s_sda1"
 			(at 0 0 0)
 			(unlocked yes)
@@ -6344,21 +6352,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "d78364ae-ff85-4737-aded-be0fcbc13064")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF330JT5E"
+		(property "MPN" "RC0603FR-0733RL"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -6372,7 +6366,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -6392,20 +6386,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "0b21a456-b214-46b2-9c65-bb868117e791")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C23140"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "fdf5f14a-0185-4aca-bf97-978ad9d9efb5")
 			(effects
 				(font
 					(size 1 1)
@@ -6585,7 +6565,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "CJ2310"
+		(property "Value" "DMN6140L-13"
 			(at 0 -2.4 180)
 			(layer "B.Fab")
 			(uuid "c83cc43b-2439-4847-9e98-b2f3b7b5a15b")
@@ -6621,39 +6601,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "package/gullwing"
-			(at 0 0 180)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "822d02e5-e05a-4b3e-8ff7-143932aa0c02")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Q_fan1"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "175b5867-dc3a-428e-aa1f-eb65a07ad03e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "42346cb0-b282-44c9-ba4c-4db6eae093ae")
 			(effects
 				(font
 					(size 1 1)
@@ -6732,21 +6685,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C75882"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "fdde73b6-f4a3-422a-b865-fc4eb4eed7ed")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "CJ2310"
+		(property "MPN" "DMN6140L-13"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -6760,7 +6699,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Jiangsu Changjing Electronics Technology Co., Ltd."
+		(property "Manufacturer" "Diodes Incorporated"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -7261,19 +7200,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "8e111e9b-1738-41bb-9f9d-96a1b448f90e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_ntc1"
 			(at 0 0 90)
 			(unlocked yes)
@@ -7288,21 +7214,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "3eacdf5e-03db-4dae-b8d7-092b419252c2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF4702T5E"
+		(property "MPN" "CRCW060347K0FKEA"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -7316,7 +7228,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "Vishay"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -7336,20 +7248,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "e4641d14-8904-4bef-8c11-17f28efd04dd")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C25819"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "8488373b-67e7-4ea5-97ae-c1bb21b04139")
 			(effects
 				(font
 					(size 1 1)
@@ -7583,20 +7481,6 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "f4d18bfe-a849-4201-92e0-d64bea28194b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Dielectric" ""
 			(at 0 0 180)
 			(unlocked yes)
@@ -7667,21 +7551,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C98663"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "72946297-c822-4d51-9804-e7ecb95cd980")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "PMEG6020ER,115"
+		(property "MPN" "PMEG6020ER-QX"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -7988,19 +7858,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "395f5691-e4a3-4d88-8f2b-9dbaf57d562f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Rfb_bot1"
 			(at 0 0 90)
 			(unlocked yes)
@@ -8015,21 +7872,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "e72efcc8-5247-4327-8c42-76ac3bb3ea4f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF3162T5E"
+		(property "MPN" "RC0603FR-1331K6L"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -8043,7 +7886,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -8063,20 +7906,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "6a1f646a-1234-4093-b027-688a4045ef62")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C25967"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "3e8cf943-5ad9-4e47-bf76-c82d3fcb8924")
 			(effects
 				(font
 					(size 1 1)
@@ -8292,19 +8121,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "fbb8203b-081e-40ec-ad53-302b53f42250")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Cff1"
 			(at 0 0 270)
 			(unlocked yes)
@@ -8319,21 +8135,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "b629c16c-2c7e-4b85-afea-d28ae335f871")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "CL10C470JB8NNNC"
+		(property "MPN" "CL10C470JC8NNNC"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -8347,7 +8149,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -8375,20 +8177,6 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C1671"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "14df1b58-4e90-42d4-87ac-53bcb4b76d89")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Tolerance" "5%"
 			(at 0 0 270)
 			(unlocked yes)
@@ -8403,7 +8191,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Voltage" "50V"
+		(property "Voltage" "100V"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -8596,39 +8384,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "95ef61fb-3f67-486b-af6b-2b5e2868716f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "C_esp3"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "a57e9995-1ece-4dfb-947b-f5835712d9f2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "59948cb9-75e1-405a-97cf-bad1a3262f61")
 			(effects
 				(font
 					(size 1 1)
@@ -8651,7 +8412,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -8671,20 +8432,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "872b4d28-dec8-4f5e-9460-e3217cc37741")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C14663"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "11c9e86e-04ce-49b2-aa38-161b2ab889c4")
 			(effects
 				(font
 					(size 1 1)
@@ -8900,19 +8647,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "8acd4a6b-dae6-45b1-88d6-e32eacca83ab")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_vbus_bot1"
 			(at 0 0 270)
 			(unlocked yes)
@@ -8927,21 +8661,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "4497a9d9-2da8-4c31-bdfb-e35d168a1b21")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF4752T5E"
+		(property "MPN" "RC0603FR-0747K5L"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -8955,7 +8675,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -8975,20 +8695,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "0b9b16c4-4e2d-4db8-b3ab-e996db20b075")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C23061"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "1ad8d535-a3a7-4c86-936e-0a48ca4f4bb8")
 			(effects
 				(font
 					(size 1 1)
@@ -9204,19 +8910,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 180)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "7537278d-3b3e-43b3-81d1-db31c7940490")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_g_heat1"
 			(at 0 0 0)
 			(unlocked yes)
@@ -9231,21 +8924,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "a5462a12-d7d6-47fc-9167-e0c6a857a546")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF1000T5E"
+		(property "MPN" "CR0603-FX-1000ELF"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -9259,7 +8938,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "Bourns"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -9279,20 +8958,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "1233325f-db1b-46cb-b17e-5a62a08b67d5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C22775"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "036287db-9b0f-461f-becd-4fb1c998291f")
 			(effects
 				(font
 					(size 1 1)
@@ -9508,19 +9173,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "8a78fbf3-7c2f-4a2a-b40f-7f2fd0814f89")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Cout2"
 			(at 0 0 270)
 			(unlocked yes)
@@ -9535,21 +9187,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "408d8aa6-c266-471b-9ebf-b41d0c3142f2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "CL21A226MAQNNNE"
+		(property "MPN" "CC0805MKX5R8BB226"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -9563,7 +9201,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -9583,20 +9221,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "d15b29db-5190-4e89-81a8-f71797544dba")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C45783"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "c075f76d-abaa-443b-9988-943710b8a4f3")
 			(effects
 				(font
 					(size 1 1)
@@ -9822,20 +9446,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "31785572-0a96-4470-a05b-a928817726b6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "8254f60a-4415-439b-9b80-7c8365ec755a")
 			(effects
 				(font
 					(size 1 1)
@@ -10083,39 +9693,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "0f0fa9d0-7791-454b-823e-eac9b9ea2a1c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Rpg1"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "b2fc01f1-2a1f-4dfa-bafd-30a20a81ed56")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "0d070010-792e-4eb6-b74a-232330535bd7")
 			(effects
 				(font
 					(size 1 1)
@@ -10186,6 +9769,34 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "23b5bf53-5c7b-41c1-9961-c31ad53d37ae")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MPN" ""
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "69cba8b6-70f0-42ff-8256-04f2b3e49027")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "c25c5c66-d375-4c35-822f-a4f65a17997e")
 			(effects
 				(font
 					(size 1 1)
@@ -10345,19 +9956,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "package/gullwing"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "37dcf7da-0c95-43f1-a29e-08c7bfb46dd8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Sim.Device" "NPN"
 			(at 0 0 90)
 			(unlocked yes)
@@ -10392,20 +9990,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "64831fbb-d37d-4edd-b3e2-0565e34b6028")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "ac81f9d3-ccee-4b0f-a6b2-62f722c7d699")
 			(effects
 				(font
 					(size 1 1)
@@ -10476,20 +10060,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "831fc4bb-d678-497a-8f0a-6248e25fdda7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C94514"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "50b435e8-7c59-42a6-8aec-471edf9af923")
 			(effects
 				(font
 					(size 1 1)
@@ -10900,39 +10470,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "capacitor/SMD/elec_round_polarized"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "f048fb8d-daad-4182-be91-905acfd6e7b4")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Cout3"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "ffd72424-0072-4ca3-9b3a-0e9efdd29ed9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "3ca5d1f4-c6fb-4b8e-991f-f39efcfa8a22")
 			(effects
 				(font
 					(size 1 1)
@@ -11003,6 +10546,34 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "3b460078-b82f-4565-865d-d171ad25b3f4")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MPN" ""
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "5a9f17c5-2bd8-4a66-a2b0-2b9e9592afe7")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "3320cde7-c0b8-4f3e-a185-312e18bba58b")
 			(effects
 				(font
 					(size 1 1)
@@ -11451,39 +11022,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "5548e661-6c98-49aa-ac26-dd6288cc4646")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "C_vdd2"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "561e4d2e-5dde-4c9b-897b-ab819197539e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "b6dc90a7-756c-4098-8556-d901128d8b9b")
 			(effects
 				(font
 					(size 1 1)
@@ -11506,7 +11050,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -11526,20 +11070,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "c2e12436-8256-4977-bd0c-34ccead4149d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C14663"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "fd75323d-2ac1-4e85-84ae-5bd779174f3d")
 			(effects
 				(font
 					(size 1 1)
@@ -11773,20 +11303,6 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "9ae536b9-f4b2-4211-960e-7dfb5793ada6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Dielectric" ""
 			(at 0 0 180)
 			(unlocked yes)
@@ -11857,21 +11373,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C98663"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "a9509e95-6643-45e0-841b-f4dac3d63a0e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "PMEG6020ER,115"
+		(property "MPN" "PMEG6020ER-QX"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -12178,39 +11680,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "c968c345-d0e7-4396-9e7f-9aa7714aa6b0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Cen1"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "1c5b304b-8546-45d5-a85b-c4cafeacc881")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "5bae2cdc-1115-41a7-a4d4-18558e821888")
 			(effects
 				(font
 					(size 1 1)
@@ -12281,6 +11756,34 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "67cdf392-b6ef-4be3-8ffb-a07acca72020")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MPN" ""
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "ea13167c-eb21-4c56-9ee6-62ba05f576f2")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "74eaff99-e175-4b17-a97d-4c0746c9d1bd")
 			(effects
 				(font
 					(size 1 1)
@@ -12440,19 +11943,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "a789a4fd-8c37-4b9d-9d77-b6bc4820b0d7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Cin2"
 			(at 0 0 90)
 			(unlocked yes)
@@ -12467,21 +11957,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "96202c80-d926-4fb0-bc80-91fcc50c9f69")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "GRM32ER71J106KA12L"
+		(property "MPN" "CL32B106KMVNNWE"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -12495,7 +11971,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -12515,20 +11991,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "03bc2739-0029-437e-9f3b-b8e5081ddc9d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C437568"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "54139d32-f0da-4537-948a-45edee6245c3")
 			(effects
 				(font
 					(size 1 1)
@@ -12857,39 +12319,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "8667fbbe-ccc6-4dd1-889c-82e1cbaacc13")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "C_reg1"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "e8e2c4f8-04ac-4d1c-9c18-c7622141d289")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "8ed5efb5-6ef7-415e-886c-22716ff3d081")
 			(effects
 				(font
 					(size 1 1)
@@ -12912,7 +12347,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -12932,20 +12367,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "2ebe621b-5ca3-46ed-8c93-3cc1ba941fa4")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C14663"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "8d7e09e1-6f8f-4953-918c-f64fda69472a")
 			(effects
 				(font
 					(size 1 1)
@@ -13138,7 +12559,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://eu.mouser.com/datasheet/2/837/usb4216-3577180.pdf"
 			(at 0 0 0)
 			(layer "B.Fab")
 			(hide yes)
@@ -13150,7 +12571,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "USB-C receptacle, USB 2.0, 16-pin, horizontal SMT"
 			(at 0 0 0)
 			(layer "B.Fab")
 			(hide yes)
@@ -13162,9 +12583,143 @@
 				(justify mirror)
 			)
 		)
+		(property "Height" ""
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "145651c5-f601-4196-8260-b98883e5154f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Manufacturer_Part_Number" "USB4216-03-A"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "e07db273-797d-4ca3-b6c8-ee579e608df8")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Mouser Part Number" "640-USB4216-03-A"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "4258a2d8-7deb-4488-b128-17f1848fa561")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/GCT/USB4216-03-A?qs=Tc%252BHE9vUsnv1G2UWLFIexA%3D%3D"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "eb57f060-1017-4f6e-bf3a-c1c6210ff6c3")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Arrow Part Number" ""
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "6ba71933-e305-4e9a-9ceb-3f96c64adc7d")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Arrow Price/Stock" ""
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "aa295269-53dc-45ec-8678-822823f72386")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Manufacturer" "GCT"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "38d1cca0-35f9-44f3-a03f-5e49c497debc")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Function" "J2"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "d0fb43a7-1ca9-47d3-9ea5-8f09c2689a7d")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MPN" "USB4216-03-A"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "65469dcd-5ed0-439d-b308-64fef61c590d")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
 		(path "/65de997d-f9e3-4a49-8760-31d73ce5b93f/ac4e38ba-6060-48ed-9d9a-e10309ce0fb8")
 		(sheetname "/MCU/")
 		(sheetfile "MCU.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "A1" "B1" "G1" "G2" "G3" "G4" "A4" "B4" "A5" "B5" "A7" "B7" "A6"
+					"B6" "A8" "B8"
+				)
+			)
+		)
 		(attr through_hole)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -13592,19 +13147,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "6ce2ad40-775b-4983-b0d9-7f54adc1a987")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Rfb_top1"
 			(at 0 0 270)
 			(unlocked yes)
@@ -13619,21 +13161,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "ca3d2dd2-7d95-45a5-9856-c9d1d214db14")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -13647,7 +13175,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -13667,20 +13195,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "22ec9ec2-f48a-46f6-a769-27a5324e47fb")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C25803"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "9dea2f9a-b9c0-4ed3-950a-16390982500c")
 			(effects
 				(font
 					(size 1 1)
@@ -13873,7 +13387,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 0 0 90)
 			(layer "B.Fab")
 			(hide yes)
@@ -13885,7 +13399,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "GCT SWT0110 tactile switch, SPST-NO, SMT, 2.0 mm actuator height"
 			(at 0 0 90)
 			(layer "B.Fab")
 			(hide yes)
@@ -13897,9 +13411,127 @@
 				(justify mirror)
 			)
 		)
+		(property "Function" "SW_BOOT"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "b67cc5ae-7d66-4361-adf7-de2688eb6850")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Dielectric" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "dbd26798-a54f-4ebe-9f0f-a96bbcf079ef")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Tolerance" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "c87fe2eb-3788-4912-8e66-8f85ee813fa6")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Voltage" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "7dd6835e-1fd4-49cb-bc90-7b008664be9e")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Power" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "c1e2d7d0-b0ef-40a1-8184-c9a78c0617e2")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "TCR" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "6c321eb4-bc63-4bbb-9ed8-ccb38a6545d3")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MPN" "SWT0110-020010SSA"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "bbf764a2-9bf4-412d-839b-b1027b67370b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Manufacturer" "GCT"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "d5204cb5-988d-4a40-a71b-379e3c4dd2d3")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
 		(path "/65de997d-f9e3-4a49-8760-31d73ce5b93f/96c6b114-8573-44e4-8190-5bb890fd6662")
 		(sheetname "/MCU/")
 		(sheetfile "MCU.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "2")
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -14065,7 +13697,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "USBLC6-2SC6"
+		(property "Value" "82400102"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "3a2d742a-0eb1-4457-a82f-0b801a31940a")
@@ -14077,7 +13709,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" "https://www.st.com/resource/en/datasheet/usblc6-2.pdf"
+		(property "Datasheet" ""
 			(at 0 0 270)
 			(layer "B.Fab")
 			(hide yes)
@@ -14101,39 +13733,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "package/gullwing"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "3c1d5a0d-255b-465c-b687-c13808c1e0f0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "U4"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "4c4f6eac-fb35-408d-ab7f-4ec22fe5d686")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "5c4f1efe-c60f-4df3-907a-da614bad0341")
 			(effects
 				(font
 					(size 1 1)
@@ -14212,21 +13817,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C7519"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "dbd8d068-c4c6-44c2-9e6b-c423ef4d9476")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "USBLC6-2SC6"
+		(property "MPN" "82400102"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -14240,7 +13831,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "STMicroelectronics"
+		(property "Manufacturer" "Würth Elektronik"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -14627,20 +14218,6 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "76664f8c-1af8-4b64-be70-ed7abd295eb6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Dielectric" ""
 			(at 0 0 270)
 			(unlocked yes)
@@ -14703,20 +14280,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "b32bcaaf-c5f1-44bb-b68d-79524044d2cc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C701341"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "ec73c20e-9a7e-4c08-a8fe-3cf4c5dd564b")
 			(effects
 				(font
 					(size 1 1)
@@ -15613,20 +15176,6 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "5e2c9b6f-912b-4ec1-9533-7777e2e25ead")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Dielectric" ""
 			(at 0 0 180)
 			(unlocked yes)
@@ -15866,39 +15415,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "package/gullwing"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "39d08aaa-86e2-4e59-9a3a-8f327f123bcc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Dz1"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "696e74be-a19c-49c6-b02d-58d1d267660f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "e8c8edb2-e96d-408f-b938-4b02bdab409e")
 			(effects
 				(font
 					(size 1 1)
@@ -15969,20 +15491,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "b9474b96-6308-446e-8929-d3521fb0abce")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C500789"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "f2bf2dbe-5105-45cb-bdae-89966a885c84")
 			(effects
 				(font
 					(size 1 1)
@@ -16391,19 +15899,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "e8833388-a810-410c-9b9a-22be747f6da0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "C_esp2"
 			(at 0 0 90)
 			(unlocked yes)
@@ -16418,21 +15913,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "57f28538-fa7f-4069-bab8-31acac160af9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "CL10B105KB8NQNC"
+		(property "MPN" "GCM188R71E105KA64J"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16446,7 +15927,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "Murata Electronics"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16474,20 +15955,6 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C5199872"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "780c1505-d37e-4866-9373-f785f87cc9dc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Tolerance" "10%"
 			(at 0 0 90)
 			(unlocked yes)
@@ -16502,7 +15969,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Voltage" "50V"
+		(property "Voltage" "25V"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16713,20 +16180,6 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "5935d051-43c6-48a2-9cb0-61ca72122c66")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Dielectric" ""
 			(at 0 0 90)
 			(unlocked yes)
@@ -16797,21 +16250,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C96335"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "3d55b04d-7640-4bbf-9437-61528b94aab6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "SMBJ28A-TR"
+		(property "MPN" "SMBJ28A"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16825,7 +16264,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "STMicroelectronics"
+		(property "Manufacturer" "Littelfuse"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -17120,19 +16559,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "bd1910a3-be9d-463a-aace-fc49a11dded8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_vbus_top1"
 			(at 0 0 90)
 			(unlocked yes)
@@ -17147,21 +16573,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "753a7c43-c40d-40eb-9313-afbaecb4ace5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF2212T5E"
+		(property "MPN" "RC0603FR-1322K1L"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -17175,7 +16587,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -17195,20 +16607,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "7ddeed26-1351-4eb5-b18e-f56b99085db3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C25961"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "13c22cc1-8ccc-4ec0-b394-3383dac886d2")
 			(effects
 				(font
 					(size 1 1)
@@ -17424,19 +16822,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 180)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "de4ee070-5ef0-4391-ac7b-1baea469c11f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_cc1"
 			(at 0 0 0)
 			(unlocked yes)
@@ -17451,21 +16836,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "abec34b7-756d-447a-b8b8-dec80d2793b5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF5101T5E"
+		(property "MPN" "RC0603FR-075K1L"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -17479,7 +16850,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -17499,20 +16870,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "9258746f-3489-482b-b84e-4277f7f93a93")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C23186"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "3bc85039-9881-4772-b31a-f2aba0506154")
 			(effects
 				(font
 					(size 1 1)
@@ -17728,39 +17085,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "package/TO_SOT/SMD"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "9292a3b3-00ea-4b5b-9a19-8eb0d17fa47c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Q1"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "c7c06d05-1bec-46a7-847c-c02c645621c3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "28c61f15-3935-41ec-8fd2-9ef22ff8d449")
 			(effects
 				(font
 					(size 1 1)
@@ -17831,20 +17161,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "25a999ff-2649-40d0-808c-a190d3b6b79d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C93034"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "3dc4ba64-7ab9-441d-95eb-9075d2870b8f")
 			(effects
 				(font
 					(size 1 1)
@@ -18158,7 +17474,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "HCB3216KF-601T30"
+		(property "Value" "BLM31KN601SH1L"
 			(at 23.9805 43.1 90)
 			(layer "B.Fab")
 			(uuid "191995f7-4c5f-4134-84cb-398a3f10c65d")
@@ -18194,53 +17510,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "0f088650-cea2-4e2e-b95c-9a55334fe032")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C357023 "
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "94b3d46c-e866-42d7-942e-c5eef51beeee")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "FB1"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "64aa31fa-421f-4f80-846f-1f2783318f85")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "2d7ea493-bc99-49b9-917c-e6b5e8056485")
 			(effects
 				(font
 					(size 1 1)
@@ -18319,7 +17594,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MPN" "HCB3216KF-601T30"
+		(property "MPN" "BLM31KN601SH1L"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18333,12 +17608,26 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "TAI-TECH"
+		(property "Manufacturer" "Murata Electronics"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "71ce0147-9137-44f1-aa6f-1eff7e0f6b0a")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Mouser Part Number" ""
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "3625a813-485e-4ba8-bb2d-9b416699429c")
 			(effects
 				(font
 					(size 1 1)
@@ -18498,19 +17787,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 180)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "bdadc5d9-9c50-4a57-bea4-a3f1ad1a5b8c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_pd_fan1"
 			(at 0 0 0)
 			(unlocked yes)
@@ -18525,21 +17801,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "5d414da8-595c-4d06-b3d1-45bac0cf8e48")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18553,7 +17815,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18573,20 +17835,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "3850a1c7-f7a0-4b21-99c2-6008225033a3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C25803"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "7b56ee3f-0f42-49b4-9edb-c0f716af3c6f")
 			(effects
 				(font
 					(size 1 1)
@@ -18802,53 +18050,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "babafeb5-99bc-4b2a-ac36-e3c47e6d196f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "F1"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "01cd45cf-a164-4685-bde4-0194704d06f7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C354897"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "ea2ac747-7c88-4b34-98cc-132863ea71e4")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "d6b2db36-9d10-48b2-8807-005e9c88d6a8")
 			(effects
 				(font
 					(size 1 1)
@@ -18927,7 +18134,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MPN" "1206T3A63V"
+		(property "MPN" "SF-1206S300W-2"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18941,7 +18148,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Walter Elec"
+		(property "Manufacturer" "Bourns"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -19219,19 +18426,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "38e64ac4-910b-4631-9a57-a1661fe9bf97")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_g_fan1"
 			(at 0 0 180)
 			(unlocked yes)
@@ -19246,21 +18440,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "832f632f-962a-48bb-88c6-8ddbd073c05a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF1000T5E"
+		(property "MPN" "CR0603-FX-1000ELF"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -19274,7 +18454,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "Bourns"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -19294,20 +18474,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "796ef0a1-b5c8-476c-846e-9b7e2722d75f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C22775"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "e85f7fe6-cd39-411e-b62e-8173c8922188")
 			(effects
 				(font
 					(size 1 1)
@@ -19523,19 +18689,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 180)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "9aa0c5f6-65d2-47fa-bdb4-5640a57355a0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Ren_top1"
 			(at 0 0 0)
 			(unlocked yes)
@@ -19550,21 +18703,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "485e3baf-548f-41ff-81fb-847adc1d0cea")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -19578,7 +18717,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -19598,20 +18737,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "dc855ac5-9474-4db0-a765-f37d48e312b7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C25803"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "876c7c0f-ec5e-4433-a61e-092cae11c050")
 			(effects
 				(font
 					(size 1 1)
@@ -19827,39 +18952,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "connector/SMD_single_row_plus_mounting_pad"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "2df9ea4d-d64c-486d-8ce0-d4a03fefefd0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "J_fan2"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "b3a284cc-0b2a-4ca6-9c72-c4877f18a76a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "b940a667-a705-4398-be0d-0de8a0ae2127")
 			(effects
 				(font
 					(size 1 1)
@@ -19930,20 +19028,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "06096519-4f07-4edf-a1f9-298dd3286c4a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C160352"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "33292341-1a92-4318-92e1-87493cf51be1")
 			(effects
 				(font
 					(size 1 1)
@@ -20427,39 +19511,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 180)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "58f6f6a3-3e77-4996-bda7-a6db682edb6d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Cbst1"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "200f33c8-2b3d-42d4-9b62-2539d4570185")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "939d2cda-b292-43fe-8e40-b4090541f700")
 			(effects
 				(font
 					(size 1 1)
@@ -20482,7 +19539,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -20502,20 +19559,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "1abcb23e-73e3-4a3e-96d5-b42afec212e7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C14663"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "866dd728-634e-4e7c-ad24-af90feff43f5")
 			(effects
 				(font
 					(size 1 1)
@@ -20731,19 +19774,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "6eaaf18b-4b62-49bd-88d0-80f5846b51af")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_rst1"
 			(at 0 0 90)
 			(unlocked yes)
@@ -20758,21 +19788,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "199fd67f-6950-4015-abe1-1d2e16e8e5bd")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF1001T5E"
+		(property "MPN" "RC0603FR-071KL"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -20786,7 +19802,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -20806,20 +19822,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "d054aeca-a708-4137-82e0-803f4f3016dc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C21190"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "788f1df0-2ff2-4fda-bbdd-24905e949f2f")
 			(effects
 				(font
 					(size 1 1)
@@ -21125,7 +20127,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://gct.co/files/drawings/swt0110.pdf"
 			(at 0 0 270)
 			(layer "B.Fab")
 			(hide yes)
@@ -21137,7 +20139,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "GCT SWT0110 tactile switch, SPST-NO, SMT, 2.0 mm actuator height"
 			(at 0 0 270)
 			(layer "B.Fab")
 			(hide yes)
@@ -21149,9 +20151,127 @@
 				(justify mirror)
 			)
 		)
+		(property "Function" "SW_RST"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "1f517939-f19f-492f-92da-9d9bba1b3990")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Dielectric" ""
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "4fc1da84-3536-4d66-854f-e9ed4c2945b2")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Tolerance" ""
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "6abe6752-9d77-40c3-8c12-91b58e87627e")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Voltage" ""
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "b5628307-3f1e-4523-81de-699b56af6f8b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Power" ""
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "cddf6672-44cb-4f4b-86ee-a193cad488e1")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "TCR" ""
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "ddf7870e-2f8d-4472-952d-fc635e15994e")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MPN" "SWT0110-020010SSA"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "74bf4cb6-4578-47f8-b78d-fd1f75c86540")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "Manufacturer" "GCT"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "8a28b0d9-d99a-415b-91c2-b1e5992bdac2")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
 		(path "/65de997d-f9e3-4a49-8760-31d73ce5b93f/f728ae59-dc88-4144-8be0-0c583557fd41")
 		(sheetname "/MCU/")
 		(sheetfile "MCU.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "2")
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -21353,19 +20473,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "d481990c-2121-4147-bf7a-ffd8f37679b9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_pu_sda1"
 			(at 0 0 0)
 			(unlocked yes)
@@ -21380,21 +20487,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "3b8964b6-ad82-499f-88fb-8a97cde8c378")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -21408,7 +20501,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -21428,20 +20521,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "8f48f680-35b0-4cdd-9a40-d1c78accb45e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "b4f0526c-5dcb-4580-8486-b30f41f394da")
 			(effects
 				(font
 					(size 1 1)
@@ -21657,39 +20736,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "f71da367-a41a-403c-8469-9817746471b5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "C_ntc1"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "ebfc1787-0452-44d7-b846-a9270600cbc3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "dee8c44c-76d8-4af2-bb57-710717351072")
 			(effects
 				(font
 					(size 1 1)
@@ -21712,7 +20764,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -21732,20 +20784,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "4737cc35-186c-49ed-9404-7e7307c37587")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C14663"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "36dc4a5e-a783-42a1-85a5-b70b31fa0fff")
 			(effects
 				(font
 					(size 1 1)
@@ -21925,7 +20963,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AP66200"
+		(property "Value" "AP66200QFVBW-13"
 			(at 0 -3.3 0)
 			(layer "B.Fab")
 			(uuid "a156bbb6-b31a-4155-9bc6-f574b1db171c")
@@ -21961,39 +20999,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "package/no_lead"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "e5e122d7-baa2-4297-a0d4-f1ac19eb58de")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "U2"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "addfb398-c466-41ad-84bb-bd8477b21f36")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "92693799-0f81-4cff-8cbd-342ca8de4a56")
 			(effects
 				(font
 					(size 1 1)
@@ -22072,21 +21083,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C6741205"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "a581f801-8af9-483e-b1b0-04240a3870b0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "AP66200FVBW-13"
+		(property "MPN" "AP66200QFVBW-13"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -22709,39 +21706,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "package/no_lead"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "c6d16aca-0e8f-4c9b-9d3e-7ddf341cc5c9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "U3"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "62b9b568-f8d5-410c-b564-4ba17bb7de1b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "6d8e6fa9-12a8-4c37-93a1-ec20bd469b89")
 			(effects
 				(font
 					(size 1 1)
@@ -22820,20 +21790,6 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C964632"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "921b85c5-278a-43fb-9cce-c130cdc8999c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "MPN" "CP2102N-A02-GQFN28R"
 			(at 0 0 180)
 			(unlocked yes)
@@ -22848,7 +21804,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Skyworks / Silicon Labs"
+		(property "Manufacturer" "Silicon Labs"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -23597,20 +22553,6 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "370a7c5d-d7c0-477b-bc51-b9142fd53a93")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Dielectric" ""
 			(at 0 0 180)
 			(unlocked yes)
@@ -23850,19 +22792,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "package/TO_SOT/SMD"
-			(at 0 0 180)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "cd636493-283a-47fb-8d1d-8d1c4a49721f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Q_heat1"
 			(at 0 0 0)
 			(unlocked yes)
@@ -23877,7 +22806,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "onsemi"
+		(property "Manufacturer" "Infineon"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -23897,34 +22826,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "c8d5d372-6953-42a5-bd04-9bda83cbf048")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C67279"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "ab7680dc-4f50-4d81-a18b-ca99c8774c69")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "523c2c7b-4423-4480-80ca-e1b21dc3f95f")
 			(effects
 				(font
 					(size 1 1)
@@ -24316,39 +23217,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "connector/JST"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "9af97d4a-e87c-4c10-85a7-7c73774e24a9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "J_dc1"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "2e0fb073-191f-4bfb-9afd-dbad5e28cbb8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "138c38dd-6286-4afc-a494-d1585bd90538")
 			(effects
 				(font
 					(size 1 1)
@@ -24419,20 +23293,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "2420e2eb-76df-4cea-a176-1229f3f29fe1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C144394"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "48243629-f377-46e7-99c5-2025be7cf7e0")
 			(effects
 				(font
 					(size 1 1)
@@ -24760,19 +23620,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "9670ad7c-564e-4751-ab46-ea3dc51ad826")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_s_scl1"
 			(at 0 0 180)
 			(unlocked yes)
@@ -24787,21 +23634,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "c99c481c-5670-47b8-b815-24776d43d0d2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF330JT5E"
+		(property "MPN" "RC0603FR-0733RL"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -24815,7 +23648,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -24835,20 +23668,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "3418a155-f80f-4dc2-b483-a2174a93de8a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C23140"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "0ef8f808-4631-4b8f-8f98-0ba8681da721")
 			(effects
 				(font
 					(size 1 1)
@@ -25064,19 +23883,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "0c7b3869-ae05-46e7-8189-512ac3e776c3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Cout1"
 			(at 0 0 90)
 			(unlocked yes)
@@ -25091,21 +23897,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "d2e11ef1-314b-46eb-a8c7-df33c6420ec5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "CL21A226MAQNNNE"
+		(property "MPN" "CC0805MKX5R8BB226"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -25119,7 +23911,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -25139,20 +23931,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "95739773-1991-4c3e-9e52-29f1629e8cbc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C45783"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "adc69f45-b99e-4dc8-a7a6-5abd0231453d")
 			(effects
 				(font
 					(size 1 1)
@@ -25368,39 +24146,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "connector/JST"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "8434a742-2bd4-4e6b-8df3-ff71cff23e26")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "J_heat1"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "fb137a1f-4a60-4c59-b42b-8f192a9a0b67")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "7bfc877d-0d35-4ebf-ad8e-92959d806997")
 			(effects
 				(font
 					(size 1 1)
@@ -25479,21 +24230,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C158012"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "ffccbbd8-802e-4e82-b161-1af1653046cf")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "B2B-XH-A(LF)(SN)"
+		(property "MPN" "Kit HALJIA XH-compatible 2P"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -25507,7 +24244,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "JST"
+		(property "Manufacturer" "HALJIA"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -25801,19 +24538,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "08ba5b4d-7cab-47f2-80f7-a1a07d3afcf9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Rg1"
 			(at 0 0 90)
 			(unlocked yes)
@@ -25828,21 +24552,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "cb1622e5-2c57-46b2-9fc2-bc59f15a3258")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -25856,7 +24566,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -25876,20 +24586,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "b8b61d1e-75fd-4920-aef4-3674b03bf0c9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C25803"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "4a1417f2-c323-4048-9574-a1e643b55b6d")
 			(effects
 				(font
 					(size 1 1)
@@ -26115,20 +24811,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "d028c907-3a96-4286-a438-c7d4dbfe60d2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "c59607f1-fc4b-433d-80da-3605039b2ac4")
 			(effects
 				(font
 					(size 1 1)
@@ -26376,19 +25058,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 180)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "b09cad33-4d90-479f-b91f-86bb2fd74973")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_pd_heat1"
 			(at 0 0 0)
 			(unlocked yes)
@@ -26403,21 +25072,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "047600db-800c-4c1c-ae24-e987c867922a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -26431,7 +25086,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -26451,20 +25106,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "51cc9b5b-f51a-438b-9b47-9533b3a16757")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C25803"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "aa1eec63-409a-4c41-b0f7-fdec779ead07")
 			(effects
 				(font
 					(size 1 1)
@@ -26680,39 +25321,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "572d9963-fca8-4a56-b377-18b955a4ddbc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Cin3"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "5cb07f29-342d-46c0-a6d4-917c7f8051ff")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "bb723d8c-48ba-47ca-9019-a0d8f198e3ad")
 			(effects
 				(font
 					(size 1 1)
@@ -26735,7 +25349,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -26755,20 +25369,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "b5490dc3-cdba-41b3-89d1-f6169591de71")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C14663"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "9cd0f95a-c899-43c6-943c-e3ea036b8d7e")
 			(effects
 				(font
 					(size 1 1)
@@ -26984,19 +25584,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "2a8265d2-b3e5-4414-9704-726624917394")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_pu_scl1"
 			(at 0 0 180)
 			(unlocked yes)
@@ -27011,21 +25598,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "7c98c7c5-df8a-432b-b723-f62e98f1424c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -27039,7 +25612,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -27059,20 +25632,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "44b6f5e6-5b07-40b3-8627-b18bd2ce8a40")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "2ee0d2a3-9ef8-4014-8be7-86308da630d5")
 			(effects
 				(font
 					(size 1 1)
@@ -27298,20 +25857,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "e22ce92b-297e-44ed-b2d3-d57fedf57b7c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "9bdc4837-cbf2-48de-9fbd-315d64498afd")
 			(effects
 				(font
 					(size 1 1)
@@ -27548,7 +26093,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Description" "COILCRAFT - XAL4040-822MEC - INDUCTOR, 8.2UH, 3.4A, 20%, PWR, 27MHZ"
+		(property "Description" "Coilcraft XAL4040 shielded power inductor, 8.2 uH"
 			(at 0 0 0)
 			(layer "B.Fab")
 			(hide yes)
@@ -27574,20 +26119,6 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "3b8e30ba-5a90-49f6-a8d2-2957815f5682")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "MPN" "XAL4040-822MEC"
 			(at 0 0 180)
 			(unlocked yes)
@@ -27602,7 +26133,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "COILCRAFT"
+		(property "Manufacturer" "Coilcraft"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -27877,39 +26408,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "connector/SMD_single_row_plus_mounting_pad"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "a7b454ca-ff9f-4c8e-9075-04e099ac1363")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "J_sens1"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "27ac1fa4-890e-480f-9b38-87fe3c20eac7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "ba224bfd-acb2-4218-bf05-dda659ec46f1")
 			(effects
 				(font
 					(size 1 1)
@@ -27980,20 +26484,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "ad33b0a5-ba9e-4b48-8bd2-0da747baa563")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C160354"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "e44ce20e-92eb-42e4-b9ed-1447f1c127e4")
 			(effects
 				(font
 					(size 1 1)
@@ -28519,19 +27009,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "af57c7af-4ae6-46a3-907b-99dc6e3b7f4f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Cmcu1"
 			(at 0 0 90)
 			(unlocked yes)
@@ -28546,21 +27023,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "f358d3d8-c2e4-4bfa-84b3-60953592e035")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "CL21A226MAQNNNE"
+		(property "MPN" "CC0805MKX5R8BB226"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -28574,7 +27037,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -28594,20 +27057,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "aea5a083-4dac-4f90-a89a-27c73f141adc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C45783"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "762562ae-681d-4779-ab20-31c973866207")
 			(effects
 				(font
 					(size 1 1)
@@ -28823,19 +27272,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "0f17d9b1-9640-497f-8065-884c91dd3a8b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Sim.Pins" "1=K 2=A"
 			(at 0 0 180)
 			(unlocked yes)
@@ -28856,20 +27292,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "c19c2ac9-2f64-4a5c-99cf-a5abaaffd547")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "e5416465-eb97-47ca-9a33-afc40ad52b05")
 			(effects
 				(font
 					(size 1 1)
@@ -28948,21 +27370,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C5569446"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "b4a0c094-d6fe-4b48-8e46-ea9b6b112530")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "APT2012LZGCK"
+		(property "MPN" "HSMG-C170"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -28976,7 +27384,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Kingbright"
+		(property "Manufacturer" "Broadcom"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -29192,39 +27600,12 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "34a76efb-99cc-4d62-9db7-902d640a41c4")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "C_vdd1"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "95b83056-e137-41bc-a923-3764507bdcfa")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "d7e0d523-4eb3-4120-8bd6-4917932126fb")
 			(effects
 				(font
 					(size 1 1)
@@ -29247,7 +27628,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -29267,20 +27648,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "0a5c9874-1147-424f-bd0e-4bbb04db5056")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C19666"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "30d4ee5a-c85b-4a02-b287-a79628138d70")
 			(effects
 				(font
 					(size 1 1)
@@ -29473,7 +27840,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" "http://industrial.panasonic.com/cdbs/www-data/pdf/RDE0000/ABA0000C1240.pdf"
+		(property "Datasheet" ""
 			(at 0 0 180)
 			(layer "B.Fab")
 			(hide yes)
@@ -29485,7 +27852,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Description" "Aluminum Electrolytic Capacitors - SMD 100uF 50volts 6.3x7.7mm SMD"
+		(property "Description" "Polarized capacitor"
 			(at 0 0 180)
 			(layer "B.Fab")
 			(hide yes)
@@ -29493,20 +27860,6 @@
 			(effects
 				(font
 					(size 1.27 1.27)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C401753"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "0183cb18-4195-4c23-83f2-4b07141df252")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
 				)
 				(justify mirror)
 			)
@@ -30827,19 +29180,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "package/gullwing"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "73f5e765-bcf6-49c3-a16f-3c2ed943aa45")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Sim.Device" "NPN"
 			(at 0 0 90)
 			(unlocked yes)
@@ -30874,20 +29214,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "c0b0a0e6-dfc6-47a9-857e-b30910938454")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "ab5a9cf4-f363-4759-956b-eb9580818d7a")
 			(effects
 				(font
 					(size 1 1)
@@ -30958,20 +29284,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "9fb1eebd-23d0-4b76-b076-764dd2b87a88")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C94514"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "13e809ca-c144-44b5-8d75-0cf9774472c2")
 			(effects
 				(font
 					(size 1 1)
@@ -31400,20 +29712,6 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "ce8123b5-7fcf-4a3a-bee0-1d7fc77829e3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Dielectric" ""
 			(at 0 0 180)
 			(unlocked yes)
@@ -31653,19 +29951,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "7e5888dc-bafc-4089-b561-830492dbbe0e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "C_en1"
 			(at 0 0 90)
 			(unlocked yes)
@@ -31680,21 +29965,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "d7d9ff13-f1fd-4653-8400-040bb604eef3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "CL10B105KB8NQNC"
+		(property "MPN" "GCM188R71E105KA64J"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -31708,7 +29979,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "Murata Electronics"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -31736,20 +30007,6 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C5199872"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "4a11bdcf-6522-447e-a861-62e130fa9a70")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Tolerance" "10%"
 			(at 0 0 90)
 			(unlocked yes)
@@ -31764,7 +30021,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Voltage" "50V"
+		(property "Voltage" "25V"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -31957,19 +30214,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "2293ff7a-1f4c-49f9-97ce-f169d07a2e95")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "C_esp1"
 			(at 0 0 90)
 			(unlocked yes)
@@ -31984,21 +30228,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "d89bab33-1176-4a76-9e5a-1768c07142b7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "CL21A106KAYNNNE"
+		(property "MPN" "CC0805KRX5R8BB106"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -32012,7 +30242,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -32032,20 +30262,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "2e89c26a-3bee-4ce4-a2e5-371ee63f2e3b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C15850"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "538b7c02-3845-4d19-886f-dc7189b4cf4d")
 			(effects
 				(font
 					(size 1 1)
@@ -32261,19 +30477,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "673fa0a9-9a8c-4c6c-b307-c9c19a1c6ed1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "R_led1"
 			(at 0 0 180)
 			(unlocked yes)
@@ -32288,21 +30491,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "f9694684-2498-468e-bf0c-18e4ab98fc5d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "0603WAF3300T5E"
+		(property "MPN" "RC0603FR-07330RL"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -32316,7 +30505,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -32336,20 +30525,6 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "e641dd71-c636-40e3-9592-cb6fef8887dc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "LCSC" "C23138"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "f0981a42-c781-46ac-a731-59b0fb0744d6")
 			(effects
 				(font
 					(size 1 1)
@@ -32565,19 +30740,6 @@
 				(justify mirror)
 			)
 		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 270)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "abfb4268-2c1c-4047-a829-38bbb170a0a1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
 		(property "Function" "Cvcc1"
 			(at 0 0 90)
 			(unlocked yes)
@@ -32592,21 +30754,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "0a430027-28ee-4dd6-9472-bd6976531d4a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MPN" "CL10B105KB8NQNC"
+		(property "MPN" "GCM188R71E105KA64J"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -32648,7 +30796,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Voltage" "50V"
+		(property "Voltage" "25V"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -32690,21 +30838,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C5199872"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "5189c472-2cf1-4f92-aaca-00390dd7a780")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "Murata Electronics"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -38522,15 +36656,15 @@
 				(xy 185.7265 114.406389) (xy 128.549782 114.406389) (xy 128.529913 114.38652) (xy 128.438587 114.333793)
 				(xy 128.336727 114.3065) (xy 128.231273 114.3065) (xy 128.129413 114.333793) (xy 128.12941 114.333794)
 				(xy 128.038085 114.386521) (xy 127.963521 114.461085) (xy 127.910794 114.55241) (xy 127.910793 114.552413)
-				(xy 127.8835 114.654273) (xy 100.3005 114.654273) (xy 100.3005 113.003273) (xy 113.4075 113.003273)
-				(xy 113.4075 113.108727) (xy 113.434793 113.210587) (xy 113.48752 113.301913) (xy 113.562087 113.37648)
-				(xy 113.653413 113.429207) (xy 113.755273 113.4565) (xy 113.755275 113.4565) (xy 113.860725 113.4565)
-				(xy 113.860727 113.4565) (xy 113.962587 113.429207) (xy 114.053913 113.37648) (xy 114.12848 113.301913)
-				(xy 114.181207 113.210587) (xy 114.2085 113.108727) (xy 114.2085 113.003273) (xy 114.181207 112.901413)
-				(xy 114.12848 112.810087) (xy 114.053913 112.73552) (xy 113.962587 112.682793) (xy 113.860727 112.6555)
-				(xy 113.755273 112.6555) (xy 113.653413 112.682793) (xy 113.65341 112.682794) (xy 113.562085 112.735521)
-				(xy 113.487521 112.810085) (xy 113.434794 112.90141) (xy 113.434793 112.901413) (xy 113.4075 113.003273)
-				(xy 100.3005 113.003273) (xy 100.3005 110.570525) (xy 106.9055 110.570525) (xy 106.9055 110.715475)
+				(xy 127.8835 114.654273) (xy 100.3005 114.654273) (xy 100.3005 112.114273) (xy 114.5485 112.114273)
+				(xy 114.5485 112.219727) (xy 114.575793 112.321587) (xy 114.62852 112.412913) (xy 114.703087 112.48748)
+				(xy 114.794413 112.540207) (xy 114.896273 112.5675) (xy 114.896275 112.5675) (xy 115.001725 112.5675)
+				(xy 115.001727 112.5675) (xy 115.103587 112.540207) (xy 115.194913 112.48748) (xy 115.26948 112.412913)
+				(xy 115.322207 112.321587) (xy 115.3495 112.219727) (xy 115.3495 112.114273) (xy 115.322207 112.012413)
+				(xy 115.26948 111.921087) (xy 115.194913 111.84652) (xy 115.103587 111.793793) (xy 115.001727 111.7665)
+				(xy 114.896273 111.7665) (xy 114.794413 111.793793) (xy 114.79441 111.793794) (xy 114.703085 111.846521)
+				(xy 114.628521 111.921085) (xy 114.575794 112.01241) (xy 114.575793 112.012413) (xy 114.5485 112.114273)
+				(xy 100.3005 112.114273) (xy 100.3005 110.570525) (xy 106.9055 110.570525) (xy 106.9055 110.715475)
 				(xy 106.9367 110.831913) (xy 106.943017 110.855488) (xy 107.015488 110.981011) (xy 107.01549 110.981013)
 				(xy 107.015491 110.981015) (xy 107.117985 111.083509) (xy 107.117986 111.08351) (xy 107.117988 111.083511)
 				(xy 107.243511 111.155982) (xy 107.243512 111.155982) (xy 107.243515 111.155984) (xy 107.383525 111.1935)
@@ -39697,12 +37831,12 @@
 				(xy 187.916414 115.209928) (xy 188.018232 115.069788) (xy 188.096873 114.915445) (xy 188.150402 114.750701)
 				(xy 188.1775 114.579611) (xy 188.1775 114.406389) (xy 188.150402 114.235299) (xy 188.096873 114.070555)
 				(xy 188.018232 113.916212) (xy 187.916414 113.776072) (xy 187.793928 113.653586) (xy 187.653788 113.551768)
-				(xy 187.653786 113.551767) (xy 187.499449 113.473128) (xy 187.348215 113.423988) (xy 187.348203 113.423985)
-				(xy 187.334701 113.419598) (xy 187.334699 113.419597) (xy 187.334698 113.419597) (xy 187.320312 113.417318)
-				(xy 187.320306 113.417317) (xy 187.230188 113.403044) (xy 187.203271 113.398781) (xy 187.187407 113.396268)
-				(xy 187.163614 113.3925) (xy 187.163611 113.3925) (xy 186.740389 113.3925) (xy 186.740388 113.3925)
-				(xy 186.700726 113.398781) (xy 186.700725 113.39878) (xy 186.569304 113.419596) (xy 186.404549 113.473129)
-				(xy 186.250211 113.551767) (xy 186.226516 113.568984) (xy 186.121943 113.644961) (xy 186.114562 113.649094)
+				(xy 187.499449 113.473128) (xy 187.348215 113.423988) (xy 187.348203 113.423985) (xy 187.334701 113.419598)
+				(xy 187.334699 113.419597) (xy 187.334698 113.419597) (xy 187.320312 113.417318) (xy 187.320306 113.417317)
+				(xy 187.230188 113.403044) (xy 187.203271 113.398781) (xy 187.187407 113.396268) (xy 187.163614 113.3925)
+				(xy 187.163611 113.3925) (xy 186.740389 113.3925) (xy 186.740388 113.3925) (xy 186.700726 113.398781)
+				(xy 186.700725 113.39878) (xy 186.569304 113.419596) (xy 186.404549 113.473129) (xy 186.25021 113.551768)
+				(xy 186.170256 113.609859) (xy 186.170255 113.609859) (xy 186.121941 113.644961) (xy 186.114564 113.649092)
 				(xy 185.983092 113.780564) (xy 185.978961 113.787941) (xy 185.943859 113.836255) (xy 185.943859 113.836256)
 				(xy 185.885768 113.91621) (xy 185.807129 114.070547) (xy 185.753598 114.235297) (xy 185.753596 114.235303)
 				(xy 185.74232 114.306499) (xy 185.742321 114.3065) (xy 185.7265 114.406389) (xy 130.682754 114.406389)
