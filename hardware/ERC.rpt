@@ -1,13 +1,10 @@
-ERC report (2026-08-19T22:25:07, Encoding UTF8)
+ERC report (2026-08-20T19:35:36, Encoding UTF8)
 Report includes: Errors, Warnings
 
 ***** Sheet /
 [lib_symbol_mismatch]: Symbol 'AP66200' doesn't match copy in library 'Filament_Dryer_Custom'
     ; warning
     @(4200 mils, 5000 mils): Symbol U1 [AP66200]
-[footprint_link_issues]: The current configuration does not include the footprint library ''
-    ; warning
-    @(8150 mils, 4500 mils): Symbol FB1 [FerriteBead]
 [unconnected_wire_endpoint]: Unconnected wire endpoint
     ; warning
     @(1900 mils, 2350 mils): Vertical Wire, length 400 mils
@@ -29,30 +26,6 @@ Report includes: Errors, Warnings
 [unconnected_wire_endpoint]: Unconnected wire endpoint
     ; warning
     @(4250 mils, 6650 mils): Horizontal Wire, length 250 mils
-[footprint_link_issues]: The current configuration does not include the footprint library ''
-    ; warning
-    @(6100 mils, 2700 mils): Symbol SW1 [SW_Push]
-[footprint_link_issues]: The current configuration does not include the footprint library ''
-    ; warning
-    @(5600 mils, 5200 mils): Symbol R24 [R_Small]
-[footprint_link_issues]: The current configuration does not include the footprint library ''
-    ; warning
-    @(5600 mils, 5650 mils): Symbol SW6 [SW_Push]
-[footprint_link_issues]: The current configuration does not include the footprint library ''
-    ; warning
-    @(5750 mils, 3450 mils): Symbol R25 [R_Small]
-[footprint_link_issues]: The current configuration does not include the footprint library ''
-    ; warning
-    @(5950 mils, 3700 mils): Symbol R26 [R_Small]
-[footprint_link_issues]: The current configuration does not include the footprint library ''
-    ; warning
-    @(8700 mils, 5750 mils): Symbol R27 [R_Small]
-[footprint_link_issues]: The current configuration does not include the footprint library ''
-    ; warning
-    @(8850 mils, 2900 mils): Symbol R28 [R_Small]
-[footprint_link_issues]: The current configuration does not include the footprint library ''
-    ; warning
-    @(9450 mils, 5300 mils): Symbol BZ1 [MLT-8530]
 [lib_symbol_mismatch]: Symbol 'MLT-8530' doesn't match copy in library 'JLCPCB'
     ; warning
     @(9450 mils, 5300 mils): Symbol BZ1 [MLT-8530]
@@ -71,7 +44,7 @@ Report includes: Errors, Warnings
     @(9300 mils, 5250 mils): Symbol BZ1 Pin 2 [2, Unspecified, Line]
     @(9150 mils, 5550 mils): Symbol Q6 Pin 3 [C, Passive, Line]
 
- ** ERC messages: 20  Errors 0  Warnings 20
+ ** ERC messages: 11  Errors 0  Warnings 11
 
  ** Ignored checks:
     - Global label only appears once in the schematic
