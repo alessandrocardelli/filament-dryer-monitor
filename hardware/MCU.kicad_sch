@@ -6272,17 +6272,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 102.87 166.37 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "MPN" "82400102"
 			(at 102.87 166.37 0)
 			(hide yes)
@@ -6537,17 +6526,6 @@
 			)
 		)
 		(property "TCR" ""
-			(at 73.66 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C964632"
 			(at 73.66 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -7253,17 +7231,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 217.17 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "Tolerance" "1%"
 			(at 217.17 91.44 0)
 			(hide yes)
@@ -7506,17 +7473,6 @@
 			)
 		)
 		(property "Dielectric" ""
-			(at 205.74 52.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" ""
 			(at 205.74 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -7858,17 +7814,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 55.88 54.61 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "Tolerance" "1%"
 			(at 55.88 54.61 0)
 			(hide yes)
@@ -8032,17 +7977,6 @@
 			)
 		)
 		(property "Dielectric" "X7R"
-			(at 90.17 49.53 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C14663"
 			(at 90.17 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -8371,17 +8305,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 255.27 68.58 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "Tolerance" "1%"
 			(at 255.27 68.58 90)
 			(hide yes)
@@ -8656,17 +8579,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 215.9 68.58 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "MPN" "SWT0110-020010SSA"
 			(at 215.9 68.58 90)
 			(hide yes)
@@ -8808,17 +8720,6 @@
 			)
 		)
 		(property "Dielectric" ""
-			(at 228.6 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" ""
 			(at 228.6 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -9014,17 +8915,6 @@
 			)
 		)
 		(property "TCR" ""
-			(at 184.15 92.71 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C701341"
 			(at 184.15 92.71 0)
 			(hide yes)
 			(show_name no)
@@ -9288,17 +9178,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 143.51 68.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "Tolerance" "10%"
 			(at 143.51 68.58 0)
 			(hide yes)
@@ -9521,17 +9400,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 74.93 163.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "MPN" "USB4216-03-A"
 			(at 74.93 163.83 0)
 			(hide yes)
@@ -9704,17 +9572,6 @@
 			)
 		)
 		(property "Dielectric" "X7R"
-			(at 101.6 49.53 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C14663"
 			(at 101.6 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9898,17 +9755,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 48.26 80.01 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "Tolerance" "1%"
 			(at 48.26 80.01 0)
 			(hide yes)
@@ -10072,17 +9918,6 @@
 			)
 		)
 		(property "Dielectric" ""
-			(at 143.51 52.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" ""
 			(at 143.51 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -10266,17 +10101,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 165.1 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "Tolerance" "10%"
 			(at 165.1 45.72 0)
 			(hide yes)
@@ -10440,17 +10264,6 @@
 			)
 		)
 		(property "Dielectric" "X7R"
-			(at 175.26 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C14663"
 			(at 175.26 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -10656,17 +10469,6 @@
 				)
 			)
 		)
-		(property "LCSC" "C160354"
-			(at 256.54 102.87 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "MPN" "B4B-PH-SM4-TB(LF)(SN)"
 			(at 256.54 102.87 0)
 			(hide yes)
@@ -10858,17 +10660,6 @@
 			)
 		)
 		(property "TCR" ""
-			(at 116.84 49.53 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C94514"
 			(at 116.84 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -11190,17 +10981,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 120.65 160.02 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "Tolerance" "1%"
 			(at 120.65 160.02 0)
 			(hide yes)
@@ -11407,17 +11187,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 255.27 76.2 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "MPN" "HSMG-C170"
 			(at 255.27 76.2 90)
 			(hide yes)
@@ -11603,17 +11372,6 @@
 			)
 		)
 		(property "TCR" ""
-			(at 125.73 68.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C94514"
 			(at 125.73 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -11855,17 +11613,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 242.57 102.87 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "Tolerance" "1%"
 			(at 242.57 102.87 90)
 			(hide yes)
@@ -12039,17 +11786,6 @@
 				)
 			)
 		)
-		(property "LCSC" "C19666"
-			(at 80.01 49.53 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "Tolerance" "10%"
 			(at 80.01 49.53 0)
 			(hide yes)
@@ -12212,17 +11948,6 @@
 			)
 		)
 		(property "Dielectric" ""
-			(at 129.54 157.48 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" ""
 			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
@@ -12554,17 +12279,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 48.26 72.39 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "Tolerance" "1%"
 			(at 48.26 72.39 0)
 			(hide yes)
@@ -12725,17 +12439,6 @@
 			)
 		)
 		(property "Dielectric" ""
-			(at 234.95 100.33 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" ""
 			(at 234.95 100.33 90)
 			(hide yes)
 			(show_name no)
@@ -12931,17 +12634,6 @@
 			)
 		)
 		(property "TCR" ""
-			(at 154.94 68.58 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" ""
 			(at 154.94 68.58 90)
 			(hide yes)
 			(show_name no)
@@ -13204,17 +12896,6 @@
 				)
 			)
 		)
-		(property "LCSC" ""
-			(at 256.54 119.38 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "MPN" ""
 			(at 256.54 119.38 0)
 			(hide yes)
@@ -13362,17 +13043,6 @@
 			)
 		)
 		(property "Dielectric" "X5R"
-			(at 154.94 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" ""
 			(at 154.94 45.72 0)
 			(hide yes)
 			(show_name no)
