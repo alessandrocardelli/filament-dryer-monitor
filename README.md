@@ -44,7 +44,9 @@ Heating is a hazard, and this design treats it as one. Three independent layers:
 
 ## Hardware
 
-4-layer PCB. Designed in **KiCad 10**, targeted at **JLCPCB/LCSC** fabrication and assembly.
+4-layer PCB. Designed in **KiCad 10** and intended for JLCPCB fabrication/assembly. Component
+procurement for the prototype is currently being migrated to **TME as the preferred supplier**;
+the implemented KiCad design remains authoritative when it differs from the purchasing BOM.
 
 The board itself forms the dryer's replacement front panel, so its outline and component
 placement are constrained by the original enclosure mechanics.
@@ -54,7 +56,7 @@ placement are constrained by the original enclosure mechanics.
 | Block | Part | Notes |
 |---|---|---|
 | MCU | ESP32-WROOM-32E | Wi-Fi, antenna keepout respected on all copper layers |
-| Buck converter | AP66200 | 24 V → 3.3 V |
+| Buck converter | AP66200 | 24 V → 3.3 V; current design part, sourcing-risk replacement under evaluation |
 | USB-UART | CP2102N | USB used for programming/debug only, with DTR/RTS auto-program circuit |
 | Humidity/temp | SHT45 (Adafruit #6174) | I²C `0x44` |
 | Display | SSD1309 OLED 128×64 | I²C `0x3C`, mounted on the front face |
@@ -62,6 +64,17 @@ placement are constrained by the original enclosure mechanics.
 | Fan driver | CJ2310 (SOT-23) | 24 V fan, ~0.2 A |
 | Element temp | Integrated ~82 kΩ NTC | ADC1, 47 kΩ divider resistor, 100 nF filtering |
 | Buzzer | Passive + NPN driver | |
+
+### Procurement status
+
+The working purchasing BOM is the Google Sheet `Filament Dryer Monitor — BOM finale Mouser`,
+tab **`BOM TME`**. It contains the current TME ordering codes, live stock/pricing data,
+delivery information and approved procurement substitutions.
+
+See [`hardware/docs/PROCUREMENT.md`](hardware/docs/PROCUREMENT.md) for the sourcing rules,
+known substitutions that still need to be applied/verified in KiCad, and the remaining sourcing
+exceptions. In particular, the current AP66200 buck is being reviewed because of poor and
+inconsistent distributor availability; no replacement is approved in the hardware design yet.
 
 ### Heater NTC characterization
 
@@ -190,6 +203,7 @@ delays in normal operation.
 hardware/
 ├── 3dmodels/          3D models used by KiCad
 ├── docs/
+│   ├── PROCUREMENT.md Current sourcing/TME procurement status
 │   └── datasheets/    Component datasheets
 ├── libs/              Custom symbols, footprints and imported libraries
 ├── production/        JLCPCB production exports (BOM, positions, netlist)
