@@ -315,7 +315,7 @@ Chronology:
 3. New candidate: `R109 = 47.5 kΩ`.
    - nominal `ILIM = 3 × 27/47.5 = 1.705 A`.
 
-**Current status:** `47.5 kΩ` is the latest candidate but is **not yet fully approved**. It has been exercised in a current-limit simulation; the simulation confirmed current limiting, but the recovery overshoot was huge because that OCP test still used the original ST compensation network rather than the newly designed Type III network. The OCP test must be rerun after final compensation is installed.
+**Current status:** `47.5 kΩ` remains the latest candidate. Subsequent tests with the final commercial compensation confirmed that it limits current, but also exposed a severe recovery overshoot after a sustained overload unless the converter is explicitly restarted through EN. See §19.
 
 ---
 
@@ -374,7 +374,7 @@ A previous tendency to insist on a 25 V output MLCC was rejected because the rai
 
 `C112` exists as an optional VOUT-to-GND polarized footprint and is currently **DNP / optional**.
 
-An earlier arbitrary suggestion to populate it with 100 µF was explicitly retracted. There is currently **no approved value or requirement** for C112.
+An earlier arbitrary suggestion to populate it with 100 µF was explicitly retracted. A later diagnostic OCP simulation added an idealized extra `100 µF, ESR = 5 mΩ`; it slowed the recovery but still produced a severe overshoot (about 6.8 V), so it did **not** justify populating C112. C112 remains DNP unless future real-component evidence changes that decision.
 
 ### 6.3 DC-bias / ESR modeling status
 
@@ -600,7 +600,7 @@ Official datasheet: https://www.bourns.com/docs/product-datasheets/srn6045.pdf
 
 This part is far smaller than the Eaton DR127/DR125 family and its normal-current margins are adequate for the 1 A rail.
 
-**Current status:** Bourns `SRN6045-150M` is the preferred L101 candidate, but final approval still depends on final ILIM/OCP validation and final loop/transient verification.
+**Current status:** Bourns `SRN6045-150M` remains the preferred L101 candidate. Normal operation, Bode and load-transient behavior are satisfactory. Final protection strategy around sustained OCP/recovery is still open; see §19.
 
 ---
 
@@ -818,7 +818,7 @@ Note on FSW in this Bode bench: the symbol is `L7987L_for_Bode`; the exposed `FS
 
 This theoretical compensation network is a successful design point.
 
-### 10.6 Proposed commercial rounding that was NOT accepted yet
+### 10.6 Proposed commercial rounding that was NOT accepted
 
 A first E-series rounding was proposed:
 
@@ -828,22 +828,38 @@ A first E-series rounding was proposed:
 - `RS / RC2: 1.124 kΩ -> 1.13 kΩ`
 - `CS / CC2: 566.6 pF -> 560 pF`.
 
-This set was **not simulated** and must not be treated as final.
+This specific set was **not accepted** because the user checked TME availability and found that 16 nF MLCC was effectively unavailable in the desired form.
 
-The user checked live TME availability and found that **16 nF MLCC is effectively unavailable in the desired form**. Therefore the `16 nF` rounded choice is discarded.
+### 10.7 Final nominal commercial-value compensation used in simulation
 
-`1.13 kΩ` is an ordinary E96 value; it is not inherently unusual, but final TME MPN/stock still must be checked.
+The user already has suitable **16 kΩ** resistors available, and 18 nF was selected as the practical CF value.
 
-### 10.7 Current commercial-compensation direction
+Final nominal values used in the subsequent simulations:
 
-The next obvious standard capacitor near theoretical `CF = 16.753 nF` is 18 nF:
+- `RF / RC / R106 = 16 kΩ`
+- `CF / CC / C109 = 18 nF`
+- `CP / C111 = 39 pF`
+- `RS / RC2 / R105 = 1.13 kΩ`
+- `CS / CC2 / C108 = 560 pF`.
 
-- 15 nF is about −10.5% from theoretical;
-- 18 nF is about +7.4% from theoretical.
+With `RF = 16 kΩ` and `CF = 18 nF`:
 
-`18 nF` is therefore the likely anchor value, but **the network has not yet been recalculated around 18 nF and no TME MPN set has been approved**.
+- `FZ1 ≈ 552.6 Hz`, about `0.0935 × fLC`;
+- with `CP = 39 pF`, `FP1 ≈ 255.1 kHz`;
+- with `CS = 560 pF`, `FZ2 ≈ 5.84 kHz`;
+- with `RS = 1.13 kΩ`, `FP2 ≈ 251.5 kHz`.
 
-Do not simply replace CC with 18 nF and call the compensation complete. The exact next step is documented at the end of this file.
+These are close to the intended placements of approximately `0.1 × fLC`, `fLC`, and `0.5 × FSW`.
+
+#### Commercial-value Bode result
+
+The commercial-value Bode run produced approximately:
+
+- crossover `fc ≈ 59.1 kHz`;
+- phase margin `PM ≈ 64.9°`;
+- gain margin `GM ≈ 19.6 dB`.
+
+This is essentially coincident with the theoretical result (`59.3 kHz`, `64.5°`, `19.6 dB`). Therefore the nominal commercial-value compensation is **validated for the nominal 15 µH / 47 µF operating point**.
 
 ---
 
@@ -1005,65 +1021,173 @@ Observed from SVG:
 
 Conclusion: adding the Bourns DCR did not produce a concerning change. This became the preferred inductor model for later work.
 
+### 11.9 Load transient with final commercial compensation
+
+File:
+
+`TB_L7987L_3V3_24V_LoadTransient_Bourns15u_TMEComp.wxsch`
+
+Configuration retained the controlled 24 V / 3.3 V / Bourns-15-µH setup and changed only the compensation to:
+
+- `R6 / RF = 16 kΩ`
+- `C9 / CF = 18 nF`
+- `C11 / CP = 39 pF`
+- `R5 / RS = 1.13 kΩ`
+- `C8 / CS = 560 pF`.
+
+Normal transient conditions:
+
+- `R4 / RILIM = 27 kΩ` for this comparison;
+- `ROFF = 10 Ω` (~0.33 A);
+- `RON = 2.5 Ω` (~1.32 A);
+- load step approximately 6.5–7.5 ms.
+
+Observed approximately:
+
+- `VOUT,min ≈ 3.254 V` on load application (~−46 mV, −1.4%);
+- `VOUT,max ≈ 3.361 V` on load release (~+61 mV, +1.85%);
+- `IL,peak ≈ 1.59 A`;
+- recovery is clean, with no obvious oscillation.
+
+Conclusion: the final nominal commercial compensation passes the normal load-transient test and is slightly better than the previous Bourns test with the old compensation.
+
 ---
 
-## 12. Current-limit simulation
+## 12. Current-limit / OCP simulation history
 
-Because ST provided no dedicated OCP bench, a copy of the LoadTransient testbench was used.
+Because ST provided no dedicated OCP bench, copies of the LoadTransient testbench were used.
 
-Save name established during the session:
+### 12.1 Preliminary OCP with old ST compensation
+
+File:
 
 `TB_L7987L_3V3_24V_CurrentLimit_Bourns15u_RILIM47k5.wxsch`
 
-Graph name:
-
-`TB_L7987L_3V3_24V_CurrentLimit_Bourns15u_RILIM47k5_graph.svg`
-
-### 12.1 Configuration
-
-Based on the Bourns load-transient bench:
+Configuration:
 
 - `VIN = 24 V`;
 - feedback for 3.3 V;
-- `L1 = 15 µH`;
-- `L1 ESR = 95.8 mΩ`;
+- `L1 = 15 µH`, ESR 95.8 mΩ;
 - original ST compensation still present;
-- `R4` (ST ILIM resistor) changed from 27 kΩ to **47.5 kΩ**;
+- `R4 = 47.5 kΩ` nominal target;
 - `ROFF = 10 Ω`;
-- `RON` changed from 2.5 Ω to **1.5 Ω**.
+- `RON = 1.5 Ω` (~2.2 A ideal load demand).
 
-At 3.3 V, a 1.5 Ω load would demand ideally:
+Expected nominal current limit from ST Equation 6:
 
-`3.3/1.5 = 2.2 A`,
+`ILIM = 3 A × 27/47.5 ≈ 1.705 A`.
 
-which is intentionally above the proposed current-limit region.
+Observed:
 
-### 12.2 Expected nominal current limit
+- OCP clearly intervened;
+- inductor current was roughly in the 1.4–1.6 A region;
+- VOUT collapsed to roughly 2.1 V during overload;
+- release overshoot was huge, visually around 7.2–7.3 V.
 
-From ST Equation 6:
+This test initially could not establish whether the overshoot was caused mostly by the outdated compensation, so it was repeated after final compensation was validated.
 
-`ILIM = 3 A × 27/47.5 ≈ 1.705 A` nominal.
+### 12.2 OCP with final commercial compensation, RON = 1.5 Ω
 
-### 12.3 Simulation result
+With `16 kΩ / 18 nF / 39 pF / 1.13 kΩ / 560 pF` compensation and the same basic OCP setup, release overshoot improved but remained severe:
 
-Observed qualitatively/approximately from the SVG:
+- VOUT release peak approximately **5.97 V**;
+- during overload, VOUT remained around ~2.1 V;
+- `COMP` rose steadily to about ~2.0 V by fault release.
 
-- overcurrent protection clearly intervened;
-- inductor current during the overload was held roughly around the 1.4–1.6 A region rather than following the ideal 2.2 A load request;
-- VOUT collapsed to roughly 2.1 V during the overloaded interval;
-- when the heavy load was released, VOUT showed a very large overshoot, visually around 7.2–7.3 V.
+Adding `V(COMP)` to the graph confirmed that the error amplifier was winding up while current limiting prevented VOUT from recovering.
 
-### 12.4 Interpretation
+### 12.3 Deep foldback diagnostic, RON = 0.5 Ω
 
-The first part is useful evidence that `RILIM = 47.5 kΩ` does invoke current limiting and keeps current comfortably below the Bourns 2.3 A saturation specification in this simulation.
+The load was made much heavier (`RON = 0.5 Ω`) to force VOUT below the foldback threshold and exercise the complete OCP/foldback behavior described by ST.
 
-The huge release overshoot must **not** be taken as the final circuit behavior because this OCP test still used the original ST 5 V/STEVAL compensation network, while VOUT, VIN and L had already been changed. The loop had not yet been retuned to the new Type III design.
+Relevant ST behavior from §4.5:
 
-Therefore:
+- pulse-by-pulse current limiting;
+- switching pulses can be skipped / effective frequency reduced;
+- when `FB < ~0.4 V`, peak current limit is reduced to approximately one third;
+- once FB rises back above the foldback threshold, the full current-limit setting becomes available again.
 
-- `R109/RILIM = 47.5 kΩ` remains a candidate;
-- the OCP test is preliminary;
-- final OCP/recovery behavior must be retested after final compensation values are installed.
+Observed in SIMPLIS:
+
+- `COMP` climbed to approximately **3.5 V**, i.e. essentially the documented upper error-amplifier swing;
+- the recovery from the sustained heavy fault again produced a severe output overshoot.
+
+This established that the issue is not nominal loop instability; it is **COMP saturation / wind-up during sustained current limiting and aggressive direct recovery when the fault is removed**.
+
+### 12.4 Extra 100 µF COUT diagnostic
+
+A diagnostic extra capacitor was placed in parallel with the normal 47 µF output capacitor:
+
+- added `100 µF`;
+- test ESR `5 mΩ`;
+- this was intentionally an exploratory model, not an approved real component.
+
+File:
+
+`TB_L7987L_3V3_24V_CurrentLimitFoldback_Bourns15u_RILIM47k5_TMEComp_CoutPlus100u.wxsch`
+
+The longer 12 ms run showed:
+
+- the additional capacitance slowed the initial rise after fault removal;
+- `COMP` still remained high for too long;
+- VOUT still peaked at approximately **6.8 V** around 8.5 ms before recovering.
+
+Conclusion: simply increasing COUT by 100 µF does **not** solve this recovery mechanism. C112 remains DNP.
+
+### 12.5 Datasheet / online research on OCP recovery
+
+A focused review was performed after the above simulations.
+
+**What ST documents:**
+
+- OCP is pulse-by-pulse with programmable peak current limit (§4.5);
+- deep output collapse enables foldback below approximately 0.4 V on FB;
+- soft-start behavior and CSS discharge are documented separately in §4.2;
+- an EN toggle invokes the soft-start/reset sequence and discharges CSS before restarting;
+- ST explicitly documents soft-start after some other restart conditions (for example thermal shutdown recovery).
+
+**What was not found in the L7987L documentation reviewed:**
+
+- no explicit anti-windup clamp for COMP during OCP;
+- no hiccup timer;
+- no documented automatic soft-start restart specifically when a sustained OCP condition clears;
+- no documented internal output-overvoltage clamp for this recovery event.
+
+ST's STEVAL material describes overcurrent as auto-recovery, but that does not imply a soft-started recovery or guarantee negligible overshoot.
+
+Non-ST literature on voltage-mode buck regulators describes the same basic failure mechanism: after a sustained overload, COMP/control voltage can be driven to its upper clamp, and removing the load can cause a large output overshoot until the control node discharges. This literature was treated as mechanism support only, not as L7987L-specific design guidance.
+
+### 12.6 EN restart diagnostic — successful mitigation in ST SIMPLIS model
+
+A dedicated test was created from the deep-foldback case. The power-stage values, final compensation, heavy-fault load and RILIM were left unchanged; only EN was driven externally.
+
+File:
+
+`TB_L7987L_3V3_24V_CurrentLimitFoldback_ENrestart_Bourns15u_RILIM47k5_TMEComp.wxsch`
+
+Test sequence:
+
+- sustained heavy load begins at ~6.5 ms;
+- heavy load ends at ~7.5 ms;
+- EN is forced LOW at ~7.5 ms;
+- EN remains LOW until ~8.0 ms;
+- EN then returns HIGH;
+- `CSS = 33 nF` retained;
+- output, inductor current, load current, COMP, EN and SS were plotted.
+
+Observed:
+
+- during fault, `COMP` again saturated near ~3.5 V;
+- when EN went LOW, switching stopped, inductor current went to zero and COMP was reset low;
+- SS was discharged to 0 V;
+- after EN returned HIGH, the device waited through its reset/discharge behavior and restarted with the documented soft-start ramp;
+- VOUT rose monotonically back toward 3.3 V rather than exhibiting the 6–7 V recovery spike.
+
+The simulation was extended to 15 ms to verify the complete restart. It showed VOUT returning normally to approximately **3.3 V** around 14 ms without the large overshoot.
+
+**Conclusion:** in the ST SIMPLIS model, an explicit EN OFF/ON restart after a sustained OCP/foldback event **solves the dangerous recovery overshoot** by resetting COMP/SS and forcing a fresh soft-start.
+
+This is a simulation result, not yet an implemented hardware decision.
 
 ---
 
@@ -1078,6 +1202,8 @@ The earlier `250 mA` “threshold” conclusion was retired.
 ### 13.2 Do not over-trust arbitrary COUT ESR/ESL assumptions
 
 An earlier suggestion to model COUT as a made-up combination such as 100 µF / 50 mΩ / 1 nH was retracted. Final modeling should use the actual chosen capacitor and manufacturer data when precision matters.
+
+The later 100 µF / 5 mΩ addition was explicitly a diagnostic sensitivity test, not a proposed real capacitor.
 
 ### 13.3 ST 20–40% ripple is a design rule, not an operating hard limit
 
@@ -1095,6 +1221,14 @@ Statements such as “ST uses 10 µH” must specify that they refer to the eDSi
 ### 13.5 Use exact ST reference names while calculating
 
 For compensation and feedback calculations, use ST notation (`RU`, `RF`, `CF`, `CP`, `RS`, `CS`, etc.) and only map to KiCad at the start/end. This avoids repeated confusion between project reference designators and datasheet/testbench names.
+
+### 13.6 Do not assume nominal-loop compensation fixes sustained-OCP recovery
+
+The final Type III network has excellent nominal Bode and normal load-transient behavior, but sustained current limiting drives COMP toward saturation. OCP recovery is therefore a separate fault-mode problem from nominal small-signal loop stability.
+
+### 13.7 Additional output capacitance is not an adequate cure by itself
+
+The +100 µF diagnostic reduced the recovery slew rate but still allowed ~6.8 V overshoot because COMP remained wound up. Do not populate C112 merely to address this fault mechanism without new evidence.
 
 ---
 
@@ -1115,24 +1249,17 @@ These are the latest design values/proposals from the session. “Selected” me
 | R107 | feedback upper / RU | 47.5 kΩ 1% | selected |
 | R110 | feedback lower / RD | 15.2 kΩ 1% | selected |
 | R108 | RFSW | 47 kΩ 1% | selected |
-| R109 | RILIM | 47.5 kΩ 1% | **candidate; final OCP retest pending** |
+| R109 | RILIM | 47.5 kΩ 1% | **candidate; current limiting works, recovery strategy still open** |
 | D101 | freewheel diode | STPS2L60A, 60 V / 2 A SMA | selected |
 | L101 | inductor | Bourns SRN6045-150M, 15 µH ±20%, DCR max 95.8 mΩ, Irms 1.9 A, Isat 2.3 A | **preferred candidate** |
-| C112 | optional polarized COUT | DNP | optional/not selected |
-| R106 | Type III RF | 16.065 kΩ theoretical | final commercial value pending |
-| C109 | Type III CF | 16.753 nF theoretical | final commercial value pending; 16 nF commercial proposal rejected due TME availability |
-| C111 | Type III CP | 39.63 pF theoretical | final commercial value pending |
-| R105 | Type III RS | 1.124 kΩ theoretical | final commercial value pending |
-| C108 | Type III CS | 566.6 pF theoretical | final commercial value pending |
+| C112 | optional polarized COUT | DNP | diagnostic +100 µF did not solve OCP recovery |
+| R106 | Type III RF | **16 kΩ** | nominal value validated in Bode/load transient; user has stock |
+| C109 | Type III CF | **18 nF** | nominal value validated in Bode/load transient; final MPN still to verify |
+| C111 | Type III CP | **39 pF** | nominal value validated in Bode/load transient; final MPN still to verify |
+| R105 | Type III RS | **1.13 kΩ** | nominal value validated in Bode/load transient; final MPN still to verify |
+| C108 | Type III CS | **560 pF** | nominal value validated in Bode/load transient; final MPN still to verify |
 
-Connections also selected:
-
-- EN -> VCC;
-- VBIAS -> VOUT;
-- SYNCH NC;
-- PGOOD NC;
-- BOOT cap directly BOOT-LX;
-- exposed pad / GND layout to follow ST signal/power-ground guidance.
+Current real-circuit EN connection in the working concept was `EN -> VCC`, but this must now be **reconsidered before KiCad implementation** if automatic fault restart is adopted. VBIAS -> VOUT, SYNCH NC, PGOOD NC, BOOT cap BOOT-LX remain the current concept unless the protection solution changes them.
 
 ---
 
@@ -1146,6 +1273,7 @@ Connections also selected:
 - VBIAS may be connected to 3.3 V VOUT with 1 µF bypass.
 - Type III compensation is appropriate for the MLCC output filter.
 - ST's inductor guideline is 20–40% ripple and should be checked at maximum VIN.
+- EN toggling invokes the reset/soft-start behavior used successfully in the restart simulation.
 
 ### 15.2 Validated by calculation
 
@@ -1155,6 +1283,7 @@ Connections also selected:
 - 15 µH at −20% gives about 0.481 A ripple and about 1.24 A normal peak current.
 - 22 µH gives about 26.3% ripple but is not required to satisfy the guideline.
 - 47.5 kΩ RILIM corresponds nominally to about 1.705 A peak limit by Equation 6.
+- The commercial compensation places the intended poles/zeros close to the theoretical targets.
 
 ### 15.3 Validated in SIMPLIS/eDSim
 
@@ -1163,71 +1292,77 @@ Connections also selected:
 - VIN-only change to 24 V works.
 - 8.2 µH transient is good in the controlled test, proving it was wrong to reject 8.2 µH on transient behavior alone.
 - 15 µH Bourns model with 95.8 mΩ DCR gives a reasonable transient.
-- New theoretical Type III network for 15 µH / 47 µF produces about 59.3 kHz crossover, 64.5° phase margin and 19.6 dB gain margin.
-- 47.5 kΩ current-limit resistor does activate current limiting in the modified OCP test.
+- Theoretical Type III network for 15 µH / 47 µF gives about 59.3 kHz crossover, 64.5° phase margin and 19.6 dB gain margin.
+- Commercial Type III `16 kΩ / 18 nF / 39 pF / 1.13 kΩ / 560 pF` gives about **59.1 kHz crossover, 64.9° PM, 19.6 dB GM**.
+- The same commercial network gives a clean normal load transient (`VOUT,min ≈ 3.254 V`, `VOUT,max ≈ 3.361 V`, `IL,peak ≈ 1.59 A`).
+- 47.5 kΩ current-limit resistor activates current limiting and keeps inductor current below the Bourns 2.3 A Isat region in the tested fault cases.
+- Sustained current limit/foldback can saturate COMP and cause severe release overshoot if recovery is allowed to occur directly.
+- A +100 µF output-capacitance diagnostic does not cure that fault mode.
+- Explicit EN OFF/ON followed by a new soft-start **eliminates the large recovery overshoot in the ST SIMPLIS model**.
 
 ---
 
 ## 16. What is NOT yet validated / still open
 
-1. **Final commercial Type III components from TME.**
-   - The theoretical network is validated.
-   - The first rounded network was not validated because 16 nF MLCC was unavailable in the required TME search.
-   - Need an actual available set of MPNs and then a Bode run with exactly those values.
+1. **Automatic hardware implementation of the EN restart.**
+   - Simulation proves the mechanism works.
+   - No real circuit has yet been selected to detect the relevant sustained fault and generate a finite EN-low pulse/restart.
+   - Need to decide whether the added hardware complexity is justified for this prototype.
 
-2. **Final current-limit behavior.**
-   - RILIM 47.5 kΩ is only a candidate.
-   - Rerun the overload/OCP test after final compensation is installed.
-   - Check recovery overshoot with the real compensation network.
+2. **Final current-limit value/corners.**
+   - `RILIM = 47.5 kΩ` is still a candidate, despite successful nominal current limiting.
+   - Need to check ST min/max current-limit tolerance against normal worst-case load/inductor peak and the Bourns saturation margin.
 
 3. **Final Bourns inductor approval.**
-   - Normal current/ripple and transient behavior are satisfactory.
-   - Final approval depends on final ILIM/OCP and compensation verification.
+   - Normal current/ripple, Bode and normal transient behavior are satisfactory.
+   - Final approval depends on the chosen fault-protection strategy and ILIM corner review.
 
 4. **Actual COUT effective capacitance / DC bias corner.**
    - Current loop work uses nominal 47 µF.
    - Manufacturer DC-bias model/data should be used for final worst-case if needed.
 
-5. **Compensation corners with final TME values.**
-   - Need nominal and sensible L/C tolerance corners after commercial parts are fixed.
+5. **Compensation corners with final values.**
+   - Nominal values are validated.
+   - Sensible L/C tolerance/DC-bias corners with the final commercial network still need to be run.
 
-6. **Line transient.**
+6. **Final compensation MPNs / live TME stock.**
+   - Values are now selected nominally.
+   - `RF = 16 kΩ` is available from the user's own stock.
+   - Final purchasable MPNs for 18 nF, 39 pF, 1.13 kΩ and 560 pF still need live procurement confirmation.
+
+7. **Line transient.**
    - ST line-transient testbench exists but has not yet been adapted to the final project design in this documented sequence.
 
-7. **Final KiCad implementation and layout.**
-   - This documentation commit does not modify the schematic or PCB.
-   - Need to apply the approved values/connectivity to the actual KiCad branch and then rerun ERC/DRC and layout review.
+8. **Final KiCad implementation and layout.**
+   - This documentation update does not modify the schematic or PCB.
+   - Need to apply approved values/connectivity to the actual KiCad branch and rerun ERC/DRC/layout review.
+   - EN must not be blindly left hard-tied to VCC until the protection decision is complete.
 
-8. **Final PSU selection.**
+9. **Final PSU selection.**
    - 24 V / 3 A is a project recommendation, not yet a chosen part.
 
 ---
 
 ## 17. Exact next step
 
-Do **not** run the previously proposed `StdComp` values with a 16 nF MLCC.
+The previous “choose commercial compensation and run Bode” checkpoint is complete.
 
-The next step is:
+**Next task:** determine the **minimum practical hardware needed to obtain the successful EN-restart behavior automatically after a sustained 3.3 V rail fault**, and then decide whether it is worth implementing.
 
-1. Search the **live TME catalog** for actually available 0603 compensation parts close to the theoretical network:
-   - `RF theoretical = 16.065 kΩ`;
-   - `CF theoretical = 16.753 nF`;
-   - `CP theoretical = 39.63 pF`;
-   - `RS theoretical = 1.124 kΩ`;
-   - `CS theoretical = 566.6 pF`.
-2. Use **18 nF as the first CF candidate** because 16 nF MLCC was found unavailable and 18 nF is closer to 16.753 nF than 15 nF.
-3. Select actual TME MPNs/values for all five compensation parts; do not assume 1.13 kΩ or any capacitor value is stocked until checked live.
-4. Recalculate/check pole/zero placements with the actual commercial values.
-5. Copy the validated theoretical Bode testbench and save the commercial-value version as:
+Requirements for the protection concept before changing KiCad:
 
-   `TB_L7987L_3V3_24V_Bode_Bourns15u_TMEComp.wxsch`
+1. Do not use the ESP32 itself as the sole detector/controller, because the 3.3 V rail is the rail that collapses during the fault.
+2. The detector/restart mechanism must have power independent enough to operate while VOUT is low; the 24 V/VCC side is therefore the natural source domain to investigate.
+3. Do not simply wire PGOOD directly to EN: if VOUT is low, PGOOD can remain asserted and create a latched-off condition rather than a timed restart.
+4. Prefer the smallest reliable implementation (supervisor/timer/comparator/one-shot, or another simple topology) that can:
+   - distinguish a persistent fault from normal startup/load transients;
+   - pull EN low for long enough to reset/discharge the soft-start/control state;
+   - release EN and allow a fresh soft-start;
+   - avoid rapid chatter if the fault remains present.
+5. Compare this added complexity against the actual likelihood/consequence of a disappearing short or severe temporary overload in this personal prototype.
+6. Once a candidate circuit is chosen, reproduce it in SIMPLIS if practical and repeat the fault/restart test before touching KiCad.
 
-6. Run Bode with exactly the selected TME values and save the graph as:
-
-   `TB_L7987L_3V3_24V_Bode_Bourns15u_TMEComp_graph.svg`
-
-7. Compare crossover, phase margin and gain margin against the theoretical result (`59.3 kHz`, `64.5°`, `19.6 dB`).
-8. Only after the commercial compensation passes, copy those values into the load-transient bench and rerun normal load transient, then rerun the saved OCP/current-limit case.
+After the protection decision, continue with ILIM tolerance/corner analysis, compensation L/C corners, line transient, procurement MPNs, then final KiCad implementation.
 
 ---
 
@@ -1235,38 +1370,46 @@ The next step is:
 
 The user explicitly requested that every future simulation step include an exact save name.
 
-Established files:
+Established files include:
 
-- OCP/current-limit bench:  
+- preliminary OCP/current-limit bench:  
   `TB_L7987L_3V3_24V_CurrentLimit_Bourns15u_RILIM47k5.wxsch`
-- OCP graph:  
-  `TB_L7987L_3V3_24V_CurrentLimit_Bourns15u_RILIM47k5_graph.svg`
 - theoretical 15 µH Bode bench:  
   `TB_L7987L_3V3_24V_Bode_Bourns15u.wxsch`
 - theoretical Bode graph:  
   `TB_L7987L_3V3_24V_Bode_Bourns15u_graph.svg`
+- commercial compensation Bode:  
+  `TB_L7987L_3V3_24V_Bode_Bourns15u_TMEComp.wxsch`
+- commercial compensation load transient:  
+  `TB_L7987L_3V3_24V_LoadTransient_Bourns15u_TMEComp.wxsch`
+- deep-foldback +100 µF diagnostic:  
+  `TB_L7987L_3V3_24V_CurrentLimitFoldback_Bourns15u_RILIM47k5_TMEComp_CoutPlus100u.wxsch`
+- successful EN-restart bench:  
+  `TB_L7987L_3V3_24V_CurrentLimitFoldback_ENrestart_Bourns15u_RILIM47k5_TMEComp.wxsch`
+- successful extended restart graph:  
+  `TB_L7987L_3V3_24V_CurrentLimitFoldback_ENrestart_Bourns15u_RILIM47k5_TMEComp_graph_15ms.svg`
 
-Next commercial compensation files should use:
-
-- `TB_L7987L_3V3_24V_Bode_Bourns15u_TMEComp.wxsch`
-- `TB_L7987L_3V3_24V_Bode_Bourns15u_TMEComp_graph.svg`
-
-Continue this naming style for later line/load/OCP tests so that the operating point and major hardware choices are encoded in the filename.
+Continue this naming style for later protection, line/load/OCP and corner tests so that the operating point and major hardware choices are encoded in the filename.
 
 ---
 
-# Current checkpoint
+## 19. Current checkpoint — supersedes earlier checkpoint
 
 **Resume here:**
 
-- Target: 24 V nominal -> 3.3 V / 1 A, L7987L, ~500 kHz.
-- Design VIN envelope: 21.6–26.4 V (project assumption).
+- Target: **24 V nominal -> 3.3 V / 1 A**, L7987L, ~500 kHz.
+- Design VIN envelope: **21.6–26.4 V** (project assumption).
 - Preferred inductor: **Bourns SRN6045-150M, 15 µH, DCR max 95.8 mΩ, Irms 1.9 A, Isat 2.3 A**.
-- Main COUT: **Taiyo Yuden EMK325BJ476MM-P, 47 µF / 16 V**.
+- Main COUT: **Taiyo Yuden EMK325BJ476MM-P, 47 µF / 16 V**; optional C112 remains DNP.
 - Feedback: **47.5 kΩ / 15.2 kΩ**.
 - RFSW: **47 kΩ**.
-- RILIM: **47.5 kΩ candidate**, final OCP recovery retest pending.
-- Theoretical Type III: **RF 16.065 kΩ, CF 16.753 nF, CP 39.63 pF, RS 1.124 kΩ, CS 566.6 pF**.
-- Theoretical Bode is good: **fc ≈ 59.3 kHz, PM ≈ 64.5°, GM ≈ 19.6 dB**.
-- First rounded compensation set was **not** accepted because **16 nF MLCC is unavailable on TME**.
-- **Exact next action:** choose live-TME commercial MPNs for the five Type III parts, likely starting from **CF = 18 nF**, recalculate/check the pole/zero placements, then run `TB_L7987L_3V3_24V_Bode_Bourns15u_TMEComp.wxsch` and compare against the theoretical Bode.
+- RILIM: **47.5 kΩ candidate**, nominal `ILIM ≈ 1.705 A`; tolerance review still pending.
+- Final nominal Type III values: **RF 16 kΩ, CF 18 nF, CP 39 pF, RS 1.13 kΩ, CS 560 pF**.
+- Commercial-value nominal Bode: **fc ≈ 59.1 kHz, PM ≈ 64.9°, GM ≈ 19.6 dB**.
+- Normal load transient with the same compensation is good: **VOUT,min ≈ 3.254 V, VOUT,max ≈ 3.361 V, IL,peak ≈ 1.59 A**.
+- Sustained OCP/foldback is a separate issue: COMP winds up/saturates and direct recovery can overshoot VOUT into approximately the **6–7 V** range.
+- An extra diagnostic **+100 µF** COUT does not solve the problem; VOUT still peaked around **6.8 V**.
+- Focused datasheet/online review found **no documented L7987L anti-windup/hiccup/automatic soft-start restart on OCP release**.
+- Explicit EN OFF/ON in SIMPLIS resets COMP/SS and forces a fresh soft-start; the 15 ms verification returns VOUT cleanly to **~3.3 V without the large overshoot**.
+- **No protection hardware has been approved yet.** The existing conceptual `EN -> VCC` connection must be reconsidered before KiCad implementation.
+- **Exact next action:** study the smallest reliable automatic EN-restart circuit, powered/detected independently of the collapsed 3.3 V rail, and decide whether its complexity is justified. Do not modify KiCad until that decision is made.
