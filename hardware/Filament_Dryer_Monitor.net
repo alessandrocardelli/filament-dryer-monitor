@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\Users\\utente\\Documents\\KiCad\\10.0\\projects\\Filament_Dryer_Monitor\\hardware\\Filament_Dryer_Monitor.kicad_sch")
-		(date "2026-08-09T17:16:50")
+		(date "2026-08-31T22:19:46")
 		(tool "Eeschema 10.0.4")
 		(sheet
 			(number "1")
@@ -158,6 +158,54 @@
 				(rev)
 				(date)
 				(source "IO_Power.kicad_sch")
+				(comment
+					(number "1")
+					(value "")
+				)
+				(comment
+					(number "2")
+					(value "")
+				)
+				(comment
+					(number "3")
+					(value "")
+				)
+				(comment
+					(number "4")
+					(value "")
+				)
+				(comment
+					(number "5")
+					(value "")
+				)
+				(comment
+					(number "6")
+					(value "")
+				)
+				(comment
+					(number "7")
+					(value "")
+				)
+				(comment
+					(number "8")
+					(value "")
+				)
+				(comment
+					(number "9")
+					(value "")
+				)
+			)
+		)
+		(sheet
+			(number "5")
+			(name "/Buck redesign/")
+			(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			(title_block
+				(title)
+				(company)
+				(rev)
+				(date)
+				(source "buck_redesign_sch.kicad_sch")
 				(comment
 					(number "1")
 					(value "")
@@ -10075,9 +10123,1581 @@
 				)
 			)
 		)
+		(comp
+			(ref "C103")
+			(value "10u")
+			(description "Unpolarized capacitor")
+			(fields
+				(field
+					(name "MPN") "GRM32EC72A106KE05L")
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "GRM32EC72A106KE05L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "0bd32d40-d8d5-415f-8aad-297c7953a01c")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C104")
+			(value "1u")
+			(description "Unpolarized capacitor")
+			(fields
+				(field
+					(name "MPN") "GRJ21BC72A105KE11L")
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "GRJ21BC72A105KE11L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "23d440f6-0b2b-45c4-b83a-ec37d8a3f7bf")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C105")
+			(value "47u")
+			(description "Unpolarized capacitor")
+			(fields
+				(field
+					(name "MPN") "EMK325BJ476MM-P,")
+				(field
+					(name "Manufacturer") "Taiyo Yuden")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "EMK325BJ476MM-P,")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Taiyo Yuden")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "bdb8a271-b871-4534-901c-76ee47593cd0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C106")
+			(value "1u")
+			(description "Unpolarized capacitor")
+			(fields
+				(field
+					(name "MPN") "GRJ21BC72A105KE11L")
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "GRJ21BC72A105KE11L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "84f14cd7-64d6-4d3f-9216-1d00b6bfaed0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C107")
+			(value "100n")
+			(description "Unpolarized capacitor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "efc2022d-30db-4868-944a-28b0cd4114d6")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C108")
+			(value "560p")
+			(description "Unpolarized capacitor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "aa7daab3-fb1d-467a-b4ab-d97cf28acff6")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C109")
+			(value "18n")
+			(description "Unpolarized capacitor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "8e332fd5-5163-477f-8011-336ca7934bb5")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C110")
+			(value "33n")
+			(description "Unpolarized capacitor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "e24829c6-252b-44f8-938c-6b634a1ad750")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C111")
+			(value "39p")
+			(description "Unpolarized capacitor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "adf7c309-0549-4951-8b2d-5bdcf9a85bde")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D101")
+			(value "STPS2L60A")
+			(description "Diode")
+			(fields
+				(field
+					(name "Sim.Device") "D")
+				(field
+					(name "Sim.Pins") "1=K 2=A")
+				(field
+					(name "MPN") "STPS2L60A")
+				(field
+					(name "Manufacturer") " STMicroelectronics")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Diode")
+			)
+			(libsource
+				(lib "Device")
+				(part "D")
+				(description "Diode")
+			)
+			(property
+				(name "Sim.Device")
+				(value "D")
+			)
+			(property
+				(name "Sim.Pins")
+				(value "1=K 2=A")
+			)
+			(property
+				(name "MPN")
+				(value "STPS2L60A")
+			)
+			(property
+				(name "Manufacturer")
+				(value " STMicroelectronics")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "diode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TO-???* *_Diode_* *SingleDiode* D_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "fc5f0161-78a4-478c-a5d8-8ce8d80f93a1")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "L101")
+			(value "15u")
+			(description "Inductor")
+			(fields
+				(field
+					(name "MPN") "SRN6045-150M")
+				(field
+					(name "Manufacturer") "BOURNS")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Inductor")
+			)
+			(libsource
+				(lib "Device")
+				(part "L")
+				(description "Inductor")
+			)
+			(property
+				(name "MPN")
+				(value "SRN6045-150M")
+			)
+			(property
+				(name "Manufacturer")
+				(value "BOURNS")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "inductor choke coil reactor magnetic")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Choke_* *Coil* Inductor_* L_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "51e1993f-59a7-4067-a97b-0377a378bc2f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "Q7")
+			(value "MMBT3904")
+			(footprint "Package_TO_SOT_SMD:SOT-23")
+			(description "NPN transistor, base/emitter/collector")
+			(fields
+				(field
+					(name "Sim.Device") "NPN")
+				(field
+					(name "Sim.Pins") "1=B 2=E 3=C")
+				(field
+					(name "Function") "Q_boot1")
+				(field
+					(name "Dielectric")
+				)
+				(field
+					(name "Tolerance")
+				)
+				(field
+					(name "Voltage")
+				)
+				(field
+					(name "Power")
+				)
+				(field
+					(name "TCR")
+				)
+				(field
+					(name "LCSC") "C94514")
+				(field
+					(name "MPN") "MMBT3904-7-F")
+				(field
+					(name "Manufacturer") "Diodes Incorporated")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "NPN transistor, base/emitter/collector")
+			)
+			(libsource
+				(lib "Transistor_BJT")
+				(part "Q_NPN_BEC")
+				(description "NPN transistor, base/emitter/collector")
+			)
+			(property
+				(name "Sim.Device")
+				(value "NPN")
+			)
+			(property
+				(name "Sim.Pins")
+				(value "1=B 2=E 3=C")
+			)
+			(property
+				(name "Function")
+				(value "Q_boot1")
+			)
+			(property
+				(name "Dielectric")
+				(value "")
+			)
+			(property
+				(name "Tolerance")
+				(value "")
+			)
+			(property
+				(name "Voltage")
+				(value "")
+			)
+			(property
+				(name "Power")
+				(value "")
+			)
+			(property
+				(name "TCR")
+				(value "")
+			)
+			(property
+				(name "LCSC")
+				(value "C94514")
+			)
+			(property
+				(name "MPN")
+				(value "MMBT3904-7-F")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Diodes Incorporated")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "BJT")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "45a0de1b-ea0d-4440-a336-e5c7b34df2e7")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R104")
+			(value "0")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "cc45f558-d133-4e30-85f6-228deec32bec")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R105")
+			(value "1k13")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "9b11b06f-3090-4b79-a24c-4d6706c8b1e9")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R106")
+			(value "16k")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "ccccc0ea-5017-4653-b30c-810055bc23e4")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R107")
+			(value "47k5")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "50ce09fe-34bc-45a3-b2f1-52b6b7434f0f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R108")
+			(value "47k")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "9196c7d1-b9e3-417f-94b9-7657bef387df")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R109")
+			(value "47k5")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "a05f587b-5177-4ca5-a7cf-f71327fa12af")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R110")
+			(value "15k2")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "6ac325fa-be2b-49f8-acb1-65b093e82434")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R111")
+			(value "270k")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "c2cca7c3-3378-48bc-b96c-14d0c4337482")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R112")
+			(value "22k")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "56838570-9d6c-49c0-8342-3bf8cb9ebbd4")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R113")
+			(value "100k")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "df812255-8221-4b3e-a34b-f81ae51300d1")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R114")
+			(value "47k")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "94654cef-2452-411d-b516-794ed43ad825")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U5")
+			(value "TLV1701")
+			(footprint "Package_TO_SOT_SMD:SOT-23-5")
+			(datasheet "http://www.ti.com/lit/ds/symlink/lm397.pdf")
+			(description "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5")
+			(fields
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-5")
+				(field
+					(name "Datasheet") "http://www.ti.com/lit/ds/symlink/lm397.pdf")
+				(field
+					(name "Description") "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5")
+			)
+			(libsource
+				(lib "Filament_Dryer_Custom")
+				(part "TLV1701AIDBVR")
+				(description "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "single comparator")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "SOT?23*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "f383dfac-2926-4b76-bb8e-a3a753e0a4d7")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U101")
+			(value "L7987L")
+			(footprint "SOP65P640X120-17N")
+			(datasheet "https://www.st.com/resource/en/datasheet/l7987l.pdf")
+			(description "Switching Voltage Regulators 61 V 2 A asynchronous step-down switching regulator with adjustable current limitation")
+			(fields
+				(field
+					(name "Height") "1.2")
+				(field
+					(name "Manufacturer_Name") "STMicroelectronics")
+				(field
+					(name "Manufacturer_Part_Number") "L7987L")
+				(field
+					(name "Footprint") "SOP65P640X120-17N")
+				(field
+					(name "Datasheet") "https://www.st.com/resource/en/datasheet/l7987l.pdf")
+				(field
+					(name "Description") "Switching Voltage Regulators 61 V 2 A asynchronous step-down switching regulator with adjustable current limitation")
+			)
+			(libsource
+				(lib "SamacSys_Parts")
+				(part "L7987L")
+				(description "Switching Voltage Regulators 61 V 2 A asynchronous step-down switching regulator with adjustable current limitation")
+			)
+			(property
+				(name "Height")
+				(value "1.2")
+			)
+			(property
+				(name "Manufacturer_Name")
+				(value "STMicroelectronics")
+			)
+			(property
+				(name "Manufacturer_Part_Number")
+				(value "L7987L")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "fbf3ab1b-61d9-48e2-b4ea-e0c40311aa5c")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "8")
+						)
+					)
+				)
+			)
+		)
 	)
 	(groups)
-	(variants)
+	(variants
+		(variant
+			(name "Mouser")
+		)
+	)
 	(libparts
 		(libpart
 			(lib "Connector")
@@ -10439,6 +12059,47 @@
 		)
 		(libpart
 			(lib "Device")
+			(part "D")
+			(description "Diode")
+			(footprints
+				(fp "TO-???*")
+				(fp "*_Diode_*")
+				(fp "*SingleDiode*")
+				(fp "D_*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "D")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Diode")
+				(field
+					(name "Sim.Device") "D")
+				(field
+					(name "Sim.Pins") "1=K 2=A")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "K")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "A")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
 			(part "D_Schottky_Small")
 			(description "Schottky diode, small symbol")
 			(footprints
@@ -10766,17 +12427,40 @@
 			(part "AP66200")
 			(fields
 				(field
-					(name "Reference") "U")
+					(name "Reference") "U1")
 				(field
 					(name "Value") "AP66200")
 				(field
-					(name "Footprint") "Package_DFN_QFN:QFN-16-1EP_4x4mm_P0.65mm_EP2.5x2.5mm")
+					(name "Footprint") "FilamentDryer:AP66200_U-QFN4040-16_EP2.6x2.6mm_P0.65mm")
 				(field
 					(name "Datasheet")
 				)
 				(field
 					(name "Description")
 				)
+				(field
+					(name "Function") "U2")
+				(field
+					(name "Dielectric")
+				)
+				(field
+					(name "Tolerance")
+				)
+				(field
+					(name "Voltage")
+				)
+				(field
+					(name "Power")
+				)
+				(field
+					(name "TCR")
+				)
+				(field
+					(name "LCSC") "C6741205")
+				(field
+					(name "MPN") "AP66200FVBW-13")
+				(field
+					(name "Manufacturer") "Diodes Incorporated")
 			)
 			(pins
 				(pin
@@ -10812,7 +12496,7 @@
 				(pin
 					(num "7")
 					(name "SW")
-					(type "power_out")
+					(type "passive")
 				)
 				(pin
 					(num "8")
@@ -10863,6 +12547,54 @@
 					(num "17")
 					(name "EPAD")
 					(type "power_in")
+				)
+			)
+		)
+		(libpart
+			(lib "Filament_Dryer_Custom")
+			(part "TLV1701AIDBVR")
+			(description "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5")
+			(docs "http://www.ti.com/lit/ds/symlink/lm397.pdf")
+			(footprints
+				(fp "SOT?23*")
+			)
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "TLV1701")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-5")
+				(field
+					(name "Datasheet") "http://www.ti.com/lit/ds/symlink/lm397.pdf")
+				(field
+					(name "Description") "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "V+")
+					(type "power_in")
+				)
+				(pin
+					(num "2")
+					(name "V-")
+					(type "power_in")
+				)
+				(pin
+					(num "3")
+					(name "-")
+					(type "input")
+				)
+				(pin
+					(num "4")
+					(name "")
+					(type "open_collector")
+				)
+				(pin
+					(num "5")
+					(name "+")
+					(type "input")
 				)
 			)
 		)
@@ -11352,6 +13084,125 @@
 			)
 		)
 		(libpart
+			(lib "SamacSys_Parts")
+			(part "L7987L")
+			(description "Switching Voltage Regulators 61 V 2 A asynchronous step-down switching regulator with adjustable current limitation")
+			(docs "https://www.st.com/resource/en/datasheet/l7987l.pdf")
+			(fields
+				(field
+					(name "Reference") "U?")
+				(field
+					(name "Value") "L7987L")
+				(field
+					(name "Footprint") "SOP65P640X120-17N")
+				(field
+					(name "Datasheet") "https://www.st.com/resource/en/datasheet/l7987l.pdf")
+				(field
+					(name "Description") "Switching Voltage Regulators 61 V 2 A asynchronous step-down switching regulator with adjustable current limitation")
+				(field
+					(name "Height") "1.2")
+				(field
+					(name "Manufacturer_Name") "STMicroelectronics")
+				(field
+					(name "Manufacturer_Part_Number") "L7987L")
+				(field
+					(name "Mouser Part Number") "511-L7987L")
+				(field
+					(name "Mouser Price/Stock") "https://www.mouser.co.uk/ProductDetail/STMicroelectronics/L7987L?qs=9MuLHSklicqgIY87eE3iDQ%3D%3D")
+				(field
+					(name "Arrow Part Number") "L7987L")
+				(field
+					(name "Arrow Price/Stock") "https://www.arrow.com/en/products/l7987l/stmicroelectronics.html?utm_currency=USD&region=nac")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "VBIAS")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "VIN_1")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "VIN_2")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "VCC")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "EN")
+					(type "passive")
+				)
+				(pin
+					(num "6")
+					(name "SS")
+					(type "passive")
+				)
+				(pin
+					(num "7")
+					(name "SYNCH")
+					(type "passive")
+				)
+				(pin
+					(num "8")
+					(name "COMP")
+					(type "passive")
+				)
+				(pin
+					(num "9")
+					(name "FB")
+					(type "passive")
+				)
+				(pin
+					(num "10")
+					(name "FSW")
+					(type "passive")
+				)
+				(pin
+					(num "11")
+					(name "ILIM")
+					(type "passive")
+				)
+				(pin
+					(num "12")
+					(name "PGOOD")
+					(type "passive")
+				)
+				(pin
+					(num "13")
+					(name "LX_1")
+					(type "passive")
+				)
+				(pin
+					(num "14")
+					(name "LX_2")
+					(type "passive")
+				)
+				(pin
+					(num "15")
+					(name "BOOT")
+					(type "passive")
+				)
+				(pin
+					(num "16")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "17")
+					(name "SGND")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
 			(lib "Switch")
 			(part "SW_Push")
 			(description "Push button switch, generic, two pins")
@@ -11575,6 +13426,10 @@
 			(uri "${KICAD10_SYMBOL_DIR}/RF_Module.kicad_sym")
 		)
 		(library
+			(logical "SamacSys_Parts")
+			(uri "${KIPRJMOD}/libs/SamacSys_Parts.kicad_sym")
+		)
+		(library
 			(logical "Switch")
 			(uri "${KICAD10_SYMBOL_DIR}/Switch.kicad_sym")
 		)
@@ -11590,6 +13445,151 @@
 	(nets
 		(net
 			(code "1")
+			(name "/Buck redesign/COMP")
+			(class "Default")
+			(node
+				(ref "C111")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R106")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "8")
+				(pinfunction "COMP_8")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "5")
+				(pinfunction "+_5")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "2")
+			(name "/Buck redesign/EN")
+			(class "Default")
+			(node
+				(ref "Q7")
+				(pin "3")
+				(pinfunction "C_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "5")
+				(pinfunction "EN_5")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "3")
+			(name "/Buck redesign/VIN")
+			(class "Default")
+			(node
+				(ref "C103")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C104")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R104")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R111")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "2")
+				(pinfunction "VIN_1_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "3")
+				(pinfunction "VIN_2_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "1")
+				(pinfunction "V+_1")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "4")
+			(name "/Buck redesign/VOUT")
+			(class "Default")
+			(node
+				(ref "C105")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C106")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C108")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "L101")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R107")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "1")
+				(pinfunction "VBIAS_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "5")
+			(name "/Buck redesign/VREF_FAULT")
+			(class "Default")
+			(node
+				(ref "R111")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R112")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "3")
+				(pinfunction "-_3")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "6")
 			(name "/IO_Power/HEATER_SW")
 			(class "Default")
 			(node
@@ -11612,7 +13612,7 @@
 			)
 		)
 		(net
-			(code "2")
+			(code "7")
 			(name "/MCU/ESP_RXD0")
 			(class "Default")
 			(node
@@ -11635,7 +13635,7 @@
 			)
 		)
 		(net
-			(code "3")
+			(code "8")
 			(name "/MCU/ESP_TXD0")
 			(class "Default")
 			(node
@@ -11658,7 +13658,7 @@
 			)
 		)
 		(net
-			(code "4")
+			(code "9")
 			(name "/MCU/LED_DRV")
 			(class "Default")
 			(node
@@ -11674,7 +13674,7 @@
 			)
 		)
 		(net
-			(code "5")
+			(code "10")
 			(name "/MCU/SCL")
 			(class "Default")
 			(node
@@ -11695,7 +13695,7 @@
 			)
 		)
 		(net
-			(code "6")
+			(code "11")
 			(name "/MCU/SDA")
 			(class "Default")
 			(node
@@ -11716,7 +13716,7 @@
 			)
 		)
 		(net
-			(code "7")
+			(code "12")
 			(name "/MCU/USB_DM")
 			(class "Default")
 			(node
@@ -11733,7 +13733,7 @@
 			)
 		)
 		(net
-			(code "8")
+			(code "13")
 			(name "/MCU/USB_DP")
 			(class "Default")
 			(node
@@ -11750,7 +13750,7 @@
 			)
 		)
 		(net
-			(code "9")
+			(code "14")
 			(name "/MCU/USB_VBUS")
 			(class "Default")
 			(node
@@ -11790,7 +13790,7 @@
 			)
 		)
 		(net
-			(code "10")
+			(code "15")
 			(name "/Power/3V3_BUCK")
 			(class "Power_3V3,Default")
 			(node
@@ -11831,7 +13831,7 @@
 			)
 		)
 		(net
-			(code "11")
+			(code "16")
 			(name "/Power/EN_BUCK")
 			(class "Default")
 			(node
@@ -11857,7 +13857,7 @@
 			)
 		)
 		(net
-			(code "12")
+			(code "17")
 			(name "/Power/FUSE_OUT")
 			(class "Power_24V,Default")
 			(node
@@ -11873,7 +13873,7 @@
 			)
 		)
 		(net
-			(code "13")
+			(code "18")
 			(name "/Power/GATE_Q1")
 			(class "Default")
 			(node
@@ -11895,7 +13895,7 @@
 			)
 		)
 		(net
-			(code "14")
+			(code "19")
 			(name "/Power/JACK_24V_RAW")
 			(class "Power_24V,Default")
 			(node
@@ -11911,7 +13911,7 @@
 			)
 		)
 		(net
-			(code "15")
+			(code "20")
 			(name "/Power/VCC_AP66200")
 			(class "Default")
 			(node
@@ -11945,7 +13945,7 @@
 			)
 		)
 		(net
-			(code "16")
+			(code "21")
 			(name "3V3_MCU")
 			(class "Power_3V3,Default")
 			(node
@@ -12093,7 +14093,7 @@
 			)
 		)
 		(net
-			(code "17")
+			(code "22")
 			(name "24V_PROT")
 			(class "Power_24V,Default")
 			(node
@@ -12178,7 +14178,7 @@
 			)
 		)
 		(net
-			(code "18")
+			(code "23")
 			(name "BTN_DOWN")
 			(class "Default")
 			(node
@@ -12200,7 +14200,7 @@
 			)
 		)
 		(net
-			(code "19")
+			(code "24")
 			(name "BTN_M")
 			(class "Default")
 			(node
@@ -12222,7 +14222,7 @@
 			)
 		)
 		(net
-			(code "20")
+			(code "25")
 			(name "BTN_ONOFF")
 			(class "Default")
 			(node
@@ -12244,7 +14244,7 @@
 			)
 		)
 		(net
-			(code "21")
+			(code "26")
 			(name "BTN_UP")
 			(class "Default")
 			(node
@@ -12266,7 +14266,7 @@
 			)
 		)
 		(net
-			(code "22")
+			(code "27")
 			(name "BUZ_DRV")
 			(class "Default")
 			(node
@@ -12282,7 +14282,7 @@
 			)
 		)
 		(net
-			(code "23")
+			(code "28")
 			(name "FAN_PWM")
 			(class "Default")
 			(node
@@ -12298,7 +14298,7 @@
 			)
 		)
 		(net
-			(code "24")
+			(code "29")
 			(name "GND")
 			(class "Default")
 			(node
@@ -12312,7 +14312,32 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "C103")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C104")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C105")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C106")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
 				(ref "C11")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C110")
 				(pin "2")
 				(pintype "passive")
 			)
@@ -12384,6 +14409,12 @@
 			(node
 				(ref "C9")
 				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "D101")
+				(pin "2")
+				(pinfunction "A_2")
 				(pintype "passive")
 			)
 			(node
@@ -12471,12 +14502,43 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "Q7")
+				(pin "2")
+				(pinfunction "E_2")
+				(pintype "passive")
+			)
+			(node
 				(ref "R10")
 				(pin "2")
 				(pintype "passive")
 			)
 			(node
+				(ref "R108")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R109")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
 				(ref "R11")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R110")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R112")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R114")
 				(pin "2")
 				(pintype "passive")
 			)
@@ -12583,6 +14645,18 @@
 				(pintype "power_in")
 			)
 			(node
+				(ref "U101")
+				(pin "16")
+				(pinfunction "GND_16")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "17")
+				(pinfunction "SGND_17")
+				(pintype "passive")
+			)
+			(node
 				(ref "U2")
 				(pin "29")
 				(pinfunction "GND_29")
@@ -12624,9 +14698,15 @@
 				(pinfunction "GND_39")
 				(pintype "power_in")
 			)
+			(node
+				(ref "U5")
+				(pin "2")
+				(pinfunction "V-_2")
+				(pintype "power_in")
+			)
 		)
 		(net
-			(code "25")
+			(code "30")
 			(name "HEATER_PWM")
 			(class "Default")
 			(node
@@ -12642,7 +14722,7 @@
 			)
 		)
 		(net
-			(code "26")
+			(code "31")
 			(name "NTC")
 			(class "Default")
 			(node
@@ -12669,7 +14749,7 @@
 			)
 		)
 		(net
-			(code "27")
+			(code "32")
 			(name "Net-(C3-Pad1)")
 			(class "Default")
 			(node
@@ -12693,11 +14773,41 @@
 				(ref "U1")
 				(pin "7")
 				(pinfunction "SW_7")
-				(pintype "power_out")
+				(pintype "passive")
 			)
 		)
 		(net
-			(code "28")
+			(code "33")
+			(name "Net-(C108-Pad1)")
+			(class "Default")
+			(node
+				(ref "C108")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R105")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "34")
+			(name "Net-(C109-Pad1)")
+			(class "Default")
+			(node
+				(ref "C109")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R106")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "35")
 			(name "Net-(D3-A)")
 			(class "Default")
 			(node
@@ -12713,7 +14823,7 @@
 			)
 		)
 		(net
-			(code "29")
+			(code "36")
 			(name "Net-(D5-A)")
 			(class "Default")
 			(node
@@ -12736,7 +14846,7 @@
 			)
 		)
 		(net
-			(code "30")
+			(code "37")
 			(name "Net-(D6-A)")
 			(class "Default")
 			(node
@@ -12759,7 +14869,41 @@
 			)
 		)
 		(net
-			(code "31")
+			(code "38")
+			(name "Net-(D101-K)")
+			(class "Default")
+			(node
+				(ref "C107")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "D101")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "L101")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "13")
+				(pinfunction "LX_1_13")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "14")
+				(pinfunction "LX_2_14")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "39")
 			(name "Net-(J2-CC1)")
 			(class "Default")
 			(node
@@ -12775,7 +14919,7 @@
 			)
 		)
 		(net
-			(code "32")
+			(code "40")
 			(name "Net-(J2-CC2)")
 			(class "Default")
 			(node
@@ -12791,7 +14935,7 @@
 			)
 		)
 		(net
-			(code "33")
+			(code "41")
 			(name "Net-(J2-D+-PadA6)")
 			(class "Default")
 			(node
@@ -12814,7 +14958,7 @@
 			)
 		)
 		(net
-			(code "34")
+			(code "42")
 			(name "Net-(J2-D--PadA7)")
 			(class "Default")
 			(node
@@ -12837,7 +14981,7 @@
 			)
 		)
 		(net
-			(code "35")
+			(code "43")
 			(name "Net-(J3-Pin_2)")
 			(class "Default")
 			(node
@@ -12859,7 +15003,7 @@
 			)
 		)
 		(net
-			(code "36")
+			(code "44")
 			(name "Net-(J3-Pin_3)")
 			(class "Default")
 			(node
@@ -12881,7 +15025,7 @@
 			)
 		)
 		(net
-			(code "37")
+			(code "45")
 			(name "Net-(Q2-B)")
 			(class "Default")
 			(node
@@ -12904,7 +15048,7 @@
 			)
 		)
 		(net
-			(code "38")
+			(code "46")
 			(name "Net-(Q2-C)")
 			(class "Default")
 			(node
@@ -12938,7 +15082,7 @@
 			)
 		)
 		(net
-			(code "39")
+			(code "47")
 			(name "Net-(Q2-E)")
 			(class "Default")
 			(node
@@ -12961,7 +15105,7 @@
 			)
 		)
 		(net
-			(code "40")
+			(code "48")
 			(name "Net-(Q3-C)")
 			(class "Default")
 			(node
@@ -13000,7 +15144,7 @@
 			)
 		)
 		(net
-			(code "41")
+			(code "49")
 			(name "Net-(Q4-G)")
 			(class "Default")
 			(node
@@ -13021,7 +15165,7 @@
 			)
 		)
 		(net
-			(code "42")
+			(code "50")
 			(name "Net-(Q5-G)")
 			(class "Default")
 			(node
@@ -13042,7 +15186,7 @@
 			)
 		)
 		(net
-			(code "43")
+			(code "51")
 			(name "Net-(Q6-B)")
 			(class "Default")
 			(node
@@ -13058,7 +15202,43 @@
 			)
 		)
 		(net
-			(code "44")
+			(code "52")
+			(name "Net-(Q7-B)")
+			(class "Default")
+			(node
+				(ref "Q7")
+				(pin "1")
+				(pinfunction "B_1")
+				(pintype "input")
+			)
+			(node
+				(ref "R113")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R114")
+				(pin "1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "53")
+			(name "Net-(R113-Pad1)")
+			(class "Default")
+			(node
+				(ref "R113")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "4")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "54")
 			(name "Net-(U1-BST)")
 			(class "Default")
 			(node
@@ -13074,7 +15254,7 @@
 			)
 		)
 		(net
-			(code "45")
+			(code "55")
 			(name "Net-(U1-FB)")
 			(class "Default")
 			(node
@@ -13100,7 +15280,7 @@
 			)
 		)
 		(net
-			(code "46")
+			(code "56")
 			(name "Net-(U1-PG)")
 			(class "Default")
 			(node
@@ -13116,7 +15296,7 @@
 			)
 		)
 		(net
-			(code "47")
+			(code "57")
 			(name "Net-(U2-VBUS)")
 			(class "Default")
 			(node
@@ -13137,7 +15317,7 @@
 			)
 		)
 		(net
-			(code "48")
+			(code "58")
 			(name "Net-(U2-~{RST})")
 			(class "Default")
 			(node
@@ -13153,7 +15333,123 @@
 			)
 		)
 		(net
-			(code "49")
+			(code "59")
+			(name "Net-(U101-BOOT)")
+			(class "Default")
+			(node
+				(ref "C107")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "15")
+				(pinfunction "BOOT_15")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "60")
+			(name "Net-(U101-FB)")
+			(class "Default")
+			(node
+				(ref "C109")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C111")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R105")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R107")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R110")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "9")
+				(pinfunction "FB_9")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "61")
+			(name "Net-(U101-FSW)")
+			(class "Default")
+			(node
+				(ref "R108")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "10")
+				(pinfunction "FSW_10")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "62")
+			(name "Net-(U101-ILIM)")
+			(class "Default")
+			(node
+				(ref "R109")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "11")
+				(pinfunction "ILIM_11")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "63")
+			(name "Net-(U101-SS)")
+			(class "Default")
+			(node
+				(ref "C110")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "6")
+				(pinfunction "SS_6")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "64")
+			(name "Net-(U101-VCC)")
+			(class "Default")
+			(node
+				(ref "R104")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U101")
+				(pin "4")
+				(pinfunction "VCC_4")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "65")
 			(name "unconnected-(BZ1-Pad3)")
 			(class "Default")
 			(node
@@ -13164,7 +15460,7 @@
 			)
 		)
 		(net
-			(code "50")
+			(code "66")
 			(name "unconnected-(BZ1-Pad4)")
 			(class "Default")
 			(node
@@ -13175,7 +15471,7 @@
 			)
 		)
 		(net
-			(code "51")
+			(code "67")
 			(name "unconnected-(J1-Pin_2-Pad2)")
 			(class "Default")
 			(node
@@ -13186,7 +15482,7 @@
 			)
 		)
 		(net
-			(code "52")
+			(code "68")
 			(name "unconnected-(J2-SBU1-PadA8)")
 			(class "Default")
 			(node
@@ -13197,7 +15493,7 @@
 			)
 		)
 		(net
-			(code "53")
+			(code "69")
 			(name "unconnected-(J2-SBU2-PadB8)")
 			(class "Default")
 			(node
@@ -13208,7 +15504,7 @@
 			)
 		)
 		(net
-			(code "54")
+			(code "70")
 			(name "unconnected-(U2-CHR0-Pad15)")
 			(class "Default")
 			(node
@@ -13219,7 +15515,7 @@
 			)
 		)
 		(net
-			(code "55")
+			(code "71")
 			(name "unconnected-(U2-CHR1-Pad14)")
 			(class "Default")
 			(node
@@ -13230,7 +15526,7 @@
 			)
 		)
 		(net
-			(code "56")
+			(code "72")
 			(name "unconnected-(U2-CHREN-Pad13)")
 			(class "Default")
 			(node
@@ -13241,7 +15537,7 @@
 			)
 		)
 		(net
-			(code "57")
+			(code "73")
 			(name "unconnected-(U2-GPIO.4-Pad22)")
 			(class "Default")
 			(node
@@ -13252,7 +15548,7 @@
 			)
 		)
 		(net
-			(code "58")
+			(code "74")
 			(name "unconnected-(U2-GPIO.5-Pad21)")
 			(class "Default")
 			(node
@@ -13263,7 +15559,7 @@
 			)
 		)
 		(net
-			(code "59")
+			(code "75")
 			(name "unconnected-(U2-GPIO.6-Pad20)")
 			(class "Default")
 			(node
@@ -13274,7 +15570,7 @@
 			)
 		)
 		(net
-			(code "60")
+			(code "76")
 			(name "unconnected-(U2-NC-Pad10)")
 			(class "Default")
 			(node
@@ -13285,7 +15581,7 @@
 			)
 		)
 		(net
-			(code "61")
+			(code "77")
 			(name "unconnected-(U2-RS485{slash}GPIO.2-Pad17)")
 			(class "Default")
 			(node
@@ -13296,7 +15592,7 @@
 			)
 		)
 		(net
-			(code "62")
+			(code "78")
 			(name "unconnected-(U2-SUSPEND-Pad12)")
 			(class "Default")
 			(node
@@ -13307,7 +15603,7 @@
 			)
 		)
 		(net
-			(code "63")
+			(code "79")
 			(name "unconnected-(U2-~{CTS}-Pad23)")
 			(class "Default")
 			(node
@@ -13318,7 +15614,7 @@
 			)
 		)
 		(net
-			(code "64")
+			(code "80")
 			(name "unconnected-(U2-~{DCD}-Pad1)")
 			(class "Default")
 			(node
@@ -13329,7 +15625,7 @@
 			)
 		)
 		(net
-			(code "65")
+			(code "81")
 			(name "unconnected-(U2-~{DSR}-Pad27)")
 			(class "Default")
 			(node
@@ -13340,7 +15636,7 @@
 			)
 		)
 		(net
-			(code "66")
+			(code "82")
 			(name "unconnected-(U2-~{RI}{slash}CLK-Pad2)")
 			(class "Default")
 			(node
@@ -13351,7 +15647,7 @@
 			)
 		)
 		(net
-			(code "67")
+			(code "83")
 			(name "unconnected-(U2-~{RXT}{slash}GPIO.1-Pad18)")
 			(class "Default")
 			(node
@@ -13362,7 +15658,7 @@
 			)
 		)
 		(net
-			(code "68")
+			(code "84")
 			(name "unconnected-(U2-~{SUSPEND}-Pad11)")
 			(class "Default")
 			(node
@@ -13373,7 +15669,7 @@
 			)
 		)
 		(net
-			(code "69")
+			(code "85")
 			(name "unconnected-(U2-~{TXT}{slash}GPIO.0-Pad19)")
 			(class "Default")
 			(node
@@ -13384,7 +15680,7 @@
 			)
 		)
 		(net
-			(code "70")
+			(code "86")
 			(name "unconnected-(U2-~{WAKEUP}{slash}GPIO.3-Pad16)")
 			(class "Default")
 			(node
@@ -13395,7 +15691,7 @@
 			)
 		)
 		(net
-			(code "71")
+			(code "87")
 			(name "unconnected-(U4-IO2-Pad24)")
 			(class "Default")
 			(node
@@ -13406,7 +15702,7 @@
 			)
 		)
 		(net
-			(code "72")
+			(code "88")
 			(name "unconnected-(U4-IO4-Pad26)")
 			(class "Default")
 			(node
@@ -13417,7 +15713,7 @@
 			)
 		)
 		(net
-			(code "73")
+			(code "89")
 			(name "unconnected-(U4-IO5-Pad29)")
 			(class "Default")
 			(node
@@ -13428,7 +15724,7 @@
 			)
 		)
 		(net
-			(code "74")
+			(code "90")
 			(name "unconnected-(U4-IO12-Pad14)")
 			(class "Default")
 			(node
@@ -13439,7 +15735,7 @@
 			)
 		)
 		(net
-			(code "75")
+			(code "91")
 			(name "unconnected-(U4-IO13-Pad16)")
 			(class "Default")
 			(node
@@ -13450,7 +15746,7 @@
 			)
 		)
 		(net
-			(code "76")
+			(code "92")
 			(name "unconnected-(U4-IO15-Pad23)")
 			(class "Default")
 			(node
@@ -13461,7 +15757,7 @@
 			)
 		)
 		(net
-			(code "77")
+			(code "93")
 			(name "unconnected-(U4-IO17-Pad28)")
 			(class "Default")
 			(node
@@ -13472,7 +15768,7 @@
 			)
 		)
 		(net
-			(code "78")
+			(code "94")
 			(name "unconnected-(U4-IO18-Pad30)")
 			(class "Default")
 			(node
@@ -13483,7 +15779,7 @@
 			)
 		)
 		(net
-			(code "79")
+			(code "95")
 			(name "unconnected-(U4-IO23-Pad37)")
 			(class "Default")
 			(node
@@ -13494,7 +15790,7 @@
 			)
 		)
 		(net
-			(code "80")
+			(code "96")
 			(name "unconnected-(U4-IO25-Pad10)")
 			(class "Default")
 			(node
@@ -13505,7 +15801,7 @@
 			)
 		)
 		(net
-			(code "81")
+			(code "97")
 			(name "unconnected-(U4-NC-Pad17)")
 			(class "Default")
 			(node
@@ -13516,7 +15812,7 @@
 			)
 		)
 		(net
-			(code "82")
+			(code "98")
 			(name "unconnected-(U4-NC-Pad18)")
 			(class "Default")
 			(node
@@ -13527,7 +15823,7 @@
 			)
 		)
 		(net
-			(code "83")
+			(code "99")
 			(name "unconnected-(U4-NC-Pad19)")
 			(class "Default")
 			(node
@@ -13538,7 +15834,7 @@
 			)
 		)
 		(net
-			(code "84")
+			(code "100")
 			(name "unconnected-(U4-NC-Pad20)")
 			(class "Default")
 			(node
@@ -13549,7 +15845,7 @@
 			)
 		)
 		(net
-			(code "85")
+			(code "101")
 			(name "unconnected-(U4-NC-Pad21)")
 			(class "Default")
 			(node
@@ -13560,7 +15856,7 @@
 			)
 		)
 		(net
-			(code "86")
+			(code "102")
 			(name "unconnected-(U4-NC-Pad22)")
 			(class "Default")
 			(node
@@ -13571,7 +15867,7 @@
 			)
 		)
 		(net
-			(code "87")
+			(code "103")
 			(name "unconnected-(U4-NC-Pad32)")
 			(class "Default")
 			(node
@@ -13582,7 +15878,7 @@
 			)
 		)
 		(net
-			(code "88")
+			(code "104")
 			(name "unconnected-(U4-SENSOR_VN-Pad5)")
 			(class "Default")
 			(node
@@ -13593,7 +15889,7 @@
 			)
 		)
 		(net
-			(code "89")
+			(code "105")
 			(name "unconnected-(U4-SENSOR_VP-Pad4)")
 			(class "Default")
 			(node
@@ -13601,6 +15897,28 @@
 				(pin "4")
 				(pinfunction "SENSOR_VP_4")
 				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "106")
+			(name "unconnected-(U101-PGOOD-Pad12)")
+			(class "Default")
+			(node
+				(ref "U101")
+				(pin "12")
+				(pinfunction "PGOOD_12")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "107")
+			(name "unconnected-(U101-SYNCH-Pad7)")
+			(class "Default")
+			(node
+				(ref "U101")
+				(pin "7")
+				(pinfunction "SYNCH_7")
+				(pintype "passive+no_connect")
 			)
 		)
 	)
