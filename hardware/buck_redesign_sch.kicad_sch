@@ -5895,7 +5895,7 @@
 				)
 			)
 		)
-		(property "MPN" "EMK325BJ476MM-P,"
+		(property "MPN" ""
 			(at 154.94 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -5906,7 +5906,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Taiyo Yuden"
+		(property "Manufacturer" ""
 			(at 154.94 133.35 0)
 			(hide yes)
 			(show_name no)

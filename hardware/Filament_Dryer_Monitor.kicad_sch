@@ -6,52 +6,6 @@
 	(paper "A4")
 	(lib_symbols)
 	(sheet
-		(at 198.755 32.385)
-		(size 23.495 13.335)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0)
-		)
-		(uuid "01411e6a-b134-4ffe-a875-3d470f9609be")
-		(property "Sheetname" "Buck redesign"
-			(at 198.755 31.6734 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "buck_redesign_sch.kicad_sch"
-			(at 198.755 46.3046 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left top)
-			)
-		)
-		(instances
-			(project "Filament_Dryer_Monitor"
-				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f"
-					(page "5")
-				)
-			)
-		)
-	)
-	(sheet
 		(at 80.01 77.47)
 		(size 38.1 52.07)
 		(exclude_from_sim no)
