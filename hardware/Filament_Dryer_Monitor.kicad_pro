@@ -844,7 +844,7 @@
         "uuid": "ec014e20-abe2-47eb-baf0-3a9eae5bda3f"
       }
     ],
-    "used_designators": "R_g_fan1,F1,Q1-7,SW_up1,R_en1-2,J1-7,Cin1-4,R1-31,R102-103,R105-107,R110-114,Rfb_bot1,D1-7,#PWR1-46,C1-23,C105-109,C111-112,R_pd_fan1,U1-5,SW_onoff1,Q_fan1,R_g_heat1-2,Ren_top1-2,C_reg1,Dz1,L1-3,Cbst1,Cvcc1,D_heat1,Cout1-5,FB1,R_s_scl1-2,Cff1,Cmcu1,Cen1,Ren_bot1,Rfb_top1,Rg1,C_en1-3,Rpg1,J_display1,TVS1,TP1-7,SW1-6,R_ntc1,C_esp1-5,R_rst1-2,C_vdd1-3,R_pu_scl1,R_vbus_bot1-3,R_vbus_top1,D_fan1,Q_boot1,Q_rst1,R_pu_sda1-2,J_heat1-2,R_s_sda1,D_led1,J_sens1,R_led1,Q_heat1-2,J_ntc1,R_pd_heat1-2,SW_m1,J_fan1-2,C_ntc1,J_dc1,R_btn1-4,SW_down1,BUZZER1,D_buz1,R_buz1,#FLG1-3,Q_buz1,R_cc1-2,R_io1,LS1,PS1",
+    "used_designators": "R_g_fan1,F1,Q1-7,SW_up1,R_en1-2,J1-7,Cin1-4,R1-31,R102-103,R105-107,R110-117,Rfb_bot1,D1-7,#PWR1-48,C1-23,C105-109,C111-113,R_pd_fan1,U1-5,SW_onoff1,Q_fan1,R_g_heat1-2,Ren_top1-2,C_reg1,Dz1,L1-3,Cbst1,Cvcc1,D_heat1,Cout1-5,FB1,R_s_scl1-2,Cff1,Cmcu1,Cen1,Ren_bot1,Rfb_top1,Rg1,C_en1-3,Rpg1,J_display1,TVS1,TP1-7,SW1-6,R_ntc1,C_esp1-5,R_rst1-2,C_vdd1-3,R_pu_scl1,R_vbus_bot1-3,R_vbus_top1,D_fan1,Q_boot1,Q_rst1,R_pu_sda1-2,J_heat1-2,R_s_sda1,D_led1,J_sens1,R_led1,Q_heat1-2,J_ntc1,R_pd_heat1-2,SW_m1,J_fan1-2,C_ntc1,J_dc1,R_btn1-4,SW_down1,BUZZER1,D_buz1,R_buz1,#FLG1-3,Q_buz1,R_cc1-2,R_io1,LS1,PS1",
     "variants": [
       {
         "name": "Mouser"

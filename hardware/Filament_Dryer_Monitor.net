@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\Users\\utente\\Documents\\KiCad\\10.0\\projects\\Filament_Dryer_Monitor\\hardware\\Filament_Dryer_Monitor.kicad_sch")
-		(date "2026-08-31T22:44:57")
+		(date "2026-08-31T22:55:42")
 		(tool "Eeschema 10.0.4")
 		(sheet
 			(number "1")
@@ -10712,6 +10712,72 @@
 			)
 		)
 		(comp
+			(ref "C113")
+			(value "330n")
+			(description "Unpolarized capacitor")
+			(fields
+				(field
+					(name "MPN") "EMK325BJ476MM-P,")
+				(field
+					(name "Manufacturer") "Taiyo Yuden")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "MPN")
+				(value "EMK325BJ476MM-P,")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Taiyo Yuden")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "f2a56e51-53b6-48c8-a94b-05ec0421bc97")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
 			(ref "D101")
 			(value "STPS2L60A")
 			(description "Diode")
@@ -11559,6 +11625,168 @@
 				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
 			)
 			(tstamps "94654cef-2452-411d-b516-794ed43ad825")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R115")
+			(value "100k")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "a4e1bdc9-918a-42b3-98c5-a75f027052cb")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R116")
+			(value "15k")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "15776817-2927-46da-b945-ac8f371ac3be")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R117")
+			(value "100k")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "Buck redesign")
+			)
+			(property
+				(name "Sheetfile")
+				(value "buck_redesign_sch.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Buck redesign/")
+				(tstamps "/01411e6a-b134-4ffe-a875-3d470f9609be/")
+			)
+			(tstamps "23b909a3-22ec-4fe8-9218-65c4f8712027")
 			(units
 				(unit
 					(name "A")
@@ -13529,9 +13757,24 @@
 			(name "/Buck redesign/EN")
 			(class "Default")
 			(node
+				(ref "C113")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
 				(ref "Q7")
 				(pin "3")
 				(pinfunction "C_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "R115")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R116")
+				(pin "1")
 				(pintype "passive")
 			)
 			(node
@@ -13562,6 +13805,16 @@
 			)
 			(node
 				(ref "R111")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R115")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R117")
 				(pin "1")
 				(pintype "passive")
 			)
@@ -14401,6 +14654,11 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "C113")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
 				(ref "C12")
 				(pin "2")
 				(pintype "passive")
@@ -14598,6 +14856,11 @@
 			)
 			(node
 				(ref "R114")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R116")
 				(pin "2")
 				(pintype "passive")
 			)
@@ -15288,6 +15551,11 @@
 			(node
 				(ref "R113")
 				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R117")
+				(pin "2")
 				(pintype "passive")
 			)
 			(node
