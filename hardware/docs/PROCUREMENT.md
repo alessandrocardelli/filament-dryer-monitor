@@ -1,6 +1,6 @@
 # Procurement and TME sourcing
 
-Status: **2026-09-01** — electrical checkpoint on branch `redesign/buck-sourcing`.
+Status: **2026-09-01** — electrical schematic checkpoint on branch `redesign/buck-sourcing`.
 
 ## Source-of-truth rules
 
@@ -10,47 +10,50 @@ the authoritative source for implemented electrical connectivity.
 At this checkpoint:
 
 - `hardware/Power.kicad_sch` contains the integrated L7987L buck redesign;
-- `hardware/Filament_Dryer_Monitor.net` was regenerated from that schematic on 2026-09-01;
+- `hardware/Filament_Dryer_Monitor.net` was regenerated from the current schematic on 2026-09-01;
+- the buzzer NPN driver now includes `R37 = 100 kΩ` as a base-emitter pull-down on Q6;
+- the pre-FB1 buck output has the explicit net name `/Power/3V3_BUCK`;
+- U1/TLV1701 now points to the correct TLV1701 datasheet;
 - `hardware/Filament_Dryer_Monitor.kicad_pcb` is **not yet synchronized** and still contains
   the legacy AP66200 power stage and old copper/net names;
-- `hardware/production/` outputs are therefore stale for the redesigned power stage and must
-  not be used for a manufacturing order until the PCB has been updated and outputs regenerated.
+- `hardware/production/` outputs are stale for the redesigned power stage and must not be used
+  for a manufacturing order until the PCB has been updated and outputs regenerated.
+
+The current electrical review found no blocking schematic omission. The topology can therefore
+be treated as **electrically frozen for the sourcing/footprint pass**, subject to a fresh ERC and
+the normal PCB/layout review later.
 
 The working purchasing BOM remains the Google Sheet:
 
 - `Filament Dryer Monitor — BOM finale Mouser`
 - tab: `BOM TME`
 
-The Google Sheet remains the working source for supplier codes, stock, prices and purchasing
-choices, but it is **not currently synchronized with the new L7987L block**.
+The sheet is still based on the previous procurement state and is **not synchronized with the
+new L7987L block**.
 
-### Current procurement hold
-
-The present decision is to **defer final MPN selection/cleanup and defer the Google Sheet
-update** until the electrical schematic has been frozen and the PCB update is ready.
-
-Consequences:
-
-- existing MPN/manufacturer fields on newly inserted buck components are provisional;
-- blank MPN/footprint fields in the new block are expected at this stage;
-- do not infer a final ordering choice from an MPN already present in KiCad;
-- do not update `BOM TME` yet;
-- do not use old buck reference designators in the sheet as if they still identified the same
-  components.
-
-The last point matters because the newly integrated buck block was selectively re-annotated.
-Several references freed by the deleted AP66200 circuit are now reused by different L7987L
-components. For example, `U1` is now the TLV1701 comparator, `U5` is the L7987L, and `L1` is
-now the 15 µH L7987L inductor. Reference-only matching against an older BOM is therefore not
-safe until the deliberate reconciliation step.
+Do not reconcile old and new parts by reference designator alone. The L7987L integration reused
+some references freed by the removed AP66200 block: for example, `U1` is now TLV1701, `U5` is
+L7987L and `L1` is the new 15 µH buck inductor.
 
 ---
 
-## Sourcing strategy
+## Current sourcing decision
 
-TME remains the preferred supplier for the prototype BOM. The goal is to use parts with good,
-repeatable availability rather than preserving a historical JLCPCB/LCSC or Mouser part when a
-fully compatible and better-stocked alternative is available.
+The next hardware task is now **TME sourcing and final MPN/footprint selection before PCB
+synchronization**.
+
+Reason: several parts in the redesigned block still have provisional MPNs or unverified
+footprints, and it is preferable to choose actual purchasable parts before placing/routing the
+new power stage.
+
+For each component during the sourcing pass:
+
+1. confirm electrical requirements from the current schematic/design record;
+2. search TME for the exact part or a fully compatible alternative;
+3. prefer parts with good, repeatable availability;
+4. verify package, pinout, body dimensions and footprint compatibility before approval;
+5. record the final manufacturer MPN and TME code in the working BOM;
+6. update KiCad symbol fields/footprints together in a deliberate cleanup pass.
 
 Using another supplier remains acceptable when:
 
@@ -58,17 +61,17 @@ Using another supplier remains acceptable when:
 - TME does not stock a sensible equivalent;
 - a substitution would force unnecessary schematic/PCB redesign.
 
-Stock, price and delivery dates are transient and should not be copied into design-state
-documentation as permanent facts.
+Stock, price and delivery dates are transient and should not be copied into permanent design
+state as fixed facts.
 
 ---
 
 ## L7987L buck redesign — current electrical state
 
-The AP66200 replacement is no longer merely a candidate: it is **implemented in the current
-Power schematic and exported netlist** on `redesign/buck-sourcing`.
+The AP66200 replacement is implemented in `hardware/Power.kicad_sch` and in the current
+exported netlist on `redesign/buck-sourcing`.
 
-Detailed calculations, simulation history and the fault-recovery rationale are in
+Detailed calculations, simulation history and the AutoEN fault-recovery rationale are in
 `docs/BUCK_L7987L_DESIGN.md`.
 
 ### Current reference/value map
@@ -110,9 +113,9 @@ These are current **electrical references and values**, not final procurement ap
 The pre-existing `C5 = 100 µF / 50 V` bulk capacitor remains upstream on `24V_PROT`, and the
 existing `FB1` / `C11` output filtering toward `3V3_MCU` remains part of the project.
 
-### Important implementation changes from the earlier redesign draft
+### Important implemented details
 
-- L7987L `VIN1`, `VIN2` and `VCC` are now tied **directly** to `24V_PROT`.
+- L7987L `VIN1`, `VIN2` and `VCC` are tied directly to `24V_PROT`.
 - The earlier VIN-to-VCC 0 Ω jumper has been removed.
 - VCC retains its local 1 µF bypass (`C3`).
 - `PGOOD` and `SYNCH` are intentionally left NC.
@@ -120,33 +123,37 @@ existing `FB1` / `C11` output filtering toward `3V3_MCU` remains part of the pro
   network.
 - The temporary `Buck redesign` hierarchical sheet has been removed from the active hierarchy;
   the implementation lives directly in `Power.kicad_sch`.
+- Q6 buzzer driver now has `R37 = 100 kΩ` base-emitter pull-down so the transistor remains off
+  while the ESP32 output is high-impedance during reset/boot.
 
 ---
 
-## Known metadata/footprint work intentionally deferred
+## Metadata and footprint cleanup for the sourcing pass
 
-Do not resolve these as part of the present documentation checkpoint; they belong to the
-forthcoming MPN/footprint pass.
+The next TME/MPN pass should deliberately resolve symbol fields and footprints rather than
+trusting provisional data already present in KiCad.
 
-Current known items include:
+Known items include:
 
-- U1/TLV1701 still carries a stale LM397 datasheet URL in its KiCad metadata;
+- `R37` is electrically correct but its copied `Function` metadata should be renamed from the
+  fan pull-down label to a buzzer-specific name such as `R_pd_buz1` in Symbol Fields Editor;
 - C10's current MPN text has a trailing comma;
 - D7's manufacturer field has a leading space;
 - several new buck passives and the catch diode/inductor still need deliberate final footprint
   assignment/review;
-- existing MPN fields for C1/C3/C10/C21/L1/Q7/D7 are not to be treated as final purchasing
-  approval merely because they are populated.
+- existing MPN fields for C1/C3/C10/C21/L1/Q7/D7 are provisional until explicitly approved in
+  the sourcing pass.
 
-The Google Sheet must remain untouched until this pass is complete.
+These metadata corrections can be performed together in KiCad Symbol Fields Editor once the
+TME choices are known; they do not justify separate electrical commits.
 
 ---
 
 ## Existing non-buck procurement items
 
-The previous TME conversion identified several non-buck substitutions that may still require
-mechanical/electrical review when the final sourcing pass resumes. These are retained here as
-pending procurement context, not as automatically approved KiCad changes:
+The previous TME conversion identified several non-buck substitutions that still require
+mechanical/electrical review during the final sourcing pass. They are retained as pending
+procurement context, not as automatically approved KiCad changes:
 
 | Current project item | Previous TME-oriented candidate / issue | Required action before applying |
 |---|---|---|
@@ -158,13 +165,12 @@ pending procurement context, not as automatically approved KiCad changes:
 | U3 USB ESD protector | Akyga Semi `AKS1201` candidate | Verify pinout, ESD characteristics, capacitance and footprint |
 | J7 JST GH NTC connector | Exact `BM02B-GHS-TBT` preferred | Preserve top-entry mechanics; use another supplier rather than change geometry without reason |
 
-The old procurement entry for the AP66200-era `L1 = 8.2 µH` is **superseded** by the L7987L
-redesign. Current `L1` is the new 15 µH buck inductor and must be sourced as part of the new
-buck pass.
+The old procurement entry for the AP66200-era `L1 = 8.2 µH` is superseded. Current `L1` is the
+new 15 µH L7987L inductor and must be sourced as part of the new buck pass.
 
 ---
 
-## PCB and production state
+## PCB, ERC and production state
 
 The schematic/netlist redesign is ahead of the board.
 
@@ -174,14 +180,21 @@ The current PCB still contains:
 - legacy `/Power/VCC_AP66200` routing/net data;
 - the previous power-stage placement/routing.
 
-Therefore the next hardware implementation phase is **not procurement**. It is:
+The existing `hardware/ERC.rpt` predates the L7987L integration and is not evidence that the
+current schematic is ERC-clean. A fresh ERC must be generated from the current schematic.
 
-1. finish small schematic naming/metadata cleanup that does not require purchasing choices;
-2. assign/verify final footprints together with the later MPN pass;
-3. update PCB from the current schematic, replacing the AP66200 stage;
-4. place and route the L7987L power loop according to the ST layout guidance;
-5. rerun ERC and DRC;
-6. regenerate BOM, positions, fabrication outputs and production netlist;
-7. only then reconcile those generated outputs against `BOM TME` and finalize the order.
+After the TME sourcing/MPN/footprint pass, proceed in this order:
 
-Until those steps are complete, the old production exports are historical only.
+1. update KiCad Symbol Fields Editor with approved MPN/manufacturer/TME metadata and cleanup;
+2. assign/verify the approved footprints;
+3. run a fresh ERC on the synchronized schematic revision;
+4. update PCB from schematic, removing the legacy AP66200 stage;
+5. place and route the L7987L power loop according to ST layout guidance;
+6. perform PCB-specific review of switching loops, grounding, thermal paths, USB routing,
+   ESP32 antenna keepout and heater/fan high-current paths;
+7. run DRC;
+8. regenerate BOM, position files, fabrication outputs and production netlist;
+9. reconcile generated production data against the final `BOM TME` sheet before ordering.
+
+Until those steps are complete, the old PCB and production exports are historical only and are
+not manufacturing-ready.
