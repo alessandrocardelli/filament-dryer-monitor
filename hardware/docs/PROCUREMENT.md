@@ -1,110 +1,187 @@
 # Procurement and TME sourcing
 
-Status: 2026-08-21
+Status: **2026-09-01** — electrical checkpoint on branch `redesign/buck-sourcing`.
 
 ## Source-of-truth rules
 
-The KiCad schematic, PCB and netlist on `main` remain the authoritative source for the
-implemented electrical and mechanical design.
+For the active redesign branch, the current KiCad **schematic and freshly exported netlist** are
+the authoritative source for implemented electrical connectivity.
 
-The working purchasing BOM is maintained in the Google Sheet:
+At this checkpoint:
+
+- `hardware/Power.kicad_sch` contains the integrated L7987L buck redesign;
+- `hardware/Filament_Dryer_Monitor.net` was regenerated from that schematic on 2026-09-01;
+- `hardware/Filament_Dryer_Monitor.kicad_pcb` is **not yet synchronized** and still contains
+  the legacy AP66200 power stage and old copper/net names;
+- `hardware/production/` outputs are therefore stale for the redesigned power stage and must
+  not be used for a manufacturing order until the PCB has been updated and outputs regenerated.
+
+The working purchasing BOM remains the Google Sheet:
 
 - `Filament Dryer Monitor — BOM finale Mouser`
 - tab: `BOM TME`
-- https://docs.google.com/spreadsheets/d/14pd4d5PjS7goH_W73SR9czaZ9BhpDt5480ON451nyR0
 
-The sheet is the working source for supplier codes, stock, prices and purchasing choices.
-Stock, price and delivery dates are transient data and must not be treated as permanent design
-facts. A component selected in the sheet does not become part of the hardware implementation
-until the corresponding KiCad fields, footprint and PCB have been reviewed and updated.
+The Google Sheet remains the working source for supplier codes, stock, prices and purchasing
+choices, but it is **not currently synchronized with the new L7987L block**.
+
+### Current procurement hold
+
+The present decision is to **defer final MPN selection/cleanup and defer the Google Sheet
+update** until the electrical schematic has been frozen and the PCB update is ready.
+
+Consequences:
+
+- existing MPN/manufacturer fields on newly inserted buck components are provisional;
+- blank MPN/footprint fields in the new block are expected at this stage;
+- do not infer a final ordering choice from an MPN already present in KiCad;
+- do not update `BOM TME` yet;
+- do not use old buck reference designators in the sheet as if they still identified the same
+  components.
+
+The last point matters because the newly integrated buck block was selectively re-annotated.
+Several references freed by the deleted AP66200 circuit are now reused by different L7987L
+components. For example, `U1` is now the TLV1701 comparator, `U5` is the L7987L, and `L1` is
+now the 15 µH L7987L inductor. Reference-only matching against an older BOM is therefore not
+safe until the deliberate reconciliation step.
+
+---
 
 ## Sourcing strategy
 
-TME is now the preferred supplier for the prototype BOM. The goal is to use parts with good,
-repeatable availability rather than forcing an exact historical JLCPCB/LCSC or Mouser part
-when an electrically and mechanically suitable TME alternative is better stocked.
+TME remains the preferred supplier for the prototype BOM. The goal is to use parts with good,
+repeatable availability rather than preserving a historical JLCPCB/LCSC or Mouser part when a
+fully compatible and better-stocked alternative is available.
 
-Using another supplier is acceptable when an exact mechanical part is required or when a
-sensible TME substitution would require unnecessary redesign. The final order therefore does
-not have to be 100% TME.
+Using another supplier remains acceptable when:
 
-The `BOM TME` sheet is API-assisted: TME stock, unit prices, delivery information and
-available datasheet links are refreshed automatically. The purchasing decision must still be
-reviewed against the actual design before ordering.
+- an exact mechanical part is required;
+- TME does not stock a sensible equivalent;
+- a substitution would force unnecessary schematic/PCB redesign.
 
-## Current procurement status
+Stock, price and delivery dates are transient and should not be copied into design-state
+documentation as permanent facts.
 
-As of 2026-08-21 almost all BOM lines have an immediately available TME selection.
+---
 
-### Resolved during TME conversion
+## L7987L buck redesign — current electrical state
 
-- **R6** — feedback resistor corrected to Yageo `RC0603FR-0731K6L`, 31.6 kΩ, 1%, 0603.
-  This is the correct TME-available `-07` part; the earlier `RC0603FR-1331K6L` choice was not
-  the useful TME ordering code.
-- **C5** — Panasonic `EEEFK1H101P`, 100 µF / 50 V SMD electrolytic, selected as the available
-  TME replacement. **PCB footprint must be verified before applying the change.**
-- **Q5** — Infineon `IRLML2060TRPBF`, 60 V SOT-23 N-MOSFET, selected for the fan switch.
-  Pinout/footprint must be verified when the KiCad design is updated.
-- **U3** — Akyga Semi `AKS1201`, TME symbol `USBLC6-2SC6-AKS`, selected as the available
-  two-line USB ESD protector. The current `main` design still uses ST `USBLC6-2SC6`; pinout,
-  line capacitance and footprint must be confirmed before replacement.
+The AP66200 replacement is no longer merely a candidate: it is **implemented in the current
+Power schematic and exported netlist** on `redesign/buck-sourcing`.
 
-The Google Sheet contains the complete current purchasing selection; do not duplicate the
-entire live BOM here because stock and supplier choices can change.
+Detailed calculations, simulation history and the fault-recovery rationale are in
+`docs/BUCK_L7987L_DESIGN.md`.
 
-## Known design-impact substitutions
+### Current reference/value map
 
-These purchasing choices differ from the current `main` implementation or require an explicit
-mechanical/electrical check before being copied into KiCad:
+These are current **electrical references and values**, not final procurement approvals:
 
-| Ref | Current `main` design | TME purchasing choice | Required action |
-|---|---|---|---|
-| C5 | 100 µF / 50 V SMD electrolytic, current 8 mm-class footprint | Panasonic `EEEFK1H101P` | Verify land pattern/body clearance |
-| J2 | HRO Type-C connector footprint | GCT `USB4216-03-A` | Replace/verify footprint, pin mapping and 3D model |
-| L1 | `ZD0650-8R2M` | Eaton `HCM0703-8R2-R` | Verify electrical ratings and footprint before PCB update |
-| Q1 | `DMP6180SK3-13` | onsemi `NTD20P06LT4G` | Verify package/pinout and update KiCad fields |
-| Q5 | `CJ2310` | Infineon `IRLML2060TRPBF` | Verify SOT-23 pinout and update KiCad fields |
-| U2 | CP2102N family | Silicon Labs `CP2102-GM` | Re-check pin/package compatibility for this circuit before applying |
-| U3 | ST `USBLC6-2SC6` | Akyga Semi `AKS1201` | Verify pinout, ESD characteristics and line capacitance |
+| Ref | Value / device | Electrical role |
+|---|---|---|
+| U5 | L7987L | 24 V -> 3.3 V asynchronous buck |
+| U1 | TLV1701 | AutoEN comparator |
+| Q7 | MMBT3904 | Pulls L7987L EN low during AutoEN fault cycle |
+| L1 | 15 µH | Buck inductor |
+| D7 | STPS2L60A | Catch Schottky diode |
+| C1 | 10 µF | Local `24V_PROT` input ceramic |
+| C2 | 100 nF | TLV1701 supply bypass |
+| C3 | 1 µF | L7987L VCC bypass |
+| C4 | 33 nF | Soft-start capacitor |
+| C6 | 100 nF | Bootstrap capacitor |
+| C7 | 330 nF | EN retry/timing capacitor |
+| C8 | 39 pF | Type-III compensation |
+| C9 | 18 nF | Type-III compensation |
+| C10 | 47 µF | Main buck output capacitor |
+| C20 | 560 pF | Type-III compensation |
+| C21 | 1 µF | VBIAS/output bypass |
+| R1 | 270 kΩ | AutoEN fault-threshold divider, top |
+| R2 | 22 kΩ | AutoEN fault-threshold divider, bottom |
+| R4 | 47 kΩ | Switching-frequency programming |
+| R5 | 100 kΩ | TLV1701 open-collector output pull-up |
+| R6 | 100 kΩ | TLV1701 output to Q7 base |
+| R29 | 47.5 kΩ | Current-limit programming |
+| R30 | 47 kΩ | Q7 base-emitter pull-down |
+| R31 | 100 kΩ | EN pull-up |
+| R32 | 15 kΩ | EN pull-down |
+| R33 | 16 kΩ | Type-III compensation |
+| R34 | 15.2 kΩ | Feedback divider, lower |
+| R35 | 1.13 kΩ | Type-III compensation |
+| R36 | 47.5 kΩ | Feedback divider, upper |
 
-Other BOM substitutions may also require footprint review. The `BOM TME` sheet notes should
-be checked line by line when the TME-oriented hardware branch is created.
+The pre-existing `C5 = 100 µF / 50 V` bulk capacitor remains upstream on `24V_PROT`, and the
+existing `FB1` / `C11` output filtering toward `3V3_MCU` remains part of the project.
 
-## Remaining sourcing exceptions
+### Important implementation changes from the earlier redesign draft
 
-### J7 — JST GH NTC connector
+- L7987L `VIN1`, `VIN2` and `VCC` are now tied **directly** to `24V_PROT`.
+- The earlier VIN-to-VCC 0 Ω jumper has been removed.
+- VCC retains its local 1 µF bypass (`C3`).
+- `PGOOD` and `SYNCH` are intentionally left NC.
+- AutoEN is implemented with TLV1701 + Q7 and the complete threshold/pull-up/pull-down/EN-RC
+  network.
+- The temporary `Buck redesign` hierarchical sheet has been removed from the active hierarchy;
+  the implementation lives directly in `Power.kicad_sch`.
 
-Current part: `BM02B-GHS-TBT`.
+---
 
-The design uses the exact vertical/top-entry JST GH footprint. TME currently reports zero local
-stock and an expected replenishment date of 2026-10-09. Do not substitute a side-entry GH part
-just to satisfy TME availability. If the exact part is not available when ordering, buy it from
-another supplier rather than changing the PCB without a mechanical reason.
+## Known metadata/footprint work intentionally deferred
 
-### U1 — AP66200 buck converter
+Do not resolve these as part of the present documentation checkpoint; they belong to the
+forthcoming MPN/footprint pass.
 
-Current design: Diodes Incorporated `AP66200FVBW-13`, 60 V / 2 A synchronous buck converting
-24 V to 3.3 V.
+Current known items include:
 
-TME currently reports zero stock and an expected replenishment date of 2026-11-27. Availability
-at other distributors has also been inconsistent, so U1 is now considered a sourcing risk.
+- U1/TLV1701 still carries a stale LM397 datasheet URL in its KiCad metadata;
+- C10's current MPN text has a trailing comma;
+- D7's manufacturer field has a leading space;
+- several new buck passives and the catch diode/inductor still need deliberate final footprint
+  assignment/review;
+- existing MPN fields for C1/C3/C10/C21/L1/Q7/D7 are not to be treated as final purchasing
+  approval merely because they are populated.
 
-A redesign around a more broadly stocked high-voltage buck is being evaluated before the first
-prototype order. ST `L7987L` is a current candidate because it supports 61 V input / 2 A and has
-substantially broader distributor stock, but **no replacement has been approved yet**. It is not
-a drop-in replacement and would require a new regulator block/PCB review.
+The Google Sheet must remain untouched until this pass is complete.
 
-Until that redesign is explicitly approved and implemented, `AP66200FVBW-13` remains the
-actual design part.
+---
 
-## Next hardware branch
+## Existing non-buck procurement items
 
-A TME-oriented hardware branch should start from the documented `main` state. For every
-procurement substitution that changes the implemented part:
+The previous TME conversion identified several non-buck substitutions that may still require
+mechanical/electrical review when the final sourcing pass resumes. These are retained here as
+pending procurement context, not as automatically approved KiCad changes:
 
-1. verify the manufacturer datasheet and electrical requirements;
-2. verify pinout, land pattern, body clearance and 3D model where relevant;
-3. update schematic fields and PCB footprint deliberately;
-4. rerun ERC/DRC;
-5. regenerate production BOM, positions and netlist from the resulting KiCad revision;
-6. compare the generated BOM against the purchasing sheet before ordering.
+| Current project item | Previous TME-oriented candidate / issue | Required action before applying |
+|---|---|---|
+| C5, 100 µF / 50 V bulk | Panasonic `EEEFK1H101P` candidate | Verify land pattern/body clearance and final sourcing choice |
+| J2 USB-C | GCT `USB4216-03-A` candidate | Verify footprint, pin mapping and 3D/mechanical fit |
+| Q1 reverse-polarity P-MOS | onsemi `NTD20P06LT4G` candidate | Verify package/pinout and electrical suitability |
+| Q5 fan MOSFET | Infineon `IRLML2060TRPBF` candidate | Verify SOT-23 pinout and final part choice |
+| U2 USB-UART | Silicon Labs `CP2102-GM` candidate | Re-check exact package/pin compatibility before any substitution |
+| U3 USB ESD protector | Akyga Semi `AKS1201` candidate | Verify pinout, ESD characteristics, capacitance and footprint |
+| J7 JST GH NTC connector | Exact `BM02B-GHS-TBT` preferred | Preserve top-entry mechanics; use another supplier rather than change geometry without reason |
+
+The old procurement entry for the AP66200-era `L1 = 8.2 µH` is **superseded** by the L7987L
+redesign. Current `L1` is the new 15 µH buck inductor and must be sourced as part of the new
+buck pass.
+
+---
+
+## PCB and production state
+
+The schematic/netlist redesign is ahead of the board.
+
+The current PCB still contains:
+
+- the AP66200 footprint;
+- legacy `/Power/VCC_AP66200` routing/net data;
+- the previous power-stage placement/routing.
+
+Therefore the next hardware implementation phase is **not procurement**. It is:
+
+1. finish small schematic naming/metadata cleanup that does not require purchasing choices;
+2. assign/verify final footprints together with the later MPN pass;
+3. update PCB from the current schematic, replacing the AP66200 stage;
+4. place and route the L7987L power loop according to the ST layout guidance;
+5. rerun ERC and DRC;
+6. regenerate BOM, positions, fabrication outputs and production netlist;
+7. only then reconcile those generated outputs against `BOM TME` and finalize the order.
+
+Until those steps are complete, the old production exports are historical only.
