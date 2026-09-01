@@ -6,9 +6,11 @@ closed-loop humidity/temperature control, a local OLED interface, data logging a
 The PCB physically replaces the original front panel: display and buttons sit on the front
 face of the board, all the electronics on the back.
 
-> **Status: work in progress.** The schematic and PCB layout are complete for the first
-> prototype revision. Final manufacturing checks and most of the firmware are still in
-> development.
+> **Status: work in progress.** On branch `redesign/buck-sourcing` the schematic and exported
+> netlist now implement the L7987L 24 V -> 3.3 V buck redesign, including the external AutoEN
+> fault-recovery circuit. The PCB is **not yet synchronized** with this schematic and still
+> contains the legacy AP66200 power stage, so the current PCB/production outputs must not be
+> treated as manufacturing-ready. Most firmware work is also still in development.
 
 ---
 
@@ -45,8 +47,10 @@ Heating is a hazard, and this design treats it as one. Three independent layers:
 ## Hardware
 
 4-layer PCB. Designed in **KiCad 10** and intended for JLCPCB fabrication/assembly. Component
-procurement for the prototype is currently being migrated to **TME as the preferred supplier**;
-the implemented KiCad design remains authoritative when it differs from the purchasing BOM.
+procurement for the prototype is being migrated to **TME as the preferred supplier**. The
+current KiCad schematic and freshly exported netlist on the active hardware branch are the
+authoritative electrical state; the PCB is currently one step behind the schematic because the
+new L7987L power stage has not yet been placed/routed.
 
 The board itself forms the dryer's replacement front panel, so its outline and component
 placement are constrained by the original enclosure mechanics.
@@ -56,7 +60,7 @@ placement are constrained by the original enclosure mechanics.
 | Block | Part | Notes |
 |---|---|---|
 | MCU | ESP32-WROOM-32E | Wi-Fi, antenna keepout respected on all copper layers |
-| Buck converter | AP66200 | 24 V → 3.3 V; current design part, sourcing-risk replacement under evaluation |
+| Buck converter | **L7987L** | `24V_PROT` -> 3.3 V, ~500 kHz, 1 A design target; external TLV1701 + NPN AutoEN fault recovery |
 | USB-UART | CP2102N | USB used for programming/debug only, with DTR/RTS auto-program circuit |
 | Humidity/temp | SHT45 (Adafruit #6174) | I²C `0x44` |
 | Display | SSD1309 OLED 128×64 | I²C `0x3C`, mounted on the front face |
@@ -65,16 +69,45 @@ placement are constrained by the original enclosure mechanics.
 | Element temp | Integrated ~82 kΩ NTC | ADC1, 47 kΩ divider resistor, 100 nF filtering |
 | Buzzer | Passive + NPN driver | |
 
+The heater and fan remain on `24V_PROT`; they are **not** loads of the 3.3 V buck. The buck is
+sized for a conservative **1 A** 3.3 V design target. Detailed calculations, compensation,
+SIMPLIS history and the AutoEN rationale are recorded in
+[`docs/BUCK_L7987L_DESIGN.md`](docs/BUCK_L7987L_DESIGN.md).
+
+### Current buck integration state
+
+The redesign is now part of `hardware/Power.kicad_sch`; the temporary `Buck redesign`
+hierarchical sheet has been removed from the project hierarchy. The exported netlist confirms:
+
+- `U5 = L7987L`;
+- `U1 = TLV1701` comparator for AutoEN;
+- `Q7 = MMBT3904` AutoEN pull-down transistor;
+- `L1 = 15 µH` buck inductor;
+- `D7 = STPS2L60A` catch diode;
+- L7987L `VIN1`, `VIN2` and `VCC` are tied directly to `24V_PROT`;
+- `PGOOD` and `SYNCH` are intentionally NC;
+- the existing upstream 24 V protection/bulk network and downstream `FB1 -> 3V3_MCU` filter are retained.
+
+The earlier VIN-to-VCC **0 Ω jumper has been removed**; VCC is now directly connected to
+`24V_PROT` with its local 1 µF bypass capacitor.
+
+The pre-FB1 buck output is electrically correct but is currently auto-named by KiCad
+(`Net-(U5-VBIAS)`); the historical `3V3_BUCK` label has not yet been restored. This is a naming
+cleanup item, not an electrical break.
+
 ### Procurement status
 
 The working purchasing BOM is the Google Sheet `Filament Dryer Monitor — BOM finale Mouser`,
-tab **`BOM TME`**. It contains the current TME ordering codes, live stock/pricing data,
-delivery information and approved procurement substitutions.
+tab **`BOM TME`**. It remains the working source for supplier codes, stock and purchasing
+choices, but it has **not yet been reconciled to the newly integrated L7987L block**.
 
-See [`hardware/docs/PROCUREMENT.md`](hardware/docs/PROCUREMENT.md) for the sourcing rules,
-known substitutions that still need to be applied/verified in KiCad, and the remaining sourcing
-exceptions. In particular, the current AP66200 buck is being reviewed because of poor and
-inconsistent distributor availability; no replacement is approved in the hardware design yet.
+At the current checkpoint, final MPN/footprint selection for the new buck components and the
+Google Sheet update are intentionally deferred until the electrical schematic is frozen and the
+PCB update is ready. Existing MPN fields in the new buck block must therefore be treated as
+provisional rather than as the final purchasing BOM.
+
+See [`hardware/docs/PROCUREMENT.md`](hardware/docs/PROCUREMENT.md) for the current sourcing
+workflow and open procurement/PCB tasks.
 
 ### Heater NTC characterization
 
@@ -168,11 +201,14 @@ voltage selection during boot.
 
 ### Reference designators
 
-This project uses **functional reference designators** where they carry meaning
-(`Q_heat`, `Rfb_top`, `J_sens`) and sequential numbering for generic passives.
+The schematic uses normal KiCad references together with `Function` fields where semantic
+names are useful. During the L7987L integration, **only the newly inserted buck block was
+selectively re-annotated** so that its references are compact; existing references elsewhere in
+the project were preserved.
 
-When re-annotating in KiCad, always choose **"Keep existing annotations"** — a full
-re-annotation will destroy these names.
+Do **not** run a project-wide annotation reset. When adding or replacing a block, either keep
+existing references or annotate only the selected new symbols, then regenerate the netlist and
+check for collisions.
 
 ---
 
@@ -200,18 +236,25 @@ delays in normal operation.
 ## Repository layout
 
 ```text
+docs/
+└── BUCK_L7987L_DESIGN.md   L7987L design record and current checkpoint
+
 hardware/
 ├── 3dmodels/          3D models used by KiCad
 ├── docs/
 │   ├── PROCUREMENT.md Current sourcing/TME procurement status
 │   └── datasheets/    Component datasheets
 ├── libs/              Custom symbols, footprints and imported libraries
-├── production/        JLCPCB production exports (BOM, positions, netlist)
+├── production/        Production exports — regenerate after PCB synchronization
 ├── review/            Hardware review files
 ├── *.kicad_sch        Hierarchical KiCad schematics
 ├── *.kicad_pcb        PCB layout
 └── *.kicad_pro        KiCad project
 ```
+
+`hardware/buck_redesign_sch.kicad_sch` is retained only as a temporary/scratch redesign file;
+it is no longer part of the active schematic hierarchy. The active implementation is in
+`hardware/Power.kicad_sch`.
 
 Firmware development is ongoing and will be added to the repository as it is finalized.
 
@@ -222,9 +265,12 @@ Firmware development is ongoing and will be added to the repository as it is fin
 1. Open `hardware/Filament_Dryer_Monitor.kicad_pro` in **KiCad 10** or newer.
 2. Custom libraries resolve through `${KIPRJMOD}`, so the project is portable and requires
    no machine-specific absolute library paths.
-3. Production BOM and component-position files are stored in `hardware/production/`.
-4. Always regenerate and review fabrication/assembly outputs from the current KiCad revision
-   before ordering boards.
+3. Treat the current PCB and `hardware/production/` exports as **stale for the power stage**
+   until the L7987L block is transferred to PCB and routed.
+4. After PCB synchronization, rerun ERC/DRC and regenerate BOM, position files, netlist and
+   fabrication outputs from that same revision before ordering boards.
+5. Reconcile the final generated BOM with the `BOM TME` Google Sheet only after final MPN and
+   footprint decisions are complete.
 
 ---
 
