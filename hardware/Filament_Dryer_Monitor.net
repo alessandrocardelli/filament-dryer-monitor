@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\Users\\utente\\Documents\\KiCad\\10.0\\projects\\Filament_Dryer_Monitor\\hardware\\Filament_Dryer_Monitor.kicad_sch")
-		(date "2026-09-01T07:23:31")
+		(date "2026-09-01T21:24:59")
 		(tool "Eeschema 10.0.4")
 		(sheet
 			(number "1")
@@ -3132,13 +3132,13 @@
 			(ref "U1")
 			(value "TLV1701")
 			(footprint "Package_TO_SOT_SMD:SOT-23-5")
-			(datasheet "http://www.ti.com/lit/ds/symlink/lm397.pdf")
+			(datasheet "https://www.ti.com/lit/ds/symlink/tlv1701.pdf")
 			(description "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5")
 			(fields
 				(field
 					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-5")
 				(field
-					(name "Datasheet") "http://www.ti.com/lit/ds/symlink/lm397.pdf")
+					(name "Datasheet") "https://www.ti.com/lit/ds/symlink/tlv1701.pdf")
 				(field
 					(name "Description") "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5")
 			)
@@ -9662,6 +9662,116 @@
 			)
 		)
 		(comp
+			(ref "R37")
+			(value "100k")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "Resistor, small symbol")
+			(fields
+				(field
+					(name "Function") "R_pd_fan1")
+				(field
+					(name "MPN") "0603WAF1003T5E")
+				(field
+					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+				(field
+					(name "Dielectric")
+				)
+				(field
+					(name "LCSC") "C25803")
+				(field
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage")
+				)
+				(field
+					(name "Power") "100mW")
+				(field
+					(name "TCR") "100ppm/K")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor, small symbol")
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "Function")
+				(value "R_pd_fan1")
+			)
+			(property
+				(name "MPN")
+				(value "0603WAF1003T5E")
+			)
+			(property
+				(name "Manufacturer")
+				(value "UNI-ROYAL(Uniroyal Elec)")
+			)
+			(property
+				(name "Dielectric")
+				(value "")
+			)
+			(property
+				(name "LCSC")
+				(value "C25803")
+			)
+			(property
+				(name "Tolerance")
+				(value "1%")
+			)
+			(property
+				(name "Voltage")
+				(value "")
+			)
+			(property
+				(name "Power")
+				(value "100mW")
+			)
+			(property
+				(name "TCR")
+				(value "100ppm/K")
+			)
+			(property
+				(name "Sheetname")
+				(value "IO_Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "IO_Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/IO_Power/")
+				(tstamps "/8ea3583c-4bf9-4d9f-826f-a898c1c22896/")
+			)
+			(tstamps "6d317334-d4bd-4bda-80f6-f48dfadcbca4")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
 			(ref "SW3")
 			(value "~")
 			(footprint "JLCPCB:SW-SMD_L3.9-W3.0-P4.45")
@@ -11924,6 +12034,48 @@
 		)
 		(net
 			(code "10")
+			(name "/Power/3V3_BUCK")
+			(class "Power_3V3,Default")
+			(node
+				(ref "C10")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C20")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C21")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "FB1")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "L1")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R36")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "1")
+				(pinfunction "VBIAS_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "11")
 			(name "/Power/COMP")
 			(class "Default")
 			(node
@@ -11950,7 +12102,7 @@
 			)
 		)
 		(net
-			(code "11")
+			(code "12")
 			(name "/Power/EN")
 			(class "Default")
 			(node
@@ -11982,7 +12134,7 @@
 			)
 		)
 		(net
-			(code "12")
+			(code "13")
 			(name "/Power/FUSE_OUT")
 			(class "Power_24V,Default")
 			(node
@@ -11998,7 +12150,7 @@
 			)
 		)
 		(net
-			(code "13")
+			(code "14")
 			(name "/Power/GATE_Q1")
 			(class "Default")
 			(node
@@ -12020,7 +12172,7 @@
 			)
 		)
 		(net
-			(code "14")
+			(code "15")
 			(name "/Power/JACK_24V_RAW")
 			(class "Power_24V,Default")
 			(node
@@ -12036,7 +12188,7 @@
 			)
 		)
 		(net
-			(code "15")
+			(code "16")
 			(name "/Power/VREF_FAULT")
 			(class "Default")
 			(node
@@ -12057,7 +12209,7 @@
 			)
 		)
 		(net
-			(code "16")
+			(code "17")
 			(name "3V3_MCU")
 			(class "Power_3V3,Default")
 			(node
@@ -12200,7 +12352,7 @@
 			)
 		)
 		(net
-			(code "17")
+			(code "18")
 			(name "24V_PROT")
 			(class "Power_24V,Default")
 			(node
@@ -12312,7 +12464,7 @@
 			)
 		)
 		(net
-			(code "18")
+			(code "19")
 			(name "BTN_DOWN")
 			(class "Default")
 			(node
@@ -12334,7 +12486,7 @@
 			)
 		)
 		(net
-			(code "19")
+			(code "20")
 			(name "BTN_M")
 			(class "Default")
 			(node
@@ -12356,7 +12508,7 @@
 			)
 		)
 		(net
-			(code "20")
+			(code "21")
 			(name "BTN_ONOFF")
 			(class "Default")
 			(node
@@ -12378,7 +12530,7 @@
 			)
 		)
 		(net
-			(code "21")
+			(code "22")
 			(name "BTN_UP")
 			(class "Default")
 			(node
@@ -12400,7 +12552,7 @@
 			)
 		)
 		(net
-			(code "22")
+			(code "23")
 			(name "BUZ_DRV")
 			(class "Default")
 			(node
@@ -12416,7 +12568,7 @@
 			)
 		)
 		(net
-			(code "23")
+			(code "24")
 			(name "FAN_PWM")
 			(class "Default")
 			(node
@@ -12432,7 +12584,7 @@
 			)
 		)
 		(net
-			(code "24")
+			(code "25")
 			(name "GND")
 			(class "Default")
 			(node
@@ -12667,6 +12819,11 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "R37")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
 				(ref "R4")
 				(pin "2")
 				(pintype "passive")
@@ -12780,7 +12937,7 @@
 			)
 		)
 		(net
-			(code "25")
+			(code "26")
 			(name "HEATER_PWM")
 			(class "Default")
 			(node
@@ -12796,7 +12953,7 @@
 			)
 		)
 		(net
-			(code "26")
+			(code "27")
 			(name "NTC")
 			(class "Default")
 			(node
@@ -12823,7 +12980,7 @@
 			)
 		)
 		(net
-			(code "27")
+			(code "28")
 			(name "Net-(C9-Pad1)")
 			(class "Default")
 			(node
@@ -12838,7 +12995,7 @@
 			)
 		)
 		(net
-			(code "28")
+			(code "29")
 			(name "Net-(C20-Pad1)")
 			(class "Default")
 			(node
@@ -12853,7 +13010,7 @@
 			)
 		)
 		(net
-			(code "29")
+			(code "30")
 			(name "Net-(D3-A)")
 			(class "Default")
 			(node
@@ -12869,7 +13026,7 @@
 			)
 		)
 		(net
-			(code "30")
+			(code "31")
 			(name "Net-(D5-A)")
 			(class "Default")
 			(node
@@ -12892,7 +13049,7 @@
 			)
 		)
 		(net
-			(code "31")
+			(code "32")
 			(name "Net-(D6-A)")
 			(class "Default")
 			(node
@@ -12915,7 +13072,7 @@
 			)
 		)
 		(net
-			(code "32")
+			(code "33")
 			(name "Net-(D7-K)")
 			(class "Default")
 			(node
@@ -12949,7 +13106,7 @@
 			)
 		)
 		(net
-			(code "33")
+			(code "34")
 			(name "Net-(J2-CC1)")
 			(class "Default")
 			(node
@@ -12965,7 +13122,7 @@
 			)
 		)
 		(net
-			(code "34")
+			(code "35")
 			(name "Net-(J2-CC2)")
 			(class "Default")
 			(node
@@ -12981,7 +13138,7 @@
 			)
 		)
 		(net
-			(code "35")
+			(code "36")
 			(name "Net-(J2-D+-PadA6)")
 			(class "Default")
 			(node
@@ -13004,7 +13161,7 @@
 			)
 		)
 		(net
-			(code "36")
+			(code "37")
 			(name "Net-(J2-D--PadA7)")
 			(class "Default")
 			(node
@@ -13027,7 +13184,7 @@
 			)
 		)
 		(net
-			(code "37")
+			(code "38")
 			(name "Net-(J3-Pin_2)")
 			(class "Default")
 			(node
@@ -13049,7 +13206,7 @@
 			)
 		)
 		(net
-			(code "38")
+			(code "39")
 			(name "Net-(J3-Pin_3)")
 			(class "Default")
 			(node
@@ -13071,7 +13228,7 @@
 			)
 		)
 		(net
-			(code "39")
+			(code "40")
 			(name "Net-(Q2-B)")
 			(class "Default")
 			(node
@@ -13094,7 +13251,7 @@
 			)
 		)
 		(net
-			(code "40")
+			(code "41")
 			(name "Net-(Q2-C)")
 			(class "Default")
 			(node
@@ -13128,7 +13285,7 @@
 			)
 		)
 		(net
-			(code "41")
+			(code "42")
 			(name "Net-(Q2-E)")
 			(class "Default")
 			(node
@@ -13151,7 +13308,7 @@
 			)
 		)
 		(net
-			(code "42")
+			(code "43")
 			(name "Net-(Q3-C)")
 			(class "Default")
 			(node
@@ -13190,7 +13347,7 @@
 			)
 		)
 		(net
-			(code "43")
+			(code "44")
 			(name "Net-(Q4-G)")
 			(class "Default")
 			(node
@@ -13211,7 +13368,7 @@
 			)
 		)
 		(net
-			(code "44")
+			(code "45")
 			(name "Net-(Q5-G)")
 			(class "Default")
 			(node
@@ -13232,7 +13389,7 @@
 			)
 		)
 		(net
-			(code "45")
+			(code "46")
 			(name "Net-(Q6-B)")
 			(class "Default")
 			(node
@@ -13246,9 +13403,14 @@
 				(pin "1")
 				(pintype "passive")
 			)
+			(node
+				(ref "R37")
+				(pin "2")
+				(pintype "passive")
+			)
 		)
 		(net
-			(code "46")
+			(code "47")
 			(name "Net-(Q7-B)")
 			(class "Default")
 			(node
@@ -13269,7 +13431,7 @@
 			)
 		)
 		(net
-			(code "47")
+			(code "48")
 			(name "Net-(R5-Pad2)")
 			(class "Default")
 			(node
@@ -13289,7 +13451,7 @@
 			)
 		)
 		(net
-			(code "48")
+			(code "49")
 			(name "Net-(U2-VBUS)")
 			(class "Default")
 			(node
@@ -13310,7 +13472,7 @@
 			)
 		)
 		(net
-			(code "49")
+			(code "50")
 			(name "Net-(U2-~{RST})")
 			(class "Default")
 			(node
@@ -13326,7 +13488,7 @@
 			)
 		)
 		(net
-			(code "50")
+			(code "51")
 			(name "Net-(U5-BOOT)")
 			(class "Default")
 			(node
@@ -13342,7 +13504,7 @@
 			)
 		)
 		(net
-			(code "51")
+			(code "52")
 			(name "Net-(U5-FB)")
 			(class "Default")
 			(node
@@ -13378,7 +13540,7 @@
 			)
 		)
 		(net
-			(code "52")
+			(code "53")
 			(name "Net-(U5-FSW)")
 			(class "Default")
 			(node
@@ -13394,7 +13556,7 @@
 			)
 		)
 		(net
-			(code "53")
+			(code "54")
 			(name "Net-(U5-ILIM)")
 			(class "Default")
 			(node
@@ -13410,7 +13572,7 @@
 			)
 		)
 		(net
-			(code "54")
+			(code "55")
 			(name "Net-(U5-SS)")
 			(class "Default")
 			(node
@@ -13422,48 +13584,6 @@
 				(ref "U5")
 				(pin "6")
 				(pinfunction "SS_6")
-				(pintype "passive")
-			)
-		)
-		(net
-			(code "55")
-			(name "Net-(U5-VBIAS)")
-			(class "Default")
-			(node
-				(ref "C10")
-				(pin "1")
-				(pintype "passive")
-			)
-			(node
-				(ref "C20")
-				(pin "2")
-				(pintype "passive")
-			)
-			(node
-				(ref "C21")
-				(pin "1")
-				(pintype "passive")
-			)
-			(node
-				(ref "FB1")
-				(pin "1")
-				(pintype "passive")
-			)
-			(node
-				(ref "L1")
-				(pin "2")
-				(pinfunction "2_2")
-				(pintype "passive")
-			)
-			(node
-				(ref "R36")
-				(pin "2")
-				(pintype "passive")
-			)
-			(node
-				(ref "U5")
-				(pin "1")
-				(pinfunction "VBIAS_1")
 				(pintype "passive")
 			)
 		)

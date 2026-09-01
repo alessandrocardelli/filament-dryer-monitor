@@ -4495,6 +4495,16 @@
 		)
 		(uuid "0b888e36-0aa0-4e19-94f4-6fb9107c3f7e")
 	)
+	(label "3V3_BUCK"
+		(at 144.78 78.74 0)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify left bottom)
+		)
+		(uuid "38523952-0f6d-49aa-ad00-ef4b80956728")
+	)
 	(label "JACK_24V_RAW"
 		(at 68.58 35.56 0)
 		(effects
@@ -8931,7 +8941,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm397.pdf"
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tlv1701.pdf"
 			(at 87.63 151.13 0)
 			(hide yes)
 			(show_name no)

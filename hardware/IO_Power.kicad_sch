@@ -1904,7 +1904,7 @@
 	)
 	(rectangle
 		(start 204.47 114.3)
-		(end 257.81 157.48)
+		(end 257.81 160.655)
 		(stroke
 			(width 0)
 			(type dash)
@@ -2018,13 +2018,19 @@
 		(uuid "f96d94bf-6dbf-482d-b10a-afa83a72bc4e")
 	)
 	(junction
+		(at 227.33 146.05)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "33a5cd02-5253-42ea-8403-694d5eced53a")
+	)
+	(junction
 		(at 118.11 137.16)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "39d45f23-1eff-4834-bb23-9b2442d90e03")
 	)
 	(junction
-		(at 232.41 128.27)
+		(at 234.95 128.27)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "48803b43-2cdc-44f7-aa59-0db7e61dab02")
@@ -2066,7 +2072,7 @@
 		(uuid "b42283d0-0af3-48b1-a0c2-4b782820e54d")
 	)
 	(junction
-		(at 232.41 135.89)
+		(at 234.95 135.89)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "cb46e4d1-303d-4ae7-b29c-c927791caf94")
@@ -2102,11 +2108,11 @@
 		(uuid "f399350c-894c-4b6e-8d73-9244cda11f78")
 	)
 	(no_connect
-		(at 240.03 139.7)
+		(at 242.57 139.7)
 		(uuid "50455ccc-5d5c-417d-b552-0a6d4ec5eb42")
 	)
 	(no_connect
-		(at 241.3 139.7)
+		(at 243.84 139.7)
 		(uuid "97e5aea6-9c0e-400a-a627-40fe52c6ef0e")
 	)
 	(wire
@@ -2121,7 +2127,7 @@
 	)
 	(wire
 		(pts
-			(xy 232.41 151.13) (xy 232.41 152.4)
+			(xy 234.95 151.13) (xy 234.95 156.21)
 		)
 		(stroke
 			(width 0)
@@ -2191,7 +2197,7 @@
 	)
 	(wire
 		(pts
-			(xy 223.52 146.05) (xy 224.79 146.05)
+			(xy 224.79 146.05) (xy 227.33 146.05)
 		)
 		(stroke
 			(width 0)
@@ -2241,7 +2247,7 @@
 	)
 	(wire
 		(pts
-			(xy 232.41 133.35) (xy 232.41 135.89)
+			(xy 234.95 133.35) (xy 234.95 135.89)
 		)
 		(stroke
 			(width 0)
@@ -2261,7 +2267,7 @@
 	)
 	(wire
 		(pts
-			(xy 215.9 146.05) (xy 218.44 146.05)
+			(xy 217.17 146.05) (xy 219.71 146.05)
 		)
 		(stroke
 			(width 0)
@@ -2321,6 +2327,16 @@
 	)
 	(wire
 		(pts
+			(xy 227.33 154.94) (xy 227.33 156.21)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6dc89e2d-9f59-4c89-9a5d-8306a95c98cf")
+	)
+	(wire
+		(pts
 			(xy 160.02 72.39) (xy 160.02 77.47)
 		)
 		(stroke
@@ -2371,7 +2387,7 @@
 	)
 	(wire
 		(pts
-			(xy 224.79 128.27) (xy 232.41 128.27)
+			(xy 227.33 128.27) (xy 234.95 128.27)
 		)
 		(stroke
 			(width 0)
@@ -2401,7 +2417,7 @@
 	)
 	(wire
 		(pts
-			(xy 236.22 133.35) (xy 232.41 133.35)
+			(xy 238.76 133.35) (xy 234.95 133.35)
 		)
 		(stroke
 			(width 0)
@@ -2531,7 +2547,7 @@
 	)
 	(wire
 		(pts
-			(xy 224.79 135.89) (xy 232.41 135.89)
+			(xy 227.33 135.89) (xy 234.95 135.89)
 		)
 		(stroke
 			(width 0)
@@ -2551,7 +2567,7 @@
 	)
 	(wire
 		(pts
-			(xy 232.41 130.81) (xy 232.41 128.27)
+			(xy 234.95 130.81) (xy 234.95 128.27)
 		)
 		(stroke
 			(width 0)
@@ -2631,6 +2647,16 @@
 	)
 	(wire
 		(pts
+			(xy 227.33 146.05) (xy 227.33 149.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c68eacea-41e0-425b-92e8-bd9cec6fbd02")
+	)
+	(wire
+		(pts
 			(xy 152.4 64.77) (xy 160.02 64.77)
 		)
 		(stroke
@@ -2671,7 +2697,7 @@
 	)
 	(wire
 		(pts
-			(xy 232.41 135.89) (xy 232.41 140.97)
+			(xy 234.95 135.89) (xy 234.95 140.97)
 		)
 		(stroke
 			(width 0)
@@ -2721,7 +2747,7 @@
 	)
 	(wire
 		(pts
-			(xy 232.41 128.27) (xy 232.41 124.46)
+			(xy 234.95 128.27) (xy 234.95 124.46)
 		)
 		(stroke
 			(width 0)
@@ -2751,7 +2777,7 @@
 	)
 	(wire
 		(pts
-			(xy 236.22 130.81) (xy 232.41 130.81)
+			(xy 238.76 130.81) (xy 234.95 130.81)
 		)
 		(stroke
 			(width 0)
@@ -3059,7 +3085,7 @@
 	)
 	(global_label "3V3_MCU"
 		(shape passive)
-		(at 232.41 124.46 90)
+		(at 234.95 124.46 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3069,7 +3095,7 @@
 		)
 		(uuid "a655f7e1-ab61-488f-b7ed-4b95f9591632")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 232.41 116.1394 90)
+			(at 234.95 116.1394 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3083,7 +3109,7 @@
 	)
 	(global_label "BUZ_DRV"
 		(shape input)
-		(at 215.9 146.05 180)
+		(at 217.17 146.05 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3093,7 +3119,7 @@
 		)
 		(uuid "d6ced691-3b67-4ba8-9f9f-341cb95682cb")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 206.7871 146.05 0)
+			(at 208.0571 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3334,8 +3360,87 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 227.33 156.21 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "017b6328-e77c-4db6-9ac6-eded261ae166")
+		(property "Reference" "#PWR041"
+			(at 227.33 162.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 227.33 161.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 227.33 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 227.33 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 227.33 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2b037ec2-2f8c-4e86-8bc9-f57ef37a9686")
+		)
+		(instances
+			(project "Filament_Dryer_Monitor"
+				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
+					(reference "#PWR041")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Diode:1N4148W")
-		(at 224.79 132.08 270)
+		(at 227.33 132.08 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3345,7 +3450,7 @@
 		(dnp no)
 		(uuid "08377014-0b2d-43fb-be6d-5d5a9e7a32cc")
 		(property "Reference" "D6"
-			(at 222.25 130.8099 90)
+			(at 224.79 130.8099 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3356,7 +3461,7 @@
 			)
 		)
 		(property "Value" "1N4148W"
-			(at 222.25 133.3499 90)
+			(at 224.79 133.3499 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3367,7 +3472,7 @@
 			)
 		)
 		(property "Footprint" "Diode_SMD:D_SOD-123"
-			(at 220.345 132.08 0)
+			(at 222.885 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3378,7 +3483,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.vishay.com/docs/85748/1n4148w.pdf"
-			(at 224.79 132.08 0)
+			(at 227.33 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3389,7 +3494,7 @@
 			)
 		)
 		(property "Description" "75V 0.15A Fast Switching Diode, SOD-123"
-			(at 224.79 132.08 0)
+			(at 227.33 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3400,7 +3505,7 @@
 			)
 		)
 		(property "Sim.Device" "D"
-			(at 224.79 132.08 0)
+			(at 227.33 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3411,7 +3516,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 224.79 132.08 0)
+			(at 227.33 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3422,7 +3527,7 @@
 			)
 		)
 		(property "Function" "D_buz1"
-			(at 224.79 132.08 90)
+			(at 227.33 132.08 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3433,7 +3538,7 @@
 			)
 		)
 		(property "Dielectric" ""
-			(at 224.79 132.08 90)
+			(at 227.33 132.08 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3444,7 +3549,7 @@
 			)
 		)
 		(property "Tolerance" ""
-			(at 224.79 132.08 90)
+			(at 227.33 132.08 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3455,7 +3560,7 @@
 			)
 		)
 		(property "Voltage" ""
-			(at 224.79 132.08 90)
+			(at 227.33 132.08 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3466,7 +3571,7 @@
 			)
 		)
 		(property "Power" ""
-			(at 224.79 132.08 90)
+			(at 227.33 132.08 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3477,7 +3582,7 @@
 			)
 		)
 		(property "TCR" ""
-			(at 224.79 132.08 90)
+			(at 227.33 132.08 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3488,7 +3593,7 @@
 			)
 		)
 		(property "LCSC" "C81598"
-			(at 224.79 132.08 90)
+			(at 227.33 132.08 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3499,7 +3604,7 @@
 			)
 		)
 		(property "MPN" "1N4148W"
-			(at 224.79 132.08 90)
+			(at 227.33 132.08 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3510,7 +3615,7 @@
 			)
 		)
 		(property "Manufacturer" "ST(Semtech)"
-			(at 224.79 132.08 90)
+			(at 227.33 132.08 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5040,7 +5145,7 @@
 	)
 	(symbol
 		(lib_id "JLCPCB:MLT-8530")
-		(at 240.03 134.62 0)
+		(at 242.57 134.62 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5051,7 +5156,7 @@
 		(fields_autoplaced yes)
 		(uuid "4775792c-a6ba-4a01-8fe2-9a1c9aa9c05a")
 		(property "Reference" "BZ1"
-			(at 245.11 130.8099 0)
+			(at 247.65 130.8099 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5062,7 +5167,7 @@
 			)
 		)
 		(property "Value" "MLT-8530"
-			(at 245.11 133.3499 0)
+			(at 247.65 133.3499 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5073,7 +5178,7 @@
 			)
 		)
 		(property "Footprint" "JLCPCB:BUZ-SMD_4P-L8.5-W8.5-P8.50-BR"
-			(at 240.03 147.32 0)
+			(at 242.57 147.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5084,7 +5189,7 @@
 			)
 		)
 		(property "Datasheet" "https://lcsc.com/product-detail/Buzzers_MLT-8530_C94599.html"
-			(at 240.03 149.86 0)
+			(at 242.57 149.86 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5095,7 +5200,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 240.03 134.62 0)
+			(at 242.57 134.62 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5106,7 +5211,7 @@
 			)
 		)
 		(property "Manufacturer" "Jiangsu Huaneng Elec"
-			(at 240.03 152.4 0)
+			(at 242.57 152.4 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5117,7 +5222,7 @@
 			)
 		)
 		(property "MPN" "MLT-8530"
-			(at 240.03 154.94 0)
+			(at 242.57 154.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5128,7 +5233,7 @@
 			)
 		)
 		(property "Function" "BUZZER1"
-			(at 240.03 134.62 0)
+			(at 242.57 134.62 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5139,7 +5244,7 @@
 			)
 		)
 		(property "LCSC" "C94599"
-			(at 240.03 134.62 0)
+			(at 242.57 134.62 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5150,7 +5255,7 @@
 			)
 		)
 		(property "Dielectric" ""
-			(at 240.03 134.62 0)
+			(at 242.57 134.62 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5161,7 +5266,7 @@
 			)
 		)
 		(property "Tolerance" ""
-			(at 240.03 134.62 0)
+			(at 242.57 134.62 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5172,7 +5277,7 @@
 			)
 		)
 		(property "Voltage" ""
-			(at 240.03 134.62 0)
+			(at 242.57 134.62 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5183,7 +5288,7 @@
 			)
 		)
 		(property "Power" ""
-			(at 240.03 134.62 0)
+			(at 242.57 134.62 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5194,7 +5299,7 @@
 			)
 		)
 		(property "TCR" ""
-			(at 240.03 134.62 0)
+			(at 242.57 134.62 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5668,7 +5773,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_Small")
-		(at 220.98 146.05 270)
+		(at 222.25 146.05 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5679,7 +5784,7 @@
 		(fields_autoplaced yes)
 		(uuid "5dc7377b-ae77-49c7-8e13-36b7ba22784e")
 		(property "Reference" "R27"
-			(at 220.98 140.97 90)
+			(at 222.25 140.97 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5689,7 +5794,7 @@
 			)
 		)
 		(property "Value" "470"
-			(at 220.98 143.51 90)
+			(at 222.25 143.51 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5699,7 +5804,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 220.98 146.05 0)
+			(at 222.25 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5710,7 +5815,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 220.98 146.05 0)
+			(at 222.25 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5721,7 +5826,7 @@
 			)
 		)
 		(property "Description" "Resistor, small symbol"
-			(at 220.98 146.05 0)
+			(at 222.25 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5732,7 +5837,7 @@
 			)
 		)
 		(property "Function" "R_buz1"
-			(at 220.98 146.05 90)
+			(at 222.25 146.05 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5743,7 +5848,7 @@
 			)
 		)
 		(property "MPN" "0603WAF4700T5E"
-			(at 220.98 146.05 90)
+			(at 222.25 146.05 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5754,7 +5859,7 @@
 			)
 		)
 		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
-			(at 220.98 146.05 90)
+			(at 222.25 146.05 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5765,7 +5870,7 @@
 			)
 		)
 		(property "Dielectric" ""
-			(at 220.98 146.05 90)
+			(at 222.25 146.05 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5776,7 +5881,7 @@
 			)
 		)
 		(property "LCSC" "C23179"
-			(at 220.98 146.05 90)
+			(at 222.25 146.05 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5787,7 +5892,7 @@
 			)
 		)
 		(property "Tolerance" "1%"
-			(at 220.98 146.05 90)
+			(at 222.25 146.05 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5798,7 +5903,7 @@
 			)
 		)
 		(property "Voltage" ""
-			(at 220.98 146.05 90)
+			(at 222.25 146.05 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5809,7 +5914,7 @@
 			)
 		)
 		(property "Power" "100mW"
-			(at 220.98 146.05 90)
+			(at 222.25 146.05 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5820,7 +5925,7 @@
 			)
 		)
 		(property "TCR" "100ppm/K"
-			(at 220.98 146.05 90)
+			(at 222.25 146.05 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6202,6 +6307,187 @@
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
 					(reference "SW5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_Small")
+		(at 227.33 152.4 0)
+		(mirror x)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "6d317334-d4bd-4bda-80f6-f48dfadcbca4")
+		(property "Reference" "R37"
+			(at 224.79 151.1299 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "100k"
+			(at 224.79 153.6699 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 227.33 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 227.33 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Description" "Resistor, small symbol"
+			(at 227.33 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Function" "R_pd_fan1"
+			(at 227.33 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "MPN" "0603WAF1003T5E"
+			(at 227.33 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+			(at 227.33 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Dielectric" ""
+			(at 227.33 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "LCSC" "C25803"
+			(at 227.33 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Tolerance" "1%"
+			(at 227.33 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Voltage" ""
+			(at 227.33 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Power" "100mW"
+			(at 227.33 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "TCR" "100ppm/K"
+			(at 227.33 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "d31cfd6f-e8c7-49a3-9a4b-ce6c034ed312")
+		)
+		(pin "1"
+			(uuid "c83946dc-159e-4b74-a993-24164556d512")
+		)
+		(instances
+			(project "Filament_Dryer_Monitor"
+				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/8ea3583c-4bf9-4d9f-826f-a898c1c22896"
+					(reference "R37")
 					(unit 1)
 				)
 			)
@@ -6805,7 +7091,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 232.41 152.4 0)
+		(at 234.95 156.21 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6816,7 +7102,7 @@
 		(fields_autoplaced yes)
 		(uuid "978ef740-b6df-4232-a4d3-44e4e2823851")
 		(property "Reference" "#PWR040"
-			(at 232.41 158.75 0)
+			(at 234.95 162.56 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6827,7 +7113,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 232.41 157.48 0)
+			(at 234.95 161.29 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6838,7 +7124,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 232.41 152.4 0)
+			(at 234.95 156.21 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6849,7 +7135,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 232.41 152.4 0)
+			(at 234.95 156.21 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6860,7 +7146,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 232.41 152.4 0)
+			(at 234.95 156.21 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8388,7 +8674,7 @@
 	)
 	(symbol
 		(lib_id "Transistor_BJT:MMBT3904")
-		(at 229.87 146.05 0)
+		(at 232.41 146.05 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8399,7 +8685,7 @@
 		(fields_autoplaced yes)
 		(uuid "e3f7df06-3acc-4de4-be75-11fb5419d735")
 		(property "Reference" "Q6"
-			(at 234.95 144.7799 0)
+			(at 237.49 144.7799 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8410,7 +8696,7 @@
 			)
 		)
 		(property "Value" "MMBT3904"
-			(at 234.95 147.3199 0)
+			(at 237.49 147.3199 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8421,7 +8707,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 234.95 147.955 0)
+			(at 237.49 147.955 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8434,7 +8720,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf"
-			(at 229.87 146.05 0)
+			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8446,7 +8732,7 @@
 			)
 		)
 		(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"
-			(at 229.87 146.05 0)
+			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8457,7 +8743,7 @@
 			)
 		)
 		(property "Sim.Device" "NPN"
-			(at 229.87 146.05 0)
+			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8468,7 +8754,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=B 2=E 3=C"
-			(at 229.87 146.05 0)
+			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8479,7 +8765,7 @@
 			)
 		)
 		(property "Function" "Q_buz1"
-			(at 229.87 146.05 0)
+			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8490,7 +8776,7 @@
 			)
 		)
 		(property "Dielectric" ""
-			(at 229.87 146.05 0)
+			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8501,7 +8787,7 @@
 			)
 		)
 		(property "Tolerance" ""
-			(at 229.87 146.05 0)
+			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8512,7 +8798,7 @@
 			)
 		)
 		(property "Voltage" ""
-			(at 229.87 146.05 0)
+			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8523,7 +8809,7 @@
 			)
 		)
 		(property "Power" ""
-			(at 229.87 146.05 0)
+			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8534,7 +8820,7 @@
 			)
 		)
 		(property "TCR" ""
-			(at 229.87 146.05 0)
+			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8545,7 +8831,7 @@
 			)
 		)
 		(property "LCSC" "C94514"
-			(at 229.87 146.05 0)
+			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8556,7 +8842,7 @@
 			)
 		)
 		(property "MPN" "MMBT3904-7-F"
-			(at 229.87 146.05 0)
+			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8567,7 +8853,7 @@
 			)
 		)
 		(property "Manufacturer" "Diodes Incorporated"
-			(at 229.87 146.05 0)
+			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
