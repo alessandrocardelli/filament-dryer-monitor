@@ -7,10 +7,12 @@ The PCB physically replaces the original front panel: display and buttons sit on
 face of the board, all the electronics on the back.
 
 > **Status: work in progress.** On branch `redesign/buck-sourcing` the schematic and exported
-> netlist now implement the L7987L 24 V -> 3.3 V buck redesign, including the external AutoEN
-> fault-recovery circuit. The PCB is **not yet synchronized** with this schematic and still
-> contains the legacy AP66200 power stage, so the current PCB/production outputs must not be
-> treated as manufacturing-ready. Most firmware work is also still in development.
+> netlist implement the L7987L 24 V -> 3.3 V buck redesign, including the external AutoEN
+> fault-recovery circuit. The latest whole-schematic electrical review found no blocking
+> omission, and the schematic is now treated as electrically frozen for the sourcing/footprint
+> pass. The PCB is **not yet synchronized** and still contains the legacy AP66200 power stage,
+> so the current PCB/production outputs are not manufacturing-ready. Most firmware work is also
+> still in development.
 
 ---
 
@@ -67,7 +69,7 @@ placement are constrained by the original enclosure mechanics.
 | Heater driver | IRLR3636TRPBF (DPAK) | 60 V logic-level N-MOSFET, ~1.6 A heater load, LCSC C67279 |
 | Fan driver | CJ2310 (SOT-23) | 24 V fan, ~0.2 A |
 | Element temp | Integrated ~82 kΩ NTC | ADC1, 47 kΩ divider resistor, 100 nF filtering |
-| Buzzer | Passive + NPN driver | |
+| Buzzer | Passive + NPN driver | Q6 includes a 100 kΩ base-emitter pull-down for defined startup state |
 
 The heater and fan remain on `24V_PROT`; they are **not** loads of the 3.3 V buck. The buck is
 sized for a conservative **1 A** 3.3 V design target. Detailed calculations, compensation,
@@ -76,7 +78,7 @@ SIMPLIS history and the AutoEN rationale are recorded in
 
 ### Current buck integration state
 
-The redesign is now part of `hardware/Power.kicad_sch`; the temporary `Buck redesign`
+The redesign is part of `hardware/Power.kicad_sch`; the temporary `Buck redesign`
 hierarchical sheet has been removed from the project hierarchy. The exported netlist confirms:
 
 - `U5 = L7987L`;
@@ -86,14 +88,11 @@ hierarchical sheet has been removed from the project hierarchy. The exported net
 - `D7 = STPS2L60A` catch diode;
 - L7987L `VIN1`, `VIN2` and `VCC` are tied directly to `24V_PROT`;
 - `PGOOD` and `SYNCH` are intentionally NC;
-- the existing upstream 24 V protection/bulk network and downstream `FB1 -> 3V3_MCU` filter are retained.
+- the existing upstream 24 V protection/bulk network and downstream `FB1 -> 3V3_MCU` filter are retained;
+- the pre-FB1 buck output is explicitly named `/Power/3V3_BUCK`.
 
-The earlier VIN-to-VCC **0 Ω jumper has been removed**; VCC is now directly connected to
+The earlier VIN-to-VCC **0 Ω jumper has been removed**; VCC is directly connected to
 `24V_PROT` with its local 1 µF bypass capacitor.
-
-The pre-FB1 buck output is electrically correct but is currently auto-named by KiCad
-(`Net-(U5-VBIAS)`); the historical `3V3_BUCK` label has not yet been restored. This is a naming
-cleanup item, not an electrical break.
 
 ### Procurement status
 
@@ -101,13 +100,15 @@ The working purchasing BOM is the Google Sheet `Filament Dryer Monitor — BOM f
 tab **`BOM TME`**. It remains the working source for supplier codes, stock and purchasing
 choices, but it has **not yet been reconciled to the newly integrated L7987L block**.
 
-At the current checkpoint, final MPN/footprint selection for the new buck components and the
-Google Sheet update are intentionally deferred until the electrical schematic is frozen and the
-PCB update is ready. Existing MPN fields in the new buck block must therefore be treated as
-provisional rather than as the final purchasing BOM.
+The next hardware task is now the **TME sourcing / final MPN / footprint pass before PCB
+synchronization**. Existing MPN fields in the redesigned buck block are provisional until each
+part is deliberately checked against availability, package, pinout and footprint.
 
-See [`hardware/docs/PROCUREMENT.md`](hardware/docs/PROCUREMENT.md) for the current sourcing
-workflow and open procurement/PCB tasks.
+Metadata cleanup such as the copied `Function` field on the new Q6 pull-down resistor can be
+performed together in KiCad Symbol Fields Editor once sourcing decisions are complete.
+
+See [`hardware/docs/PROCUREMENT.md`](hardware/docs/PROCUREMENT.md) for the authoritative
+sourcing workflow, pending substitutions and post-sourcing PCB sequence.
 
 ### Heater NTC characterization
 
@@ -265,12 +266,14 @@ Firmware development is ongoing and will be added to the repository as it is fin
 1. Open `hardware/Filament_Dryer_Monitor.kicad_pro` in **KiCad 10** or newer.
 2. Custom libraries resolve through `${KIPRJMOD}`, so the project is portable and requires
    no machine-specific absolute library paths.
-3. Treat the current PCB and `hardware/production/` exports as **stale for the power stage**
-   until the L7987L block is transferred to PCB and routed.
-4. After PCB synchronization, rerun ERC/DRC and regenerate BOM, position files, netlist and
-   fabrication outputs from that same revision before ordering boards.
-5. Reconcile the final generated BOM with the `BOM TME` Google Sheet only after final MPN and
-   footprint decisions are complete.
+3. Complete the TME sourcing / final MPN / footprint pass against the electrically frozen
+   schematic before transferring the redesigned block to PCB.
+4. Update KiCad symbol fields and approved footprints, then run a fresh ERC from that revision.
+5. Update PCB from schematic, replace/place/route the L7987L stage, and perform a dedicated
+   PCB/layout review.
+6. Run DRC and regenerate BOM, position files, netlist and fabrication outputs from that same
+   revision before ordering boards.
+7. Reconcile the generated BOM against the final `BOM TME` sheet before purchasing/production.
 
 ---
 
