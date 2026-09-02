@@ -1,0 +1,32 @@
+name: Temporary buzzer datasheet inspection
+
+on:
+  push:
+    branches:
+      - redesign/buck-sourcing
+    paths:
+      - .github/workflows/tmp-buzzer-datasheet.yml
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download datasheet
+        run: |
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' 'https://www.tme.eu/Document/95412e28ccf9a3841c10b9b3b2632864/LD-BZEL-T67-0808_DTE.pdf' -o buzzer.pdf
+          file buzzer.pdf
+          ls -lh buzzer.pdf
+      - name: Render PDF
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y poppler-utils
+          mkdir rendered
+          pdftoppm -png -r 180 buzzer.pdf rendered/page
+          ls -lh rendered
+      - uses: actions/upload-artifact@v4
+        with:
+          name: buzzer-datasheet-render
+          path: rendered/
