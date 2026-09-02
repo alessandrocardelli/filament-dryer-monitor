@@ -3145,7 +3145,7 @@
 							)
 						)
 					)
-					(symbol "BZX84C15_0_1"
+					(symbol "BZX84C15-7-F_0_1"
 						(polyline
 							(pts
 								(xy -1.27 -1.27) (xy -1.27 1.27) (xy -0.762 1.27)
@@ -3183,7 +3183,7 @@
 							)
 						)
 					)
-					(symbol "BZX84C15_1_1"
+					(symbol "BZX84C15-7-F_1_1"
 						(pin passive line
 							(at -3.81 0 0)
 							(length 2.54)
