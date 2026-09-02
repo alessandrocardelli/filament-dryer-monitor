@@ -1,0 +1,79 @@
+name: KiCad footprint audit
+
+on:
+  push:
+    branches:
+      - redesign/buck-sourcing
+    paths:
+      - .github/workflows/kicad-footprint-audit.yml
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract schematic footprint metadata
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import pathlib
+          import re
+
+          def balanced_end(text, start):
+              depth = 0
+              in_string = False
+              escape = False
+              for i in range(start, len(text)):
+                  ch = text[i]
+                  if in_string:
+                      if escape:
+                          escape = False
+                      elif ch == '\\':
+                          escape = True
+                      elif ch == '"':
+                          in_string = False
+                  else:
+                      if ch == '"':
+                          in_string = True
+                      elif ch == '(':
+                          depth += 1
+                      elif ch == ')':
+                          depth -= 1
+                          if depth == 0:
+                              return i + 1
+              raise ValueError('Unbalanced S-expression')
+
+          def symbol_spans(text):
+              for m in re.finditer(r'\(symbol(?:\s|\")', text):
+                  start = m.start()
+                  end = balanced_end(text, start)
+                  block = text[start:end]
+                  refm = re.search(r'\(property\s+"Reference"\s+"([A-Za-z]+\d+)"', block)
+                  if refm:
+                      yield refm.group(1), block
+
+          wanted = {'Value', 'MPN', 'Manufacturer', 'Footprint', 'Function'}
+          report = {}
+          for path in sorted(pathlib.Path('hardware').glob('*.kicad_sch')):
+              text = path.read_text(encoding='utf-8')
+              for ref, block in symbol_spans(text):
+                  props = {}
+                  for m in re.finditer(r'\(property\s+"([^"]+)"\s+"((?:\\.|[^"])*)"', block):
+                      if m.group(1) in wanted:
+                          props[m.group(1)] = m.group(2)
+                  report[ref] = {'file': str(path), **props}
+
+          pathlib.Path('kicad-footprint-audit.json').write_text(
+              json.dumps(dict(sorted(report.items())), indent=2, ensure_ascii=False),
+              encoding='utf-8'
+          )
+          print(json.dumps(dict(sorted(report.items())), indent=2, ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kicad-footprint-audit
+          path: kicad-footprint-audit.json
