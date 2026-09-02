@@ -30,8 +30,8 @@ jobs:
               'Footprint', 'Datasheet', 'Value'
           }
 
-          def extract_symbol_blocks(text):
-              starts = [m.start() for m in re.finditer(r'\(symbol(?:\s|\")', text)]
+          def balanced_blocks(text, token):
+              starts = [m.start() for m in re.finditer(token, text)]
               for start in starts:
                   depth = 0
                   in_string = False
@@ -58,13 +58,10 @@ jobs:
                                   break
                       i += 1
 
-          def unescape(s):
-              return bytes(s, 'utf-8').decode('unicode_escape') if '\\' in s else s
-
           report = {}
           for path in sorted(pathlib.Path('hardware').glob('*.kicad_sch')):
               text = path.read_text(encoding='utf-8')
-              for block in extract_symbol_blocks(text):
+              for block in balanced_blocks(text, r'\(symbol(?:\s|\")'):
                   mref = re.search(r'\(property\s+"Reference"\s+"([A-Za-z]+\d+)"', block)
                   if not mref:
                       continue
@@ -74,7 +71,23 @@ jobs:
                       name, value = m.group(1), m.group(2)
                       if name in wanted:
                           props[name] = value
-                  report[ref] = {'file': str(path), **props}
+                  report[ref] = {'file': str(path), **props, 'nets': []}
+
+          netfile = pathlib.Path('hardware/Filament_Dryer_Monitor.net')
+          if netfile.exists():
+              nettext = netfile.read_text(encoding='utf-8')
+              for block in balanced_blocks(nettext, r'\(net\s'):
+                  mname = re.search(r'\(name\s+"((?:\\.|[^"])*)"\)', block)
+                  if not mname:
+                      continue
+                  netname = mname.group(1)
+                  for m in re.finditer(r'\(node\s+\(ref\s+"([A-Za-z]+\d+)"\)\s+\(pin\s+"([^"]+)"\)', block):
+                      ref, pin = m.group(1), m.group(2)
+                      if ref in report:
+                          report[ref]['nets'].append({'pin': pin, 'net': netname})
+
+          for ref in report:
+              report[ref]['nets'] = sorted(report[ref]['nets'], key=lambda x: (x['pin'], x['net']))
 
           pathlib.Path('kicad-metadata-audit.json').write_text(
               json.dumps(dict(sorted(report.items())), indent=2, ensure_ascii=False),
