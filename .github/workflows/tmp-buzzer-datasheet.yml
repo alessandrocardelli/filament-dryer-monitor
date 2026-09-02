@@ -14,13 +14,26 @@ jobs:
   render:
     runs-on: ubuntu-latest
     steps:
-      - name: Download datasheet
+      - name: Download datasheet mirror
+        shell: bash
         run: |
+          set -euxo pipefail
           UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/142.0 Safari/537.36'
-          PAGE='https://www.tme.eu/en/details/ld-bzel-t67-0808/electromagnetic-sounders-w-o-generator/loudity/'
-          PDF='https://www.tme.eu/Document/95412e28ccf9a3841c10b9b3b2632864/LD-BZEL-T67-0808_DTE.pdf'
-          curl -L --fail --retry 2 -A "$UA" -c cookies.txt "$PAGE" -o product.html
-          curl -L --fail --retry 3 -A "$UA" -b cookies.txt -e "$PAGE" "$PDF" -o buzzer.pdf
+          PAGE='https://dip8.ru/shop/product/ld_bzel_t67_0808_lou/'
+          curl -L --fail --retry 3 -A "$UA" "$PAGE" -o product.html
+          grep -oiE 'href=["'"'][^"'"']*(LD-BZEL-T67-0808|Datasheet)[^"'"']*\.pdf[^"'"']*["'"']' product.html || true
+          python - <<'PY'
+          import re, urllib.parse
+          html=open('product.html',encoding='utf-8',errors='ignore').read()
+          links=re.findall(r'href=["\x27]([^"\x27]+\.pdf(?:\?[^"\x27]*)?)["\x27]',html,re.I)
+          print('\n'.join(links))
+          cand=[x for x in links if 't67' in x.lower() or 'datasheet' in x.lower()]
+          if not cand: raise SystemExit('No PDF link found')
+          print('PDFURL='+urllib.parse.urljoin('https://dip8.ru/',cand[0]))
+          open('pdfurl.txt','w').write(urllib.parse.urljoin('https://dip8.ru/',cand[0]))
+          PY
+          PDF="$(cat pdfurl.txt)"
+          curl -L --fail --retry 3 -A "$UA" -e "$PAGE" "$PDF" -o buzzer.pdf
           file buzzer.pdf
           ls -lh buzzer.pdf
       - name: Render PDF
@@ -28,7 +41,7 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y poppler-utils
           mkdir rendered
-          pdftoppm -png -r 180 buzzer.pdf rendered/page
+          pdftoppm -png -r 200 buzzer.pdf rendered/page
           ls -lh rendered
       - uses: actions/upload-artifact@v4
         with:
