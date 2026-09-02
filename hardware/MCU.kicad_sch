@@ -6391,7 +6391,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "CP2102N-A02-GQFN28R"
+		(property "Value" "CP2102-GM"
 			(at 75.8033 127 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6402,7 +6402,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "FilamentDryer:CP2102N_GQFN28_5x5mm_P0.5mm_EP3.35x3.35mm"
+		(property "Footprint" "FilamentDryer:CP2102_GM_QFN28_5x5_P0.5_EP3.25"
 			(at 106.68 123.19 0)
 			(hide yes)
 			(show_name no)
@@ -8634,7 +8634,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "JLCPCB:SW-SMD_L3.9-W3.0-P4.45"
+		(property "Footprint" "FilamentDryer:SW_GCT_SWT0110"
 			(at 210.82 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -11757,7 +11757,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "JLCPCB:SW-SMD_L3.9-W3.0-P4.45"
+		(property "Footprint" "FilamentDryer:SW_GCT_SWT0110"
 			(at 149.86 68.58 0)
 			(hide yes)
 			(show_name no)

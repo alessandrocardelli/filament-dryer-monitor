@@ -4,7 +4,7 @@ Status: **schematic/netlist implementation complete; PCB integration pending**.
 
 Repository: `alessandrocardelli/filament-dryer-monitor`  
 Working branch: `redesign/buck-sourcing`  
-Repository checkpoint verified for this document: schematic at commit `9ae20baf45efc8dad69b3fa07e15d245c30e2893`, regenerated netlist at commit `3f02fa303bba51f2bb647fd7bd7127f1000f8ca1`.
+Sourcing and footprint audit closed on **2026-09-02** on this branch; the actual schematic/netlist at branch HEAD remain authoritative.
 
 The actual KiCad schematic and exported netlist override this document if they ever disagree.
 The current implementation is in `hardware/Power.kicad_sch`; the temporary
@@ -20,9 +20,9 @@ The current implementation is in `hardware/Power.kicad_sch`; the temporary
 
 > **Sourcing / footprint status**
 >
-> The `BOM TME` sourcing pass and KiCad MPN/manufacturer metadata synchronization have been
-> completed for the selected parts. The next manufacturing-preparation step is the footprint
-> audit against the selected MPNs, followed by PCB synchronization and layout work.
+> The `BOM TME` sourcing pass, KiCad MPN/manufacturer synchronization and footprint audit were
+> completed on 2026-09-02. Sourcing/footprints are no longer a blocker; the next step is PCB
+> synchronization, placement/routing and PCB-level verification.
 
 ---
 
@@ -54,8 +54,7 @@ The AutoEN comparator selected in the implemented circuit is the **TI TLV1701**:
 - rail-to-rail input common-mode capability
 - https://www.ti.com/lit/ds/symlink/tlv1701.pdf
 
-The KiCad metadata for the current TLV1701 symbol still contains an old LM397 datasheet URL;
-that is a known metadata cleanup item and does not describe the actual selected comparator.
+The KiCad metadata for the selected TLV1701 has been synchronized to the final sourced part and datasheet.
 
 ---
 
@@ -70,7 +69,7 @@ The heater and fan are **not powered by the 3.3 V buck**.
 - Buck: supplies the low-voltage electronics only.
 - Buck output feeds the existing ferrite bead `FB1`, then the project rail `3V3_MCU`.
 
-The 3.3 V loads include the ESP32-WROOM-32E, CP2102N, sensor/display interfaces, pull-ups,
+The 3.3 V loads include the ESP32-WROOM-32E, CP2102 USB-UART bridge, sensor/display interfaces, pull-ups,
 buzzer/logic and related circuitry.
 
 ### 2.2 3.3 V design current
@@ -147,10 +146,7 @@ The main output capacitor is **C10 = 47 µF**.
 
 The output then feeds the existing `FB1` ferrite bead and downstream `3V3_MCU` rail.
 
-At the current checkpoint, the pre-FB1 output net has no explicit `3V3_BUCK` label and KiCad
-exports it as **`Net-(U5-VBIAS)`** because U5 VBIAS is tied to that output node. This is
-currently an electrical-equivalent naming issue only. Restoring the historical `3V3_BUCK`
-label is a cleanup option before PCB synchronization.
+The pre-FB1 regulated output node is explicitly labeled **`3V3_BUCK`** and then feeds `FB1` toward `3V3_MCU`.
 
 ### 3.3 PGOOD and SYNCH
 
@@ -266,8 +262,7 @@ Current inductor:
 - current schematic MPN field: Bourns `SRN6045-150M`;
 - previously reviewed ratings: DCR max ~95.8 mΩ, Irms ~1.9 A, Isat ~2.3 A.
 
-These MPN/rating entries now reflect the sourced BOM selection; footprint/PCB validation remains
-the remaining manufacturing-preparation work.
+These MPN/rating entries reflect the final sourced BOM selection, and the corresponding L1 footprint has been validated against the Bourns recommended land pattern. PCB placement/routing remains pending.
 
 Current catch diode:
 
