@@ -1,4 +1,4 @@
-name: Temporary final footprint inspection
+name: Final footprint audit closure
 
 on:
   push:
@@ -8,59 +8,29 @@ on:
       - .github/workflows/tmp-buzzer-datasheet.yml
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  inspect:
+  finalize:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: redesign/buck-sourcing
-      - name: Inspect BZ1 U2 and switches
-        shell: bash
+      - name: Apply final footprint audit
+        run: python .github/scripts/finalize_footprint_audit.py
+      - name: Diff validation
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          def balanced_end(text, start):
-              depth=0; ins=False; esc=False
-              for i,ch in enumerate(text[start:], start):
-                  if ins:
-                      if esc: esc=False
-                      elif ch=='\\': esc=True
-                      elif ch=='"': ins=False
-                  else:
-                      if ch=='"': ins=True
-                      elif ch=='(': depth+=1
-                      elif ch==')':
-                          depth-=1
-                          if depth==0: return i+1
-              raise ValueError('unbalanced')
-
-          def symbol_blocks(path):
-              text=Path(path).read_text(encoding='utf-8')
-              for m in re.finditer(r'\(symbol(?:\s|\")', text):
-                  s=m.start(); e=balanced_end(text,s); b=text[s:e]
-                  r=re.search(r'\(property\s+"Reference"\s+"([A-Za-z]+\d+)"',b)
-                  if r: yield r.group(1),b
-
-          for path in Path('hardware').glob('*.kicad_sch'):
-              for ref,b in symbol_blocks(path):
-                  if ref in {'BZ1','U2','SW1','SW2','SW3','SW4','SW5','SW6'}:
-                      print(f'=== {path} {ref} ===')
-                      for prop in ['Value','Footprint','MPN','Manufacturer']:
-                          m=re.search(r'\(property\s+"'+re.escape(prop)+r'"\s+"((?:\\.|[^"])*)"',b)
-                          print(prop, '=', m.group(1) if m else '<missing>')
-                      pins=re.findall(r'\(pin\s+"([^"]+)"',b)
-                      print('symbol instance pins =', pins)
-
-          net=Path('hardware/Filament_Dryer_Monitor.net').read_text(encoding='utf-8')
-          print('=== NETLIST NODES ===')
-          for ref in ['BZ1','U2','SW1','SW2','SW3','SW4','SW5','SW6']:
-              hits=[]
-              for m in re.finditer(r'\(node\s+\(ref\s+"'+re.escape(ref)+r'"\)\s+\(pin\s+"([^"]+)"\)(?:\s+\(pinfunction\s+"([^"]*)"\))?(?:\s+\(pintype\s+"([^"]*)"\))?',net):
-                  hits.append(m.groups())
-              print(ref, hits)
-          PY
+          git diff --check
+          git status --short
+      - name: Commit audit closure
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add hardware docs/BUCK_L7987L_DESIGN.md
+          if git diff --cached --quiet; then
+            echo 'No changes to commit'
+          else
+            git commit -m 'Close sourced component footprint audit'
+            git push origin HEAD:redesign/buck-sourcing
+          fi
