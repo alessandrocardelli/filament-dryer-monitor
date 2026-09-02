@@ -19,6 +19,22 @@ jobs:
           ref: redesign/buck-sourcing
       - name: Apply confirmed pinout fixes
         run: python .github/scripts/apply_strict_pinout_fixes.py
+      - name: Normalize generated blank lines
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          for path in [
+              Path('hardware/Power.kicad_sch'),
+              Path('hardware/IO_Power.kicad_sch'),
+              Path('hardware/MCU.kicad_sch'),
+              Path('hardware/Filament_Dryer_Custom.kicad_sym'),
+          ]:
+              text = path.read_text(encoding='utf-8')
+              text = re.sub(r'(?m)^[ \t]+$', '', text)
+              path.write_text(text, encoding='utf-8')
+          PY
       - name: Validate diff
         run: |
           git diff --check
