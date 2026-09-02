@@ -37,6 +37,23 @@ All BOM components now have a deliberate footprint assignment consistent with th
 
 Standard 0603/0805/1210 passives, SOT-23/SOT-23-5/SOT-23-6 devices, DPAK/TO-252 devices, SMA/SMB/SOD-123/CFP3 diodes, JST connectors, ESP32 module and the remaining already-established footprints were checked against their selected package/MPN during the same pass.
 
+### Strict pinout / symbol audit — closed 2026-09-02
+
+A second pass checked selected MPN pin numbering against the KiCad symbol and footprint pad numbering, not only package geometry. It found and corrected three real symbol-level issues:
+
+- `D1 = BZX84C15-7-F`: the generic two-pin Zener symbol could not represent the SOT-23 device correctly. The project symbol now maps **pin 1 = A, pin 2 = NC, pin 3 = K** while retaining the standard KiCad SOT-23 footprint.
+- `Q5 = IRLML2060TRPBF`: the previous generic MOSFET symbol used G-D-S numbering. The final device is **1=G, 2=S, 3=D**, so Q5 now uses the matching G-S-D symbol with the standard KiCad SOT-23 footprint.
+- `U2 = CP2102-GM`: the schematic had inherited a CP2102N symbol. A dedicated classic CP2102-GM symbol is now used; pins **10 and 13–22 are NC**, pin 2 is `~RI` input, and the custom QFN28 footprint remains the Silicon Labs classic CP2102 land pattern.
+
+The remaining semiconductor mappings were checked without finding another pin-numbering mismatch. `U3 = AKS1201` retains the USBLC6-2SC6 topology and standard SOT-23-6 footprint; `Q1/Q4`, the MMBT3904 devices, `U1`, `U4` and `U5` retain their audited mappings.
+
+The following items are deliberately **not** treated as unresolved electrical pinout errors, but still require normal physical/manufacturing review before fabrication:
+
+- `J5`: the real part is a HALJIA XH-compatible connector, so fit/polarization must be confirmed against the actual connector despite the 2.50 mm JST-XH footprint.
+- `U5`: HTSSOP-16 copper/pad geometry is verified, but the exposed-pad **stencil/paste aperture strategy** must be reviewed before final paste Gerbers/assembly.
+- `U4`: verify final ESP32 antenna keepout and board-edge placement in PCB layout.
+- optional OLED footprint: it is custom and excluded from the BOM; verify mechanically only if the display is installed.
+
 ### BZ1 qualification note
 
 BZ1 is the only footprint for which the manufacturer drawing does not provide explicit recommended land dimensions. This is not an unresolved package mismatch: terminal locations, polarity, body envelope and SMD mounting are defined and the footprint has been made deliberately conservative. It should nevertheless receive the normal first-board visual solderability check, like any custom land pattern.
