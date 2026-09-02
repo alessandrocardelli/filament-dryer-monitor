@@ -1,4 +1,4 @@
-name: KiCad metadata audit
+name: KiCad metadata sync
 
 on:
   push:
@@ -8,14 +8,16 @@ on:
       - .github/workflows/kicad-metadata-audit.yml
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  audit:
+  sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Audit component fields
+        with:
+          ref: redesign/buck-sourcing
+      - name: Sync BOM metadata into KiCad
         shell: bash
         run: |
           python - <<'PY'
@@ -23,80 +25,348 @@ jobs:
           import pathlib
           import re
 
-          wanted = {
-              'MPN', 'Manufacturer', 'Function', 'LCSC',
-              'Voltage', 'Tolerance', 'Dielectric', 'Power', 'TCR',
-              'Manufacturer_Part_Number', 'Manufacturer_Name',
-              'Footprint', 'Datasheet', 'Value'
+          # BOM TME snapshot verified 2026-09-02.  R34/R36 are deliberately
+          # excluded from sourcing metadata because the checked-in schematic
+          # still has 15k2 / 47k5 while the BOM currently has 16k / 49k9.
+          groups = [
+              ('BZ1', 'LD-BZEL-T67-0808', 'LOUDITY'),
+              ('C11', 'CL21A226MAYNNNE', 'SAMSUNG'),
+              ('C12', 'CL10A475KO8NNNC', 'SAMSUNG'),
+              ('C2,C6,C13,C14,C18,C19', 'CC0603KRX7R9BB104', 'YAGEO'),
+              ('C15,C17,C21', 'GCM188R71E105KA64J', 'MURATA'),
+              ('C16', 'C0805C106K3PACTU', 'KEMET'),
+              ('C4', 'GCM188R71H333KA55D', 'MURATA'),
+              ('C5', 'EEEFK1H101P', 'PANASONIC'),
+              ('C1', 'GRM32EC72A106KE05L', 'MURATA'),
+              ('C3', 'GRJ21BC72A105KE11L', 'MURATA'),
+              ('C7', 'GRM219R71H334KA88D', 'MURATA'),
+              ('C8', 'C0603C390J5GACTU', 'KEMET'),
+              ('C9', 'GRM21B5C1H183JA01L', 'MURATA'),
+              ('C10', 'LMK325B7476KM-PR', 'TAIYO YUDEN'),
+              ('C20', '06035A561JAT2A', 'KYOCERA AVX'),
+              ('D1', 'BZX84C15-7-F', 'DIODES INCORPORATED'),
+              ('D2', 'SMBJ28A', 'LITTELFUSE'),
+              ('D3', 'HSMG-C170', 'BROADCOM (AVAGO)'),
+              ('D4,D5', 'PMEG6020ER,115', 'NEXPERIA'),
+              ('D6', '1N4148WGW', 'DIOTEC SEMICONDUCTOR'),
+              ('D7', 'STPS2L60A', 'STMicroelectronics'),
+              ('F1', '0685T3000-01', 'BEL FUSE'),
+              ('FB1', 'BLM31KN601SH1L', 'MURATA'),
+              ('J1', 'B3B-XH-A (LF)(SN)', 'JST'),
+              ('J2', 'USB4216-03-A', 'GCT'),
+              ('J3', 'B4B-PH-SM4-TB (LF)(SN)', 'JST'),
+              ('J5', 'Kit HALJIA XH-compatible 2P', 'HALJIA'),
+              ('J7', 'BM02B-GHS-TBT (LF)(SN)(N)', 'JST'),
+              ('J6', 'B2B-PH-SM4-TB (LF)(SN)', 'JST'),
+              ('L1', 'SRN6045-150M', 'BOURNS'),
+              ('Q1', 'NTD20P06LT4G', 'ONSEMI'),
+              ('Q2,Q3,Q6,Q7', 'MMBT3904', 'DIOTEC SEMICONDUCTOR'),
+              ('Q4', 'IRLR3636TRPBF', 'INFINEON TECHNOLOGIES'),
+              ('Q5', 'IRLML2060TRPBF', 'INFINEON TECHNOLOGIES'),
+              ('R3,R5,R6,R21,R26,R31,R37', 'RC0603FR-07100KL', 'YAGEO'),
+              ('R10,R11', 'RC0603FR-075K1L', 'YAGEO'),
+              ('R12,R13,R14,R15,R19,R22,R23,R24', 'RC0603FR-0710KL', 'YAGEO'),
+              ('R16,R17', 'RC0603FR-0733RL', 'YAGEO'),
+              ('R18', 'RC0603FR-07330RL', 'YAGEO'),
+              ('R20,R25', 'RC0603FR-07100RL', 'YAGEO'),
+              ('R27', 'RC0603FR-07470RL', 'YAGEO'),
+              ('R4,R28,R30', 'RC0603FR-0747KL', 'YAGEO'),
+              ('R1', 'RC0603FR-07270KL', 'YAGEO'),
+              ('R7', 'RC0603FR-1322K1L', 'YAGEO'),
+              ('R8,R29', 'RC0603FR-0747K5L', 'YAGEO'),
+              ('R9', 'RC0603FR-071KL', 'YAGEO'),
+              ('R2', 'RC0603FR-0722KL', 'YAGEO'),
+              ('R32', 'RC0603FR-0715KL', 'YAGEO'),
+              ('R33', 'RC0603FR-0716KL', 'YAGEO'),
+              ('R35', 'ERA3AEB1131V', 'PANASONIC'),
+              ('SW1,SW2,SW3,SW4,SW5,SW6', 'SWT0110-020010SSA', 'GCT'),
+              ('U1', 'TLV1701AIDBVR', 'TEXAS INSTRUMENTS'),
+              ('U2', 'CP2102-GM', 'SILICON LABS'),
+              ('U3', 'AKS1201', 'AKYGA SEMI'),
+              ('U4', 'ESP32-WROOM-32E-N4', 'ESPRESSIF'),
+              ('U5', 'L7987L', 'STMicroelectronics'),
+          ]
+
+          meta = {}
+          for refs, mpn, manufacturer in groups:
+              for ref in refs.split(','):
+                  meta[ref] = {'MPN': mpn, 'Manufacturer': manufacturer}
+
+          cap_fields = {
+              'C11': ('25V', '20%', 'X5R'),
+              'C12': ('16V', '10%', 'X5R'),
+              'C2': ('50V', '10%', 'X7R'),
+              'C6': ('50V', '10%', 'X7R'),
+              'C13': ('50V', '10%', 'X7R'),
+              'C14': ('50V', '10%', 'X7R'),
+              'C18': ('50V', '10%', 'X7R'),
+              'C19': ('50V', '10%', 'X7R'),
+              'C15': ('25V', '10%', 'X7R'),
+              'C17': ('25V', '10%', 'X7R'),
+              'C21': ('25V', '10%', 'X7R'),
+              'C16': ('25V', '10%', 'X5R'),
+              'C4': ('50V', '10%', 'X7R'),
+              'C5': ('50V', '20%', 'Aluminum Electrolytic'),
+              'C1': ('100V', '10%', 'X7S'),
+              'C3': ('100V', '10%', 'X7S'),
+              'C7': ('50V', '10%', 'X7R'),
+              'C8': ('50V', '5%', 'C0G/NP0'),
+              'C9': ('50V', '5%', 'C0G/NP0'),
+              'C10': ('10V', '10%', 'X7R'),
+              'C20': ('50V', '5%', 'C0G/NP0'),
+          }
+          for ref, (voltage, tolerance, dielectric) in cap_fields.items():
+              meta.setdefault(ref, {}).update({
+                  'Voltage': voltage,
+                  'Tolerance': tolerance,
+                  'Dielectric': dielectric,
+              })
+
+          yageo_resistors = {
+              ref for ref, values in meta.items()
+              if ref.startswith('R') and values.get('Manufacturer') == 'YAGEO'
+          }
+          for ref in yageo_resistors:
+              meta[ref].update({
+                  'Voltage': '75V',
+                  'Tolerance': '1%',
+                  'Power': '100mW',
+                  'TCR': '100ppm/K',
+              })
+          meta['R35'].update({
+              'Voltage': '75V',
+              'Tolerance': '0.1%',
+              'Power': '100mW',
+              'TCR': '25ppm/K',
+          })
+
+          functions = {
+              'C1': 'Cin_buck1',
+              'C2': 'C_autoen_vdd1',
+              'C3': 'C_vcc_buck1',
+              'C4': 'C_ss1',
+              'C6': 'Cbst1',
+              'C7': 'C_en_timing1',
+              'C8': 'C_comp_cp1',
+              'C9': 'C_comp_cf1',
+              'C10': 'Cout_buck1',
+              'C20': 'C_comp_cs1',
+              'C21': 'C_vbias1',
+              'D7': 'D_buck1',
+              'L1': 'L_buck1',
+              'Q7': 'Q_autoen1',
+              'R1': 'R_vref_top1',
+              'R2': 'R_vref_bot1',
+              'R4': 'R_fsw1',
+              'R5': 'R_cmp_pu1',
+              'R6': 'R_q_autoen1',
+              'R29': 'R_ilim1',
+              'R30': 'R_q7_pd1',
+              'R31': 'R_en_pu1',
+              'R32': 'R_en_pd1',
+              'R33': 'R_comp_rf1',
+              'R34': 'Rfb_bot1',
+              'R35': 'R_comp_rs1',
+              'R36': 'Rfb_top1',
+              'R37': 'R_pd_buz1',
+              'U1': 'U_autoen_cmp1',
+              'U5': 'U_buck1',
           }
 
-          def balanced_blocks(text, token):
-              starts = [m.start() for m in re.finditer(token, text)]
-              for start in starts:
-                  depth = 0
-                  in_string = False
-                  escape = False
-                  i = start
-                  while i < len(text):
-                      ch = text[i]
-                      if in_string:
-                          if escape:
-                              escape = False
-                          elif ch == '\\':
-                              escape = True
-                          elif ch == '"':
-                              in_string = False
-                      else:
-                          if ch == '"':
-                              in_string = True
-                          elif ch == '(':
-                              depth += 1
-                          elif ch == ')':
-                              depth -= 1
-                              if depth == 0:
-                                  yield text[start:i+1]
-                                  break
-                      i += 1
+          # Deliberate conflicts: keep electrical/sourcing fields untouched until
+          # the schematic values and BOM agree. Circuit-function metadata is safe.
+          conflicts = {'R34': '15k2 vs BOM 16k', 'R36': '47k5 vs BOM 49k9'}
+          for ref in conflicts:
+              meta.pop(ref, None)
 
-          report = {}
+          def escape_value(value):
+              return str(value).replace('\\', '\\\\').replace('"', '\\"')
+
+          def balanced_end(text, start):
+              depth = 0
+              in_string = False
+              escape = False
+              for i in range(start, len(text)):
+                  ch = text[i]
+                  if in_string:
+                      if escape:
+                          escape = False
+                      elif ch == '\\':
+                          escape = True
+                      elif ch == '"':
+                          in_string = False
+                  else:
+                      if ch == '"':
+                          in_string = True
+                      elif ch == '(':
+                          depth += 1
+                      elif ch == ')':
+                          depth -= 1
+                          if depth == 0:
+                              return i + 1
+              raise ValueError('Unbalanced S-expression')
+
+          def symbol_spans(text):
+              for match in re.finditer(r'\(symbol(?:\s|\")', text):
+                  start = match.start()
+                  end = balanced_end(text, start)
+                  block = text[start:end]
+                  mref = re.search(r'\(property\s+"Reference"\s+"([A-Za-z]+\d+)"', block)
+                  if mref:
+                      yield start, end, mref.group(1), block
+
+          def property_span(block, name):
+              pat = re.compile(r'\(property\s+"' + re.escape(name) + r'"\s+"')
+              m = pat.search(block)
+              if not m:
+                  return None
+              start = m.start()
+              return start, balanced_end(block, start)
+
+          def remove_property(block, name):
+              while True:
+                  span = property_span(block, name)
+                  if not span:
+                      return block
+                  start, end = span
+                  line_start = block.rfind('\n', 0, start) + 1
+                  if block[line_start:start].strip() == '':
+                      start = line_start
+                  block = block[:start] + block[end:]
+
+          def upsert_property(block, name, value):
+              value = escape_value(value)
+              span = property_span(block, name)
+              if span:
+                  start, end = span
+                  prop = block[start:end]
+                  prop2, n = re.subn(
+                      r'^(\(property\s+"' + re.escape(name) + r'"\s+")((?:\\.|[^"])*)"',
+                      lambda m: m.group(1) + value + '"',
+                      prop,
+                      count=1,
+                  )
+                  if n != 1:
+                      raise ValueError(f'Cannot update {name}')
+                  return block[:start] + prop2 + block[end:]
+
+              template_span = property_span(block, 'Datasheet')
+              if not template_span:
+                  template_span = property_span(block, 'Value')
+              if not template_span:
+                  raise ValueError(f'No property template for {name}')
+              tstart, tend = template_span
+              template = block[tstart:tend]
+              clone, n = re.subn(
+                  r'^\(property\s+"[^"]+"\s+"(?:\\.|[^"])*"',
+                  f'(property "{name}" "{value}"',
+                  template,
+                  count=1,
+              )
+              if n != 1:
+                  raise ValueError(f'Cannot clone property for {name}')
+              if '(hide yes)' not in clone:
+                  # Custom fields should stay hidden on the schematic.
+                  close_at = clone.rfind(')')
+                  clone = clone[:close_at] + '\n\t\t\t(hide yes)' + clone[close_at:]
+              line_start = block.rfind('\n', 0, tstart) + 1
+              indent = block[line_start:tstart]
+              return block[:tend] + '\n' + indent + clone + block[tend:]
+
+          changed_refs = set()
+          seen_refs = set()
           for path in sorted(pathlib.Path('hardware').glob('*.kicad_sch')):
               text = path.read_text(encoding='utf-8')
-              for block in balanced_blocks(text, r'\(symbol(?:\s|\")'):
-                  mref = re.search(r'\(property\s+"Reference"\s+"([A-Za-z]+\d+)"', block)
-                  if not mref:
-                      continue
-                  ref = mref.group(1)
+              replacements = []
+              for start, end, ref, block in symbol_spans(text):
+                  seen_refs.add(ref)
+                  original = block
+
+                  # Retire obsolete sourcing/duplicate fields from actual instances.
+                  block = remove_property(block, 'LCSC')
+                  block = remove_property(block, 'Manufacturer_Part_Number')
+                  block = remove_property(block, 'Manufacturer_Name')
+
+                  for name, value in meta.get(ref, {}).items():
+                      block = upsert_property(block, name, value)
+                  if ref in functions:
+                      block = upsert_property(block, 'Function', functions[ref])
+
+                  if block != original:
+                      replacements.append((start, end, block))
+                      changed_refs.add(ref)
+
+              for start, end, block in sorted(replacements, reverse=True):
+                  text = text[:start] + block + text[end:]
+
+              # Basic syntax guard before writing.
+              if balanced_end(text, 0) != len(text):
+                  raise ValueError(f'Unexpected top-level parse in {path}')
+              path.write_text(text, encoding='utf-8')
+
+          missing = set(meta) - seen_refs
+          if missing:
+              raise SystemExit(f'Missing schematic refs: {sorted(missing)}')
+
+          # Clean the KiCad BOM table configuration without touching footprints.
+          pro_path = pathlib.Path('hardware/Filament_Dryer_Monitor.kicad_pro')
+          pro = json.loads(pro_path.read_text(encoding='utf-8'))
+          ordered = pro['schematic']['bom_settings']['fields_ordered']
+          remove_columns = {'LCSC', 'Manufacturer_Part_Number', 'Manufacturer_Name'}
+          pro['schematic']['bom_settings']['fields_ordered'] = [
+              item for item in ordered if item.get('name') not in remove_columns
+          ]
+          pro_path.write_text(json.dumps(pro, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+
+          # Re-read transformed symbols and validate the source metadata.
+          verify = {}
+          for path in sorted(pathlib.Path('hardware').glob('*.kicad_sch')):
+              text = path.read_text(encoding='utf-8')
+              for _, _, ref, block in symbol_spans(text):
                   props = {}
                   for m in re.finditer(r'\(property\s+"([^"]+)"\s+"((?:\\.|[^"])*)"', block):
-                      name, value = m.group(1), m.group(2)
-                      if name in wanted:
-                          props[name] = value
-                  report[ref] = {'file': str(path), **props, 'nets': []}
+                      props[m.group(1)] = m.group(2)
+                  verify[ref] = props
 
-          netfile = pathlib.Path('hardware/Filament_Dryer_Monitor.net')
-          if netfile.exists():
-              nettext = netfile.read_text(encoding='utf-8')
-              for block in balanced_blocks(nettext, r'\(net\s'):
-                  mname = re.search(r'\(name\s+"((?:\\.|[^"])*)"\)', block)
-                  if not mname:
-                      continue
-                  netname = mname.group(1)
-                  for m in re.finditer(r'\(node\s+\(ref\s+"([A-Za-z]+\d+)"\)\s+\(pin\s+"([^"]+)"\)', block):
-                      ref, pin = m.group(1), m.group(2)
-                      if ref in report:
-                          report[ref]['nets'].append({'pin': pin, 'net': netname})
+          errors = []
+          for ref, expected in meta.items():
+              for name, value in expected.items():
+                  if verify.get(ref, {}).get(name) != value:
+                      errors.append(f'{ref} {name}: {verify.get(ref, {}).get(name)!r} != {value!r}')
+          for ref, value in functions.items():
+              if verify.get(ref, {}).get('Function') != value:
+                  errors.append(f'{ref} Function not updated')
+          for ref, props in verify.items():
+              if 'LCSC' in props:
+                  errors.append(f'{ref} still has LCSC')
+              if 'Manufacturer_Part_Number' in props or 'Manufacturer_Name' in props:
+                  errors.append(f'{ref} still has duplicate manufacturer fields')
 
-          for ref in report:
-              report[ref]['nets'] = sorted(report[ref]['nets'], key=lambda x: (x['pin'], x['net']))
+          # Ensure the two unresolved electrical-value conflicts were not overwritten.
+          expected_conflict_values = {'R34': '15k2', 'R36': '47k5'}
+          for ref, expected_value in expected_conflict_values.items():
+              actual = verify.get(ref, {}).get('Value')
+              if actual != expected_value:
+                  errors.append(f'{ref}: expected checked-in Value {expected_value}, got {actual}')
 
-          pathlib.Path('kicad-metadata-audit.json').write_text(
-              json.dumps(dict(sorted(report.items())), indent=2, ensure_ascii=False),
-              encoding='utf-8'
-          )
-          print(json.dumps(dict(sorted(report.items())), indent=2, ensure_ascii=False))
+          if errors:
+              raise SystemExit('\n'.join(errors))
+
+          print(f'Updated {len(changed_refs)} component instances.')
+          print('Skipped sourcing fields for conflicts:')
+          for ref, reason in conflicts.items():
+              print(f'  {ref}: {reason}')
           PY
-      - name: Upload audit
-        uses: actions/upload-artifact@v4
-        with:
-          name: kicad-metadata-audit
-          path: kicad-metadata-audit.json
+
+      - name: Commit synchronized metadata
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add hardware/*.kicad_sch hardware/Filament_Dryer_Monitor.kicad_pro
+          if git diff --cached --quiet; then
+            echo "No metadata changes to commit"
+          else
+            git commit -m "Sync KiCad component metadata with TME BOM"
+            git push origin HEAD:redesign/buck-sourcing
+          fi
