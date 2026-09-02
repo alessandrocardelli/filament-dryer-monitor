@@ -16,7 +16,11 @@ jobs:
     steps:
       - name: Download datasheet
         run: |
-          curl -L --fail --retry 3 -A 'Mozilla/5.0' 'https://www.tme.eu/Document/95412e28ccf9a3841c10b9b3b2632864/LD-BZEL-T67-0808_DTE.pdf' -o buzzer.pdf
+          UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/142.0 Safari/537.36'
+          PAGE='https://www.tme.eu/en/details/ld-bzel-t67-0808/electromagnetic-sounders-w-o-generator/loudity/'
+          PDF='https://www.tme.eu/Document/95412e28ccf9a3841c10b9b3b2632864/LD-BZEL-T67-0808_DTE.pdf'
+          curl -L --fail --retry 2 -A "$UA" -c cookies.txt "$PAGE" -o product.html
+          curl -L --fail --retry 3 -A "$UA" -b cookies.txt -e "$PAGE" "$PDF" -o buzzer.pdf
           file buzzer.pdf
           ls -lh buzzer.pdf
       - name: Render PDF
