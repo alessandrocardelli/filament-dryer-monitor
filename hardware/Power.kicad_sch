@@ -4727,6 +4727,17 @@
 				)
 			)
 		)
+		(property "Description" "Resistor"
+			(at 64.77 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "R_vref_bot1"
 			(at 64.77 165.1 0)
 			(hide yes)
@@ -4794,17 +4805,6 @@
 			)
 		)
 		(property "MPN" "RC0603FR-0722KL"
-			(at 64.77 165.1 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Resistor"
 			(at 64.77 165.1 0)
 			(hide yes)
 			(show_name no)
@@ -4941,7 +4941,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "1%"
 			(at 109.22 52.07 0)
 			(hide yes)
@@ -5054,6 +5053,17 @@
 				)
 			)
 		)
+		(property "Description" "Unpolarized capacitor"
+			(at 196.85 100.33 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "C_comp_cs1"
 			(at 196.85 100.33 0)
 			(hide yes)
@@ -5110,17 +5120,6 @@
 			)
 		)
 		(property "MPN" "06035A561JAT2A"
-			(at 196.85 100.33 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
 			(at 196.85 100.33 0)
 			(hide yes)
 			(show_name no)
@@ -5276,7 +5275,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "B3B-XH-A (LF)(SN)"
 			(at 60.96 38.1 0)
 			(hide yes)
@@ -5551,7 +5549,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "MMBT3904"
 			(at 118.11 156.21 0)
 			(hide yes)
@@ -5704,7 +5701,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "20%"
 			(at 217.17 85.09 0)
 			(hide yes)
@@ -5820,6 +5816,17 @@
 				)
 			)
 		)
+		(property "Description" "Unpolarized capacitor"
+			(at 204.47 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "C_vbias1"
 			(at 204.47 116.84 0)
 			(hide yes)
@@ -5854,17 +5861,6 @@
 			)
 		)
 		(property "Voltage" "25V"
-			(at 204.47 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
 			(at 204.47 116.84 0)
 			(hide yes)
 			(show_name no)
@@ -6200,7 +6196,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "NTD20P06LT4G"
 			(at 109.22 38.1 90)
 			(hide yes)
@@ -6317,7 +6312,6 @@
 				)
 			)
 		)
-
 		(property "Dielectric" ""
 			(at 86.36 35.56 90)
 			(hide yes)
@@ -6541,6 +6535,17 @@
 				)
 			)
 		)
+		(property "Description" "Unpolarized capacitor"
+			(at 173.99 105.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "C_comp_cf1"
 			(at 173.99 105.41 0)
 			(hide yes)
@@ -6597,17 +6602,6 @@
 			)
 		)
 		(property "MPN" "GRM21B5C1H183JA01L"
-			(at 173.99 105.41 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
 			(at 173.99 105.41 0)
 			(hide yes)
 			(show_name no)
@@ -6679,6 +6673,17 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 134.62 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Description" "Resistor"
 			(at 134.62 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -6766,17 +6771,6 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
-			(at 134.62 143.51 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
 		(pin "2"
 			(uuid "1d18fe93-4034-4424-aef6-6b50da72f764")
 		)
@@ -6805,7 +6799,7 @@
 		(dnp no)
 		(uuid "525ad749-8a59-47cb-b8ec-5889756965af")
 		(property "Reference" "R34"
-			(at 186.69 123.19 90)
+			(at 184.023 121.92 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6814,8 +6808,8 @@
 				)
 			)
 		)
-		(property "Value" "15k2"
-			(at 184.15 123.19 90)
+		(property "Value" "16k"
+			(at 184.023 124.46 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6846,6 +6840,17 @@
 				)
 			)
 		)
+		(property "Description" "Resistor"
+			(at 180.34 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "Rfb_bot1"
 			(at 180.34 123.19 0)
 			(hide yes)
@@ -6857,14 +6862,69 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "MPN" "RC0603FR-0716KL"
+			(at 180.34 123.19 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 180.34 123.19 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Power" "100mW"
 			(at 180.34 123.19 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
-					(size 1.016 1.016)
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "TCR" "100ppm/K"
+			(at 180.34 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" "1%"
+			(at 180.34 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage" "75V"
+			(at 180.34 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -6947,7 +7007,6 @@
 				)
 			)
 		)
-
 		(property "Function" "FB1"
 			(at 210.82 78.74 90)
 			(hide yes)
@@ -7107,6 +7166,17 @@
 				)
 			)
 		)
+		(property "Description" "Resistor"
+			(at 105.41 110.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "R_ilim1"
 			(at 105.41 110.49 0)
 			(hide yes)
@@ -7184,17 +7254,6 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
-			(at 105.41 110.49 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
 		(pin "2"
 			(uuid "88625b9d-1528-4d9e-a24a-de28f4c36df0")
 		)
@@ -7253,6 +7312,17 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 163.83 105.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Description" "Resistor"
 			(at 163.83 105.41 0)
 			(hide yes)
 			(show_name no)
@@ -7340,17 +7410,6 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
-			(at 163.83 105.41 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
 		(pin "2"
 			(uuid "7708a4aa-c0fe-4359-ba61-c6b45530b5fd")
 		)
@@ -7410,6 +7469,17 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 186.69 100.33 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Description" "Resistor"
 			(at 186.69 100.33 0)
 			(hide yes)
 			(show_name no)
@@ -7497,17 +7567,6 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
-			(at 186.69 100.33 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
 		(pin "2"
 			(uuid "7d26a715-34c0-434e-9c7b-093b1048536e")
 		)
@@ -7569,6 +7628,17 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 110.49 162.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Description" "Resistor"
 			(at 110.49 162.56 0)
 			(hide yes)
 			(show_name no)
@@ -7656,17 +7726,6 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
-			(at 110.49 162.56 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
 		(pin "2"
 			(uuid "9b50b842-654d-4db1-9d79-382ab754d2d1")
 		)
@@ -7737,6 +7796,17 @@
 				)
 			)
 		)
+		(property "Description" "Unpolarized capacitor"
+			(at 74.93 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "C_autoen_vdd1"
 			(at 74.93 143.51 0)
 			(hide yes)
@@ -7793,17 +7863,6 @@
 			)
 		)
 		(property "MPN" "CC0603KRX7R9BB104"
-			(at 74.93 143.51 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
 			(at 74.93 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -7885,6 +7944,17 @@
 				)
 			)
 		)
+		(property "Description" "Unpolarized capacitor"
+			(at 144.78 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "Cbst1"
 			(at 144.78 88.9 0)
 			(hide yes)
@@ -7941,17 +8011,6 @@
 			)
 		)
 		(property "MPN" "CC0603KRX7R9BB104"
-			(at 144.78 88.9 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
 			(at 144.78 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -8023,6 +8082,17 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 134.62 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Description" "Resistor"
 			(at 134.62 156.21 0)
 			(hide yes)
 			(show_name no)
@@ -8110,17 +8180,6 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
-			(at 134.62 156.21 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
 		(pin "2"
 			(uuid "34af9579-e701-450e-bfad-cb1b5d9e49ad")
 		)
@@ -8191,6 +8250,17 @@
 				)
 			)
 		)
+		(property "Description" "Unpolarized capacitor"
+			(at 77.47 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "C_vcc_buck1"
 			(at 77.47 96.52 0)
 			(hide yes)
@@ -8225,17 +8295,6 @@
 			)
 		)
 		(property "Voltage" "100V"
-			(at 77.47 96.52 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
 			(at 77.47 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -8627,7 +8686,7 @@
 				)
 			)
 		)
-		(property "Function" "L_buck1"
+		(property "Description" "Inductor"
 			(at 163.83 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -8638,7 +8697,7 @@
 				)
 			)
 		)
-		(property "Description" "Inductor"
+		(property "Function" "L_buck1"
 			(at 163.83 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -8741,6 +8800,17 @@
 				)
 			)
 		)
+		(property "Description" "Resistor"
+			(at 97.79 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "R_fsw1"
 			(at 97.79 109.22 0)
 			(hide yes)
@@ -8808,17 +8878,6 @@
 			)
 		)
 		(property "MPN" "RC0603FR-0747KL"
-			(at 97.79 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Resistor"
 			(at 97.79 109.22 0)
 			(hide yes)
 			(show_name no)
@@ -9056,6 +9115,17 @@
 				)
 			)
 		)
+		(property "Description" "Unpolarized capacitor"
+			(at 87.63 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "C_ss1"
 			(at 87.63 106.68 0)
 			(hide yes)
@@ -9112,17 +9182,6 @@
 			)
 		)
 		(property "MPN" "GCM188R71H333KA55D"
-			(at 87.63 106.68 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
 			(at 87.63 106.68 0)
 			(hide yes)
 			(show_name no)
@@ -9437,6 +9496,17 @@
 				)
 			)
 		)
+		(property "Description" "Resistor"
+			(at 102.87 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "R_q_autoen1"
 			(at 102.87 156.21 0)
 			(hide yes)
@@ -9504,17 +9574,6 @@
 			)
 		)
 		(property "MPN" "RC0603FR-07100KL"
-			(at 102.87 156.21 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Resistor"
 			(at 102.87 156.21 0)
 			(hide yes)
 			(show_name no)
@@ -9753,6 +9812,17 @@
 				)
 			)
 		)
+		(property "Description" "Resistor"
+			(at 64.77 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "R_vref_top1"
 			(at 64.77 152.4 0)
 			(hide yes)
@@ -9820,17 +9890,6 @@
 			)
 		)
 		(property "MPN" "RC0603FR-07270KL"
-			(at 64.77 152.4 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Resistor"
 			(at 64.77 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -9989,7 +10048,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "SMBJ28A"
 			(at 128.27 52.07 90)
 			(hide yes)
@@ -10082,6 +10140,17 @@
 				)
 			)
 		)
+		(property "Description" "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5"
+			(at 87.63 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(property "Function" "U_autoen_cmp1"
 			(at 87.63 151.13 0)
 			(hide yes)
@@ -10106,17 +10175,6 @@
 		)
 		(property "MPN" "TLV1701AIDBVR"
 			(at 87.63 151.13 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5"
-			(at 87.63 156.21 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10351,6 +10409,17 @@
 				(justify left top)
 			)
 		)
+		(property "Description" "Switching Voltage Regulators 61 V 2 A asynchronous step-down switching regulator with adjustable current limitation"
+			(at 123.19 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "U_buck1"
 			(at 149.86 285.09 0)
 			(hide yes)
@@ -10387,17 +10456,6 @@
 				(justify left top)
 			)
 		)
-		(property "Description" "Switching Voltage Regulators 61 V 2 A asynchronous step-down switching regulator with adjustable current limitation"
-			(at 123.19 90.17 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
 		(property "Height" "1.2"
 			(at 149.86 485.09 0)
 			(hide yes)
@@ -10410,8 +10468,6 @@
 				(justify left top)
 			)
 		)
-
-
 		(pin "6"
 			(uuid "44a7dbb2-0ca2-4bc8-8ffc-837d4b91006b")
 		)
@@ -10528,7 +10584,7 @@
 				)
 			)
 		)
-		(property "Function" "D_buck1"
+		(property "Description" "Diode"
 			(at 144.78 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -10539,7 +10595,7 @@
 				)
 			)
 		)
-		(property "Description" "Diode"
+		(property "Function" "D_buck1"
 			(at 144.78 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -10664,6 +10720,17 @@
 				)
 			)
 		)
+		(property "Description" "Unpolarized capacitor"
+			(at 64.77 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "Cin_buck1"
 			(at 64.77 96.52 0)
 			(hide yes)
@@ -10698,17 +10765,6 @@
 			)
 		)
 		(property "Voltage" "100V"
-			(at 64.77 96.52 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
 			(at 64.77 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -10812,6 +10868,17 @@
 				)
 			)
 		)
+		(property "Description" "Unpolarized capacitor"
+			(at 147.32 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "C_en_timing1"
 			(at 147.32 156.21 0)
 			(hide yes)
@@ -10846,17 +10913,6 @@
 			)
 		)
 		(property "Voltage" "50V"
-			(at 147.32 156.21 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
 			(at 147.32 156.21 0)
 			(hide yes)
 			(show_name no)
@@ -11035,7 +11091,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "BZX84C15-7-F"
 			(at 118.11 45.72 0)
 			(hide yes)
@@ -11284,6 +11339,17 @@
 				)
 			)
 		)
+		(property "Description" "Unpolarized capacitor"
+			(at 167.64 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "C_comp_cp1"
 			(at 167.64 115.57 0)
 			(hide yes)
@@ -11340,17 +11406,6 @@
 			)
 		)
 		(property "MPN" "C0603C390J5GACTU"
-			(at 167.64 115.57 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
 			(at 167.64 115.57 0)
 			(hide yes)
 			(show_name no)
@@ -11600,7 +11655,6 @@
 				)
 			)
 		)
-
 		(property "Function" "Cin1"
 			(at 140.97 41.91 0)
 			(hide yes)
@@ -11760,6 +11814,17 @@
 				)
 			)
 		)
+		(property "Description" "Resistor"
+			(at 97.79 147.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "R_cmp_pu1"
 			(at 97.79 147.32 0)
 			(hide yes)
@@ -11837,17 +11902,6 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
-			(at 97.79 147.32 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
 		(pin "2"
 			(uuid "9f9fd319-3717-414f-96bd-f7d852357350")
 		)
@@ -11885,7 +11939,7 @@
 				)
 			)
 		)
-		(property "Value" "47k5"
+		(property "Value" "49k9"
 			(at 186.69 110.49 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11917,6 +11971,17 @@
 				)
 			)
 		)
+		(property "Description" "Resistor"
+			(at 186.69 105.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "Rfb_top1"
 			(at 186.69 105.41 0)
 			(hide yes)
@@ -11928,14 +11993,69 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
-			(at 186.69 105.41 0)
+		(property "MPN" "RC0603FR-0749K9L"
+			(at 186.69 105.41 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
-					(size 1.016 1.016)
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 186.69 105.41 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Power" "100mW"
+			(at 186.69 105.41 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "TCR" "100ppm/K"
+			(at 186.69 105.41 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" "1%"
+			(at 186.69 105.41 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage" "75V"
+			(at 186.69 105.41 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -12088,6 +12208,17 @@
 				)
 			)
 		)
+		(property "Description" "Unpolarized capacitor"
+			(at 193.04 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
 		(property "Function" "Cout_buck1"
 			(at 193.04 116.84 0)
 			(hide yes)
@@ -12122,17 +12253,6 @@
 			)
 		)
 		(property "Voltage" "10V"
-			(at 193.04 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
 			(at 193.04 116.84 0)
 			(hide yes)
 			(show_name no)

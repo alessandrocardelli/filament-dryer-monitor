@@ -6240,7 +6240,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "AKS1201"
 			(at 102.87 166.37 0)
 			(hide yes)
@@ -6502,7 +6501,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "CP2102-GM"
 			(at 73.66 91.44 0)
 			(hide yes)
@@ -7192,7 +7190,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "1%"
 			(at 217.17 91.44 0)
 			(hide yes)
@@ -7442,7 +7439,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "1%"
 			(at 205.74 52.07 0)
 			(hide yes)
@@ -7771,7 +7767,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "1%"
 			(at 55.88 54.61 0)
 			(hide yes)
@@ -7942,7 +7937,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "10%"
 			(at 90.17 49.53 0)
 			(hide yes)
@@ -8278,7 +8272,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "USB4216-03-A"
 			(at 74.93 163.83 0)
 			(hide yes)
@@ -8469,7 +8462,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "1%"
 			(at 255.27 68.58 90)
 			(hide yes)
@@ -8741,7 +8733,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "SWT0110-020010SSA"
 			(at 215.9 68.58 90)
 			(hide yes)
@@ -8890,7 +8881,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "1%"
 			(at 228.6 91.44 0)
 			(hide yes)
@@ -9083,7 +9073,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "ESP32-WROOM-32E-N4"
 			(at 184.15 92.71 0)
 			(hide yes)
@@ -9334,7 +9323,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "10%"
 			(at 143.51 68.58 0)
 			(hide yes)
@@ -9505,7 +9493,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "10%"
 			(at 101.6 49.53 0)
 			(hide yes)
@@ -9676,7 +9663,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "1%"
 			(at 48.26 80.01 0)
 			(hide yes)
@@ -9847,7 +9833,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "1%"
 			(at 143.51 52.07 0)
 			(hide yes)
@@ -10018,7 +10003,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "10%"
 			(at 165.1 45.72 0)
 			(hide yes)
@@ -10189,7 +10173,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "10%"
 			(at 175.26 45.72 0)
 			(hide yes)
@@ -10382,7 +10365,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "B4B-PH-SM4-TB (LF)(SN)"
 			(at 256.54 102.87 0)
 			(hide yes)
@@ -10581,7 +10563,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "MMBT3904"
 			(at 116.84 49.53 0)
 			(hide yes)
@@ -10890,7 +10871,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "1%"
 			(at 120.65 160.02 0)
 			(hide yes)
@@ -11094,7 +11074,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "HSMG-C170"
 			(at 255.27 76.2 90)
 			(hide yes)
@@ -11287,7 +11266,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "MMBT3904"
 			(at 125.73 68.58 0)
 			(hide yes)
@@ -11516,7 +11494,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "1%"
 			(at 242.57 102.87 90)
 			(hide yes)
@@ -11687,7 +11664,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "10%"
 			(at 80.01 49.53 0)
 			(hide yes)
@@ -11880,7 +11856,6 @@
 				)
 			)
 		)
-
 		(property "MPN" "SWT0110-020010SSA"
 			(at 154.94 68.58 90)
 			(hide yes)
@@ -12028,7 +12003,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "1%"
 			(at 129.54 157.48 0)
 			(hide yes)
@@ -12344,7 +12318,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "1%"
 			(at 48.26 72.39 0)
 			(hide yes)
@@ -12512,7 +12485,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "1%"
 			(at 234.95 100.33 90)
 			(hide yes)
@@ -12916,7 +12888,6 @@
 				)
 			)
 		)
-
 		(property "Tolerance" "10%"
 			(at 154.94 45.72 0)
 			(hide yes)
