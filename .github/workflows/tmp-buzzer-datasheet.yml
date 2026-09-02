@@ -1,4 +1,4 @@
-name: Temporary final strict pinout audit
+name: Temporary post-audit documentation sync
 
 on:
   push:
@@ -11,26 +11,26 @@ permissions:
   contents: write
 
 jobs:
-  finalize:
+  sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: redesign/buck-sourcing
-      - name: Finalize strict audit
-        run: python .github/scripts/finalize_pinout_audit.py
+      - name: Sync project documentation
+        run: python .github/scripts/sync_post_audit_docs.py
       - name: Validate diff
         run: |
           git diff --check
           git status --short
-      - name: Commit final audit corrections
+      - name: Commit documentation sync
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add hardware
+          git add README.md docs/BUCK_L7987L_DESIGN.md hardware/docs/PROCUREMENT.md
           if git diff --cached --quiet; then
             echo 'No changes to commit'
           else
-            git commit -m 'Finalize strict component pinout audit'
+            git commit -m 'Sync project state after strict pinout audit'
             git push origin HEAD:redesign/buck-sourcing
           fi
