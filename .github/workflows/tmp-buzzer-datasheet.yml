@@ -1,4 +1,4 @@
-name: Temporary buzzer datasheet inspection
+name: Temporary final footprint inspection
 
 on:
   push:
@@ -11,39 +11,56 @@ permissions:
   contents: read
 
 jobs:
-  render:
+  inspect:
     runs-on: ubuntu-latest
     steps:
-      - name: Download datasheet mirror
+      - uses: actions/checkout@v4
+        with:
+          ref: redesign/buck-sourcing
+      - name: Inspect BZ1 U2 and switches
         shell: bash
         run: |
-          set -euxo pipefail
-          UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/142.0 Safari/537.36'
-          PAGE='https://dip8.ru/shop/product/ld_bzel_t67_0808_lou/'
-          curl -L --fail --retry 3 -A "$UA" "$PAGE" -o product.html
           python - <<'PY'
-          import re, urllib.parse
-          html=open('product.html',encoding='utf-8',errors='ignore').read()
-          links=re.findall(r'href=["\x27]([^"\x27]+\.pdf(?:\?[^"\x27]*)?)["\x27]',html,re.I)
-          print('\n'.join(links))
-          cand=[x for x in links if 't67' in x.lower() or 'datasheet' in x.lower()]
-          if not cand: raise SystemExit('No PDF link found')
-          url=urllib.parse.urljoin('https://dip8.ru/',cand[0])
-          print('PDFURL='+url)
-          open('pdfurl.txt','w').write(url)
+          from pathlib import Path
+          import re
+
+          def balanced_end(text, start):
+              depth=0; ins=False; esc=False
+              for i,ch in enumerate(text[start:], start):
+                  if ins:
+                      if esc: esc=False
+                      elif ch=='\\': esc=True
+                      elif ch=='"': ins=False
+                  else:
+                      if ch=='"': ins=True
+                      elif ch=='(': depth+=1
+                      elif ch==')':
+                          depth-=1
+                          if depth==0: return i+1
+              raise ValueError('unbalanced')
+
+          def symbol_blocks(path):
+              text=Path(path).read_text(encoding='utf-8')
+              for m in re.finditer(r'\(symbol(?:\s|\")', text):
+                  s=m.start(); e=balanced_end(text,s); b=text[s:e]
+                  r=re.search(r'\(property\s+"Reference"\s+"([A-Za-z]+\d+)"',b)
+                  if r: yield r.group(1),b
+
+          for path in Path('hardware').glob('*.kicad_sch'):
+              for ref,b in symbol_blocks(path):
+                  if ref in {'BZ1','U2','SW1','SW2','SW3','SW4','SW5','SW6'}:
+                      print(f'=== {path} {ref} ===')
+                      for prop in ['Value','Footprint','MPN','Manufacturer']:
+                          m=re.search(r'\(property\s+"'+re.escape(prop)+r'"\s+"((?:\\.|[^"])*)"',b)
+                          print(prop, '=', m.group(1) if m else '<missing>')
+                      pins=re.findall(r'\(pin\s+"([^"]+)"',b)
+                      print('symbol instance pins =', pins)
+
+          net=Path('hardware/Filament_Dryer_Monitor.net').read_text(encoding='utf-8')
+          print('=== NETLIST NODES ===')
+          for ref in ['BZ1','U2','SW1','SW2','SW3','SW4','SW5','SW6']:
+              hits=[]
+              for m in re.finditer(r'\(node\s+\(ref\s+"'+re.escape(ref)+r'"\)\s+\(pin\s+"([^"]+)"\)(?:\s+\(pinfunction\s+"([^"]*)"\))?(?:\s+\(pintype\s+"([^"]*)"\))?',net):
+                  hits.append(m.groups())
+              print(ref, hits)
           PY
-          PDF="$(cat pdfurl.txt)"
-          curl -L --fail --retry 3 -A "$UA" -e "$PAGE" "$PDF" -o buzzer.pdf
-          file buzzer.pdf
-          ls -lh buzzer.pdf
-      - name: Render PDF
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y poppler-utils
-          mkdir rendered
-          pdftoppm -png -r 200 buzzer.pdf rendered/page
-          ls -lh rendered
-      - uses: actions/upload-artifact@v4
-        with:
-          name: buzzer-datasheet-render
-          path: rendered/
