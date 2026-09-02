@@ -18,11 +18,11 @@ The current implementation is in `hardware/Power.kicad_sch`; the temporary
 > power stage and must not be used for fabrication until the board has been synchronized,
 > rerouted and checked.
 
-> **Procurement hold**
+> **Sourcing / footprint status**
 >
-> Final MPN selection/cleanup and the `BOM TME` Google Sheet update are intentionally deferred.
-> MPN/manufacturer fields currently present in the new buck symbols are provisional and are not
-> a final purchasing approval.
+> The `BOM TME` sourcing pass and KiCad MPN/manufacturer metadata synchronization have been
+> completed for the selected parts. The next manufacturing-preparation step is the footprint
+> audit against the selected MPNs, followed by PCB synchronization and layout work.
 
 ---
 
@@ -213,9 +213,9 @@ Existing project capacitors relevant to the power path:
 | R31 | 100 kΩ | EN pull-up |
 | R32 | 15 kΩ | EN pull-down |
 | R33 | 16 kΩ | Type-III compensation `RF` |
-| R34 | 15.2 kΩ | Feedback divider lower resistor |
+| R34 | 16 kΩ | Feedback divider lower resistor |
 | R35 | 1.13 kΩ | Type-III compensation `RS` |
-| R36 | 47.5 kΩ | Feedback divider upper resistor |
+| R36 | 49.9 kΩ | Feedback divider upper resistor |
 
 `R3` belongs to the pre-existing 24 V input-protection network and is not one of the new buck
 control resistors.
@@ -245,16 +245,16 @@ ST feedback reference:
 
 Current divider:
 
-- upper: **R36 = 47.5 kΩ**;
-- lower: **R34 = 15.2 kΩ**.
+- upper: **R36 = 49.9 kΩ**;
+- lower: **R34 = 16 kΩ**.
 
 Project calculation:
 
 `VOUT = VFB × (1 + R36/R34)`
 
-`VOUT ≈ 0.8 × (1 + 47.5/15.2) ≈ 3.300 V`
+`VOUT ≈ 0.8 × (1 + 49.9/16) ≈ 3.295 V`
 
-So the implemented nominal target is **3.3 V**.
+So the implemented nominal target remains **3.3 V** (approximately 3.295 V using the nominal 0.800 V feedback reference).
 
 ---
 
