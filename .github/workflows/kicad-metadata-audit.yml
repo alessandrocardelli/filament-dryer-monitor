@@ -1,0 +1,89 @@
+name: KiCad metadata audit
+
+on:
+  push:
+    branches:
+      - redesign/buck-sourcing
+    paths:
+      - .github/workflows/kicad-metadata-audit.yml
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit component fields
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import pathlib
+          import re
+
+          wanted = {
+              'MPN', 'Manufacturer', 'Function', 'LCSC',
+              'Voltage', 'Tolerance', 'Dielectric', 'Power', 'TCR',
+              'Manufacturer_Part_Number', 'Manufacturer_Name',
+              'Footprint', 'Datasheet', 'Value'
+          }
+
+          def extract_symbol_blocks(text):
+              starts = [m.start() for m in re.finditer(r'\(symbol(?:\s|\")', text)]
+              for start in starts:
+                  depth = 0
+                  in_string = False
+                  escape = False
+                  i = start
+                  while i < len(text):
+                      ch = text[i]
+                      if in_string:
+                          if escape:
+                              escape = False
+                          elif ch == '\\':
+                              escape = True
+                          elif ch == '"':
+                              in_string = False
+                      else:
+                          if ch == '"':
+                              in_string = True
+                          elif ch == '(':
+                              depth += 1
+                          elif ch == ')':
+                              depth -= 1
+                              if depth == 0:
+                                  yield text[start:i+1]
+                                  break
+                      i += 1
+
+          def unescape(s):
+              return bytes(s, 'utf-8').decode('unicode_escape') if '\\' in s else s
+
+          report = {}
+          for path in sorted(pathlib.Path('hardware').glob('*.kicad_sch')):
+              text = path.read_text(encoding='utf-8')
+              for block in extract_symbol_blocks(text):
+                  mref = re.search(r'\(property\s+"Reference"\s+"([A-Za-z]+\d+)"', block)
+                  if not mref:
+                      continue
+                  ref = mref.group(1)
+                  props = {}
+                  for m in re.finditer(r'\(property\s+"([^"]+)"\s+"((?:\\.|[^"])*)"', block):
+                      name, value = m.group(1), m.group(2)
+                      if name in wanted:
+                          props[name] = value
+                  report[ref] = {'file': str(path), **props}
+
+          pathlib.Path('kicad-metadata-audit.json').write_text(
+              json.dumps(dict(sorted(report.items())), indent=2, ensure_ascii=False),
+              encoding='utf-8'
+          )
+          print(json.dumps(dict(sorted(report.items())), indent=2, ensure_ascii=False))
+          PY
+      - name: Upload audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: kicad-metadata-audit
+          path: kicad-metadata-audit.json
