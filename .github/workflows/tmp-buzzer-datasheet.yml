@@ -1,4 +1,4 @@
-name: Temporary strict pinout correction
+name: Temporary final strict pinout audit
 
 on:
   push:
@@ -11,35 +11,19 @@ permissions:
   contents: write
 
 jobs:
-  fix:
+  finalize:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: redesign/buck-sourcing
-      - name: Apply confirmed pinout fixes
-        run: python .github/scripts/apply_strict_pinout_fixes.py
-      - name: Normalize generated blank lines
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          for path in [
-              Path('hardware/Power.kicad_sch'),
-              Path('hardware/IO_Power.kicad_sch'),
-              Path('hardware/MCU.kicad_sch'),
-              Path('hardware/Filament_Dryer_Custom.kicad_sym'),
-          ]:
-              text = path.read_text(encoding='utf-8')
-              text = re.sub(r'(?m)^[ \t]+$', '', text)
-              path.write_text(text, encoding='utf-8')
-          PY
+      - name: Finalize strict audit
+        run: python .github/scripts/finalize_pinout_audit.py
       - name: Validate diff
         run: |
           git diff --check
           git status --short
-      - name: Commit fixes
+      - name: Commit final audit corrections
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -47,6 +31,6 @@ jobs:
           if git diff --cached --quiet; then
             echo 'No changes to commit'
           else
-            git commit -m 'Fix strict symbol and pinout mappings'
+            git commit -m 'Finalize strict component pinout audit'
             git push origin HEAD:redesign/buck-sourcing
           fi
