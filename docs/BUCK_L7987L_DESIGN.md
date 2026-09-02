@@ -266,8 +266,8 @@ Current inductor:
 - current schematic MPN field: Bourns `SRN6045-150M`;
 - previously reviewed ratings: DCR max ~95.8 mΩ, Irms ~1.9 A, Isat ~2.3 A.
 
-These MPN/rating entries are retained as the design record but final procurement approval is
-still deferred.
+These MPN/rating entries now reflect the sourced BOM selection; footprint/PCB validation remains
+the remaining manufacturing-preparation work.
 
 Current catch diode:
 

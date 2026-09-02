@@ -8173,7 +8173,7 @@
 				)
 			)
 		)
-		(property "Footprint" "FilamentDryer:USB_C_Receptacle_HRO_TYPE-C-31-M-12"
+		(property "Footprint" "FilamentDryer:USB_C_GCT_USB4216-03-A"
 			(at 78.74 163.83 0)
 			(hide yes)
 			(show_name no)
