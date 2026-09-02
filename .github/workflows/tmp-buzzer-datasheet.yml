@@ -21,7 +21,6 @@ jobs:
           UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/142.0 Safari/537.36'
           PAGE='https://dip8.ru/shop/product/ld_bzel_t67_0808_lou/'
           curl -L --fail --retry 3 -A "$UA" "$PAGE" -o product.html
-          grep -oiE 'href=["'"'][^"'"']*(LD-BZEL-T67-0808|Datasheet)[^"'"']*\.pdf[^"'"']*["'"']' product.html || true
           python - <<'PY'
           import re, urllib.parse
           html=open('product.html',encoding='utf-8',errors='ignore').read()
@@ -29,8 +28,9 @@ jobs:
           print('\n'.join(links))
           cand=[x for x in links if 't67' in x.lower() or 'datasheet' in x.lower()]
           if not cand: raise SystemExit('No PDF link found')
-          print('PDFURL='+urllib.parse.urljoin('https://dip8.ru/',cand[0]))
-          open('pdfurl.txt','w').write(urllib.parse.urljoin('https://dip8.ru/',cand[0]))
+          url=urllib.parse.urljoin('https://dip8.ru/',cand[0])
+          print('PDFURL='+url)
+          open('pdfurl.txt','w').write(url)
           PY
           PDF="$(cat pdfurl.txt)"
           curl -L --fail --retry 3 -A "$UA" -e "$PAGE" "$PDF" -o buzzer.pdf
