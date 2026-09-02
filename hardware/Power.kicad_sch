@@ -3056,6 +3056,173 @@
 			)
 			(embedded_fonts no)
 		)
+
+		(symbol "Filament_Dryer_Custom:BZX84C15-7-F"
+					(pin_numbers
+						(hide yes)
+					)
+					(pin_names
+						(offset 1.016)
+						(hide yes)
+					)
+					(exclude_from_sim no)
+					(in_bom yes)
+					(on_board yes)
+					(in_pos_files yes)
+					(duplicate_pin_numbers_are_jumpers no)
+					(property "Reference" "D"
+						(at 0 2.54 0)
+						(show_name no)
+						(do_not_autoplace no)
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(property "Value" "BZX84C15-7-F"
+						(at 0 -2.54 0)
+						(show_name no)
+						(do_not_autoplace no)
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+						(at 0 0 0)
+						(show_name no)
+						(do_not_autoplace no)
+						(hide yes)
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(property "Datasheet" "https://www.diodes.com/datasheet/download/BZX84C2V4%20-%20BZX84C51.pdf"
+						(at 0 0 0)
+						(show_name no)
+						(do_not_autoplace no)
+						(hide yes)
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(property "Description" "BZX84C15-7-F 15 V surface-mount Zener diode, SOT-23; pin 1 A, pin 2 NC, pin 3 K"
+						(at 0 0 0)
+						(show_name no)
+						(do_not_autoplace no)
+						(hide yes)
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(property "ki_keywords" "diode"
+						(at 0 0 0)
+						(show_name no)
+						(do_not_autoplace no)
+						(hide yes)
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+						(at 0 0 0)
+						(show_name no)
+						(do_not_autoplace no)
+						(hide yes)
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(symbol "BZX84C15_0_1"
+						(polyline
+							(pts
+								(xy -1.27 -1.27) (xy -1.27 1.27) (xy -0.762 1.27)
+							)
+							(stroke
+								(width 0.254)
+								(type default)
+							)
+							(fill
+								(type none)
+							)
+						)
+						(polyline
+							(pts
+								(xy 1.27 0) (xy -1.27 0)
+							)
+							(stroke
+								(width 0)
+								(type default)
+							)
+							(fill
+								(type none)
+							)
+						)
+						(polyline
+							(pts
+								(xy 1.27 -1.27) (xy 1.27 1.27) (xy -1.27 0) (xy 1.27 -1.27)
+							)
+							(stroke
+								(width 0.254)
+								(type default)
+							)
+							(fill
+								(type none)
+							)
+						)
+					)
+					(symbol "BZX84C15_1_1"
+						(pin passive line
+							(at -3.81 0 0)
+							(length 2.54)
+							(name "K"
+								(effects
+									(font
+										(size 1.27 1.27)
+									)
+								)
+							)
+							(number "3"
+								(effects
+									(font
+										(size 1.27 1.27)
+									)
+								)
+							)
+						)
+						(pin passive line
+							(at 3.81 0 180)
+							(length 2.54)
+							(name "A"
+								(effects
+									(font
+										(size 1.27 1.27)
+									)
+								)
+							)
+							(number "1"
+								(effects
+									(font
+										(size 1.27 1.27)
+									)
+								)
+							)
+						)
+					)
+					(embedded_fonts no)
+				)
 	)
 	(junction
 		(at 107.95 81.28)
@@ -6087,7 +6254,7 @@
 				)
 			)
 		)
-		(property "Value" "DMP6180SK3-13"
+		(property "Value" "NTD20P06LT4G"
 			(at 109.22 31.75 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6964,7 +7131,7 @@
 				)
 			)
 		)
-		(property "Value" "HCB3216KF-601T30"
+		(property "Value" "BLM31KN601SH1L"
 			(at 210.82 71.882 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10961,7 +11128,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:D_Zener")
+		(lib_id "Filament_Dryer_Custom:BZX84C15-7-F")
 		(at 118.11 45.72 180)
 		(unit 1)
 		(body_style 1)
@@ -10982,7 +11149,7 @@
 				)
 			)
 		)
-		(property "Value" "BZX84C15"
+		(property "Value" "BZX84C15-7-F"
 			(at 118.11 41.91 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11003,7 +11170,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.diodes.com/datasheet/download/BZX84C2V4%20-%20BZX84C51.pdf"
 			(at 118.11 45.72 0)
 			(hide yes)
 			(show_name no)
