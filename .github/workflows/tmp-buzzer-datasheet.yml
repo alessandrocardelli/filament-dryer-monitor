@@ -1,4 +1,4 @@
-name: Temporary post-audit documentation sync
+name: Temporary BZX84 KiCad repair
 
 on:
   push:
@@ -11,26 +11,33 @@ permissions:
   contents: write
 
 jobs:
-  sync:
+  repair:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: redesign/buck-sourcing
-      - name: Sync project documentation
-        run: python .github/scripts/sync_post_audit_docs.py
-      - name: Validate diff
+      - name: Repair BZX84 unit-name prefixes
+        run: python .github/scripts/fix_bzx84_symbol_prefix.py
+      - name: Validate repaired names
+        shell: bash
         run: |
+          python - <<'PY'
+          from pathlib import Path
+          for p in [Path('hardware/Power.kicad_sch'), Path('hardware/Filament_Dryer_Custom.kicad_sym')]:
+              t=p.read_text(encoding='utf-8')
+              assert 'BZX84C15_0_1' not in t
+              assert 'BZX84C15_1_1' not in t
+              assert 'BZX84C15-7-F_0_1' in t
+              assert 'BZX84C15-7-F_1_1' in t
+          print('KiCad BZX84 unit-name validation: PASS')
+          PY
           git diff --check
           git status --short
-      - name: Commit documentation sync
+      - name: Commit repair
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add README.md docs/BUCK_L7987L_DESIGN.md hardware/docs/PROCUREMENT.md
-          if git diff --cached --quiet; then
-            echo 'No changes to commit'
-          else
-            git commit -m 'Sync project state after strict pinout audit'
-            git push origin HEAD:redesign/buck-sourcing
-          fi
+          git add hardware/Power.kicad_sch hardware/Filament_Dryer_Custom.kicad_sym
+          git commit -m 'Fix BZX84 KiCad symbol unit names'
+          git push origin HEAD:redesign/buck-sourcing
