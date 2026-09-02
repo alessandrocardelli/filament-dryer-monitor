@@ -3256,7 +3256,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 69.85 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3267,7 +3267,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 69.85 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3289,17 +3289,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
-			(at 69.85 132.08 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Tolerance" "1%"
 			(at 69.85 132.08 0)
 			(hide yes)
@@ -3311,7 +3301,7 @@
 				)
 			)
 		)
-		(property "Voltage" ""
+		(property "Voltage" "75V"
 			(at 69.85 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3592,7 +3582,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C81598"
+
+		(property "MPN" "1N4148WGW"
 			(at 227.33 132.08 90)
 			(hide yes)
 			(show_name no)
@@ -3603,18 +3594,7 @@
 				)
 			)
 		)
-		(property "MPN" "1N4148W"
-			(at 227.33 132.08 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Manufacturer" "ST(Semtech)"
+		(property "Manufacturer" "DIOTEC SEMICONDUCTOR"
 			(at 227.33 132.08 90)
 			(hide yes)
 			(show_name no)
@@ -3851,17 +3831,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C98663"
-			(at 80.01 71.12 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "MPN" "PMEG6020ER,115"
 			(at 80.01 71.12 90)
 			(hide yes)
@@ -3873,7 +3843,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Nexperia"
+		(property "Manufacturer" "NEXPERIA"
 			(at 80.01 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -3976,7 +3946,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 118.11 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -3987,7 +3957,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 118.11 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4009,17 +3979,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
-			(at 118.11 132.08 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Tolerance" "1%"
 			(at 118.11 132.08 0)
 			(hide yes)
@@ -4031,7 +3991,7 @@
 				)
 			)
 		)
-		(property "Voltage" ""
+		(property "Voltage" "75V"
 			(at 118.11 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4212,7 +4172,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C75882"
+
+		(property "MPN" "IRLML2060TRPBF"
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4223,18 +4184,7 @@
 				)
 			)
 		)
-		(property "MPN" "CJ2310"
-			(at 157.48 87.63 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Manufacturer" "Jiangsu Changjing Electronics Technology Co., Ltd."
+		(property "Manufacturer" "INFINEON TECHNOLOGIES"
 			(at 157.48 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4341,7 +4291,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4352,7 +4302,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4374,17 +4324,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
-			(at 151.13 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Tolerance" "1%"
 			(at 151.13 93.98 0)
 			(hide yes)
@@ -4396,7 +4336,7 @@
 				)
 			)
 		)
-		(property "Voltage" ""
+		(property "Voltage" "75V"
 			(at 151.13 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -4521,7 +4461,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 93.98 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4532,7 +4472,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 93.98 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4554,17 +4494,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
-			(at 93.98 132.08 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Tolerance" "1%"
 			(at 93.98 132.08 0)
 			(hide yes)
@@ -4576,7 +4506,7 @@
 				)
 			)
 		)
-		(property "Voltage" ""
+		(property "Voltage" "75V"
 			(at 93.98 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -4757,7 +4687,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C720477"
+
+		(property "MPN" "SWT0110-020010SSA"
 			(at 142.24 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -4768,18 +4699,7 @@
 				)
 			)
 		)
-		(property "MPN" "TS-1088-AR02016"
-			(at 142.24 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Manufacturer" "XUNPU"
+		(property "Manufacturer" "GCT"
 			(at 142.24 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -5040,7 +4960,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "RC0603FR-0710KL"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -5051,7 +4971,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -5073,17 +4993,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
-			(at 142.24 132.08 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Tolerance" "1%"
 			(at 142.24 132.08 0)
 			(hide yes)
@@ -5095,7 +5005,7 @@
 				)
 			)
 		)
-		(property "Voltage" ""
+		(property "Voltage" "75V"
 			(at 142.24 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -5210,7 +5120,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Jiangsu Huaneng Elec"
+		(property "Manufacturer" "LOUDITY"
 			(at 242.57 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -5221,7 +5131,7 @@
 				)
 			)
 		)
-		(property "MPN" "MLT-8530"
+		(property "MPN" "LD-BZEL-T67-0808"
 			(at 242.57 154.94 0)
 			(hide yes)
 			(show_name no)
@@ -5243,17 +5153,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C94599"
-			(at 242.57 134.62 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Dielectric" ""
 			(at 242.57 134.62 0)
 			(hide yes)
@@ -5542,7 +5442,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C720477"
+
+		(property "MPN" "SWT0110-020010SSA"
 			(at 93.98 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -5553,18 +5454,7 @@
 				)
 			)
 		)
-		(property "MPN" "TS-1088-AR02016"
-			(at 93.98 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Manufacturer" "XUNPU"
+		(property "Manufacturer" "GCT"
 			(at 93.98 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -5723,18 +5613,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C161690"
-			(at 229.87 82.55 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "MPN" "BM02B-GHS-TBT(LF)(SN)"
+
+		(property "MPN" "BM02B-GHS-TBT (LF)(SN)(N)"
 			(at 229.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -5847,7 +5727,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF4700T5E"
+		(property "MPN" "RC0603FR-07470RL"
 			(at 222.25 146.05 90)
 			(hide yes)
 			(show_name no)
@@ -5858,7 +5738,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 222.25 146.05 90)
 			(hide yes)
 			(show_name no)
@@ -5880,17 +5760,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C23179"
-			(at 222.25 146.05 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Tolerance" "1%"
 			(at 222.25 146.05 90)
 			(hide yes)
@@ -5902,7 +5772,7 @@
 				)
 			)
 		)
-		(property "Voltage" ""
+		(property "Voltage" "75V"
 			(at 222.25 146.05 90)
 			(hide yes)
 			(show_name no)
@@ -6028,7 +5898,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF4702T5E"
+		(property "MPN" "RC0603FR-0747KL"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -6039,7 +5909,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -6061,17 +5931,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25819"
-			(at 224.79 73.66 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Tolerance" "1%"
 			(at 224.79 73.66 0)
 			(hide yes)
@@ -6083,7 +5943,7 @@
 				)
 			)
 		)
-		(property "Voltage" ""
+		(property "Voltage" "75V"
 			(at 224.79 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -6264,7 +6124,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C720477"
+
+		(property "MPN" "SWT0110-020010SSA"
 			(at 118.11 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6275,18 +6136,7 @@
 				)
 			)
 		)
-		(property "MPN" "TS-1088-AR02016"
-			(at 118.11 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Manufacturer" "XUNPU"
+		(property "Manufacturer" "GCT"
 			(at 118.11 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -6379,7 +6229,7 @@
 				)
 			)
 		)
-		(property "Function" "R_pd_fan1"
+		(property "Function" "R_pd_buz1"
 			(at 227.33 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -6390,7 +6240,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 227.33 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -6401,7 +6251,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 227.33 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -6423,17 +6273,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
-			(at 227.33 152.4 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Tolerance" "1%"
 			(at 227.33 152.4 0)
 			(hide yes)
@@ -6445,7 +6285,7 @@
 				)
 			)
 		)
-		(property "Voltage" ""
+		(property "Voltage" "75V"
 			(at 227.33 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -6581,7 +6421,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "YAGEO"
 			(at 218.44 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -6603,17 +6443,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C14663"
-			(at 218.44 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Tolerance" "10%"
 			(at 218.44 86.36 0)
 			(hide yes)
@@ -6907,7 +6737,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1000T5E"
+		(property "MPN" "RC0603FR-07100RL"
 			(at 73.66 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -6918,7 +6748,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 73.66 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -6940,17 +6770,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C22775"
-			(at 73.66 87.63 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Tolerance" "1%"
 			(at 73.66 87.63 90)
 			(hide yes)
@@ -6962,7 +6782,7 @@
 				)
 			)
 		)
-		(property "Voltage" ""
+		(property "Voltage" "75V"
 			(at 73.66 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -7246,7 +7066,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 78.74 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -7257,7 +7077,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 78.74 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -7279,17 +7099,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
-			(at 78.74 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Tolerance" "1%"
 			(at 78.74 93.98 0)
 			(hide yes)
@@ -7301,7 +7111,7 @@
 				)
 			)
 		)
-		(property "Voltage" ""
+		(property "Voltage" "75V"
 			(at 78.74 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -7481,17 +7291,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C98663"
-			(at 152.4 71.12 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "MPN" "PMEG6020ER,115"
 			(at 152.4 71.12 90)
 			(hide yes)
@@ -7503,7 +7303,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Nexperia"
+		(property "Manufacturer" "NEXPERIA"
 			(at 152.4 71.12 90)
 			(hide yes)
 			(show_name no)
@@ -7686,7 +7486,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "onsemi"
+		(property "Manufacturer" "INFINEON TECHNOLOGIES"
 			(at 85.09 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -7708,17 +7508,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C67279"
-			(at 85.09 87.63 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Dielectric" ""
 			(at 85.09 87.63 0)
 			(hide yes)
@@ -7925,7 +7715,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C158012"
+
+		(property "MPN" "Kit HALJIA XH-compatible 2P"
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -7936,18 +7727,7 @@
 				)
 			)
 		)
-		(property "MPN" "B2B-XH-A(LF)(SN)"
-			(at 92.71 72.39 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Manufacturer" "JST"
+		(property "Manufacturer" "HALJIA"
 			(at 92.71 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8185,7 +7965,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C720477"
+
+		(property "MPN" "SWT0110-020010SSA"
 			(at 69.85 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -8196,18 +7977,7 @@
 				)
 			)
 		)
-		(property "MPN" "TS-1088-AR02016"
-			(at 69.85 143.51 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Manufacturer" "XUNPU"
+		(property "Manufacturer" "GCT"
 			(at 69.85 143.51 90)
 			(hide yes)
 			(show_name no)
@@ -8366,18 +8136,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C160352"
-			(at 165.1 72.39 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "MPN" "B2B-PH-SM4-TB(LF)(SN)"
+
+		(property "MPN" "B2B-PH-SM4-TB (LF)(SN)"
 			(at 165.1 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -8569,7 +8329,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1000T5E"
+		(property "MPN" "RC0603FR-07100RL"
 			(at 146.05 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -8580,7 +8340,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
+		(property "Manufacturer" "YAGEO"
 			(at 146.05 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -8602,17 +8362,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C22775"
-			(at 146.05 87.63 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
+
 		(property "Tolerance" "1%"
 			(at 146.05 87.63 90)
 			(hide yes)
@@ -8624,7 +8374,7 @@
 				)
 			)
 		)
-		(property "Voltage" ""
+		(property "Voltage" "75V"
 			(at 146.05 87.63 90)
 			(hide yes)
 			(show_name no)
@@ -8830,7 +8580,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C94514"
+
+		(property "MPN" "MMBT3904"
 			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -8841,18 +8592,7 @@
 				)
 			)
 		)
-		(property "MPN" "MMBT3904-7-F"
-			(at 232.41 146.05 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Manufacturer" "Diodes Incorporated"
+		(property "Manufacturer" "DIOTEC SEMICONDUCTOR"
 			(at 232.41 146.05 0)
 			(hide yes)
 			(show_name no)
