@@ -1,4 +1,4 @@
-name: Final footprint audit closure
+name: Temporary pinout and footprint mapping audit
 
 on:
   push:
@@ -8,29 +8,109 @@ on:
       - .github/workflows/tmp-buzzer-datasheet.yml
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  finalize:
+  audit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: redesign/buck-sourcing
-      - name: Apply final footprint audit
-        run: python .github/scripts/finalize_footprint_audit.py
-      - name: Diff validation
+      - name: Audit mappings
+        shell: bash
         run: |
-          git diff --check
-          git status --short
-      - name: Commit audit closure
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add hardware docs/BUCK_L7987L_DESIGN.md
-          if git diff --cached --quiet; then
-            echo 'No changes to commit'
-          else
-            git commit -m 'Close sourced component footprint audit'
-            git push origin HEAD:redesign/buck-sourcing
-          fi
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          REFS = {
+              'D1','D2','D3','D4','D5','D6','D7',
+              'Q1','Q2','Q3','Q4','Q5','Q6','Q7',
+              'U1','U2','U3','U4','U5',
+              'J1','J2','J3','J5','J6','J7',
+              'BZ1','SW1','SW2','SW3','SW4','SW5','SW6',
+              'F1','FB1','L1','C5'
+          }
+
+          def bend(text, start):
+              depth=0; ins=False; esc=False
+              for i,ch in enumerate(text[start:], start):
+                  if ins:
+                      if esc: esc=False
+                      elif ch=='\\': esc=True
+                      elif ch=='"': ins=False
+                  else:
+                      if ch=='"': ins=True
+                      elif ch=='(': depth += 1
+                      elif ch==')':
+                          depth -= 1
+                          if depth == 0: return i+1
+              raise ValueError('unbalanced')
+
+          def prop(block, name):
+              m=re.search(r'\(property\s+"'+re.escape(name)+r'"\s+"((?:\\.|[^"])*)"', block)
+              return m.group(1) if m else ''
+
+          found={}
+          for path in sorted(Path('hardware').glob('*.kicad_sch')):
+              text=path.read_text(encoding='utf-8')
+              for m in re.finditer(r'\(symbol\s*\n?\s*\(lib_id\s+"([^"]+)"\)', text):
+                  start=m.start(); end=bend(text,start); block=text[start:end]
+                  ref=prop(block,'Reference')
+                  if ref in REFS:
+                      found[ref]={
+                          'file': path.name,
+                          'lib': m.group(1),
+                          'mpn': prop(block,'MPN'),
+                          'mfr': prop(block,'Manufacturer'),
+                          'fp': prop(block,'Footprint'),
+                          'value': prop(block,'Value'),
+                      }
+
+          net=Path('hardware/Filament_Dryer_Monitor.net').read_text(encoding='utf-8')
+          netpins={r:[] for r in REFS}
+          # Each node has ref, pin, pinfunction, pintype. Extract regardless of ordering by scanning node blocks.
+          for m in re.finditer(r'\(node\b', net):
+              s=m.start(); e=bend(net,s); b=net[s:e]
+              mr=re.search(r'\(ref\s+"([^"]+)"\)',b)
+              if not mr or mr.group(1) not in REFS: continue
+              ref=mr.group(1)
+              pn=re.search(r'\(pin\s+"([^"]+)"\)',b)
+              pf=re.search(r'\(pinfunction\s+"([^"]*)"\)',b)
+              pt=re.search(r'\(pintype\s+"([^"]*)"\)',b)
+              netpins[ref].append((pn.group(1) if pn else '', pf.group(1) if pf else '', pt.group(1) if pt else ''))
+
+          libdirs={
+              'FilamentDryer': Path('hardware/libs/FilamentDryer.pretty'),
+              'JLCPCB': Path('hardware/libs/JLCPCB.pretty'),
+              'SamacSys_Parts': Path('hardware/libs/SamacSys_Parts.pretty'),
+          }
+          def fp_pads(fpname):
+              if ':' not in fpname: return []
+              lib,name=fpname.split(':',1)
+              d=libdirs.get(lib)
+              if not d: return []
+              p=d/(name+'.kicad_mod')
+              if not p.exists(): return [('MISSING_FILE','','','','')]
+              t=p.read_text(encoding='utf-8')
+              out=[]
+              for mm in re.finditer(r'\(pad\s+"([^"]+)"\s+([^\s()]+)\s+([^\s()]+)',t):
+                  s=mm.start(); e=bend(t,s); b=t[s:e]
+                  at=re.search(r'\(at\s+([^\)]+)\)',b)
+                  size=re.search(r'\(size\s+([^\)]+)\)',b)
+                  drill=re.search(r'\(drill(?:\s+oval)?\s+([^\)]+)\)',b)
+                  out.append((mm.group(1),mm.group(2),mm.group(3),at.group(1) if at else '',size.group(1) if size else '',drill.group(1) if drill else ''))
+              return out
+
+          for ref in sorted(REFS, key=lambda x:(re.sub(r'\d','',x), int(re.search(r'\d+',x).group()) if re.search(r'\d+',x) else 0)):
+              d=found.get(ref)
+              if not d:
+                  print(f'REF {ref}: NOT FOUND')
+                  continue
+              print(f'REF {ref} | file={d["file"]} | lib={d["lib"]} | value={d["value"]} | MPN={d["mpn"]} | MFR={d["mfr"]} | FP={d["fp"]}')
+              print('  NETPINS:', ', '.join(f'{n}:{f}:{t}' for n,f,t in sorted(netpins.get(ref,[]), key=lambda z:(int(z[0]) if z[0].isdigit() else 999,z[0]))))
+              pads=fp_pads(d['fp'])
+              if pads:
+                  print('  CUSTOM_PADS:', ' ; '.join('|'.join(x) for x in pads))
+          PY
