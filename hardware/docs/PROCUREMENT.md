@@ -1,6 +1,6 @@
 # Procurement and footprint state
 
-Status: **2026-09-04 — TME sourcing, KiCad MPN/manufacturer synchronization and footprint audit complete; schematic review closure pending** on branch `redesign/buck-sourcing`.
+Status: **2026-09-04 — TME sourcing, KiCad MPN/manufacturer synchronization, footprint audit and engineering schematic review complete** on branch `redesign/buck-sourcing`.
 
 ## Source of truth
 
@@ -18,24 +18,69 @@ Important final buck values include:
 - `U1 = TLV1701AIDBVR`;
 - `L1 = SRN6045-150M`, 15 µH;
 - `D7 = STPS2L60A`;
+- `R29 = 47.5 kΩ` for ILIM;
 - `R33 = 16 kΩ`, `R34 = 16 kΩ`, `R35 = 1.13 kΩ 0.1%`, `R36 = 49.9 kΩ`;
-- the capacitor values/dielectrics and resistor tolerances in the schematic/BOM are the sourced values selected during this pass.
+- `C1 = GRM32EC72A106KE05L`, 10 µF / 100 V / X7S;
+- `C10 = LMK325B7476KM-PR` (current Taiyo Yuden number `MSASL32MSB7476KPNB25`), 47 µF / 10 V / X7R;
+- the remaining capacitor values/dielectrics and resistor tolerances in the schematic/BOM are the sourced values selected during the pass.
 
-Sourcing and footprint selection are therefore **closed** for the present schematic. They should only be reopened if an electrical review item forces a component change.
+Sourcing and footprint selection are therefore **closed** for the present schematic. They should only be reopened if later PCB/layout or physical validation forces a component change.
 
-## 2026-09-04 schematic-review checkpoint
+## 2026-09-04 schematic-review sign-off
 
-A schematic review using the project Hardware Design Manual as the review framework found no blocking omission in the implemented L7987L + AutoEN topology. This does **not** yet constitute final schematic sign-off.
+A schematic review using the project Hardware Design Manual as the review framework is now **complete** for the current L7987L + AutoEN implementation.
 
-The following gates remain open before PCB synchronization:
+The four electrical gates previously listed as open are closed for engineering schematic sign-off:
 
-1. **Fresh ERC** — the committed `hardware/ERC.rpt` is dated 2026-08-09 and predates the L7987L redesign, so it is stale for the current schematic.
-2. **ILIM/L1 worst case** — the nominal programmed L7987L peak limit is approximately 1.705 A, while normal-operation peak inductor current at the 1 A design load is approximately 1.18–1.19 A. The maximum current-limit threshold over IC tolerance must still be compared explicitly with the SRN6045-150M saturation behavior and relevant fault stresses.
-3. **Effective capacitance** — final sourced input/output MLCCs must be checked using manufacturer capacitance-versus-DC-bias/temperature data so the effective values remain compatible with the L7987L input/output, startup and loop-compensation requirements.
-4. **AutoEN corners** — the R1/R2 threshold is derived from `24V_PROT` and therefore varies nominally from approximately 1.63 V to 1.99 V over the project 21.6–26.4 V input range. Trip/recovery behavior must be checked across VIN, component tolerance and temperature.
-5. **DFT/debug access** — before placement, decide whether to add convenient probe/test pads for `3V3_BUCK`, L7987L COMP and EN/AutoEN. Existing access to `24V_PROT`, `3V3_MCU` and GND is already present.
+### 1. ERC — closed and CI-enforced
 
-Detailed calculations and the review record are maintained in `docs/BUCK_L7987L_DESIGN.md`.
+A KiCad 10 GitHub Actions workflow now runs ERC on the active schematic.
+
+The fresh report contains:
+
+- one `power_pin_not_driven` error on `#PWR02` GND;
+- seven `unconnected_wire_endpoint` warnings;
+- two `lib_symbol_mismatch` warnings;
+- two `pin_to_pin` warnings.
+
+The single error is a reviewed ERC-modeling condition: external power enters through a passive connector, so KiCad does not see a `Power output` source on the GND net. It is not an electrical open.
+
+The CI gate explicitly waives **only that exact error** and permits only the reviewed warning classes up to their current counts. A new error, changed waiver target, new warning class or warning-count increase fails the gate. `hardware/ERC.rpt` has been refreshed to the current L7987L schematic.
+
+### 2. ILIM / L1 — closed at engineering-review level
+
+- `R29 = 47.5 kΩ` gives approximately **1.705 A nominal** programmed current limit from the ST relation.
+- Normal inductor peak at the 1 A design load is approximately **1.18–1.19 A**, or about **1.23 A** with the 15 µH inductor at its -20% tolerance stress case.
+- Bourns `SRN6045-150M` is rated approximately **1.9 A Irms / 2.3 A Isat**.
+
+ST does not publish a guaranteed min/max specifically at RILIM = 47.5 kΩ. The review therefore does **not** claim an exact guaranteed `ILIM,max`. A deliberately conservative engineering envelope derived from ST's published current-limit data and R29 tolerance gives approximately **1.42–2.15 A**. The upper estimate remains below L1 Isat and the lower estimate remains above the normal worst-case operating peak.
+
+This closes component selection for the schematic while retaining first-board fault-current measurement as physical validation.
+
+### 3. Effective capacitance / stability — closed for schematic selection
+
+Actual sourced power-stage capacitors were reviewed rather than generic nominal values:
+
+- `C1 = Murata GRM32EC72A106KE05L`, 10 µF / 100 V / X7S;
+- `C10 = Taiyo Yuden LMK325B7476KM-PR` / `MSASL32MSB7476KPNB25`, 47 µF / 10 V / X7R.
+
+Manufacturer documentation confirms nominal ratings and provides class-II MLCC bias/temperature characterization or simulation data. These curves/models are not treated as guaranteed minimum capacitance specifications. The review therefore used deliberately reduced-capacitance stress cases and did not invent a guaranteed `Ceff,min`.
+
+The topology retains the required local input/VCC/output capacitors, the upstream `C5 = 100 µF / 50 V` bulk reservoir and the final Type-III compensation network. No capacitor change is justified at schematic stage. Real load-transient behavior remains a bring-up measurement.
+
+### 4. AutoEN corners — closed
+
+The R1/R2 threshold varies nominally from approximately **1.63 V to 1.99 V** over the 21.6–26.4 V engineering input range.
+
+The corner review included input range, ±1% divider tolerance, conservative resistor TCR and TLV1701 input-error terms. The reviewed COMP trip window is approximately **1.56–2.07 V** and remains well separated from the L7987L high-COMP fault state. The EN-high level also remains comfortably above the L7987L enable threshold at the reviewed low-line/tolerance corner.
+
+The recorded persistent-fault simulation continues to show shutdown/retry and clean eventual restart. Real AutoEN timing/waveforms remain first-board validation.
+
+### Review classification
+
+**Engineering schematic sign-off: PASS.**
+
+This does not mean the hardware is manufacturing-ready. PCB/layout review and physical prototype validation remain mandatory. Detailed calculations, caveats and source hierarchy are maintained in `docs/BUCK_L7987L_DESIGN.md`.
 
 ## Footprint audit — closed 2026-09-02
 
@@ -57,35 +102,44 @@ Standard 0603/0805/1210 passives, SOT-23/SOT-23-5/SOT-23-6 devices, DPAK/TO-252 
 
 A second pass checked selected MPN pin numbering against the KiCad symbol and footprint pad numbering, not only package geometry. It found and corrected three real symbol-level issues:
 
-- `D1 = BZX84C15-7-F`: the generic two-pin Zener symbol could not represent the SOT-23 device correctly. The project symbol now maps **pin 1 = A, pin 2 = NC, pin 3 = K** while retaining the standard KiCad SOT-23 footprint.
-- `Q5 = IRLML2060TRPBF`: the previous generic MOSFET symbol used G-D-S numbering. The final device is **1=G, 2=S, 3=D**, so Q5 now uses the matching G-S-D symbol with the standard KiCad SOT-23 footprint.
-- `U2 = CP2102-GM`: the schematic had inherited a CP2102N symbol. A dedicated classic CP2102-GM symbol is now used; pins **10 and 13–22 are NC**, pin 2 is `~RI` input, and the custom QFN28 footprint remains the Silicon Labs classic CP2102 land pattern.
+- `D1 = BZX84C15-7-F`: the project symbol maps **pin 1 = A, pin 2 = NC, pin 3 = K** while retaining the standard KiCad SOT-23 footprint.
+- `Q5 = IRLML2060TRPBF`: the final device is **1=G, 2=S, 3=D**, so Q5 uses the matching G-S-D symbol with the standard KiCad SOT-23 footprint.
+- `U2 = CP2102-GM`: a dedicated classic CP2102-GM symbol is used; pins **10 and 13–22 are NC**, pin 2 is `~RI` input, and the custom QFN28 footprint remains the Silicon Labs classic CP2102 land pattern.
 
 The remaining semiconductor mappings were checked without finding another pin-numbering mismatch. `U3 = AKS1201` retains the USBLC6-2SC6 topology and standard SOT-23-6 footprint; `Q1/Q4`, the MMBT3904 devices, `U1`, `U4` and `U5` retain their audited mappings.
 
-The following items are deliberately **not** treated as unresolved electrical pinout errors, but still require normal physical/manufacturing review before fabrication:
+The following items are deliberately **not** unresolved electrical pinout errors, but still require normal physical/manufacturing review before fabrication:
 
-- `J5`: the real part is a HALJIA XH-compatible connector, so fit/polarization must be confirmed against the actual connector despite the 2.50 mm JST-XH footprint.
-- `U5`: HTSSOP-16 copper/pad geometry is verified, but the exposed-pad **stencil/paste aperture strategy** must be reviewed before final paste Gerbers/assembly.
-- `U4`: verify final ESP32 antenna keepout and board-edge placement in PCB layout.
-- optional OLED footprint: it is custom and excluded from the BOM; verify mechanically only if the display is installed.
+- `J5`: the real part is a HALJIA XH-compatible connector, so fit/polarization must be confirmed against the actual connector despite the 2.50 mm JST-XH footprint;
+- `U5`: HTSSOP-16 copper/pad geometry is verified, but the exposed-pad **stencil/paste aperture strategy** must be reviewed before final paste Gerbers/assembly;
+- `U4`: verify final ESP32 antenna keepout and board-edge placement in PCB layout;
+- optional OLED footprint: custom and excluded from the BOM; verify mechanically only if installed.
 
 ### BZ1 qualification note
 
-BZ1 is the only footprint for which the manufacturer drawing does not provide explicit recommended land dimensions. This is not an unresolved package mismatch: terminal locations, polarity, body envelope and SMD mounting are defined and the footprint has been made deliberately conservative. It should nevertheless receive the normal first-board visual solderability check, like any custom land pattern.
+BZ1 is the only footprint for which the manufacturer drawing does not provide explicit recommended land dimensions. This is not an unresolved package mismatch: terminal locations, polarity, body envelope and SMD mounting are defined and the footprint has been made deliberately conservative. It should nevertheless receive normal first-board visual solderability inspection.
+
+## DFT / debug decision before placement
+
+The schematic electrical gates are closed, but it remains useful to decide before PCB placement whether to add convenient probe/test pads for:
+
+- `3V3_BUCK` before FB1;
+- L7987L COMP;
+- L7987L EN / AutoEN control node.
+
+Existing access to `24V_PROT`, `3V3_MCU` and GND is already present. These are DFT recommendations, not electrical sign-off blockers.
 
 ## Next manufacturing-preparation sequence
 
-Sourcing and footprint selection are no longer blockers. Proceed in this order:
+Sourcing, footprint selection and schematic electrical review are no longer blockers. Proceed in this order:
 
-1. close the remaining schematic-review gates listed above;
-2. decide the additional buck DFT/debug access before placement;
-3. run a fresh ERC on the exact current schematic and resolve or explicitly justify every item;
-4. update the PCB from that signed-off schematic, removing the legacy AP66200 stage;
-5. place and route the L7987L switching loop according to ST layout guidance;
-6. review grounding/return paths, thermal paths, USB routing, ESP32 antenna keepout, heater/fan high-current paths and U5 exposed-pad paste strategy;
-7. run DRC;
-8. regenerate BOM, CPL/position data, fabrication outputs and production netlist from the same revision;
-9. reconcile generated production data against the final `BOM TME` before ordering.
+1. decide optional additional buck DFT/debug access before placement;
+2. update the PCB from the signed-off schematic, removing the legacy AP66200 stage;
+3. place and route the L7987L switching loop according to ST layout guidance;
+4. review grounding/return paths, switching-node ringing risk, thermal paths, USB routing, ESP32 antenna keepout, heater/fan high-current paths and U5 exposed-pad paste strategy;
+5. run DRC;
+6. regenerate BOM, CPL/position data, fabrication outputs and production netlist from the same revision;
+7. reconcile generated production data against the final `BOM TME` before ordering;
+8. during first-board bring-up, validate output regulation/transient response, component temperatures, switching-node stress, fault current and AutoEN shutdown/recovery timing.
 
-Until schematic closure, PCB synchronization, routing and DRC are complete, the existing PCB/production outputs remain historical and are **not manufacturing-ready**.
+Until PCB synchronization, routing and DRC are complete, the existing PCB/production outputs remain historical and are **not manufacturing-ready**.
