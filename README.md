@@ -8,11 +8,13 @@ face of the board, all the electronics on the back.
 
 > **Status: work in progress.** On branch `redesign/buck-sourcing` the schematic and exported
 > netlist implement the L7987L 24 V -> 3.3 V buck redesign, including the external AutoEN
-> fault-recovery circuit. The latest whole-schematic electrical review found no blocking
-> omission, and the schematic is now treated as electrically frozen for the sourcing/footprint
-> pass. The PCB is **not yet synchronized** and still contains the legacy AP66200 power stage,
-> so the current PCB/production outputs are not manufacturing-ready. Most firmware work is also
-> still in development.
+> fault-recovery circuit. A Hardware Design Manual-based schematic review on **2026-09-04**
+> found no blocking electrical omission, but schematic sign-off is still pending a fresh ERC and
+> a small set of explicit worst-case checks: programmed current-limit versus L1 saturation,
+> effective capacitor values under bias/temperature, and AutoEN threshold/recovery behavior
+> across the full input/tolerance range. The PCB is **not yet synchronized** and still contains
+> the legacy AP66200 power stage, so the current PCB/production outputs are not
+> manufacturing-ready. Most firmware work is also still in development.
 
 ---
 
@@ -49,10 +51,10 @@ Heating is a hazard, and this design treats it as one. Three independent layers:
 ## Hardware
 
 4-layer PCB. Designed in **KiCad 10** and intended for JLCPCB fabrication/assembly. Component
-procurement for the prototype is being migrated to **TME as the preferred supplier**. The
-current KiCad schematic and freshly exported netlist on the active hardware branch are the
-authoritative electrical state; the PCB is currently one step behind the schematic because the
-new L7987L power stage has not yet been placed/routed.
+procurement for the prototype uses **TME as the preferred supplier**. The current KiCad
+schematic and freshly exported netlist on the active hardware branch are the authoritative
+electrical state; the PCB is currently one step behind the schematic because the new L7987L
+power stage has not yet been placed/routed.
 
 The board itself forms the dryer's replacement front panel, so its outline and component
 placement are constrained by the original enclosure mechanics.
@@ -63,7 +65,7 @@ placement are constrained by the original enclosure mechanics.
 |---|---|---|
 | MCU | ESP32-WROOM-32E | Wi-Fi, antenna keepout respected on all copper layers |
 | Buck converter | **L7987L** | `24V_PROT` -> 3.3 V, ~500 kHz, 1 A design target; external TLV1701 + NPN AutoEN fault recovery |
-| USB-UART | CP2102N | USB used for programming/debug only, with DTR/RTS auto-program circuit |
+| USB-UART | CP2102-GM | USB used for programming/debug only, with DTR/RTS auto-program circuit |
 | Humidity/temp | SHT45 (Adafruit #6174) | I²C `0x44` |
 | Display | SSD1309 OLED 128×64 | I²C `0x3C`, mounted on the front face |
 | Heater driver | IRLR3636TRPBF (DPAK) | 60 V logic-level N-MOSFET, ~1.6 A heater load, LCSC C67279 |
@@ -73,7 +75,7 @@ placement are constrained by the original enclosure mechanics.
 
 The heater and fan remain on `24V_PROT`; they are **not** loads of the 3.3 V buck. The buck is
 sized for a conservative **1 A** 3.3 V design target. Detailed calculations, compensation,
-SIMPLIS history and the AutoEN rationale are recorded in
+SIMPLIS history, AutoEN rationale and current schematic-review gates are recorded in
 [`docs/BUCK_L7987L_DESIGN.md`](docs/BUCK_L7987L_DESIGN.md).
 
 ### Current buck integration state
@@ -89,26 +91,32 @@ hierarchical sheet has been removed from the project hierarchy. The exported net
 - L7987L `VIN1`, `VIN2` and `VCC` are tied directly to `24V_PROT`;
 - `PGOOD` and `SYNCH` are intentionally NC;
 - the existing upstream 24 V protection/bulk network and downstream `FB1 -> 3V3_MCU` filter are retained;
-- the pre-FB1 buck output is explicitly named `/Power/3V3_BUCK`.
+- the pre-FB1 buck output is explicitly named `/Power/3V3_BUCK`;
+- the implemented feedback divider is `R36 = 49.9 kΩ` / `R34 = 16 kΩ`, giving approximately 3.295 V from the nominal 0.800 V feedback reference.
 
 The earlier VIN-to-VCC **0 Ω jumper has been removed**; VCC is directly connected to
 `24V_PROT` with its local 1 µF bypass capacitor.
 
+The 2026-09-04 schematic review also recorded the following current design checks:
+
+- with L1 = 15 µH and ~516 kHz switching, first-order inductor ripple is about **0.36–0.37 A p-p** across the 21.6–26.4 V design input range;
+- the corresponding normal-operation peak at the 1 A design load is about **1.18–1.19 A**, below the reviewed Bourns SRN6045-150M current ratings;
+- the nominal programmed L7987L current limit is about **1.705 A**, but its worst-case maximum must still be reconciled explicitly with L1 saturation current before schematic sign-off;
+- the AutoEN threshold divider is line-dependent by construction: `VREF_FAULT` is approximately **1.63–1.99 V** across the 21.6–26.4 V input design range, so recovery behavior must be checked over VIN, component tolerance and temperature;
+- a **fresh ERC from the current revision is mandatory** because the committed `hardware/ERC.rpt` predates the L7987L redesign.
+
 ### Procurement status
 
 The working purchasing BOM is the Google Sheet `Filament Dryer Monitor — BOM finale Mouser`,
-tab **`BOM TME`**. It remains the working source for supplier codes, stock and purchasing
-choices, but it has **not yet been reconciled to the newly integrated L7987L block**.
+tab **`BOM TME`**. The TME sourcing pass, KiCad manufacturer/MPN synchronization and
+footprint audit were completed on **2026-09-02** for the current branch.
 
-The next hardware task is now the **TME sourcing / final MPN / footprint pass before PCB
-synchronization**. Existing MPN fields in the redesigned buck block are provisional until each
-part is deliberately checked against availability, package, pinout and footprint.
-
-Metadata cleanup such as the copied `Function` field on the new Q6 pull-down resistor can be
-performed together in KiCad Symbol Fields Editor once sourcing decisions are complete.
+Sourcing/footprints are therefore no longer the immediate blocker. The next electrical step is
+to close the remaining schematic-review gates listed above and run a fresh ERC; only then
+should the PCB be synchronized to the new power stage.
 
 See [`hardware/docs/PROCUREMENT.md`](hardware/docs/PROCUREMENT.md) for the authoritative
-sourcing workflow, pending substitutions and post-sourcing PCB sequence.
+sourcing workflow, footprint decisions and manufacturing-preparation sequence.
 
 ### Heater NTC characterization
 
@@ -266,14 +274,16 @@ Firmware development is ongoing and will be added to the repository as it is fin
 1. Open `hardware/Filament_Dryer_Monitor.kicad_pro` in **KiCad 10** or newer.
 2. Custom libraries resolve through `${KIPRJMOD}`, so the project is portable and requires
    no machine-specific absolute library paths.
-3. Complete the TME sourcing / final MPN / footprint pass against the electrically frozen
-   schematic before transferring the redesigned block to PCB.
-4. Update KiCad symbol fields and approved footprints, then run a fresh ERC from that revision.
-5. Update PCB from schematic, replace/place/route the L7987L stage, and perform a dedicated
-   PCB/layout review.
+3. Close the remaining schematic-review gates: ILIM/L1 worst case, effective capacitor values,
+   AutoEN threshold/recovery across VIN/tolerance/temperature, and intended debug/test access.
+4. Run a **fresh ERC** from that exact current schematic revision and resolve or explicitly
+   justify every violation.
+5. Update PCB from schematic, remove the legacy AP66200 stage, place/route the L7987L stage
+   and perform a dedicated PCB/layout review against the ST reference guidance.
 6. Run DRC and regenerate BOM, position files, netlist and fabrication outputs from that same
    revision before ordering boards.
-7. Reconcile the generated BOM against the final `BOM TME` sheet before purchasing/production.
+7. Reconcile the generated production data against the final `BOM TME` sheet before
+   purchasing/production release.
 
 ---
 
