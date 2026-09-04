@@ -1,0 +1,39 @@
+name: KiCad schematic ERC
+
+on:
+  push:
+    branches:
+      - redesign/buck-sourcing
+    paths:
+      - .github/workflows/kicad-erc.yml
+      - hardware/*.kicad_sch
+      - hardware/*.kicad_pro
+      - hardware/libs/**
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  erc:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run KiCad 10 ERC
+        id: erc
+        uses: actions-for-kicad/kicad-actions@v2-k10.0
+        with:
+          project_file_name: hardware/Filament_Dryer_Monitor.kicad_pro
+          schematic_file_name: hardware/Filament_Dryer_Monitor.kicad_sch
+          run_erc: true
+          erc_output_file_name: ERC-current.rpt
+
+      - name: Upload ERC report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kicad-erc-report
+          path: ERC-current.rpt
+          if-no-files-found: warn
