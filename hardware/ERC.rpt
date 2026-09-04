@@ -1,51 +1,53 @@
-ERC report (2026-08-09T17:32:20, Encoding UTF8)
+ERC report (2026-09-04T21:29:11, Encoding UTF8)
 Report includes: Errors, Warnings
 
 ***** Sheet /
 [unconnected_wire_endpoint]: Unconnected wire endpoint
     ; warning
-    @(1900 mils, 2350 mils): Vertical Wire, length 400 mils
+    @(48.26 mm, 59.69 mm): Vertical Wire, length 10.16 mm
 [unconnected_wire_endpoint]: Unconnected wire endpoint
     ; warning
-    @(2150 mils, 3100 mils): Horizontal Wire, length 250 mils
+    @(54.61 mm, 78.74 mm): Horizontal Wire, length 6.35 mm
 [unconnected_wire_endpoint]: Unconnected wire endpoint
     ; warning
-    @(2150 mils, 3200 mils): Horizontal Wire, length 250 mils
+    @(54.61 mm, 81.28 mm): Horizontal Wire, length 6.35 mm
 [unconnected_wire_endpoint]: Unconnected wire endpoint
     ; warning
-    @(3400 mils, 2500 mils): Horizontal Wire, length 350 mils
+    @(86.36 mm, 63.50 mm): Horizontal Wire, length 8.89 mm
 [unconnected_wire_endpoint]: Unconnected wire endpoint
     ; warning
-    @(3400 mils, 2600 mils): Horizontal Wire, length 350 mils
+    @(86.36 mm, 66.04 mm): Horizontal Wire, length 8.89 mm
 [unconnected_wire_endpoint]: Unconnected wire endpoint
     ; warning
-    @(4250 mils, 6550 mils): Horizontal Wire, length 250 mils
+    @(107.95 mm, 166.37 mm): Horizontal Wire, length 6.35 mm
 [unconnected_wire_endpoint]: Unconnected wire endpoint
     ; warning
-    @(4250 mils, 6650 mils): Horizontal Wire, length 250 mils
+    @(107.95 mm, 168.91 mm): Horizontal Wire, length 6.35 mm
+[lib_symbol_mismatch]: Symbol 'Q_NMOS_GSD' doesn't match copy in library 'Transistor_FET'
+    ; warning
+    @(157.48 mm, 87.63 mm): Symbol Q5 [Q_NMOS_GSD]
+[lib_symbol_mismatch]: Symbol 'MLT-8530' doesn't match copy in library 'JLCPCB'
+    ; warning
+    @(242.57 mm, 134.62 mm): Symbol BZ1 [MLT-8530]
 
 ***** Sheet /Power/
 [power_pin_not_driven]: Input Power pin not driven by any Output Power pins
     ; error
-    @(2700 mils, 5100 mils): Symbol #PWR01 Pin 1 [Power input, Line]
-[pin_to_pin]: Pins of type Power output and Power output are connected
-    ; error
-    @(4650 mils, 4500 mils): Symbol U1 Pin 6 [SW, Power output, Line]
-    @(4650 mils, 4700 mils): Symbol U1 Pin 7 [SW, Power output, Line]
+    @(66.04 mm, 43.18 mm): Symbol #PWR02 Pin 1 [Power input, Line]
 
 ***** Sheet /MCU/
 
 ***** Sheet /IO_Power/
 [pin_to_pin]: Pins of type Unspecified and Passive are connected
     ; warning
-    @(9300 mils, 5150 mils): Symbol BZ1 Pin 1 [+, Unspecified, Line]
-    @(8850 mils, 5050 mils): Symbol D6 Pin 1 [K, Passive, Line]
+    @(238.76 mm, 130.81 mm): Symbol BZ1 Pin 1 [+, Unspecified, Line]
+    @(227.33 mm, 128.27 mm): Symbol D6 Pin 1 [K, Passive, Line]
 [pin_to_pin]: Pins of type Unspecified and Passive are connected
     ; warning
-    @(9300 mils, 5250 mils): Symbol BZ1 Pin 2 [2, Unspecified, Line]
-    @(9150 mils, 5550 mils): Symbol Q6 Pin 3 [C, Passive, Line]
+    @(238.76 mm, 133.35 mm): Symbol BZ1 Pin 2 [2, Unspecified, Line]
+    @(234.95 mm, 140.97 mm): Symbol Q6 Pin 3 [C, Passive, Line]
 
- ** ERC messages: 11  Errors 2  Warnings 9
+ ** ERC messages: 12  Errors 1  Warnings 11
 
  ** Ignored checks:
     - Global label only appears once in the schematic
