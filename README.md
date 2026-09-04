@@ -8,13 +8,14 @@ face of the board, all the electronics on the back.
 
 > **Status: work in progress.** On branch `redesign/buck-sourcing` the schematic and exported
 > netlist implement the L7987L 24 V -> 3.3 V buck redesign, including the external AutoEN
-> fault-recovery circuit. A Hardware Design Manual-based schematic review on **2026-09-04**
-> found no blocking electrical omission, but schematic sign-off is still pending a fresh ERC and
-> a small set of explicit worst-case checks: programmed current-limit versus L1 saturation,
-> effective capacitor values under bias/temperature, and AutoEN threshold/recovery behavior
-> across the full input/tolerance range. The PCB is **not yet synchronized** and still contains
-> the legacy AP66200 power stage, so the current PCB/production outputs are not
-> manufacturing-ready. Most firmware work is also still in development.
+> fault-recovery circuit. The Hardware Design Manual-based schematic review was completed on
+> **2026-09-04** and the four electrical closure gates (current ERC, ILIM/L1 engineering
+> worst-case, effective-capacitance/stability review and AutoEN corner review) are now **closed
+> for schematic sign-off**. The KiCad 10 ERC is also enforced in CI against the reviewed set of
+> violations. The PCB is **not yet synchronized** and still contains the legacy AP66200 power
+> stage, so the current PCB/production outputs are not manufacturing-ready. Physical validation
+> of switching-node stress, transient response, temperatures and AutoEN behavior remains part
+> of PCB review and first-board bring-up. Most firmware work is also still in development.
 
 ---
 
@@ -75,7 +76,7 @@ placement are constrained by the original enclosure mechanics.
 
 The heater and fan remain on `24V_PROT`; they are **not** loads of the 3.3 V buck. The buck is
 sized for a conservative **1 A** 3.3 V design target. Detailed calculations, compensation,
-SIMPLIS history, AutoEN rationale and current schematic-review gates are recorded in
+SIMPLIS history, AutoEN rationale and schematic sign-off record are maintained in
 [`docs/BUCK_L7987L_DESIGN.md`](docs/BUCK_L7987L_DESIGN.md).
 
 ### Current buck integration state
@@ -97,13 +98,42 @@ hierarchical sheet has been removed from the project hierarchy. The exported net
 The earlier VIN-to-VCC **0 Ω jumper has been removed**; VCC is directly connected to
 `24V_PROT` with its local 1 µF bypass capacitor.
 
-The 2026-09-04 schematic review also recorded the following current design checks:
+### Buck schematic sign-off — 2026-09-04
 
-- with L1 = 15 µH and ~516 kHz switching, first-order inductor ripple is about **0.36–0.37 A p-p** across the 21.6–26.4 V design input range;
-- the corresponding normal-operation peak at the 1 A design load is about **1.18–1.19 A**, below the reviewed Bourns SRN6045-150M current ratings;
-- the nominal programmed L7987L current limit is about **1.705 A**, but its worst-case maximum must still be reconciled explicitly with L1 saturation current before schematic sign-off;
-- the AutoEN threshold divider is line-dependent by construction: `VREF_FAULT` is approximately **1.63–1.99 V** across the 21.6–26.4 V input design range, so recovery behavior must be checked over VIN, component tolerance and temperature;
-- a **fresh ERC from the current revision is mandatory** because the committed `hardware/ERC.rpt` predates the L7987L redesign.
+The schematic review closed the four previously open electrical gates:
+
+1. **ERC — closed.** A KiCad 10 GitHub Actions workflow now runs ERC on the current schematic.
+   The current report contains one reviewed `power_pin_not_driven` error on the externally-fed
+   GND net and eleven reviewed warnings. CI treats the GND item as an explicit modeling waiver
+   and permits only the already-reviewed warning classes/counts; new errors, new warning classes
+   or increased warning counts fail the gate.
+2. **ILIM/L1 — closed at engineering-review level.** `R29 = 47.5 kΩ` gives approximately
+   **1.705 A nominal** programmed current limit. ST does not publish a guaranteed min/max
+   specifically for 47.5 kΩ, so no exact `ILIM,max` is claimed. A deliberately conservative
+   engineering envelope derived from the published ST current-limit data and R29 tolerance gives
+   about **2.15 A** as an upper stress estimate, below the Bourns SRN6045-150M **2.3 A Isat**
+   rating. The corresponding conservative lower estimate remains above the normal operating
+   peak. This closes component selection for the schematic without turning that estimate into a
+   manufacturer guarantee.
+3. **Capacitance/stability — closed for schematic selection.** The actual sourced parts are
+   `C1 = GRM32EC72A106KE05L` (10 µF, 100 V, X7S) and
+   `C10 = LMK325B7476KM-PR` / `MSASL32MSB7476KPNB25` (47 µF, 10 V, X7R). Manufacturer
+   documentation confirms their nominal ratings and provides DC-bias/temperature characterization
+   or simulation data, but those curves are not treated as guaranteed minimum capacitances. The
+   schematic review therefore used conservative reduced-capacitance stress cases and retained
+   first-board load-transient/loop validation as a bring-up task rather than inventing a guaranteed
+   `Ceff,min`.
+4. **AutoEN corners — closed.** The nominal R1/R2 threshold varies from approximately
+   **1.63 V to 1.99 V** over the 21.6–26.4 V input design range. Including resistor tolerance/TCR
+   and TLV1701 input-error terms gives a conservative reviewed COMP trip window of approximately
+   **1.56–2.07 V**. This remains well separated from the L7987L high-COMP fault condition, while
+   the worst reviewed EN-high level remains comfortably above the L7987L enable threshold.
+
+The review also retains the existing simulation record: approximately **59.1 kHz** loop
+crossover, **64.9°** phase margin and **19.6 dB** gain margin with the final compensation values,
+plus the recorded persistent-fault AutoEN shutdown/retry and clean restart behavior. These are
+simulation/design-review results; real-board transient, thermal and fault testing is still
+required during bring-up.
 
 ### Procurement status
 
@@ -111,9 +141,9 @@ The working purchasing BOM is the Google Sheet `Filament Dryer Monitor — BOM f
 tab **`BOM TME`**. The TME sourcing pass, KiCad manufacturer/MPN synchronization and
 footprint audit were completed on **2026-09-02** for the current branch.
 
-Sourcing/footprints are therefore no longer the immediate blocker. The next electrical step is
-to close the remaining schematic-review gates listed above and run a fresh ERC; only then
-should the PCB be synchronized to the new power stage.
+Sourcing, footprint selection and the schematic electrical review are therefore closed for the
+present revision. The next hardware phase is to decide any additional buck debug/test access,
+then synchronize and review the PCB/layout.
 
 See [`hardware/docs/PROCUREMENT.md`](hardware/docs/PROCUREMENT.md) for the authoritative
 sourcing workflow, footprint decisions and manufacturing-preparation sequence.
@@ -246,7 +276,7 @@ delays in normal operation.
 
 ```text
 docs/
-└── BUCK_L7987L_DESIGN.md   L7987L design record and current checkpoint
+└── BUCK_L7987L_DESIGN.md   L7987L design record and schematic sign-off
 
 hardware/
 ├── 3dmodels/          3D models used by KiCad
@@ -274,15 +304,19 @@ Firmware development is ongoing and will be added to the repository as it is fin
 1. Open `hardware/Filament_Dryer_Monitor.kicad_pro` in **KiCad 10** or newer.
 2. Custom libraries resolve through `${KIPRJMOD}`, so the project is portable and requires
    no machine-specific absolute library paths.
-3. Close the remaining schematic-review gates: ILIM/L1 worst case, effective capacitor values,
-   AutoEN threshold/recovery across VIN/tolerance/temperature, and intended debug/test access.
-4. Run a **fresh ERC** from that exact current schematic revision and resolve or explicitly
-   justify every violation.
+3. The current buck schematic review is signed off. Preserve the KiCad 10 ERC CI gate and
+   re-open the schematic review if a later PCB/layout decision forces an electrical/component
+   change.
+4. Decide whether additional probe/test pads are wanted for `3V3_BUCK`, COMP and EN/AutoEN
+   before placement.
 5. Update PCB from schematic, remove the legacy AP66200 stage, place/route the L7987L stage
-   and perform a dedicated PCB/layout review against the ST reference guidance.
-6. Run DRC and regenerate BOM, position files, netlist and fabrication outputs from that same
+   and perform a dedicated PCB/layout review against ST reference guidance.
+6. During PCB review and first-board bring-up, verify switching-node/transient stress, output
+   transient response, component temperatures, real effective-capacitance behavior and AutoEN
+   fault/recovery timing.
+7. Run DRC and regenerate BOM, position files, netlist and fabrication outputs from that same
    revision before ordering boards.
-7. Reconcile the generated production data against the final `BOM TME` sheet before
+8. Reconcile the generated production data against the final `BOM TME` sheet before
    purchasing/production release.
 
 ---
