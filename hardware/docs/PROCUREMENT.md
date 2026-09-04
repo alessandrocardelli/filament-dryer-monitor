@@ -1,6 +1,6 @@
 # Procurement and footprint state
 
-Status: **2026-09-02 — TME sourcing, KiCad MPN/manufacturer synchronization and footprint audit complete** on branch `redesign/buck-sourcing`.
+Status: **2026-09-04 — TME sourcing, KiCad MPN/manufacturer synchronization and footprint audit complete; schematic review closure pending** on branch `redesign/buck-sourcing`.
 
 ## Source of truth
 
@@ -20,6 +20,22 @@ Important final buck values include:
 - `D7 = STPS2L60A`;
 - `R33 = 16 kΩ`, `R34 = 16 kΩ`, `R35 = 1.13 kΩ 0.1%`, `R36 = 49.9 kΩ`;
 - the capacitor values/dielectrics and resistor tolerances in the schematic/BOM are the sourced values selected during this pass.
+
+Sourcing and footprint selection are therefore **closed** for the present schematic. They should only be reopened if an electrical review item forces a component change.
+
+## 2026-09-04 schematic-review checkpoint
+
+A schematic review using the project Hardware Design Manual as the review framework found no blocking omission in the implemented L7987L + AutoEN topology. This does **not** yet constitute final schematic sign-off.
+
+The following gates remain open before PCB synchronization:
+
+1. **Fresh ERC** — the committed `hardware/ERC.rpt` is dated 2026-08-09 and predates the L7987L redesign, so it is stale for the current schematic.
+2. **ILIM/L1 worst case** — the nominal programmed L7987L peak limit is approximately 1.705 A, while normal-operation peak inductor current at the 1 A design load is approximately 1.18–1.19 A. The maximum current-limit threshold over IC tolerance must still be compared explicitly with the SRN6045-150M saturation behavior and relevant fault stresses.
+3. **Effective capacitance** — final sourced input/output MLCCs must be checked using manufacturer capacitance-versus-DC-bias/temperature data so the effective values remain compatible with the L7987L input/output, startup and loop-compensation requirements.
+4. **AutoEN corners** — the R1/R2 threshold is derived from `24V_PROT` and therefore varies nominally from approximately 1.63 V to 1.99 V over the project 21.6–26.4 V input range. Trip/recovery behavior must be checked across VIN, component tolerance and temperature.
+5. **DFT/debug access** — before placement, decide whether to add convenient probe/test pads for `3V3_BUCK`, L7987L COMP and EN/AutoEN. Existing access to `24V_PROT`, `3V3_MCU` and GND is already present.
+
+Detailed calculations and the review record are maintained in `docs/BUCK_L7987L_DESIGN.md`.
 
 ## Footprint audit — closed 2026-09-02
 
@@ -58,16 +74,18 @@ The following items are deliberately **not** treated as unresolved electrical pi
 
 BZ1 is the only footprint for which the manufacturer drawing does not provide explicit recommended land dimensions. This is not an unresolved package mismatch: terminal locations, polarity, body envelope and SMD mounting are defined and the footprint has been made deliberately conservative. It should nevertheless receive the normal first-board visual solderability check, like any custom land pattern.
 
-## Next manufacturing-preparation step
+## Next manufacturing-preparation sequence
 
-Sourcing and footprint selection are no longer blockers. Proceed with:
+Sourcing and footprint selection are no longer blockers. Proceed in this order:
 
-1. run a fresh ERC on the current schematic;
-2. update the PCB from the current schematic, removing the legacy AP66200 stage;
-3. place and route the L7987L switching loop according to ST layout guidance;
-4. review grounding, thermal paths, USB routing, ESP32 antenna keepout and heater/fan high-current paths;
-5. run DRC;
-6. regenerate BOM, CPL/position data, fabrication outputs and production netlist;
-7. reconcile generated production data against the final `BOM TME` before ordering.
+1. close the remaining schematic-review gates listed above;
+2. decide the additional buck DFT/debug access before placement;
+3. run a fresh ERC on the exact current schematic and resolve or explicitly justify every item;
+4. update the PCB from that signed-off schematic, removing the legacy AP66200 stage;
+5. place and route the L7987L switching loop according to ST layout guidance;
+6. review grounding/return paths, thermal paths, USB routing, ESP32 antenna keepout, heater/fan high-current paths and U5 exposed-pad paste strategy;
+7. run DRC;
+8. regenerate BOM, CPL/position data, fabrication outputs and production netlist from the same revision;
+9. reconcile generated production data against the final `BOM TME` before ordering.
 
-Until PCB synchronization, routing and DRC are complete, the existing PCB/production outputs remain historical and are **not manufacturing-ready**.
+Until schematic closure, PCB synchronization, routing and DRC are complete, the existing PCB/production outputs remain historical and are **not manufacturing-ready**.
