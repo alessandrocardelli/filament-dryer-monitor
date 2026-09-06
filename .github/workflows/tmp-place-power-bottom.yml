@@ -1,0 +1,221 @@
+name: Temporary bottom-side power placement
+
+on:
+  push:
+    branches:
+      - pcb/l7987l-layout
+    paths:
+      - .github/workflows/tmp-place-power-bottom.yml
+
+permissions:
+  contents: write
+
+jobs:
+  place:
+    runs-on: ubuntu-latest
+    container: kicad/kicad:10.0
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: pcb/l7987l-layout
+          fetch-depth: 0
+
+      - name: Place Power-sheet components on B.Cu
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import shutil
+          import pcbnew
+
+          pcb_path = Path('hardware/Filament_Dryer_Monitor.kicad_pcb')
+          original_path = Path('/tmp/original.kicad_pcb')
+          transformed_path = Path('/tmp/transformed.kicad_pcb')
+          shutil.copy2(pcb_path, original_path)
+
+          buck_refs = {
+              'U5','D7','L1','C1','C3','C4','C6','C8','C9','C10','C20','C21',
+              'R4','R29','R33','R34','R35','R36'
+          }
+          auto_refs = {'U1','Q7','C2','C7','R1','R2','R5','R6','R30','R31','R32'}
+          target_refs = buck_refs | auto_refs
+
+          # Rough AutoEN placement on the quiet/right side of the staged L7987L block.
+          # Buck placement itself is preserved exactly as supplied by the user.
+          auto_place = {
+              'U1':  (254.0, 92.0, 180.0),
+              'C2':  (256.5, 90.5,  90.0),
+              'R1':  (260.0, 89.0,  90.0),
+              'R2':  (260.0, 93.0,  90.0),
+              'C7':  (257.8, 94.5,  90.0),
+              'R5':  (251.5, 88.5,   0.0),
+              'R6':  (250.0, 92.0,   0.0),
+              'Q7':  (247.0, 92.0, 180.0),
+              'R30': (247.0, 94.7,   0.0),
+              'R31': (243.8, 95.8,  90.0),
+              'R32': (245.8, 95.8,  90.0),
+          }
+
+          board = pcbnew.LoadBoard(str(pcb_path))
+          footprints = {}
+          for fp in board.GetFootprints():
+              ref = fp.GetReference()
+              if ref in target_refs:
+                  if ref in footprints:
+                      raise RuntimeError(f'duplicate target reference on PCB: {ref}')
+                  footprints[ref] = fp
+
+          missing = sorted(target_refs - set(footprints))
+          if missing:
+              raise RuntimeError('missing target footprints: ' + ', '.join(missing))
+
+          def deg(fp):
+              return float(fp.GetOrientation().AsDegrees())
+
+          def set_deg(fp, angle):
+              if hasattr(fp, 'SetOrientationDegrees'):
+                  fp.SetOrientationDegrees(angle)
+              else:
+                  fp.SetOrientation(pcbnew.EDA_ANGLE(angle, pcbnew.DEGREES_T))
+
+          def pos_mm(fp):
+              p = fp.GetPosition()
+              return (pcbnew.ToMM(p.x), pcbnew.ToMM(p.y))
+
+          print('BEFORE')
+          for ref in sorted(target_refs):
+              fp = footprints[ref]
+              x, y = pos_mm(fp)
+              print(f'{ref:>3} layer={board.GetLayerName(fp.GetLayer()):5} x={x:8.3f} y={y:8.3f} rot={deg(fp):7.2f}')
+
+          # Every buck/AutoEN footprint belongs on the bottom. Flip only when needed;
+          # already-bottom buck placement is intentionally left untouched.
+          for ref in sorted(target_refs):
+              fp = footprints[ref]
+              old_angle = deg(fp)
+              if fp.GetLayer() != pcbnew.B_Cu:
+                  fp.Flip(fp.GetPosition(), False)
+                  # Keep the same explicit board rotation unless AutoEN receives the
+                  # controlled placement below.
+                  if ref not in auto_place:
+                      set_deg(fp, old_angle)
+
+              if ref in auto_place:
+                  x, y, angle = auto_place[ref]
+                  fp.SetPosition(pcbnew.VECTOR2I(pcbnew.FromMM(x), pcbnew.FromMM(y)))
+                  set_deg(fp, angle)
+
+          pcbnew.SaveBoard(str(transformed_path), board)
+
+          # Splice only the selected top-level footprint blocks from KiCad's saved
+          # board back into the original text. This keeps every track, via, zone,
+          # netclass and every non-target footprint byte-for-byte unchanged.
+          def footprint_blocks(text):
+              out = []
+              i = 0
+              marker = '(footprint '
+              n = len(text)
+              while True:
+                  start = text.find(marker, i)
+                  if start < 0:
+                      break
+                  depth = 0
+                  in_string = False
+                  escape = False
+                  j = start
+                  while j < n:
+                      ch = text[j]
+                      if in_string:
+                          if escape:
+                              escape = False
+                          elif ch == '\\':
+                              escape = True
+                          elif ch == '"':
+                              in_string = False
+                      else:
+                          if ch == '"':
+                              in_string = True
+                          elif ch == '(':
+                              depth += 1
+                          elif ch == ')':
+                              depth -= 1
+                              if depth == 0:
+                                  end = j + 1
+                                  block = text[start:end]
+                                  m = re.search(r'\(property\s+"Reference"\s+"([^"]+)"', block)
+                                  if m:
+                                      out.append((start, end, m.group(1), block))
+                                  i = end
+                                  break
+                      j += 1
+                  else:
+                      raise RuntimeError('unterminated footprint block')
+              return out
+
+          original = original_path.read_text(encoding='utf-8')
+          transformed = transformed_path.read_text(encoding='utf-8')
+          orig_blocks = footprint_blocks(original)
+          new_blocks = footprint_blocks(transformed)
+          transformed_by_ref = {ref: block for _, _, ref, block in new_blocks if ref in target_refs}
+          if set(transformed_by_ref) != target_refs:
+              raise RuntimeError('could not extract every transformed target footprint')
+
+          pieces = []
+          cursor = 0
+          replaced = set()
+          for start, end, ref, block in orig_blocks:
+              if ref not in target_refs:
+                  continue
+              pieces.append(original[cursor:start])
+              pieces.append(transformed_by_ref[ref])
+              cursor = end
+              replaced.add(ref)
+          pieces.append(original[cursor:])
+          if replaced != target_refs:
+              raise RuntimeError('could not replace every target footprint')
+          final_text = ''.join(pieces)
+          pcb_path.write_text(final_text, encoding='utf-8')
+
+          # Re-open the minimally edited file with KiCad and enforce the scope.
+          check = pcbnew.LoadBoard(str(pcb_path))
+          check_fps = {fp.GetReference(): fp for fp in check.GetFootprints() if fp.GetReference() in target_refs}
+          if set(check_fps) != target_refs:
+              raise RuntimeError('target references changed after final serialization')
+          for ref, fp in check_fps.items():
+              if fp.GetLayer() != pcbnew.B_Cu:
+                  raise RuntimeError(f'{ref} is not on B.Cu')
+              x = pcbnew.ToMM(fp.GetPosition().x)
+              if x <= 200.0:
+                  raise RuntimeError(f'{ref} is no longer in the off-board staging area: x={x}')
+
+          # Explicitly verify the unrelated IO_Power R37 block is unchanged.
+          def one_block(blocks, ref):
+              matches = [b for _, _, r, b in blocks if r == ref]
+              if len(matches) != 1:
+                  raise RuntimeError(f'expected exactly one {ref} footprint block')
+              return matches[0]
+          final_blocks = footprint_blocks(final_text)
+          if one_block(orig_blocks, 'R37') != one_block(final_blocks, 'R37'):
+              raise RuntimeError('R37 changed unexpectedly')
+
+          print('AFTER')
+          for ref in sorted(target_refs):
+              fp = check_fps[ref]
+              p = fp.GetPosition()
+              print(f'{ref:>3} layer={check.GetLayerName(fp.GetLayer()):5} x={pcbnew.ToMM(p.x):8.3f} y={pcbnew.ToMM(p.y):8.3f} rot={float(fp.GetOrientation().AsDegrees()):7.2f}')
+          print('Validation PASS: 29/29 target footprints on B.Cu; R37 untouched; only target footprint blocks spliced.')
+          PY
+
+      - name: Commit placement and remove temporary workflow
+        shell: bash
+        run: |
+          rm .github/workflows/tmp-place-power-bottom.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add hardware/Filament_Dryer_Monitor.kicad_pcb .github/workflows/tmp-place-power-bottom.yml
+          git diff --cached --check
+          git status --short
+          git commit -m "Place power components on bottom"
+          git push origin HEAD:pcb/l7987l-layout
