@@ -13,7 +13,6 @@ permissions:
 jobs:
   place:
     runs-on: ubuntu-latest
-    container: kicad/kicad:10.0
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -21,10 +20,14 @@ jobs:
           ref: pcb/l7987l-layout
           fetch-depth: 0
 
-      - name: Place Power-sheet components on B.Cu
+      - name: Place Power-sheet components on B.Cu with KiCad 10
         shell: bash
         run: |
-          python3 - <<'PY'
+          docker run --rm -i \
+            -u "$(id -u):$(id -g)" \
+            -v "$PWD:/work" \
+            -w /work \
+            kicad/kicad:10.0 python3 - <<'PY'
           from pathlib import Path
           import re
           import shutil
@@ -42,8 +45,8 @@ jobs:
           auto_refs = {'U1','Q7','C2','C7','R1','R2','R5','R6','R30','R31','R32'}
           target_refs = buck_refs | auto_refs
 
-          # Rough AutoEN placement on the quiet/right side of the staged L7987L block.
-          # Buck placement itself is preserved exactly as supplied by the user.
+          # Preserve the user's buck placement. Arrange AutoEN on the quiet/right
+          # side of the staged L7987L block, away from D7/L1/LX.
           auto_place = {
               'U1':  (254.0, 92.0, 180.0),
               'C2':  (256.5, 90.5,  90.0),
@@ -90,15 +93,11 @@ jobs:
               x, y = pos_mm(fp)
               print(f'{ref:>3} layer={board.GetLayerName(fp.GetLayer()):5} x={x:8.3f} y={y:8.3f} rot={deg(fp):7.2f}')
 
-          # Every buck/AutoEN footprint belongs on the bottom. Flip only when needed;
-          # already-bottom buck placement is intentionally left untouched.
           for ref in sorted(target_refs):
               fp = footprints[ref]
               old_angle = deg(fp)
               if fp.GetLayer() != pcbnew.B_Cu:
                   fp.Flip(fp.GetPosition(), False)
-                  # Keep the same explicit board rotation unless AutoEN receives the
-                  # controlled placement below.
                   if ref not in auto_place:
                       set_deg(fp, old_angle)
 
@@ -109,9 +108,9 @@ jobs:
 
           pcbnew.SaveBoard(str(transformed_path), board)
 
-          # Splice only the selected top-level footprint blocks from KiCad's saved
-          # board back into the original text. This keeps every track, via, zone,
-          # netclass and every non-target footprint byte-for-byte unchanged.
+          # Replace only the 29 selected top-level footprint blocks in the original
+          # file. Tracks, vias, zones, setup/netclasses and every other footprint
+          # remain byte-for-byte unchanged.
           def footprint_blocks(text):
               out = []
               i = 0
@@ -178,7 +177,6 @@ jobs:
           final_text = ''.join(pieces)
           pcb_path.write_text(final_text, encoding='utf-8')
 
-          # Re-open the minimally edited file with KiCad and enforce the scope.
           check = pcbnew.LoadBoard(str(pcb_path))
           check_fps = {fp.GetReference(): fp for fp in check.GetFootprints() if fp.GetReference() in target_refs}
           if set(check_fps) != target_refs:
@@ -190,7 +188,6 @@ jobs:
               if x <= 200.0:
                   raise RuntimeError(f'{ref} is no longer in the off-board staging area: x={x}')
 
-          # Explicitly verify the unrelated IO_Power R37 block is unchanged.
           def one_block(blocks, ref):
               matches = [b for _, _, r, b in blocks if r == ref]
               if len(matches) != 1:
