@@ -1,166 +1,146 @@
 # Filament Dryer Monitor
 
-Custom ESP32-based controller board that retrofits an **eSUN eBox** filament dryer with
-closed-loop humidity/temperature control, a local OLED interface, data logging and a web UI.
+Custom ESP32-based controller board that retrofits an **eSUN eBox** filament dryer with closed-loop humidity/temperature control, a local OLED interface, data logging and a web UI.
 
-The PCB physically replaces the original front panel: display and buttons sit on the front
-face of the board, all the electronics on the back.
+The PCB physically replaces the original front panel: display and buttons sit on the front face of the board, while the main electronics are on the back.
 
-> **Status: work in progress.** On branch `redesign/buck-sourcing` the schematic and exported
-> netlist implement the L7987L 24 V -> 3.3 V buck redesign, including the external AutoEN
-> fault-recovery circuit. The Hardware Design Manual-based schematic review was completed on
-> **2026-09-04** and the four electrical closure gates (current ERC, ILIM/L1 engineering
-> worst-case, effective-capacitance/stability review and AutoEN corner review) are now **closed
-> for schematic sign-off**. The KiCad 10 ERC is also enforced in CI against the reviewed set of
-> violations. The PCB is **not yet synchronized** and still contains the legacy AP66200 power
-> stage, so the current PCB/production outputs are not manufacturing-ready. Physical validation
-> of switching-node stress, transient response, temperatures and AutoEN behavior remains part
-> of PCB review and first-board bring-up. Most firmware work is also still in development.
+> **Current status — 2026-09-07:** hardware work is on branch **`pcb/l7987l-layout`**. The L7987L + AutoEN schematic passed the project engineering schematic review on 2026-09-04 and the PCB has now been synchronized to that design. The legacy AP66200 stage is absent from the current board. The project is in the **L7987L PCB layout/routing phase**: placement and local B.Cu power zones are in progress, both inner layers are solid GND planes, and U5 exposed-pad/GND-via strategy, critical buck routing, USB differential geometry and final PCB review are still open. The board is **not manufacturing-ready** until a fresh DRC is closed and production outputs are regenerated.
+
+For a new work session, read `AGENTS.md`, `docs/PROJECT_STATE.md`, `docs/DECISIONS.md` and `docs/TODO.md` before changing the design.
 
 ---
 
 ## Features
 
-- **SHT45** humidity/temperature sensor (I²C) for accurate chamber readings
-- **Characterized NTC thermistor** integrated into the heating element for the safety layer
-- **1.54" SSD1309 OLED** (128×64, I²C) + 4 front-panel buttons for local control
-- **PWM heater control** with hardware and firmware safety cutoffs
-- **PWM fan control** (25 kHz, inaudible)
-- **CSV logging** to internal flash (LittleFS)
-- **Web UI** over Wi-Fi as a secondary interface
-- Powered directly from the dryer's **24 V** supply, USB only for programming
+- **SHT45** humidity/temperature sensor (I²C)
+- **Characterized NTC thermistor** integrated into the heating element
+- **1.54 in SSD1309 OLED** (128×64, I²C) + four front-panel buttons
+- PWM heater control with hardware and firmware safety layers
+- PWM fan control
+- CSV logging to internal flash planned
+- Web UI planned
+- Powered from the dryer's 24 V supply; USB is used for programming/debug
 
-## Safety
+## Safety concept
 
-Heating is a hazard, and this design treats it as one. Three independent layers:
+The project keeps three independent safety layers for the heater:
 
-1. **Hardware TCO** — a thermal cutoff (~100–110 °C) wired in series on the `HEATER+` line
-   at the heating element. Off-board, purely mechanical, works even if the MCU is dead.
+1. **Hardware TCO** in series with `HEATER+`, off-board and independent of the MCU.
+2. **Firmware safety loop** using the heater NTC; an invalid/open sensor is treated as a fault and disables the heater.
+3. **Compile-time gate**: heater drive is disabled until NTC calibration is explicitly enabled.
 
-2. **Firmware safety loop** — runs every cycle, independent of the UI state machine.
-   Fail-safe by design: if the NTC is disconnected, the ADC node is pulled toward 3V3.
-   An out-of-range/open-sensor condition is treated as a fault and immediately disables
-   the heater.
-
-3. **Compile-time gate** — `NTC_CALIBRATED` must be defined before the heater can be driven
-   at all, preventing operation with placeholder thermistor coefficients.
-
-**Use at your own risk.** This is a personal project, not a certified product.
+This is a personal project and not a certified product.
 
 ---
 
 ## Hardware
 
-4-layer PCB. Designed in **KiCad 10** and intended for JLCPCB fabrication/assembly. Component
-procurement for the prototype uses **TME as the preferred supplier**. The current KiCad
-schematic and freshly exported netlist on the active hardware branch are the authoritative
-electrical state; the PCB is currently one step behind the schematic because the new L7987L
-power stage has not yet been placed/routed.
-
-The board itself forms the dryer's replacement front panel, so its outline and component
-placement are constrained by the original enclosure mechanics.
+The board is a 4-layer KiCad 10 design intended for JLCPCB fabrication/assembly. TME is the preferred prototype component supplier. The current KiCad schematic, PCB and project files on the active branch are the authoritative implementation.
 
 ### Main blocks
 
 | Block | Part | Notes |
 |---|---|---|
-| MCU | ESP32-WROOM-32E | Wi-Fi, antenna keepout respected on all copper layers |
-| Buck converter | **L7987L** | `24V_PROT` -> 3.3 V, ~500 kHz, 1 A design target; external TLV1701 + NPN AutoEN fault recovery |
-| USB-UART | CP2102-GM | USB used for programming/debug only, with DTR/RTS auto-program circuit |
-| Humidity/temp | SHT45 (Adafruit #6174) | I²C `0x44` |
-| Display | SSD1309 OLED 128×64 | I²C `0x3C`, mounted on the front face |
-| Heater driver | IRLR3636TRPBF (DPAK) | 60 V logic-level N-MOSFET, ~1.6 A heater load, LCSC C67279 |
-| Fan driver | CJ2310 (SOT-23) | 24 V fan, ~0.2 A |
-| Element temp | Integrated ~82 kΩ NTC | ADC1, 47 kΩ divider resistor, 100 nF filtering |
-| Buzzer | Passive + NPN driver | Q6 includes a 100 kΩ base-emitter pull-down for defined startup state |
+| MCU | ESP32-WROOM-32E | Wi-Fi; final antenna copper keepout still part of PCB review |
+| Buck converter | **L7987L** | `24V_PROT` -> 3.3 V, about 516 kHz, 1 A design target |
+| Buck fault recovery | TLV1701AIDBVR + MMBT3904 | External AutoEN based on COMP fault detection |
+| USB-UART | CP2102-GM | USB used for programming/debug |
+| Humidity/temp | SHT45 | I²C `0x44` |
+| Display | SSD1309 OLED 128×64 | I²C `0x3C` |
+| Heater driver | IRLR3636TRPBF | 60 V DPAK N-MOSFET, about 1.6 A heater load |
+| Fan driver | CJ2310 | 24 V fan low-side switch |
+| Heater temperature | Integrated ~82 kΩ NTC | GPIO34 / ADC1, R28 = 47 kΩ, C19 = 100 nF |
+| Buzzer | Passive buzzer + NPN | Defined startup state with base-emitter pull-down |
 
-The heater and fan remain on `24V_PROT`; they are **not** loads of the 3.3 V buck. The buck is
-sized for a conservative **1 A** 3.3 V design target. Detailed calculations, compensation,
-SIMPLIS history, AutoEN rationale and schematic sign-off record are maintained in
-[`docs/BUCK_L7987L_DESIGN.md`](docs/BUCK_L7987L_DESIGN.md).
+Heater and fan stay on `24V_PROT`; they are not powered by the 3.3 V buck.
 
-### Current buck integration state
+### L7987L electrical state
 
-The redesign is part of `hardware/Power.kicad_sch`; the temporary `Buck redesign`
-hierarchical sheet has been removed from the project hierarchy. The exported netlist confirms:
+The active implementation is in `hardware/Power.kicad_sch`.
 
-- `U5 = L7987L`;
-- `U1 = TLV1701` comparator for AutoEN;
-- `Q7 = MMBT3904` AutoEN pull-down transistor;
-- `L1 = 15 µH` buck inductor;
-- `D7 = STPS2L60A` catch diode;
-- L7987L `VIN1`, `VIN2` and `VCC` are tied directly to `24V_PROT`;
-- `PGOOD` and `SYNCH` are intentionally NC;
-- the existing upstream 24 V protection/bulk network and downstream `FB1 -> 3V3_MCU` filter are retained;
-- the pre-FB1 buck output is explicitly named `/Power/3V3_BUCK`;
-- the implemented feedback divider is `R36 = 49.9 kΩ` / `R34 = 16 kΩ`, giving approximately 3.295 V from the nominal 0.800 V feedback reference.
+Key parts/values:
 
-The earlier VIN-to-VCC **0 Ω jumper has been removed**; VCC is directly connected to
-`24V_PROT` with its local 1 µF bypass capacitor.
+| Ref | Value / part | Role |
+|---|---|---|
+| U5 | L7987L | Buck regulator |
+| U1 | TLV1701AIDBVR | AutoEN comparator |
+| Q7 | MMBT3904 | AutoEN EN pull-down |
+| L1 | SRN6045-150M, 15 µH | Inductor |
+| D7 | STPS2L60A | Catch diode |
+| C1 | 10 µF / 100 V X7S | Main local input ceramic |
+| C3 | 1 µF / 100 V | Local VIN/VCC bypass |
+| C6 | 100 nF | BOOT-LX bootstrap |
+| C10 | 47 µF / 10 V X7R | Main pre-bead output capacitor |
+| C21 | 1 µF / 25 V | VBIAS bypass |
+| R4 | 47 kΩ | FSW, ~516 kHz |
+| R29 | 47.5 kΩ | ILIM, ~1.705 A nominal |
+| R36 / R34 | 49.9 kΩ / 16 kΩ | Feedback, ~3.295 V nominal |
 
-### Buck schematic sign-off — 2026-09-04
+Compensation: R33 = 16 kΩ, C9 = 18 nF, C8 = 39 pF, R35 = 1.13 kΩ, C20 = 560 pF.
 
-The schematic review closed the four previously open electrical gates:
+Output architecture remains `3V3_BUCK -> FB1 -> 3V3_MCU`. `PGOOD` and `SYNCH` are intentionally NC. The upstream C5 = 100 µF / 50 V bulk capacitor remains.
 
-1. **ERC — closed.** A KiCad 10 GitHub Actions workflow now runs ERC on the current schematic.
-   The current report contains one reviewed `power_pin_not_driven` error on the externally-fed
-   GND net and eleven reviewed warnings. CI treats the GND item as an explicit modeling waiver
-   and permits only the already-reviewed warning classes/counts; new errors, new warning classes
-   or increased warning counts fail the gate.
-2. **ILIM/L1 — closed at engineering-review level.** `R29 = 47.5 kΩ` gives approximately
-   **1.705 A nominal** programmed current limit. ST does not publish a guaranteed min/max
-   specifically for 47.5 kΩ, so no exact `ILIM,max` is claimed. A deliberately conservative
-   engineering envelope derived from the published ST current-limit data and R29 tolerance gives
-   about **2.15 A** as an upper stress estimate, below the Bourns SRN6045-150M **2.3 A Isat**
-   rating. The corresponding conservative lower estimate remains above the normal operating
-   peak. This closes component selection for the schematic without turning that estimate into a
-   manufacturer guarantee.
-3. **Capacitance/stability — closed for schematic selection.** The actual sourced parts are
-   `C1 = GRM32EC72A106KE05L` (10 µF, 100 V, X7S) and
-   `C10 = LMK325B7476KM-PR` / `MSASL32MSB7476KPNB25` (47 µF, 10 V, X7R). Manufacturer
-   documentation confirms their nominal ratings and provides DC-bias/temperature characterization
-   or simulation data, but those curves are not treated as guaranteed minimum capacitances. The
-   schematic review therefore used conservative reduced-capacitance stress cases and retained
-   first-board load-transient/loop validation as a bring-up task rather than inventing a guaranteed
-   `Ceff,min`.
-4. **AutoEN corners — closed.** The nominal R1/R2 threshold varies from approximately
-   **1.63 V to 1.99 V** over the 21.6–26.4 V input design range. Including resistor tolerance/TCR
-   and TLV1701 input-error terms gives a conservative reviewed COMP trip window of approximately
-   **1.56–2.07 V**. This remains well separated from the L7987L high-COMP fault condition, while
-   the worst reviewed EN-high level remains comfortably above the L7987L enable threshold.
+Detailed calculations, source hierarchy, AutoEN rationale and schematic sign-off are in [`docs/BUCK_L7987L_DESIGN.md`](docs/BUCK_L7987L_DESIGN.md).
 
-The review also retains the existing simulation record: approximately **59.1 kHz** loop
-crossover, **64.9°** phase margin and **19.6 dB** gain margin with the final compensation values,
-plus the recorded persistent-fault AutoEN shutdown/retry and clean restart behavior. These are
-simulation/design-review results; real-board transient, thermal and fault testing is still
-required during bring-up.
+### Schematic sign-off
 
-### Procurement status
+The Hardware Design Manual-based review completed on **2026-09-04**. Four electrical gates are closed:
 
-The working purchasing BOM is the Google Sheet `Filament Dryer Monitor — BOM finale Mouser`,
-tab **`BOM TME`**. The TME sourcing pass, KiCad manufacturer/MPN synchronization and
-footprint audit were completed on **2026-09-02** for the current branch.
+1. **ERC:** current reviewed state is CI-enforced. The report contains one reviewed `power_pin_not_driven` modeling error on external GND plus eleven reviewed warnings.
+2. **ILIM/L1:** R29 = 47.5 kΩ gives ~1.705 A nominal. A conservative engineering envelope of roughly 1.42–2.15 A was used for component-selection review; the upper estimate remains below the Bourns 2.3 A Isat rating. It is not claimed as an ST-guaranteed 47.5 kΩ limit.
+3. **Capacitance/stability:** actual sourced C1 and C10 were reviewed including class-II MLCC bias sensitivity. No invented guaranteed `Ceff,min` is used.
+4. **AutoEN:** reviewed COMP trip window is about 1.56–2.07 V over the defined engineering corners; EN-high margin remains ample.
 
-Sourcing, footprint selection and the schematic electrical review are therefore closed for the
-present revision. The next hardware phase is to decide any additional buck debug/test access,
-then synchronize and review the PCB/layout.
+Recorded simulation results with final compensation are approximately **59.1 kHz crossover, 64.9° phase margin and 19.6 dB gain margin**. These are design/simulation results; physical validation remains required.
 
-See [`hardware/docs/PROCUREMENT.md`](hardware/docs/PROCUREMENT.md) for the authoritative
-sourcing workflow, footprint decisions and manufacturing-preparation sequence.
+### Current PCB integration
+
+The current `hardware/Filament_Dryer_Monitor.kicad_pcb` contains the L7987L stage and AutoEN block. The old AP66200 stage and `/Power/VCC_AP66200` are absent.
+
+The buck is on **B.Cu**. Current layout work includes local B.Cu zones for `24V_PROT`, `/Power/3V3_BUCK`, GND and LX. Placement has already been iterated against ST/TI guidance, but critical routing and exposed-pad/ground-via details are not frozen.
+
+Primary buck layout reference: ST L7987L datasheet plus STEVAL-ISA198V1 Gerbers/layout. The ST reference is used for topology/current-return intent, adapted to this project's four-layer stackup and footprints.
+
+### Ground planes and stackup
+
+| Layer | Role |
+|---|---|
+| F.Cu | Front components and signals |
+| In1.Cu | **Solid GND plane** |
+| In2.Cu | **Solid GND plane** |
+| B.Cu | Back components/signals + local buck/power copper |
+
+Stackup entered in KiCad: 35 µm copper; 0.10 mm FR4 between F.Cu-In1 and In2-B.Cu; 1.24 mm FR4 core between inner layers; total board thickness 1.6 mm.
+
+**Both inner layers are deliberately full GND.** There are no internal 3V3 or 24 V power planes.
+
+For the L7987L, PGND and SGND are not separate project nets or separate internal planes. They are different **current-return regions on the same `GND` net**. High-current returns (C1−, D7 anode, C10−) and quiet returns (U5 pin16/EP, C3−, C21− and sensitive control returns) use local B.Cu geometry and short vias into the common solid GND planes so switching current is not forced through the quiet return region.
+
+See `docs/DECISIONS.md` before changing this architecture.
+
+### Netclasses
+
+| Class | Clearance | Track | Via dia/drill |
+|---|---:|---:|---:|
+| Default | 0.20 mm | 0.25 mm | 0.60/0.30 mm |
+| Power_3V3 | 0.20 mm | 0.50 mm | 0.60/0.30 mm |
+| Power_24V | 0.20 mm | 1.00 mm | 0.80/0.40 mm |
+| Power_Heat | 0.30 mm | 1.50 mm | 0.80/0.40 mm |
+| USB | 0.20 mm | 0.25 mm | 0.60/0.30 mm |
+
+`USB_DP` and `USB_DM` are assigned to the USB class, but **USB differential-pair width/gap is still open** and must be calculated/verified for the actual stackup. Do not assume the Default-class DP settings are correct.
+
+### Procurement
+
+The working purchasing BOM is the Google Sheet **`Filament Dryer Monitor — BOM finale Mouser`**, tab `BOM TME`.
+
+TME sourcing, KiCad manufacturer/MPN synchronization and the footprint/pinout audit are closed for the current schematic. See [`hardware/docs/PROCUREMENT.md`](hardware/docs/PROCUREMENT.md).
 
 ### Heater NTC characterization
 
-The original eSUN flexible heater incorporates an NTC thermistor that cannot be removed
-independently from the heater assembly.
+The original eSUN heater includes an NTC whose exact manufacturer/part number is unknown. It was characterized in situ during cooldown after disconnecting it from the original controller.
 
-The thermistor was therefore characterized **in situ**. The original dryer controller was
-used to heat the assembly, after which power was removed and the NTC JST connector was
-disconnected from the original electronics. Temperature and NTC resistance were then
-recorded during natural cooldown.
-
-Measured values:
-
-| Temperature | NTC resistance |
+| Temperature | Resistance |
 |---:|---:|
 | 25 °C | 82.5 kΩ |
 | 28 °C | 75.5 kΩ |
@@ -170,43 +150,9 @@ Measured values:
 | 44 °C | 35.93 kΩ |
 | 50 °C | 28.8 kΩ |
 
-The measurements are consistent with an NTC of approximately **82 kΩ at 25 °C**, with a
-single-beta approximation of roughly **β ≈ 4100 K** over the measured temperature range.
+The measurements are consistent with about 82 kΩ at 25 °C and a single-beta approximation near β ≈ 4100 K over the measured range. These are empirical measurements, not manufacturer specifications.
 
-Because the original thermistor manufacturer and exact part number are unknown, these values
-should be considered an **empirical characterization**, not manufacturer specifications.
-
-The PCB uses:
-
-- **R28 = 47 kΩ, 1%** as the fixed divider resistor
-- **C19 = 100 nF** for ADC input filtering
-- **GPIO34 / ADC1** for the temperature measurement
-
-The 47 kΩ divider value was selected to provide better ADC voltage span across the useful
-heater-temperature range than the original 100 kΩ design.
-
-Final temperature conversion and safety thresholds will be calibrated in firmware using the
-measured thermistor data.
-
-### Layer stackup
-
-| Layer | Role |
-|---|---|
-| F.Cu | Signals + front-facing components (display, buttons) |
-| In1.Cu | Solid GND plane — never routed on |
-| In2.Cu | Power zones (24 V and 3.3 V, separate zones) |
-| B.Cu | Signals + back-facing components |
-
-### Net classes
-
-| Class | Track width |
-|---|---|
-| Default | 0.25 mm |
-| Power_3V3 | 0.5 mm |
-| Power_24V | 1.0 mm |
-| Power_Heat | 1.5 mm |
-
-Power-class vias: 0.8 mm drill / 0.4 mm annular ring.
+PCB interface: R28 = 47 kΩ 1%, C19 = 100 nF, GPIO34 / ADC1.
 
 ### GPIO map
 
@@ -219,52 +165,27 @@ Power-class vias: 0.8 mm drill / 0.4 mm annular ring.
 | Fan PWM | IO16 |
 | Buzzer | IO33 |
 | Heater PWM | IO19 |
-| NTC (ADC1) | IO34 |
+| NTC | IO34 / ADC1 |
 | Button ON/OFF | IO35 |
 | Button M | IO32 |
 | Button UP | IO14 |
 | Button DOWN | IO27 |
 
-The four front-panel buttons (ON/OFF, M, UP, DOWN) each use an external 10 kΩ pull-up
-to 3V3 with the button to GND, so a press reads LOW.
-
-IO35 is input-only and has no internal pull-up, so its external pull-up is mandatory.
-
-BOOT and RESET are two additional service buttons for the ESP32-WROOM module
-(programming and reset), not part of the normal user interface.
-
-The NTC is connected to **ADC1** because ADC2 cannot be used reliably while Wi-Fi is active.
-
-IO12 is deliberately left unloaded because it is an ESP32 strapping pin that affects flash
-voltage selection during boot.
-
-### Reference designators
-
-The schematic uses normal KiCad references together with `Function` fields where semantic
-names are useful. During the L7987L integration, **only the newly inserted buck block was
-selectively re-annotated** so that its references are compact; existing references elsewhere in
-the project were preserved.
-
-Do **not** run a project-wide annotation reset. When adding or replacing a block, either keep
-existing references or annotate only the selected new symbols, then regenerate the netlist and
-check for collisions.
+Do not run a project-wide annotation reset when changing a hardware block; preserve established references or annotate only the selected new block.
 
 ---
 
 ## Firmware
 
-The firmware is based on the **ESP32 Arduino core 3.x** and is structured as modular blocks.
-
-The main loop is intended to remain cooperative and `millis()`-based, with no blocking
-delays in normal operation.
+Firmware uses the ESP32 Arduino core 3.x and is intended to remain cooperative/non-blocking in normal operation.
 
 | Block | Status |
 |---|---|
-| SHT45 driver (hand-written I²C, CRC-8, cmd `0xFD`) | Done |
-| Fan PWM (LEDC, 25 kHz, 10-bit) | Done — kickstart and duty floor provisional |
-| Heater + NTC safety | NTC characterized — conversion, calibration and safety implementation pending |
-| OLED (U8g2, SSD1309-specific constructor) | Pending |
-| Buttons + UI state machine (STANDBY / DRYING / DONE / FAULT) | Pending |
+| SHT45 driver | Done |
+| Fan PWM | Done; kickstart/duty floor provisional |
+| Heater + NTC safety | NTC characterized; conversion/calibration/safety implementation pending |
+| OLED | Pending |
+| Buttons + UI state machine | Pending |
 | LittleFS + CSV logging | Pending |
 | Web UI | Pending |
 | Buzzer / LED | Pending |
@@ -272,55 +193,30 @@ delays in normal operation.
 
 ---
 
-## Repository layout
+## Repository handoff files
 
 ```text
-docs/
-└── BUCK_L7987L_DESIGN.md   L7987L design record and schematic sign-off
-
-hardware/
-├── 3dmodels/          3D models used by KiCad
-├── docs/
-│   ├── PROCUREMENT.md Current sourcing/TME procurement status
-│   └── datasheets/    Component datasheets
-├── libs/              Custom symbols, footprints and imported libraries
-├── production/        Production exports — regenerate after PCB synchronization
-├── review/            Hardware review files
-├── *.kicad_sch        Hierarchical KiCad schematics
-├── *.kicad_pcb        PCB layout
-└── *.kicad_pro        KiCad project
+AGENTS.md                       Mandatory workflow before project work
+docs/PROJECT_STATE.md           Current authoritative checkpoint
+docs/DECISIONS.md               Durable engineering decisions
+docs/TODO.md                    Immediate work list
+docs/BUCK_L7987L_DESIGN.md      Detailed L7987L design/layout record
+hardware/docs/PROCUREMENT.md    Sourcing/footprint/manufacturing state
+hardware/*.kicad_*              Actual KiCad implementation
 ```
 
-`hardware/buck_redesign_sch.kicad_sch` is retained only as a temporary/scratch redesign file;
-it is no longer part of the active schematic hierarchy. The active implementation is in
-`hardware/Power.kicad_sch`.
+## Current next steps
 
-Firmware development is ongoing and will be added to the repository as it is finalized.
+Continue from the current PCB rather than resynchronizing from scratch. The immediate sequence is:
 
----
+1. finalize U5 exposed-pad thermal/GND via and paste strategy;
+2. finalize buck high-current versus quiet GND via/current-return geometry;
+3. finish L7987L critical input, LX/BOOT/diode/inductor, output and FB/COMP routing against ST guidance;
+4. close optional DFT access before routing freeze;
+5. calculate/configure USB differential-pair geometry and review its continuous GND reference;
+6. complete full-board PCB review;
+7. run a **fresh DRC** and close it;
+8. regenerate production outputs from the final revision and reconcile them with the purchasing BOM;
+9. perform first-board electrical, thermal, switching-stress and AutoEN validation.
 
-## Building the hardware
-
-1. Open `hardware/Filament_Dryer_Monitor.kicad_pro` in **KiCad 10** or newer.
-2. Custom libraries resolve through `${KIPRJMOD}`, so the project is portable and requires
-   no machine-specific absolute library paths.
-3. The current buck schematic review is signed off. Preserve the KiCad 10 ERC CI gate and
-   re-open the schematic review if a later PCB/layout decision forces an electrical/component
-   change.
-4. Decide whether additional probe/test pads are wanted for `3V3_BUCK`, COMP and EN/AutoEN
-   before placement.
-5. Update PCB from schematic, remove the legacy AP66200 stage, place/route the L7987L stage
-   and perform a dedicated PCB/layout review against ST reference guidance.
-6. During PCB review and first-board bring-up, verify switching-node/transient stress, output
-   transient response, component temperatures, real effective-capacitance behavior and AutoEN
-   fault/recovery timing.
-7. Run DRC and regenerate BOM, position files, netlist and fabrication outputs from that same
-   revision before ordering boards.
-8. Reconcile the generated production data against the final `BOM TME` sheet before
-   purchasing/production release.
-
----
-
-## License
-
-To be defined.
+The existing `hardware/DRC.rpt` is historical and must not be used as proof that the current PCB passes DRC.
