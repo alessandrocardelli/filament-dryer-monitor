@@ -1,185 +1,141 @@
 # L7987L buck redesign — current design record
 
-Status: **schematic/netlist implementation complete; engineering schematic review PASS; PCB integration pending**.
+Status: **schematic/netlist implementation complete; engineering schematic review PASS; PCB synchronized; PCB layout/routing in progress**.
 
 Repository: `alessandrocardelli/filament-dryer-monitor`  
-Working branch: `redesign/buck-sourcing`  
+Current hardware branch: **`pcb/l7987l-layout`**  
+Hardware/layout checkpoint before the documentation refresh: **`6e74f76d8d6877fab63283c1aa520bdbfc149921`** (`Layout update`).  
 TME sourcing, KiCad MPN/manufacturer synchronization and footprint audit closed on **2026-09-02**.  
-Hardware Design Manual-based schematic review and the four electrical closure gates completed on **2026-09-04**.
+Hardware Design Manual-based schematic review and the four electrical closure gates completed on **2026-09-04**.  
+PCB synchronization and initial L7987L/AutoEN placement/layout work completed sufficiently to enter the routing/grounding phase by **2026-09-07**.
 
-The actual KiCad schematic and freshly exported netlist override this document if they ever disagree.
-The current implementation is in `hardware/Power.kicad_sch`; the temporary
-`hardware/buck_redesign_sch.kicad_sch` file is no longer part of the active hierarchy.
+The actual KiCad schematic and PCB override this document if they ever disagree. The active electrical implementation is in `hardware/Power.kicad_sch`; the current board implementation is `hardware/Filament_Dryer_Monitor.kicad_pcb`.
 
-> **Important manufacturing-state warning**
+> **Current manufacturing-state warning**
 >
-> The schematic/netlist implement the L7987L redesign, but
-> `hardware/Filament_Dryer_Monitor.kicad_pcb` still contains the legacy AP66200 power stage and
-> `/Power/VCC_AP66200` routing. The PCB and production exports are therefore **stale** for the
-> power stage and must not be used for fabrication until the board has been synchronized,
-> rerouted and checked.
+> The PCB now contains the L7987L redesign and the legacy AP66200 implementation is absent. However, the board is **not manufacturing-ready**. Critical buck routing, local ground/via geometry, U5 exposed-pad thermal/paste implementation, USB differential-pair geometry, full PCB review and a fresh DRC remain open. Existing production outputs are historical until regenerated from the final routed revision.
 
 > **Schematic-review result — PASS**
 >
-> The implemented L7987L + AutoEN block has passed the project engineering schematic review.
-> The four previously open gates are closed:
->
-> 1. current KiCad 10 ERC reviewed and enforced in CI;
-> 2. programmed current-limit versus L1 engineering worst-case reviewed;
-> 3. effective-capacitance / compensation sensitivity reviewed using the actual sourced parts,
->    with manufacturer curves/models treated as characterization rather than guaranteed minima;
-> 4. AutoEN trip and enable levels reviewed across VIN/component corners.
->
-> This is **schematic sign-off**, not final hardware validation. PCB-level ringing, thermal
-> behavior, real load transients, effective capacitance in-circuit and AutoEN fault/recovery
-> timing remain first-board/layout verification items.
+> The implemented L7987L + AutoEN block passed the project engineering schematic review on 2026-09-04. The four gates remain closed: current/ERC, ILIM/L1 engineering envelope, effective-capacitance/compensation sensitivity, and AutoEN corners. PCB-level ringing, thermal behavior, real load transients, fault current and AutoEN timing remain physical validation items.
 
 ---
 
 ## 1. Design objective
 
-Replace the previous AP66200 24 V -> 3.3 V buck with a more readily sourceable high-voltage
-regulator while preserving the existing project architecture.
+Replace the previous AP66200 24 V -> 3.3 V buck with a sourceable high-voltage regulator while preserving the rest of the board architecture.
 
-Selected regulator architecture:
+Selected regulator:
 
-- **STMicroelectronics L7987L**;
+- STMicroelectronics **L7987L**;
 - asynchronous buck;
 - 4.5–61 V operating input range;
-- 2 A DC capability;
+- 2 A capability;
 - adjustable switching frequency;
 - programmable peak current limit;
 - external compensation.
 
 Primary manufacturer source:
 
-- STMicroelectronics, **L7987L — 61 V, 2 A asynchronous step-down switching regulator with adjustable current limitation**;
-- DocID026362, Rev. 4;
+- STMicroelectronics, **L7987L — 61 V, 2 A asynchronous step-down switching regulator with adjustable current limitation**, DocID026362 Rev. 4;
 - https://www.st.com/resource/en/datasheet/l7987l.pdf
 
 AutoEN comparator:
 
-- **TI TLV1701**;
-- 2.2–36 V supply range;
-- rail-to-rail input common-mode range;
+- TI **TLV1701AIDBVR**;
+- 2.2–36 V supply;
+- rail-to-rail input common-mode;
 - open-collector output;
-- industrial temperature range -40 °C to +125 °C;
 - https://www.ti.com/lit/ds/symlink/tlv1701.pdf
+
+ST layout reference:
+
+- **STEVAL-ISA198V1**, L7987L demonstration/evaluation board;
+- use the official ST layout and Gerbers as the primary topological/geometric reference, adapted to this board's four-layer stackup and actual footprints.
 
 ---
 
 ## 2. Electrical requirements
 
-### 2.1 Load topology
+### Load topology
 
-The heater and fan are **not powered by the 3.3 V buck**.
+Heater and fan are not supplied by the 3.3 V buck.
 
-- Heater: `24V_PROT`, low-side switched, approximately **1.6 A at 24 V**.
-- Fan: `24V_PROT`, low-side switched, approximately **0.2 A at 24 V**.
-- Buck: supplies the low-voltage electronics only.
-- Buck output feeds the existing ferrite bead `FB1`, then `3V3_MCU`.
+- Heater: `24V_PROT`, low-side switched, approximately 1.6 A at 24 V.
+- Fan: `24V_PROT`, low-side switched, approximately 0.2 A.
+- Buck: low-voltage electronics only.
+- Buck output -> `3V3_BUCK` -> FB1 -> `3V3_MCU`.
 
-The 3.3 V loads include ESP32-WROOM-32E, CP2102-GM, sensor/display interfaces, pull-ups,
-buzzer/logic and related circuitry.
+3.3 V load budget used during design:
 
-### 2.2 3.3 V current target
+- conservative normal load ~0.66 A;
+- including SHT45 internal-heater case ~0.76 A;
+- adopted buck design target **1.0 A**.
 
-Project load-budget values:
+Input engineering range: **21.6–26.4 V** around 24 V nominal. This ±10% range is a project engineering assumption, not a verified tolerance specification of the original eSUN supply.
 
-- conservative normal load: approximately **0.66 A**;
-- including the SHT45 internal-heater case: approximately **0.76 A**;
-- adopted buck design target: **1.0 A**.
-
-`IOUT,design = 1.0 A`
-
-### 2.3 Input-voltage design envelope
-
-- nominal input: **24.0 V**;
-- continuous engineering range: **21.6–26.4 V** (`24 V ±10%`).
-
-This ±10% range is a **project engineering assumption**, not a verified tolerance specification
-of the original eSUN supply.
-
-### 2.4 Original PSU budget
-
-Original supply: **24 V / 48 W**.
-
-Approximate design-point power:
-
-- heater: 38.4 W;
-- fan: 4.8 W;
-- 3.3 V buck output target: 3.3 W;
-- ideal subtotal before buck loss: **46.5 W**.
-
-The original 48 W source therefore has little practical margin. A future regulated **24 V / 3 A /
-72 W minimum** source remains a sensible project target, but no replacement PSU is selected here.
+Original supply is 24 V / 48 W. The combined design-point load leaves limited source margin; a future 24 V / 3 A / 72 W minimum replacement remains a sensible target, but no replacement supply is selected in this record.
 
 ---
 
-## 3. Current implemented topology
+## 3. Implemented topology
 
-The redesigned stage is integrated directly into `hardware/Power.kicad_sch`.
+### Input / VCC / bypass
 
-### 3.1 Input, VCC and local bypass
+`24V_PROT` directly supplies L7987L VIN1, VIN2 and VCC.
 
-The actual buck input rail is `24V_PROT`.
+- C1 = 10 µF / 100 V X7S, main local input ceramic.
+- C3 = 1 µF / 100 V, local L7987L VIN/VCC bypass.
+- C2 = 100 nF, local TLV1701 supply bypass.
+- C5 = 100 µF / 50 V, upstream bulk reservoir retained.
 
-```text
-24V_PROT ───── U5 VIN1
-    │          U5 VIN2
-    │          U5 VCC
-    │
-    ├── C1  10 µF ── GND     local buck input ceramic
-    ├── C2 100 nF ── GND     TLV1701 local bypass
-    └── C3   1 µF ── GND     L7987L VCC local bypass
-```
+The earlier VIN-to-VCC 0 Ω jumper is removed.
 
-The earlier VIN-to-VCC 0 Ω jumper is removed. The existing **C5 = 100 µF / 50 V** bulk
-capacitor and the upstream 24 V protection network remain.
+ST's demonstration board uses two 4.7 µF main input capacitors and two 1 µF local bypass capacitors. The project implementation uses C1 = 10 µF as the main input ceramic and C3 = 1 µF as the local VIN/VCC bypass because VIN1/VIN2/VCC are directly commoned in the current schematic. Do not silently add a second 1 µF bypass; if layout proves one capacitor cannot provide an adequate local connection to the required pins, reopen that specific schematic/layout tradeoff explicitly.
 
-### 3.2 Output and VBIAS
+### Output / VBIAS
 
-- `C10 = 47 µF` is the main pre-bead output capacitor;
-- `C21 = 1 µF` bypasses VBIAS on the regulated output;
-- the pre-FB1 node is explicitly `3V3_BUCK`;
-- `FB1` then feeds `3V3_MCU`.
+- C10 = 47 µF main pre-bead output capacitor.
+- C21 = 1 µF / 25 V VBIAS/output bypass.
+- pre-bead node = `3V3_BUCK`.
+- FB1 feeds `3V3_MCU`.
 
-### 3.3 Unused pins
+### Unused pins
 
-- U5 pin 12 `PGOOD`: intentionally NC;
+- U5 pin 12 `PGOOD`: intentionally NC.
 - U5 pin 7 `SYNCH`: intentionally NC.
 
 ---
 
 ## 4. Current reference/value map
 
-### 4.1 Active devices / magnetics
+### Active devices / magnetics
 
 | Ref | Current device | Role |
 |---|---|---|
 | U5 | L7987L | Buck regulator |
-| U1 | TLV1701 | AutoEN comparator |
-| Q7 | MMBT3904 | AutoEN EN pull-down transistor |
+| U1 | TLV1701AIDBVR | AutoEN comparator |
+| Q7 | MMBT3904 | AutoEN EN pull-down |
 | L1 | SRN6045-150M, 15 µH | Buck inductor |
-| D7 | STPS2L60A | Catch Schottky diode |
+| D7 | STPS2L60A | Catch Schottky |
 
-### 4.2 Buck capacitors
+### Buck and AutoEN capacitors
 
 | Ref | Value | Role |
 |---|---:|---|
-| C1 | 10 µF | Local `24V_PROT` input capacitor |
+| C1 | 10 µF / 100 V X7S | Main local input ceramic |
 | C2 | 100 nF | TLV1701 bypass |
-| C3 | 1 µF | L7987L VCC bypass |
+| C3 | 1 µF / 100 V | L7987L VIN/VCC local bypass |
 | C4 | 33 nF | Soft start |
 | C6 | 100 nF | BOOT-to-LX bootstrap |
 | C7 | 330 nF | AutoEN EN timing |
-| C8 | 39 pF | Type-III `CP` |
-| C9 | 18 nF | Type-III `CF` |
-| C10 | 47 µF | Main buck output capacitor |
-| C20 | 560 pF | Type-III `CS` |
-| C21 | 1 µF | VBIAS/output bypass |
+| C8 | 39 pF | Type-III CP |
+| C9 | 18 nF | Type-III CF |
+| C10 | 47 µF / 10 V X7R | Main buck output capacitor |
+| C20 | 560 pF | Type-III CS |
+| C21 | 1 µF / 25 V | VBIAS/output bypass |
 
-### 4.3 Buck control resistors
+### Buck and AutoEN resistors
 
 | Ref | Value | Role |
 |---|---:|---|
@@ -192,9 +148,9 @@ capacitor and the upstream 24 V protection network remain.
 | R30 | 47 kΩ | Q7 base-emitter pull-down |
 | R31 | 100 kΩ | EN pull-up |
 | R32 | 15 kΩ | EN pull-down |
-| R33 | 16 kΩ | Type-III `RF` |
+| R33 | 16 kΩ | Type-III RF |
 | R34 | 16 kΩ | Feedback lower resistor |
-| R35 | 1.13 kΩ | Type-III `RS` |
+| R35 | 1.13 kΩ | Type-III RS |
 | R36 | 49.9 kΩ | Feedback upper resistor |
 
 ---
@@ -205,184 +161,126 @@ ST relation:
 
 `FSW [kHz] = 250 + 12500 / RFSW [kΩ]`
 
-With `R4 = 47 kΩ`:
+With R4 = 47 kΩ:
 
 `FSW ≈ 516 kHz`
 
-The project therefore treats the stage as a practical **~500 kHz** converter.
+The layout is therefore treated as a practical ~500 kHz switcher.
 
 ---
 
 ## 6. Feedback divider
 
-Current values:
-
-- upper `R36 = 49.9 kΩ`;
-- lower `R34 = 16 kΩ`;
-- L7987L nominal `VFB = 0.800 V`.
+- R36 upper = 49.9 kΩ.
+- R34 lower = 16 kΩ.
+- nominal L7987L VFB = 0.800 V.
 
 `VOUT = VFB × (1 + R36/R34) ≈ 3.295 V`
 
-Using the ST feedback-reference limits alone (`0.788–0.812 V`) gives approximately
-**3.246–3.344 V** before adding resistor tolerance and bias/leakage terms. The nominal programmed
-rail remains correctly centered on 3.3 V.
+Using ST's feedback-reference limits 0.788–0.812 V gives approximately 3.246–3.344 V before resistor-tolerance/bias terms.
 
 ---
 
 ## 7. Inductor, ripple and catch diode
 
-Current inductor: **Bourns SRN6045-150M**.
+L1 = Bourns SRN6045-150M:
 
-Reviewed manufacturer ratings:
+- 15 µH nominal;
+- ±20% tolerance;
+- DCR max ~95.8 mΩ;
+- Irms ~1.9 A;
+- Isat ~2.3 A, defined by Bourns at 30% inductance reduction.
 
-- nominal L: 15 µH;
-- tolerance: ±20%;
-- DCR max: approximately 95.8 mΩ;
-- Irms: approximately 1.9 A;
-- Isat: approximately 2.3 A;
-- Bourns defines Isat at 30% inductance reduction.
+At ~516 kHz over the 21.6–26.4 V design range:
 
-At ~516 kHz and the 21.6–26.4 V design range:
+- nominal inductor ripple ~0.36–0.37 A p-p;
+- normal peak at 1.0 A load ~1.18–1.19 A;
+- with L at -20%, normal high-line peak ~1.23 A.
 
-- nominal `ΔIL ≈ 0.36–0.37 A p-p`;
-- normal peak at 1.0 A load: approximately **1.18–1.19 A**;
-- with L at -20%, ripple increases by about 25%, giving a normal peak of approximately
-  **1.23 A** at the high-line stress point.
-
-Normal operation therefore has large margin to both Irms and Isat.
-
-Catch diode: **STPS2L60A**, 60 V / 2 A Schottky. Its DC reverse-voltage rating has ample margin
-over the 26.4 V continuous input engineering maximum. PCB review must still validate switching
-ringing, diode dissipation and temperature.
+D7 = STPS2L60A, 60 V / 2 A Schottky. Its DC reverse-voltage rating covers the continuous input envelope, but first-board probing must still verify switching-node ringing and temperature.
 
 ---
 
 ## 8. Current-limit programming — CLOSED
 
-Current value: `R29 = 47.5 kΩ`.
+R29 = 47.5 kΩ.
 
-ST provides the programming relation:
+ST relation:
 
 `RILIM = 27 kΩ × 3 A / ILIM`
 
-which gives a nominal project value of approximately:
+Nominal project value:
 
 `ILIM,nom ≈ 1.705 A`
 
-ST does **not** publish a guaranteed min/max table entry specifically for 47.5 kΩ. The datasheet
-instead gives characterized/guaranteed examples at other programming resistances. Therefore the
-project does not claim an exact guaranteed `ILIM,max` for R29 = 47.5 kΩ.
+ST does not publish a guaranteed min/max specifically at 47.5 kΩ. For component-selection review, a deliberately conservative engineering envelope based on the published ST current-limit spread plus R29 tolerance was used:
 
-For schematic component-selection sign-off, a deliberately conservative engineering envelope was
-formed from the worst relative high/low spread of the published ST current-limit points together
-with the ±1% R29 tolerance:
+- lower estimate ~1.42 A;
+- upper stress estimate ~2.15 A.
 
-- conservative upper stress estimate: approximately **2.15 A**;
-- conservative lower estimate: approximately **1.42 A**.
+The lower estimate remains above the normal worst-case operating peak (~1.23 A). The upper estimate remains below L1's ~2.3 A Isat. The 2.15 A number is an engineering stress estimate, not a manufacturer-guaranteed maximum at 47.5 kΩ.
 
-Interpretation:
-
-- the lower engineering estimate remains above the normal worst-case inductor peak (~1.23 A);
-- the upper engineering estimate remains below the Bourns 2.3 A Isat rating by about 0.15 A;
-- ST also implements pulse-by-pulse current limiting and peak-current foldback in heavy short
-  circuit.
-
-**Gate result: CLOSED for engineering schematic sign-off.** No component change is justified from
-this review. The 2.15 A figure is an engineering stress envelope, **not a manufacturer-guaranteed
-47.5 kΩ maximum**. Fault current and inductor waveform must still be observed during prototype
-fault testing.
+**Gate: CLOSED for schematic sign-off.** Prototype fault-current/current-waveform measurement remains required.
 
 ---
 
 ## 9. Input/output capacitance — CLOSED FOR SCHEMATIC SELECTION
 
-Actual sourced parts:
+Sourced power capacitors:
 
-- **C1 = Murata GRM32EC72A106KE05L**, 10 µF, 100 V, X7S, 1210;
-- **C10 = Taiyo Yuden LMK325B7476KM-PR**, previous part number for current
-  `MSASL32MSB7476KPNB25`, 47 µF ±10%, 10 V, X7R, 1210;
-- **C3 = 1 µF / 100 V** local L7987L VCC bypass;
-- **C21 = 1 µF / 25 V** VBIAS bypass;
-- upstream **C5 = 100 µF / 50 V** remains a separate low-frequency bulk reservoir.
+- C1 = Murata `GRM32EC72A106KE05L`, 10 µF / 100 V / X7S / 1210.
+- C10 = Taiyo Yuden `LMK325B7476KM-PR`, current number `MSASL32MSB7476KPNB25`, 47 µF ±10% / 10 V / X7R / 1210.
+- C3 = 1 µF / 100 V local bypass.
+- C21 = 1 µF / 25 V VBIAS bypass.
+- C5 = 100 µF / 50 V upstream bulk.
 
-Manufacturer primary documentation confirms the nominal part ratings. Taiyo Yuden also exposes
-part-specific temperature/DC-bias simulation data for C10. As is normal for class-II MLCCs, the
-characterization curves/models are not treated here as a simple guaranteed minimum capacitance.
-No invented `Ceff,min` is therefore recorded.
+Manufacturer data confirms nominal ratings and provides bias/temperature characterization or simulation data. Those curves/models are not treated as a guaranteed minimum capacitance specification. The schematic review therefore used conservative reduced-capacitance stress cases rather than inventing `Ceff,min`.
 
-ST requires local ceramic input/VCC bypassing and treats output capacitance as part of the LC/loop
-stability design. The implemented topology provides those local capacitors and uses Type-III
-compensation appropriate to a low-ESR ceramic output network.
+A severe 23.5 µF C10 stress case was checked during review; it did not invalidate the selected compensation architecture or the recorded crossover relative to the ~500 kHz switching frequency.
 
-The design review also checked reduced-capacitance stress cases rather than assuming the printed
-47 µF value remains unchanged under bias. For example, using **23.5 µF** as a deliberately severe
-C10 stress case moves the ideal LC pole upward but does not invalidate the adopted compensation
-architecture or the ~59 kHz recorded crossover relative to the ~500 kHz switching frequency.
-
-**Gate result: CLOSED for schematic component selection.** This does not turn manufacturer
-characterization into a guaranteed `Ceff,min`. First-board load-transient response and real
-in-circuit output behavior remain mandatory bring-up checks.
-
-Manufacturer references:
-
-- Murata GRM series / part specification: https://www.murata.com/
-- Taiyo Yuden `MSASL32MSB7476KPNB25` product data and DC-bias model:
-  https://ds.yuden.co.jp/TYCOMPAS/eu/detail?pn=MSASL32MSB7476KPNB25&u=M
+**Gate: CLOSED for schematic selection.** Physical load-transient behavior remains a bring-up measurement.
 
 ---
 
 ## 10. Type-III compensation
 
-Final implemented network:
+Final network:
 
-- `R33 / RF = 16 kΩ`;
-- `C9 / CF = 18 nF`;
-- `C8 / CP = 39 pF`;
-- `R35 / RS = 1.13 kΩ`;
-- `C20 / CS = 560 pF`.
+- R33 / RF = 16 kΩ;
+- C9 / CF = 18 nF;
+- C8 / CP = 39 pF;
+- R35 / RS = 1.13 kΩ;
+- C20 / CS = 560 pF.
 
 Recorded final-value simulation results:
 
-- crossover: **~59.1 kHz**;
-- phase margin: **~64.9°**;
-- gain margin: **~19.6 dB**.
+- crossover ~59.1 kHz;
+- phase margin ~64.9°;
+- gain margin ~19.6 dB.
 
-Recorded load-transient run (~0.33 A -> 1.32 A):
+Recorded transient run (~0.33 A -> 1.32 A):
 
-- `VOUT,min ≈ 3.254 V`;
-- `VOUT,max ≈ 3.361 V`;
-- inductor-current peak `≈ 1.59 A`;
+- VOUT,min ~3.254 V;
+- VOUT,max ~3.361 V;
+- inductor-current peak ~1.59 A;
 - clean recovery.
 
-These are **session-recorded SIMPLIS/eDSim results**. They are not measurements from physical
-hardware and were not re-created from scratch during the 2026-09-04 documentation update.
+These are session-recorded SIMPLIS/eDSim results, not measurements from physical hardware.
 
 ---
 
-## 11. Why AutoEN was added
+## 11. AutoEN rationale and implementation — CLOSED
 
-Deep-short simulation/testing of the L7987L model showed COMP could remain heavily saturated
-during a persistent fault. Releasing the short without clearing the loop state could produce an
-undesirable recovery overshoot.
+Deep-short simulation of the L7987L model showed COMP could remain strongly saturated during a persistent fault. Resetting EN cleared the loop state and produced a clean restart. The final design therefore adds an external AutoEN detector that forces EN low when COMP rises above a chosen threshold.
 
-A manual EN reset cleared the state and produced a clean restart. The final schematic therefore
-adds an external AutoEN fault detector that forces EN low when COMP rises above a defined threshold.
-It complements, rather than replaces, the L7987L internal current limit/foldback.
+U1 = TLV1701AIDBVR:
 
----
-
-## 12. AutoEN implementation and corner review — CLOSED
-
-Comparator: **U1 = TLV1701**.
-
-Connections:
-
-- `IN+` -> L7987L `COMP`;
-- `IN-` -> `VREF_FAULT`;
-- `V+` -> `24V_PROT`;
-- `V-` -> GND;
-- C2 = 100 nF local supply bypass;
-- open-collector OUT uses R5 pull-up and R6/Q7 drive network.
+- IN+ -> L7987L COMP;
+- IN− -> `VREF_FAULT`;
+- V+ -> `24V_PROT`;
+- V− -> GND;
+- C2 = 100 nF local bypass;
+- open-collector OUT uses R5 pull-up and R6/Q7 drive.
 
 Threshold divider:
 
@@ -391,156 +289,253 @@ Threshold divider:
 
 Nominal threshold:
 
-- 21.6 V input -> approximately **1.627 V**;
-- 24.0 V input -> approximately **1.808 V**;
-- 26.4 V input -> approximately **1.989 V**.
+- 21.6 V input -> ~1.627 V;
+- 24.0 V -> ~1.808 V;
+- 26.4 V -> ~1.989 V.
 
-The final corner review included:
-
-- input range 21.6–26.4 V;
-- R1/R2 ±1% tolerance;
-- 100 ppm/K resistor TCR in opposing directions for a conservative temperature check;
-- TLV1701 input offset/bias error at industrial temperature.
-
-The resulting conservative reviewed COMP trip window is approximately **1.56–2.07 V**.
-This remains well below the L7987L high-COMP fault condition used by the protection concept,
-leaving more than 1 V of separation at the reviewed upper trip corner.
+Corner review included input range, ±1% divider tolerance, conservative 100 ppm/K opposing TCR and TLV1701 input-error terms. Reviewed COMP trip window is approximately **1.56–2.07 V**.
 
 EN network:
 
-```text
-24V_PROT ── R31 100k ──┬── EN
-                        │
-                     R32 15k
-                        │
-                       GND
+- R31 = 100 kΩ from 24V_PROT to EN;
+- R32 = 15 kΩ EN to GND;
+- C7 = 330 nF EN to GND;
+- Q7 collector pulls EN low during fault.
 
-EN ── C7 330n ── GND
-EN ── Q7 collector
-```
+Nominal VEN ~3.13 V at 24 V; reviewed low-line/tolerance EN-high remains ~2.7 V or higher, comfortably above the L7987L maximum enable-high threshold of 0.9 V.
 
-Nominal `VEN ≈ 3.13 V` at 24 V. At the reviewed low-line/tolerance corner the EN-high level
-remains approximately **2.7 V or higher**, comfortably above the L7987L maximum enable-high
-threshold of 0.9 V.
+Recorded persistent-fault simulation showed repeated shutdown/retry and clean eventual restart after the fault was removed.
 
-The recorded persistent-fault simulation showed repeated shutdown/retry under a maintained fault
-and clean eventual restart after fault removal.
-
-**Gate result: CLOSED for schematic sign-off.** Real comparator propagation, EN timing, COMP
-waveform and restart behavior remain prototype measurements.
+**Gate: CLOSED for schematic sign-off.** Comparator propagation, EN timing, COMP waveform and restart behavior remain prototype measurements.
 
 ---
 
-## 13. ERC — CLOSED AND CI-ENFORCED
+## 12. ERC — CLOSED AND CI-ENFORCED
 
-A new KiCad 10 GitHub Actions workflow (`.github/workflows/kicad-erc.yml`) now runs ERC on the
-current schematic.
+`.github/workflows/kicad-erc.yml` runs KiCad 10 ERC.
 
-The fresh 2026-09-04 ERC report contains:
+Current reviewed `hardware/ERC.rpt` dated 2026-09-04 contains:
 
-- **1 error**: `power_pin_not_driven` on `#PWR02` GND;
-- **11 warnings**: seven `unconnected_wire_endpoint`, two `lib_symbol_mismatch`, two
-  `pin_to_pin` warnings.
+- 1 `power_pin_not_driven` error on `#PWR02` GND;
+- 7 `unconnected_wire_endpoint` warnings;
+- 2 `lib_symbol_mismatch` warnings;
+- 2 `pin_to_pin` warnings.
 
-The single error is an ERC modeling condition: the board receives power from an external passive
-connector, so KiCad sees the GND power symbol as not being driven by a `Power output` pin. The
-actual net is connected; this is not an electrical open.
+The single error is a KiCad modeling condition caused by external power entering through a passive connector; it is not an electrical GND open. CI explicitly waives only that exact item and permits only the reviewed warning classes/counts. New errors, changed waiver target, new warning classes or warning-count increases fail the gate.
 
-The CI therefore contains an explicit reviewed waiver for **only that exact error** and permits
-only the already-reviewed warning classes up to their current counts. The gate fails if:
-
-- another ERC error appears;
-- the waived error changes identity;
-- a new warning class appears;
-- one of the reviewed warning counts increases.
-
-The workflow run after adding the gate completed successfully. `hardware/ERC.rpt` has been
-refreshed to the current L7987L schematic state.
-
-**Gate result: CLOSED.** ERC is now a repeatable regression check instead of a stale manual report.
+**Gate: CLOSED.**
 
 ---
 
-## 14. Repository verification
+## 13. Sourcing / footprint state — CLOSED
 
-Verified against the actual schematic/netlist on `redesign/buck-sourcing`:
+TME sourcing, manufacturer/MPN synchronization, footprint audit and strict pin-numbering audit were completed for the present schematic.
 
-- old AP66200 absent from the active exported netlist;
-- active buck `U5 = L7987L` in `/Power/`;
-- VIN1, VIN2 and VCC on `24V_PROT`;
-- no VIN-to-VCC 0 Ω jumper;
-- local input/VCC/comparator bypass capacitors present;
-- `L1 = 15 µH`, `D7 = STPS2L60A`, `C10 = 47 µF`;
-- feedback `R36 = 49.9 kΩ`, `R34 = 16 kΩ`;
-- FSW `R4 = 47 kΩ`;
-- ILIM `R29 = 47.5 kΩ`;
-- compensation `R33 = 16 kΩ`, `C9 = 18 nF`, `C8 = 39 pF`, `R35 = 1.13 kΩ`,
-  `C20 = 560 pF`;
-- TLV1701 pin mapping and COMP/reference connections correct;
-- R5/R6/Q7 open-collector AutoEN drive present;
-- EN contains R31/R32/C7 timing network;
-- PGOOD and SYNCH explicitly NC;
-- upstream protection/bulk retained;
-- downstream `FB1 -> 3V3_MCU` retained;
-- pre-FB1 output explicitly `3V3_BUCK`;
-- temporary redesign sheet removed from the active hierarchy.
+Important non-trivial footprint decisions include:
 
-No missing component from the intended L7987L + AutoEN electrical block was found.
+- C5 Panasonic EEEFK1H101P -> custom Panasonic size-F footprint;
+- J2 GCT USB4216-03-A -> custom USB-C footprint;
+- L1 SRN6045-150M -> custom Bourns footprint from recommended layout;
+- U2 CP2102-GM -> custom QFN28 footprint using Silicon Labs classic CP2102 land-pattern data;
+- SW1–SW6 GCT SWT0110-020010SSA -> custom footprint;
+- BZ1 LD-BZEL-T67-0808 -> custom footprint with conservative terminal lands because manufacturer does not publish numeric recommended PCB land size;
+- U5 L7987L -> `SamacSys_Parts:SOP65P640X120-17N`, HTSSOP-16 exposed pad.
+
+U5 exposed-pad **paste aperture and thermal-via implementation remain PCB/manufacturing tasks**, not a footprint-package mismatch.
+
+See `hardware/docs/PROCUREMENT.md` for the sourcing/manufacturing record.
 
 ---
 
-## 15. Design-for-test / debug access
+## 14. PCB synchronization checkpoint — CLOSED
 
-Existing project test access includes `24V_PROT`, `3V3_MCU` and GND.
+Verified on branch `pcb/l7987l-layout` at the 2026-09-07 hardware checkpoint:
 
-Before PCB placement, decide whether to add convenient probe/test pads for:
+- current PCB contains U5 = L7987L on B.Cu;
+- old `AP66200` is absent;
+- old `/Power/VCC_AP66200` is absent;
+- current buck/AutoEN components are placed on B.Cu;
+- local B.Cu zones are present for `24V_PROT`, `/Power/3V3_BUCK`, GND and `Net-(D7-K)` / LX;
+- both inner layers contain full-board GND zones.
+
+Therefore PCB synchronization is no longer an open task. The open work is layout completion and validation.
+
+---
+
+## 15. Current stackup and grounding decision
+
+KiCad stackup:
+
+- F.Cu 35 µm;
+- 0.10 mm FR4, Er 4.5;
+- In1.Cu 35 µm;
+- 1.24 mm FR4 core, Er 4.5;
+- In2.Cu 35 µm;
+- 0.10 mm FR4, Er 4.5;
+- B.Cu 35 µm;
+- total 1.6 mm.
+
+**Project decision:**
+
+- In1.Cu = solid GND plane;
+- In2.Cu = solid GND plane;
+- no 3V3 or 24 V internal power planes;
+- buck local power distribution uses B.Cu copper/tracks/zones.
+
+For the B.Cu buck, In2 is the nearest GND reference only 0.10 mm away.
+
+### PGND / SGND implementation
+
+ST explicitly distinguishes power-ground and signal-ground current paths in the L7987L layout guidance. This project implements that intent **without separate GND nets and without splitting the internal planes**.
+
+Same electrical `GND` net:
+
+- high-current/pulsed return region: C1 negative, D7 anode, C10 negative;
+- quiet/signal return region: U5 pin 16 + exposed pad, C3 negative, C21 negative and sensitive control returns.
+
+Both use short local B.Cu connections/vias into the same continuous In1/In2 GND planes. The design goal is to prevent the pulsed input/catch-diode/output return current from flowing through the quiet local return geometry around FB/COMP.
+
+Do not create a split In2 PGND/SGND plane as an interpretation of the ST diagram.
+
+---
+
+## 16. ST layout guidance applied to the current PCB
+
+Verified ST guidance that controls the current layout:
+
+- minimize the high-pulsed-current step-down loop;
+- place a small ≥1 µF bypass as close as possible to the input-voltage pin for both VIN and VCC;
+- keep FB divider close to the device and away from high-current paths;
+- connect EP to signal GND while avoiding high current through signal-ground copper;
+- use a short BOOT-to-LX capacitor connection;
+- use the demonstration-board layout as the device-specific reference.
+
+Reference-board component mapping used during placement:
+
+| ST demo | Project |
+|---|---|
+| U1 | U5 |
+| D1 | D7 |
+| L1 | L1 |
+| C1+C2 main input | C1 10 µF |
+| local 1 µF input/VCC bypass | C3 1 µF |
+| C5 output | C10 |
+| C7 bootstrap | C6 |
+| C10 soft start | C4 |
+| R8 FSW | R4 |
+| R9 ILIM | R29 |
+| R6/C9/C11 | R33/C9/C8 compensation |
+| R5/C8 | R35/C20 compensation |
+| R7/R11 feedback | R36/R34 |
+
+C21 has no direct demonstration-board equivalent in that mapping; it is the project VBIAS/output bypass.
+
+### Placement facts to preserve
+
+- In the current physical board view, VIN/VCC are on the **left side of U5**.
+- C3 belongs closest to VIN/VCC.
+- C1 belongs on the same VIN side and may be slightly farther out than C3.
+- C21 stays close to pin 1 VBIAS; it does not need to be moved merely to make a continuous surface PGND strip between C1 and D7.
+- C6 is BOOT-LX, not a GND return component.
+- FB/COMP network stays in the quiet region.
+
+### Bottom-side orientation process rule
+
+Do not infer B.Cu pad direction from raw local footprint coordinates. A previous manual transform led to incorrect rotation recommendations. Use KiCad/pcbnew absolute pad positions or the actual board view with nets/pad numbers.
+
+---
+
+## 17. Current PCB open items
+
+### U5 exposed pad / thermal implementation
+
+U5 pad 17 is the 3.2 × 3.2 mm exposed pad on `GND` / `SGND_17`. The current footprint does not by itself close the final thermal-via/paste strategy.
+
+Before routing freeze:
+
+- choose/verify via count, drill/diameter and spacing;
+- ensure a low-inductance GND/thermal connection to the internal planes;
+- review solder-wicking risk and JLCPCB process capability;
+- define/verify paste aperture strategy against ST package/manufacturing guidance.
+
+### Local GND/current-return geometry
+
+Finalize short GND/via entry for C1−, D7 anode and C10− while keeping their pulsed current path out of the quiet U5/FB/COMP return region. Separately provide short quiet returns for U5 EP/pin16, C3− and C21− into the same solid GND planes.
+
+### Critical routing
+
+Still to close:
+
+- C1/C3 -> VIN/VCC input loop;
+- C6 BOOT-LX;
+- U5 LX -> D7/L1 switch region;
+- L1 -> C10 -> `3V3_BUCK` -> FB1;
+- FB/COMP network;
+- AutoEN routing.
+
+No generic wide LX netclass is required; switch-node copper is controlled geometrically and kept compact.
+
+---
+
+## 18. Netclasses
+
+Current accepted classes:
+
+| Class | Clearance | Track | Via dia/drill |
+|---|---:|---:|---:|
+| Default | 0.20 mm | 0.25 mm | 0.60/0.30 mm |
+| Power_3V3 | 0.20 mm | 0.50 mm | 0.60/0.30 mm |
+| Power_24V | 0.20 mm | 1.00 mm | 0.80/0.40 mm |
+| Power_Heat | 0.30 mm | 1.50 mm | 0.80/0.40 mm |
+| USB | 0.20 mm | 0.25 mm | 0.60/0.30 mm |
+
+Assignments:
+
+- `3V3_MCU`, `/Power/3V3_BUCK` -> Power_3V3;
+- `24V_PROT`, `/Power/JACK_24V_RAW`, `/Power/FUSE_OUT` -> Power_24V;
+- `HEATER_SW` -> Power_Heat;
+- `USB_DP`, `USB_DM` -> USB.
+
+Open item: USB-class DP width/gap fields are not finalized. The Default class contains DP width 0.20 mm / gap 0.25 mm, but those values must not be treated as the USB solution without stackup-based verification.
+
+---
+
+## 19. DFT / debug access
+
+Existing access includes `24V_PROT`, `3V3_MCU` and GND.
+
+Before routing freeze, decide whether to add convenient test access for:
 
 - `3V3_BUCK` before FB1;
-- L7987L COMP;
-- L7987L EN / AutoEN control node.
+- COMP;
+- EN / AutoEN control node;
+- local GND near the buck.
 
-These are **DFT recommendations**, not unresolved schematic electrical gates.
-
----
-
-## 16. Closed sourcing / footprint state
-
-Closed items include:
-
-- TME sourcing pass;
-- manufacturer/MPN synchronization into KiCad;
-- final footprint audit;
-- L1 footprint against Bourns recommended layout;
-- U5 HTSSOP footprint geometry check;
-- strict symbol/pinout audit;
-- explicit `3V3_BUCK` label;
-- TLV1701 metadata/datasheet synchronization.
-
-Sourcing and footprints should only be reopened if later PCB/layout work forces an electrical or
-mechanical component change.
+Avoid creating a large LX test pad. If LX probing is needed, use an existing switch-node pad with a very short probe ground arrangement.
 
 ---
 
-## 17. PCB state and next implementation sequence
+## 20. DRC / manufacturing state
 
-The current PCB still contains the pre-redesign AP66200 implementation. Schematic and PCB are
-therefore intentionally out of sync at this checkpoint.
+`hardware/DRC.rpt` is dated 2026-08-06 and belongs to the pre-L7987L board state. It is **not valid evidence for the current PCB**.
 
-Next hardware steps:
+A fresh DRC must be run after routing/layout completion.
 
-1. decide optional buck DFT/debug access for `3V3_BUCK`, COMP and EN/AutoEN;
-2. update PCB from the signed-off schematic and remove the old AP66200 stage;
-3. place L7987L, D7, L1 and local capacitors according to ST switching-loop/layout guidance;
-4. route the new stage and reconnect the existing `24V_PROT` / FB1 architecture;
-5. perform dedicated PCB review: high-current loops, return paths, thermal paths, switching-node
-   clearance/ringing risk, USB routing, ESP32 antenna keepout, heater/fan paths and U5 exposed-pad
-   paste strategy;
-6. run DRC;
-7. regenerate BOM, CPL/position data, fabrication outputs and production netlist from the same
-   revision;
-8. reconcile generated production data with the final `BOM TME` before ordering;
-9. on the first board, validate output regulation/transient response, component temperatures,
-   switching-node stress and AutoEN fault/recovery behavior.
+Production Gerbers, drill files, position/CPL data, BOM exports and production netlist remain stale until regenerated from the final DRC-closed board and reconciled against the purchasing BOM.
 
-**Current project gate:** schematic electrical review is complete; PCB/layout integration is the
-next design phase.
+---
+
+## 21. Next implementation sequence
+
+1. Finalize U5 exposed-pad thermal/GND vias and paste strategy.
+2. Finalize local PGND/SGND current-return/via geometry while keeping In1/In2 continuous GND.
+3. Finish the critical L7987L input, BOOT/LX/diode/inductor, output and FB/COMP routing against ST guidance.
+4. Finish AutoEN routing.
+5. Close optional DFT/debug access before routing freeze.
+6. Calculate/verify USB differential-pair geometry for the actual 0.10 mm B.Cu-to-In2 reference stackup and configure the USB netclass.
+7. Review full-board GND continuity, USB reference, ESP32 antenna keepout, heater/fan/high-current paths, edge/mechanical clearances and exposed-pad/stencil details.
+8. Run a fresh KiCad DRC and close all current violations.
+9. Regenerate fabrication/assembly outputs from the same final revision and reconcile with the final purchasing BOM.
+10. During first-board bring-up, validate 3.3 V regulation/transients, LX ringing/stress, temperatures, current-limit behavior and AutoEN shutdown/recovery timing.
+
+**Current project gate:** schematic sign-off and PCB synchronization are complete. **PCB layout/routing completion and current DRC are the next release gates.**
