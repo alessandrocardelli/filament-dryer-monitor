@@ -4,7 +4,7 @@ Custom ESP32-based controller board that retrofits an **eSUN eBox** filament dry
 
 The PCB physically replaces the original front panel: display and buttons sit on the front face of the board, while the main electronics are on the back.
 
-> **Current status — 2026-09-07:** hardware work is on branch **`pcb/l7987l-layout`**. The L7987L + AutoEN schematic passed the project engineering schematic review on 2026-09-04 and the PCB has now been synchronized to that design. The legacy AP66200 stage is absent from the current board. The project is in the **L7987L PCB layout/routing phase**: placement and local B.Cu power zones are in progress, both inner layers are solid GND planes, and U5 exposed-pad/GND-via strategy, critical buck routing, USB differential geometry and final PCB review are still open. The board is **not manufacturing-ready** until a fresh DRC is closed and production outputs are regenerated.
+> **Current status — 2026-09-08:** hardware work is on branch **`pcb/l7987l-layout`**. The L7987L + AutoEN schematic passed the project engineering schematic review on 2026-09-04 and the PCB is synchronized to that design. The legacy AP66200 stage is absent. The project is in the **L7987L PCB layout/routing phase**. Latest PCB-only checkpoint recorded for this handoff is `e8741347ef5570948a1115719ae65fbc0de02ce6`. Both inner layers are solid GND planes and the power/default netclasses are accepted. The immediate open implementation is the U5 exposed-pad GND/thermal-via and paste strategy, followed by buck local GND-via/current-return geometry and critical routing. USB differential-pair geometry and final DRC remain open. The board is **not manufacturing-ready**.
 
 For a new work session, read `AGENTS.md`, `docs/PROJECT_STATE.md`, `docs/DECISIONS.md` and `docs/TODO.md` before changing the design.
 
@@ -97,7 +97,7 @@ Recorded simulation results with final compensation are approximately **59.1 kHz
 
 The current `hardware/Filament_Dryer_Monitor.kicad_pcb` contains the L7987L stage and AutoEN block. The old AP66200 stage and `/Power/VCC_AP66200` are absent.
 
-The buck is on **B.Cu**. Current layout work includes local B.Cu zones for `24V_PROT`, `/Power/3V3_BUCK`, GND and LX. Placement has already been iterated against ST/TI guidance, but critical routing and exposed-pad/ground-via details are not frozen.
+The buck is on **B.Cu**. Placement has been iterated against ST/TI guidance. In the current physical board view the U5 VIN/VCC side is the **left side**; C3 is the closest local VIN/VCC bypass, C1 is on the same side more externally, and C21 remains close to pin 1 VBIAS.
 
 Primary buck layout reference: ST L7987L datasheet plus STEVAL-ISA198V1 Gerbers/layout. The ST reference is used for topology/current-return intent, adapted to this project's four-layer stackup and footprints.
 
@@ -114,7 +114,7 @@ Stackup entered in KiCad: 35 µm copper; 0.10 mm FR4 between F.Cu-In1 and In2-B.
 
 **Both inner layers are deliberately full GND.** There are no internal 3V3 or 24 V power planes.
 
-For the L7987L, PGND and SGND are not separate project nets or separate internal planes. They are different **current-return regions on the same `GND` net**. High-current returns (C1−, D7 anode, C10−) and quiet returns (U5 pin16/EP, C3−, C21− and sensitive control returns) use local B.Cu geometry and short vias into the common solid GND planes so switching current is not forced through the quiet return region.
+For the L7987L, PGND and SGND are not separate project nets or separate internal planes. They are different **current-return regions on the same `GND` net**. High-current returns (C1−, D7 anode, C10−) and quiet returns (U5 pin16/EP, C3−, C21− and sensitive control returns) use local B.Cu geometry and short vias into the common solid GND planes so switching current is not forced through the quiet return region. A continuous B.Cu PGND corridor joining the two sides of U5 is not required.
 
 See `docs/DECISIONS.md` before changing this architecture.
 
@@ -128,7 +128,7 @@ See `docs/DECISIONS.md` before changing this architecture.
 | Power_Heat | 0.30 mm | 1.50 mm | 0.80/0.40 mm |
 | USB | 0.20 mm | 0.25 mm | 0.60/0.30 mm |
 
-`USB_DP` and `USB_DM` are assigned to the USB class, but **USB differential-pair width/gap is still open** and must be calculated/verified for the actual stackup. Do not assume the Default-class DP settings are correct.
+`USB_DP` and `USB_DM` are assigned to the USB class, but **USB differential-pair width/gap is still open**. In the last reviewed Board Setup the USB DP fields were blank. Do not assume the Default-class 0.20/0.25 mm DP settings are correct.
 
 ### Procurement
 
@@ -210,7 +210,7 @@ hardware/*.kicad_*              Actual KiCad implementation
 Continue from the current PCB rather than resynchronizing from scratch. The immediate sequence is:
 
 1. finalize U5 exposed-pad thermal/GND via and paste strategy;
-2. finalize buck high-current versus quiet GND via/current-return geometry;
+2. place/review high-current and quiet local GND vias into the common inner GND planes;
 3. finish L7987L critical input, LX/BOOT/diode/inductor, output and FB/COMP routing against ST guidance;
 4. close optional DFT access before routing freeze;
 5. calculate/configure USB differential-pair geometry and review its continuous GND reference;
