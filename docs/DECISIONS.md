@@ -34,6 +34,8 @@ Both are the same KiCad `GND` net. The distinction is made through B.Cu copper g
 
 These paths use short local connections to the common solid GND planes. The high-current return geometry must not force switching current through the quiet feedback/compensation return region.
 
+**Implementation clarification:** a continuous B.Cu PGND strip physically joining C1− to D7/C10− is not a project requirement. The high-current pads may enter the same solid inner GND planes through short nearby GND vias, provided the via placement and local copper keep the pulsed return current out of the quiet local return region. Do not move C21 merely to create a superficial PGND corridor across U5.
+
 ## D004 — Buck is implemented on B.Cu
 
 **Status:** accepted/current implementation.
