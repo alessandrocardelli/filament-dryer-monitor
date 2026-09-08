@@ -4,6 +4,8 @@ Current phase: **L7987L PCB layout/routing** on `pcb/l7987l-layout`.
 
 Read `docs/PROJECT_STATE.md` and `docs/DECISIONS.md` before acting on this list. Inspect the actual current KiCad board before assuming coordinates or placement from older notes.
 
+Latest PCB-only checkpoint recorded for this handoff: **`e8741347ef5570948a1115719ae65fbc0de02ce6`**. Documentation commits may advance branch HEAD without changing the board.
+
 ## Completed before this checkpoint
 
 - [x] L7987L + AutoEN schematic integrated in `hardware/Power.kicad_sch`.
@@ -13,13 +15,19 @@ Read `docs/PROJECT_STATE.md` and `docs/DECISIONS.md` before acting on this list.
 - [x] PCB synchronized from the L7987L schematic; legacy AP66200 stage removed.
 - [x] Buck and AutoEN components moved to B.Cu and initial placement reviewed.
 - [x] Stackup decision closed: **In1 = solid GND, In2 = solid GND**.
-- [x] In1 and In2 currently contain full-board GND zones.
+- [x] In1 and In2 contain full-board GND zones; there are no internal 3V3/24 V power planes.
+- [x] PGND/SGND implementation decision closed: same `GND` net and same continuous inner planes; distinction is local current-return geometry/via placement, not split planes/nets.
 - [x] Power/default netclass values reviewed and accepted.
+- [x] Current physical placement convention recorded: U5 VIN/VCC side is the **left side** in the board view; C3 closest to VIN/VCC, C1 same side but more external, C21 kept close to pin 1 VBIAS.
 
-## Immediate buck-layout work
+## Immediate next action — start here in the next chat
 
-- [ ] **Finalize U5 exposed-pad implementation.** Decide/verify thermal/GND via count, size, spacing and exposed-pad paste aperture strategy against ST package guidance and the intended JLCPCB process. Current U5 EP is GND/`SGND_17`; this item is not yet closed.
-- [ ] **Finalize local GND via placement.** Keep the pulsed/high-current return group (C1−, D7 anode, C10−) geometrically distinct from the quiet return group (U5 pin16/EP, C3−, C21− and sensitive control returns), while all vias connect to the same continuous internal GND planes.
+- [ ] **Finalize U5 exposed-pad implementation.** Determine and verify GND/thermal via count, finished/drill diameter, spacing and paste-aperture strategy against ST package guidance and the intended JLCPCB process. The previous chat ended while preparing to place these vias. Do not assume a final via pattern exists unless the current PCB at latest HEAD shows it.
+- [ ] After the EP strategy is fixed, place/review the remaining local GND vias. High-current group: C1−, D7 anode, C10−. Quiet group: U5 pin16/EP, C3−, C21− and sensitive control returns. All connect to the same solid inner GND planes.
+- [ ] Do **not** create a required B.Cu GND corridor from C1− across U5 to D7/C10−. Short local vias into the common planes are allowed; keep the pulsed return geometry away from the quiet local return region.
+
+## Critical buck routing
+
 - [ ] **Finish critical input loop.** Route/zone C1, C3 and U5 VIN/VCC according to ST guidance, with C3 getting the shortest local bypass connection.
 - [ ] **Finish BOOT/LX/catch-diode/inductor geometry.** Keep C6 BOOT-LX short and switch-node copper compact; verify D7/L1 connections against the ST reference layout.
 - [ ] **Finish output path.** Complete L1 -> C10 -> `3V3_BUCK` -> FB1 path and local output-ground return.
@@ -32,12 +40,12 @@ Read `docs/PROJECT_STATE.md` and `docs/DECISIONS.md` before acting on this list.
 - [ ] Decide whether to add COMP test access.
 - [ ] Decide whether to add EN / AutoEN-node test access.
 - [ ] Ensure convenient local GND probe access near the buck.
-- [ ] Avoid a large dedicated LX test pad; if LX must be probed during bring-up, prefer the existing D7/L1/U5 switch-node access with a very short probe ground.
+- [ ] Avoid a large dedicated LX test pad; if LX must be probed during bring-up, prefer existing D7/L1/U5 switch-node access with a very short probe ground.
 
 ## USB
 
 - [ ] Calculate/verify USB differential-pair width and gap for the actual stackup: B.Cu, 0.10 mm FR4 to In2 GND, Er currently entered as 4.5.
-- [ ] Put the verified DP width/gap in the **USB** netclass; current USB DP fields are not finalized.
+- [ ] Put the verified DP width/gap in the **USB** netclass. In the last reviewed Board Setup, USB DP width/gap fields were blank; Default contained 0.20 mm / 0.25 mm but those values are not approved for USB.
 - [ ] Review the full D+/D− route for continuous GND reference and avoid reference-plane discontinuities.
 - [ ] Review pair spacing, skew, via use and connector/ESD transitions.
 
