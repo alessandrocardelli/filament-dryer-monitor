@@ -1,18 +1,37 @@
 # Project state
 
-Checkpoint date: **2026-09-07**  
+Checkpoint date: **2026-09-08**  
 Active hardware branch: **`pcb/l7987l-layout`**  
-Last hardware/layout commit before this documentation checkpoint: **`6e74f76d8d6877fab63283c1aa520bdbfc149921`** (`Layout update`). Documentation-only commits after that SHA may advance the branch HEAD without changing the KiCad implementation.
+Branch HEAD immediately before this handoff update: **`47232957429eb04c03334b39ef418ae120cec05e`**.  
+Latest PCB-only commit at this checkpoint: **`e8741347ef5570948a1115719ae65fbc0de02ce6`** (`Update Filament_Dryer_Monitor.kicad_pcb`). Documentation commits after that SHA may advance branch HEAD without changing the KiCad implementation.
 
 ## Executive state
 
-The L7987L redesign is no longer only a schematic change. The PCB has been synchronized with the signed-off schematic and the legacy AP66200 stage is absent from the current board file. The project is now in the **PCB layout/routing phase for the L7987L + AutoEN block**.
+The L7987L redesign is integrated in both schematic and PCB. The legacy AP66200 stage is absent from the current board. Work is now in the **L7987L + AutoEN PCB layout/routing phase**.
 
-The schematic electrical review remains **PASS**. The PCB is **not manufacturing-ready yet**: buck routing/grounding/thermal details, USB differential-pair geometry, final PCB review and a fresh DRC are still open. Existing production exports must be considered stale until regenerated from the final routed revision.
+The schematic electrical review remains **PASS**. The PCB is **not manufacturing-ready**: U5 exposed-pad via/paste implementation, local GND-via/current-return geometry, critical buck routing, USB differential geometry, final PCB review and a fresh DRC are still open.
+
+Production Gerbers/BOM/CPL/netlist exports must be treated as stale until regenerated from the final routed revision.
+
+## Sources inspected for this checkpoint
+
+The 2026-09-08 handoff was based on the active branch and the current repository sources, including:
+
+- `AGENTS.md`;
+- `README.md`;
+- `docs/PROJECT_STATE.md`;
+- `docs/DECISIONS.md`;
+- `docs/TODO.md`;
+- `hardware/Filament_Dryer_Monitor.kicad_pcb`;
+- `hardware/Filament_Dryer_Monitor.kicad_pro`;
+- `hardware/Power.kicad_sch`;
+- `hardware/Filament_Dryer_Monitor.net`.
+
+The KiCad files remain authoritative if prose documentation disagrees.
 
 ## Authoritative electrical state
 
-Active schematic implementation: `hardware/Power.kicad_sch`.
+Active buck schematic implementation: `hardware/Power.kicad_sch`.
 
 Current exported netlist: `hardware/Filament_Dryer_Monitor.net`, generated with Eeschema 10.0.4 on 2026-09-04.
 
@@ -23,11 +42,9 @@ The four schematic closure gates completed on 2026-09-04 remain closed:
 3. Effective-capacitance / compensation sensitivity reviewed for the sourced capacitors.
 4. AutoEN comparator and EN corner levels reviewed.
 
-Current ERC report: one reviewed `power_pin_not_driven` modeling error on the externally-fed GND net plus 11 reviewed warnings. This is the state enforced by CI.
+Current reviewed ERC state remains one `power_pin_not_driven` modeling error on externally-fed GND plus eleven reviewed warnings, enforced by CI.
 
 ## L7987L implementation
-
-Key final schematic values:
 
 | Ref | Value / part | Function |
 |---|---|---|
@@ -40,14 +57,14 @@ Key final schematic values:
 | C3 | 1 µF, 100 V | Local VIN/VCC bypass |
 | C6 | 100 nF | BOOT-LX bootstrap |
 | C10 | 47 µF, 10 V X7R | Main pre-bead output capacitor |
-| C21 | 1 µF, 25 V | VBIAS/output bypass |
+| C21 | 1 µF, 25 V | VBIAS bypass |
 | R4 | 47 kΩ | FSW, about 516 kHz nominal |
 | R29 | 47.5 kΩ | ILIM, about 1.705 A nominal |
 | R33/C9/C8 | 16 kΩ / 18 nF / 39 pF | Type-III compensation branch |
 | R35/C20 | 1.13 kΩ / 560 pF | Type-III compensation branch |
 | R36/R34 | 49.9 kΩ / 16 kΩ | Feedback divider, about 3.295 V nominal |
 
-Output architecture remains `3V3_BUCK -> FB1 -> 3V3_MCU`. `PGOOD` and `SYNCH` are intentionally NC. The existing upstream C5 = 100 µF / 50 V bulk reservoir remains.
+Output architecture remains `3V3_BUCK -> FB1 -> 3V3_MCU`. `PGOOD` and `SYNCH` are intentionally NC. Upstream C5 = 100 µF / 50 V remains.
 
 Recorded simulation/design-review results remain approximately 59.1 kHz crossover, 64.9° phase margin and 19.6 dB gain margin. These are simulation results, not hardware measurements.
 
@@ -55,22 +72,26 @@ Recorded simulation/design-review results remain approximately 59.1 kHz crossove
 
 Current board file: `hardware/Filament_Dryer_Monitor.kicad_pcb`.
 
-Verified at the 2026-09-07 checkpoint:
+At the latest PCB checkpoint:
 
-- old `AP66200` and `/Power/VCC_AP66200` are absent from the current PCB;
-- U5 is the L7987L on **B.Cu**;
-- buck and AutoEN components have been placed and their placement has undergone an initial review against ST/TI guidance;
-- local B.Cu copper zones are already being developed for `24V_PROT`, `/Power/3V3_BUCK`, GND and the LX node `Net-(D7-K)`;
-- U5 exposed pad is GND/`SGND_17`; thermal/GND via and final paste strategy are not yet closed;
-- critical buck routing and final ground-via geometry are still in progress.
+- old `AP66200` and `/Power/VCC_AP66200` are absent;
+- U5 and the buck/AutoEN block are on **B.Cu**;
+- the placement has been iterated against the ST L7987L / STEVAL-ISA198V1 layout and TI comparator guidance;
+- in the current physical board view the **VIN/VCC side of U5 is the left side**;
+- C3 is the closest local 1 µF VIN/VCC bypass; C1 is on the same VIN side, slightly more external;
+- C21 is intentionally kept close to U5 pin 1 VBIAS and does not need to be moved to create a superficial PGND corridor;
+- C6 is BOOT-to-LX and is not part of the GND network;
+- C10 / FB1 / C11 remain the output-side sequence;
+- FB/COMP parts are kept in the quiet region away from LX/high-current copper;
+- local B.Cu copper/zones are being developed for `24V_PROT`, `/Power/3V3_BUCK`, GND and LX;
+- U5 exposed pad is GND/`SGND_17`; **thermal/GND via count, diameter, spacing and paste strategy are the immediate open implementation item**;
+- critical routing is not yet frozen.
 
-Do not use old coordinate/rotation notes from chats as authoritative: placement has changed during the layout pass. Inspect the current board.
+Do not use old chat coordinate/rotation notes as authoritative. Placement has changed. For B.Cu pad-direction review, use KiCad absolute pad positions or the actual board view.
 
-## Stackup and ground planes
+## Stackup and inner planes
 
-Current KiCad stackup:
-
-| Layer | Copper / spacing | Current role |
+| Layer | Copper / spacing | Role |
 |---|---|---|
 | F.Cu | 35 µm | front components/signals |
 | dielectric 1 | 0.10 mm FR4, Er 4.5 | F.Cu to In1 |
@@ -78,41 +99,36 @@ Current KiCad stackup:
 | core | 1.24 mm FR4, Er 4.5 | inner separation |
 | In2.Cu | 35 µm | **solid GND plane** |
 | dielectric 3 | 0.10 mm FR4, Er 4.5 | In2 to B.Cu |
-| B.Cu | 35 µm | back components/signals + buck local copper |
+| B.Cu | 35 µm | back components/signals + local buck/power copper |
 
-This is a deliberate project decision: **both inner layers are full GND reference planes. There is no internal 3V3 or 24 V plane.**
+This is a closed project decision: **In1 and In2 are both full GND planes. There is no internal 3V3 or 24 V power plane.**
 
-For the B.Cu buck, In2 is the nearest reference plane at only 0.10 mm.
+For the B.Cu buck, In2 is the nearest reference plane at 0.10 mm.
 
-## Buck ground implementation
+## Buck PGND / SGND implementation
 
-ST distinguishes power-ground and signal-ground current paths. In this project they remain the **same electrical `GND` net** and the inner planes are not split.
+ST distinguishes power-ground and signal-ground current paths. In this project they are the **same KiCad `GND` net** and the inner planes are not split.
 
-The practical distinction is local geometry and via entry points:
+High-current/pulsed return group:
 
-- high-current/pulsed return group: C1 negative, D7 anode, C10 negative;
-- quiet/signal return group: U5 pin 16 + exposed pad, C3 negative, C21 negative and the sensitive control network.
+- C1 negative;
+- D7 anode;
+- C10 negative.
 
-Each group enters the same continuous internal GND planes with short local connections/vias. Layout must avoid forcing the pulsed buck return current through the quiet local return copper around the feedback/compensation circuitry.
+Quiet/signal return group:
 
-## Placement principles already established
+- U5 pin 16 and exposed pad;
+- C3 negative;
+- C21 negative;
+- sensitive feedback/compensation/control returns.
 
-Use the ST L7987L datasheet and STEVAL-ISA198V1 Gerbers as the primary buck layout reference.
+The practical distinction is **local B.Cu geometry and where the vias enter the common continuous GND planes**. The pulsed current must not be forced through the quiet local return region.
 
-Important current interpretation:
+A continuous B.Cu GND strip from C1− to D7/C10− is **not required** merely because ST calls those paths PGND. C1−, D7 anode and C10− may each enter the common inner GND planes through very short nearby vias, with the planes providing the low-impedance common return. C21 therefore does not need to be displaced simply to create a B.Cu PGND corridor across the top of U5.
 
-- VIN/VCC are on the **left side of U5 in the current physical board view**;
-- C3 is the local 1 µF bypass and gets highest proximity priority to VIN/VCC;
-- C1 is the 10 µF main input ceramic and belongs on the same VIN side, slightly more external than C3 if necessary;
-- C21 stays close to U5 pin 1 VBIAS and does not need to be moved merely to create a surface GND corridor;
-- C6 is BOOT-to-LX and is not a GND component;
-- FB/COMP components remain in the quiet area and must be kept away from high-current/LX copper.
+## Netclasses checkpoint
 
-For any bottom-side pad-orientation check, use KiCad absolute pad positions or the actual board view. Do not manually interpret raw local footprint coordinates.
-
-## Netclasses
-
-Current accepted power/default classes:
+Power/default netclasses were reviewed and accepted at the end of the previous chat:
 
 | Class | Clearance | Track width | Via diameter / drill |
 |---|---:|---:|---:|
@@ -124,23 +140,20 @@ Current accepted power/default classes:
 
 Assignments include `3V3_MCU` and `/Power/3V3_BUCK` -> Power_3V3; `24V_PROT`, `/Power/JACK_24V_RAW`, `/Power/FUSE_OUT` -> Power_24V; `HEATER_SW` -> Power_Heat; `USB_DP`/`USB_DM` -> USB.
 
-**Open item:** USB-class differential-pair width/gap fields are not yet finalized. The Default class currently contains 0.20 mm DP width / 0.25 mm DP gap, but these values must not be assumed valid for USB. Calculate/verify the USB pair against the actual 0.10 mm B.Cu-to-In2 GND stackup before routing freeze.
+**USB differential-pair geometry remains open.** In the reviewed Board Setup screenshot, the USB class DP width/gap fields were still blank. The Default class contained 0.20 mm DP width / 0.25 mm DP gap, but these values must not be assumed valid for USB. Calculate/verify the USB pair against the actual B.Cu-to-In2 stackup before routing freeze.
 
-## DRC and manufacturing state
+## Exact handoff point for the next chat
 
-`hardware/DRC.rpt` is historical, dated 2026-08-06, from before the current L7987L PCB integration. It must not be used as evidence that the present PCB passes DRC.
+The next chat must bootstrap from `AGENTS.md`, then inspect the current branch and current board rather than relying on this prose alone.
 
-A **fresh DRC is required** after current routing/layout work is complete.
+The immediate work sequence is:
 
-Production Gerbers, CPL/position data, BOM exports and production netlists are not released for fabrication until:
+1. **U5 exposed pad:** define/verify the GND/thermal via matrix and paste strategy against ST package guidance and the intended JLCPCB process. The previous chat ended while preparing to place these vias; do not assume a final via pattern is already committed unless the current PCB shows it.
+2. Place the remaining local GND vias for the high-current group (C1−, D7 anode, C10−) and quiet group (U5 EP/pin16, C3−, C21−), all into the same solid inner GND planes.
+3. Finish critical input/VIN, BOOT/LX/D7/L1, output and FB/COMP routing against the ST reference.
+4. Finish AutoEN routing.
+5. Decide DFT access before routing freeze.
+6. Calculate and configure USB differential-pair geometry.
+7. Complete full-board review, run a fresh DRC, then regenerate production outputs.
 
-- layout review is complete;
-- current DRC is reviewed and closed;
-- manufacturing outputs are regenerated from the same final revision;
-- generated production data is reconciled against the final purchasing BOM.
-
-## Immediate handoff
-
-The next chat should start by reading `AGENTS.md`, this file, `docs/DECISIONS.md` and `docs/TODO.md`, then inspect the current PCB at the latest branch HEAD.
-
-The immediate design task is **continue the L7987L PCB layout from the current B.Cu placement/zones**, beginning with U5 exposed-pad/GND via strategy and the local PGND/SGND current-return geometry, then finish critical buck routing.
+The historical `hardware/DRC.rpt` is not evidence that this PCB passes DRC.
