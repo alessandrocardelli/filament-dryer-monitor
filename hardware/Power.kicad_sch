@@ -10787,7 +10787,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "STPS2L60A"
+		(property "Value" "PMEG6030EP"
 			(at 147.32 121.9199 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10798,7 +10798,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMA"
+		(property "Footprint" "D_SOD-128"
 			(at 144.78 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -10864,7 +10864,7 @@
 				)
 			)
 		)
-		(property "MPN" "STPS2L60A"
+		(property "MPN" "PMEG6030EP.115"
 			(at 144.78 120.65 90)
 			(hide yes)
 			(show_name no)
@@ -10875,7 +10875,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "STMicroelectronics"
+		(property "Manufacturer" "Nexperia"
 			(at 144.78 120.65 90)
 			(hide yes)
 			(show_name no)
