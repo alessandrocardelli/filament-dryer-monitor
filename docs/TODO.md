@@ -38,7 +38,7 @@ Latest PCB-only checkpoint recorded for this handoff: **`e8741347ef5570948a11157
 
 - [ ] Decide whether to add convenient test access for `3V3_BUCK`.
 - [ ] Decide whether to add COMP test access.
-- [ ] Decide whether to add EN / AutoEN-node test access.
+- [ ] Add EN / AutoEN-node test access. Now required rather than optional: AutoEN is confirmed necessary (D013) and EN is the node that distinguishes a buck fault from an AutoEN shutdown.
 - [ ] Ensure convenient local GND probe access near the buck.
 - [ ] Avoid a large dedicated LX test pad; if LX must be probed during bring-up, prefer existing D7/L1/U5 switch-node access with a very short probe ground.
 
@@ -76,4 +76,6 @@ Latest PCB-only checkpoint recorded for this handoff: **`e8741347ef5570948a11157
 - [ ] Measure U5, D7, L1 and relevant capacitor temperatures under representative load.
 - [ ] Verify fault current/current-limit behavior.
 - [ ] Verify AutoEN COMP threshold, shutdown/retry timing and clean restart after fault removal.
+- [ ] Follow `docs/ASSEMBLY.md`: assemble without R5, confirm 3.3 V, then fit R5 and confirm 3.3 V again before any fault testing.
+- [ ] Confirm the foldback-lock recovery point on hardware. Simulation settles at ~1.5 V with FB ~0.36 V against a 400 mV release threshold — about 150 mV of margin. The real ESP32 load draws far less than 0.45 A at 1.5 V, so the lock may not occur with the actual load; establish where the boundary is.
 - [ ] Validate the remaining NTC/firmware safety calibration work before enabling the heater in normal operation.

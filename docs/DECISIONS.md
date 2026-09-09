@@ -113,3 +113,51 @@ The historical `hardware/DRC.rpt` is not a release gate for the current PCB. No 
 **Status:** accepted.
 
 PCB placement/routing refinements that do not change electrical topology/component values do not reopen schematic sign-off. If layout forces an electrical or component change, explicitly reopen the relevant schematic-review gate, update the schematic/netlist first, then resynchronize the PCB and documentation.
+
+## D012 — C22 added as second 1 µF bypass for U5 VIN/VCC
+
+**Status:** accepted.
+
+The L7987L datasheet requires a 1 µF or larger ceramic local to both the VIN pins and the
+VCC pin (sections 5.1 and 5.6); the ST demo board implements this as two separate 1 µF
+parts. The design previously carried a single C3 because `24V_PROT` feeds VIN1, VIN2 and
+VCC on one net. C22 (`GRJ21BC72A105KE11L`, 1 µF 100 V X7S 0805, identical to C3) was added
+2026-09-09.
+
+Electrically the two are in parallel on `24V_PROT`; the requirement is physical. C3 stays
+as the VCC bypass at pin 4, C22 becomes the VIN bypass at pins 2/3. Their functional names
+(`C_vcc_buck1`, `C_vin_byp1`) carry that placement intent and must not be made identical.
+
+The 25 V `GCM188R71E105KA64J` used for C15/C17/C21 is not an acceptable substitute here —
+it has no voltage margin on a 24 V rail.
+
+## D013 — AutoEN is required; validated failure mechanism is foldback lock
+
+**Status:** accepted. Supersedes the rationale recorded in `BUCK_L7987L_DESIGN.md` section 11.
+
+A datasheet-only review argued that the L7987L handles a persistent output fault natively
+via pulse-by-pulse OCP, pulse skipping and FB foldback, and that AutoEN might therefore be
+redundant complexity protecting against a simulation artifact.
+
+Simulation on 2026-09-09 disproved that argument. The device protections are present and
+work as documented, but recovery does not occur: foldback holds the output at ~1.5 V, which
+keeps FB at ~0.36 V, below the 400 mV release threshold, indefinitely. Full detail in
+`BUCK_L7987L_DESIGN.md` section 11.1.
+
+AutoEN stays. Two of the three objections raised during that review were withdrawn on
+evidence; the third — failure direction of U1 — is addressed by assembly order (D014).
+
+Process note: the existing simulation evidence was the strongest available and should have
+been examined before a datasheet argument was built against a closed decision.
+
+## D014 — R5 unpopulated for initial bring-up
+
+**Status:** accepted.
+
+R5 (100 kΩ, TLV1701 open-collector pull-up) is not fitted at first assembly. A missing or
+badly soldered U1 otherwise holds EN low through R5/Q7 and the board produces no 3.3 V rail,
+which at first power-up is indistinguishable from a buck failure.
+
+With R5 absent, R30 holds the Q7 base at ground and EN is free. R5 is fitted after the
+regulator is confirmed working. No schematic or netlist change; the schematic carries a
+`DNP at first assembly` note on R5 and the procedure lives in `docs/ASSEMBLY.md`.

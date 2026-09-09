@@ -306,6 +306,68 @@ Nominal VEN ~3.13 V at 24 V; reviewed low-line/tolerance EN-high remains ~2.7 V 
 
 Recorded persistent-fault simulation showed repeated shutdown/retry and clean eventual restart after the fault was removed.
 
+### 11.1 Why AutoEN is required — foldback lock, identified 2026-09-09
+
+The original justification recorded here was only "COMP remained saturated in a deep-short
+simulation". The actual mechanism has since been isolated and is more specific than that.
+
+Overload/recovery simulation, SIMPLIS, testbench derived from
+`TB_L7987L_STEVAL-ISA198V1_LoadTransient` with project values
+(24 V in, 3.3 V out, L1 15 µH / 95.8 mΩ, RILIM 47.5 kΩ, RFSW 47 kΩ,
+COUT 23.5 µF and CIN 7.5 µF as DC-bias-derated effective values).
+Load stepped 1 A -> 3 A at 20 ms, released at 45 ms, run to 60 ms.
+
+Observed sequence:
+
+1. During the fault FB falls below the 400 mV `VFOLD` threshold and the peak current limit
+   folds back to one third. Inductor current drops from ~1.2 A to ~0.45 A, confirming that
+   the model does implement the datasheet section 4.5 protections — the earlier suspicion
+   that this was an incomplete-model artifact is disproved.
+2. After the fault is removed the converter can only deliver the folded-back current.
+3. ~0.45 A into the 3.3 Ω recovery load settles the output at ~1.5 V.
+4. At 1.5 V the divider puts FB at ~0.36 V, still below the 400 mV threshold.
+5. Foldback therefore never releases. The converter latches in a stable sub-threshold
+   operating point and does not return to 3.3 V within the simulated window.
+
+The margin is thin: leaving foldback needs roughly 1.65 V at the output and the circuit
+settles at ~1.5 V, about 150 mV short. The datasheet statement that the full limit is
+restored as soon as FB rises above `VFOLD` is correct but not sufficient — nothing in the
+device drives FB back across the threshold.
+
+The device protection prevents inductor current runaway. It does not guarantee recovery.
+Those are separate properties and only the first is covered by the datasheet analysis.
+
+### 11.2 Measured COMP levels and threshold placement
+
+From the same simulation:
+
+| Condition | COMP |
+|---|---|
+| Steady state, 1 A load | ~0.25 V |
+| Persistent fault | ~3.3 V (saturated) |
+
+The R1/R2 threshold window of approximately 1.56–2.07 V sits between the two with wide
+margin on both sides. This supersedes the earlier tolerance-only corner analysis with
+observed levels, and removes a previously raised concern that input-rail sag from heater
+switching could drag the threshold into a false trip: at 0.25 V steady-state COMP the
+available margin is roughly a factor of six.
+
+### 11.3 Single-failure direction — R5 not populated at first assembly
+
+U1 has an open-collector output. If U1 is absent, damaged, or has an unsoldered pin, the
+output node is pulled up through R5, Q7 conducts and EN is held low. The board produces no
+3.3 V rail at all.
+
+This is the wrong failure direction for an auxiliary protection block: a fault-recovery
+accessory should degrade to "unprotected but working", not to "dead board". The practical
+exposure is assembly rather than field failure — U1 is a hand-soldered SOT-23-5, and a
+single cold joint at first power-up presents as a dead buck, sending debugging effort to
+U5, L1 and the feedback network while the regulator itself is healthy.
+
+Resolution is assembly order, not a schematic change. R5 is left unpopulated for initial
+bring-up; R30 then holds the Q7 base at ground, Q7 stays off and EN is free. See
+`docs/ASSEMBLY.md`.
+
 **Gate: CLOSED for schematic sign-off.** Comparator propagation, EN timing, COMP waveform and restart behavior remain prototype measurements.
 
 ---
