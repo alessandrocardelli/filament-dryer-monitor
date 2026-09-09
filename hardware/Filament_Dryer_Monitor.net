@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\Users\\utente\\Documents\\KiCad\\10.0\\projects\\Filament_Dryer_Monitor\\hardware\\Filament_Dryer_Monitor.kicad_sch")
-		(date "2026-09-04T20:40:00")
+		(date "2026-09-09T17:30:20")
 		(tool "Eeschema 10.0.4")
 		(sheet
 			(number "1")
@@ -1382,6 +1382,96 @@
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
 			(tstamps "1c828135-337e-4625-9b6f-7b11b4a8d5f0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C22")
+			(value "1u")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
+			(description "Unpolarized capacitor")
+			(fields
+				(field
+					(name "Function") "C_vcc_buck1")
+				(field
+					(name "Dielectric") "X7S")
+				(field
+					(name "Tolerance") "10%")
+				(field
+					(name "Voltage") "100V")
+				(field
+					(name "MPN") "GRJ21BC72A105KE11L")
+				(field
+					(name "Manufacturer") "MURATA")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "Function")
+				(value "C_vcc_buck1")
+			)
+			(property
+				(name "Dielectric")
+				(value "X7S")
+			)
+			(property
+				(name "Tolerance")
+				(value "10%")
+			)
+			(property
+				(name "Voltage")
+				(value "100V")
+			)
+			(property
+				(name "MPN")
+				(value "GRJ21BC72A105KE11L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "MURATA")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "f26d158c-d628-4424-864f-d887b25231b3")
 			(units
 				(unit
 					(name "A")
@@ -12944,6 +13034,11 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "C22")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
 				(ref "C3")
 				(pin "1")
 				(pintype "passive")
@@ -13227,6 +13322,11 @@
 			)
 			(node
 				(ref "C21")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C22")
 				(pin "2")
 				(pintype "passive")
 			)

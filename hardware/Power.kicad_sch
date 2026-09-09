@@ -1636,6 +1636,190 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Filament_Dryer_Custom:BZX84C15-7-F"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "D"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "BZX84C15-7-F"
+				(at 0 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.diodes.com/datasheet/download/BZX84C2V4%20-%20BZX84C51.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "BZX84C15-7-F 15 V surface-mount Zener diode, SOT-23; pin 1 A, pin 2 NC, pin 3 K"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "diode"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "BZX84C15-7-F_0_1"
+				(polyline
+					(pts
+						(xy -1.27 -1.27) (xy -1.27 1.27) (xy -0.762 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy -1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -1.27) (xy 1.27 1.27) (xy -1.27 0) (xy 1.27 -1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "BZX84C15-7-F_1_1"
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin no_connect line
+					(at 0 3.81 270)
+					(length 2.54)
+					(name "NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Filament_Dryer_Custom:TLV1701AIDBVR"
 			(pin_names
 				(offset 0.127)
@@ -3056,192 +3240,6 @@
 			)
 			(embedded_fonts no)
 		)
-
-		(symbol "Filament_Dryer_Custom:BZX84C15-7-F"
-					(pin_numbers
-						(hide yes)
-					)
-					(pin_names
-						(offset 1.016)
-						(hide yes)
-					)
-					(exclude_from_sim no)
-					(in_bom yes)
-					(on_board yes)
-					(in_pos_files yes)
-					(duplicate_pin_numbers_are_jumpers no)
-					(property "Reference" "D"
-						(at 0 2.54 0)
-						(show_name no)
-						(do_not_autoplace no)
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(property "Value" "BZX84C15-7-F"
-						(at 0 -2.54 0)
-						(show_name no)
-						(do_not_autoplace no)
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-						(at 0 0 0)
-						(show_name no)
-						(do_not_autoplace no)
-						(hide yes)
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(property "Datasheet" "https://www.diodes.com/datasheet/download/BZX84C2V4%20-%20BZX84C51.pdf"
-						(at 0 0 0)
-						(show_name no)
-						(do_not_autoplace no)
-						(hide yes)
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(property "Description" "BZX84C15-7-F 15 V surface-mount Zener diode, SOT-23; pin 1 A, pin 2 NC, pin 3 K"
-						(at 0 0 0)
-						(show_name no)
-						(do_not_autoplace no)
-						(hide yes)
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(property "ki_keywords" "diode"
-						(at 0 0 0)
-						(show_name no)
-						(do_not_autoplace no)
-						(hide yes)
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
-						(at 0 0 0)
-						(show_name no)
-						(do_not_autoplace no)
-						(hide yes)
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(symbol "BZX84C15-7-F_0_1"
-						(polyline
-							(pts
-								(xy -1.27 -1.27) (xy -1.27 1.27) (xy -0.762 1.27)
-							)
-							(stroke
-								(width 0.254)
-								(type default)
-							)
-							(fill
-								(type none)
-							)
-						)
-						(polyline
-							(pts
-								(xy 1.27 0) (xy -1.27 0)
-							)
-							(stroke
-								(width 0)
-								(type default)
-							)
-							(fill
-								(type none)
-							)
-						)
-						(polyline
-							(pts
-								(xy 1.27 -1.27) (xy 1.27 1.27) (xy -1.27 0) (xy 1.27 -1.27)
-							)
-							(stroke
-								(width 0.254)
-								(type default)
-							)
-							(fill
-								(type none)
-							)
-						)
-					)
-					(symbol "BZX84C15-7-F_1_1"
-						(pin passive line
-							(at -3.81 0 0)
-							(length 2.54)
-							(name "K"
-								(effects
-									(font
-										(size 1.27 1.27)
-									)
-								)
-							)
-							(number "3"
-								(effects
-									(font
-										(size 1.27 1.27)
-									)
-								)
-							)
-						)
-						(pin passive line
-							(at 3.81 0 180)
-							(length 2.54)
-							(name "A"
-								(effects
-									(font
-										(size 1.27 1.27)
-									)
-								)
-							)
-							(number "1"
-								(effects
-									(font
-										(size 1.27 1.27)
-									)
-								)
-							)
-						)
-
-		(pin no_connect line
-			(at 0 3.81 270)
-			(length 2.54)
-			(name "NC"
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(number "2"
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-		)
-	)
-					(embedded_fonts no)
-				)
 	)
 	(junction
 		(at 107.95 81.28)
@@ -3268,13 +3266,19 @@
 		(uuid "0ed5ee62-554a-4847-973d-a6944b89f4c7")
 	)
 	(junction
+		(at 107.95 78.74)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0ef4a468-612a-4ec9-8351-522d7816be77")
+	)
+	(junction
 		(at 160.02 35.56)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "107a813e-b831-46ed-842f-35c391224ab5")
 	)
 	(junction
-		(at 77.47 78.74)
+		(at 66.04 78.74)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "23343b8d-3d83-4939-a86d-4d41b955be97")
@@ -3302,12 +3306,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "2c867d63-9d35-4a28-83f2-c11940782f1c")
-	)
-	(junction
-		(at 107.95 78.74)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "2e6e0e1b-f54d-4d3a-8004-5d77e88b42cb")
 	)
 	(junction
 		(at 171.45 78.74)
@@ -3376,13 +3374,13 @@
 		(uuid "74accfb9-3766-485d-903a-356a00fb8308")
 	)
 	(junction
-		(at 77.47 115.57)
+		(at 66.04 115.57)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "79844a5a-2380-4761-bd42-3f366d6152f1")
 	)
 	(junction
-		(at 64.77 78.74)
+		(at 53.34 78.74)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7b9d634b-2be1-4317-b211-3bbe27606583")
@@ -3436,22 +3434,34 @@
 		(uuid "b36cca91-94bc-4b6b-bf62-3b6e7f0820f7")
 	)
 	(junction
+		(at 76.2 78.74)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c233547a-ee93-469f-8bcc-f22973d5cd57")
+	)
+	(junction
 		(at 110.49 156.21)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c4486e58-cfdd-4a73-b05a-3f0bde45321f")
 	)
 	(junction
-		(at 87.63 115.57)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d9daf073-4bc1-41f3-9518-5949e688fc4d")
-	)
-	(junction
 		(at 180.34 105.41)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "db49e0c6-553d-4f9a-8d90-fa6d3cc2cdb8")
+	)
+	(junction
+		(at 87.63 115.57)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e687a0c9-cc80-4988-abc7-c2d355b063a7")
+	)
+	(junction
+		(at 76.2 115.57)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f28863aa-a6d7-49f8-a69f-9c6fffc78226")
 	)
 	(junction
 		(at 144.78 96.52)
@@ -3523,7 +3533,7 @@
 	)
 	(wire
 		(pts
-			(xy 64.77 92.71) (xy 64.77 78.74)
+			(xy 53.34 92.71) (xy 53.34 78.74)
 		)
 		(stroke
 			(width 0)
@@ -3580,6 +3590,16 @@
 			(type default)
 		)
 		(uuid "10f9c5f1-f379-4ca5-ab63-7fb0462c93f7")
+	)
+	(wire
+		(pts
+			(xy 76.2 78.74) (xy 76.2 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "12142db7-5890-43e7-bdff-971b94b2e833")
 	)
 	(wire
 		(pts
@@ -3733,7 +3753,7 @@
 	)
 	(wire
 		(pts
-			(xy 64.77 115.57) (xy 77.47 115.57)
+			(xy 53.34 115.57) (xy 66.04 115.57)
 		)
 		(stroke
 			(width 0)
@@ -3790,6 +3810,16 @@
 			(type default)
 		)
 		(uuid "4c58f07f-e6b8-4ac6-a24d-368c6bb00f10")
+	)
+	(wire
+		(pts
+			(xy 76.2 115.57) (xy 87.63 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "51f5e478-ebbe-4645-8591-bce280c40495")
 	)
 	(wire
 		(pts
@@ -3863,7 +3893,7 @@
 	)
 	(wire
 		(pts
-			(xy 77.47 115.57) (xy 87.63 115.57)
+			(xy 66.04 115.57) (xy 76.2 115.57)
 		)
 		(stroke
 			(width 0)
@@ -4013,7 +4043,17 @@
 	)
 	(wire
 		(pts
-			(xy 64.77 100.33) (xy 64.77 115.57)
+			(xy 76.2 78.74) (xy 107.95 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "77958f7f-f7b0-497b-89b7-e87ff6057446")
+	)
+	(wire
+		(pts
+			(xy 53.34 100.33) (xy 53.34 115.57)
 		)
 		(stroke
 			(width 0)
@@ -4033,7 +4073,7 @@
 	)
 	(wire
 		(pts
-			(xy 77.47 100.33) (xy 77.47 115.57)
+			(xy 66.04 100.33) (xy 66.04 115.57)
 		)
 		(stroke
 			(width 0)
@@ -4243,7 +4283,7 @@
 	)
 	(wire
 		(pts
-			(xy 62.23 78.74) (xy 64.77 78.74)
+			(xy 50.8 78.74) (xy 53.34 78.74)
 		)
 		(stroke
 			(width 0)
@@ -4493,7 +4533,7 @@
 	)
 	(wire
 		(pts
-			(xy 77.47 78.74) (xy 77.47 92.71)
+			(xy 66.04 78.74) (xy 66.04 92.71)
 		)
 		(stroke
 			(width 0)
@@ -4603,7 +4643,7 @@
 	)
 	(wire
 		(pts
-			(xy 77.47 78.74) (xy 107.95 78.74)
+			(xy 66.04 78.74) (xy 76.2 78.74)
 		)
 		(stroke
 			(width 0)
@@ -4643,13 +4683,23 @@
 	)
 	(wire
 		(pts
-			(xy 64.77 78.74) (xy 77.47 78.74)
+			(xy 53.34 78.74) (xy 66.04 78.74)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "fa75667c-d642-47cc-8bf6-3fbf8a7e565a")
+	)
+	(wire
+		(pts
+			(xy 76.2 100.33) (xy 76.2 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fa92a423-0d56-4c19-a3d3-4f8368fbafea")
 	)
 	(wire
 		(pts
@@ -4811,7 +4861,7 @@
 	)
 	(global_label "24V_PROT"
 		(shape passive)
-		(at 62.23 78.74 180)
+		(at 50.8 78.74 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4821,7 +4871,7 @@
 		)
 		(uuid "68a0b4a5-e4d6-4f9d-babc-47657a015255")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 53.2804 78.74 0)
+			(at 41.8504 78.74 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8383,7 +8433,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 77.47 96.52 0)
+		(at 66.04 96.52 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8393,7 +8443,7 @@
 		(dnp no)
 		(uuid "78b55b31-9fce-443c-b7d4-7d4d41b947df")
 		(property "Reference" "C3"
-			(at 80.391 95.25 0)
+			(at 68.961 95.25 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8404,7 +8454,7 @@
 			)
 		)
 		(property "Value" "1u"
-			(at 80.391 97.79 0)
+			(at 68.961 97.79 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8415,7 +8465,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-			(at 78.4352 100.33 0)
+			(at 67.0052 100.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8426,7 +8476,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 77.47 96.52 0)
+			(at 66.04 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8437,7 +8487,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 77.47 96.52 0)
+			(at 66.04 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8448,7 +8498,7 @@
 			)
 		)
 		(property "Function" "C_vcc_buck1"
-			(at 77.47 96.52 0)
+			(at 66.04 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8459,7 +8509,7 @@
 			)
 		)
 		(property "Dielectric" "X7S"
-			(at 77.47 96.52 0)
+			(at 66.04 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8470,7 +8520,7 @@
 			)
 		)
 		(property "Tolerance" "10%"
-			(at 77.47 96.52 0)
+			(at 66.04 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8481,7 +8531,7 @@
 			)
 		)
 		(property "Voltage" "100V"
-			(at 77.47 96.52 0)
+			(at 66.04 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8492,7 +8542,7 @@
 			)
 		)
 		(property "MPN" "GRJ21BC72A105KE11L"
-			(at 77.47 96.52 0)
+			(at 66.04 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8503,7 +8553,7 @@
 			)
 		)
 		(property "Manufacturer" "MURATA"
-			(at 77.47 96.52 0)
+			(at 66.04 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10853,7 +10903,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 64.77 96.52 0)
+		(at 53.34 96.52 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10863,7 +10913,7 @@
 		(dnp no)
 		(uuid "b87d9bbe-de9b-4f33-a2d1-e743e8b47b8f")
 		(property "Reference" "C1"
-			(at 67.818 95.504 0)
+			(at 56.388 95.504 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10874,7 +10924,7 @@
 			)
 		)
 		(property "Value" "10u"
-			(at 67.818 98.044 0)
+			(at 56.388 98.044 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10885,7 +10935,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
-			(at 65.7352 100.33 0)
+			(at 54.3052 100.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10896,7 +10946,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 64.77 96.52 0)
+			(at 53.34 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10907,7 +10957,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 64.77 96.52 0)
+			(at 53.34 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10918,7 +10968,7 @@
 			)
 		)
 		(property "Function" "Cin_buck1"
-			(at 64.77 96.52 0)
+			(at 53.34 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10929,7 +10979,7 @@
 			)
 		)
 		(property "Dielectric" "X7S"
-			(at 64.77 96.52 0)
+			(at 53.34 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10940,7 +10990,7 @@
 			)
 		)
 		(property "Tolerance" "10%"
-			(at 64.77 96.52 0)
+			(at 53.34 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10951,7 +11001,7 @@
 			)
 		)
 		(property "Voltage" "100V"
-			(at 64.77 96.52 0)
+			(at 53.34 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10962,7 +11012,7 @@
 			)
 		)
 		(property "MPN" "GRM32EC72A106KE05L"
-			(at 64.77 96.52 0)
+			(at 53.34 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10973,7 +11023,7 @@
 			)
 		)
 		(property "Manufacturer" "MURATA"
-			(at 64.77 96.52 0)
+			(at 53.34 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11304,6 +11354,9 @@
 		)
 		(pin "2"
 			(uuid "e92ea0ef-9858-4a05-b276-980cb9d9f549")
+		)
+		(pin "3"
+			(uuid "e9a85bcd-70a3-42aa-a73c-66eaca0f73f8")
 		)
 		(instances
 			(project "Filament_Dryer_Monitor"
@@ -11769,6 +11822,153 @@
 			(project "Filament_Dryer_Monitor"
 				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
 					(reference "#PWR055")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 76.2 96.52 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "f26d158c-d628-4424-864f-d887b25231b3")
+		(property "Reference" "C22"
+			(at 79.121 95.25 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1u"
+			(at 79.121 97.79 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 77.1652 100.33 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 76.2 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 76.2 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Function" "C_vcc_buck1"
+			(at 76.2 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Dielectric" "X7S"
+			(at 76.2 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Tolerance" "10%"
+			(at 76.2 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Voltage" "100V"
+			(at 76.2 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "MPN" "GRJ21BC72A105KE11L"
+			(at 76.2 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Manufacturer" "MURATA"
+			(at 76.2 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "041819be-3847-4144-a8a6-42acfbac7a49")
+		)
+		(pin "1"
+			(uuid "dafda650-1dc4-4c70-9b9c-48f558b09c61")
+		)
+		(instances
+			(project "Filament_Dryer_Monitor"
+				(path "/ec014e20-abe2-47eb-baf0-3a9eae5bda3f/0e3f9383-1659-4b52-a038-79c57390c0e1"
+					(reference "C22")
 					(unit 1)
 				)
 			)

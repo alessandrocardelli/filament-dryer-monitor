@@ -76,7 +76,12 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        [
+          "silk_edge_clearance|100000000|108718000|e24c11c8-9941-44b7-ba14-fbea6aa8c460|db159c5f-65b1-4532-9ffe-a86093464664",
+          "Silkscreen not important"
+        ]
+      ],
       "meta": {
         "version": 2
       },
