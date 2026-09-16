@@ -1,81 +1,94 @@
 # TODO
 
-Current phase: **L7987L PCB layout/routing** on `pcb/l7987l-layout`.
+Current phase: **PCB release review / manufacturing preparation** on `pcb/l7987l-layout`.
 
-Read `docs/PROJECT_STATE.md` and `docs/DECISIONS.md` before acting on this list. Inspect the actual current KiCad board before assuming coordinates or placement from older notes.
+Hardware checkpoint before this documentation refresh: **`9da46e7953f801073882fd1934802fa8ace1f1c2`**.
 
-Latest PCB-only checkpoint recorded for this handoff: **`e8741347ef5570948a1115719ae65fbc0de02ce6`**. Documentation commits may advance branch HEAD without changing the board.
+Read `docs/PROJECT_STATE.md` and `docs/DECISIONS.md` before acting. The KiCad source files override this list if they disagree.
 
-## Completed before this checkpoint
+## Completed
 
-- [x] L7987L + AutoEN schematic integrated in `hardware/Power.kicad_sch`.
-- [x] Schematic engineering review signed off 2026-09-04.
-- [x] ERC regression gate added to CI with the exact reviewed waiver/warning set.
-- [x] TME sourcing / MPN synchronization / footprint audit closed for the current schematic.
-- [x] PCB synchronized from the L7987L schematic; legacy AP66200 stage removed.
-- [x] Buck and AutoEN components moved to B.Cu and initial placement reviewed.
-- [x] Stackup decision closed: **In1 = solid GND, In2 = solid GND**.
-- [x] In1 and In2 contain full-board GND zones; there are no internal 3V3/24 V power planes.
-- [x] PGND/SGND implementation decision closed: same `GND` net and same continuous inner planes; distinction is local current-return geometry/via placement, not split planes/nets.
-- [x] Power/default netclass values reviewed and accepted.
-- [x] Current physical placement convention recorded: U5 VIN/VCC side is the **left side** in the board view; C3 closest to VIN/VCC, C1 same side but more external, C21 kept close to pin 1 VBIAS.
+- [x] L7987L + AutoEN schematic integrated and engineering design review completed.
+- [x] Legacy AP66200 removed from current schematic/PCB.
+- [x] 4-layer stackup fixed with **In1 = solid GND** and **In2 = solid GND**.
+- [x] PGND/SGND implementation fixed as current-path regions on the same GND net/planes.
+- [x] Buck/AutoEN components placed on B.Cu.
+- [x] Power/default netclasses configured.
+- [x] PCB routing connectivity completed: current DRC reports **0 unconnected pads**.
+- [x] USB data nets renamed to proper `+`/`-` differential-pair names.
+- [x] USB class configured for **0.20 mm width / 0.25 mm gap**.
+- [x] `USB_90R` tuning profile configured for B.Cu referenced to In2.Cu, target 90 Ω.
+- [x] U2 -> U3 USB pair routed on B.Cu with no vias.
+- [x] USB-C duplicated D+ pad crossover implemented with two short signal vias and nearby GND stitching; D− remains on B.Cu.
+- [x] J2 physical USB mapping corrected: A6/B6 D+, A7/B7 D−; J2 GND/shield pads are GND.
+- [x] CP2102-GM footprint updated to 0.95 × 0.28 mm perimeter pads, +0.06 mm mask expansion, 3.25 mm EP and 3×3 0.9 mm paste apertures.
+- [x] CP2102 REGIN 1 µF / 25 V local bypass added as current ref C22.
+- [x] Fresh DRC run 2026-09-16: **0 errors, 0 unconnected pads**.
 
-## Immediate next action — start here in the next chat
+## Release blockers — do these first
 
-- [ ] **Finalize U5 exposed-pad implementation.** Determine and verify GND/thermal via count, finished/drill diameter, spacing and paste-aperture strategy against ST package guidance and the intended JLCPCB process. The previous chat ended while preparing to place these vias. Do not assume a final via pattern exists unless the current PCB at latest HEAD shows it.
-- [ ] After the EP strategy is fixed, place/review the remaining local GND vias. High-current group: C1−, D7 anode, C10−. Quiet group: U5 pin16/EP, C3−, C21− and sensitive control returns. All connect to the same solid inner GND planes.
-- [ ] Do **not** create a required B.Cu GND corridor from C1− across U5 to D7/C10−. Short local vias into the common planes are allowed; keep the pulsed return geometry away from the quiet local return region.
+- [ ] **Resolve D012 implementation conflict.** The accepted second local 1 µF / 100 V L7987L VIN/VCC bypass is missing from the current Power schematic. C22 is now used by the CP2102 REGIN bypass, so restore the D012 function under a non-conflicting reference or explicitly reopen D012 before changing the design intent.
+- [ ] **Finalize U5 exposed pad.** Current pad 17 is 3.2 × 3.2 mm GND with no thermal vias inside the EP and a full-size paste pad. Define via matrix, drill/diameter/process and stencil/paste windowing against ST + JLCPCB requirements.
+- [ ] **Regenerate netlist after latest MCU schematic edit.** The stored netlist still has J2 D+/D− labels reversed relative to the corrected PCB.
+- [ ] **Regenerate ERC after latest MCU schematic edit.** Stored report has 1 reviewed GND modeling error and 0 warnings, but predates the latest MCU edit.
+- [ ] **Reconcile live BOM TME C22.** C22 currently appears in both the 1 µF / 25 V and stale 1 µF / 100 V rows.
 
-## Critical buck routing
+## DRC warning closure
 
-- [ ] **Finish critical input loop.** Route/zone C1, C3 and U5 VIN/VCC according to ST guidance, with C3 getting the shortest local bypass connection.
-- [ ] **Finish BOOT/LX/catch-diode/inductor geometry.** Keep C6 BOOT-LX short and switch-node copper compact; verify D7/L1 connections against the ST reference layout.
-- [ ] **Finish output path.** Complete L1 -> C10 -> `3V3_BUCK` -> FB1 path and local output-ground return.
-- [ ] **Finish feedback/compensation routing.** Keep FB and COMP short, quiet and away from LX/high-current copper; verify final R33/C9/C8/R35/C20/R36/R34 routing against U5 pins.
-- [ ] **Finish AutoEN routing.** Preserve compact U1/C2/Q7/R1/R2/R5/R6/R30/R31/R32/C7 geometry and keep it out of the switching-current region.
+Current fresh report has 14 active warnings plus 1 excluded warning.
 
-## DFT / debug before routing freeze
+- [ ] Review/fix footprint-library mismatch warnings for J4, U4, J6, J1, J5 and J3.
+- [ ] Review/fix the eight BZ1 silkscreen-over-copper warnings.
+- [ ] Reconfirm the existing excluded ESP32 silkscreen/board-edge warning is still intentional at release.
+- [ ] Re-run DRC after every release-blocking hardware change.
 
-- [ ] Decide whether to add convenient test access for `3V3_BUCK`.
-- [ ] Decide whether to add COMP test access.
-- [ ] Add EN / AutoEN-node test access. Now required rather than optional: AutoEN is confirmed necessary (D013) and EN is the node that distinguishes a buck fault from an AutoEN shutdown.
-- [ ] Ensure convenient local GND probe access near the buck.
-- [ ] Avoid a large dedicated LX test pad; if LX must be probed during bring-up, prefer existing D7/L1/U5 switch-node access with a very short probe ground.
+## Buck final review
 
-## USB
+Electrical connectivity is complete, but the layout quality gate remains open.
 
-- [ ] Calculate/verify USB differential-pair width and gap for the actual stackup: B.Cu, 0.10 mm FR4 to In2 GND, Er currently entered as 4.5.
-- [ ] Put the verified DP width/gap in the **USB** netclass. In the last reviewed Board Setup, USB DP width/gap fields were blank; Default contained 0.20 mm / 0.25 mm but those values are not approved for USB.
-- [ ] Review the full D+/D− route for continuous GND reference and avoid reference-plane discontinuities.
-- [ ] Review pair spacing, skew, via use and connector/ESD transitions.
+- [ ] Review C1/C3 -> VIN/VCC input-loop geometry against ST guidance.
+- [ ] Review C6 BOOT-LX and LX/D7/L1 switch-loop geometry; keep switch-node copper no larger than needed.
+- [ ] Review L1 -> C10 -> `3V3_BUCK` -> FB1 path and output-ground return.
+- [ ] Review FB/COMP routing and return isolation from switching/high-current current paths.
+- [ ] Review AutoEN routing and local returns.
+- [ ] Review local GND via/current-return placement for C1−, D7 anode, C10−, U5 pin16/EP, C3− and C21−.
+- [ ] Keep `3V3_BUCK` as compact local external copper. `3V3_MCU` may remain mainly track-distributed with local copper where useful; do not create internal power planes.
 
-## Full-board PCB review after buck routing
+## USB final review
 
-- [ ] Verify both internal GND planes remain continuous and no accidental split/isolated area has been introduced.
-- [ ] Review GND stitching where useful, especially around return-path transitions; do not add arbitrary periodic stitching without purpose.
-- [ ] Review ESP32 antenna keepout on every copper layer and board-edge placement.
-- [ ] Review heater and fan high-current paths and connector/current capacity.
-- [ ] Review 24 V protection/input-current paths.
-- [ ] Review all component-to-edge/courtyard/mechanical clearances.
-- [ ] Review U5, U2 and other exposed-pad/stencil details before paste release.
+- [x] 90 Ω target geometry configured: B.Cu / In2.Cu, 0.20 mm width, 0.25 mm gap.
+- [x] U2 -> U3 pair kept on B.Cu without vias.
+- [x] Type-C A6/B6 and A7/B7 duplicated pads connected correctly.
+- [x] Short D+ crossover uses two vias; nearby GND stitching via added.
+- [ ] After netlist regeneration, verify schematic ↔ PCB USB mapping one final time.
+- [ ] Confirm no later power-zone edit crowds the USB pair enough to invalidate the intended geometry/reference environment.
 
-## Verification and production
+## Full-board review
 
-- [ ] Run a **fresh KiCad DRC** on the current routed board. `hardware/DRC.rpt` dated 2026-08-06 is historical and is not valid for this PCB checkpoint.
-- [ ] Resolve/review every new DRC error and warning; regenerate `hardware/DRC.rpt` from the final board.
-- [ ] Confirm ERC CI still passes if no schematic changes were made. If schematic changes occur, run a fresh ERC and reopen any affected review gate.
-- [ ] Regenerate BOM, CPL/position files, Gerbers/drill files and production netlist from the same final revision.
-- [ ] Reconcile generated production data against the final purchasing BOM (`Filament Dryer Monitor — BOM finale Mouser`, tab `BOM TME`).
+- [ ] Verify both internal GND planes remain continuous with no accidental islands/splits.
+- [ ] Review ESP32 antenna keepout on every copper layer and at the board edge.
+- [ ] Review heater/fan high-current paths, connector current capacity and switched-node copper area.
+- [ ] Review 24 V input/protection path and local copper.
+- [ ] Review component-to-edge, courtyard and enclosure/mechanical constraints.
+- [ ] Review all exposed-pad/stencil details, especially U5 and U2.
+- [ ] Decide whether additional buck DFT access is still worth adding before fabrication; existing TP1/TP2/TP3 provide 24V_PROT/3V3_MCU/GND access.
+
+## Production release
+
+- [ ] After all hardware changes, run a final fresh DRC and ERC.
+- [ ] Ensure current-branch ERC is actually enforced manually or update the workflow trigger; current workflow push trigger covers `redesign/buck-sourcing`, not `pcb/l7987l-layout`.
+- [ ] Regenerate production BOM, CPL/position files, Gerbers, drills and netlist from the same final commit.
+- [ ] Reconcile generated production data with `BOM TME`.
 - [ ] Perform final fabrication/assembly review before ordering.
 
 ## First-board bring-up
 
+- [ ] Follow `docs/ASSEMBLY.md`: assemble without R5, confirm 3.3 V, then fit R5 and confirm 3.3 V again before fault testing.
 - [ ] Verify 3.3 V regulation and startup.
 - [ ] Measure load-transient behavior.
-- [ ] Observe LX switching waveform/ringing and diode stress with appropriate probing.
-- [ ] Measure U5, D7, L1 and relevant capacitor temperatures under representative load.
-- [ ] Verify fault current/current-limit behavior.
+- [ ] Probe LX waveform/ringing with appropriate short-ground technique.
+- [ ] Measure U5, D7, L1 and capacitor temperatures under representative load.
+- [ ] Verify current-limit/foldback behavior.
 - [ ] Verify AutoEN COMP threshold, shutdown/retry timing and clean restart after fault removal.
-- [ ] Follow `docs/ASSEMBLY.md`: assemble without R5, confirm 3.3 V, then fit R5 and confirm 3.3 V again before any fault testing.
-- [ ] Confirm the foldback-lock recovery point on hardware. Simulation settles at ~1.5 V with FB ~0.36 V against a 400 mV release threshold — about 150 mV of margin. The real ESP32 load draws far less than 0.45 A at 1.5 V, so the lock may not occur with the actual load; establish where the boundary is.
-- [ ] Validate the remaining NTC/firmware safety calibration work before enabling the heater in normal operation.
+- [ ] Establish whether the simulated foldback-lock condition occurs with the real load.
+- [ ] Complete NTC/firmware safety calibration before normal heater operation.

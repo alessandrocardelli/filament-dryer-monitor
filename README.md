@@ -4,9 +4,9 @@ Custom ESP32-based controller board that retrofits an **eSUN eBox** filament dry
 
 The PCB physically replaces the original front panel: display and buttons sit on the front face of the board, while the main electronics are on the back.
 
-> **Current status — 2026-09-08:** hardware work is on branch **`pcb/l7987l-layout`**. The L7987L + AutoEN schematic passed the project engineering schematic review on 2026-09-04 and the PCB is synchronized to that design. The legacy AP66200 stage is absent. The project is in the **L7987L PCB layout/routing phase**. Latest PCB-only checkpoint recorded for this handoff is `e8741347ef5570948a1115719ae65fbc0de02ce6`. Both inner layers are solid GND planes and the power/default netclasses are accepted. The immediate open implementation is the U5 exposed-pad GND/thermal-via and paste strategy, followed by buck local GND-via/current-return geometry and critical routing. USB differential-pair geometry and final DRC remain open. The board is **not manufacturing-ready**.
+> **Current status — 2026-09-16:** hardware work is on branch **pcb/l7987l-layout**. Latest hardware checkpoint before this documentation refresh: **9da46e7953f801073882fd1934802fa8ace1f1c2** (updated layout). L7987L + AutoEN routing is electrically complete enough for the current DRC to report **0 errors and 0 unconnected pads**. USB routing is configured for a **90 Ω differential target** on B.Cu/In2.Cu using **0.20 mm width / 0.25 mm gap**. The board is **not manufacturing-ready**: U5 exposed-pad thermal-via/paste implementation remains open, accepted decision D012's second 1 µF/100 V L7987L VIN/VCC bypass is missing from the current Power schematic, stored netlist/ERC must be regenerated after the latest MCU edit, current DRC warnings need review, and production outputs/BOM must be reconciled.
 
-For a new work session, read `AGENTS.md`, `docs/PROJECT_STATE.md`, `docs/DECISIONS.md` and `docs/TODO.md` before changing the design.
+For a new work session, read AGENTS.md, docs/PROJECT_STATE.md, docs/DECISIONS.md and docs/TODO.md before changing the design.
 
 ---
 
@@ -25,7 +25,7 @@ For a new work session, read `AGENTS.md`, `docs/PROJECT_STATE.md`, `docs/DECISIO
 
 The project keeps three independent safety layers for the heater:
 
-1. **Hardware TCO** in series with `HEATER+`, off-board and independent of the MCU.
+1. **Hardware TCO** in series with HEATER+, off-board and independent of the MCU.
 2. **Firmware safety loop** using the heater NTC; an invalid/open sensor is treated as a fault and disables the heater.
 3. **Compile-time gate**: heater drive is disabled until NTC calibration is explicitly enabled.
 
@@ -35,30 +35,31 @@ This is a personal project and not a certified product.
 
 ## Hardware
 
-The board is a 4-layer KiCad 10 design intended for JLCPCB fabrication/assembly. TME is the preferred prototype component supplier. The current KiCad schematic, PCB and project files on the active branch are the authoritative implementation.
+The board is a 4-layer KiCad 10 design intended for JLCPCB fabrication/assembly. TME is the preferred prototype component supplier. The current KiCad schematic and PCB on the active branch are the authoritative implementation.
 
 ### Main blocks
 
 | Block | Part | Notes |
 |---|---|---|
-| MCU | ESP32-WROOM-32E | Wi-Fi; final antenna copper keepout still part of PCB review |
-| Buck converter | **L7987L** | `24V_PROT` -> 3.3 V, about 516 kHz, 1 A design target |
+| MCU | ESP32-WROOM-32E | Wi-Fi; final antenna copper/edge review remains a release item |
+| Buck converter | **L7987L** | 24V_PROT -> 3.3 V, about 516 kHz, 1 A design target |
 | Buck fault recovery | TLV1701AIDBVR + MMBT3904 | External AutoEN based on COMP fault detection |
-| USB-UART | CP2102-GM | USB used for programming/debug |
-| Humidity/temp | SHT45 | I²C `0x44` |
-| Display | SSD1309 OLED 128×64 | I²C `0x3C` |
+| USB-UART | CP2102-GM | USB Full-Speed programming/debug |
+| USB ESD | AKS1201 / USBLC6-2SC6-compatible topology | Two protected data channels |
+| Humidity/temp | SHT45 | I²C 0x44 |
+| Display | SSD1309 OLED 128×64 | I²C 0x3C |
 | Heater driver | IRLR3636TRPBF | 60 V DPAK N-MOSFET, about 1.6 A heater load |
 | Fan driver | CJ2310 | 24 V fan low-side switch |
 | Heater temperature | Integrated ~82 kΩ NTC | GPIO34 / ADC1, R28 = 47 kΩ, C19 = 100 nF |
 | Buzzer | Passive buzzer + NPN | Defined startup state with base-emitter pull-down |
 
-Heater and fan stay on `24V_PROT`; they are not powered by the 3.3 V buck.
+Heater and fan stay on 24V_PROT; they are not powered by the 3.3 V buck.
 
 ### L7987L electrical state
 
-The active implementation is in `hardware/Power.kicad_sch`.
+The active implementation is in hardware/Power.kicad_sch.
 
-Key parts/values:
+Key implemented parts/values:
 
 | Ref | Value / part | Role |
 |---|---|---|
@@ -68,7 +69,7 @@ Key parts/values:
 | L1 | SRN6045-150M, 15 µH | Inductor |
 | D7 | STPS2L60A | Catch diode |
 | C1 | 10 µF / 100 V X7S | Main local input ceramic |
-| C3 | 1 µF / 100 V | Local VIN/VCC bypass |
+| C3 | 1 µF / 100 V X7S | Current local VIN/VCC bypass present in source |
 | C6 | 100 nF | BOOT-LX bootstrap |
 | C10 | 47 µF / 10 V X7R | Main pre-bead output capacitor |
 | C21 | 1 µF / 25 V | VBIAS bypass |
@@ -78,28 +79,72 @@ Key parts/values:
 
 Compensation: R33 = 16 kΩ, C9 = 18 nF, C8 = 39 pF, R35 = 1.13 kΩ, C20 = 560 pF.
 
-Output architecture remains `3V3_BUCK -> FB1 -> 3V3_MCU`. `PGOOD` and `SYNCH` are intentionally NC. The upstream C5 = 100 µF / 50 V bulk capacitor remains.
+Output architecture remains 3V3_BUCK -> FB1 -> 3V3_MCU. PGOOD and SYNCH are intentionally NC. The upstream C5 = 100 µF / 50 V bulk capacitor remains.
 
-Detailed calculations, source hierarchy, AutoEN rationale and schematic sign-off are in [`docs/BUCK_L7987L_DESIGN.md`](docs/BUCK_L7987L_DESIGN.md).
+**Open implementation conflict:** D012 accepted a second physically local 1 µF / 100 V bypass for the L7987L VIN pins. The current Power schematic contains only C3. Historical C22 from D012 is no longer present in the Power sheet; current C22 is the CP2102 REGIN capacitor. Restore the accepted VIN-bypass function under a non-conflicting reference or explicitly reopen D012 before fabrication.
 
-### Schematic sign-off
+Detailed calculations and AutoEN rationale are in [docs/BUCK_L7987L_DESIGN.md](docs/BUCK_L7987L_DESIGN.md).
 
-The Hardware Design Manual-based review completed on **2026-09-04**. Four electrical gates are closed:
+### Engineering review
 
-1. **ERC:** current reviewed state is CI-enforced. The report contains one reviewed `power_pin_not_driven` modeling error on external GND plus eleven reviewed warnings.
-2. **ILIM/L1:** R29 = 47.5 kΩ gives ~1.705 A nominal. A conservative engineering envelope of roughly 1.42–2.15 A was used for component-selection review; the upper estimate remains below the Bourns 2.3 A Isat rating. It is not claimed as an ST-guaranteed 47.5 kΩ limit.
-3. **Capacitance/stability:** actual sourced C1 and C10 were reviewed including class-II MLCC bias sensitivity. No invented guaranteed `Ceff,min` is used.
-4. **AutoEN:** reviewed COMP trip window is about 1.56–2.07 V over the defined engineering corners; EN-high margin remains ample.
+The L7987L + AutoEN engineering review completed on **2026-09-04**. The accepted design basis remains:
 
-Recorded simulation results with final compensation are approximately **59.1 kHz crossover, 64.9° phase margin and 19.6 dB gain margin**. These are design/simulation results; physical validation remains required.
+- R29 = 47.5 kΩ -> ~1.705 A nominal current limit;
+- conservative component-selection envelope ~1.42–2.15 A;
+- actual sourced C1/C10 reviewed with class-II MLCC bias sensitivity;
+- AutoEN reviewed COMP trip window ~1.56–2.07 V;
+- recorded simulation ~59.1 kHz crossover, 64.9° phase margin, 19.6 dB gain margin.
+
+These are engineering/simulation results; physical validation remains required.
+
+The stored hardware/ERC.rpt currently reports **1 power_pin_not_driven error on external GND and 0 warnings**, but it predates the latest MCU schematic edit and must be regenerated. The existing GitHub ERC workflow contains the reviewed waiver logic, but its automatic push trigger currently names redesign/buck-sourcing, not the active pcb/l7987l-layout branch.
 
 ### Current PCB integration
 
-The current `hardware/Filament_Dryer_Monitor.kicad_pcb` contains the L7987L stage and AutoEN block. The old AP66200 stage and `/Power/VCC_AP66200` are absent.
+The current board at hardware checkpoint 9da46e7 contains the L7987L stage and AutoEN block on **B.Cu**. The old AP66200 stage and /Power/VCC_AP66200 are absent.
 
-The buck is on **B.Cu**. Placement has been iterated against ST/TI guidance. In the current physical board view the U5 VIN/VCC side is the **left side**; C3 is the closest local VIN/VCC bypass, C1 is on the same side more externally, and C21 remains close to pin 1 VBIAS.
+The fresh 2026-09-16 DRC reports:
 
-Primary buck layout reference: ST L7987L datasheet plus STEVAL-ISA198V1 Gerbers/layout. The ST reference is used for topology/current-return intent, adapted to this project's four-layer stackup and footprints.
+- **0 errors**;
+- **0 unconnected pads**;
+- 14 active warnings;
+- 1 excluded warning.
+
+Local external copper/zones are present for 24V_PROT, /Power/3V3_BUCK, 3V3_MCU, HEATER_SW, LX and GND. Both internal layers remain solid GND.
+
+Routing connectivity is therefore complete, but the final engineering/manufacturing review remains open.
+
+### U5 exposed pad
+
+U5 pad 17 is a 3.2 × 3.2 mm GND exposed pad. In the current board there are **no thermal vias inside the EP**, and the current footprint exposes the full EP as B.Paste.
+
+Before fabrication the project still needs a deliberate EP implementation: via matrix/process, paste-window strategy, solder-wicking review and JLCPCB capability check.
+
+### CP2102-GM / USB
+
+The classic CP2102-GM custom QFN footprint currently uses:
+
+- 0.50 mm pitch;
+- perimeter pads **0.95 × 0.28 mm**;
+- exposed pad **3.25 × 3.25 mm**;
+- solder-mask expansion **+0.06 mm**;
+- **3 × 3** exposed-pad paste apertures, each 0.9 × 0.9 mm.
+
+REGIN is on 3V3_MCU and now has a local **C22 = 1 µF / 25 V X7R 0603, Murata GCM188R71E105KA64J**, in addition to the local 100 nF decoupling.
+
+USB differential routing:
+
+- target: **90 Ω differential**;
+- B.Cu referenced to In2.Cu;
+- width: **0.20 mm**;
+- gap: **0.25 mm**;
+- KiCad tuning profile: **USB_90R**;
+- long U2 -> U3 pair stays entirely on B.Cu with no vias;
+- J2 A6/B6 = D+, A7/B7 = D−;
+- U3 channel 1↔6 carries D+, channel 3↔4 carries D−;
+- the short Type-C duplicated D+ fanout uses two signal vias and a short F.Cu bridge, with a nearby GND stitching via; D− stays on B.Cu.
+
+The stored netlist is stale relative to the last MCU edit and still contains the pre-correction J2 D+/D− assignment. Regenerate it before using it for sign-off.
 
 ### Ground planes and stackup
 
@@ -108,33 +153,44 @@ Primary buck layout reference: ST L7987L datasheet plus STEVAL-ISA198V1 Gerbers/
 | F.Cu | Front components and signals |
 | In1.Cu | **Solid GND plane** |
 | In2.Cu | **Solid GND plane** |
-| B.Cu | Back components/signals + local buck/power copper |
+| B.Cu | Back components/signals + local power copper |
 
 Stackup entered in KiCad: 35 µm copper; 0.10 mm FR4 between F.Cu-In1 and In2-B.Cu; 1.24 mm FR4 core between inner layers; total board thickness 1.6 mm.
 
 **Both inner layers are deliberately full GND.** There are no internal 3V3 or 24 V power planes.
 
-For the L7987L, PGND and SGND are not separate project nets or separate internal planes. They are different **current-return regions on the same `GND` net**. High-current returns (C1−, D7 anode, C10−) and quiet returns (U5 pin16/EP, C3−, C21− and sensitive control returns) use local B.Cu geometry and short vias into the common solid GND planes so switching current is not forced through the quiet return region. A continuous B.Cu PGND corridor joining the two sides of U5 is not required.
+For the L7987L, PGND and SGND are not separate project nets or split inner planes. They are current-return regions on the same GND net; local B.Cu geometry and via placement keep pulsed returns out of quiet control returns.
 
-See `docs/DECISIONS.md` before changing this architecture.
+### Power distribution
+
+Power remains on the external layers.
+
+- 24V_PROT: wide traces/local zones are appropriate where current requires them.
+- 3V3_BUCK: compact local copper around the buck output/Cout/FB1 path is preferred.
+- 3V3_MCU: may remain mainly track-distributed, with local copper where useful.
+- LX and other fast switched nodes: keep copper only as large as needed.
+
+The capacitance from external power copper to the nearby GND plane is not a reason to avoid local power pours; the important restriction is minimizing fast switch-node area.
 
 ### Netclasses
 
-| Class | Clearance | Track | Via dia/drill |
-|---|---:|---:|---:|
-| Default | 0.20 mm | 0.25 mm | 0.60/0.30 mm |
-| Power_3V3 | 0.20 mm | 0.50 mm | 0.60/0.30 mm |
-| Power_24V | 0.20 mm | 1.00 mm | 0.80/0.40 mm |
-| Power_Heat | 0.30 mm | 1.50 mm | 0.80/0.40 mm |
-| USB | 0.20 mm | 0.25 mm | 0.60/0.30 mm |
+| Class | Clearance | Track | DP width / gap | Via dia/drill |
+|---|---:|---:|---:|---:|
+| Default | 0.20 mm | 0.25 mm | 0.20 / 0.25 mm default | 0.60/0.30 mm |
+| Power_3V3 | 0.20 mm | 0.50 mm | — | 0.60/0.30 mm |
+| Power_24V | 0.20 mm | 1.00 mm | — | 0.80/0.40 mm |
+| Power_Heat | 0.30 mm | 1.50 mm | — | 0.80/0.40 mm |
+| USB | 0.20 mm | **0.20 mm** | **0.20 / 0.25 mm** | 0.60/0.30 mm |
 
-`USB_DP` and `USB_DM` are assigned to the USB class, but **USB differential-pair width/gap is still open**. In the last reviewed Board Setup the USB DP fields were blank. Do not assume the Default-class 0.20/0.25 mm DP settings are correct.
+USB data nets are USB_D+, USB_D−, USB_CONN_D+, USB_CONN_D−.
 
 ### Procurement
 
-The working purchasing BOM is the Google Sheet **`Filament Dryer Monitor — BOM finale Mouser`**, tab `BOM TME`.
+The working purchasing BOM is the Google Sheet **Filament Dryer Monitor — BOM finale Mouser**, tab **BOM TME**.
 
-TME sourcing, KiCad manufacturer/MPN synchronization and the footprint/pinout audit are closed for the current schematic. See [`hardware/docs/PROCUREMENT.md`](hardware/docs/PROCUREMENT.md).
+A current reconciliation issue remains: C22 appears in the live sheet both in the 1 µF / 25 V row used by CP2102 REGIN and in the older 1 µF / 100 V row associated with the historical D012 buck reference. The KiCad source currently uses C22 only as the 25 V REGIN capacitor.
+
+See [hardware/docs/PROCUREMENT.md](hardware/docs/PROCUREMENT.md).
 
 ### Heater NTC characterization
 
@@ -171,7 +227,7 @@ PCB interface: R28 = 47 kΩ 1%, C19 = 100 nF, GPIO34 / ADC1.
 | Button UP | IO14 |
 | Button DOWN | IO27 |
 
-Do not run a project-wide annotation reset when changing a hardware block; preserve established references or annotate only the selected new block.
+Do not run a project-wide annotation reset when changing a hardware block; preserve established references or annotate only selected new circuitry.
 
 ---
 
@@ -195,28 +251,26 @@ Firmware uses the ESP32 Arduino core 3.x and is intended to remain cooperative/n
 
 ## Repository handoff files
 
-```text
+~~~text
 AGENTS.md                       Mandatory workflow before project work
 docs/PROJECT_STATE.md           Current authoritative checkpoint
 docs/DECISIONS.md               Durable engineering decisions
 docs/TODO.md                    Immediate work list
 docs/BUCK_L7987L_DESIGN.md      Detailed L7987L design/layout record
+docs/ASSEMBLY.md                Assembly/bring-up sequencing
 hardware/docs/PROCUREMENT.md    Sourcing/footprint/manufacturing state
 hardware/*.kicad_*              Actual KiCad implementation
-```
+~~~
 
 ## Current next steps
 
-Continue from the current PCB rather than resynchronizing from scratch. The immediate sequence is:
-
-1. finalize U5 exposed-pad thermal/GND via and paste strategy;
-2. place/review high-current and quiet local GND vias into the common inner GND planes;
-3. finish L7987L critical input, LX/BOOT/diode/inductor, output and FB/COMP routing against ST guidance;
-4. close optional DFT access before routing freeze;
-5. calculate/configure USB differential-pair geometry and review its continuous GND reference;
-6. complete full-board PCB review;
-7. run a **fresh DRC** and close it;
-8. regenerate production outputs from the final revision and reconcile them with the purchasing BOM;
-9. perform first-board electrical, thermal, switching-stress and AutoEN validation.
-
-The existing `hardware/DRC.rpt` is historical and must not be used as proof that the current PCB passes DRC.
+1. resolve the missing D012 second 1 µF / 100 V VIN bypass under a non-conflicting reference, or explicitly reopen D012;
+2. finalize U5 exposed-pad thermal-via and paste/stencil strategy;
+3. regenerate the netlist and ERC from the latest schematic and verify USB mapping;
+4. review/close the current DRC warnings;
+5. complete final buck, USB, antenna, high-current and mechanical PCB review;
+6. reconcile the live BOM TME C22 reference;
+7. regenerate production BOM/CPL/Gerbers/drills/netlist from the same final revision;
+8. perform fabrication/assembly review;
+9. follow docs/ASSEMBLY.md for first power-up and AutoEN R5 sequencing;
+10. perform first-board electrical, thermal, switching-stress and fault-recovery validation.

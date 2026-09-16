@@ -1,25 +1,22 @@
 # L7987L buck redesign — current design record
 
-Status: **schematic/netlist implementation complete; engineering schematic review PASS; PCB synchronized; PCB layout/routing in progress**.
+Status: **schematic design basis accepted; PCB routing connected; release review in progress**.
 
-Repository: `alessandrocardelli/filament-dryer-monitor`  
-Current hardware branch: **`pcb/l7987l-layout`**  
-Hardware/layout checkpoint before the documentation refresh: **`6e74f76d8d6877fab63283c1aa520bdbfc149921`** (`Layout update`).  
-TME sourcing, KiCad MPN/manufacturer synchronization and footprint audit closed on **2026-09-02**.  
-Hardware Design Manual-based schematic review and the four electrical closure gates completed on **2026-09-04**.  
-PCB synchronization and initial L7987L/AutoEN placement/layout work completed sufficiently to enter the routing/grounding phase by **2026-09-07**.
+Repository: alessandrocardelli/filament-dryer-monitor  
+Current hardware branch: **pcb/l7987l-layout**  
+Hardware checkpoint before this documentation refresh: **9da46e7953f801073882fd1934802fa8ace1f1c2** (updated layout).  
+Hardware Design Manual-based schematic review completed on **2026-09-04**.  
+Current PCB DRC was generated on **2026-09-16** and reports 0 errors / 0 unconnected pads, with warnings still open.
 
-The actual KiCad schematic and PCB override this document if they ever disagree. The active electrical implementation is in `hardware/Power.kicad_sch`; the current board implementation is `hardware/Filament_Dryer_Monitor.kicad_pcb`.
+The actual KiCad schematic and PCB override this document if they disagree. The active electrical implementation is in hardware/Power.kicad_sch; the current board implementation is hardware/Filament_Dryer_Monitor.kicad_pcb.
 
 > **Current manufacturing-state warning**
 >
-> The PCB now contains the L7987L redesign and the legacy AP66200 implementation is absent. However, the board is **not manufacturing-ready**. Critical buck routing, local ground/via geometry, U5 exposed-pad thermal/paste implementation, USB differential-pair geometry, full PCB review and a fresh DRC remain open. Existing production outputs are historical until regenerated from the final routed revision.
+> The PCB contains the L7987L redesign and the legacy AP66200 implementation is absent. Routing connectivity is complete and USB geometry is now configured/routed. The board is still **not manufacturing-ready** because U5 exposed-pad thermal-via/paste implementation is open, accepted decision D012's second 1 µF / 100 V VIN bypass is missing from the current Power schematic, stored netlist/ERC are stale after the latest MCU edit, DRC warnings still require review, and production outputs/BOM require reconciliation.
 
-> **Schematic-review result — PASS**
+> **Design-review result**
 >
-> The implemented L7987L + AutoEN block passed the project engineering schematic review on 2026-09-04. The four gates remain closed: current/ERC, ILIM/L1 engineering envelope, effective-capacitance/compensation sensitivity, and AutoEN corners. PCB-level ringing, thermal behavior, real load transients, fault current and AutoEN timing remain physical validation items.
-
----
+> The L7987L + AutoEN electrical calculations accepted on 2026-09-04 remain the design basis: ILIM/L1 selection, capacitance/compensation sensitivity and AutoEN corners are not reopened by PCB routing alone. Physical ringing, thermal behavior, real load transients, fault current and AutoEN timing remain prototype validation items.
 
 ## 1. Design objective
 
@@ -82,30 +79,30 @@ Original supply is 24 V / 48 W. The combined design-point load leaves limited so
 
 ### Input / VCC / bypass
 
-`24V_PROT` directly supplies L7987L VIN1, VIN2 and VCC.
+24V_PROT directly supplies L7987L VIN1, VIN2 and VCC.
+
+Current source implementation:
 
 - C1 = 10 µF / 100 V X7S, main local input ceramic.
-- C3 = 1 µF / 100 V, local L7987L VIN/VCC bypass.
+- C3 = 1 µF / 100 V X7S, local L7987L VCC/input bypass.
 - C2 = 100 nF, local TLV1701 supply bypass.
 - C5 = 100 µF / 50 V, upstream bulk reservoir retained.
 
-The earlier VIN-to-VCC 0 Ω jumper is removed.
+**D012 implementation conflict:** the accepted design calls for a second physically local 1 µF / 100 V ceramic at the VIN pins. The current Power schematic no longer contains that second part or the C_vin_byp1 function. Historical reference C22 from D012 is now used in the MCU sheet for the CP2102 REGIN 1 µF / 25 V bypass.
 
-ST's demonstration board uses two 4.7 µF main input capacitors and two 1 µF local bypass capacitors. The project implementation uses C1 = 10 µF as the main input ceramic and C3 = 1 µF as the local VIN/VCC bypass because VIN1/VIN2/VCC are directly commoned in the current schematic. Do not silently add a second 1 µF bypass; if layout proves one capacitor cannot provide an adequate local connection to the required pins, reopen that specific schematic/layout tradeoff explicitly.
+Do not silently reinterpret this as a design change. Before fabrication, restore the second 1 µF / 100 V VIN bypass under a non-conflicting reference or explicitly reopen D012 using new primary-source/layout evidence.
 
 ### Output / VBIAS
 
 - C10 = 47 µF main pre-bead output capacitor.
 - C21 = 1 µF / 25 V VBIAS/output bypass.
-- pre-bead node = `3V3_BUCK`.
-- FB1 feeds `3V3_MCU`.
+- pre-bead node = 3V3_BUCK.
+- FB1 feeds 3V3_MCU.
 
 ### Unused pins
 
-- U5 pin 12 `PGOOD`: intentionally NC.
-- U5 pin 7 `SYNCH`: intentionally NC.
-
----
+- U5 pin 12 PGOOD: intentionally NC.
+- U5 pin 7 SYNCH: intentionally NC.
 
 ## 4. Current reference/value map
 
@@ -372,57 +369,57 @@ bring-up; R30 then holds the Q7 base at ground, Q7 stays off and EN is free. See
 
 ---
 
-## 12. ERC — CLOSED AND CI-ENFORCED
+## 12. ERC / schematic-regression state
 
-`.github/workflows/kicad-erc.yml` runs KiCad 10 ERC.
+The stored hardware/ERC.rpt dated **2026-09-16 18:13:37** contains:
 
-Current reviewed `hardware/ERC.rpt` dated 2026-09-04 contains:
+- 1 power_pin_not_driven error on #PWR02 GND;
+- 0 warnings.
 
-- 1 `power_pin_not_driven` error on `#PWR02` GND;
-- 7 `unconnected_wire_endpoint` warnings;
-- 2 `lib_symbol_mismatch` warnings;
-- 2 `pin_to_pin` warnings.
+The single GND item remains the reviewed KiCad modeling condition caused by external power entering through a passive connector.
 
-The single error is a KiCad modeling condition caused by external power entering through a passive connector; it is not an electrical GND open. CI explicitly waives only that exact item and permits only the reviewed warning classes/counts. New errors, changed waiver target, new warning classes or warning-count increases fail the gate.
+However, the report predates the latest MCU schematic correction committed in hardware checkpoint 9da46e7, so it is **not the final ERC for the present schematic**. Regenerate ERC after the current schematic is frozen.
 
-**Gate: CLOSED.**
+The repository workflow still contains explicit waiver logic for only that GND error and allows the historical warning classes only to decrease. Its automatic push trigger currently covers branch redesign/buck-sourcing, not pcb/l7987l-layout. Until that trigger is changed or the work is merged into a covered branch, run ERC explicitly on the active branch.
 
----
+**Gate:** the original buck-design ERC review remains accepted, but a fresh current-schematic ERC is a release requirement.
 
-## 13. Sourcing / footprint state — CLOSED
+## 13. Sourcing / footprint state
 
-TME sourcing, manufacturer/MPN synchronization, footprint audit and strict pin-numbering audit were completed for the present schematic.
+TME sourcing, manufacturer/MPN synchronization and the main footprint audit remain the purchasing basis, but the live BOM now requires one reconciliation pass before release.
 
-Important non-trivial footprint decisions include:
+Important current footprint/manufacturing facts:
 
 - C5 Panasonic EEEFK1H101P -> custom Panasonic size-F footprint;
 - J2 GCT USB4216-03-A -> custom USB-C footprint;
-- L1 SRN6045-150M -> custom Bourns footprint from recommended layout;
-- U2 CP2102-GM -> custom QFN28 footprint using Silicon Labs classic CP2102 land-pattern data;
+- L1 SRN6045-150M -> custom Bourns footprint;
+- U2 CP2102-GM -> custom QFN28 footprint now using 0.95 × 0.28 mm perimeter pads, +0.06 mm footprint mask expansion, 3.25 × 3.25 mm EP and a 3 × 3 array of 0.9 mm paste apertures;
 - SW1–SW6 GCT SWT0110-020010SSA -> custom footprint;
-- BZ1 LD-BZEL-T67-0808 -> custom footprint with conservative terminal lands because manufacturer does not publish numeric recommended PCB land size;
-- U5 L7987L -> `SamacSys_Parts:SOP65P640X120-17N`, HTSSOP-16 exposed pad.
+- BZ1 LD-BZEL-T67-0808 -> custom footprint with conservative terminal lands;
+- U5 L7987L -> SamacSys_Parts:SOP65P640X120-17N, HTSSOP-16 exposed pad.
 
-U5 exposed-pad **paste aperture and thermal-via implementation remain PCB/manufacturing tasks**, not a footprint-package mismatch.
+Current CP2102 REGIN bypass is C22 = GCM188R71E105KA64J, 1 µF / 25 V / X7R / 0603.
 
-See `hardware/docs/PROCUREMENT.md` for the sourcing/manufacturing record.
+The live BOM TME currently lists C22 both in the 1 µF / 25 V row and in the older 1 µF / 100 V row associated with D012. Reconcile this after the D012 implementation conflict is resolved.
 
----
+U5 exposed-pad paste aperture and thermal-via implementation remain open PCB/manufacturing tasks.
 
-## 14. PCB synchronization checkpoint — CLOSED
+See hardware/docs/PROCUREMENT.md for the sourcing/manufacturing record.
 
-Verified on branch `pcb/l7987l-layout` at the 2026-09-07 hardware checkpoint:
+## 14. PCB synchronization / routing checkpoint
+
+Verified at hardware checkpoint 9da46e7:
 
 - current PCB contains U5 = L7987L on B.Cu;
-- old `AP66200` is absent;
-- old `/Power/VCC_AP66200` is absent;
-- current buck/AutoEN components are placed on B.Cu;
-- local B.Cu zones are present for `24V_PROT`, `/Power/3V3_BUCK`, GND and `Net-(D7-K)` / LX;
-- both inner layers contain full-board GND zones.
+- old AP66200 and /Power/VCC_AP66200 are absent;
+- AutoEN is present on B.Cu;
+- local B.Cu zones exist for 24V_PROT, /Power/3V3_BUCK, 3V3_MCU, GND, HEATER_SW and LX;
+- both inner layers contain full-board GND zones;
+- fresh DRC reports **0 unconnected pads**.
 
-Therefore PCB synchronization is no longer an open task. The open work is layout completion and validation.
+Therefore schematic-to-board integration and basic routing connectivity are no longer open tasks. The remaining gate is engineering/manufacturing review.
 
----
+The latest MCU schematic was edited after the stored netlist was generated. The current PCB has the corrected Type-C D+/D− mapping, while the stored netlist still shows the previous reversed connector labels. Regenerate the netlist before final connectivity sign-off.
 
 ## 15. Current stackup and grounding decision
 
@@ -511,37 +508,43 @@ Do not infer B.Cu pad direction from raw local footprint coordinates. A previous
 
 ### U5 exposed pad / thermal implementation
 
-U5 pad 17 is the 3.2 × 3.2 mm exposed pad on `GND` / `SGND_17`. The current footprint does not by itself close the final thermal-via/paste strategy.
+U5 pad 17 is the 3.2 × 3.2 mm exposed GND / SGND pad.
 
-Before routing freeze:
+Current board inspection at 9da46e7 shows:
+
+- no thermal/GND via located inside the exposed-pad area;
+- nearby peripheral GND vias are present;
+- the footprint still applies B.Paste to the full 3.2 × 3.2 mm EP as one pad.
+
+Before fabrication:
 
 - choose/verify via count, drill/diameter and spacing;
-- ensure a low-inductance GND/thermal connection to the internal planes;
-- review solder-wicking risk and JLCPCB process capability;
-- define/verify paste aperture strategy against ST package/manufacturing guidance.
+- define via treatment appropriate to the intended JLCPCB assembly process;
+- provide a low-inductance GND/thermal path to the internal planes;
+- replace/override full-area paste if required with a deliberate windowed stencil strategy;
+- review solder-wicking and voiding risk.
 
-### Local GND/current-return geometry
+### D012 VIN bypass discrepancy
 
-Finalize short GND/via entry for C1−, D7 anode and C10− while keeping their pulsed current path out of the quiet U5/FB/COMP return region. Separately provide short quiet returns for U5 EP/pin16, C3− and C21− into the same solid GND planes.
+The second accepted 1 µF / 100 V local VIN bypass is absent from the current Power schematic. Resolve this before considering buck placement/routing frozen.
 
-### Critical routing
+### Buck routing review
 
-Still to close:
+All current nets are connected, but final quality review is still required for:
 
-- C1/C3 -> VIN/VCC input loop;
+- C1/C3 -> VIN/VCC loop;
 - C6 BOOT-LX;
-- U5 LX -> D7/L1 switch region;
-- L1 -> C10 -> `3V3_BUCK` -> FB1;
-- FB/COMP network;
-- AutoEN routing.
+- U5 LX -> D7/L1 switching region;
+- L1 -> C10 -> 3V3_BUCK -> FB1;
+- FB/COMP routing and quiet return;
+- AutoEN routing;
+- high-current versus quiet GND via entry.
 
 No generic wide LX netclass is required; switch-node copper is controlled geometrically and kept compact.
 
----
+## 18. Netclasses and USB geometry
 
-## 18. Netclasses
-
-Current accepted classes:
+Current classes:
 
 | Class | Clearance | Track | Via dia/drill |
 |---|---:|---:|---:|
@@ -549,18 +552,21 @@ Current accepted classes:
 | Power_3V3 | 0.20 mm | 0.50 mm | 0.60/0.30 mm |
 | Power_24V | 0.20 mm | 1.00 mm | 0.80/0.40 mm |
 | Power_Heat | 0.30 mm | 1.50 mm | 0.80/0.40 mm |
-| USB | 0.20 mm | 0.25 mm | 0.60/0.30 mm |
+| USB | 0.20 mm | **0.20 mm** | 0.60/0.30 mm |
 
-Assignments:
+USB geometry is now closed for the current stackup:
 
-- `3V3_MCU`, `/Power/3V3_BUCK` -> Power_3V3;
-- `24V_PROT`, `/Power/JACK_24V_RAW`, `/Power/FUSE_OUT` -> Power_24V;
-- `HEATER_SW` -> Power_Heat;
-- `USB_DP`, `USB_DM` -> USB.
+- B.Cu signal layer;
+- In2.Cu reference;
+- 0.10 mm FR4, Er 4.5;
+- 90 Ω differential target;
+- width 0.20 mm;
+- gap 0.25 mm;
+- profile USB_90R.
 
-Open item: USB-class DP width/gap fields are not finalized. The Default class contains DP width 0.20 mm / gap 0.25 mm, but those values must not be treated as the USB solution without stackup-based verification.
+Assignments use USB_D+, USB_D−, USB_CONN_D+, USB_CONN_D−.
 
----
+The long U2-to-U3 pair stays on B.Cu with no vias. The short Type-C D+ duplicate-pad crossover uses two local vias and a short F.Cu bridge with nearby GND stitching; D− remains on B.Cu.
 
 ## 19. DFT / debug access
 
@@ -579,25 +585,39 @@ Avoid creating a large LX test pad. If LX probing is needed, use an existing swi
 
 ## 20. DRC / manufacturing state
 
-`hardware/DRC.rpt` is dated 2026-08-06 and belongs to the pre-L7987L board state. It is **not valid evidence for the current PCB**.
+A fresh DRC was generated on **2026-09-16 20:12:47** from the current routed PCB.
 
-A fresh DRC must be run after routing/layout completion.
+Current result:
 
-Production Gerbers, drill files, position/CPL data, BOM exports and production netlist remain stale until regenerated from the final DRC-closed board and reconciled against the purchasing BOM.
+- **0 DRC errors**;
+- **0 unconnected pads**;
+- 14 active warnings;
+- 1 excluded warning.
 
----
+Active warnings:
+
+- library-footprint mismatch: J4, U4, J6, J1, J5, J3;
+- eight BZ1 silkscreen-over-copper warnings.
+
+Excluded warning:
+
+- ESP32 silkscreen clipping the board edge.
+
+The report is now useful evidence that current routing is connected and free of DRC errors, but release still requires deliberate review of the warnings and a repeat DRC after any remaining hardware changes.
+
+Production Gerbers, drill files, position/CPL data, BOM exports and netlist remain stale until regenerated from the final released revision.
 
 ## 21. Next implementation sequence
 
-1. Finalize U5 exposed-pad thermal/GND vias and paste strategy.
-2. Finalize local PGND/SGND current-return/via geometry while keeping In1/In2 continuous GND.
-3. Finish the critical L7987L input, BOOT/LX/diode/inductor, output and FB/COMP routing against ST guidance.
-4. Finish AutoEN routing.
-5. Close optional DFT/debug access before routing freeze.
-6. Calculate/verify USB differential-pair geometry for the actual 0.10 mm B.Cu-to-In2 reference stackup and configure the USB netclass.
-7. Review full-board GND continuity, USB reference, ESP32 antenna keepout, heater/fan/high-current paths, edge/mechanical clearances and exposed-pad/stencil details.
-8. Run a fresh KiCad DRC and close all current violations.
-9. Regenerate fabrication/assembly outputs from the same final revision and reconcile with the final purchasing BOM.
+1. Resolve the D012 missing second 1 µF / 100 V VIN bypass under a non-conflicting reference, or explicitly reopen D012.
+2. Finalize U5 exposed-pad thermal/GND vias and paste/stencil strategy.
+3. Regenerate netlist and ERC from the latest schematic; verify USB mapping.
+4. Review/fix or deliberately accept the current DRC warnings.
+5. Complete final buck current-loop/quiet-return review and full-board USB/antenna/high-current/mechanical review.
+6. Reconcile the live BOM TME C22 reference.
+7. Run final DRC/ERC after all hardware changes.
+8. Regenerate fabrication/assembly outputs from the same final revision and reconcile them with the purchasing BOM.
+9. Follow docs/ASSEMBLY.md for first power-up.
 10. During first-board bring-up, validate 3.3 V regulation/transients, LX ringing/stress, temperatures, current-limit behavior and AutoEN shutdown/recovery timing.
 
-**Current project gate:** schematic sign-off and PCB synchronization are complete. **PCB layout/routing completion and current DRC are the next release gates.**
+**Current project gate:** routing connectivity and USB geometry are substantially complete. **D012 reconciliation, U5 EP manufacturing implementation, fresh current-schematic netlist/ERC, DRC-warning review and release-output regeneration are the next gates.**

@@ -68,7 +68,7 @@ Do not create a generic wide `LX` netclass simply because it is a power node. Ke
 
 ## D007 — Current power/default netclasses accepted; USB differential geometry remains open
 
-**Status:** power/default classes accepted; USB DP geometry pending.
+**Status:** accepted; USB geometry closed 2026-09-16.
 
 Accepted classes:
 
@@ -78,9 +78,19 @@ Accepted classes:
 | Power_3V3 | 0.20 mm | 0.50 mm | 0.60/0.30 mm |
 | Power_24V | 0.20 mm | 1.00 mm | 0.80/0.40 mm |
 | Power_Heat | 0.30 mm | 1.50 mm | 0.80/0.40 mm |
-| USB | 0.20 mm | 0.25 mm | 0.60/0.30 mm |
+| USB | 0.20 mm | **0.20 mm** | 0.60/0.30 mm |
 
-USB `USB_DP`/`USB_DM` are assigned to the USB class, but USB differential-pair width/gap must be calculated/verified against the actual stackup before routing is frozen. Do not simply inherit the Default-class DP values.
+USB differential routing uses:
+
+- signal layer B.Cu;
+- nearest reference In2.Cu;
+- 0.10 mm FR4 dielectric, Er 4.5 as entered in KiCad;
+- target 90 Ω differential;
+- DP width 0.20 mm;
+- DP gap 0.25 mm;
+- tuning profile `USB_90R`.
+
+USB net names are `USB_D+`, `USB_D-`, `USB_CONN_D+`, `USB_CONN_D-`. Do not revert to `USB_DP`/`USB_DM`, because KiCad differential-pair recognition depends on a shared basename with +/− or P/N suffixes.
 
 ## D008 — Bottom-side orientation checks must use transformed/absolute geometry
 
@@ -116,20 +126,30 @@ PCB placement/routing refinements that do not change electrical topology/compone
 
 ## D012 — C22 added as second 1 µF bypass for U5 VIN/VCC
 
-**Status:** accepted.
+**Status:** accepted design decision; **current implementation conflict detected 2026-09-16**.
 
 The L7987L datasheet requires a 1 µF or larger ceramic local to both the VIN pins and the
-VCC pin (sections 5.1 and 5.6); the ST demo board implements this as two separate 1 µF
-parts. The design previously carried a single C3 because `24V_PROT` feeds VIN1, VIN2 and
-VCC on one net. C22 (`GRJ21BC72A105KE11L`, 1 µF 100 V X7S 0805, identical to C3) was added
-2026-09-09.
+VCC pin; the ST demo board implements this as two separate 1 µF parts. The accepted design
+therefore calls for two physically local 1 µF / 100 V capacitors on `24V_PROT`:
 
-Electrically the two are in parallel on `24V_PROT`; the requirement is physical. C3 stays
-as the VCC bypass at pin 4, C22 becomes the VIN bypass at pins 2/3. Their functional names
-(`C_vcc_buck1`, `C_vin_byp1`) carry that placement intent and must not be made identical.
+- one local to VCC;
+- one local to VIN1/VIN2.
 
-The 25 V `GCM188R71E105KA64J` used for C15/C17/C21 is not an acceptable substitute here —
-it has no voltage margin on a 24 V rail.
+The historical implementation used C3 plus C22, both
+`GRJ21BC72A105KE11L`, 1 µF / 100 V X7S 0805.
+
+**Current-source discrepancy:** the present `Power.kicad_sch` contains only C3 with
+function `C_vcc_buck1`; the second 1 µF / 100 V part and function `C_vin_byp1` are absent.
+Current reference **C22 is now used in the MCU sheet for the CP2102 REGIN 1 µF / 25 V
+bypass**.
+
+This does **not** silently supersede D012. Before fabrication, either:
+
+1. restore the second 1 µF / 100 V VIN bypass under a non-conflicting reference; or
+2. explicitly reopen this decision using new primary-source/layout evidence.
+
+The 25 V `GCM188R71E105KA64J` used at CP2102 REGIN is not a substitute on the 24 V buck
+input rail.
 
 ## D013 — AutoEN is required; validated failure mechanism is foldback lock
 
@@ -161,3 +181,49 @@ which at first power-up is indistinguishable from a buck failure.
 With R5 absent, R30 holds the Q7 base at ground and EN is free. R5 is fitted after the
 regulator is confirmed working. No schematic or netlist change; the schematic carries a
 `DNP at first assembly` note on R5 and the procedure lives in `docs/ASSEMBLY.md`.
+
+
+## D015 — CP2102-GM land pattern, mask, paste and REGIN bypass
+
+**Status:** accepted 2026-09-16.
+
+The classic CP2102-GM QFN28 footprint is implemented as a custom project footprint with:
+
+- 0.50 mm perimeter pitch;
+- perimeter lands 0.95 × 0.28 mm;
+- exposed pad 3.25 × 3.25 mm;
+- footprint solder-mask expansion +0.06 mm;
+- exposed-pad paste split into a 3 × 3 matrix of 0.9 × 0.9 mm apertures.
+
+This follows the Silicon Labs CP2102/9 package guidance while preserving a practical solder-mask web.
+
+REGIN is supplied from `3V3_MCU`. A local 1 µF / 25 V X7R 0603
+`GCM188R71E105KA64J` is added in parallel with the existing local 100 nF decoupling.
+The current schematic/PCB reference is C22.
+
+Because D012 historically used C22 for the second buck input bypass, the reference collision is a
+documentation/implementation issue that must be resolved by restoring the buck bypass under a new
+reference rather than deleting either electrical requirement.
+
+## D016 — USB ESD/channel mapping and Type-C duplicated-pad crossover
+
+**Status:** accepted 2026-09-16.
+
+USB data routing is kept on B.Cu as a differential pair for the long CP2102-to-ESD run.
+The ESD protector channels are used as:
+
+- pin 1 ↔ pin 6 = D+ channel;
+- pin 3 ↔ pin 4 = D− channel;
+- pin 2 = GND;
+- pin 5 = USB_VBUS.
+
+USB-C receptacle mapping remains standards-correct:
+
+- A6/B6 = D+;
+- A7/B7 = D−.
+
+To preserve the clean no-via long pair from U2 to U3, the short connector-side duplicated-pad
+fanout is allowed one local crossover: D+ uses two short signal vias and a short F.Cu bridge;
+D− remains on B.Cu. A nearby GND stitching via provides a short reference transition between
+In2 and In1. Do not move the layer change into the long U2→U3 pair merely to avoid the short
+Type-C breakout crossover.

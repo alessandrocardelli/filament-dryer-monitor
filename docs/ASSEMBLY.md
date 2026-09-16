@@ -4,6 +4,20 @@ Hand assembly with hot air and a fine-tip iron. This document covers only the st
 assembly order carries engineering meaning. Ordinary reflow/soldering sequence is not
 prescribed here.
 
+## Before assembly / fabrication release
+
+Do not use an in-progress PCB revision for assembly merely because routing is complete or DRC has no errors.
+
+For the current 2026-09-16 hardware checkpoint, fabrication release still requires the gates in docs/PROJECT_STATE.md to be closed, especially:
+
+- resolve the D012 missing second 1 µF / 100 V L7987L VIN bypass/reference conflict;
+- finalize the U5 exposed-pad thermal-via and paste/stencil strategy;
+- regenerate netlist/ERC after the latest schematic edit;
+- review the remaining DRC warnings;
+- regenerate final fabrication/assembly outputs from the same released revision.
+
+Once a fabrication revision is released, the R5 sequence below remains mandatory for first power-up.
+
 ## R5 — do not fit at first assembly
 
 **Rule: populate the whole board except R5. Fit R5 only after the 3.3 V rail is confirmed.**
