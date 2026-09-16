@@ -216,6 +216,7 @@
       ],
       "track_widths": [
         0.0,
+        0.2,
         0.25,
         0.4
       ],
@@ -573,14 +574,16 @@
       },
       {
         "clearance": 0.2,
+        "diff_pair_gap": 0.25,
+        "diff_pair_width": 0.2,
         "microvia_diameter": 0.0,
         "microvia_drill": 0.0,
         "name": "USB",
         "pcb_color": "rgb(0, 0, 0)",
         "priority": 0,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.25,
-        "tuning_profile": "",
+        "track_width": 0.2,
+        "tuning_profile": "USB_90R",
         "via_diameter": 0.6,
         "via_drill": 0.3
       }
@@ -613,15 +616,23 @@
       },
       {
         "netclass": "USB",
-        "pattern": "USB_DP"
+        "pattern": "USB_D+"
       },
       {
         "netclass": "USB",
-        "pattern": "USB_DM"
+        "pattern": "USB_D-"
       },
       {
         "netclass": "Power_Heat",
         "pattern": "HEATER_SW"
+      },
+      {
+        "netclass": "USB",
+        "pattern": "USB_CONN_D+"
+      },
+      {
+        "netclass": "USB",
+        "pattern": "USB_CONN_D-"
       }
     ]
   },
@@ -861,6 +872,25 @@
     "meta": {
       "version": 0
     },
-    "tuning_profiles_impedance_geometric": []
+    "tuning_profiles_impedance_geometric": [
+      {
+        "enable_time_domain_tuning": true,
+        "layer_entries": [
+          {
+            "bottom_reference_layer": "UNDEFINED",
+            "delay": 6074500,
+            "diff_pair_gap": 250000,
+            "signal_layer": "B.Cu",
+            "top_reference_layer": "In2.Cu",
+            "width": 200000
+          }
+        ],
+        "profile_name": "USB_90R",
+        "target_impedance": 90.0,
+        "type": 1,
+        "via_overrides": [],
+        "via_prop_delay": 0
+      }
+    ]
   }
 }
