@@ -10,7 +10,6 @@ Do not use an in-progress PCB revision for assembly merely because routing is co
 
 For the current 2026-09-16 hardware checkpoint, fabrication release still requires the gates in docs/PROJECT_STATE.md to be closed, especially:
 
-- resolve the D012 missing second 1 µF / 100 V L7987L VIN bypass/reference conflict;
 - finalize the U5 exposed-pad thermal-via and paste/stencil strategy;
 - regenerate netlist/ERC after the latest schematic edit;
 - review the remaining DRC warnings;

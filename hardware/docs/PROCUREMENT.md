@@ -24,7 +24,7 @@ The board is synchronized to the L7987L redesign and substantially routed:
 - USB routing is configured for a 90 Ω differential target;
 - fresh DRC dated 2026-09-16 reports **0 errors and 0 unconnected pads**.
 
-The PCB is still **not manufacturing-ready** because U5 exposed-pad thermal/paste implementation is open, accepted D012 is not currently implemented, stored netlist/ERC are stale after the latest MCU schematic edit, DRC warnings remain to review, and final production outputs have not been regenerated.
+The PCB is still **not manufacturing-ready** because U5 exposed-pad thermal/paste implementation is open, stored netlist/ERC are stale after the latest MCU schematic edit, DRC warnings remain to review, and final production outputs have not been regenerated.
 
 ## Current DRC warning set
 
@@ -58,26 +58,21 @@ The component-selection basis remains:
 - C21 = Murata GCM188R71E105KA64J, 1 µF / 25 V / X7R;
 - upstream C5 = 100 µF / 50 V bulk reservoir.
 
-### D012 sourcing/implementation conflict
+### VIN/VCC bypass sourcing status — resolved
 
-Decision D012 accepted **two physically local 1 µF / 100 V capacitors** for L7987L VIN/VCC, historically C3 + C22.
+Historical D012 called for an additional dedicated 1 µF / 100 V VIN capacitor, but D018 supersedes that interpretation. ST's VIN requirement is 1 µF or higher; current C1 = 10 µF / 100 V X7S already satisfies it. C3 = 1 µF / 100 V X7S remains the dedicated VCC bypass.
 
-Current source state:
+The redundant buck C22 was deliberately removed in commit `24a9170a`. Current C22 is exclusively the CP2102 REGIN 1 µF / 25 V capacitor.
 
-- Power.kicad_sch contains C3 as the only 1 µF / 100 V part;
-- there is no current C_vin_byp1 part in the Power sheet;
-- current C22 is in MCU.kicad_sch and is the CP2102 REGIN 1 µF / 25 V capacitor.
+## Live BOM TME status
 
-The electrical decision has not been withdrawn. Before release, restore the second 1 µF / 100 V VIN bypass under a non-conflicting reference or explicitly reopen D012.
+The live `BOM TME` was rechecked on 2026-09-16 and is already consistent with the current references:
 
-## Live BOM TME reconciliation issue
+- **C1** -> 10 µF / 100 V X7S 1210, Murata `GRM32EC72A106KE05L`;
+- **C3** -> 1 µF / 100 V X7S 0805, Murata `GRJ21BC72A105KE11L`;
+- **C15,C17,C21,C22** -> 1 µF / 25 V X7R 0603, Murata `GCM188R71E105KA64J`.
 
-The live BOM TME currently contains:
-
-- **C15,C17,C21,C22** -> 1 µF / 25 V X7R 0603, Murata GCM188R71E105KA64J;
-- **C3,C22** -> 1 µF / 100 V X7S 0805, Murata GRJ21BC72A105KE11L.
-
-That is internally inconsistent with the current KiCad source because C22 cannot be both parts. Do not order/finalize the production BOM until D012 is resolved and the stale C22 entry is removed from the wrong row.
+C22 does not appear in the 100 V row. The former duplicate-reference issue is closed. Final production BOM/CPL still need normal release-time reconciliation with the live purchasing sheet.
 
 ## Footprint audit
 
@@ -167,14 +162,13 @@ USB tuning profile USB_90R targets 90 Ω differential on B.Cu referenced to In2.
 
 ## Production release sequence
 
-1. resolve D012 and the C22 reference conflict;
-2. finalize U5 EP thermal-via/paste implementation;
-3. regenerate netlist and ERC from the latest schematic;
-4. review/close DRC warnings and run final DRC after remaining changes;
-5. perform final electrical/layout/mechanical/antenna review;
-6. reconcile BOM TME against current KiCad references and MPNs;
-7. regenerate BOM, CPL/position data, Gerbers/drills and production netlist from the same final revision;
-8. perform final fabrication/assembly review;
-9. release fabrication only after all above items are closed.
+1. finalize U5 EP thermal-via/paste implementation;
+2. regenerate netlist and ERC from the latest schematic;
+3. review/close DRC warnings and run final DRC after remaining changes;
+4. perform final electrical/layout/mechanical/antenna review;
+5. regenerate BOM, CPL/position data, Gerbers/drills and production netlist from the same final revision;
+6. reconcile those generated outputs with the already-updated live BOM TME;
+7. perform final fabrication/assembly review;
+8. release fabrication only after all above items are closed.
 
 Existing generated production outputs remain historical until that sequence is complete.

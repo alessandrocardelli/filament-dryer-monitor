@@ -23,16 +23,16 @@ Read `docs/PROJECT_STATE.md` and `docs/DECISIONS.md` before acting. The KiCad so
 - [x] J2 physical USB mapping corrected: A6/B6 D+, A7/B7 D−; J2 GND/shield pads are GND.
 - [x] CP2102-GM footprint updated to 0.95 × 0.28 mm perimeter pads, +0.06 mm mask expansion, 3.25 mm EP and 3×3 0.9 mm paste apertures.
 - [x] CP2102 REGIN 1 µF / 25 V local bypass added as current ref C22.
+- [x] L7987L VIN/VCC bypass interpretation reconciled: C1 = 10 µF / 100 V already satisfies the VIN ≥1 µF ceramic requirement; C3 = 1 µF / 100 V is the VCC bypass; redundant buck C22 was removed in `24a9170a` (D018 supersedes D012).
+- [x] Live BOM TME rechecked: C22 is only the CP2102 1 µF / 25 V part; C3 is the sole 1 µF / 100 V entry.
 - [x] Fresh DRC run 2026-09-16: **0 errors, 0 unconnected pads**.
 - [x] External power-distribution policy recorded as D017: compact local `3V3_BUCK` copper, `3V3_MCU` primarily 0.50 mm traces after FB1, wide/local `24V_PROT` copper where current requires it, and no internal power planes.
 
 ## Release blockers — do these first
 
-- [ ] **Resolve D012 implementation conflict.** The accepted second local 1 µF / 100 V L7987L VIN/VCC bypass is missing from the current Power schematic. C22 is now used by the CP2102 REGIN bypass, so restore the D012 function under a non-conflicting reference or explicitly reopen D012 before changing the design intent.
 - [ ] **Finalize U5 exposed pad.** Current pad 17 is 3.2 × 3.2 mm GND with no thermal vias inside the EP and a full-size paste pad. Define via matrix, drill/diameter/process and stencil/paste windowing against ST + JLCPCB requirements.
 - [ ] **Regenerate netlist after latest MCU schematic edit.** The stored netlist still has J2 D+/D− labels reversed relative to the corrected PCB.
 - [ ] **Regenerate ERC after latest MCU schematic edit.** Stored report has 1 reviewed GND modeling error and 0 warnings, but predates the latest MCU edit.
-- [ ] **Reconcile live BOM TME C22.** C22 currently appears in both the 1 µF / 25 V and stale 1 µF / 100 V rows.
 
 ## DRC warning closure
 

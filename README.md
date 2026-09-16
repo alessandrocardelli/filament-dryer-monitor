@@ -4,7 +4,7 @@ Custom ESP32-based controller board that retrofits an **eSUN eBox** filament dry
 
 The PCB physically replaces the original front panel: display and buttons sit on the front face of the board, while the main electronics are on the back.
 
-> **Current status — 2026-09-16:** hardware work is on branch **pcb/l7987l-layout**. Latest hardware checkpoint before this documentation refresh: **9da46e7953f801073882fd1934802fa8ace1f1c2** (updated layout). L7987L + AutoEN routing is electrically complete enough for the current DRC to report **0 errors and 0 unconnected pads**. USB routing is configured for a **90 Ω differential target** on B.Cu/In2.Cu using **0.20 mm width / 0.25 mm gap**. The board is **not manufacturing-ready**: U5 exposed-pad thermal-via/paste implementation remains open, accepted decision D012's second 1 µF/100 V L7987L VIN/VCC bypass is missing from the current Power schematic, stored netlist/ERC must be regenerated after the latest MCU edit, current DRC warnings need review, and production outputs/BOM must be reconciled.
+> **Current status — 2026-09-16:** hardware work is on branch **pcb/l7987l-layout**. Latest hardware checkpoint before this documentation refresh: **9da46e7953f801073882fd1934802fa8ace1f1c2** (updated layout). L7987L + AutoEN routing is electrically complete enough for the current DRC to report **0 errors and 0 unconnected pads**. USB routing is configured for a **90 Ω differential target** on B.Cu/In2.Cu using **0.20 mm width / 0.25 mm gap**. The board is **not manufacturing-ready**: U5 exposed-pad thermal-via/paste implementation remains open, stored netlist/ERC must be regenerated after the latest MCU edit, current DRC warnings need review, and production outputs must be regenerated/reconciled before release.
 
 For a new work session, read AGENTS.md, docs/PROJECT_STATE.md, docs/DECISIONS.md and docs/TODO.md before changing the design.
 
@@ -81,7 +81,7 @@ Compensation: R33 = 16 kΩ, C9 = 18 nF, C8 = 39 pF, R35 = 1.13 kΩ, C20 = 560 pF
 
 Output architecture remains 3V3_BUCK -> FB1 -> 3V3_MCU. PGOOD and SYNCH are intentionally NC. The upstream C5 = 100 µF / 50 V bulk capacitor remains.
 
-**Open implementation conflict:** D012 accepted a second physically local 1 µF / 100 V bypass for the L7987L VIN pins. The current Power schematic contains only C3. Historical C22 from D012 is no longer present in the Power sheet; current C22 is the CP2102 REGIN capacitor. Restore the accepted VIN-bypass function under a non-conflicting reference or explicitly reopen D012 before fabrication.
+**VIN/VCC ceramic bypass — resolved:** ST requires a ceramic of 1 µF or higher across VIN-to-power-GND and another across VCC-to-IC-GND, close to the device. In the current design C1 = 10 µF / 100 V X7S already satisfies the VIN-side requirement, while C3 = 1 µF / 100 V X7S is the VCC bypass. The extra buck C22 added on 2026-09-09 was therefore redundant and was deliberately removed in commit `24a9170a`. Current C22 is unrelated: it is the CP2102 REGIN 1 µF / 25 V capacitor.
 
 Detailed calculations and AutoEN rationale are in [docs/BUCK_L7987L_DESIGN.md](docs/BUCK_L7987L_DESIGN.md).
 
@@ -188,7 +188,7 @@ USB data nets are USB_D+, USB_D−, USB_CONN_D+, USB_CONN_D−.
 
 The working purchasing BOM is the Google Sheet **Filament Dryer Monitor — BOM finale Mouser**, tab **BOM TME**.
 
-A current reconciliation issue remains: C22 appears in the live sheet both in the 1 µF / 25 V row used by CP2102 REGIN and in the older 1 µF / 100 V row associated with the historical D012 buck reference. The KiCad source currently uses C22 only as the 25 V REGIN capacitor.
+The live **BOM TME** was rechecked on 2026-09-16 and is already consistent with the current references: C1 is the 10 µF / 100 V VIN ceramic, C3 is the 1 µF / 100 V VCC bypass, and C22 appears only in the 1 µF / 25 V row for CP2102 REGIN. No C22 duplicate remains.
 
 See [hardware/docs/PROCUREMENT.md](hardware/docs/PROCUREMENT.md).
 
@@ -264,13 +264,11 @@ hardware/*.kicad_*              Actual KiCad implementation
 
 ## Current next steps
 
-1. resolve the missing D012 second 1 µF / 100 V VIN bypass under a non-conflicting reference, or explicitly reopen D012;
-2. finalize U5 exposed-pad thermal-via and paste/stencil strategy;
-3. regenerate the netlist and ERC from the latest schematic and verify USB mapping;
-4. review/close the current DRC warnings;
-5. complete final buck, USB, antenna, high-current and mechanical PCB review;
-6. reconcile the live BOM TME C22 reference;
-7. regenerate production BOM/CPL/Gerbers/drills/netlist from the same final revision;
-8. perform fabrication/assembly review;
-9. follow docs/ASSEMBLY.md for first power-up and AutoEN R5 sequencing;
-10. perform first-board electrical, thermal, switching-stress and fault-recovery validation.
+1. finalize U5 exposed-pad thermal-via and paste/stencil strategy;
+2. regenerate the netlist and ERC from the latest schematic and verify USB mapping;
+3. review/close the current DRC warnings;
+4. complete final buck, USB, antenna, high-current and mechanical PCB review;
+5. regenerate production BOM/CPL/Gerbers/drills/netlist from the same final revision and reconcile them with the already-updated live BOM TME;
+6. perform fabrication/assembly review;
+7. follow docs/ASSEMBLY.md for first power-up and AutoEN R5 sequencing;
+8. perform first-board electrical, thermal, switching-stress and fault-recovery validation.

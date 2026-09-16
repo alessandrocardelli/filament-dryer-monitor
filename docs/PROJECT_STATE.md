@@ -20,11 +20,13 @@ USB routing is now configured and routed for a **90 Ω differential target** on 
 The PCB is **not manufacturing-ready**. Release blockers/open gates are:
 
 1. U5 exposed-pad thermal-via and paste/stencil implementation is still not finalized.
-2. Accepted decision D012 (second local 1 µF / 100 V L7987L VIN/VCC bypass) is **not present in the current Power schematic**. Current C22 is instead the CP2102 REGIN 1 µF / 25 V capacitor. This is an implementation/documentation conflict, not a silently superseded decision.
-3. The stored netlist and ERC report predate the latest MCU schematic correction and must be regenerated.
-4. The current DRC warnings still need deliberate review/closure or documented acceptance.
-5. Production Gerbers/BOM/CPL/drill/netlist outputs must be regenerated from the released revision and reconciled with the live purchasing BOM.
-6. The live `BOM TME` currently contains a stale duplicate reference: C22 appears in both the 1 µF / 25 V and 1 µF / 100 V rows.
+2. The stored netlist and ERC report predate the latest MCU schematic correction and must be regenerated.
+3. The current DRC warnings still need deliberate review/closure or documented acceptance.
+4. Production Gerbers/BOM/CPL/drill/netlist outputs must be regenerated from the released revision and reconciled with the live purchasing BOM.
+
+The previously documented D012/C22 buck-bypass conflict is **closed**: the later design review recognized that C1 = 10 µF / 100 V already satisfies ST's ≥1 µF VIN-to-power-GND ceramic requirement, while C3 = 1 µF / 100 V satisfies the VCC-to-IC-GND requirement. The redundant buck C22 was deliberately removed in commit `24a9170a`.
+
+The live **BOM TME** was also rechecked on 2026-09-16: C22 appears only in the 1 µF / 25 V CP2102 REGIN row, while C3 is the sole 1 µF / 100 V entry. The earlier duplicate-reference warning is obsolete.
 
 ## Sources inspected for this checkpoint
 
@@ -74,11 +76,23 @@ Output architecture remains `3V3_BUCK -> FB1 -> 3V3_MCU`. `PGOOD` and `SYNCH` re
 
 The 2026-09-04 design calculations/review remain accepted: nominal ILIM about 1.705 A, engineering selection envelope about 1.42–2.15 A, and recorded compensation simulation about 59.1 kHz crossover / 64.9° phase margin / 19.6 dB gain margin.
 
-### D012 implementation conflict
+### VIN/VCC local ceramic requirement — resolved
 
-D012 accepted a second local 1 µF / 100 V bypass so VIN and VCC each have a physically local 1 µF ceramic. The current `Power.kicad_sch` contains only **C3** with MPN `GRJ21BC72A105KE11L` and function `C_vcc_buck1`; there is no second 1 µF / 100 V part and no `C_vin_byp1` in the current Power sheet.
+The original D012 interpretation treated ST's VIN and VCC bypass guidance as requiring two additional dedicated 1 µF / 100 V parts. The later review corrected that interpretation.
 
-This must be treated as an implementation regression/open decision conflict. Do not remove or rewrite D012 merely to match the current source. Restore the accepted function under a non-conflicting reference, or explicitly reopen D012 before fabrication.
+ST requires:
+
+- a ceramic capacitor of **1 µF or higher** across VIN and power GND, close to U5;
+- a ceramic capacitor of **1 µF or higher** across VCC and IC/signal GND, close to U5.
+
+Current implementation:
+
+- **C1 = 10 µF / 100 V X7S** is the local VIN ceramic and therefore already exceeds the VIN-side minimum;
+- **C3 = 1 µF / 100 V X7S** is the local VCC bypass.
+
+The extra 1 µF / 100 V buck C22 added in commit `6c6414b3` was redundant and was deliberately removed in commit `24a9170a`. Decision D012 is retained only as historical context and is superseded by D018 in `docs/DECISIONS.md`.
+
+Current C22 belongs to the MCU sheet and is the CP2102 REGIN 1 µF / 25 V capacitor.
 
 ## MCU / USB state
 
@@ -219,22 +233,23 @@ The fresh DRC is meaningful evidence for connectivity/clearance at this checkpoi
 
 ## Procurement/BOM reconciliation
 
-The live Google Sheet `Filament Dryer Monitor — BOM finale Mouser`, tab `BOM TME`, currently lists:
+The live Google Sheet `Filament Dryer Monitor — BOM finale Mouser`, tab `BOM TME`, was rechecked on 2026-09-16.
 
-- C15/C17/C21/C22 as 1 µF / 25 V / X7R / 0603 `GCM188R71E105KA64J`;
-- a stale second row that still includes C22 with C3 as 1 µF / 100 V / 0805 `GRJ21BC72A105KE11L`.
+Relevant rows are now consistent with KiCad:
 
-The source implementation and purchasing sheet therefore need reconciliation before ordering/final BOM export.
+- **C1** -> 10 µF / 100 V X7S, Murata `GRM32EC72A106KE05L`;
+- **C3** -> 1 µF / 100 V X7S, Murata `GRJ21BC72A105KE11L`;
+- **C15,C17,C21,C22** -> 1 µF / 25 V X7R 0603, Murata `GCM188R71E105KA64J`.
+
+C22 no longer appears in the 100 V row. The previous C22 duplicate-reference issue is closed. Final production exports still need the normal release-time reconciliation against this live sheet.
 
 ## Immediate handoff / next gates
 
-1. Resolve the D012 missing second 1 µF / 100 V VIN/VCC bypass without reusing C22, unless D012 is explicitly reopened.
-2. Finalize U5 exposed-pad thermal vias and paste/stencil strategy.
-3. Regenerate netlist and ERC from the latest schematic; verify USB connectivity against the current PCB.
-4. Review the 14 active DRC warnings and either fix them or record justified exclusions.
-5. Perform final engineering review of buck current loops/feedback/AutoEN routing, USB reference continuity, ESP32 antenna keepout, heater/fan/high-current paths and mechanical clearances.
-6. Reconcile `BOM TME`, especially C22.
-7. Regenerate final BOM/CPL/Gerbers/drills/netlist from the same released revision.
-8. Perform fabrication/assembly review.
-9. Follow `docs/ASSEMBLY.md` for first assembly and R5 sequencing.
-10. Validate regulation, transients, switching stress, temperatures, current limit and AutoEN recovery on the first board.
+1. Finalize U5 exposed-pad thermal vias and paste/stencil strategy.
+2. Regenerate netlist and ERC from the latest schematic; verify USB connectivity against the current PCB.
+3. Review the 14 active DRC warnings and either fix them or record justified exclusions.
+4. Perform final engineering review of buck current loops/feedback/AutoEN routing, USB reference continuity, ESP32 antenna keepout, heater/fan/high-current paths and mechanical clearances.
+5. Regenerate final BOM/CPL/Gerbers/drills/netlist from the same released revision and reconcile them with the live BOM TME.
+6. Perform fabrication/assembly review.
+7. Follow `docs/ASSEMBLY.md` for first assembly and R5 sequencing.
+8. Validate regulation, transients, switching stress, temperatures, current limit and AutoEN recovery on the first board.

@@ -124,32 +124,21 @@ The historical `hardware/DRC.rpt` is not a release gate for the current PCB. No 
 
 PCB placement/routing refinements that do not change electrical topology/component values do not reopen schematic sign-off. If layout forces an electrical or component change, explicitly reopen the relevant schematic-review gate, update the schematic/netlist first, then resynchronize the PCB and documentation.
 
-## D012 — C22 added as second 1 µF bypass for U5 VIN/VCC
+## D012 — Historical dedicated second 1 µF VIN bypass
 
-**Status:** accepted design decision; **current implementation conflict detected 2026-09-16**.
+**Status:** superseded by D018 on 2026-09-16; implementation had already been removed in commit `24a9170a` on 2026-09-11.
 
-The L7987L datasheet requires a 1 µF or larger ceramic local to both the VIN pins and the
-VCC pin; the ST demo board implements this as two separate 1 µF parts. The accepted design
-therefore calls for two physically local 1 µF / 100 V capacitors on `24V_PROT`:
+D012 originally interpreted the L7987L datasheet as requiring two additional dedicated
+1 µF / 100 V capacitors, one for VIN and one for VCC, and historical reference C22 was
+added on `24V_PROT`.
 
-- one local to VCC;
-- one local to VIN1/VIN2.
+That interpretation was overly strict because the datasheet requirement on VIN is **1 µF or
+higher**, not specifically an additional 1 µF part. The existing local C1 = 10 µF / 100 V
+ceramic already satisfies the VIN-to-power-GND requirement. C3 = 1 µF / 100 V remains the
+dedicated VCC-to-IC-GND bypass.
 
-The historical implementation used C3 plus C22, both
-`GRJ21BC72A105KE11L`, 1 µF / 100 V X7S 0805.
-
-**Current-source discrepancy:** the present `Power.kicad_sch` contains only C3 with
-function `C_vcc_buck1`; the second 1 µF / 100 V part and function `C_vin_byp1` are absent.
-Current reference **C22 is now used in the MCU sheet for the CP2102 REGIN 1 µF / 25 V
-bypass**.
-
-This does **not** silently supersede D012. Before fabrication, either:
-
-1. restore the second 1 µF / 100 V VIN bypass under a non-conflicting reference; or
-2. explicitly reopen this decision using new primary-source/layout evidence.
-
-The 25 V `GCM188R71E105KA64J` used at CP2102 REGIN is not a substitute on the 24 V buck
-input rail.
+D018 records the corrected durable decision. Do not re-add the historical buck C22 unless
+new layout/measurement evidence creates a separate need for additional local input capacitance.
 
 ## D013 — AutoEN is required; validated failure mechanism is foldback lock
 
@@ -200,9 +189,9 @@ REGIN is supplied from `3V3_MCU`. A local 1 µF / 25 V X7R 0603
 `GCM188R71E105KA64J` is added in parallel with the existing local 100 nF decoupling.
 The current schematic/PCB reference is C22.
 
-Because D012 historically used C22 for the second buck input bypass, the reference collision is a
-documentation/implementation issue that must be resolved by restoring the buck bypass under a new
-reference rather than deleting either electrical requirement.
+Historical D012 also used the reference C22 for a redundant buck VIN bypass. D018 supersedes that
+decision, so there is no remaining reference collision: current C22 is correctly reserved for CP2102
+REGIN.
 
 ## D016 — USB ESD/channel mapping and Type-C duplicated-pad crossover
 
@@ -241,3 +230,25 @@ Power distribution remains on the external copper layers; D002's two solid inter
 - Do not let optional power pours crowd the controlled USB differential pair or violate the ESP32 antenna keepout.
 
 This decision defines the default layout policy; it does not require replacing already-correct power traces with pours merely to increase copper area.
+
+
+## D018 — L7987L VIN/VCC local ceramic requirement satisfied by C1 + C3
+
+**Status:** accepted 2026-09-16; supersedes D012.
+
+Manufacturer guidance requires a ceramic capacitor of **1 µF or higher** across VIN and
+power GND and another of **1 µF or higher** across VCC and IC/signal GND, placed as close as
+practical to the L7987L.
+
+The current implementation satisfies this without an extra dedicated VIN 1 µF capacitor:
+
+- C1 = 10 µF / 100 V X7S is the local VIN-to-power-GND ceramic and exceeds the ≥1 µF requirement;
+- C3 = 1 µF / 100 V X7S is the local VCC-to-IC-GND bypass.
+
+The additional buck C22 introduced in commit `6c6414b3` was therefore redundant and was
+deliberately removed in commit `24a9170a` ("Removed C22"). Current reference C22 is used
+only for the CP2102 REGIN 1 µF / 25 V bypass.
+
+This decision depends on preserving C1 and C3 as genuinely local bypass components during
+final layout review. It does not relax the requirement for short VIN/power-GND and
+VCC/signal-GND high-frequency current paths.

@@ -12,7 +12,7 @@ The actual KiCad schematic and PCB override this document if they disagree. The 
 
 > **Current manufacturing-state warning**
 >
-> The PCB contains the L7987L redesign and the legacy AP66200 implementation is absent. Routing connectivity is complete and USB geometry is now configured/routed. The board is still **not manufacturing-ready** because U5 exposed-pad thermal-via/paste implementation is open, accepted decision D012's second 1 µF / 100 V VIN bypass is missing from the current Power schematic, stored netlist/ERC are stale after the latest MCU edit, DRC warnings still require review, and production outputs/BOM require reconciliation.
+> The PCB contains the L7987L redesign and the legacy AP66200 implementation is absent. Routing connectivity is complete and USB geometry is now configured/routed. The board is still **not manufacturing-ready** because U5 exposed-pad thermal-via/paste implementation is open, stored netlist/ERC are stale after the latest MCU edit, DRC warnings still require review, and production outputs must be regenerated/reconciled before release.
 
 > **Design-review result**
 >
@@ -88,9 +88,7 @@ Current source implementation:
 - C2 = 100 nF, local TLV1701 supply bypass.
 - C5 = 100 µF / 50 V, upstream bulk reservoir retained.
 
-**D012 implementation conflict:** the accepted design calls for a second physically local 1 µF / 100 V ceramic at the VIN pins. The current Power schematic no longer contains that second part or the C_vin_byp1 function. Historical reference C22 from D012 is now used in the MCU sheet for the CP2102 REGIN 1 µF / 25 V bypass.
-
-Do not silently reinterpret this as a design change. Before fabrication, restore the second 1 µF / 100 V VIN bypass under a non-conflicting reference or explicitly reopen D012 using new primary-source/layout evidence.
+**VIN/VCC local ceramic requirement — resolved:** ST requires a ceramic of 1 µF or higher across VIN-to-power-GND and another across VCC-to-IC-GND, close to the device. C1 = 10 µF / 100 V already satisfies the VIN-side requirement; C3 = 1 µF / 100 V is the VCC bypass. The additional 1 µF / 100 V buck C22 added on 2026-09-09 was redundant and was deliberately removed in commit `24a9170a`. D018 supersedes historical D012.
 
 ### Output / VBIAS
 
@@ -400,7 +398,7 @@ Important current footprint/manufacturing facts:
 
 Current CP2102 REGIN bypass is C22 = GCM188R71E105KA64J, 1 µF / 25 V / X7R / 0603.
 
-The live BOM TME currently lists C22 both in the 1 µF / 25 V row and in the older 1 µF / 100 V row associated with D012. Reconcile this after the D012 implementation conflict is resolved.
+The live BOM TME was rechecked on 2026-09-16 and is already consistent: C22 appears only in the 1 µF / 25 V CP2102 REGIN row; C3 is the sole 1 µF / 100 V part. No C22 reference conflict remains.
 
 U5 exposed-pad paste aperture and thermal-via implementation remain open PCB/manufacturing tasks.
 
@@ -524,9 +522,9 @@ Before fabrication:
 - replace/override full-area paste if required with a deliberate windowed stencil strategy;
 - review solder-wicking and voiding risk.
 
-### D012 VIN bypass discrepancy
+### VIN/VCC bypass status
 
-The second accepted 1 µF / 100 V local VIN bypass is absent from the current Power schematic. Resolve this before considering buck placement/routing frozen.
+Closed by D018. C1 provides the required local VIN ceramic capacitance (10 µF ≥ 1 µF) and C3 provides the required 1 µF VCC bypass. No additional dedicated buck C22 is required. Final layout review must still verify that C1/C3 and their respective GND return paths remain genuinely local.
 
 ### Buck routing review
 
@@ -609,15 +607,13 @@ Production Gerbers, drill files, position/CPL data, BOM exports and netlist rema
 
 ## 21. Next implementation sequence
 
-1. Resolve the D012 missing second 1 µF / 100 V VIN bypass under a non-conflicting reference, or explicitly reopen D012.
-2. Finalize U5 exposed-pad thermal/GND vias and paste/stencil strategy.
-3. Regenerate netlist and ERC from the latest schematic; verify USB mapping.
-4. Review/fix or deliberately accept the current DRC warnings.
-5. Complete final buck current-loop/quiet-return review and full-board USB/antenna/high-current/mechanical review.
-6. Reconcile the live BOM TME C22 reference.
-7. Run final DRC/ERC after all hardware changes.
-8. Regenerate fabrication/assembly outputs from the same final revision and reconcile them with the purchasing BOM.
-9. Follow docs/ASSEMBLY.md for first power-up.
-10. During first-board bring-up, validate 3.3 V regulation/transients, LX ringing/stress, temperatures, current-limit behavior and AutoEN shutdown/recovery timing.
+1. Finalize U5 exposed-pad thermal/GND vias and paste/stencil strategy.
+2. Regenerate netlist and ERC from the latest schematic; verify USB mapping.
+3. Review/fix or deliberately accept the current DRC warnings.
+4. Complete final buck current-loop/quiet-return review and full-board USB/antenna/high-current/mechanical review.
+5. Regenerate the final production outputs from the same released revision and reconcile them with the live BOM TME.
+6. Perform final fabrication/assembly review.
+7. Follow `docs/ASSEMBLY.md` for R5 sequencing and first power-up.
+8. Validate 3.3 V regulation/transients, LX ringing/stress, temperatures, current-limit behavior and AutoEN shutdown/recovery timing.
 
-**Current project gate:** routing connectivity and USB geometry are substantially complete. **D012 reconciliation, U5 EP manufacturing implementation, fresh current-schematic netlist/ERC, DRC-warning review and release-output regeneration are the next gates.**
+**Current project gate:** routing connectivity and USB geometry are substantially complete. **U5 EP manufacturing implementation, fresh current-schematic netlist/ERC, DRC-warning review, final engineering review and release-output regeneration are the next gates.**
