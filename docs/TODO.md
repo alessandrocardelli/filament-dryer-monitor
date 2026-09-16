@@ -24,6 +24,7 @@ Read `docs/PROJECT_STATE.md` and `docs/DECISIONS.md` before acting. The KiCad so
 - [x] CP2102-GM footprint updated to 0.95 × 0.28 mm perimeter pads, +0.06 mm mask expansion, 3.25 mm EP and 3×3 0.9 mm paste apertures.
 - [x] CP2102 REGIN 1 µF / 25 V local bypass added as current ref C22.
 - [x] Fresh DRC run 2026-09-16: **0 errors, 0 unconnected pads**.
+- [x] External power-distribution policy recorded as D017: compact local `3V3_BUCK` copper, `3V3_MCU` primarily 0.50 mm traces after FB1, wide/local `24V_PROT` copper where current requires it, and no internal power planes.
 
 ## Release blockers — do these first
 
@@ -52,7 +53,7 @@ Electrical connectivity is complete, but the layout quality gate remains open.
 - [ ] Review FB/COMP routing and return isolation from switching/high-current current paths.
 - [ ] Review AutoEN routing and local returns.
 - [ ] Review local GND via/current-return placement for C1−, D7 anode, C10−, U5 pin16/EP, C3− and C21−.
-- [ ] Keep `3V3_BUCK` as compact local external copper. `3V3_MCU` may remain mainly track-distributed with local copper where useful; do not create internal power planes.
+- [ ] Preserve D017 during final cleanup: `3V3_BUCK` remains compact local external copper; `3V3_MCU` may stay trace-distributed at 0.50 mm with only optional local pours; do not create internal power planes.
 
 ## USB final review
 

@@ -182,7 +182,6 @@ With R5 absent, R30 holds the Q7 base at ground and EN is free. R5 is fitted aft
 regulator is confirmed working. No schematic or netlist change; the schematic carries a
 `DNP at first assembly` note on R5 and the procedure lives in `docs/ASSEMBLY.md`.
 
-
 ## D015 — CP2102-GM land pattern, mask, paste and REGIN bypass
 
 **Status:** accepted 2026-09-16.
@@ -227,3 +226,18 @@ fanout is allowed one local crossover: D+ uses two short signal vias and a short
 D− remains on B.Cu. A nearby GND stitching via provides a short reference transition between
 In2 and In1. Do not move the layer change into the long U2→U3 pair merely to avoid the short
 Type-C breakout crossover.
+
+## D017 — External power-distribution copper policy
+
+**Status:** accepted 2026-09-16.
+
+Power distribution remains on the external copper layers; D002's two solid internal GND planes are unchanged.
+
+- `/Power/3V3_BUCK`: use compact local copper around the buck output, C10, L1 and FB1 path. It is not a board-wide power plane.
+- `3V3_MCU`: the normal distribution method may remain the existing **0.50 mm Power_3V3 traces** after FB1. Local copper pours are optional where they materially improve connection geometry; a broad 3V3_MCU plane is not required.
+- `24V_PROT`: wide traces and/or local pours are appropriate where load current and voltage drop justify them.
+- Fast switched nodes, especially L7987L `LX`, must keep copper area only as large as required for the current path. Heater/fan switched-node copper should likewise not be enlarged without a current/thermal reason.
+- The distributed capacitance between an external DC power pour and the adjacent solid GND plane is not, by itself, a reason to avoid the pour. The more important parasitic-capacitance/EMI concern is excessive area on fast switch nodes.
+- Do not let optional power pours crowd the controlled USB differential pair or violate the ESP32 antenna keepout.
+
+This decision defines the default layout policy; it does not require replacing already-correct power traces with pours merely to increase copper area.

@@ -142,6 +142,18 @@ Current B.Cu/local-zone implementation includes:
 
 All nets are presently connected according to the fresh DRC. That closes the **connectivity/ratsnest** phase, not the engineering review/release phase.
 
+### Power-distribution policy
+
+Decision D017 records the power-copper policy for the current layout:
+
+- `/Power/3V3_BUCK` stays a **compact local B.Cu copper area** around the buck output/C10/L1/FB1 path;
+- `3V3_MCU` may remain **primarily 0.50 mm Power_3V3 traces after FB1**. The local zone currently present in the PCB is optional layout copper, not a requirement for a broad 3.3 V plane;
+- `24V_PROT` may use wide traces and local pours where current/voltage-drop needs justify them;
+- `LX` and other switched nodes remain geometrically compact;
+- both inner layers remain uninterrupted GND.
+
+Capacitance from an external DC power area to the nearby GND plane is not considered a reason to avoid the area. The relevant parasitic/EMI concern is excessive copper on fast switched nodes, plus any optional pour crowding the USB pair or ESP32 antenna keepout.
+
 ### U5 exposed pad remains open
 
 U5 pad 17 is a **3.2 × 3.2 mm** GND/SGND exposed pad. Inspection of the current board shows no thermal/GND via located inside the exposed-pad area. The current footprint also applies B.Paste over the EP as a single full-size pad.
