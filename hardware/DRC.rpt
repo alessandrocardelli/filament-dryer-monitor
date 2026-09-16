@@ -1,26 +1,64 @@
 ** Drc report for Filament_Dryer_Monitor.kicad_pcb **
-** Created on 2026-09-16T18:13:13 **
-** Report includes: Errors **
+** Created on 2026-09-16T20:12:47 **
+** Report includes: Errors, Warnings, Exclusions **
 
-** Found 1 DRC violations **
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1360 mm)
-    Local override; error
-    @(146.5910 mm, 126.7460 mm): Track [/MCU/USB_VBUS] on B.Cu, length 18.5120 mm
-    @(130.5570 mm, 126.0100 mm): Pad 1 [3V3_MCU] of C13 on B.Cu
+** Found 15 DRC violations **
+[lib_footprint_mismatch]: Footprint 'Oled 1.54 Inch SSD1309 TZT' does not match copy in library 'FilamentDryer'
+    Local override; warning
+    @(138.1900 mm, 88.0000 mm): Footprint J4
+[lib_footprint_mismatch]: Footprint 'ESP32-WROOM-32E' does not match copy in library 'RF_Module'
+    Local override; warning
+    @(106.3520 mm, 118.0660 mm): Footprint U4
+[lib_footprint_mismatch]: Footprint 'JST_PH_B2B-PH-SM4-TB_1x02-1MP_P2.00mm_Vertical' does not match copy in library 'FilamentDryer'
+    Local override; warning
+    @(165.0720 mm, 125.5485 mm): Footprint J6
+[lib_footprint_mismatch]: Footprint 'JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical' does not match copy in library 'Connector_JST'
+    Local override; warning
+    @(186.9520 mm, 111.9930 mm): Footprint J1
+[lib_footprint_mismatch]: Footprint 'JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical' does not match copy in library 'Connector_JST'
+    Local override; warning
+    @(186.7040 mm, 124.6977 mm): Footprint J5
+[lib_footprint_mismatch]: Footprint 'JST_PH_B4B-PH-SM4-TB_1x04-1MP_P2.00mm_Vertical' does not match copy in library 'FilamentDryer'
+    Local override; warning
+    @(124.0000 mm, 85.6860 mm): Footprint J3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(109.6460 mm, 90.2680 mm): Segment of BZ1 on F.Silkscreen
+    @(110.4460 mm, 83.2680 mm): Pad 1 [3V3_MCU] of BZ1 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(109.6460 mm, 90.2680 mm): Segment of BZ1 on F.Silkscreen
+    @(110.4460 mm, 90.4680 mm): Pad 2 [Net-(D6-A)] of BZ1 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(117.4460 mm, 91.2680 mm): Segment of BZ1 on F.Silkscreen
+    @(110.4460 mm, 90.4680 mm): Pad 2 [Net-(D6-A)] of BZ1 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(117.4460 mm, 91.2680 mm): Segment of BZ1 on F.Silkscreen
+    @(117.6460 mm, 90.4680 mm): Pad 4 [unconnected-(BZ1-Pad4)] of BZ1 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(110.6460 mm, 82.4680 mm): Segment of BZ1 on F.Silkscreen
+    @(110.4460 mm, 83.2680 mm): Pad 1 [3V3_MCU] of BZ1 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(110.6460 mm, 82.4680 mm): Segment of BZ1 on F.Silkscreen
+    @(117.6460 mm, 83.2680 mm): Pad 3 [unconnected-(BZ1-Pad3)] of BZ1 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(118.4460 mm, 83.4680 mm): Segment of BZ1 on F.Silkscreen
+    @(117.6460 mm, 83.2680 mm): Pad 3 [unconnected-(BZ1-Pad3)] of BZ1 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(118.4460 mm, 83.4680 mm): Segment of BZ1 on F.Silkscreen
+    @(117.6460 mm, 90.4680 mm): Pad 4 [unconnected-(BZ1-Pad4)] of BZ1 on F.Cu
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1500 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning (excluded)
+    @(100.0000 mm, 81.0000 mm): Segment on Edge.Cuts
+    @(100.3520 mm, 108.8660 mm): Polygon of U4 on B.Silkscreen
 
-** Found 3 unconnected pads **
-[unconnected_items]: Missing connection between items
-    Local override; error
-    @(183.4680 mm, 92.6035 mm): Pad 5 [24V_PROT] of U1 on B.Cu
-    @(184.1640 mm, 83.3380 mm): Zone [24V_PROT] on B.Cu, priority 2
-[unconnected_items]: Missing connection between items
-    Local override; error
-    @(183.6430 mm, 94.5140 mm): Pad 1 [24V_PROT] of C2 on B.Cu
-    @(183.4680 mm, 92.6035 mm): Pad 5 [24V_PROT] of U1 on B.Cu
-[unconnected_items]: Missing connection between items
-    Local override; error
-    @(183.6430 mm, 94.5140 mm): Pad 1 [24V_PROT] of C2 on B.Cu
-    @(183.4560 mm, 98.7520 mm): Track [24V_PROT] on B.Cu, length 0.2645 mm
+** Found 0 unconnected pads **
 
 ** Found 0 Footprint errors **
 
