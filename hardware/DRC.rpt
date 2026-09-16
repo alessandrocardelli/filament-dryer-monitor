@@ -1,14 +1,26 @@
 ** Drc report for Filament_Dryer_Monitor.kicad_pcb **
-** Created on 2026-08-06T21:18:01 **
-** Report includes: Errors, Warnings, Exclusions **
+** Created on 2026-09-16T18:13:13 **
+** Report includes: Errors **
 
 ** Found 1 DRC violations **
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1500 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(100.0000 mm, 81.0000 mm): Segment on Edge.Cuts
-    @(100.3520 mm, 108.8660 mm): Polygon of U4 on B.Silkscreen
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1360 mm)
+    Local override; error
+    @(146.5910 mm, 126.7460 mm): Track [/MCU/USB_VBUS] on B.Cu, length 18.5120 mm
+    @(130.5570 mm, 126.0100 mm): Pad 1 [3V3_MCU] of C13 on B.Cu
 
-** Found 0 unconnected pads **
+** Found 3 unconnected pads **
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(183.4680 mm, 92.6035 mm): Pad 5 [24V_PROT] of U1 on B.Cu
+    @(184.1640 mm, 83.3380 mm): Zone [24V_PROT] on B.Cu, priority 2
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(183.6430 mm, 94.5140 mm): Pad 1 [24V_PROT] of C2 on B.Cu
+    @(183.4680 mm, 92.6035 mm): Pad 5 [24V_PROT] of U1 on B.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(183.6430 mm, 94.5140 mm): Pad 1 [24V_PROT] of C2 on B.Cu
+    @(183.4560 mm, 98.7520 mm): Track [24V_PROT] on B.Cu, length 0.2645 mm
 
 ** Found 0 Footprint errors **
 

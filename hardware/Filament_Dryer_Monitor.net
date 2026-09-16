@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\Users\\utente\\Documents\\KiCad\\10.0\\projects\\Filament_Dryer_Monitor\\hardware\\Filament_Dryer_Monitor.kicad_sch")
-		(date "2026-09-09T17:30:20")
+		(date "2026-09-16T18:12:49")
 		(tool "Eeschema 10.0.4")
 		(sheet
 			(number "1")
@@ -1397,96 +1397,6 @@
 			)
 		)
 		(comp
-			(ref "C22")
-			(value "1u")
-			(footprint "Capacitor_SMD:C_0805_2012Metric")
-			(description "Unpolarized capacitor")
-			(fields
-				(field
-					(name "Function") "C_vcc_buck1")
-				(field
-					(name "Dielectric") "X7S")
-				(field
-					(name "Tolerance") "10%")
-				(field
-					(name "Voltage") "100V")
-				(field
-					(name "MPN") "GRJ21BC72A105KE11L")
-				(field
-					(name "Manufacturer") "MURATA")
-				(field
-					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "Unpolarized capacitor")
-			)
-			(libsource
-				(lib "Device")
-				(part "C")
-				(description "Unpolarized capacitor")
-			)
-			(property
-				(name "Function")
-				(value "C_vcc_buck1")
-			)
-			(property
-				(name "Dielectric")
-				(value "X7S")
-			)
-			(property
-				(name "Tolerance")
-				(value "10%")
-			)
-			(property
-				(name "Voltage")
-				(value "100V")
-			)
-			(property
-				(name "MPN")
-				(value "GRJ21BC72A105KE11L")
-			)
-			(property
-				(name "Manufacturer")
-				(value "MURATA")
-			)
-			(property
-				(name "Sheetname")
-				(value "Power")
-			)
-			(property
-				(name "Sheetfile")
-				(value "Power.kicad_sch")
-			)
-			(property
-				(name "ki_keywords")
-				(value "cap capacitor")
-			)
-			(property
-				(name "ki_fp_filters")
-				(value "C_*")
-			)
-			(sheetpath
-				(names "/Power/")
-				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
-			)
-			(tstamps "f26d158c-d628-4424-864f-d887b25231b3")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-					)
-				)
-			)
-		)
-		(comp
 			(ref "D1")
 			(value "BZX84C15-7-F")
 			(footprint "Package_TO_SOT_SMD:SOT-23")
@@ -1705,8 +1615,8 @@
 		)
 		(comp
 			(ref "D7")
-			(value "STPS2L60A")
-			(footprint "Diode_SMD:D_SMA")
+			(value "PMEG6030EP")
+			(footprint "Diode_SMD:D_SOD-128")
 			(description "Diode")
 			(fields
 				(field
@@ -1716,11 +1626,11 @@
 				(field
 					(name "Sim.Pins") "1=K 2=A")
 				(field
-					(name "MPN") "STPS2L60A")
+					(name "MPN") "PMEG6030EP.115")
 				(field
-					(name "Manufacturer") "STMicroelectronics")
+					(name "Manufacturer") "Nexperia")
 				(field
-					(name "Footprint") "Diode_SMD:D_SMA")
+					(name "Footprint") "Diode_SMD:D_SOD-128")
 				(field
 					(name "Datasheet")
 				)
@@ -1746,11 +1656,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "STPS2L60A")
+				(value "PMEG6030EP.115")
 			)
 			(property
 				(name "Manufacturer")
-				(value "STMicroelectronics")
+				(value "Nexperia")
 			)
 			(property
 				(name "Sheetname")
@@ -4962,6 +4872,110 @@
 				(tstamps "/65de997d-f9e3-4a49-8760-31d73ce5b93f/")
 			)
 			(tstamps "c6c9cfcb-806f-4a9b-9690-a2a29deba4d9")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C22")
+			(value "1u")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(description "Unpolarized capacitor, small symbol")
+			(fields
+				(field
+					(name "Function") "C_en1")
+				(field
+					(name "MPN") "GCM188R71E105KA64J")
+				(field
+					(name "Manufacturer") "MURATA")
+				(field
+					(name "Dielectric") "X7R")
+				(field
+					(name "Tolerance") "10%")
+				(field
+					(name "Voltage") "25V")
+				(field
+					(name "Power")
+				)
+				(field
+					(name "TCR")
+				)
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor, small symbol")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "Function")
+				(value "C_en1")
+			)
+			(property
+				(name "MPN")
+				(value "GCM188R71E105KA64J")
+			)
+			(property
+				(name "Manufacturer")
+				(value "MURATA")
+			)
+			(property
+				(name "Dielectric")
+				(value "X7R")
+			)
+			(property
+				(name "Tolerance")
+				(value "10%")
+			)
+			(property
+				(name "Voltage")
+				(value "25V")
+			)
+			(property
+				(name "Power")
+				(value "")
+			)
+			(property
+				(name "TCR")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "MCU")
+			)
+			(property
+				(name "Sheetfile")
+				(value "MCU.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/MCU/")
+				(tstamps "/65de997d-f9e3-4a49-8760-31d73ce5b93f/")
+			)
+			(tstamps "af08d8de-dd16-4a03-a5d0-aa5a319b0dfb")
 			(units
 				(unit
 					(name "A")
@@ -12628,12 +12642,58 @@
 		)
 		(net
 			(code "7")
-			(name "/MCU/USB_DM")
+			(name "/MCU/USB_CONN_D+")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "A7")
+				(pinfunction "D-_A7")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "J2")
+				(pin "B7")
+				(pinfunction "D-_B7")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "1")
+				(pinfunction "I/O1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "8")
+			(name "/MCU/USB_CONN_D-")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "A6")
+				(pinfunction "D+_A6")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "J2")
+				(pin "B6")
+				(pinfunction "D+_B6")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "3")
+				(pinfunction "I/O2_3")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "9")
+			(name "/MCU/USB_D+")
 			(class "Default")
 			(node
 				(ref "U2")
-				(pin "5")
-				(pinfunction "D-_5")
+				(pin "4")
+				(pinfunction "D+_4")
 				(pintype "bidirectional")
 			)
 			(node
@@ -12644,13 +12704,13 @@
 			)
 		)
 		(net
-			(code "8")
-			(name "/MCU/USB_DP")
+			(code "10")
+			(name "/MCU/USB_D-")
 			(class "Default")
 			(node
 				(ref "U2")
-				(pin "4")
-				(pinfunction "D+_4")
+				(pin "5")
+				(pinfunction "D-_5")
 				(pintype "bidirectional")
 			)
 			(node
@@ -12661,7 +12721,7 @@
 			)
 		)
 		(net
-			(code "9")
+			(code "11")
 			(name "/MCU/USB_VBUS")
 			(class "Default")
 			(node
@@ -12701,7 +12761,7 @@
 			)
 		)
 		(net
-			(code "10")
+			(code "12")
 			(name "/Power/3V3_BUCK")
 			(class "Power_3V3,Default")
 			(node
@@ -12743,7 +12803,7 @@
 			)
 		)
 		(net
-			(code "11")
+			(code "13")
 			(name "/Power/COMP")
 			(class "Default")
 			(node
@@ -12770,7 +12830,7 @@
 			)
 		)
 		(net
-			(code "12")
+			(code "14")
 			(name "/Power/EN")
 			(class "Default")
 			(node
@@ -12802,7 +12862,7 @@
 			)
 		)
 		(net
-			(code "13")
+			(code "15")
 			(name "/Power/FUSE_OUT")
 			(class "Power_24V,Default")
 			(node
@@ -12818,7 +12878,7 @@
 			)
 		)
 		(net
-			(code "14")
+			(code "16")
 			(name "/Power/GATE_Q1")
 			(class "Default")
 			(node
@@ -12840,7 +12900,7 @@
 			)
 		)
 		(net
-			(code "15")
+			(code "17")
 			(name "/Power/JACK_24V_RAW")
 			(class "Power_24V,Default")
 			(node
@@ -12856,7 +12916,7 @@
 			)
 		)
 		(net
-			(code "16")
+			(code "18")
 			(name "/Power/VREF_FAULT")
 			(class "Default")
 			(node
@@ -12877,7 +12937,7 @@
 			)
 		)
 		(net
-			(code "17")
+			(code "19")
 			(name "3V3_MCU")
 			(class "Power_3V3,Default")
 			(node
@@ -12918,6 +12978,11 @@
 			)
 			(node
 				(ref "C18")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C22")
 				(pin "1")
 				(pintype "passive")
 			)
@@ -13020,7 +13085,7 @@
 			)
 		)
 		(net
-			(code "18")
+			(code "20")
 			(name "24V_PROT")
 			(class "Power_24V,Default")
 			(node
@@ -13030,11 +13095,6 @@
 			)
 			(node
 				(ref "C2")
-				(pin "1")
-				(pintype "passive")
-			)
-			(node
-				(ref "C22")
 				(pin "1")
 				(pintype "passive")
 			)
@@ -13137,7 +13197,7 @@
 			)
 		)
 		(net
-			(code "19")
+			(code "21")
 			(name "BTN_DOWN")
 			(class "Default")
 			(node
@@ -13159,7 +13219,7 @@
 			)
 		)
 		(net
-			(code "20")
+			(code "22")
 			(name "BTN_M")
 			(class "Default")
 			(node
@@ -13181,7 +13241,7 @@
 			)
 		)
 		(net
-			(code "21")
+			(code "23")
 			(name "BTN_ONOFF")
 			(class "Default")
 			(node
@@ -13203,7 +13263,7 @@
 			)
 		)
 		(net
-			(code "22")
+			(code "24")
 			(name "BTN_UP")
 			(class "Default")
 			(node
@@ -13225,7 +13285,7 @@
 			)
 		)
 		(net
-			(code "23")
+			(code "25")
 			(name "BUZ_DRV")
 			(class "Default")
 			(node
@@ -13241,7 +13301,7 @@
 			)
 		)
 		(net
-			(code "24")
+			(code "26")
 			(name "FAN_PWM")
 			(class "Default")
 			(node
@@ -13257,7 +13317,7 @@
 			)
 		)
 		(net
-			(code "25")
+			(code "27")
 			(name "GND")
 			(class "Default")
 			(node
@@ -13615,7 +13675,7 @@
 			)
 		)
 		(net
-			(code "26")
+			(code "28")
 			(name "HEATER_PWM")
 			(class "Default")
 			(node
@@ -13631,7 +13691,7 @@
 			)
 		)
 		(net
-			(code "27")
+			(code "29")
 			(name "NTC")
 			(class "Default")
 			(node
@@ -13658,7 +13718,7 @@
 			)
 		)
 		(net
-			(code "28")
+			(code "30")
 			(name "Net-(C9-Pad1)")
 			(class "Default")
 			(node
@@ -13673,7 +13733,7 @@
 			)
 		)
 		(net
-			(code "29")
+			(code "31")
 			(name "Net-(C20-Pad1)")
 			(class "Default")
 			(node
@@ -13688,7 +13748,7 @@
 			)
 		)
 		(net
-			(code "30")
+			(code "32")
 			(name "Net-(D3-A)")
 			(class "Default")
 			(node
@@ -13704,7 +13764,7 @@
 			)
 		)
 		(net
-			(code "31")
+			(code "33")
 			(name "Net-(D5-A)")
 			(class "Default")
 			(node
@@ -13727,7 +13787,7 @@
 			)
 		)
 		(net
-			(code "32")
+			(code "34")
 			(name "Net-(D6-A)")
 			(class "Default")
 			(node
@@ -13750,7 +13810,7 @@
 			)
 		)
 		(net
-			(code "33")
+			(code "35")
 			(name "Net-(D7-K)")
 			(class "Default")
 			(node
@@ -13784,7 +13844,7 @@
 			)
 		)
 		(net
-			(code "34")
+			(code "36")
 			(name "Net-(J2-CC1)")
 			(class "Default")
 			(node
@@ -13800,7 +13860,7 @@
 			)
 		)
 		(net
-			(code "35")
+			(code "37")
 			(name "Net-(J2-CC2)")
 			(class "Default")
 			(node
@@ -13812,52 +13872,6 @@
 			(node
 				(ref "R10")
 				(pin "1")
-				(pintype "passive")
-			)
-		)
-		(net
-			(code "36")
-			(name "Net-(J2-D+-PadA6)")
-			(class "Default")
-			(node
-				(ref "J2")
-				(pin "A6")
-				(pinfunction "D+_A6")
-				(pintype "bidirectional")
-			)
-			(node
-				(ref "J2")
-				(pin "B6")
-				(pinfunction "D+_B6")
-				(pintype "bidirectional")
-			)
-			(node
-				(ref "U3")
-				(pin "3")
-				(pinfunction "I/O2_3")
-				(pintype "passive")
-			)
-		)
-		(net
-			(code "37")
-			(name "Net-(J2-D--PadA7)")
-			(class "Default")
-			(node
-				(ref "J2")
-				(pin "A7")
-				(pinfunction "D-_A7")
-				(pintype "bidirectional")
-			)
-			(node
-				(ref "J2")
-				(pin "B7")
-				(pinfunction "D-_B7")
-				(pintype "bidirectional")
-			)
-			(node
-				(ref "U3")
-				(pin "1")
-				(pinfunction "I/O1_1")
 				(pintype "passive")
 			)
 		)
