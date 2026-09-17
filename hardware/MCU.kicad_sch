@@ -4858,16 +4858,6 @@
 	)
 	(wire
 		(pts
-			(xy 114.3 171.45) (xy 120.65 171.45)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0f5bbfdc-0f88-4690-b463-35c9adb7230b")
-	)
-	(wire
-		(pts
 			(xy 143.51 41.91) (xy 143.51 49.53)
 		)
 		(stroke
@@ -5028,26 +5018,6 @@
 	)
 	(wire
 		(pts
-			(xy 199.39 107.95) (xy 208.28 107.95)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2c418533-11b7-459e-82e1-9f38210b4a36")
-	)
-	(wire
-		(pts
-			(xy 48.26 59.69) (xy 48.26 69.85)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2efe2c63-1ff8-4e12-b8bc-9b0a02bcb09c")
-	)
-	(wire
-		(pts
 			(xy 228.6 85.09) (xy 228.6 86.36)
 		)
 		(stroke
@@ -5075,16 +5045,6 @@
 			(type default)
 		)
 		(uuid "39aa7226-129b-40ad-99b7-e3e3400b0315")
-	)
-	(wire
-		(pts
-			(xy 86.36 63.5) (xy 95.25 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3b1b05cb-47b8-43e0-aa01-e8af8d3f7524")
 	)
 	(wire
 		(pts
@@ -5148,7 +5108,7 @@
 	)
 	(wire
 		(pts
-			(xy 125.73 156.21) (xy 125.73 157.48)
+			(xy 120.65 156.21) (xy 120.65 157.48)
 		)
 		(stroke
 			(width 0)
@@ -5328,7 +5288,7 @@
 	)
 	(wire
 		(pts
-			(xy 90.17 156.21) (xy 125.73 156.21)
+			(xy 90.17 156.21) (xy 120.65 156.21)
 		)
 		(stroke
 			(width 0)
@@ -5498,17 +5458,7 @@
 	)
 	(wire
 		(pts
-			(xy 54.61 81.28) (xy 60.96 81.28)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "97089ea4-fb0e-421f-966c-d572215ceb69")
-	)
-	(wire
-		(pts
-			(xy 90.17 153.67) (xy 134.62 153.67)
+			(xy 90.17 153.67) (xy 129.54 153.67)
 		)
 		(stroke
 			(width 0)
@@ -5648,16 +5598,6 @@
 	)
 	(wire
 		(pts
-			(xy 114.3 168.91) (xy 120.65 168.91)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b792468c-1eb4-4e6f-bce1-dd2e91be6aae")
-	)
-	(wire
-		(pts
 			(xy 90.17 45.72) (xy 101.6 45.72)
 		)
 		(stroke
@@ -5718,16 +5658,6 @@
 	)
 	(wire
 		(pts
-			(xy 86.36 66.04) (xy 95.25 66.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c7582aec-cf3c-4139-959a-863bada42454")
-	)
-	(wire
-		(pts
 			(xy 90.17 43.18) (xy 90.17 45.72)
 		)
 		(stroke
@@ -5735,16 +5665,6 @@
 			(type default)
 		)
 		(uuid "c834053c-d7c1-4493-8129-f47b9302b8a0")
-	)
-	(wire
-		(pts
-			(xy 54.61 78.74) (xy 60.96 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c8751494-a5ad-49ae-b3eb-09d33b261e6d")
 	)
 	(wire
 		(pts
@@ -5808,7 +5728,7 @@
 	)
 	(wire
 		(pts
-			(xy 134.62 153.67) (xy 134.62 154.94)
+			(xy 129.54 153.67) (xy 129.54 154.94)
 		)
 		(stroke
 			(width 0)
@@ -6227,12 +6147,12 @@
 		(uuid "bb014afe-cca6-4a26-a47f-63efc5e3ddbc")
 	)
 	(label "LED_DRV"
-		(at 208.28 107.95 180)
+		(at 199.39 107.95 0)
 		(effects
 			(font
 				(size 1.016 1.016)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "c4344ff4-898d-4669-87bf-602b9933c9d1")
 	)
@@ -8267,7 +8187,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 134.62 160.02 0)
+		(at 129.54 160.02 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8278,7 +8198,7 @@
 		(fields_autoplaced yes)
 		(uuid "65043bee-9ce8-4569-b90a-7ec22f381daf")
 		(property "Reference" "#PWR021"
-			(at 134.62 166.37 0)
+			(at 129.54 166.37 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8289,7 +8209,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 134.62 165.1 0)
+			(at 129.54 165.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8300,7 +8220,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 134.62 160.02 0)
+			(at 129.54 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8311,7 +8231,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 134.62 160.02 0)
+			(at 129.54 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8322,7 +8242,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 134.62 160.02 0)
+			(at 129.54 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9290,7 +9210,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 125.73 162.56 0)
+		(at 120.65 162.56 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -9301,7 +9221,7 @@
 		(fields_autoplaced yes)
 		(uuid "90f95d2f-9efb-4c72-9dfa-d4cb80aa9f3e")
 		(property "Reference" "#PWR020"
-			(at 125.73 168.91 0)
+			(at 120.65 168.91 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9312,7 +9232,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 125.73 167.64 0)
+			(at 120.65 167.64 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9323,7 +9243,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 125.73 162.56 0)
+			(at 120.65 162.56 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9334,7 +9254,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 125.73 162.56 0)
+			(at 120.65 162.56 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9345,7 +9265,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 125.73 162.56 0)
+			(at 120.65 162.56 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11700,7 +11620,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_Small")
-		(at 125.73 160.02 0)
+		(at 120.65 160.02 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -11710,7 +11630,7 @@
 		(dnp no)
 		(uuid "deb755cb-f6de-47f8-8c5d-7cfbb89c78ac")
 		(property "Reference" "R10"
-			(at 128.27 158.7499 0)
+			(at 123.19 158.7499 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -11721,7 +11641,7 @@
 			)
 		)
 		(property "Value" "5k1"
-			(at 128.27 161.2899 0)
+			(at 123.19 161.2899 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -11732,7 +11652,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 125.73 160.02 0)
+			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11743,7 +11663,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 125.73 160.02 0)
+			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11754,7 +11674,7 @@
 			)
 		)
 		(property "Description" "Resistor, small symbol"
-			(at 125.73 160.02 0)
+			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11765,7 +11685,7 @@
 			)
 		)
 		(property "Function" "R_cc2"
-			(at 125.73 160.02 0)
+			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11776,7 +11696,7 @@
 			)
 		)
 		(property "MPN" "RC0603FR-075K1L"
-			(at 125.73 160.02 0)
+			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11787,7 +11707,7 @@
 			)
 		)
 		(property "Manufacturer" "YAGEO"
-			(at 125.73 160.02 0)
+			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11798,7 +11718,7 @@
 			)
 		)
 		(property "Dielectric" ""
-			(at 125.73 160.02 0)
+			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11809,7 +11729,7 @@
 			)
 		)
 		(property "Tolerance" "1%"
-			(at 125.73 160.02 0)
+			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11820,7 +11740,7 @@
 			)
 		)
 		(property "Voltage" "75V"
-			(at 125.73 160.02 0)
+			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11831,7 +11751,7 @@
 			)
 		)
 		(property "Power" "100mW"
-			(at 125.73 160.02 0)
+			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11842,7 +11762,7 @@
 			)
 		)
 		(property "TCR" "100ppm/K"
-			(at 125.73 160.02 0)
+			(at 120.65 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12832,7 +12752,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_Small")
-		(at 134.62 157.48 0)
+		(at 129.54 157.48 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -12842,7 +12762,7 @@
 		(dnp no)
 		(uuid "f183ec2b-d483-4081-ae35-1f68b86f7aa8")
 		(property "Reference" "R11"
-			(at 137.16 156.2099 0)
+			(at 132.08 156.2099 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -12853,7 +12773,7 @@
 			)
 		)
 		(property "Value" "5k1"
-			(at 137.16 158.7499 0)
+			(at 132.08 158.7499 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -12864,7 +12784,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 134.62 157.48 0)
+			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12875,7 +12795,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 134.62 157.48 0)
+			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12886,7 +12806,7 @@
 			)
 		)
 		(property "Description" "Resistor, small symbol"
-			(at 134.62 157.48 0)
+			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12897,7 +12817,7 @@
 			)
 		)
 		(property "Function" "R_cc1"
-			(at 134.62 157.48 0)
+			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12908,7 +12828,7 @@
 			)
 		)
 		(property "MPN" "RC0603FR-075K1L"
-			(at 134.62 157.48 0)
+			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12919,7 +12839,7 @@
 			)
 		)
 		(property "Manufacturer" "YAGEO"
-			(at 134.62 157.48 0)
+			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12930,7 +12850,7 @@
 			)
 		)
 		(property "Dielectric" ""
-			(at 134.62 157.48 0)
+			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12941,7 +12861,7 @@
 			)
 		)
 		(property "Tolerance" "1%"
-			(at 134.62 157.48 0)
+			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12952,7 +12872,7 @@
 			)
 		)
 		(property "Voltage" "75V"
-			(at 134.62 157.48 0)
+			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12963,7 +12883,7 @@
 			)
 		)
 		(property "Power" "100mW"
-			(at 134.62 157.48 0)
+			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12974,7 +12894,7 @@
 			)
 		)
 		(property "TCR" "100ppm/K"
-			(at 134.62 157.48 0)
+			(at 129.54 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
