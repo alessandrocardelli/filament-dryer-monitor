@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\Users\\utente\\Documents\\KiCad\\10.0\\projects\\Filament_Dryer_Monitor\\hardware\\Filament_Dryer_Monitor.kicad_sch")
-		(date "2026-09-16T18:12:49")
+		(date "2026-09-17T21:13:01")
 		(tool "Eeschema 10.0.4")
 		(sheet
 			(number "1")
@@ -12646,14 +12646,14 @@
 			(class "Default")
 			(node
 				(ref "J2")
-				(pin "A7")
-				(pinfunction "D-_A7")
+				(pin "A6")
+				(pinfunction "D+_A6")
 				(pintype "bidirectional")
 			)
 			(node
 				(ref "J2")
-				(pin "B7")
-				(pinfunction "D-_B7")
+				(pin "B6")
+				(pinfunction "D+_B6")
 				(pintype "bidirectional")
 			)
 			(node
@@ -12669,14 +12669,14 @@
 			(class "Default")
 			(node
 				(ref "J2")
-				(pin "A6")
-				(pinfunction "D+_A6")
+				(pin "A7")
+				(pinfunction "D-_A7")
 				(pintype "bidirectional")
 			)
 			(node
 				(ref "J2")
-				(pin "B6")
-				(pinfunction "D+_B6")
+				(pin "B7")
+				(pinfunction "D-_B7")
 				(pintype "bidirectional")
 			)
 			(node
