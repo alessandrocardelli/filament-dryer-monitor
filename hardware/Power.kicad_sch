@@ -3488,7 +3488,7 @@
 		(uuid "fd1655c6-57f8-4515-8412-8bb19bbcc701")
 	)
 	(no_connect
-		(at 66.04 38.1)
+		(at 68.58 38.1)
 		(uuid "27ffbb47-9654-4fb4-8857-bc503138b2f1")
 	)
 	(no_connect
@@ -3911,7 +3911,7 @@
 	)
 	(wire
 		(pts
-			(xy 90.17 35.56) (xy 104.14 35.56)
+			(xy 92.71 35.56) (xy 104.14 35.56)
 		)
 		(stroke
 			(width 0)
@@ -4441,7 +4441,7 @@
 	)
 	(wire
 		(pts
-			(xy 66.04 35.56) (xy 82.55 35.56)
+			(xy 68.58 35.56) (xy 85.09 35.56)
 		)
 		(stroke
 			(width 0)
@@ -4551,7 +4551,7 @@
 	)
 	(wire
 		(pts
-			(xy 66.04 40.64) (xy 66.04 43.18)
+			(xy 68.58 40.64) (xy 68.58 43.18)
 		)
 		(stroke
 			(width 0)
@@ -4690,7 +4690,7 @@
 		(uuid "38523952-0f6d-49aa-ad00-ef4b80956728")
 	)
 	(label "JACK_24V_RAW"
-		(at 68.58 35.56 0)
+		(at 71.12 35.56 0)
 		(effects
 			(font
 				(size 1.016 1.016)
@@ -4730,7 +4730,7 @@
 		(uuid "954e47ff-2682-4c3b-bb5b-2036aa72d35c")
 	)
 	(label "FUSE_OUT"
-		(at 92.71 35.56 0)
+		(at 95.25 35.56 0)
 		(effects
 			(font
 				(size 1.016 1.016)
@@ -5331,7 +5331,7 @@
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x03")
-		(at 60.96 38.1 180)
+		(at 63.5 38.1 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5341,7 +5341,7 @@
 		(dnp no)
 		(uuid "16948a75-4d6f-43e8-a458-795434bfc2f5")
 		(property "Reference" "J1"
-			(at 60.96 29.21 0)
+			(at 63.5 29.21 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5351,7 +5351,7 @@
 			)
 		)
 		(property "Value" "DC Connector"
-			(at 60.706 31.496 0)
+			(at 63.246 31.496 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5361,7 +5361,7 @@
 			)
 		)
 		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
-			(at 60.96 38.1 0)
+			(at 63.5 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5372,7 +5372,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 60.96 38.1 0)
+			(at 63.5 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5383,7 +5383,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 60.96 38.1 0)
+			(at 63.5 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5394,7 +5394,7 @@
 			)
 		)
 		(property "Function" "J_dc1"
-			(at 60.96 38.1 0)
+			(at 63.5 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5405,7 +5405,7 @@
 			)
 		)
 		(property "Dielectric" ""
-			(at 60.96 38.1 0)
+			(at 63.5 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5416,7 +5416,7 @@
 			)
 		)
 		(property "Tolerance" ""
-			(at 60.96 38.1 0)
+			(at 63.5 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5427,7 +5427,7 @@
 			)
 		)
 		(property "Voltage" ""
-			(at 60.96 38.1 0)
+			(at 63.5 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5438,7 +5438,7 @@
 			)
 		)
 		(property "Power" ""
-			(at 60.96 38.1 0)
+			(at 63.5 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5449,7 +5449,7 @@
 			)
 		)
 		(property "TCR" ""
-			(at 60.96 38.1 0)
+			(at 63.5 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5460,7 +5460,7 @@
 			)
 		)
 		(property "MPN" "B3B-XH-A (LF)(SN)"
-			(at 60.96 38.1 0)
+			(at 63.5 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5471,7 +5471,7 @@
 			)
 		)
 		(property "Manufacturer" "JST"
-			(at 60.96 38.1 0)
+			(at 63.5 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6422,7 +6422,7 @@
 	)
 	(symbol
 		(lib_id "Device:Fuse")
-		(at 86.36 35.56 90)
+		(at 88.9 35.56 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6433,7 +6433,7 @@
 		(fields_autoplaced yes)
 		(uuid "34433498-caad-4437-8484-a6f7e1231b3d")
 		(property "Reference" "F1"
-			(at 86.36 29.21 90)
+			(at 88.9 29.21 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6443,7 +6443,7 @@
 			)
 		)
 		(property "Value" "T3A/63V"
-			(at 86.36 31.75 90)
+			(at 88.9 31.75 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6453,7 +6453,7 @@
 			)
 		)
 		(property "Footprint" "Fuse:Fuse_1206_3216Metric_Pad1.42x1.75mm_HandSolder"
-			(at 86.36 37.338 90)
+			(at 88.9 37.338 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6464,7 +6464,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 86.36 35.56 0)
+			(at 88.9 35.56 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6475,7 +6475,7 @@
 			)
 		)
 		(property "Description" "Fuse"
-			(at 86.36 35.56 0)
+			(at 88.9 35.56 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6486,7 +6486,7 @@
 			)
 		)
 		(property "Function" "F1"
-			(at 86.36 35.56 90)
+			(at 88.9 35.56 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6497,7 +6497,7 @@
 			)
 		)
 		(property "Dielectric" ""
-			(at 86.36 35.56 90)
+			(at 88.9 35.56 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6508,7 +6508,7 @@
 			)
 		)
 		(property "Tolerance" ""
-			(at 86.36 35.56 90)
+			(at 88.9 35.56 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6519,7 +6519,7 @@
 			)
 		)
 		(property "Voltage" ""
-			(at 86.36 35.56 90)
+			(at 88.9 35.56 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6530,7 +6530,7 @@
 			)
 		)
 		(property "Power" ""
-			(at 86.36 35.56 90)
+			(at 88.9 35.56 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6541,7 +6541,7 @@
 			)
 		)
 		(property "TCR" ""
-			(at 86.36 35.56 90)
+			(at 88.9 35.56 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6552,7 +6552,7 @@
 			)
 		)
 		(property "MPN" "0685T3000-01"
-			(at 86.36 35.56 90)
+			(at 88.9 35.56 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6563,7 +6563,7 @@
 			)
 		)
 		(property "Manufacturer" "BEL FUSE"
-			(at 86.36 35.56 90)
+			(at 88.9 35.56 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9167,7 +9167,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 66.04 43.18 0)
+		(at 68.58 43.18 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -9178,7 +9178,7 @@
 		(fields_autoplaced yes)
 		(uuid "8111e213-decd-46b8-82eb-b4677333918b")
 		(property "Reference" "#PWR02"
-			(at 66.04 49.53 0)
+			(at 68.58 49.53 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9189,7 +9189,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 66.04 48.26 0)
+			(at 68.58 48.26 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9200,7 +9200,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 66.04 43.18 0)
+			(at 68.58 43.18 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9211,7 +9211,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 66.04 43.18 0)
+			(at 68.58 43.18 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9222,7 +9222,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 66.04 43.18 0)
+			(at 68.58 43.18 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
