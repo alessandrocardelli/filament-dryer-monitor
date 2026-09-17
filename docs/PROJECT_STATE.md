@@ -17,12 +17,13 @@ The remaining active warnings are six library-footprint mismatch warnings (J4, U
 
 USB routing is now configured and routed for a **90 Ω differential target** on B.Cu referenced to In2.Cu. The CP2102-GM footprint, solder-mask expansion and exposed-pad paste pattern were also updated, and the new 1 µF REGIN bypass is present.
 
+The U5 exposed-pad implementation is also closed for the planned hand-assembly flow: pad 17 remains a 3.2 × 3.2 mm B.Cu GND EP with **no via-in-pad**, and six 0.60/0.30 mm GND vias sit immediately outside it in two rows of three (3 above + 3 below). The arrangement was implemented in commit `c9dc4129` and remains present in the current PCB. U5 is assembled by light pre-tin + flux + hot air; stencil paste-windowing is therefore not a prototype release blocker.
+
 The PCB is **not manufacturing-ready**. Release blockers/open gates are:
 
-1. U5 exposed-pad thermal-via and paste/stencil implementation is still not finalized.
-2. The stored netlist and ERC report predate the latest MCU schematic correction and must be regenerated.
-3. The current DRC warnings still need deliberate review/closure or documented acceptance.
-4. Production Gerbers/BOM/CPL/drill/netlist outputs must be regenerated from the released revision and reconciled with the live purchasing BOM.
+1. The stored netlist and ERC report predate the latest MCU schematic correction and must be regenerated.
+2. The current DRC warnings still need deliberate review/closure or documented acceptance.
+3. Production Gerbers/BOM/CPL/drill/netlist outputs must be regenerated from the released revision and reconciled with the live purchasing BOM.
 
 The previously documented D012/C22 buck-bypass conflict is **closed**: the later design review recognized that C1 = 10 µF / 100 V already satisfies ST's ≥1 µF VIN-to-power-GND ceramic requirement, while C3 = 1 µF / 100 V satisfies the VCC-to-IC-GND requirement. The redundant buck C22 was deliberately removed in commit `24a9170a`.
 
@@ -168,19 +169,21 @@ Decision D017 records the power-copper policy for the current layout:
 
 Capacitance from an external DC power area to the nearby GND plane is not considered a reason to avoid the area. The relevant parasitic/EMI concern is excessive copper on fast switched nodes, plus any optional pour crowding the USB pair or ESP32 antenna keepout.
 
-### U5 exposed pad remains open
+### U5 exposed pad — resolved for planned assembly
 
-U5 pad 17 is a **3.2 × 3.2 mm** GND/SGND exposed pad. Inspection of the current board shows no thermal/GND via located inside the exposed-pad area. The current footprint also applies B.Paste over the EP as a single full-size pad.
+U5 is centered at approximately `(174.649, 85.116)` on B.Cu. Pad 17 is the **3.2 × 3.2 mm** GND/SGND exposed pad.
 
-The final EP strategy must therefore still define:
+The accepted implementation is deliberately **not via-in-pad**. Six GND vias, each **0.60 mm diameter / 0.30 mm drill**, are placed immediately outside the pad in two rows of three:
 
-- via count and placement;
-- via finished/drill size;
-- whether vias are tented/filled/plugged for the intended assembly process;
-- paste-window pattern/coverage;
-- solder-wicking risk and JLCPCB manufacturability.
+- one row at approximately y = 82.9 mm;
+- one row at approximately y = 87.35 mm;
+- x positions around 173.75 / 174.65 / 175.55 mm.
 
-Nearby GND vias do not by themselves close the exposed-pad thermal implementation.
+This geometry was implemented in commit `c9dc4129` (`updated vias on U5 and D7`) and remains present in the current PCB. It gives the EP a short thermal/GND path to the internal GND planes without open vias directly under the solderable pad.
+
+For the planned prototype process, U5 is hand assembled with a very light pre-tin on the exposed pad, flux and hot air. The current full-size B.Paste definition therefore does not control solder deposition and is **not a fabrication blocker** for this flow. If the process later changes to stencil/reflow or external PCBA, the paste aperture and via-treatment strategy must be reopened for that process.
+
+First-board measurement of U5 temperature remains required, but that is prototype validation rather than unfinished PCB implementation. Decision D019 records this closure.
 
 ## Stackup / planes
 
@@ -245,11 +248,10 @@ C22 no longer appears in the 100 V row. The previous C22 duplicate-reference iss
 
 ## Immediate handoff / next gates
 
-1. Finalize U5 exposed-pad thermal vias and paste/stencil strategy.
-2. Regenerate netlist and ERC from the latest schematic; verify USB connectivity against the current PCB.
-3. Review the 14 active DRC warnings and either fix them or record justified exclusions.
-4. Perform final engineering review of buck current loops/feedback/AutoEN routing, USB reference continuity, ESP32 antenna keepout, heater/fan/high-current paths and mechanical clearances.
-5. Regenerate final BOM/CPL/Gerbers/drills/netlist from the same released revision and reconcile them with the live BOM TME.
-6. Perform fabrication/assembly review.
-7. Follow `docs/ASSEMBLY.md` for first assembly and R5 sequencing.
-8. Validate regulation, transients, switching stress, temperatures, current limit and AutoEN recovery on the first board.
+1. Regenerate netlist and ERC from the latest schematic; verify USB connectivity against the current PCB.
+2. Review the 14 active DRC warnings and either fix them or record justified exclusions.
+3. Perform final engineering review of buck current loops/feedback/AutoEN routing, USB reference continuity, ESP32 antenna keepout, heater/fan/high-current paths and mechanical clearances.
+4. Regenerate final BOM/CPL/Gerbers/drills/netlist from the same released revision and reconcile them with the live BOM TME.
+5. Perform fabrication/assembly review.
+6. Follow `docs/ASSEMBLY.md` for first assembly and R5 sequencing.
+7. Validate regulation, transients, switching stress, temperatures, current limit and AutoEN recovery on the first board.

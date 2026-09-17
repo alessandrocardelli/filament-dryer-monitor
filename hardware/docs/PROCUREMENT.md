@@ -22,9 +22,10 @@ The board is synchronized to the L7987L redesign and substantially routed:
 - both internal copper layers are solid GND planes;
 - local external copper/zones exist for 24V_PROT, 3V3_BUCK, 3V3_MCU, HEATER_SW, LX and GND;
 - USB routing is configured for a 90 Ω differential target;
+- U5 exposed-pad thermal/GND strategy is implemented with six 0.60/0.30 mm GND vias immediately outside the EP, arranged 3 above + 3 below; no via-in-pad;
 - fresh DRC dated 2026-09-16 reports **0 errors and 0 unconnected pads**.
 
-The PCB is still **not manufacturing-ready** because U5 exposed-pad thermal/paste implementation is open, stored netlist/ERC are stale after the latest MCU schematic edit, DRC warnings remain to review, and final production outputs have not been regenerated.
+The PCB is still **not manufacturing-ready** because stored netlist/ERC are stale after the latest MCU schematic edit, DRC warnings remain to review, and final production outputs have not been regenerated. U5 exposed-pad implementation is no longer a release blocker for the planned hand-assembly process.
 
 ## Current DRC warning set
 
@@ -88,7 +89,7 @@ Important non-trivial footprint decisions:
 | U2 | Silicon Labs CP2102-GM | Custom QFN28 footprint based on Silicon Labs CP2102/9 package guidance |
 | SW1–SW6 | GCT SWT0110-020010SSA | Custom footprint based on GCT mechanical drawing |
 | BZ1 | Loudity LD-BZEL-T67-0808 | Custom footprint with conservative terminal lands |
-| U5 | ST L7987L | SamacSys_Parts:SOP65P640X120-17N; HTSSOP-16 exposed pad |
+| U5 | ST L7987L | SamacSys_Parts:SOP65P640X120-17N; HTSSOP-16 exposed pad; six peripheral GND/thermal vias, no via-in-pad |
 
 ### CP2102-GM footprint state
 
@@ -105,6 +106,12 @@ Current REGIN bypass:
 - C22 = 1 µF / 25 V / X7R / 0603;
 - Murata GCM188R71E105KA64J;
 - connected between 3V3_MCU and GND.
+
+### U5 exposed-pad / assembly state
+
+U5 pad 17 is 3.2 × 3.2 mm on B.Cu. The implemented thermal/GND path uses six through vias, each 0.60 mm diameter / 0.30 mm drill, immediately outside the pad in two rows of three. The vias are deliberately not placed inside the solderable EP, avoiding open via-in-pad solder-wicking risk.
+
+The prototype assembly method is hand assembly: very light pre-tin on the power pad, flux and hot air. Therefore the full B.Paste shape in the KiCad footprint does not control the planned prototype solder volume and is not a release blocker. If the process changes to stencil/reflow or external PCBA, paste aperture and via treatment must be reopened for that process.
 
 ### Strict symbol/pin-numbering audit
 
@@ -127,12 +134,13 @@ The stored netlist predates the last MCU correction and still shows the old reve
 
 ## Physical/manufacturing items still open
 
-- **U5:** current EP is 3.2 × 3.2 mm with no vias inside the exposed pad; final thermal-via and stencil/paste-window strategy remains open.
 - **J5:** real HALJIA XH-compatible connector fit/polarization still needs physical verification.
 - **U4:** final ESP32 antenna keepout/board-edge review remains part of release.
 - **J4 OLED:** custom/mechanical verification remains relevant if fitted.
 - **BZ1:** first-board solderability/fit remains worth checking because manufacturer land-pattern data are limited.
 - current DRC footprint-library mismatch warnings must be deliberately reviewed rather than ignored generically.
+
+U5 is no longer in this list for the planned hand-assembly flow. First-board U5 temperature measurement remains a validation item.
 
 ## Current stackup / plane decision
 
@@ -162,13 +170,12 @@ USB tuning profile USB_90R targets 90 Ω differential on B.Cu referenced to In2.
 
 ## Production release sequence
 
-1. finalize U5 EP thermal-via/paste implementation;
-2. regenerate netlist and ERC from the latest schematic;
-3. review/close DRC warnings and run final DRC after remaining changes;
-4. perform final electrical/layout/mechanical/antenna review;
-5. regenerate BOM, CPL/position data, Gerbers/drills and production netlist from the same final revision;
-6. reconcile those generated outputs with the already-updated live BOM TME;
-7. perform final fabrication/assembly review;
-8. release fabrication only after all above items are closed.
+1. regenerate netlist and ERC from the latest schematic;
+2. review/close DRC warnings and run final DRC after remaining changes;
+3. perform final electrical/layout/mechanical/antenna review;
+4. regenerate BOM, CPL/position data, Gerbers/drills and production netlist from the same final revision;
+5. reconcile those generated outputs with the already-updated live BOM TME;
+6. perform final fabrication/assembly review;
+7. release fabrication only after all above items are closed.
 
 Existing generated production outputs remain historical until that sequence is complete.

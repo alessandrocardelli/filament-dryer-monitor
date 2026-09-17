@@ -10,12 +10,21 @@ Do not use an in-progress PCB revision for assembly merely because routing is co
 
 For the current 2026-09-16 hardware checkpoint, fabrication release still requires the gates in docs/PROJECT_STATE.md to be closed, especially:
 
-- finalize the U5 exposed-pad thermal-via and paste/stencil strategy;
 - regenerate netlist/ERC after the latest schematic edit;
 - review the remaining DRC warnings;
 - regenerate final fabrication/assembly outputs from the same released revision.
 
+The U5 exposed-pad implementation is already closed for the planned hand-assembly process; see the section below and decision D019.
+
 Once a fabrication revision is released, the R5 sequence below remains mandatory for first power-up.
+
+## U5 exposed pad — hand-assembly implementation
+
+U5 pad 17 is the 3.2 × 3.2 mm GND exposed pad on B.Cu. The board intentionally does **not** use via-in-pad. Instead, six GND vias (0.60 mm diameter / 0.30 mm drill) sit immediately outside the exposed pad in two rows of three, one above and one below U5. They provide the short thermal/GND path into the internal GND planes while avoiding solder wicking through open vias under the pad.
+
+This arrangement was implemented in commit `c9dc4129` and remains present in the current PCB. For the planned prototype assembly, U5 is fitted by lightly pre-tinning the exposed pad, applying flux, placing the device and heating with hot air. Because no stencil is used for this operation, the full B.Paste definition on pad 17 is not a fabrication blocker for the prototype.
+
+If the assembly process later changes to stencil/reflow or external PCBA, reopen the paste-aperture/via-treatment decision for that process. First-board thermal validation of U5 remains required, but it is a validation item, not unfinished PCB layout.
 
 ## R5 — do not fit at first assembly
 

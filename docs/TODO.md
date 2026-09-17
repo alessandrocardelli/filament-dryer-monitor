@@ -25,12 +25,12 @@ Read `docs/PROJECT_STATE.md` and `docs/DECISIONS.md` before acting. The KiCad so
 - [x] CP2102 REGIN 1 µF / 25 V local bypass added as current ref C22.
 - [x] L7987L VIN/VCC bypass interpretation reconciled: C1 = 10 µF / 100 V already satisfies the VIN ≥1 µF ceramic requirement; C3 = 1 µF / 100 V is the VCC bypass; redundant buck C22 was removed in `24a9170a` (D018 supersedes D012).
 - [x] Live BOM TME rechecked: C22 is only the CP2102 1 µF / 25 V part; C3 is the sole 1 µF / 100 V entry.
+- [x] U5 exposed-pad thermal/GND implementation completed: six 0.60/0.30 mm GND vias immediately outside pad 17, arranged 3 above + 3 below U5; no via-in-pad. Planned assembly is light pre-tin + flux + hot air, so stencil paste-windowing is not a prototype release blocker (D019).
 - [x] Fresh DRC run 2026-09-16: **0 errors, 0 unconnected pads**.
 - [x] External power-distribution policy recorded as D017: compact local `3V3_BUCK` copper, `3V3_MCU` primarily 0.50 mm traces after FB1, wide/local `24V_PROT` copper where current requires it, and no internal power planes.
 
 ## Release blockers — do these first
 
-- [ ] **Finalize U5 exposed pad.** Current pad 17 is 3.2 × 3.2 mm GND with no thermal vias inside the EP and a full-size paste pad. Define via matrix, drill/diameter/process and stencil/paste windowing against ST + JLCPCB requirements.
 - [ ] **Regenerate netlist after latest MCU schematic edit.** The stored netlist still has J2 D+/D− labels reversed relative to the corrected PCB.
 - [ ] **Regenerate ERC after latest MCU schematic edit.** Stored report has 1 reviewed GND modeling error and 0 warnings, but predates the latest MCU edit.
 
@@ -52,7 +52,7 @@ Electrical connectivity is complete, but the layout quality gate remains open.
 - [ ] Review L1 -> C10 -> `3V3_BUCK` -> FB1 path and output-ground return.
 - [ ] Review FB/COMP routing and return isolation from switching/high-current current paths.
 - [ ] Review AutoEN routing and local returns.
-- [ ] Review local GND via/current-return placement for C1−, D7 anode, C10−, U5 pin16/EP, C3− and C21−.
+- [ ] Review local GND via/current-return placement for C1−, D7 anode, C10−, U5 pin16/EP, C3− and C21−. For U5, preserve the accepted 3+3 peripheral via arrangement unless the assembly process is explicitly reopened.
 - [ ] Preserve D017 during final cleanup: `3V3_BUCK` remains compact local external copper; `3V3_MCU` may stay trace-distributed at 0.50 mm with only optional local pours; do not create internal power planes.
 
 ## USB final review
@@ -71,7 +71,7 @@ Electrical connectivity is complete, but the layout quality gate remains open.
 - [ ] Review heater/fan high-current paths, connector current capacity and switched-node copper area.
 - [ ] Review 24 V input/protection path and local copper.
 - [ ] Review component-to-edge, courtyard and enclosure/mechanical constraints.
-- [ ] Review all exposed-pad/stencil details, especially U5 and U2.
+- [ ] Reconfirm U2 exposed-pad/stencil details. U5 EP is closed for the planned hand-assembly process; reopen it only if moving to stencil/reflow or external PCBA.
 - [ ] Decide whether additional buck DFT access is still worth adding before fabrication; existing TP1/TP2/TP3 provide 24V_PROT/3V3_MCU/GND access.
 
 ## Production release

@@ -231,7 +231,6 @@ Power distribution remains on the external copper layers; D002's two solid inter
 
 This decision defines the default layout policy; it does not require replacing already-correct power traces with pours merely to increase copper area.
 
-
 ## D018 — L7987L VIN/VCC local ceramic requirement satisfied by C1 + C3
 
 **Status:** accepted 2026-09-16; supersedes D012.
@@ -252,3 +251,21 @@ only for the CP2102 REGIN 1 µF / 25 V bypass.
 This decision depends on preserving C1 and C3 as genuinely local bypass components during
 final layout review. It does not relax the requirement for short VIN/power-GND and
 VCC/signal-GND high-frequency current paths.
+
+## D019 — U5 exposed-pad thermal/GND implementation uses 3+3 peripheral vias
+
+**Status:** accepted 2026-09-16; implementation already present since commit `c9dc4129`.
+
+U5 pad 17 is the 3.2 × 3.2 mm GND/SGND exposed pad on B.Cu. The project deliberately does **not** use via-in-pad for U5. The thermal/GND path is implemented with six through vias immediately outside the exposed pad:
+
+- via diameter 0.60 mm;
+- drill 0.30 mm;
+- three vias in a row immediately above U5;
+- three vias in a row immediately below U5;
+- all six are on GND and connect the external copper to the internal GND planes.
+
+The current board coordinates confirm the two rows at approximately y = 82.9 mm and y = 87.35 mm around U5 centered at approximately `(174.649, 85.116)`. This keeps open vias out of the solderable exposed pad while retaining a short thermal and electrical path to the planes.
+
+The planned prototype assembly process is manual: lightly pre-tin the exposed pad, apply flux, place U5 and solder with hot air. Under this process the footprint's full B.Paste shape is not used to meter solder paste and is therefore not a release blocker. If the process changes to stencil/reflow or external PCBA, reopen the paste-aperture and via-treatment decision for that manufacturing process.
+
+First-board U5 temperature measurement remains mandatory validation. It does not mean the PCB thermal-via implementation is unfinished.

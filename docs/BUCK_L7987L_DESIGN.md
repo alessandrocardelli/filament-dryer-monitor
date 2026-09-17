@@ -12,7 +12,7 @@ The actual KiCad schematic and PCB override this document if they disagree. The 
 
 > **Current manufacturing-state warning**
 >
-> The PCB contains the L7987L redesign and the legacy AP66200 implementation is absent. Routing connectivity is complete and USB geometry is now configured/routed. The board is still **not manufacturing-ready** because U5 exposed-pad thermal-via/paste implementation is open, stored netlist/ERC are stale after the latest MCU edit, DRC warnings still require review, and production outputs must be regenerated/reconciled before release.
+> The PCB contains the L7987L redesign and the legacy AP66200 implementation is absent. Routing connectivity is complete and USB geometry is now configured/routed. U5 exposed-pad thermal/GND implementation is also closed for the planned hand-assembly flow with six 0.60/0.30 mm peripheral GND vias arranged 3 above + 3 below the EP and no via-in-pad. The board is still **not manufacturing-ready** because stored netlist/ERC are stale after the latest MCU edit, DRC warnings still require review, and production outputs must be regenerated/reconciled before release.
 
 > **Design-review result**
 >
@@ -400,7 +400,7 @@ Current CP2102 REGIN bypass is C22 = GCM188R71E105KA64J, 1 µF / 25 V / X7R / 06
 
 The live BOM TME was rechecked on 2026-09-16 and is already consistent: C22 appears only in the 1 µF / 25 V CP2102 REGIN row; C3 is the sole 1 µF / 100 V part. No C22 reference conflict remains.
 
-U5 exposed-pad paste aperture and thermal-via implementation remain open PCB/manufacturing tasks.
+U5 exposed-pad implementation is closed for the planned hand-assembly process: six 0.60/0.30 mm GND vias sit immediately outside pad 17 in two rows of three, with no via-in-pad. The prototype soldering method is light pre-tin + flux + hot air, so the footprint's full B.Paste shape is not a release blocker unless the assembly process changes to stencil/reflow or external PCBA.
 
 See hardware/docs/PROCUREMENT.md for the sourcing/manufacturing record.
 
@@ -504,23 +504,23 @@ Do not infer B.Cu pad direction from raw local footprint coordinates. A previous
 
 ## 17. Current PCB open items
 
-### U5 exposed pad / thermal implementation
+### U5 exposed pad / thermal implementation — CLOSED for planned hand assembly
 
-U5 pad 17 is the 3.2 × 3.2 mm exposed GND / SGND pad.
+U5 pad 17 is the 3.2 × 3.2 mm exposed GND / SGND pad centered with U5 at approximately `(174.649, 85.116)`.
 
-Current board inspection at 9da46e7 shows:
+The accepted implementation is deliberately **not via-in-pad**. Six GND vias are placed immediately outside the EP:
 
-- no thermal/GND via located inside the exposed-pad area;
-- nearby peripheral GND vias are present;
-- the footprint still applies B.Paste to the full 3.2 × 3.2 mm EP as one pad.
+- 0.60 mm via diameter;
+- 0.30 mm drill;
+- three vias in a row above U5 at approximately y = 82.9 mm;
+- three vias in a row below U5 at approximately y = 87.35 mm;
+- x positions around 173.75 / 174.65 / 175.55 mm.
 
-Before fabrication:
+This arrangement was implemented in commit `c9dc4129` and remains present in the current PCB. It gives the exposed pad a short thermal/electrical path to the internal GND planes without placing open vias in the solderable EP, avoiding the via-in-pad solder-wicking problem that motivated the 3+3 peripheral arrangement.
 
-- choose/verify via count, drill/diameter and spacing;
-- define via treatment appropriate to the intended JLCPCB assembly process;
-- provide a low-inductance GND/thermal path to the internal planes;
-- replace/override full-area paste if required with a deliberate windowed stencil strategy;
-- review solder-wicking and voiding risk.
+For the planned prototype flow, U5 is assembled manually with a very light pre-tin on the exposed pad, flux and hot air. The footprint still contains full-area B.Paste on pad 17, but that layer is not used to meter solder in this hand-assembly process and is therefore not a prototype release blocker.
+
+If the manufacturing method changes to stencil/reflow or external PCBA, reopen the paste-window and via-treatment decision for that process. First-board U5 temperature measurement remains a validation requirement. Decision D019 records the closure.
 
 ### VIN/VCC bypass status
 
@@ -607,13 +607,12 @@ Production Gerbers, drill files, position/CPL data, BOM exports and netlist rema
 
 ## 21. Next implementation sequence
 
-1. Finalize U5 exposed-pad thermal/GND vias and paste/stencil strategy.
-2. Regenerate netlist and ERC from the latest schematic; verify USB mapping.
-3. Review/fix or deliberately accept the current DRC warnings.
-4. Complete final buck current-loop/quiet-return review and full-board USB/antenna/high-current/mechanical review.
-5. Regenerate the final production outputs from the same released revision and reconcile them with the live BOM TME.
-6. Perform final fabrication/assembly review.
-7. Follow `docs/ASSEMBLY.md` for R5 sequencing and first power-up.
-8. Validate 3.3 V regulation/transients, LX ringing/stress, temperatures, current-limit behavior and AutoEN shutdown/recovery timing.
+1. Regenerate netlist and ERC from the latest schematic; verify USB mapping.
+2. Review/fix or deliberately accept the current DRC warnings.
+3. Complete final buck current-loop/quiet-return review and full-board USB/antenna/high-current/mechanical review.
+4. Regenerate the final production outputs from the same released revision and reconcile them with the live BOM TME.
+5. Perform final fabrication/assembly review.
+6. Follow `docs/ASSEMBLY.md` for R5 sequencing and first power-up.
+7. Validate 3.3 V regulation/transients, LX ringing/stress, temperatures, current-limit behavior and AutoEN shutdown/recovery timing.
 
-**Current project gate:** routing connectivity and USB geometry are substantially complete. **U5 EP manufacturing implementation, fresh current-schematic netlist/ERC, DRC-warning review, final engineering review and release-output regeneration are the next gates.**
+**Current project gate:** routing connectivity, USB geometry, VIN/VCC bypass selection and the U5 exposed-pad thermal/GND implementation are closed for the current hand-assembly plan. **Fresh current-schematic netlist/ERC, DRC-warning review, final engineering review and release-output regeneration are the next gates.**

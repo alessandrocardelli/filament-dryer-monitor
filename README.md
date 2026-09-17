@@ -4,7 +4,7 @@ Custom ESP32-based controller board that retrofits an **eSUN eBox** filament dry
 
 The PCB physically replaces the original front panel: display and buttons sit on the front face of the board, while the main electronics are on the back.
 
-> **Current status — 2026-09-16:** hardware work is on branch **pcb/l7987l-layout**. Latest hardware checkpoint before this documentation refresh: **9da46e7953f801073882fd1934802fa8ace1f1c2** (updated layout). L7987L + AutoEN routing is electrically complete enough for the current DRC to report **0 errors and 0 unconnected pads**. USB routing is configured for a **90 Ω differential target** on B.Cu/In2.Cu using **0.20 mm width / 0.25 mm gap**. The board is **not manufacturing-ready**: U5 exposed-pad thermal-via/paste implementation remains open, stored netlist/ERC must be regenerated after the latest MCU edit, current DRC warnings need review, and production outputs must be regenerated/reconciled before release.
+> **Current status — 2026-09-16:** hardware work is on branch **pcb/l7987l-layout**. Latest hardware checkpoint before this documentation refresh: **9da46e7953f801073882fd1934802fa8ace1f1c2** (updated layout). L7987L + AutoEN routing is electrically complete enough for the current DRC to report **0 errors and 0 unconnected pads**. USB routing is configured for a **90 Ω differential target** on B.Cu/In2.Cu using **0.20 mm width / 0.25 mm gap**. U5 exposed-pad thermal/GND implementation is closed for the planned hand-assembly flow with six 0.60/0.30 mm GND vias arranged 3 above + 3 below the EP, outside the solderable pad. The board is **not manufacturing-ready** because stored netlist/ERC must be regenerated after the latest MCU edit, current DRC warnings need review, and production outputs must be regenerated/reconciled before release.
 
 For a new work session, read AGENTS.md, docs/PROJECT_STATE.md, docs/DECISIONS.md and docs/TODO.md before changing the design.
 
@@ -114,11 +114,13 @@ Local external copper/zones are present for 24V_PROT, /Power/3V3_BUCK, 3V3_MCU, 
 
 Routing connectivity is therefore complete, but the final engineering/manufacturing review remains open.
 
-### U5 exposed pad
+### U5 exposed pad — resolved for planned hand assembly
 
-U5 pad 17 is a 3.2 × 3.2 mm GND exposed pad. In the current board there are **no thermal vias inside the EP**, and the current footprint exposes the full EP as B.Paste.
+U5 pad 17 is a 3.2 × 3.2 mm GND exposed pad on B.Cu. The accepted design intentionally uses **no via-in-pad**. Instead, six GND vias, each **0.60 mm diameter / 0.30 mm drill**, sit immediately outside the EP in two rows of three: 3 above and 3 below U5. This arrangement was implemented in commit `c9dc4129` and is present in the current PCB.
 
-Before fabrication the project still needs a deliberate EP implementation: via matrix/process, paste-window strategy, solder-wicking review and JLCPCB capability check.
+The peripheral vias provide a short thermal/GND path into the internal GND planes without placing open vias directly under the solderable exposed pad. For the planned prototype assembly, U5 is fitted by lightly pre-tinning the EP, applying flux and heating with hot air. Because this flow does not use a stencil for U5, the full B.Paste definition on pad 17 is not a prototype release blocker.
+
+If the process later changes to stencil/reflow or external PCBA, paste-windowing and via treatment must be reopened for that process. First-board U5 temperature measurement remains part of validation. See decision D019 and `docs/ASSEMBLY.md`.
 
 ### CP2102-GM / USB
 
@@ -264,11 +266,10 @@ hardware/*.kicad_*              Actual KiCad implementation
 
 ## Current next steps
 
-1. finalize U5 exposed-pad thermal-via and paste/stencil strategy;
-2. regenerate the netlist and ERC from the latest schematic and verify USB mapping;
-3. review/close the current DRC warnings;
-4. complete final buck, USB, antenna, high-current and mechanical PCB review;
-5. regenerate production BOM/CPL/Gerbers/drills/netlist from the same final revision and reconcile them with the already-updated live BOM TME;
-6. perform fabrication/assembly review;
-7. follow docs/ASSEMBLY.md for first power-up and AutoEN R5 sequencing;
-8. perform first-board electrical, thermal, switching-stress and fault-recovery validation.
+1. regenerate the netlist and ERC from the latest schematic and verify USB mapping;
+2. review/close the current DRC warnings;
+3. complete final buck, USB, antenna, high-current and mechanical PCB review;
+4. regenerate production BOM/CPL/Gerbers/drills/netlist from the same final revision and reconcile them with the already-updated live BOM TME;
+5. perform fabrication/assembly review;
+6. follow docs/ASSEMBLY.md for first power-up and AutoEN R5 sequencing;
+7. perform first-board electrical, thermal, switching-stress and fault-recovery validation.
