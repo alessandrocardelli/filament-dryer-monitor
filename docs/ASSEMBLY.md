@@ -24,7 +24,7 @@ If the assembly process later changes to stencil/reflow or external PCBA, reopen
 
 ## R5 — do not fit at first assembly
 
-**Rule: populate the whole board except R5. Fit R5 only after the 3.3 V rail is confirmed.**
+**Rule: keep R5 unpopulated until the buck has independently produced a verified 3.3 V rail.** For the first article, populate and test functional groups progressively as specified below; do not interpret the historical complete-board wording as a requirement to install every other component before the first power-up.
 
 Reason, in short: U1 (TLV1701) has an open-collector output. If U1 is missing, damaged, or
 has one unsoldered pin, R5 pulls its output node up, Q7 conducts, and EN is held low. The
@@ -41,13 +41,12 @@ Background: `docs/BUCK_L7987L_DESIGN.md` section 11.3, decision D014.
 
 ### Bring-up sequence
 
-1. Assemble the board complete **except R5**.
+1. Populate the complete, electrically necessary input-protection and buck group **except R5**; verify against the actual schematic/netlist that all required bypass, feedback, compensation and output components are fitted. Do not energize an incomplete regulator.
 2. Power up. Verify the buck produces 3.3 V.
-   - No 3.3 V here means the fault is in the buck itself. Debug U5, L1, D7, C10, feedback.
+   - If 3.3 V is absent, inspect the populated supply group and any already-connected load or short; do not assume the regulator IC itself is defective.
      AutoEN is not involved and cannot be the cause.
 3. Fit R5. Power up again and verify 3.3 V is still present.
-   - If the rail disappears at this step, the fault is U1 or its solder joints — not the
-     regulator. Reflow or replace U1.
+   - If the rail disappears at this step, investigate the AutoEN path (including U1, Q7 and solder joints) and verify the buck independently before replacing parts.
 4. Only then proceed to fault-injection testing of AutoEN.
 
 Step 3 is the point of the whole procedure: it separates "the buck does not work" from
@@ -60,3 +59,21 @@ The thermal cutoff (~100–110 °C) is **off-board, in series with HEATER+**, an
 The **94 PCB-mounted references** in the live `BOM TME` do not include the separate **1.54-inch SSD1309 OLED for J4**, **SHT45 humidity/temperature sensor for J3**, the thermal cutoff, mating JST housings/contacts/cables, heater/fan/NTC wiring or enclosure/mounting parts. Verify exact in-hand availability and pinout/fit rather than assuming that a complete PCB BOM covers the assembled dryer.
 
 For the first board, verify the actual mating J5 connector's polarization and fit, J4 OLED form factor, J3 SHT45 harness, and electrical isolation/current paths before energizing the heater. Do not enable normal heater operation until firmware NTC fault handling and independent thermal cutoff protections have been tested.
+
+## First-article handoff — staged assembly and diagnostic firmware (agreed 2026-09-21)
+
+**Resume here when the bare boards and required components arrive.** The first article will be assembled and checked in functional groups rather than populating the entire PCB before the first electrical test. This changes the *assembly/test plan only*, not the released PCB, schematic, BOM or accepted circuit decisions. The R5 rule above remains mandatory.
+
+Before soldering, inspect the released PCB, schematic, netlist, current firmware and actual delivered parts. Produce a reference-by-reference population matrix for each group, identify accessible measurement points, and check whether leaving later groups unpopulated actually isolates their loads (especially the FB1 path from `3V3_BUCK` to `3V3_MCU`). Do not guess which parts can be omitted from a live regulator or apply power to an incomplete feedback/compensation/bypass network. Define bench supply current limits and measured acceptance criteria before energizing the first article; the table below is a planning outline, not a validated step-by-step test instruction.
+
+| Group | Planned population / verification gate |
+|---|---|
+| 1 — input and buck | Populate the complete input protection and L7987L power stage, including every electrically necessary support component, **without R5**. With external loads disconnected, inspect for shorts and check regulated 3.3 V and supply behavior using a current-limited bench supply. Verify actual isolation of unpopulated downstream groups before power-up. |
+| 2 — rail distribution and AutoEN | Populate the remaining required rail-distribution/AutoEN parts; fit R5 **only after** the initial 3.3 V check, then verify 3.3 V again. Fault-injection and recovery tests require a separately reviewed procedure; do not assume an absent 3.3 V uniquely identifies U1. |
+| 3 — ESP32, boot and USB-UART | Populate the complete MCU/boot/programming group. Check supply and USB enumeration, then flash and run the pre-prepared diagnostic firmware over serial before adding later peripherals. |
+| 4 — low-power interfaces | Populate and check the sensor/display connectors, buttons, LED, buzzer and NTC interface in suitable groups. Exercise each with diagnostic firmware while fan and heater remain disabled. Confirm the actual off-board modules, wiring and connector pinouts before connection. |
+| 5 — output stages and external loads | Populate fan/heater driver groups; check their power-up OFF states and outputs without energizing the heater. Test the fan separately. Heater load testing requires validated NTC calibration/fault handling and the independent off-board thermal cutoff installed and checked; never bypass these gates through a diagnostic command. |
+
+**Firmware timing:** prepare and compile a minimal diagnostic firmware *before assembly*, based on the current GPIO map and actual source. It must default fan and heater OFF, expose boot/serial diagnostics and independently test inputs and low-power outputs. Flash it at group 3 and use it at each subsequent gate. Heater diagnostics must inhibit energization on missing, invalid or faulty NTC readings and must not bypass the independent thermal cutoff. The complete application (OLED UI, drying-cycle control, logging and web UI) follows successful first-article hardware/safety validation; it is not a prerequisite for initial bring-up.
+
+**Not yet performed:** the population matrix, physical test-point mapping, diagnostic firmware, numerical acceptance limits and first-board tests. No receipt, assembly, power-up or safety validation is claimed by this handoff. C11 and the off-board safety items remain procurement/inventory gates as documented above.
