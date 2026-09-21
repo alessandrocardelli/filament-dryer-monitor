@@ -1,95 +1,40 @@
 # TODO
 
-Current phase: **PCB release review / manufacturing preparation** on `pcb/l7987l-layout`.
+Current phase: **released bare-PCB prototype procurement, incoming inspection and hand assembly** (2026-09-21). Active hardware branch: `pcb/l7987l-layout`. Fabrication-source checkpoint: `74a3000127371ac6c3b3b7197f9036dec5b58eef` (2026-09-17, `Production files`). This file tracks remaining work; read `AGENTS.md` and `docs/PROJECT_STATE.md` before changes. Do not silently alter the already submitted fabrication revision.
 
-Hardware checkpoint before this documentation refresh: **`9da46e7953f801073882fd1934802fa8ace1f1c2`**.
+## Completed / recorded
 
-Read `docs/PROJECT_STATE.md` and `docs/DECISIONS.md` before acting. The KiCad source files override this list if they disagree.
+- [x] L7987L + AutoEN design basis, USB routing, two solid inner GND planes and U5's six peripheral thermal/GND vias accepted in `docs/DECISIONS.md`.
+- [x] Updated schematic, 2026-09-17 netlist (correct USB-C D+/D− mapping), ERC (0 errors/0 warnings) and DRC (0 active errors/0 unconnected pads; one intentionally excluded U4 silkscreen-to-board-edge warning) are stored on the active branch.
+- [x] Current production-source checkpoint contains `hardware/production/Filament_Dryer_Monitor_bom.csv` and `Filament_Dryer_Monitor_positions.csv`; unsuffixed legacy `bom.csv`/`positions.csv` must not be used.
+- [x] Bare-PCB Gerbers/drills uploaded to JLCPCB; a production/CAM package was received and reviewed in the order discussion. Confirm actual manufacturing/shipping status from the supplier; it is not tracked here.
+- [x] Live `BOM TME` checked against 94 PCB-mounted references and the current released BOM/netlist (2026-09-19); `TME_IMPORT` excludes in-house references.
+- [x] TME order placed 2026-09-20 for the supplier-designated items for one assembled PCB. Original confirmation recorded C11 as in stock.
 
-## Completed
+## Immediate: supplier and component availability
 
-- [x] L7987L + AutoEN schematic integrated and engineering design review completed.
-- [x] Legacy AP66200 removed from current schematic/PCB.
-- [x] 4-layer stackup fixed with **In1 = solid GND** and **In2 = solid GND**.
-- [x] PGND/SGND implementation fixed as current-path regions on the same GND net/planes.
-- [x] Buck/AutoEN components placed on B.Cu.
-- [x] Power/default netclasses configured.
-- [x] PCB routing connectivity completed: current DRC reports **0 unconnected pads**.
-- [x] USB data nets renamed to proper `+`/`-` differential-pair names.
-- [x] USB class configured for **0.20 mm width / 0.25 mm gap**.
-- [x] `USB_90R` tuning profile configured for B.Cu referenced to In2.Cu, target 90 Ω.
-- [x] U2 -> U3 USB pair routed on B.Cu with no vias.
-- [x] USB-C duplicated D+ pad crossover implemented with two short signal vias and nearby GND stitching; D− remains on B.Cu.
-- [x] J2 physical USB mapping corrected: A6/B6 D+, A7/B7 D−; J2 GND/shield pads are GND.
-- [x] CP2102-GM footprint updated to 0.95 × 0.28 mm perimeter pads, +0.06 mm mask expansion, 3.25 mm EP and 3×3 0.9 mm paste apertures.
-- [x] CP2102 REGIN 1 µF / 25 V local bypass added as current ref C22.
-- [x] L7987L VIN/VCC bypass interpretation reconciled: C1 = 10 µF / 100 V already satisfies the VIN ≥1 µF ceramic requirement; C3 = 1 µF / 100 V is the VCC bypass; redundant buck C22 was removed in `24a9170a` (D018 supersedes D012).
-- [x] Live BOM TME rechecked: C22 is only the CP2102 1 µF / 25 V part; C3 is the sole 1 µF / 100 V entry.
-- [x] U5 exposed-pad thermal/GND implementation completed: six 0.60/0.30 mm GND vias immediately outside pad 17, arranged 3 above + 3 below U5; no via-in-pad. Planned assembly is light pre-tin + flux + hot air, so stencil paste-windowing is not a prototype release blocker (D019).
-- [x] Fresh DRC run 2026-09-16: **0 errors, 0 unconnected pads**.
-- [x] External power-distribution policy recorded as D017: compact local `3V3_BUCK` copper, `3V3_MCU` primarily 0.50 mm traces after FB1, wide/local `24V_PROT` copper where current requires it, and no internal power planes.
+- [ ] **C11 — await TME's definitive warehouse answer.** Ordered Samsung `CL21A226MAYNNNE`, 22 µF / 25 V X5R / 0805, is currently unlocated in their stock. The later week 48/2026 estimate refers to C11 only. **No cancellation or replacement has been approved.**
+- [ ] Ask/obtain explicit confirmation that other available TME items will ship without waiting for C11 and without extra fees; the supplier's latest message did not answer that question.
+- [ ] If C11 cannot be found, settle shipment/cost/refund with TME before agreeing to any replacement or full-order cancellation. Candidate *only*: TDK `C2012X5R1C226M125AC` (TME `C2012X5R1C226MAC`), 22 µF / 16 V X5R / 0805. Verify exact part and effective capacitance/DC-bias before assembly; do not edit KiCad/BOM solely because it was discussed.
+- [ ] On delivery, audit **actual shipped quantities/MPNs and packaging** against order confirmation, the live `BOM TME` and `hardware/production/Filament_Dryer_Monitor_bom.csv`. Supplier-imposed minimum packs may differ from the per-PCB need.
+- [ ] Physically verify in-house stocks of J5 and the 13 resistor BOM rows (33 component refs marked `In casa`). In-house label is a planning declaration, **not** a verified physical inventory.
+- [ ] Check the separate **off-board** assembly inventory: 1.54-inch SSD1309 OLED module for J4 and its physical fit/pinout, SHT45 sensor and J3 harness, independent heater thermal cutoff (TCO) in the HEATER+ wire, mating JST housings/contacts/leads for J1/J3/J6/J7 where needed, heater/fan/NTC wiring, mounting hardware and actual enclosure clearances. These are **not** covered by the 94-reference PCB BOM. Do not mark them ordered/in-house without evidence.
 
-## Release blockers — do these first
+## Incoming bare PCB and assembly
 
-- [ ] **Regenerate netlist after latest MCU schematic edit.** The stored netlist still has J2 D+/D− labels reversed relative to the corrected PCB.
-- [ ] **Regenerate ERC after latest MCU schematic edit.** Stored report has 1 reviewed GND modeling error and 0 warnings, but predates the latest MCU edit.
+- [ ] Confirm JLCPCB CAM approval/production status and actual shipment or receipt. Archive the final board-order stackup/production confirmation if useful; the uploaded Gerber/CAM ZIP is not maintained as a repository source file.
+- [ ] Inspect incoming PCBs: 91 × 52 mm profile, board thickness, rounded corners, solder mask, plated holes, USB-C/JST footprints, component alignment and 4-layer continuity. Inspect U2's exposed pad and any open plated holes for hand-soldering suitability.
+- [ ] Check physical fit/polarization of in-house J5 HALJIA, J4 OLED, J1/J3/J6/J7 mating connectors and BZ1 footprint.
+- [ ] Hand assemble **without R5**; fit R5 only after the initial 3.3 V check per `docs/ASSEMBLY.md`. Do not omit C11 from the completed functional prototype merely to bypass the supply issue.
+- [ ] First-article bring-up: check input protection/fuse, the 3.3 V rails, USB/UART enumeration and boot, I2C SHT45/OLED, buttons, fan/heat MOSFET defaults, buzzer and NTC input before enabling heating.
+- [ ] Power/thermal tests: 3.3 V load steps, LX ringing and switch-loop stress, U5/D7/L1/capacitor temperatures, current-limit/foldback and AutoEN shutdown/restart.
+- [ ] Install and verify the independent off-board heater TCO. Complete NTC characterization-to-firmware calibration and heater safety gates before normal closed-loop heating.
 
-## DRC warning closure
+## Engineering items to verify on the first article / before any later revision
 
-Current fresh report has 14 active warnings plus 1 excluded warning.
+The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PCB has already been submitted for fabrication; **do not silently reclassify these follow-up checks as reasons to alter that released design**.
 
-- [ ] Review/fix footprint-library mismatch warnings for J4, U4, J6, J1, J5 and J3.
-- [ ] Review/fix the eight BZ1 silkscreen-over-copper warnings.
-- [ ] Reconfirm the existing excluded ESP32 silkscreen/board-edge warning is still intentional at release.
-- [ ] Re-run DRC after every release-blocking hardware change.
-
-## Buck final review
-
-Electrical connectivity is complete, but the layout quality gate remains open.
-
-- [ ] Review C1/C3 -> VIN/VCC input-loop geometry against ST guidance.
-- [ ] Review C6 BOOT-LX and LX/D7/L1 switch-loop geometry; keep switch-node copper no larger than needed.
-- [ ] Review L1 -> C10 -> `3V3_BUCK` -> FB1 path and output-ground return.
-- [ ] Review FB/COMP routing and return isolation from switching/high-current current paths.
-- [ ] Review AutoEN routing and local returns.
-- [ ] Review local GND via/current-return placement for C1−, D7 anode, C10−, U5 pin16/EP, C3− and C21−. For U5, preserve the accepted 3+3 peripheral via arrangement unless the assembly process is explicitly reopened.
-- [ ] Preserve D017 during final cleanup: `3V3_BUCK` remains compact local external copper; `3V3_MCU` may stay trace-distributed at 0.50 mm with only optional local pours; do not create internal power planes.
-
-## USB final review
-
-- [x] 90 Ω target geometry configured: B.Cu / In2.Cu, 0.20 mm width, 0.25 mm gap.
-- [x] U2 -> U3 pair kept on B.Cu without vias.
-- [x] Type-C A6/B6 and A7/B7 duplicated pads connected correctly.
-- [x] Short D+ crossover uses two vias; nearby GND stitching via added.
-- [ ] After netlist regeneration, verify schematic ↔ PCB USB mapping one final time.
-- [ ] Confirm no later power-zone edit crowds the USB pair enough to invalidate the intended geometry/reference environment.
-
-## Full-board review
-
-- [ ] Verify both internal GND planes remain continuous with no accidental islands/splits.
-- [ ] Review ESP32 antenna keepout on every copper layer and at the board edge.
-- [ ] Review heater/fan high-current paths, connector current capacity and switched-node copper area.
-- [ ] Review 24 V input/protection path and local copper.
-- [ ] Review component-to-edge, courtyard and enclosure/mechanical constraints.
-- [ ] Reconfirm U2 exposed-pad/stencil details. U5 EP is closed for the planned hand-assembly process; reopen it only if moving to stencil/reflow or external PCBA.
-- [ ] Decide whether additional buck DFT access is still worth adding before fabrication; existing TP1/TP2/TP3 provide 24V_PROT/3V3_MCU/GND access.
-
-## Production release
-
-- [ ] After all hardware changes, run a final fresh DRC and ERC.
-- [ ] Ensure current-branch ERC is actually enforced manually or update the workflow trigger; current workflow push trigger covers `redesign/buck-sourcing`, not `pcb/l7987l-layout`.
-- [ ] Regenerate production BOM, CPL/position files, Gerbers, drills and netlist from the same final commit.
-- [ ] Reconcile generated production data with `BOM TME`.
-- [ ] Perform final fabrication/assembly review before ordering.
-
-## First-board bring-up
-
-- [ ] Follow `docs/ASSEMBLY.md`: assemble without R5, confirm 3.3 V, then fit R5 and confirm 3.3 V again before fault testing.
-- [ ] Verify 3.3 V regulation and startup.
-- [ ] Measure load-transient behavior.
-- [ ] Probe LX waveform/ringing with appropriate short-ground technique.
-- [ ] Measure U5, D7, L1 and capacitor temperatures under representative load.
-- [ ] Verify current-limit/foldback behavior.
-- [ ] Verify AutoEN COMP threshold, shutdown/retry timing and clean restart after fault removal.
-- [ ] Establish whether the simulated foldback-lock condition occurs with the real load.
-- [ ] Complete NTC/firmware safety calibration before normal heater operation.
+- [ ] Compare actual JLCPCB stackup/order details with the nominal KiCad USB reference geometry (B.Cu/In2.Cu, 0.20 mm width / 0.25 mm gap, 90 Ω design target). USB functionality needs real-board validation; a CAM comparison alone does not prove impedance.
+- [ ] Verify U4 antenna-edge and keepout behavior, U2 pad/USB-C solderability, buck current-loop and quiet-feedback behavior, component-edge clearances, high-current heater/fan routing and all mating/assembly constraints during initial hardware tests.
+- [ ] The one excluded U4 B.Silkscreen/edge warning remains documented, not magically fixed. If manufacturing or assembly reveals problems, record evidence and open a **new hardware revision** under `AGENTS.md` and `docs/DECISIONS.md`.
+- [ ] Review GitHub CI branch triggers before expecting automatic ERC on future feature-branch PCB changes; for any actual future schematic/PCB revision, generate fresh netlist/ERC/DRC and all fabrication exports from the same revision.
