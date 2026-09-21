@@ -1,8 +1,8 @@
 # Procurement and footprint state
 
-Status: **2026-09-16 — sourcing basis retained; PCB routed; release reconciliation still open** on branch **pcb/l7987l-layout**.
+Status: **2026-09-21 — bare-PCB fabrication package submitted; one-board TME order placed, C11 supply issue open; manual assembly pending** on branch **pcb/l7987l-layout**.
 
-Hardware checkpoint before this documentation refresh: **9da46e7953f801073882fd1934802fa8ace1f1c2** (updated layout).
+Fabrication-source checkpoint (before documentation-only commits): **74a3000127371ac6c3b3b7197f9036dec5b58eef** (2026-09-17, `Production files`).
 
 ## Source of truth
 
@@ -14,33 +14,15 @@ If documentation disagrees with the actual KiCad files, the KiCad implementation
 
 ## Current PCB/manufacturing state
 
-The board is synchronized to the L7987L redesign and substantially routed:
+The 2026-09-17 KiCad release contains L7987L U5, AutoEN, IRLML2060TRPBF Q5, Nexperia PMEG6030EP.115 D7 and both continuous inner GND planes; legacy AP66200 is absent. Current `hardware/ERC.rpt`: **0 errors, 0 warnings** (2026-09-17 22:18). Current `hardware/DRC.rpt`: **0 active errors, 0 active warnings, 0 unconnected pads, 0 footprint errors**, with one **excluded** U4 B.Silkscreen/board-edge warning (2026-09-17 22:18). The 2026-09-17 netlist correctly maps USB-C A6/B6 to D+ and A7/B7 to D−.
 
-- U5 = L7987L is present on B.Cu;
-- AutoEN is present on B.Cu;
-- legacy AP66200 and /Power/VCC_AP66200 are absent;
-- both internal copper layers are solid GND planes;
-- local external copper/zones exist for 24V_PROT, 3V3_BUCK, 3V3_MCU, HEATER_SW, LX and GND;
-- USB routing is configured for a 90 Ω differential target;
-- U5 exposed-pad thermal/GND strategy is implemented with six 0.60/0.30 mm GND vias immediately outside the EP, arranged 3 above + 3 below; no via-in-pad;
-- fresh DRC dated 2026-09-16 reports **0 errors and 0 unconnected pads**.
+The current PCB and drill/Gerber package was uploaded to JLCPCB as a **bare 4-layer PCB**, with **manual component assembly** planned (no JLC PCBA or stencil). JLCPCB's CAM/production ZIP was received and reviewed against the original uploaded Gerbers in the order conversation. GitHub does not independently establish whether the order has entered fabrication or shipped; inspect the actual manufacturer order status.
 
-The PCB is still **not manufacturing-ready** because stored netlist/ERC are stale after the latest MCU schematic edit, DRC warnings remain to review, and final production outputs have not been regenerated. U5 exposed-pad implementation is no longer a release blocker for the planned hand-assembly process.
+**Correct current release exports:** `hardware/production/Filament_Dryer_Monitor_bom.csv` and `Filament_Dryer_Monitor_positions.csv`. The similarly named **unsuffixed** `hardware/production/bom.csv`, `positions.csv` and `designators.csv` belong to an **obsolete AP66200 / CP2102N-era BOM** and are not an acceptable purchasing or assembly source for this revision. The current suffixed export retains an `LCSC Part #` column with heterogeneous legacy/supplier identifiers, **not necessarily valid LCSC order codes**. Use the live sheet's `Codice TME` field when procuring from TME.
 
 ## Current DRC warning set
 
-Fresh DRC has 14 active warnings plus 1 excluded warning.
-
-Active:
-
-- library-footprint mismatch: J4, U4, J6, J1, J5, J3;
-- eight BZ1 silkscreen-over-copper warnings.
-
-Excluded:
-
-- ESP32 silkscreen clipped by board edge.
-
-These warnings require deliberate release review even though there are no DRC errors.
+The previously documented 2026-09-16 14-warning set was resolved in the saved 2026-09-17 DRC. Only the intentionally **excluded** U4 B.Silkscreen/board-edge `silk_edge_clearance` item remains in the report. This does not prove mechanical fit, RF behavior, or final solderability; check the first delivered PCB. A documentation-only commit does not require regenerating ERC/DRC; any new hardware revision does.
 
 ## Closed sourcing basis
 
@@ -50,7 +32,7 @@ The component-selection basis remains:
 - U1 = TLV1701AIDBVR;
 - Q7 = MMBT3904;
 - L1 = SRN6045-150M, 15 µH;
-- D7 = STPS2L60A;
+- D7 = Nexperia PMEG6030EP,115 / KiCad MPN PMEG6030EP.115, 60 V / 3 A Schottky, CFP5/SOD-128;
 - R29 = 47.5 kΩ ILIM;
 - R33 = 16 kΩ, R34 = 16 kΩ, R35 = 1.13 kΩ 0.1%, R36 = 49.9 kΩ;
 - C1 = Murata GRM32EC72A106KE05L, 10 µF / 100 V / X7S;
@@ -67,13 +49,13 @@ The redundant buck C22 was deliberately removed in commit `24a9170a`. Current C2
 
 ## Live BOM TME status
 
-The live `BOM TME` was rechecked on 2026-09-16 and is already consistent with the current references:
+As read on **2026-09-21**, the live Google Sheet `Filament Dryer Monitor — BOM finale Mouser`, tab **`BOM TME`**, is set to **one PCB for manual assembly** and contains 94 unique PCB-mounted refs in 57 procurement/stock rows. Of these, **43 rows / 61 refs** are marked `TME`, and **14 rows / 33 refs** are marked `In casa` (J5 plus 13 resistor groups). The generated `TME_IMPORT` tab contains the 43 current TME code/quantity rows; it is an **export view, not proof of shipping or payment**. The full reference/MPN comparison against the released schematic netlist and current suffixed production BOM found no missing or duplicate PCB-mounted refs in the 2026-09-19 audit. Count actual packs ordered/shipped separately: TME minimum packs can exceed one-board quantities.
 
-- **C1** -> 10 µF / 100 V X7S 1210, Murata `GRM32EC72A106KE05L`;
-- **C3** -> 1 µF / 100 V X7S 0805, Murata `GRJ21BC72A105KE11L`;
-- **C15,C17,C21,C22** -> 1 µF / 25 V X7R 0603, Murata `GCM188R71E105KA64J`.
+The order was **placed and paid 2026-09-20**. Supplier confirmation initially marked C11 `CL21A226MAYNNNE` as `Disponibile a magazzino` (page 1, position 3). On 2026-09-21 the supplier reported its sole warehouse unit could not be located and is investigating; a separate automatic notice listed `settimana 48/2026` for C11 alone. The **remaining order's release/ship date has not been explicitly confirmed**. Supplier discussions mentioned a possible refund/reorder route, but **no C11 cancellation, substitute order or complete-order cancellation is authorized**. Wait for their definite warehouse answer; do not arrange a second paid shipment without user approval.
 
-C22 does not appear in the 100 V row. The former duplicate-reference issue is closed. Final production BOM/CPL still need normal release-time reconciliation with the live purchasing sheet.
+**C11 identity / design role:** the released PCB/schematic uses Samsung `CL21A226MAYNNNE` (22 µF, 25 V, X5R, 0805), tied between `3V3_MCU` and GND. This is an actual assembly part, not DNP and not a missing PCB designator. TDK `C2012X5R1C226M125AC` (TME catalog code `C2012X5R1C226MAC`), 22 µF / 16 V / X5R / 0805, is **only a candidate**. Although 16 V nominal exceeds 3.3 V, review usable capacitance under 3.3 V DC bias and exact product identity before approving an assembly/BOM substitution. Do not silently overwrite current C11 MPN or sheet until delivery/substitution is resolved.
+
+The previous C22 duplication is closed: C1 = 10 µF / 100 V VIN, C3 = 1 µF / 100 V VCC, and **C15,C17,C21,C22** share the separate 1 µF / 25 V 0603 sourcing row; C22 is the CP2102 REGIN bypass.
 
 ## Footprint audit
 
@@ -130,17 +112,15 @@ Current USB board mapping is:
 - J2 A6/B6 = D+;
 - J2 A7/B7 = D−.
 
-The stored netlist predates the last MCU correction and still shows the old reversed J2 labels. Regenerate it before final pinout sign-off.
+The stored netlist was regenerated on 2026-09-17 and correctly maps J2 A6/B6 to D+ and A7/B7 to D−. Functional USB verification remains a first-board task.
 
 ## Physical/manufacturing items still open
 
-- **J5:** real HALJIA XH-compatible connector fit/polarization still needs physical verification.
-- **U4:** final ESP32 antenna keepout/board-edge review remains part of release.
-- **J4 OLED:** custom/mechanical verification remains relevant if fitted.
-- **BZ1:** first-board solderability/fit remains worth checking because manufacturer land-pattern data are limited.
-- current DRC footprint-library mismatch warnings must be deliberately reviewed rather than ignored generically.
-
-U5 is no longer in this list for the planned hand-assembly flow. First-board U5 temperature measurement remains a validation item.
+- **Supplier fulfillment:** confirm TME warehouse outcome for C11, shipping of other available items, final shipped quantities, and payment/refund implications before modifying purchasing status.
+- **Stock marked `In casa`:** inspect J5 and all 13 resistor BOM rows for correct values, packages and usable quantities; an `In casa` flag is not an inventory count.
+- **Off-board items excluded from the 94 PCB refs:** the SSD1309 OLED for J4, SHT45 sensor for J3, independent heater cutoff/TCO in the HEATER+ wire, mating JST housings/contacts, leads/cable assemblies and mounting hardware. Verify real inventory, physical fit, pinout and wiring; do not infer they are included in the TME order.
+- **Incoming bare board:** confirm JLC fab/shipment, inspect 91 × 52 mm PCB outline, four-layer build and solder mask/drilling; check U4 antenna edge, U2 EP solderability, J4/J5/JST mechanical alignment and BZ1 footprint before full population.
+- **Hand assembly:** R5 remains **unfitted for first power-up**; C11 remains required for the completed design. Follow `docs/ASSEMBLY.md` and validate the 3.3 V regulator before enabling AutoEN/heater.
 
 ## Current stackup / plane decision
 
@@ -170,12 +150,4 @@ USB tuning profile USB_90R targets 90 Ω differential on B.Cu referenced to In2.
 
 ## Production release sequence
 
-1. regenerate netlist and ERC from the latest schematic;
-2. review/close DRC warnings and run final DRC after remaining changes;
-3. perform final electrical/layout/mechanical/antenna review;
-4. regenerate BOM, CPL/position data, Gerbers/drills and production netlist from the same final revision;
-5. reconcile those generated outputs with the already-updated live BOM TME;
-6. perform final fabrication/assembly review;
-7. release fabrication only after all above items are closed.
-
-Existing generated production outputs remain historical until that sequence is complete.
+The 2026-09-17 production-source revision and ERC/DRC reports supersede the historical *pre-fabrication* checklist. For **this submitted prototype**, first confirm the manufacturer's current order/shipping status; then audit delivered bare PCBs and TME parts, close the C11 supply gap and off-board inventory, hand-assemble with R5 omitted initially, and perform first-board electrical/thermal/USB/safety checks. An actual **future hardware change** must restart schematic/PCB synchronization, ERC/DRC, production-output generation and BOM reconciliation under `AGENTS.md`; do not silently update already submitted fabrication data.
