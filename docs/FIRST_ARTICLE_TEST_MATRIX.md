@@ -50,3 +50,148 @@ Prepare/compile a **separate diagnostic build**, after reading current firmware 
 4. Inspect current firmware tree and compile diagnostic build. None of these tasks is marked completed merely by creating this draft.
 
 See `docs/ASSEMBLY.md` and `docs/TODO.md` for the accepted handoff and open gates.
+
+
+## Reference-by-reference staged population plan
+
+This grouping covers the **94 BOM-mounted references**. Test points TP1-TP7 and board-only pads are not BOM purchase items and remain available as designed. The purpose is fault isolation during manual first-article assembly, not a redesign.
+
+### Gate 1A — raw input and protection
+
+Populate:
+
+`J1, F1, Q1, D1, D2, R3, C1, C2, C5, TP1, TP3`
+
+Hold:
+
+- Do not populate FB1 or R5.
+- Do not connect external heater/fan/sensor/display loads.
+- U5 buck group is added only at Gate 1B.
+
+Rationale from netlist: J1/F1/Q1 form the raw-to-protected 24 V path; D1/R3 are the Q1 gate network; D2 and C1/C2/C5 are on the protected input/GND rail. TP1 measures `24V_PROT`; TP3 is GND.
+
+### Gate 1B — complete isolated L7987L buck
+
+Add:
+
+`U5, L1, D7, C3, C4, C6, C8, C9, C10, C20, C21, R4, R29, R33, R34, R35, R36`
+
+Also populate the EN default network needed with AutoEN disabled:
+
+`C7, Q7, R30, R31, R32`
+
+**Leave unpopulated:** `FB1, R5, U1, R1, R2, R6`.
+
+Reasoning:
+
+- C3 is the U5 VCC bypass on `24V_PROT`/GND.
+- C4 = soft-start, R4 = FSW, R29 = ILIM.
+- C6/D7/L1 form the bootstrap/switch/output path.
+- C8/C9/C20 and R33-R36 implement compensation/feedback/output sensing.
+- C10/C21 are directly on `3V3_BUCK`.
+- With R5 absent, R30 holds Q7 base low; the documented D014 behavior keeps AutoEN from suppressing the initial buck start.
+- FB1 absent isolates `3V3_BUCK` from `3V3_MCU`.
+
+Initial measurement: `3V3_BUCK` at C10 pad 1 or C21 pad 1 relative to TP3/GND. Do not use TP2 yet: TP2 is downstream of FB1 on `3V3_MCU`.
+
+### Gate 2 — AutoEN, then 3V3_MCU distribution
+
+First add the complete AutoEN sensing path:
+
+`U1, R1, R2, R6`
+
+Then, **only after the isolated buck has passed**, add `R5` and repeat the buck-start check. This preserves D014.
+
+After AutoEN behavior is confirmed sufficiently for normal rail bring-up, populate the MCU-rail bulk/local decoupling and rail link:
+
+`C11, C12, C13, C14, C16, C17, C18, C22, FB1, TP2`
+
+At this point TP2 is the intended `3V3_MCU` measurement node. C11 remains required; do not bridge this gate by omitting it because of procurement delay.
+
+### Gate 3 — ESP32 + boot/reset + USB/UART programming
+
+Populate:
+
+`U4, U2, U3, J2, Q2, Q3, R7, R8, R9, R10, R11, R12, R13, C15, SW1, SW2`
+
+Test points already present in the PCB design:
+
+`TP4, TP5, TP6, TP7`
+
+Dependencies confirmed by netlist:
+
+- J2/U3/U2 = USB-C data/ESD/USB-UART chain.
+- R10/R11 = USB-C CC resistors.
+- R7/R8 = CP2102 VBUS sensing/divider path.
+- R9 = CP2102 reset pull-up.
+- Q2/Q3 + R12/R13 + C15 + SW1/SW2 implement the ESP32 EN/IO0 auto/manual boot network.
+- U2 and U4 share `3V3_MCU`; U2/U4 UART is accessible at TP6/TP7.
+
+Gate condition: flash and run the diagnostic firmware before adding the remaining functional I/O groups. Firmware must set fan/heater control pins to safe OFF immediately.
+
+### Gate 4A — I2C sensor/display
+
+Populate:
+
+`J3, J4, R14, R15, R16, R17`
+
+R14/R15 are the 3V3_MCU-side I2C pull-ups; R16/R17 are the series connections into the J3/J4 SDA/SCL wiring according to the stored netlist. Connect off-board modules only after their actual pinout/fit is checked.
+
+### Gate 4B — buttons and status LED
+
+Populate:
+
+`SW3, SW4, SW5, SW6, R19, R22, R23, R24, D3, R18`
+
+The four button nets terminate at U4 and have their corresponding 10 kΩ rail resistors. D3/R18 form the status LED path.
+
+### Gate 4C — buzzer
+
+Populate:
+
+`BZ1, Q6, D6, R27, R37`
+
+This is the complete buzzer driver/flyback/control subgroup from the stored netlist. Test independently from the power outputs.
+
+### Gate 4D — NTC input
+
+Populate:
+
+`J7, R28, C19`
+
+This completes the NTC divider/filter input to U4. Use measured/known resistor substitutes as appropriate for diagnostic ADC checks before heater operation; the real heater NTC calibration and fault limits remain a separate firmware/safety task.
+
+### Gate 5A — fan output
+
+Populate:
+
+`J6, Q5, D5, R25, R26`
+
+Verify safe OFF first with no fan connected; then test the external fan separately.
+
+### Gate 5B — heater output
+
+Populate:
+
+`J5, Q4, D4, R20, R21`
+
+Do **not** energize the heater merely because this group is populated. Heater load testing remains gated by validated NTC conversion/fault handling and the independent off-board thermal cutoff in series with HEATER+.
+
+### Coverage check
+
+The staged list above assigns all 94 production-BOM references exactly once:
+
+- Gate 1A: 10
+- Gate 1B: 21
+- Gate 2: 13
+- Gate 3: 16
+- Gate 4A: 6
+- Gate 4B: 10
+- Gate 4C: 5
+- Gate 4D: 3
+- Gate 5A: 5
+- Gate 5B: 5
+
+Total: **94**.
+
+Before using the list physically, perform one final cross-check against the delivered components and received PCB. Population order inside each gate should favor low-profile passives before large/hot-air parts where practical, but electrical completeness at the gate boundary is mandatory.
