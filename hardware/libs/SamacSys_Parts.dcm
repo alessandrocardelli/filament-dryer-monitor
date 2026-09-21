@@ -12,4 +12,10 @@ K
 F https://www.sameskydevices.com/product/resource/css-i4b20-smt-tr.pdf
 $ENDCMP
 #
+$CMP L7987L
+D Switching Voltage Regulators 61 V 2 A asynchronous step-down switching regulator with adjustable current limitation
+K
+F https://www.st.com/resource/en/datasheet/l7987l.pdf
+$ENDCMP
+#
 #End Doc Library

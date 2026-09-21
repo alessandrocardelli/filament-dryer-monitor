@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\Users\\utente\\Documents\\KiCad\\10.0\\projects\\Filament_Dryer_Monitor\\hardware\\Filament_Dryer_Monitor.kicad_sch")
-		(date "2026-08-09T17:16:50")
+		(date "2026-09-17T21:13:01")
 		(tool "Eeschema 10.0.4")
 		(sheet
 			(number "1")
@@ -200,29 +200,24 @@
 	(components
 		(comp
 			(ref "C1")
-			(value "100n")
-			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(value "10u")
+			(footprint "Capacitor_SMD:C_1210_3225Metric")
 			(description "Unpolarized capacitor")
 			(fields
 				(field
-					(name "Function") "Cen1")
+					(name "Function") "Cin_buck1")
 				(field
-					(name "Dielectric")
-				)
+					(name "Dielectric") "X7S")
 				(field
-					(name "Tolerance")
-				)
+					(name "Tolerance") "10%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "100V")
 				(field
-					(name "Power")
-				)
+					(name "MPN") "GRM32EC72A106KE05L")
 				(field
-					(name "TCR")
-				)
+					(name "Manufacturer") "MURATA")
 				(field
-					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+					(name "Footprint") "Capacitor_SMD:C_1210_3225Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -236,27 +231,27 @@
 			)
 			(property
 				(name "Function")
-				(value "Cen1")
+				(value "Cin_buck1")
 			)
 			(property
 				(name "Dielectric")
-				(value "")
+				(value "X7S")
 			)
 			(property
 				(name "Tolerance")
-				(value "")
+				(value "10%")
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "100V")
 			)
 			(property
-				(name "Power")
-				(value "")
+				(name "MPN")
+				(value "GRM32EC72A106KE05L")
 			)
 			(property
-				(name "TCR")
-				(value "")
+				(name "Manufacturer")
+				(value "MURATA")
 			)
 			(property
 				(name "Sheetname")
@@ -265,15 +260,6 @@
 			(property
 				(name "Sheetfile")
 				(value "Power.kicad_sch")
-			)
-			(property
-				(name "exclude_from_bom")
-			)
-			(property
-				(name "exclude_from_pos_files")
-			)
-			(property
-				(name "dnp")
 			)
 			(property
 				(name "ki_keywords")
@@ -287,7 +273,7 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "5a62c476-fddc-4954-93cc-1e8687a7cea4")
+			(tstamps "b87d9bbe-de9b-4f33-a2d1-e743e8b47b8f")
 			(units
 				(unit
 					(name "A")
@@ -304,15 +290,12 @@
 		)
 		(comp
 			(ref "C2")
-			(value "1u")
+			(value "100n")
 			(footprint "Capacitor_SMD:C_0603_1608Metric")
-			(datasheet "16V X7R")
 			(description "Unpolarized capacitor")
 			(fields
 				(field
-					(name "Function") "Cvcc1")
-				(field
-					(name "MPN") "CL10B105KB8NQNC")
+					(name "Function") "C_autoen_vdd1")
 				(field
 					(name "Dielectric") "X7R")
 				(field
@@ -320,19 +303,14 @@
 				(field
 					(name "Voltage") "50V")
 				(field
-					(name "Power")
-				)
+					(name "Manufacturer") "YAGEO")
 				(field
-					(name "TCR")
-				)
-				(field
-					(name "LCSC") "C5199872")
-				(field
-					(name "Manufacturer") "Samsung")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
 					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
 				(field
-					(name "Datasheet") "16V X7R")
+					(name "Datasheet")
+				)
 				(field
 					(name "Description") "Unpolarized capacitor")
 			)
@@ -343,11 +321,7 @@
 			)
 			(property
 				(name "Function")
-				(value "Cvcc1")
-			)
-			(property
-				(name "MPN")
-				(value "CL10B105KB8NQNC")
+				(value "C_autoen_vdd1")
 			)
 			(property
 				(name "Dielectric")
@@ -362,20 +336,12 @@
 				(value "50V")
 			)
 			(property
-				(name "Power")
-				(value "")
-			)
-			(property
-				(name "TCR")
-				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C5199872")
-			)
-			(property
 				(name "Manufacturer")
-				(value "Samsung")
+				(value "YAGEO")
+			)
+			(property
+				(name "MPN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Sheetname")
@@ -397,7 +363,7 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "b2b52202-876c-47a7-8873-728714ff03fd")
+			(tstamps "63cee94c-eb9b-4a4f-8e47-ecae8154c3bb")
 			(units
 				(unit
 					(name "A")
@@ -414,32 +380,24 @@
 		)
 		(comp
 			(ref "C3")
-			(value "100n")
-			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(value "1u")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
 			(description "Unpolarized capacitor")
 			(fields
 				(field
-					(name "Function") "Cbst1")
+					(name "Function") "C_vcc_buck1")
 				(field
-					(name "MPN") "CC0603KRX7R9BB104")
-				(field
-					(name "Manufacturer") "Yageo")
-				(field
-					(name "Dielectric") "X7R")
-				(field
-					(name "LCSC") "C14663")
+					(name "Dielectric") "X7S")
 				(field
 					(name "Tolerance") "10%")
 				(field
-					(name "Voltage") "50V")
+					(name "Voltage") "100V")
 				(field
-					(name "Power")
-				)
+					(name "MPN") "GRJ21BC72A105KE11L")
 				(field
-					(name "TCR")
-				)
+					(name "Manufacturer") "MURATA")
 				(field
-					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -453,23 +411,11 @@
 			)
 			(property
 				(name "Function")
-				(value "Cbst1")
-			)
-			(property
-				(name "MPN")
-				(value "CC0603KRX7R9BB104")
-			)
-			(property
-				(name "Manufacturer")
-				(value "Yageo")
+				(value "C_vcc_buck1")
 			)
 			(property
 				(name "Dielectric")
-				(value "X7R")
-			)
-			(property
-				(name "LCSC")
-				(value "C14663")
+				(value "X7S")
 			)
 			(property
 				(name "Tolerance")
@@ -477,15 +423,15 @@
 			)
 			(property
 				(name "Voltage")
-				(value "50V")
+				(value "100V")
 			)
 			(property
-				(name "Power")
-				(value "")
+				(name "MPN")
+				(value "GRJ21BC72A105KE11L")
 			)
 			(property
-				(name "TCR")
-				(value "")
+				(name "Manufacturer")
+				(value "MURATA")
 			)
 			(property
 				(name "Sheetname")
@@ -507,7 +453,7 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "fdd86f98-b97e-4375-8557-2a6753b00452")
+			(tstamps "78b55b31-9fce-443c-b7d4-7d4d41b947df")
 			(units
 				(unit
 					(name "A")
@@ -524,30 +470,22 @@
 		)
 		(comp
 			(ref "C4")
-			(value "47p")
+			(value "33n")
 			(footprint "Capacitor_SMD:C_0603_1608Metric")
 			(description "Unpolarized capacitor")
 			(fields
 				(field
-					(name "Function") "Cff1")
+					(name "Function") "C_ss1")
 				(field
-					(name "MPN") "CL10C470JB8NNNC")
+					(name "Dielectric") "X7R")
 				(field
-					(name "Manufacturer") "Samsung")
-				(field
-					(name "Dielectric") "C0G")
-				(field
-					(name "LCSC") "C1671")
-				(field
-					(name "Tolerance") "5%")
+					(name "Tolerance") "10%")
 				(field
 					(name "Voltage") "50V")
 				(field
-					(name "Power")
-				)
+					(name "Manufacturer") "MURATA")
 				(field
-					(name "TCR")
-				)
+					(name "MPN") "GCM188R71H333KA55D")
 				(field
 					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
 				(field
@@ -563,39 +501,27 @@
 			)
 			(property
 				(name "Function")
-				(value "Cff1")
-			)
-			(property
-				(name "MPN")
-				(value "CL10C470JB8NNNC")
-			)
-			(property
-				(name "Manufacturer")
-				(value "Samsung")
+				(value "C_ss1")
 			)
 			(property
 				(name "Dielectric")
-				(value "C0G")
-			)
-			(property
-				(name "LCSC")
-				(value "C1671")
+				(value "X7R")
 			)
 			(property
 				(name "Tolerance")
-				(value "5%")
+				(value "10%")
 			)
 			(property
 				(name "Voltage")
 				(value "50V")
 			)
 			(property
-				(name "Power")
-				(value "")
+				(name "Manufacturer")
+				(value "MURATA")
 			)
 			(property
-				(name "TCR")
-				(value "")
+				(name "MPN")
+				(value "GCM188R71H333KA55D")
 			)
 			(property
 				(name "Sheetname")
@@ -617,7 +543,7 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "8f2c5eb3-c1b3-4718-ad9e-d2814d515f93")
+			(tstamps "84c20bb3-fe8d-408a-b466-5d2ca19cbbc0")
 			(units
 				(unit
 					(name "A")
@@ -635,17 +561,15 @@
 		(comp
 			(ref "C5")
 			(value "100u")
-			(footprint "JLCPCB:CAP-SMD_BD8.0-L8.3-W8.3-FD")
+			(footprint "FilamentDryer:CP_Panasonic_F_8x10.2")
 			(description "Polarized capacitor")
 			(fields
 				(field
-					(name "LCSC") "C401753")
-				(field
 					(name "Function") "Cin1")
 				(field
-					(name "MPN") "EEEFP1H101AP")
+					(name "MPN") "EEEFK1H101P")
 				(field
-					(name "Manufacturer") "Panasonic")
+					(name "Manufacturer") "PANASONIC")
 				(field
 					(name "Dielectric") "Aluminum Electrolytic")
 				(field
@@ -659,7 +583,7 @@
 					(name "TCR")
 				)
 				(field
-					(name "Footprint") "JLCPCB:CAP-SMD_BD8.0-L8.3-W8.3-FD")
+					(name "Footprint") "FilamentDryer:CP_Panasonic_F_8x10.2")
 				(field
 					(name "Datasheet")
 				)
@@ -672,20 +596,16 @@
 				(description "Polarized capacitor")
 			)
 			(property
-				(name "LCSC")
-				(value "C401753")
-			)
-			(property
 				(name "Function")
 				(value "Cin1")
 			)
 			(property
 				(name "MPN")
-				(value "EEEFP1H101AP")
+				(value "EEEFK1H101P")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Panasonic")
+				(value "PANASONIC")
 			)
 			(property
 				(name "Dielectric")
@@ -744,35 +664,27 @@
 		)
 		(comp
 			(ref "C6")
-			(value "22u")
-			(footprint "Capacitor_SMD:C_0805_2012Metric")
-			(datasheet "16V X7R")
+			(value "100n")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
 			(description "Unpolarized capacitor")
 			(fields
 				(field
-					(name "Function") "Cout1")
+					(name "Function") "Cbst1")
 				(field
-					(name "MPN") "CL21A226MAQNNNE")
+					(name "Dielectric") "X7R")
 				(field
-					(name "Manufacturer") "Samsung")
+					(name "Tolerance") "10%")
 				(field
-					(name "Dielectric") "X5R")
+					(name "Voltage") "50V")
 				(field
-					(name "LCSC") "C45783")
+					(name "Manufacturer") "YAGEO")
 				(field
-					(name "Tolerance") "20%")
+					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Voltage") "25V")
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
 				(field
-					(name "Power")
+					(name "Datasheet")
 				)
-				(field
-					(name "TCR")
-				)
-				(field
-					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
-				(field
-					(name "Datasheet") "16V X7R")
 				(field
 					(name "Description") "Unpolarized capacitor")
 			)
@@ -783,39 +695,27 @@
 			)
 			(property
 				(name "Function")
-				(value "Cout1")
-			)
-			(property
-				(name "MPN")
-				(value "CL21A226MAQNNNE")
-			)
-			(property
-				(name "Manufacturer")
-				(value "Samsung")
+				(value "Cbst1")
 			)
 			(property
 				(name "Dielectric")
-				(value "X5R")
-			)
-			(property
-				(name "LCSC")
-				(value "C45783")
+				(value "X7R")
 			)
 			(property
 				(name "Tolerance")
-				(value "20%")
+				(value "10%")
 			)
 			(property
 				(name "Voltage")
-				(value "25V")
+				(value "50V")
 			)
 			(property
-				(name "Power")
-				(value "")
+				(name "Manufacturer")
+				(value "YAGEO")
 			)
 			(property
-				(name "TCR")
-				(value "")
+				(name "MPN")
+				(value "CC0603KRX7R9BB104")
 			)
 			(property
 				(name "Sheetname")
@@ -837,7 +737,7 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "87386b39-7d08-4e00-964f-f0ab3efd0c34")
+			(tstamps "650bcf22-38bb-4d1c-a29b-0c23fb0a8219")
 			(units
 				(unit
 					(name "A")
@@ -854,32 +754,24 @@
 		)
 		(comp
 			(ref "C7")
-			(value "10u")
-			(footprint "Capacitor_SMD:C_1210_3225Metric")
+			(value "330n")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
 			(description "Unpolarized capacitor")
 			(fields
 				(field
-					(name "Function") "Cin2")
-				(field
-					(name "MPN") "GRM32ER71J106KA12L")
-				(field
-					(name "Manufacturer") "Murata")
+					(name "Function") "C_en_timing1")
 				(field
 					(name "Dielectric") "X7R")
 				(field
-					(name "LCSC") "C437568")
-				(field
 					(name "Tolerance") "10%")
 				(field
-					(name "Voltage") "63V")
+					(name "Voltage") "50V")
 				(field
-					(name "Power")
-				)
+					(name "MPN") "GRM219R71H334KA88D")
 				(field
-					(name "TCR")
-				)
+					(name "Manufacturer") "MURATA")
 				(field
-					(name "Footprint") "Capacitor_SMD:C_1210_3225Metric")
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -893,23 +785,11 @@
 			)
 			(property
 				(name "Function")
-				(value "Cin2")
-			)
-			(property
-				(name "MPN")
-				(value "GRM32ER71J106KA12L")
-			)
-			(property
-				(name "Manufacturer")
-				(value "Murata")
+				(value "C_en_timing1")
 			)
 			(property
 				(name "Dielectric")
 				(value "X7R")
-			)
-			(property
-				(name "LCSC")
-				(value "C437568")
 			)
 			(property
 				(name "Tolerance")
@@ -917,15 +797,15 @@
 			)
 			(property
 				(name "Voltage")
-				(value "63V")
+				(value "50V")
 			)
 			(property
-				(name "Power")
-				(value "")
+				(name "MPN")
+				(value "GRM219R71H334KA88D")
 			)
 			(property
-				(name "TCR")
-				(value "")
+				(name "Manufacturer")
+				(value "MURATA")
 			)
 			(property
 				(name "Sheetname")
@@ -947,7 +827,7 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "3c0dca06-7711-46ad-b323-8c22f426e10d")
+			(tstamps "b94dc8f4-a00c-4584-8b7e-8d89d42cc1e7")
 			(units
 				(unit
 					(name "A")
@@ -964,35 +844,27 @@
 		)
 		(comp
 			(ref "C8")
-			(value "22u")
-			(footprint "Capacitor_SMD:C_0805_2012Metric")
-			(datasheet "16V X7R")
+			(value "39p")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
 			(description "Unpolarized capacitor")
 			(fields
 				(field
-					(name "Function") "Cout2")
+					(name "Function") "C_comp_cp1")
 				(field
-					(name "MPN") "CL21A226MAQNNNE")
+					(name "Dielectric") "C0G/NP0")
 				(field
-					(name "Manufacturer") "Samsung")
+					(name "Tolerance") "5%")
 				(field
-					(name "Dielectric") "X5R")
+					(name "Voltage") "50V")
 				(field
-					(name "LCSC") "C45783")
+					(name "Manufacturer") "KEMET")
 				(field
-					(name "Tolerance") "20%")
+					(name "MPN") "C0603C390J5GACTU")
 				(field
-					(name "Voltage") "25V")
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
 				(field
-					(name "Power")
+					(name "Datasheet")
 				)
-				(field
-					(name "TCR")
-				)
-				(field
-					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
-				(field
-					(name "Datasheet") "16V X7R")
 				(field
 					(name "Description") "Unpolarized capacitor")
 			)
@@ -1003,39 +875,27 @@
 			)
 			(property
 				(name "Function")
-				(value "Cout2")
-			)
-			(property
-				(name "MPN")
-				(value "CL21A226MAQNNNE")
-			)
-			(property
-				(name "Manufacturer")
-				(value "Samsung")
+				(value "C_comp_cp1")
 			)
 			(property
 				(name "Dielectric")
-				(value "X5R")
-			)
-			(property
-				(name "LCSC")
-				(value "C45783")
+				(value "C0G/NP0")
 			)
 			(property
 				(name "Tolerance")
-				(value "20%")
+				(value "5%")
 			)
 			(property
 				(name "Voltage")
-				(value "25V")
+				(value "50V")
 			)
 			(property
-				(name "Power")
-				(value "")
+				(name "Manufacturer")
+				(value "KEMET")
 			)
 			(property
-				(name "TCR")
-				(value "")
+				(name "MPN")
+				(value "C0603C390J5GACTU")
 			)
 			(property
 				(name "Sheetname")
@@ -1057,7 +917,7 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "f334f793-ed9e-4ecd-91e3-68d72d3e5ecc")
+			(tstamps "d9362f1b-f86d-4d26-9e97-b65a3d9e6583")
 			(units
 				(unit
 					(name "A")
@@ -1074,32 +934,24 @@
 		)
 		(comp
 			(ref "C9")
-			(value "100n")
-			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(value "18n")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
 			(description "Unpolarized capacitor")
 			(fields
 				(field
-					(name "Function") "Cin3")
+					(name "Function") "C_comp_cf1")
 				(field
-					(name "MPN") "CC0603KRX7R9BB104")
+					(name "Dielectric") "C0G/NP0")
 				(field
-					(name "Manufacturer") "Yageo")
-				(field
-					(name "Dielectric") "X7R")
-				(field
-					(name "LCSC") "C14663")
-				(field
-					(name "Tolerance") "10%")
+					(name "Tolerance") "5%")
 				(field
 					(name "Voltage") "50V")
 				(field
-					(name "Power")
-				)
+					(name "Manufacturer") "MURATA")
 				(field
-					(name "TCR")
-				)
+					(name "MPN") "GRM21B5C1H183JA01L")
 				(field
-					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
 				(field
 					(name "Datasheet")
 				)
@@ -1113,39 +965,27 @@
 			)
 			(property
 				(name "Function")
-				(value "Cin3")
-			)
-			(property
-				(name "MPN")
-				(value "CC0603KRX7R9BB104")
-			)
-			(property
-				(name "Manufacturer")
-				(value "Yageo")
+				(value "C_comp_cf1")
 			)
 			(property
 				(name "Dielectric")
-				(value "X7R")
-			)
-			(property
-				(name "LCSC")
-				(value "C14663")
+				(value "C0G/NP0")
 			)
 			(property
 				(name "Tolerance")
-				(value "10%")
+				(value "5%")
 			)
 			(property
 				(name "Voltage")
 				(value "50V")
 			)
 			(property
-				(name "Power")
-				(value "")
+				(name "Manufacturer")
+				(value "MURATA")
 			)
 			(property
-				(name "TCR")
-				(value "")
+				(name "MPN")
+				(value "GRM21B5C1H183JA01L")
 			)
 			(property
 				(name "Sheetname")
@@ -1167,7 +1007,7 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "ff2d0567-82dd-43a4-bb95-52b0843cb9fd")
+			(tstamps "415efe98-0f9c-4711-a758-c93781d097ee")
 			(units
 				(unit
 					(name "A")
@@ -1184,63 +1024,58 @@
 		)
 		(comp
 			(ref "C10")
-			(value "470u")
-			(footprint "Capacitor_SMD:CP_Elec_8x10")
-			(description "Polarized capacitor")
+			(value "47u")
+			(footprint "Capacitor_SMD:C_1210_3225Metric")
+			(description "Unpolarized capacitor")
 			(fields
 				(field
-					(name "Function") "Cout3")
+					(name "Function") "Cout_buck1")
 				(field
-					(name "Dielectric")
-				)
+					(name "Dielectric") "X7R")
 				(field
-					(name "Tolerance")
-				)
+					(name "Tolerance") "10%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "10V")
 				(field
-					(name "Power")
-				)
+					(name "MPN") "LMK325B7476KM-PR")
 				(field
-					(name "TCR")
-				)
+					(name "Manufacturer") "TAIYO YUDEN")
 				(field
-					(name "Footprint") "Capacitor_SMD:CP_Elec_8x10")
+					(name "Footprint") "Capacitor_SMD:C_1210_3225Metric")
 				(field
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "Polarized capacitor")
+					(name "Description") "Unpolarized capacitor")
 			)
 			(libsource
 				(lib "Device")
-				(part "C_Polarized")
-				(description "Polarized capacitor")
+				(part "C")
+				(description "Unpolarized capacitor")
 			)
 			(property
 				(name "Function")
-				(value "Cout3")
+				(value "Cout_buck1")
 			)
 			(property
 				(name "Dielectric")
-				(value "")
+				(value "X7R")
 			)
 			(property
 				(name "Tolerance")
-				(value "")
+				(value "10%")
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "10V")
 			)
 			(property
-				(name "Power")
-				(value "")
+				(name "MPN")
+				(value "LMK325B7476KM-PR")
 			)
 			(property
-				(name "TCR")
-				(value "")
+				(name "Manufacturer")
+				(value "TAIYO YUDEN")
 			)
 			(property
 				(name "Sheetname")
@@ -1251,27 +1086,18 @@
 				(value "Power.kicad_sch")
 			)
 			(property
-				(name "exclude_from_bom")
-			)
-			(property
-				(name "exclude_from_pos_files")
-			)
-			(property
-				(name "dnp")
-			)
-			(property
 				(name "ki_keywords")
 				(value "cap capacitor")
 			)
 			(property
 				(name "ki_fp_filters")
-				(value "CP_*")
+				(value "C_*")
 			)
 			(sheetpath
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "78cfe102-70ad-4639-877e-c30082ae8121")
+			(tstamps "fc7c4bf1-28f3-40fb-a552-45e4b8c0407a")
 			(units
 				(unit
 					(name "A")
@@ -1296,13 +1122,11 @@
 				(field
 					(name "Function") "Cmcu1")
 				(field
-					(name "MPN") "CL21A226MAQNNNE")
+					(name "MPN") "CL21A226MAYNNNE")
 				(field
-					(name "Manufacturer") "Samsung")
+					(name "Manufacturer") "SAMSUNG")
 				(field
 					(name "Dielectric") "X5R")
-				(field
-					(name "LCSC") "C45783")
 				(field
 					(name "Tolerance") "20%")
 				(field
@@ -1331,19 +1155,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "CL21A226MAQNNNE")
+				(value "CL21A226MAYNNNE")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Samsung")
+				(value "SAMSUNG")
 			)
 			(property
 				(name "Dielectric")
 				(value "X5R")
-			)
-			(property
-				(name "LCSC")
-				(value "C45783")
 			)
 			(property
 				(name "Tolerance")
@@ -1397,9 +1217,190 @@
 			)
 		)
 		(comp
+			(ref "C20")
+			(value "560p")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(description "Unpolarized capacitor")
+			(fields
+				(field
+					(name "Function") "C_comp_cs1")
+				(field
+					(name "Dielectric") "C0G/NP0")
+				(field
+					(name "Tolerance") "5%")
+				(field
+					(name "Voltage") "50V")
+				(field
+					(name "Manufacturer") "KYOCERA AVX")
+				(field
+					(name "MPN") "06035A561JAT2A")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "Function")
+				(value "C_comp_cs1")
+			)
+			(property
+				(name "Dielectric")
+				(value "C0G/NP0")
+			)
+			(property
+				(name "Tolerance")
+				(value "5%")
+			)
+			(property
+				(name "Voltage")
+				(value "50V")
+			)
+			(property
+				(name "Manufacturer")
+				(value "KYOCERA AVX")
+			)
+			(property
+				(name "MPN")
+				(value "06035A561JAT2A")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "0cc7be1a-3f8c-4b46-b238-9b94b9046f07")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C21")
+			(value "1u")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(description "Unpolarized capacitor")
+			(fields
+				(field
+					(name "Function") "C_vbias1")
+				(field
+					(name "Dielectric") "X7R")
+				(field
+					(name "Tolerance") "10%")
+				(field
+					(name "Voltage") "25V")
+				(field
+					(name "MPN") "GCM188R71E105KA64J")
+				(field
+					(name "Manufacturer") "MURATA")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "Function")
+				(value "C_vbias1")
+			)
+			(property
+				(name "Dielectric")
+				(value "X7R")
+			)
+			(property
+				(name "Tolerance")
+				(value "10%")
+			)
+			(property
+				(name "Voltage")
+				(value "25V")
+			)
+			(property
+				(name "MPN")
+				(value "GCM188R71E105KA64J")
+			)
+			(property
+				(name "Manufacturer")
+				(value "MURATA")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "1c828135-337e-4625-9b6f-7b11b4a8d5f0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
 			(ref "D1")
-			(value "BZX84C15")
+			(value "BZX84C15-7-F")
 			(footprint "Package_TO_SOT_SMD:SOT-23")
+			(datasheet "https://www.diodes.com/datasheet/download/BZX84C2V4%20-%20BZX84C51.pdf")
 			(description "Zener diode")
 			(fields
 				(field
@@ -1420,23 +1421,20 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C500789")
-				(field
 					(name "MPN") "BZX84C15-7-F")
 				(field
-					(name "Manufacturer") "Diodes Incorporated")
+					(name "Manufacturer") "DIODES INCORPORATED")
 				(field
 					(name "Footprint") "Package_TO_SOT_SMD:SOT-23")
 				(field
-					(name "Datasheet")
-				)
+					(name "Datasheet") "https://www.diodes.com/datasheet/download/BZX84C2V4%20-%20BZX84C51.pdf")
 				(field
 					(name "Description") "Zener diode")
 			)
 			(libsource
-				(lib "Device")
-				(part "D_Zener")
-				(description "Zener diode")
+				(lib "Filament_Dryer_Custom")
+				(part "BZX84C15-7-F")
+				(description "BZX84C15-7-F 15 V surface-mount Zener diode, SOT-23; pin 1 A, pin 2 NC, pin 3 K")
 			)
 			(property
 				(name "Function")
@@ -1463,16 +1461,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C500789")
-			)
-			(property
 				(name "MPN")
 				(value "BZX84C15-7-F")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Diodes Incorporated")
+				(value "DIODES INCORPORATED")
 			)
 			(property
 				(name "Sheetname")
@@ -1500,10 +1494,13 @@
 					(name "A")
 					(pins
 						(pin
-							(num "1")
+							(num "3")
 						)
 						(pin
 							(num "2")
+						)
+						(pin
+							(num "1")
 						)
 					)
 				)
@@ -1533,11 +1530,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C96335")
+					(name "MPN") "SMBJ28A")
 				(field
-					(name "MPN") "SMBJ28A-TR")
-				(field
-					(name "Manufacturer") "STMicroelectronics")
+					(name "Manufacturer") "LITTELFUSE")
 				(field
 					(name "Footprint") "Diode_SMD:D_SMB")
 				(field
@@ -1576,16 +1571,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C96335")
-			)
-			(property
 				(name "MPN")
-				(value "SMBJ28A-TR")
+				(value "SMBJ28A")
 			)
 			(property
 				(name "Manufacturer")
-				(value "STMicroelectronics")
+				(value "LITTELFUSE")
 			)
 			(property
 				(name "Sheetname")
@@ -1623,6 +1614,90 @@
 			)
 		)
 		(comp
+			(ref "D7")
+			(value "PMEG6030EP")
+			(footprint "Diode_SMD:D_SOD-128")
+			(description "Diode")
+			(fields
+				(field
+					(name "Function") "D_buck1")
+				(field
+					(name "Sim.Device") "D")
+				(field
+					(name "Sim.Pins") "1=K 2=A")
+				(field
+					(name "MPN") "PMEG6030EP.115")
+				(field
+					(name "Manufacturer") "Nexperia")
+				(field
+					(name "Footprint") "Diode_SMD:D_SOD-128")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Diode")
+			)
+			(libsource
+				(lib "Device")
+				(part "D")
+				(description "Diode")
+			)
+			(property
+				(name "Function")
+				(value "D_buck1")
+			)
+			(property
+				(name "Sim.Device")
+				(value "D")
+			)
+			(property
+				(name "Sim.Pins")
+				(value "1=K 2=A")
+			)
+			(property
+				(name "MPN")
+				(value "PMEG6030EP.115")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Nexperia")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "diode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TO-???* *_Diode_* *SingleDiode* D_*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "b6336b23-0eef-4503-8c6c-ecb7a1c2373d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
 			(ref "F1")
 			(value "T3A/63V")
 			(footprint "Fuse:Fuse_1206_3216Metric_Pad1.42x1.75mm_HandSolder")
@@ -1630,8 +1705,6 @@
 			(fields
 				(field
 					(name "Function") "F1")
-				(field
-					(name "LCSC") "C354897")
 				(field
 					(name "Dielectric")
 				)
@@ -1648,9 +1721,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "MPN") "1206T3A63V")
+					(name "MPN") "0685T3000-01")
 				(field
-					(name "Manufacturer") "Walter Elec")
+					(name "Manufacturer") "BEL FUSE")
 				(field
 					(name "Footprint") "Fuse:Fuse_1206_3216Metric_Pad1.42x1.75mm_HandSolder")
 				(field
@@ -1667,10 +1740,6 @@
 			(property
 				(name "Function")
 				(value "F1")
-			)
-			(property
-				(name "LCSC")
-				(value "C354897")
 			)
 			(property
 				(name "Dielectric")
@@ -1694,11 +1763,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "1206T3A63V")
+				(value "0685T3000-01")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Walter Elec")
+				(value "BEL FUSE")
 			)
 			(property
 				(name "Sheetname")
@@ -1737,12 +1806,10 @@
 		)
 		(comp
 			(ref "FB1")
-			(value "HCB3216KF-601T30")
+			(value "BLM31KN601SH1L")
 			(footprint "Inductor_SMD:L_1206_3216Metric")
 			(description "Ferrite bead")
 			(fields
-				(field
-					(name "LCSC") "C357023 ")
 				(field
 					(name "Function") "FB1")
 				(field
@@ -1761,9 +1828,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "MPN") "HCB3216KF-601T30")
+					(name "MPN") "BLM31KN601SH1L")
 				(field
-					(name "Manufacturer") "TAI-TECH")
+					(name "Manufacturer") "MURATA")
 				(field
 					(name "Footprint") "Inductor_SMD:L_1206_3216Metric")
 				(field
@@ -1776,10 +1843,6 @@
 				(lib "Device")
 				(part "FerriteBead")
 				(description "Ferrite bead")
-			)
-			(property
-				(name "LCSC")
-				(value "C357023 ")
 			)
 			(property
 				(name "Function")
@@ -1807,11 +1870,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "HCB3216KF-601T30")
+				(value "BLM31KN601SH1L")
 			)
 			(property
 				(name "Manufacturer")
-				(value "TAI-TECH")
+				(value "MURATA")
 			)
 			(property
 				(name "Sheetname")
@@ -1872,9 +1935,7 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C144394")
-				(field
-					(name "MPN") "B3B-XH-A(LF)(SN)")
+					(name "MPN") "B3B-XH-A (LF)(SN)")
 				(field
 					(name "Manufacturer") "JST")
 				(field
@@ -1915,12 +1976,8 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C144394")
-			)
-			(property
 				(name "MPN")
-				(value "B3B-XH-A(LF)(SN)")
+				(value "B3B-XH-A (LF)(SN)")
 			)
 			(property
 				(name "Manufacturer")
@@ -1966,38 +2023,21 @@
 		)
 		(comp
 			(ref "L1")
-			(value "8u2")
-			(footprint "JLCPCB:IND-SMD_L7.0-W6.6_ZD0650-100M")
-			(datasheet "ZD0650-8R2M")
+			(value "15u")
+			(footprint "FilamentDryer:L_Bourns_SRN6045")
 			(description "Inductor")
 			(fields
 				(field
-					(name "Function") "L1")
+					(name "Function") "L_buck1")
 				(field
-					(name "LCSC") "C48031458")
+					(name "MPN") "SRN6045-150M")
 				(field
-					(name "MPN") "ZD0650-8R2M")
+					(name "Manufacturer") "BOURNS")
 				(field
-					(name "Manufacturer") "zoomdo electronics")
+					(name "Footprint") "FilamentDryer:L_Bourns_SRN6045")
 				(field
-					(name "Dielectric")
+					(name "Datasheet")
 				)
-				(field
-					(name "Tolerance")
-				)
-				(field
-					(name "Voltage")
-				)
-				(field
-					(name "Power")
-				)
-				(field
-					(name "TCR")
-				)
-				(field
-					(name "Footprint") "JLCPCB:IND-SMD_L7.0-W6.6_ZD0650-100M")
-				(field
-					(name "Datasheet") "ZD0650-8R2M")
 				(field
 					(name "Description") "Inductor")
 			)
@@ -2008,39 +2048,15 @@
 			)
 			(property
 				(name "Function")
-				(value "L1")
-			)
-			(property
-				(name "LCSC")
-				(value "C48031458")
+				(value "L_buck1")
 			)
 			(property
 				(name "MPN")
-				(value "ZD0650-8R2M")
+				(value "SRN6045-150M")
 			)
 			(property
 				(name "Manufacturer")
-				(value "zoomdo electronics")
-			)
-			(property
-				(name "Dielectric")
-				(value "")
-			)
-			(property
-				(name "Tolerance")
-				(value "")
-			)
-			(property
-				(name "Voltage")
-				(value "")
-			)
-			(property
-				(name "Power")
-				(value "")
-			)
-			(property
-				(name "TCR")
-				(value "")
+				(value "BOURNS")
 			)
 			(property
 				(name "Sheetname")
@@ -2062,7 +2078,7 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "e35965a5-5018-4cf4-afca-a5060d4554a0")
+			(tstamps "7d629266-2355-42d1-a536-995b60a42d4a")
 			(units
 				(unit
 					(name "A")
@@ -2079,7 +2095,7 @@
 		)
 		(comp
 			(ref "Q1")
-			(value "DMP6180SK3-13")
+			(value "NTD20P06LT4G")
 			(footprint "Package_TO_SOT_SMD:TO-252-2")
 			(description "P-MOSFET transistor, gate/drain/source")
 			(fields
@@ -2101,11 +2117,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C93034")
+					(name "MPN") "NTD20P06LT4G")
 				(field
-					(name "MPN") "DMP6180SK3-13")
-				(field
-					(name "Manufacturer") "Diodes Incorporated")
+					(name "Manufacturer") "ONSEMI")
 				(field
 					(name "Footprint") "Package_TO_SOT_SMD:TO-252-2")
 				(field
@@ -2144,16 +2158,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C93034")
-			)
-			(property
 				(name "MPN")
-				(value "DMP6180SK3-13")
+				(value "NTD20P06LT4G")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Diodes Incorporated")
+				(value "ONSEMI")
 			)
 			(property
 				(name "Sheetname")
@@ -2190,123 +2200,17 @@
 			)
 		)
 		(comp
-			(ref "R1")
-			(value "100k")
-			(footprint "Resistor_SMD:R_0603_1608Metric")
-			(description "Resistor")
+			(ref "Q7")
+			(value "MMBT3904")
+			(footprint "Package_TO_SOT_SMD:SOT-23")
+			(description "NPN transistor, base/emitter/collector")
 			(fields
 				(field
-					(name "Function") "Ren_top1")
+					(name "Sim.Device") "NPN")
 				(field
-					(name "MPN") "0603WAF1003T5E")
+					(name "Sim.Pins") "1=B 2=E 3=C")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
-				(field
-					(name "Dielectric")
-				)
-				(field
-					(name "LCSC") "C25803")
-				(field
-					(name "Tolerance") "1%")
-				(field
-					(name "Voltage")
-				)
-				(field
-					(name "Power") "100mW")
-				(field
-					(name "TCR") "100ppm/K")
-				(field
-					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "Resistor")
-			)
-			(libsource
-				(lib "Device")
-				(part "R")
-				(description "Resistor")
-			)
-			(property
-				(name "Function")
-				(value "Ren_top1")
-			)
-			(property
-				(name "MPN")
-				(value "0603WAF1003T5E")
-			)
-			(property
-				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
-			)
-			(property
-				(name "Dielectric")
-				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25803")
-			)
-			(property
-				(name "Tolerance")
-				(value "1%")
-			)
-			(property
-				(name "Voltage")
-				(value "")
-			)
-			(property
-				(name "Power")
-				(value "100mW")
-			)
-			(property
-				(name "TCR")
-				(value "100ppm/K")
-			)
-			(property
-				(name "Sheetname")
-				(value "Power")
-			)
-			(property
-				(name "Sheetfile")
-				(value "Power.kicad_sch")
-			)
-			(property
-				(name "ki_keywords")
-				(value "R res resistor")
-			)
-			(property
-				(name "ki_fp_filters")
-				(value "R_*")
-			)
-			(sheetpath
-				(names "/Power/")
-				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
-			)
-			(tstamps "de5d5ca3-3706-454c-a408-7a6dd5dc9476")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-					)
-				)
-			)
-		)
-		(comp
-			(ref "R2")
-			(value "7k87")
-			(footprint "Resistor_SMD:R_0603_1608Metric")
-			(description "Resistor")
-			(fields
-				(field
-					(name "Function") "Ren_bot1")
+					(name "Function") "Q_autoen1")
 				(field
 					(name "Dielectric")
 				)
@@ -2323,21 +2227,33 @@
 					(name "TCR")
 				)
 				(field
-					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+					(name "MPN") "MMBT3904")
+				(field
+					(name "Manufacturer") "DIOTEC SEMICONDUCTOR")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23")
 				(field
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "Resistor")
+					(name "Description") "NPN transistor, base/emitter/collector")
 			)
 			(libsource
-				(lib "Device")
-				(part "R")
-				(description "Resistor")
+				(lib "Transistor_BJT")
+				(part "Q_NPN_BEC")
+				(description "NPN transistor, base/emitter/collector")
+			)
+			(property
+				(name "Sim.Device")
+				(value "NPN")
+			)
+			(property
+				(name "Sim.Pins")
+				(value "1=B 2=E 3=C")
 			)
 			(property
 				(name "Function")
-				(value "Ren_bot1")
+				(value "Q_autoen1")
 			)
 			(property
 				(name "Dielectric")
@@ -2360,6 +2276,14 @@
 				(value "")
 			)
 			(property
+				(name "MPN")
+				(value "MMBT3904")
+			)
+			(property
+				(name "Manufacturer")
+				(value "DIOTEC SEMICONDUCTOR")
+			)
+			(property
 				(name "Sheetname")
 				(value "Power")
 			)
@@ -2368,13 +2292,99 @@
 				(value "Power.kicad_sch")
 			)
 			(property
-				(name "exclude_from_bom")
+				(name "ki_keywords")
+				(value "BJT")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "17c401ad-1502-4f34-9b9e-1d01d28d1736")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R1")
+			(value "270k")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Function") "R_vref_top1")
+				(field
+					(name "TCR") "100ppm/K")
+				(field
+					(name "Power") "100mW")
+				(field
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage") "75V")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "MPN") "RC0603FR-07270KL")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
 			)
 			(property
-				(name "exclude_from_pos_files")
+				(name "Function")
+				(value "R_vref_top1")
 			)
 			(property
-				(name "dnp")
+				(name "TCR")
+				(value "100ppm/K")
+			)
+			(property
+				(name "Power")
+				(value "100mW")
+			)
+			(property
+				(name "Tolerance")
+				(value "1%")
+			)
+			(property
+				(name "Voltage")
+				(value "75V")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-07270KL")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
 			)
 			(property
 				(name "ki_keywords")
@@ -2388,7 +2398,103 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "32cf081a-cfdc-4c69-bd55-7c9d7548dfc0")
+			(tstamps "a20fa8ad-36e7-4d5e-98dd-c1f404134d66")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R2")
+			(value "22k")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Function") "R_vref_bot1")
+				(field
+					(name "TCR") "100ppm/K")
+				(field
+					(name "Power") "100mW")
+				(field
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage") "75V")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "MPN") "RC0603FR-0722KL")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Function")
+				(value "R_vref_bot1")
+			)
+			(property
+				(name "TCR")
+				(value "100ppm/K")
+			)
+			(property
+				(name "Power")
+				(value "100mW")
+			)
+			(property
+				(name "Tolerance")
+				(value "1%")
+			)
+			(property
+				(name "Voltage")
+				(value "75V")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0722KL")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "04f05719-8d05-4d89-a0c3-95e0c654ee21")
 			(units
 				(unit
 					(name "A")
@@ -2412,19 +2518,16 @@
 				(field
 					(name "Function") "Rg1")
 				(field
-					(name "MPN") "0603WAF1003T5E")
+					(name "MPN") "RC0603FR-07100KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C25803")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -2448,19 +2551,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1003T5E")
+				(value "RC0603FR-07100KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25803")
 			)
 			(property
 				(name "Tolerance")
@@ -2468,7 +2567,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -2515,24 +2614,24 @@
 		)
 		(comp
 			(ref "R4")
-			(value "100k")
+			(value "47k")
 			(footprint "Resistor_SMD:R_0603_1608Metric")
 			(description "Resistor")
 			(fields
 				(field
-					(name "Function") "Rpg1")
+					(name "Function") "R_fsw1")
 				(field
-					(name "Dielectric")
-				)
-				(field
-					(name "Tolerance") "1%")
-				(field
-					(name "Voltage")
-				)
+					(name "TCR") "100ppm/K")
 				(field
 					(name "Power") "100mW")
 				(field
-					(name "TCR") "100ppm/K")
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage") "75V")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "MPN") "RC0603FR-0747KL")
 				(field
 					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
 				(field
@@ -2548,11 +2647,15 @@
 			)
 			(property
 				(name "Function")
-				(value "Rpg1")
+				(value "R_fsw1")
 			)
 			(property
-				(name "Dielectric")
-				(value "")
+				(name "TCR")
+				(value "100ppm/K")
+			)
+			(property
+				(name "Power")
+				(value "100mW")
 			)
 			(property
 				(name "Tolerance")
@@ -2560,15 +2663,15 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
-				(name "Power")
-				(value "100mW")
+				(name "Manufacturer")
+				(value "YAGEO")
 			)
 			(property
-				(name "TCR")
-				(value "100ppm/K")
+				(name "MPN")
+				(value "RC0603FR-0747KL")
 			)
 			(property
 				(name "Sheetname")
@@ -2577,15 +2680,6 @@
 			(property
 				(name "Sheetfile")
 				(value "Power.kicad_sch")
-			)
-			(property
-				(name "exclude_from_bom")
-			)
-			(property
-				(name "exclude_from_pos_files")
-			)
-			(property
-				(name "dnp")
 			)
 			(property
 				(name "ki_keywords")
@@ -2599,7 +2693,7 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "a342500c-97e5-4a49-b85b-e26b103ac722")
+			(tstamps "805a9edb-ccd7-4f36-a6d0-fa8087cbf3d4")
 			(units
 				(unit
 					(name "A")
@@ -2621,25 +2715,19 @@
 			(description "Resistor")
 			(fields
 				(field
-					(name "Function") "Rfb_top1")
+					(name "Function") "R_cmp_pu1")
 				(field
-					(name "MPN") "0603WAF1003T5E")
-				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
-				(field
-					(name "Dielectric")
-				)
-				(field
-					(name "LCSC") "C25803")
-				(field
-					(name "Tolerance") "1%")
-				(field
-					(name "Voltage")
-				)
+					(name "TCR") "100ppm/K")
 				(field
 					(name "Power") "100mW")
 				(field
-					(name "TCR") "100ppm/K")
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage") "75V")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "MPN") "RC0603FR-07100KL")
 				(field
 					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
 				(field
@@ -2655,23 +2743,15 @@
 			)
 			(property
 				(name "Function")
-				(value "Rfb_top1")
+				(value "R_cmp_pu1")
 			)
 			(property
-				(name "MPN")
-				(value "0603WAF1003T5E")
+				(name "TCR")
+				(value "100ppm/K")
 			)
 			(property
-				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
-			)
-			(property
-				(name "Dielectric")
-				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25803")
+				(name "Power")
+				(value "100mW")
 			)
 			(property
 				(name "Tolerance")
@@ -2679,15 +2759,15 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
-				(name "Power")
-				(value "100mW")
+				(name "Manufacturer")
+				(value "YAGEO")
 			)
 			(property
-				(name "TCR")
-				(value "100ppm/K")
+				(name "MPN")
+				(value "RC0603FR-07100KL")
 			)
 			(property
 				(name "Sheetname")
@@ -2709,7 +2789,7 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "e7cd3909-aedc-4d6f-9731-764c8d7e9eb9")
+			(tstamps "f4053200-33a9-4b97-8c7d-1704bc97e57a")
 			(units
 				(unit
 					(name "A")
@@ -2726,30 +2806,600 @@
 		)
 		(comp
 			(ref "R6")
-			(value "31k6")
+			(value "100k")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Function") "R_q_autoen1")
+				(field
+					(name "TCR") "100ppm/K")
+				(field
+					(name "Power") "100mW")
+				(field
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage") "75V")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "MPN") "RC0603FR-07100KL")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Function")
+				(value "R_q_autoen1")
+			)
+			(property
+				(name "TCR")
+				(value "100ppm/K")
+			)
+			(property
+				(name "Power")
+				(value "100mW")
+			)
+			(property
+				(name "Tolerance")
+				(value "1%")
+			)
+			(property
+				(name "Voltage")
+				(value "75V")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-07100KL")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "8f449910-7dcb-4d3d-b6fe-777328c05f04")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R29")
+			(value "47k5")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Function") "R_ilim1")
+				(field
+					(name "TCR") "100ppm/K")
+				(field
+					(name "Power") "100mW")
+				(field
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage") "75V")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "MPN") "RC0603FR-0747K5L")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Function")
+				(value "R_ilim1")
+			)
+			(property
+				(name "TCR")
+				(value "100ppm/K")
+			)
+			(property
+				(name "Power")
+				(value "100mW")
+			)
+			(property
+				(name "Tolerance")
+				(value "1%")
+			)
+			(property
+				(name "Voltage")
+				(value "75V")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0747K5L")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "52f9d1c3-eaeb-4722-b401-634548bb9ae9")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R30")
+			(value "47k")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Function") "R_q7_pd1")
+				(field
+					(name "TCR") "100ppm/K")
+				(field
+					(name "Power") "100mW")
+				(field
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage") "75V")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "MPN") "RC0603FR-0747KL")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Function")
+				(value "R_q7_pd1")
+			)
+			(property
+				(name "TCR")
+				(value "100ppm/K")
+			)
+			(property
+				(name "Power")
+				(value "100mW")
+			)
+			(property
+				(name "Tolerance")
+				(value "1%")
+			)
+			(property
+				(name "Voltage")
+				(value "75V")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0747KL")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "5c8128ec-2ec1-4763-99ae-654f9535fc09")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R31")
+			(value "100k")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Function") "R_en_pu1")
+				(field
+					(name "TCR") "100ppm/K")
+				(field
+					(name "Power") "100mW")
+				(field
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage") "75V")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "MPN") "RC0603FR-07100KL")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Function")
+				(value "R_en_pu1")
+			)
+			(property
+				(name "TCR")
+				(value "100ppm/K")
+			)
+			(property
+				(name "Power")
+				(value "100mW")
+			)
+			(property
+				(name "Tolerance")
+				(value "1%")
+			)
+			(property
+				(name "Voltage")
+				(value "75V")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-07100KL")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "49adf7d2-78d0-4bdd-b8c2-f5e68192eb11")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R32")
+			(value "15k")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Function") "R_en_pd1")
+				(field
+					(name "TCR") "100ppm/K")
+				(field
+					(name "Power") "100mW")
+				(field
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage") "75V")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "MPN") "RC0603FR-0715KL")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Function")
+				(value "R_en_pd1")
+			)
+			(property
+				(name "TCR")
+				(value "100ppm/K")
+			)
+			(property
+				(name "Power")
+				(value "100mW")
+			)
+			(property
+				(name "Tolerance")
+				(value "1%")
+			)
+			(property
+				(name "Voltage")
+				(value "75V")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0715KL")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "723f9551-d6c8-413d-903d-c1f77986a25d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R33")
+			(value "16k")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Function") "R_comp_rf1")
+				(field
+					(name "TCR") "100ppm/K")
+				(field
+					(name "Power") "100mW")
+				(field
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage") "75V")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "MPN") "RC0603FR-0716KL")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Function")
+				(value "R_comp_rf1")
+			)
+			(property
+				(name "TCR")
+				(value "100ppm/K")
+			)
+			(property
+				(name "Power")
+				(value "100mW")
+			)
+			(property
+				(name "Tolerance")
+				(value "1%")
+			)
+			(property
+				(name "Voltage")
+				(value "75V")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0716KL")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "5b1d622b-16a0-4312-bc5f-e4c3105c5158")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R34")
+			(value "16k")
 			(footprint "Resistor_SMD:R_0603_1608Metric")
 			(description "Resistor")
 			(fields
 				(field
 					(name "Function") "Rfb_bot1")
 				(field
-					(name "MPN") "0603WAF3162T5E")
+					(name "MPN") "RC0603FR-0716KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
-				(field
-					(name "Dielectric")
-				)
-				(field
-					(name "LCSC") "C25967")
-				(field
-					(name "Tolerance") "1%")
-				(field
-					(name "Voltage")
-				)
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Power") "100mW")
 				(field
 					(name "TCR") "100ppm/K")
+				(field
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage") "75V")
 				(field
 					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
 				(field
@@ -2769,27 +3419,11 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF3162T5E")
+				(value "RC0603FR-0716KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
-			)
-			(property
-				(name "Dielectric")
-				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25967")
-			)
-			(property
-				(name "Tolerance")
-				(value "1%")
-			)
-			(property
-				(name "Voltage")
-				(value "")
+				(value "YAGEO")
 			)
 			(property
 				(name "Power")
@@ -2798,6 +3432,14 @@
 			(property
 				(name "TCR")
 				(value "100ppm/K")
+			)
+			(property
+				(name "Tolerance")
+				(value "1%")
+			)
+			(property
+				(name "Voltage")
+				(value "75V")
 			)
 			(property
 				(name "Sheetname")
@@ -2819,7 +3461,199 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "b9bac050-08b0-426f-ace4-ab9aa8234fad")
+			(tstamps "525ad749-8a59-47cb-b8ec-5889756965af")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R35")
+			(value "1k13")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Function") "R_comp_rs1")
+				(field
+					(name "TCR") "25ppm/K")
+				(field
+					(name "Power") "100mW")
+				(field
+					(name "Tolerance") "0.1%")
+				(field
+					(name "Voltage") "75V")
+				(field
+					(name "Manufacturer") "PANASONIC")
+				(field
+					(name "MPN") "ERA3AEB1131V")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Function")
+				(value "R_comp_rs1")
+			)
+			(property
+				(name "TCR")
+				(value "25ppm/K")
+			)
+			(property
+				(name "Power")
+				(value "100mW")
+			)
+			(property
+				(name "Tolerance")
+				(value "0.1%")
+			)
+			(property
+				(name "Voltage")
+				(value "75V")
+			)
+			(property
+				(name "Manufacturer")
+				(value "PANASONIC")
+			)
+			(property
+				(name "MPN")
+				(value "ERA3AEB1131V")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "5bf3eeb2-33ff-4d3e-aead-a73198e789cf")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R36")
+			(value "49k9")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Function") "Rfb_top1")
+				(field
+					(name "MPN") "RC0603FR-0749K9L")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "Power") "100mW")
+				(field
+					(name "TCR") "100ppm/K")
+				(field
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage") "75V")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Function")
+				(value "Rfb_top1")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0749K9L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "Power")
+				(value "100mW")
+			)
+			(property
+				(name "TCR")
+				(value "100ppm/K")
+			)
+			(property
+				(name "Tolerance")
+				(value "1%")
+			)
+			(property
+				(name "Voltage")
+				(value "75V")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "f7d435fe-0b4d-45c9-9837-97cbcb279ff5")
 			(units
 				(unit
 					(name "A")
@@ -3130,81 +3964,127 @@
 		)
 		(comp
 			(ref "U1")
-			(value "AP66200")
-			(footprint "FilamentDryer:AP66200_U-QFN4040-16_EP2.6x2.6mm_P0.65mm")
+			(value "TLV1701")
+			(footprint "Package_TO_SOT_SMD:SOT-23-5")
+			(datasheet "https://www.ti.com/lit/ds/symlink/tlv1701.pdf")
+			(description "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5")
 			(fields
 				(field
-					(name "Function") "U2")
+					(name "Function") "U_autoen_cmp1")
 				(field
-					(name "Dielectric")
-				)
+					(name "Manufacturer") "TEXAS INSTRUMENTS")
 				(field
-					(name "Tolerance")
-				)
+					(name "MPN") "TLV1701AIDBVR")
 				(field
-					(name "Voltage")
-				)
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-5")
 				(field
-					(name "Power")
-				)
+					(name "Datasheet") "https://www.ti.com/lit/ds/symlink/tlv1701.pdf")
 				(field
-					(name "TCR")
-				)
-				(field
-					(name "LCSC") "C6741205")
-				(field
-					(name "MPN") "AP66200FVBW-13")
-				(field
-					(name "Manufacturer") "Diodes Incorporated")
-				(field
-					(name "Footprint") "FilamentDryer:AP66200_U-QFN4040-16_EP2.6x2.6mm_P0.65mm")
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description")
-				)
+					(name "Description") "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5")
 			)
 			(libsource
 				(lib "Filament_Dryer_Custom")
-				(part "AP66200")
-				(description "")
+				(part "TLV1701AIDBVR")
+				(description "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5")
 			)
 			(property
 				(name "Function")
-				(value "U2")
-			)
-			(property
-				(name "Dielectric")
-				(value "")
-			)
-			(property
-				(name "Tolerance")
-				(value "")
-			)
-			(property
-				(name "Voltage")
-				(value "")
-			)
-			(property
-				(name "Power")
-				(value "")
-			)
-			(property
-				(name "TCR")
-				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C6741205")
-			)
-			(property
-				(name "MPN")
-				(value "AP66200FVBW-13")
+				(value "U_autoen_cmp1")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Diodes Incorporated")
+				(value "TEXAS INSTRUMENTS")
+			)
+			(property
+				(name "MPN")
+				(value "TLV1701AIDBVR")
+			)
+			(property
+				(name "Sheetname")
+				(value "Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "single comparator")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "SOT?23*")
+			)
+			(sheetpath
+				(names "/Power/")
+				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
+			)
+			(tstamps "aa8d8012-264c-4a3d-80d7-2be44611a9b4")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U5")
+			(value "L7987L")
+			(footprint "SamacSys_Parts:SOP65P640X120-17N")
+			(datasheet "https://www.st.com/resource/en/datasheet/l7987l.pdf")
+			(description "Switching Voltage Regulators 61 V 2 A asynchronous step-down switching regulator with adjustable current limitation")
+			(fields
+				(field
+					(name "Function") "U_buck1")
+				(field
+					(name "Manufacturer") "STMicroelectronics")
+				(field
+					(name "MPN") "L7987L")
+				(field
+					(name "Height") "1.2")
+				(field
+					(name "Footprint") "SamacSys_Parts:SOP65P640X120-17N")
+				(field
+					(name "Datasheet") "https://www.st.com/resource/en/datasheet/l7987l.pdf")
+				(field
+					(name "Description") "Switching Voltage Regulators 61 V 2 A asynchronous step-down switching regulator with adjustable current limitation")
+			)
+			(libsource
+				(lib "SamacSys_Parts")
+				(part "L7987L")
+				(description "Switching Voltage Regulators 61 V 2 A asynchronous step-down switching regulator with adjustable current limitation")
+			)
+			(property
+				(name "Function")
+				(value "U_buck1")
+			)
+			(property
+				(name "Manufacturer")
+				(value "STMicroelectronics")
+			)
+			(property
+				(name "MPN")
+				(value "L7987L")
+			)
+			(property
+				(name "Height")
+				(value "1.2")
 			)
 			(property
 				(name "Sheetname")
@@ -3218,11 +4098,17 @@
 				(names "/Power/")
 				(tstamps "/0e3f9383-1659-4b52-a038-79c57390c0e1/")
 			)
-			(tstamps "02bb0320-8d6f-475a-84e2-b9311d67e13d")
+			(tstamps "b5a1bb6c-0125-4709-b614-745d4c80f556")
 			(units
 				(unit
 					(name "A")
 					(pins
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "2")
+						)
 						(pin
 							(num "3")
 						)
@@ -3230,49 +4116,43 @@
 							(num "4")
 						)
 						(pin
-							(num "10")
-						)
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-						(pin
-							(num "11")
-						)
-						(pin
-							(num "12")
-						)
-						(pin
-							(num "14")
-						)
-						(pin
-							(num "16")
-						)
-						(pin
-							(num "8")
-						)
-						(pin
-							(num "9")
-						)
-						(pin
-							(num "17")
+							(num "5")
 						)
 						(pin
 							(num "6")
 						)
 						(pin
-							(num "7")
+							(num "10")
 						)
 						(pin
-							(num "5")
+							(num "11")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "1")
 						)
 						(pin
 							(num "15")
 						)
 						(pin
 							(num "13")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "8")
 						)
 					)
 				)
@@ -3289,11 +4169,9 @@
 				(field
 					(name "MPN") "CL10A475KO8NNNC")
 				(field
-					(name "Manufacturer") "Samsung")
+					(name "Manufacturer") "SAMSUNG")
 				(field
 					(name "Dielectric") "X5R")
-				(field
-					(name "LCSC") "C19666")
 				(field
 					(name "Tolerance") "10%")
 				(field
@@ -3327,15 +4205,11 @@
 			)
 			(property
 				(name "Manufacturer")
-				(value "Samsung")
+				(value "SAMSUNG")
 			)
 			(property
 				(name "Dielectric")
 				(value "X5R")
-			)
-			(property
-				(name "LCSC")
-				(value "C19666")
 			)
 			(property
 				(name "Tolerance")
@@ -3399,11 +4273,9 @@
 				(field
 					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "Yageo")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric") "X7R")
-				(field
-					(name "LCSC") "C14663")
 				(field
 					(name "Tolerance") "10%")
 				(field
@@ -3437,15 +4309,11 @@
 			)
 			(property
 				(name "Manufacturer")
-				(value "Yageo")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "X7R")
-			)
-			(property
-				(name "LCSC")
-				(value "C14663")
 			)
 			(property
 				(name "Tolerance")
@@ -3509,11 +4377,9 @@
 				(field
 					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "Yageo")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric") "X7R")
-				(field
-					(name "LCSC") "C14663")
 				(field
 					(name "Tolerance") "10%")
 				(field
@@ -3547,15 +4413,11 @@
 			)
 			(property
 				(name "Manufacturer")
-				(value "Yageo")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "X7R")
-			)
-			(property
-				(name "LCSC")
-				(value "C14663")
 			)
 			(property
 				(name "Tolerance")
@@ -3617,17 +4479,15 @@
 				(field
 					(name "Function") "C_en1")
 				(field
-					(name "MPN") "CL10B105KB8NQNC")
+					(name "MPN") "GCM188R71E105KA64J")
 				(field
-					(name "Manufacturer") "Samsung")
+					(name "Manufacturer") "MURATA")
 				(field
 					(name "Dielectric") "X7R")
 				(field
-					(name "LCSC") "C5199872")
-				(field
 					(name "Tolerance") "10%")
 				(field
-					(name "Voltage") "50V")
+					(name "Voltage") "25V")
 				(field
 					(name "Power")
 				)
@@ -3653,19 +4513,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "CL10B105KB8NQNC")
+				(value "GCM188R71E105KA64J")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Samsung")
+				(value "MURATA")
 			)
 			(property
 				(name "Dielectric")
 				(value "X7R")
-			)
-			(property
-				(name "LCSC")
-				(value "C5199872")
 			)
 			(property
 				(name "Tolerance")
@@ -3673,7 +4529,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "50V")
+				(value "25V")
 			)
 			(property
 				(name "Power")
@@ -3727,13 +4583,11 @@
 				(field
 					(name "Function") "C_esp1")
 				(field
-					(name "MPN") "CL21A106KAYNNNE")
+					(name "MPN") "C0805C106K3PACTU")
 				(field
-					(name "Manufacturer") "Samsung")
+					(name "Manufacturer") "KEMET")
 				(field
 					(name "Dielectric") "X5R")
-				(field
-					(name "LCSC") "C15850")
 				(field
 					(name "Tolerance") "10%")
 				(field
@@ -3763,19 +4617,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "CL21A106KAYNNNE")
+				(value "C0805C106K3PACTU")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Samsung")
+				(value "KEMET")
 			)
 			(property
 				(name "Dielectric")
 				(value "X5R")
-			)
-			(property
-				(name "LCSC")
-				(value "C15850")
 			)
 			(property
 				(name "Tolerance")
@@ -3837,17 +4687,15 @@
 				(field
 					(name "Function") "C_esp2")
 				(field
-					(name "MPN") "CL10B105KB8NQNC")
+					(name "MPN") "GCM188R71E105KA64J")
 				(field
-					(name "Manufacturer") "Samsung")
+					(name "Manufacturer") "MURATA")
 				(field
 					(name "Dielectric") "X7R")
 				(field
-					(name "LCSC") "C5199872")
-				(field
 					(name "Tolerance") "10%")
 				(field
-					(name "Voltage") "50V")
+					(name "Voltage") "25V")
 				(field
 					(name "Power")
 				)
@@ -3873,19 +4721,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "CL10B105KB8NQNC")
+				(value "GCM188R71E105KA64J")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Samsung")
+				(value "MURATA")
 			)
 			(property
 				(name "Dielectric")
 				(value "X7R")
-			)
-			(property
-				(name "LCSC")
-				(value "C5199872")
 			)
 			(property
 				(name "Tolerance")
@@ -3893,7 +4737,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "50V")
+				(value "25V")
 			)
 			(property
 				(name "Power")
@@ -3949,11 +4793,9 @@
 				(field
 					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "Yageo")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric") "X7R")
-				(field
-					(name "LCSC") "C14663")
 				(field
 					(name "Tolerance") "10%")
 				(field
@@ -3987,15 +4829,11 @@
 			)
 			(property
 				(name "Manufacturer")
-				(value "Yageo")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "X7R")
-			)
-			(property
-				(name "LCSC")
-				(value "C14663")
 			)
 			(property
 				(name "Tolerance")
@@ -4049,6 +4887,110 @@
 			)
 		)
 		(comp
+			(ref "C22")
+			(value "1u")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(description "Unpolarized capacitor, small symbol")
+			(fields
+				(field
+					(name "Function") "C_en1")
+				(field
+					(name "MPN") "GCM188R71E105KA64J")
+				(field
+					(name "Manufacturer") "MURATA")
+				(field
+					(name "Dielectric") "X7R")
+				(field
+					(name "Tolerance") "10%")
+				(field
+					(name "Voltage") "25V")
+				(field
+					(name "Power")
+				)
+				(field
+					(name "TCR")
+				)
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor, small symbol")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "Function")
+				(value "C_en1")
+			)
+			(property
+				(name "MPN")
+				(value "GCM188R71E105KA64J")
+			)
+			(property
+				(name "Manufacturer")
+				(value "MURATA")
+			)
+			(property
+				(name "Dielectric")
+				(value "X7R")
+			)
+			(property
+				(name "Tolerance")
+				(value "10%")
+			)
+			(property
+				(name "Voltage")
+				(value "25V")
+			)
+			(property
+				(name "Power")
+				(value "")
+			)
+			(property
+				(name "TCR")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "MCU")
+			)
+			(property
+				(name "Sheetfile")
+				(value "MCU.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/MCU/")
+				(tstamps "/65de997d-f9e3-4a49-8760-31d73ce5b93f/")
+			)
+			(tstamps "af08d8de-dd16-4a03-a5d0-aa5a319b0dfb")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
 			(ref "D3")
 			(value "LED_Small")
 			(footprint "LED_SMD:LED_0805_2012Metric")
@@ -4074,11 +5016,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C5569446")
+					(name "MPN") "HSMG-C170")
 				(field
-					(name "MPN") "APT2012LZGCK")
-				(field
-					(name "Manufacturer") "Kingbright")
+					(name "Manufacturer") "BROADCOM (AVAGO)")
 				(field
 					(name "Footprint") "LED_SMD:LED_0805_2012Metric")
 				(field
@@ -4121,16 +5061,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C5569446")
-			)
-			(property
 				(name "MPN")
-				(value "APT2012LZGCK")
+				(value "HSMG-C170")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Kingbright")
+				(value "BROADCOM (AVAGO)")
 			)
 			(property
 				(name "Sheetname")
@@ -4170,7 +5106,7 @@
 		(comp
 			(ref "J2")
 			(value "USB_C_Receptacle_USB2.0_16P")
-			(footprint "FilamentDryer:USB_C_Receptacle_HRO_TYPE-C-31-M-12")
+			(footprint "FilamentDryer:USB_C_GCT_USB4216-03-A")
 			(datasheet "https://www.usb.org/sites/default/files/documents/usb_type-c.zip")
 			(description "USB 2.0-only 16P Type-C Receptacle connector")
 			(fields
@@ -4192,13 +5128,11 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C165948")
+					(name "MPN") "USB4216-03-A")
 				(field
-					(name "MPN") "TYPE-C-31-M-12")
+					(name "Manufacturer") "GCT")
 				(field
-					(name "Manufacturer") "Korean Hroparts Elec")
-				(field
-					(name "Footprint") "FilamentDryer:USB_C_Receptacle_HRO_TYPE-C-31-M-12")
+					(name "Footprint") "FilamentDryer:USB_C_GCT_USB4216-03-A")
 				(field
 					(name "Datasheet") "https://www.usb.org/sites/default/files/documents/usb_type-c.zip")
 				(field
@@ -4234,16 +5168,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C165948")
-			)
-			(property
 				(name "MPN")
-				(value "TYPE-C-31-M-12")
+				(value "USB4216-03-A")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Korean Hroparts Elec")
+				(value "GCT")
 			)
 			(property
 				(name "Sheetname")
@@ -4349,9 +5279,7 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C160354")
-				(field
-					(name "MPN") "B4B-PH-SM4-TB(LF)(SN)")
+					(name "MPN") "B4B-PH-SM4-TB (LF)(SN)")
 				(field
 					(name "Manufacturer") "JST")
 				(field
@@ -4392,12 +5320,8 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C160354")
-			)
-			(property
 				(name "MPN")
-				(value "B4B-PH-SM4-TB(LF)(SN)")
+				(value "B4B-PH-SM4-TB (LF)(SN)")
 			)
 			(property
 				(name "Manufacturer")
@@ -4579,11 +5503,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C94514")
+					(name "MPN") "MMBT3904")
 				(field
-					(name "MPN") "MMBT3904-7-F")
-				(field
-					(name "Manufacturer") "Diodes Incorporated")
+					(name "Manufacturer") "DIOTEC SEMICONDUCTOR")
 				(field
 					(name "Footprint") "Package_TO_SOT_SMD:SOT-23")
 				(field
@@ -4630,16 +5552,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C94514")
-			)
-			(property
 				(name "MPN")
-				(value "MMBT3904-7-F")
+				(value "MMBT3904")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Diodes Incorporated")
+				(value "DIOTEC SEMICONDUCTOR")
 			)
 			(property
 				(name "Sheetname")
@@ -4703,11 +5621,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C94514")
+					(name "MPN") "MMBT3904")
 				(field
-					(name "MPN") "MMBT3904-7-F")
-				(field
-					(name "Manufacturer") "Diodes Incorporated")
+					(name "Manufacturer") "DIOTEC SEMICONDUCTOR")
 				(field
 					(name "Footprint") "Package_TO_SOT_SMD:SOT-23")
 				(field
@@ -4754,16 +5670,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C94514")
-			)
-			(property
 				(name "MPN")
-				(value "MMBT3904-7-F")
+				(value "MMBT3904")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Diodes Incorporated")
+				(value "DIOTEC SEMICONDUCTOR")
 			)
 			(property
 				(name "Sheetname")
@@ -4808,19 +5720,16 @@
 				(field
 					(name "Function") "R_vbus_top1")
 				(field
-					(name "MPN") "0603WAF2212T5E")
+					(name "MPN") "RC0603FR-1322K1L")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C25961")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -4844,19 +5753,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF2212T5E")
+				(value "RC0603FR-1322K1L")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25961")
 			)
 			(property
 				(name "Tolerance")
@@ -4864,7 +5769,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -4918,19 +5823,16 @@
 				(field
 					(name "Function") "R_vbus_bot1")
 				(field
-					(name "MPN") "0603WAF4752T5E")
+					(name "MPN") "RC0603FR-0747K5L")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C23061")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -4954,19 +5856,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF4752T5E")
+				(value "RC0603FR-0747K5L")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C23061")
 			)
 			(property
 				(name "Tolerance")
@@ -4974,7 +5872,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -5028,19 +5926,16 @@
 				(field
 					(name "Function") "R_rst1")
 				(field
-					(name "MPN") "0603WAF1001T5E")
+					(name "MPN") "RC0603FR-071KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C21190")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -5064,19 +5959,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1001T5E")
+				(value "RC0603FR-071KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C21190")
 			)
 			(property
 				(name "Tolerance")
@@ -5084,7 +5975,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -5138,19 +6029,16 @@
 				(field
 					(name "Function") "R_cc2")
 				(field
-					(name "MPN") "0603WAF5101T5E")
+					(name "MPN") "RC0603FR-075K1L")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C23186")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -5174,19 +6062,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF5101T5E")
+				(value "RC0603FR-075K1L")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C23186")
 			)
 			(property
 				(name "Tolerance")
@@ -5194,7 +6078,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -5248,19 +6132,16 @@
 				(field
 					(name "Function") "R_cc1")
 				(field
-					(name "MPN") "0603WAF5101T5E")
+					(name "MPN") "RC0603FR-075K1L")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C23186")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -5284,19 +6165,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF5101T5E")
+				(value "RC0603FR-075K1L")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C23186")
 			)
 			(property
 				(name "Tolerance")
@@ -5304,7 +6181,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -5358,19 +6235,16 @@
 				(field
 					(name "Function") "R_en1")
 				(field
-					(name "MPN") "0603WAF1002T5E")
+					(name "MPN") "RC0603FR-0710KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C25804")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -5394,19 +6268,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1002T5E")
+				(value "RC0603FR-0710KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25804")
 			)
 			(property
 				(name "Tolerance")
@@ -5414,7 +6284,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -5468,19 +6338,16 @@
 				(field
 					(name "Function") "R_io0")
 				(field
-					(name "MPN") "0603WAF1002T5E")
+					(name "MPN") "RC0603FR-0710KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C25804")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -5504,19 +6371,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1002T5E")
+				(value "RC0603FR-0710KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25804")
 			)
 			(property
 				(name "Tolerance")
@@ -5524,7 +6387,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -5578,19 +6441,16 @@
 				(field
 					(name "Function") "R_pu_sda1")
 				(field
-					(name "MPN") "0603WAF1002T5E")
+					(name "MPN") "RC0603FR-0710KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C25804")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -5614,19 +6474,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1002T5E")
+				(value "RC0603FR-0710KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25804")
 			)
 			(property
 				(name "Tolerance")
@@ -5634,7 +6490,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -5688,19 +6544,16 @@
 				(field
 					(name "Function") "R_pu_scl1")
 				(field
-					(name "MPN") "0603WAF1002T5E")
+					(name "MPN") "RC0603FR-0710KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C25804")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -5724,19 +6577,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1002T5E")
+				(value "RC0603FR-0710KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25804")
 			)
 			(property
 				(name "Tolerance")
@@ -5744,7 +6593,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -5798,19 +6647,16 @@
 				(field
 					(name "Function") "R_s_scl1")
 				(field
-					(name "MPN") "0603WAF330JT5E")
+					(name "MPN") "RC0603FR-0733RL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C23140")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -5834,19 +6680,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF330JT5E")
+				(value "RC0603FR-0733RL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C23140")
 			)
 			(property
 				(name "Tolerance")
@@ -5854,7 +6696,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -5908,19 +6750,16 @@
 				(field
 					(name "Function") "R_s_sda1")
 				(field
-					(name "MPN") "0603WAF330JT5E")
+					(name "MPN") "RC0603FR-0733RL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C23140")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -5944,19 +6783,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF330JT5E")
+				(value "RC0603FR-0733RL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C23140")
 			)
 			(property
 				(name "Tolerance")
@@ -5964,7 +6799,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -6018,19 +6853,16 @@
 				(field
 					(name "Function") "R_led1")
 				(field
-					(name "MPN") "0603WAF3300T5E")
+					(name "MPN") "RC0603FR-07330RL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C23138")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -6054,19 +6886,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF3300T5E")
+				(value "RC0603FR-07330RL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C23138")
 			)
 			(property
 				(name "Tolerance")
@@ -6074,7 +6902,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -6122,7 +6950,7 @@
 		(comp
 			(ref "SW1")
 			(value "~")
-			(footprint "JLCPCB:SW-SMD_L3.9-W3.0-P4.45")
+			(footprint "FilamentDryer:SW_GCT_SWT0110")
 			(description "Push button switch, generic, two pins")
 			(fields
 				(field
@@ -6143,13 +6971,11 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C720477")
+					(name "MPN") "SWT0110-020010SSA")
 				(field
-					(name "MPN") "TS-1088-AR02016")
+					(name "Manufacturer") "GCT")
 				(field
-					(name "Manufacturer") "XUNPU")
-				(field
-					(name "Footprint") "JLCPCB:SW-SMD_L3.9-W3.0-P4.45")
+					(name "Footprint") "FilamentDryer:SW_GCT_SWT0110")
 				(field
 					(name "Datasheet")
 				)
@@ -6186,16 +7012,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C720477")
-			)
-			(property
 				(name "MPN")
-				(value "TS-1088-AR02016")
+				(value "SWT0110-020010SSA")
 			)
 			(property
 				(name "Manufacturer")
-				(value "XUNPU")
+				(value "GCT")
 			)
 			(property
 				(name "Sheetname")
@@ -6231,7 +7053,7 @@
 		(comp
 			(ref "SW2")
 			(value "~")
-			(footprint "JLCPCB:SW-SMD_L3.9-W3.0-P4.45")
+			(footprint "FilamentDryer:SW_GCT_SWT0110")
 			(description "Push button switch, generic, two pins")
 			(fields
 				(field
@@ -6252,13 +7074,11 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C720477")
+					(name "MPN") "SWT0110-020010SSA")
 				(field
-					(name "MPN") "TS-1088-AR02016")
+					(name "Manufacturer") "GCT")
 				(field
-					(name "Manufacturer") "XUNPU")
-				(field
-					(name "Footprint") "JLCPCB:SW-SMD_L3.9-W3.0-P4.45")
+					(name "Footprint") "FilamentDryer:SW_GCT_SWT0110")
 				(field
 					(name "Datasheet")
 				)
@@ -6295,16 +7115,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C720477")
-			)
-			(property
 				(name "MPN")
-				(value "TS-1088-AR02016")
+				(value "SWT0110-020010SSA")
 			)
 			(property
 				(name "Manufacturer")
-				(value "XUNPU")
+				(value "GCT")
 			)
 			(property
 				(name "Sheetname")
@@ -6731,9 +7547,9 @@
 		)
 		(comp
 			(ref "U2")
-			(value "CP2102N-A02-GQFN28R")
-			(footprint "FilamentDryer:CP2102N_GQFN28_5x5mm_P0.5mm_EP3.35x3.35mm")
-			(datasheet "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf")
+			(value "CP2102-GM")
+			(footprint "FilamentDryer:CP2102_GM_QFN28_5x5_P0.5_EP3.25")
+			(datasheet "https://www.silabs.com/documents/public/data-sheets/CP2102-9.pdf")
 			(description "USB to UART master bridge, QFN-28")
 			(fields
 				(field
@@ -6754,22 +7570,20 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C964632")
+					(name "MPN") "CP2102-GM")
 				(field
-					(name "MPN") "CP2102N-A02-GQFN28R")
+					(name "Manufacturer") "SILICON LABS")
 				(field
-					(name "Manufacturer") "Skyworks / Silicon Labs")
+					(name "Footprint") "FilamentDryer:CP2102_GM_QFN28_5x5_P0.5_EP3.25")
 				(field
-					(name "Footprint") "FilamentDryer:CP2102N_GQFN28_5x5mm_P0.5mm_EP3.35x3.35mm")
-				(field
-					(name "Datasheet") "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf")
+					(name "Datasheet") "https://www.silabs.com/documents/public/data-sheets/CP2102-9.pdf")
 				(field
 					(name "Description") "USB to UART master bridge, QFN-28")
 			)
 			(libsource
-				(lib "Interface_USB")
-				(part "CP2102N-Axx-xQFN28")
-				(description "USB to UART master bridge, QFN-28")
+				(lib "Filament_Dryer_Custom")
+				(part "CP2102-GM")
+				(description "Silicon Labs CP2102 classic USB-to-UART bridge, QFN28 5x5 mm")
 			)
 			(property
 				(name "Function")
@@ -6796,16 +7610,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C964632")
-			)
-			(property
 				(name "MPN")
-				(value "CP2102N-A02-GQFN28R")
+				(value "CP2102-GM")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Skyworks / Silicon Labs")
+				(value "SILICON LABS")
 			)
 			(property
 				(name "Sheetname")
@@ -6925,7 +7735,7 @@
 		)
 		(comp
 			(ref "U3")
-			(value "USBLC6-2SC6")
+			(value "AKS1201")
 			(footprint "Package_TO_SOT_SMD:SOT-23-6")
 			(datasheet "https://www.st.com/resource/en/datasheet/usblc6-2.pdf")
 			(description "Very low capacitance ESD protection diode, 2 data-line, SOT-23-6")
@@ -6948,11 +7758,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C7519")
+					(name "MPN") "AKS1201")
 				(field
-					(name "MPN") "USBLC6-2SC6")
-				(field
-					(name "Manufacturer") "STMicroelectronics")
+					(name "Manufacturer") "AKYGA SEMI")
 				(field
 					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-6")
 				(field
@@ -6990,16 +7798,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C7519")
-			)
-			(property
 				(name "MPN")
-				(value "USBLC6-2SC6")
+				(value "AKS1201")
 			)
 			(property
 				(name "Manufacturer")
-				(value "STMicroelectronics")
+				(value "AKYGA SEMI")
 			)
 			(property
 				(name "Sheetname")
@@ -7073,11 +7877,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C701341")
-				(field
 					(name "MPN") "ESP32-WROOM-32E-N4")
 				(field
-					(name "Manufacturer") "Espressif Systems")
+					(name "Manufacturer") "ESPRESSIF")
 				(field
 					(name "Footprint") "RF_Module:ESP32-WROOM-32E")
 				(field
@@ -7115,16 +7917,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C701341")
-			)
-			(property
 				(name "MPN")
 				(value "ESP32-WROOM-32E-N4")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Espressif Systems")
+				(value "ESPRESSIF")
 			)
 			(property
 				(name "Sheetname")
@@ -7274,18 +8072,16 @@
 		)
 		(comp
 			(ref "BZ1")
-			(value "MLT-8530")
-			(footprint "JLCPCB:BUZ-SMD_4P-L8.5-W8.5-P8.50-BR")
+			(value "LD-BZEL-T67-0808")
+			(footprint "FilamentDryer:BUZ_Loudity_SMT67_8.5x8.5")
 			(datasheet "https://lcsc.com/product-detail/Buzzers_MLT-8530_C94599.html")
 			(fields
 				(field
-					(name "Manufacturer") "Jiangsu Huaneng Elec")
+					(name "Manufacturer") "LOUDITY")
 				(field
-					(name "MPN") "MLT-8530")
+					(name "MPN") "LD-BZEL-T67-0808")
 				(field
 					(name "Function") "BUZZER1")
-				(field
-					(name "LCSC") "C94599")
 				(field
 					(name "Dielectric")
 				)
@@ -7302,7 +8098,7 @@
 					(name "TCR")
 				)
 				(field
-					(name "Footprint") "JLCPCB:BUZ-SMD_4P-L8.5-W8.5-P8.50-BR")
+					(name "Footprint") "FilamentDryer:BUZ_Loudity_SMT67_8.5x8.5")
 				(field
 					(name "Datasheet") "https://lcsc.com/product-detail/Buzzers_MLT-8530_C94599.html")
 				(field
@@ -7316,19 +8112,15 @@
 			)
 			(property
 				(name "Manufacturer")
-				(value "Jiangsu Huaneng Elec")
+				(value "LOUDITY")
 			)
 			(property
 				(name "MPN")
-				(value "MLT-8530")
+				(value "LD-BZEL-T67-0808")
 			)
 			(property
 				(name "Function")
 				(value "BUZZER1")
-			)
-			(property
-				(name "LCSC")
-				(value "C94599")
 			)
 			(property
 				(name "Dielectric")
@@ -7398,11 +8190,9 @@
 				(field
 					(name "MPN") "CC0603KRX7R9BB104")
 				(field
-					(name "Manufacturer") "Yageo")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric") "X7R")
-				(field
-					(name "LCSC") "C14663")
 				(field
 					(name "Tolerance") "10%")
 				(field
@@ -7436,15 +8226,11 @@
 			)
 			(property
 				(name "Manufacturer")
-				(value "Yageo")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "X7R")
-			)
-			(property
-				(name "LCSC")
-				(value "C14663")
 			)
 			(property
 				(name "Tolerance")
@@ -7521,11 +8307,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C98663")
-				(field
 					(name "MPN") "PMEG6020ER,115")
 				(field
-					(name "Manufacturer") "Nexperia")
+					(name "Manufacturer") "NEXPERIA")
 				(field
 					(name "Footprint") "Diode_SMD:Nexperia_CFP3_SOD-123W")
 				(field
@@ -7564,16 +8348,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C98663")
-			)
-			(property
 				(name "MPN")
 				(value "PMEG6020ER,115")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Nexperia")
+				(value "NEXPERIA")
 			)
 			(property
 				(name "Sheetname")
@@ -7634,11 +8414,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C98663")
-				(field
 					(name "MPN") "PMEG6020ER,115")
 				(field
-					(name "Manufacturer") "Nexperia")
+					(name "Manufacturer") "NEXPERIA")
 				(field
 					(name "Footprint") "Diode_SMD:Nexperia_CFP3_SOD-123W")
 				(field
@@ -7677,16 +8455,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C98663")
-			)
-			(property
 				(name "MPN")
 				(value "PMEG6020ER,115")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Nexperia")
+				(value "NEXPERIA")
 			)
 			(property
 				(name "Sheetname")
@@ -7752,11 +8526,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C81598")
+					(name "MPN") "1N4148WGW")
 				(field
-					(name "MPN") "1N4148W")
-				(field
-					(name "Manufacturer") "ST(Semtech)")
+					(name "Manufacturer") "DIOTEC SEMICONDUCTOR")
 				(field
 					(name "Footprint") "Diode_SMD:D_SOD-123")
 				(field
@@ -7802,16 +8574,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C81598")
-			)
-			(property
 				(name "MPN")
-				(value "1N4148W")
+				(value "1N4148WGW")
 			)
 			(property
 				(name "Manufacturer")
-				(value "ST(Semtech)")
+				(value "DIOTEC SEMICONDUCTOR")
 			)
 			(property
 				(name "Sheetname")
@@ -7872,11 +8640,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C158012")
+					(name "MPN") "Kit HALJIA XH-compatible 2P")
 				(field
-					(name "MPN") "B2B-XH-A(LF)(SN)")
-				(field
-					(name "Manufacturer") "JST")
+					(name "Manufacturer") "HALJIA")
 				(field
 					(name "Footprint") "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical")
 				(field
@@ -7915,16 +8681,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C158012")
-			)
-			(property
 				(name "MPN")
-				(value "B2B-XH-A(LF)(SN)")
+				(value "Kit HALJIA XH-compatible 2P")
 			)
 			(property
 				(name "Manufacturer")
-				(value "JST")
+				(value "HALJIA")
 			)
 			(property
 				(name "Sheetname")
@@ -7985,9 +8747,7 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C160352")
-				(field
-					(name "MPN") "B2B-PH-SM4-TB(LF)(SN)")
+					(name "MPN") "B2B-PH-SM4-TB (LF)(SN)")
 				(field
 					(name "Manufacturer") "JST")
 				(field
@@ -8028,12 +8788,8 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C160352")
-			)
-			(property
 				(name "MPN")
-				(value "B2B-PH-SM4-TB(LF)(SN)")
+				(value "B2B-PH-SM4-TB (LF)(SN)")
 			)
 			(property
 				(name "Manufacturer")
@@ -8098,9 +8854,7 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C161690")
-				(field
-					(name "MPN") "BM02B-GHS-TBT(LF)(SN)")
+					(name "MPN") "BM02B-GHS-TBT (LF)(SN)(N)")
 				(field
 					(name "Manufacturer") "JST")
 				(field
@@ -8141,12 +8895,8 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C161690")
-			)
-			(property
 				(name "MPN")
-				(value "BM02B-GHS-TBT(LF)(SN)")
+				(value "BM02B-GHS-TBT (LF)(SN)(N)")
 			)
 			(property
 				(name "Manufacturer")
@@ -8197,11 +8947,9 @@
 				(field
 					(name "Function") "Q_heat1")
 				(field
-					(name "Manufacturer") "onsemi")
+					(name "Manufacturer") "INFINEON TECHNOLOGIES")
 				(field
 					(name "MPN") "IRLR3636TRPBF")
-				(field
-					(name "LCSC") "C67279")
 				(field
 					(name "Dielectric")
 				)
@@ -8235,15 +8983,11 @@
 			)
 			(property
 				(name "Manufacturer")
-				(value "onsemi")
+				(value "INFINEON TECHNOLOGIES")
 			)
 			(property
 				(name "MPN")
 				(value "IRLR3636TRPBF")
-			)
-			(property
-				(name "LCSC")
-				(value "C67279")
 			)
 			(property
 				(name "Dielectric")
@@ -8301,8 +9045,9 @@
 		)
 		(comp
 			(ref "Q5")
-			(value "CJ2310")
+			(value "IRLML2060TRPBF")
 			(footprint "Package_TO_SOT_SMD:SOT-23")
+			(datasheet "https://www.infineon.com/dgdl/Infineon-IRLML2060-DataSheet-v01_01-EN.pdf?fileId=5546d462533600a401535664b7fb25ee")
 			(description "N-MOSFET transistor, gate/drain/source")
 			(fields
 				(field
@@ -8323,22 +9068,19 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C75882")
+					(name "MPN") "IRLML2060TRPBF")
 				(field
-					(name "MPN") "CJ2310")
-				(field
-					(name "Manufacturer") "Jiangsu Changjing Electronics Technology Co., Ltd.")
+					(name "Manufacturer") "INFINEON TECHNOLOGIES")
 				(field
 					(name "Footprint") "Package_TO_SOT_SMD:SOT-23")
 				(field
-					(name "Datasheet")
-				)
+					(name "Datasheet") "https://www.infineon.com/dgdl/Infineon-IRLML2060-DataSheet-v01_01-EN.pdf?fileId=5546d462533600a401535664b7fb25ee")
 				(field
 					(name "Description") "N-MOSFET transistor, gate/drain/source")
 			)
 			(libsource
 				(lib "Transistor_FET")
-				(part "Q_NMOS_GDS")
+				(part "Q_NMOS_GSD")
 				(description "N-MOSFET transistor, gate/drain/source")
 			)
 			(property
@@ -8366,16 +9108,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C75882")
-			)
-			(property
 				(name "MPN")
-				(value "CJ2310")
+				(value "IRLML2060TRPBF")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Jiangsu Changjing Electronics Technology Co., Ltd.")
+				(value "INFINEON TECHNOLOGIES")
 			)
 			(property
 				(name "Sheetname")
@@ -8402,10 +9140,10 @@
 							(num "1")
 						)
 						(pin
-							(num "2")
+							(num "3")
 						)
 						(pin
-							(num "3")
+							(num "2")
 						)
 					)
 				)
@@ -8440,11 +9178,9 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C94514")
+					(name "MPN") "MMBT3904")
 				(field
-					(name "MPN") "MMBT3904-7-F")
-				(field
-					(name "Manufacturer") "Diodes Incorporated")
+					(name "Manufacturer") "DIOTEC SEMICONDUCTOR")
 				(field
 					(name "Footprint") "Package_TO_SOT_SMD:SOT-23")
 				(field
@@ -8490,16 +9226,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C94514")
-			)
-			(property
 				(name "MPN")
-				(value "MMBT3904-7-F")
+				(value "MMBT3904")
 			)
 			(property
 				(name "Manufacturer")
-				(value "Diodes Incorporated")
+				(value "DIOTEC SEMICONDUCTOR")
 			)
 			(property
 				(name "Sheetname")
@@ -8548,19 +9280,16 @@
 				(field
 					(name "Function") "R_btn1")
 				(field
-					(name "MPN") "0603WAF1002T5E")
+					(name "MPN") "RC0603FR-0710KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C25804")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -8584,19 +9313,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1002T5E")
+				(value "RC0603FR-0710KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25804")
 			)
 			(property
 				(name "Tolerance")
@@ -8604,7 +9329,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -8658,19 +9383,16 @@
 				(field
 					(name "Function") "R_g_heat1")
 				(field
-					(name "MPN") "0603WAF1000T5E")
+					(name "MPN") "RC0603FR-07100RL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C22775")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -8694,19 +9416,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1000T5E")
+				(value "RC0603FR-07100RL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C22775")
 			)
 			(property
 				(name "Tolerance")
@@ -8714,7 +9432,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -8768,19 +9486,16 @@
 				(field
 					(name "Function") "R_pd_heat1")
 				(field
-					(name "MPN") "0603WAF1003T5E")
+					(name "MPN") "RC0603FR-07100KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C25803")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -8804,19 +9519,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1003T5E")
+				(value "RC0603FR-07100KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25803")
 			)
 			(property
 				(name "Tolerance")
@@ -8824,7 +9535,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -8878,19 +9589,16 @@
 				(field
 					(name "Function") "R_btn2")
 				(field
-					(name "MPN") "0603WAF1002T5E")
+					(name "MPN") "RC0603FR-0710KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C25804")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -8914,19 +9622,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1002T5E")
+				(value "RC0603FR-0710KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25804")
 			)
 			(property
 				(name "Tolerance")
@@ -8934,7 +9638,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -8988,19 +9692,16 @@
 				(field
 					(name "Function") "R_btn3")
 				(field
-					(name "MPN") "0603WAF1002T5E")
+					(name "MPN") "RC0603FR-0710KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C25804")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -9024,19 +9725,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1002T5E")
+				(value "RC0603FR-0710KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25804")
 			)
 			(property
 				(name "Tolerance")
@@ -9044,7 +9741,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -9098,19 +9795,16 @@
 				(field
 					(name "Function") "R_btn4")
 				(field
-					(name "MPN") "0603WAF1002T5E")
+					(name "MPN") "RC0603FR-0710KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C25804")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -9134,19 +9828,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1002T5E")
+				(value "RC0603FR-0710KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25804")
 			)
 			(property
 				(name "Tolerance")
@@ -9154,7 +9844,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -9208,19 +9898,16 @@
 				(field
 					(name "Function") "R_g_fan1")
 				(field
-					(name "MPN") "0603WAF1000T5E")
+					(name "MPN") "RC0603FR-07100RL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C22775")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -9244,19 +9931,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1000T5E")
+				(value "RC0603FR-07100RL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C22775")
 			)
 			(property
 				(name "Tolerance")
@@ -9264,7 +9947,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -9318,19 +10001,16 @@
 				(field
 					(name "Function") "R_pd_fan1")
 				(field
-					(name "MPN") "0603WAF1003T5E")
+					(name "MPN") "RC0603FR-07100KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C25803")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -9354,19 +10034,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF1003T5E")
+				(value "RC0603FR-07100KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25803")
 			)
 			(property
 				(name "Tolerance")
@@ -9374,7 +10050,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -9428,19 +10104,16 @@
 				(field
 					(name "Function") "R_buz1")
 				(field
-					(name "MPN") "0603WAF4700T5E")
+					(name "MPN") "RC0603FR-07470RL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C23179")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -9464,19 +10137,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF4700T5E")
+				(value "RC0603FR-07470RL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C23179")
 			)
 			(property
 				(name "Tolerance")
@@ -9484,7 +10153,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -9538,19 +10207,16 @@
 				(field
 					(name "Function") "R_ntc1")
 				(field
-					(name "MPN") "0603WAF4702T5E")
+					(name "MPN") "RC0603FR-0747KL")
 				(field
-					(name "Manufacturer") "UNI-ROYAL(Uniroyal Elec)")
+					(name "Manufacturer") "YAGEO")
 				(field
 					(name "Dielectric")
 				)
 				(field
-					(name "LCSC") "C25819")
-				(field
 					(name "Tolerance") "1%")
 				(field
-					(name "Voltage")
-				)
+					(name "Voltage") "75V")
 				(field
 					(name "Power") "100mW")
 				(field
@@ -9574,19 +10240,15 @@
 			)
 			(property
 				(name "MPN")
-				(value "0603WAF4702T5E")
+				(value "RC0603FR-0747KL")
 			)
 			(property
 				(name "Manufacturer")
-				(value "UNI-ROYAL(Uniroyal Elec)")
+				(value "YAGEO")
 			)
 			(property
 				(name "Dielectric")
 				(value "")
-			)
-			(property
-				(name "LCSC")
-				(value "C25819")
 			)
 			(property
 				(name "Tolerance")
@@ -9594,7 +10256,7 @@
 			)
 			(property
 				(name "Voltage")
-				(value "")
+				(value "75V")
 			)
 			(property
 				(name "Power")
@@ -9640,9 +10302,112 @@
 			)
 		)
 		(comp
+			(ref "R37")
+			(value "100k")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "Resistor, small symbol")
+			(fields
+				(field
+					(name "Function") "R_pd_buz1")
+				(field
+					(name "MPN") "RC0603FR-07100KL")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "Dielectric")
+				)
+				(field
+					(name "Tolerance") "1%")
+				(field
+					(name "Voltage") "75V")
+				(field
+					(name "Power") "100mW")
+				(field
+					(name "TCR") "100ppm/K")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor, small symbol")
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "Function")
+				(value "R_pd_buz1")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-07100KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "Dielectric")
+				(value "")
+			)
+			(property
+				(name "Tolerance")
+				(value "1%")
+			)
+			(property
+				(name "Voltage")
+				(value "75V")
+			)
+			(property
+				(name "Power")
+				(value "100mW")
+			)
+			(property
+				(name "TCR")
+				(value "100ppm/K")
+			)
+			(property
+				(name "Sheetname")
+				(value "IO_Power")
+			)
+			(property
+				(name "Sheetfile")
+				(value "IO_Power.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/IO_Power/")
+				(tstamps "/8ea3583c-4bf9-4d9f-826f-a898c1c22896/")
+			)
+			(tstamps "6d317334-d4bd-4bda-80f6-f48dfadcbca4")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
 			(ref "SW3")
 			(value "~")
-			(footprint "JLCPCB:SW-SMD_L3.9-W3.0-P4.45")
+			(footprint "FilamentDryer:SW_GCT_SWT0110")
 			(description "Push button switch, generic, two pins")
 			(fields
 				(field
@@ -9663,13 +10428,11 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C720477")
+					(name "MPN") "SWT0110-020010SSA")
 				(field
-					(name "MPN") "TS-1088-AR02016")
+					(name "Manufacturer") "GCT")
 				(field
-					(name "Manufacturer") "XUNPU")
-				(field
-					(name "Footprint") "JLCPCB:SW-SMD_L3.9-W3.0-P4.45")
+					(name "Footprint") "FilamentDryer:SW_GCT_SWT0110")
 				(field
 					(name "Datasheet")
 				)
@@ -9706,16 +10469,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C720477")
-			)
-			(property
 				(name "MPN")
-				(value "TS-1088-AR02016")
+				(value "SWT0110-020010SSA")
 			)
 			(property
 				(name "Manufacturer")
-				(value "XUNPU")
+				(value "GCT")
 			)
 			(property
 				(name "Sheetname")
@@ -9751,7 +10510,7 @@
 		(comp
 			(ref "SW4")
 			(value "~")
-			(footprint "JLCPCB:SW-SMD_L3.9-W3.0-P4.45")
+			(footprint "FilamentDryer:SW_GCT_SWT0110")
 			(description "Push button switch, generic, two pins")
 			(fields
 				(field
@@ -9772,13 +10531,11 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C720477")
+					(name "MPN") "SWT0110-020010SSA")
 				(field
-					(name "MPN") "TS-1088-AR02016")
+					(name "Manufacturer") "GCT")
 				(field
-					(name "Manufacturer") "XUNPU")
-				(field
-					(name "Footprint") "JLCPCB:SW-SMD_L3.9-W3.0-P4.45")
+					(name "Footprint") "FilamentDryer:SW_GCT_SWT0110")
 				(field
 					(name "Datasheet")
 				)
@@ -9815,16 +10572,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C720477")
-			)
-			(property
 				(name "MPN")
-				(value "TS-1088-AR02016")
+				(value "SWT0110-020010SSA")
 			)
 			(property
 				(name "Manufacturer")
-				(value "XUNPU")
+				(value "GCT")
 			)
 			(property
 				(name "Sheetname")
@@ -9860,7 +10613,7 @@
 		(comp
 			(ref "SW5")
 			(value "~")
-			(footprint "JLCPCB:SW-SMD_L3.9-W3.0-P4.45")
+			(footprint "FilamentDryer:SW_GCT_SWT0110")
 			(description "Push button switch, generic, two pins")
 			(fields
 				(field
@@ -9881,13 +10634,11 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C720477")
+					(name "MPN") "SWT0110-020010SSA")
 				(field
-					(name "MPN") "TS-1088-AR02016")
+					(name "Manufacturer") "GCT")
 				(field
-					(name "Manufacturer") "XUNPU")
-				(field
-					(name "Footprint") "JLCPCB:SW-SMD_L3.9-W3.0-P4.45")
+					(name "Footprint") "FilamentDryer:SW_GCT_SWT0110")
 				(field
 					(name "Datasheet")
 				)
@@ -9924,16 +10675,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C720477")
-			)
-			(property
 				(name "MPN")
-				(value "TS-1088-AR02016")
+				(value "SWT0110-020010SSA")
 			)
 			(property
 				(name "Manufacturer")
-				(value "XUNPU")
+				(value "GCT")
 			)
 			(property
 				(name "Sheetname")
@@ -9969,7 +10716,7 @@
 		(comp
 			(ref "SW6")
 			(value "~")
-			(footprint "JLCPCB:SW-SMD_L3.9-W3.0-P4.45")
+			(footprint "FilamentDryer:SW_GCT_SWT0110")
 			(description "Push button switch, generic, two pins")
 			(fields
 				(field
@@ -9990,13 +10737,11 @@
 					(name "TCR")
 				)
 				(field
-					(name "LCSC") "C720477")
+					(name "MPN") "SWT0110-020010SSA")
 				(field
-					(name "MPN") "TS-1088-AR02016")
+					(name "Manufacturer") "GCT")
 				(field
-					(name "Manufacturer") "XUNPU")
-				(field
-					(name "Footprint") "JLCPCB:SW-SMD_L3.9-W3.0-P4.45")
+					(name "Footprint") "FilamentDryer:SW_GCT_SWT0110")
 				(field
 					(name "Datasheet")
 				)
@@ -10033,16 +10778,12 @@
 				(value "")
 			)
 			(property
-				(name "LCSC")
-				(value "C720477")
-			)
-			(property
 				(name "MPN")
-				(value "TS-1088-AR02016")
+				(value "SWT0110-020010SSA")
 			)
 			(property
 				(name "Manufacturer")
-				(value "XUNPU")
+				(value "GCT")
 			)
 			(property
 				(name "Sheetname")
@@ -10077,7 +10818,11 @@
 		)
 	)
 	(groups)
-	(variants)
+	(variants
+		(variant
+			(name "Mouser")
+		)
+	)
 	(libparts
 		(libpart
 			(lib "Connector")
@@ -10439,6 +11184,47 @@
 		)
 		(libpart
 			(lib "Device")
+			(part "D")
+			(description "Diode")
+			(footprints
+				(fp "TO-???*")
+				(fp "*_Diode_*")
+				(fp "*SingleDiode*")
+				(fp "D_*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "D")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Diode")
+				(field
+					(name "Sim.Device") "D")
+				(field
+					(name "Sim.Pins") "1=K 2=A")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "K")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "A")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
 			(part "D_Schottky_Small")
 			(description "Schottky diode, small symbol")
 			(footprints
@@ -10763,114 +11549,50 @@
 		)
 		(libpart
 			(lib "Filament_Dryer_Custom")
-			(part "AP66200")
+			(part "BZX84C15-7-F")
+			(description "BZX84C15-7-F 15 V surface-mount Zener diode, SOT-23; pin 1 A, pin 2 NC, pin 3 K")
+			(docs "https://www.diodes.com/datasheet/download/BZX84C2V4%20-%20BZX84C51.pdf")
+			(footprints
+				(fp "TO-???*")
+				(fp "*_Diode_*")
+				(fp "*SingleDiode*")
+				(fp "D_*")
+			)
 			(fields
 				(field
-					(name "Reference") "U")
+					(name "Reference") "D")
 				(field
-					(name "Value") "AP66200")
+					(name "Value") "BZX84C15-7-F")
 				(field
-					(name "Footprint") "Package_DFN_QFN:QFN-16-1EP_4x4mm_P0.65mm_EP2.5x2.5mm")
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23")
 				(field
-					(name "Datasheet")
-				)
+					(name "Datasheet") "https://www.diodes.com/datasheet/download/BZX84C2V4%20-%20BZX84C51.pdf")
 				(field
-					(name "Description")
-				)
+					(name "Description") "BZX84C15-7-F 15 V surface-mount Zener diode, SOT-23; pin 1 A, pin 2 NC, pin 3 K")
 			)
 			(pins
 				(pin
 					(num "1")
-					(name "BIAS")
-					(type "power_in")
-				)
-				(pin
-					(num "2")
-					(name "VCC")
-					(type "power_out")
-				)
-				(pin
-					(num "3")
-					(name "VIN")
-					(type "power_in")
-				)
-				(pin
-					(num "4")
-					(name "VIN")
-					(type "power_in")
-				)
-				(pin
-					(num "5")
-					(name "BST")
+					(name "A")
 					(type "passive")
 				)
 				(pin
-					(num "6")
-					(name "SW")
-					(type "power_out")
+					(num "2")
+					(name "NC")
+					(type "no_connect")
 				)
 				(pin
-					(num "7")
-					(name "SW")
-					(type "power_out")
-				)
-				(pin
-					(num "8")
-					(name "PGND")
-					(type "power_in")
-				)
-				(pin
-					(num "9")
-					(name "PGND")
-					(type "power_in")
-				)
-				(pin
-					(num "10")
-					(name "EN")
-					(type "input")
-				)
-				(pin
-					(num "11")
-					(name "FS")
-					(type "input")
-				)
-				(pin
-					(num "12")
-					(name "MSYNC")
-					(type "input")
-				)
-				(pin
-					(num "13")
-					(name "PG")
-					(type "open_collector")
-				)
-				(pin
-					(num "14")
-					(name "SS/TR")
-					(type "input")
-				)
-				(pin
-					(num "15")
-					(name "FB")
-					(type "input")
-				)
-				(pin
-					(num "16")
-					(name "GND")
-					(type "power_in")
-				)
-				(pin
-					(num "17")
-					(name "EPAD")
-					(type "power_in")
+					(num "3")
+					(name "K")
+					(type "passive")
 				)
 			)
 		)
 		(libpart
-			(lib "Interface_USB")
-			(part "CP2102N-Axx-xQFN28")
-			(description "USB to UART master bridge, QFN-28")
-			(docs "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf")
+			(lib "Filament_Dryer_Custom")
+			(part "CP2102-GM")
+			(description "Silicon Labs CP2102 classic USB-to-UART bridge, QFN28 5x5 mm")
+			(docs "https://www.silabs.com/documents/public/data-sheets/CP2102-9.pdf")
 			(footprints
 				(fp "QFN*1EP*5x5mm*P0.5mm*")
 			)
@@ -10878,13 +11600,13 @@
 				(field
 					(name "Reference") "U")
 				(field
-					(name "Value") "CP2102N-Axx-xQFN28")
+					(name "Value") "CP2102-GM")
 				(field
-					(name "Footprint") "Package_DFN_QFN:QFN-28-1EP_5x5mm_P0.5mm_EP3.35x3.35mm")
+					(name "Footprint") "FilamentDryer:CP2102_GM_QFN28_5x5_P0.5_EP3.25")
 				(field
-					(name "Datasheet") "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf")
+					(name "Datasheet") "https://www.silabs.com/documents/public/data-sheets/CP2102-9.pdf")
 				(field
-					(name "Description") "USB to UART master bridge, QFN-28")
+					(name "Description") "Silicon Labs CP2102 classic USB-to-UART bridge, QFN28 5x5 mm")
 			)
 			(pins
 				(pin
@@ -10894,8 +11616,8 @@
 				)
 				(pin
 					(num "2")
-					(name "~{RI}/CLK")
-					(type "bidirectional")
+					(name "~{RI}")
+					(type "input")
 				)
 				(pin
 					(num "3")
@@ -10919,7 +11641,7 @@
 				)
 				(pin
 					(num "7")
-					(name "VREGIN")
+					(name "REGIN")
 					(type "power_in")
 				)
 				(pin
@@ -10949,53 +11671,53 @@
 				)
 				(pin
 					(num "13")
-					(name "CHREN")
-					(type "output")
+					(name "NC")
+					(type "no_connect")
 				)
 				(pin
 					(num "14")
-					(name "CHR1")
-					(type "output")
+					(name "NC")
+					(type "no_connect")
 				)
 				(pin
 					(num "15")
-					(name "CHR0")
-					(type "output")
+					(name "NC")
+					(type "no_connect")
 				)
 				(pin
 					(num "16")
-					(name "~{WAKEUP}/GPIO.3")
-					(type "bidirectional")
+					(name "NC")
+					(type "no_connect")
 				)
 				(pin
 					(num "17")
-					(name "RS485/GPIO.2")
-					(type "bidirectional")
+					(name "NC")
+					(type "no_connect")
 				)
 				(pin
 					(num "18")
-					(name "~{RXT}/GPIO.1")
-					(type "bidirectional")
+					(name "NC")
+					(type "no_connect")
 				)
 				(pin
 					(num "19")
-					(name "~{TXT}/GPIO.0")
-					(type "bidirectional")
+					(name "NC")
+					(type "no_connect")
 				)
 				(pin
 					(num "20")
-					(name "GPIO.6")
-					(type "bidirectional")
+					(name "NC")
+					(type "no_connect")
 				)
 				(pin
 					(num "21")
-					(name "GPIO.5")
-					(type "bidirectional")
+					(name "NC")
+					(type "no_connect")
 				)
 				(pin
 					(num "22")
-					(name "GPIO.4")
-					(type "bidirectional")
+					(name "NC")
+					(type "no_connect")
 				)
 				(pin
 					(num "23")
@@ -11031,6 +11753,54 @@
 					(num "29")
 					(name "GND")
 					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Filament_Dryer_Custom")
+			(part "TLV1701AIDBVR")
+			(description "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5")
+			(docs "https://www.ti.com/lit/ds/symlink/tlv1701.pdf")
+			(footprints
+				(fp "SOT?23*")
+			)
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "TLV1701")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-5")
+				(field
+					(name "Datasheet") "https://www.ti.com/lit/ds/symlink/tlv1701.pdf")
+				(field
+					(name "Description") "Single General-Purpose Voltage Comparator with Open-Collector Output, SOT-23-5")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "+")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "V-")
+					(type "power_in")
+				)
+				(pin
+					(num "3")
+					(name "-")
+					(type "input")
+				)
+				(pin
+					(num "4")
+					(name "")
+					(type "open_collector")
+				)
+				(pin
+					(num "5")
+					(name "V+")
+					(type "power_in")
 				)
 			)
 		)
@@ -11352,6 +12122,125 @@
 			)
 		)
 		(libpart
+			(lib "SamacSys_Parts")
+			(part "L7987L")
+			(description "Switching Voltage Regulators 61 V 2 A asynchronous step-down switching regulator with adjustable current limitation")
+			(docs "https://www.st.com/resource/en/datasheet/l7987l.pdf")
+			(fields
+				(field
+					(name "Reference") "U?")
+				(field
+					(name "Value") "L7987L")
+				(field
+					(name "Footprint") "SOP65P640X120-17N")
+				(field
+					(name "Datasheet") "https://www.st.com/resource/en/datasheet/l7987l.pdf")
+				(field
+					(name "Description") "Switching Voltage Regulators 61 V 2 A asynchronous step-down switching regulator with adjustable current limitation")
+				(field
+					(name "Height") "1.2")
+				(field
+					(name "Manufacturer_Name") "STMicroelectronics")
+				(field
+					(name "Manufacturer_Part_Number") "L7987L")
+				(field
+					(name "Mouser Part Number") "511-L7987L")
+				(field
+					(name "Mouser Price/Stock") "https://www.mouser.co.uk/ProductDetail/STMicroelectronics/L7987L?qs=9MuLHSklicqgIY87eE3iDQ%3D%3D")
+				(field
+					(name "Arrow Part Number") "L7987L")
+				(field
+					(name "Arrow Price/Stock") "https://www.arrow.com/en/products/l7987l/stmicroelectronics.html?utm_currency=USD&region=nac")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "VBIAS")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "VIN_1")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "VIN_2")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "VCC")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "EN")
+					(type "passive")
+				)
+				(pin
+					(num "6")
+					(name "SS")
+					(type "passive")
+				)
+				(pin
+					(num "7")
+					(name "SYNCH")
+					(type "passive")
+				)
+				(pin
+					(num "8")
+					(name "COMP")
+					(type "passive")
+				)
+				(pin
+					(num "9")
+					(name "FB")
+					(type "passive")
+				)
+				(pin
+					(num "10")
+					(name "FSW")
+					(type "passive")
+				)
+				(pin
+					(num "11")
+					(name "ILIM")
+					(type "passive")
+				)
+				(pin
+					(num "12")
+					(name "PGOOD")
+					(type "passive")
+				)
+				(pin
+					(num "13")
+					(name "LX_1")
+					(type "passive")
+				)
+				(pin
+					(num "14")
+					(name "LX_2")
+					(type "passive")
+				)
+				(pin
+					(num "15")
+					(name "BOOT")
+					(type "passive")
+				)
+				(pin
+					(num "16")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "17")
+					(name "SGND")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
 			(lib "Switch")
 			(part "SW_Push")
 			(description "Push button switch, generic, two pins")
@@ -11502,6 +12391,42 @@
 		)
 		(libpart
 			(lib "Transistor_FET")
+			(part "Q_NMOS_GSD")
+			(description "N-MOSFET transistor, gate/drain/source")
+			(fields
+				(field
+					(name "Reference") "Q")
+				(field
+					(name "Value") "Q_NMOS_GDS")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "N-MOSFET transistor, gate/drain/source")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "G")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "S")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "D")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Transistor_FET")
 			(part "Q_PMOS_GDS")
 			(description "P-MOSFET transistor, gate/drain/source")
 			(fields
@@ -11559,10 +12484,6 @@
 			(uri "${KIPRJMOD}/Filament_Dryer_Custom.kicad_sym")
 		)
 		(library
-			(logical "Interface_USB")
-			(uri "${KICAD10_SYMBOL_DIR}/Interface_USB.kicad_sym")
-		)
-		(library
 			(logical "JLCPCB")
 			(uri "${KIPRJMOD}/libs/JLCPCB.kicad_sym")
 		)
@@ -11573,6 +12494,10 @@
 		(library
 			(logical "RF_Module")
 			(uri "${KICAD10_SYMBOL_DIR}/RF_Module.kicad_sym")
+		)
+		(library
+			(logical "SamacSys_Parts")
+			(uri "${KIPRJMOD}/libs/SamacSys_Parts.kicad_sym")
 		)
 		(library
 			(logical "Switch")
@@ -11717,12 +12642,58 @@
 		)
 		(net
 			(code "7")
-			(name "/MCU/USB_DM")
+			(name "/MCU/USB_CONN_D+")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "A6")
+				(pinfunction "D+_A6")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "J2")
+				(pin "B6")
+				(pinfunction "D+_B6")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "1")
+				(pinfunction "I/O1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "8")
+			(name "/MCU/USB_CONN_D-")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "A7")
+				(pinfunction "D-_A7")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "J2")
+				(pin "B7")
+				(pinfunction "D-_B7")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "3")
+				(pinfunction "I/O2_3")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "9")
+			(name "/MCU/USB_D+")
 			(class "Default")
 			(node
 				(ref "U2")
-				(pin "5")
-				(pinfunction "D-_5")
+				(pin "4")
+				(pinfunction "D+_4")
 				(pintype "bidirectional")
 			)
 			(node
@@ -11733,13 +12704,13 @@
 			)
 		)
 		(net
-			(code "8")
-			(name "/MCU/USB_DP")
+			(code "10")
+			(name "/MCU/USB_D-")
 			(class "Default")
 			(node
 				(ref "U2")
-				(pin "4")
-				(pinfunction "D+_4")
+				(pin "5")
+				(pinfunction "D-_5")
 				(pintype "bidirectional")
 			)
 			(node
@@ -11750,7 +12721,7 @@
 			)
 		)
 		(net
-			(code "9")
+			(code "11")
 			(name "/MCU/USB_VBUS")
 			(class "Default")
 			(node
@@ -11790,7 +12761,7 @@
 			)
 		)
 		(net
-			(code "10")
+			(code "12")
 			(name "/Power/3V3_BUCK")
 			(class "Power_3V3,Default")
 			(node
@@ -11799,17 +12770,12 @@
 				(pintype "passive")
 			)
 			(node
-				(ref "C4")
-				(pin "1")
+				(ref "C20")
+				(pin "2")
 				(pintype "passive")
 			)
 			(node
-				(ref "C6")
-				(pin "1")
-				(pintype "passive")
-			)
-			(node
-				(ref "C8")
+				(ref "C21")
 				(pin "1")
 				(pintype "passive")
 			)
@@ -11825,39 +12791,78 @@
 				(pintype "passive")
 			)
 			(node
-				(ref "R5")
-				(pin "1")
-				(pintype "passive")
-			)
-		)
-		(net
-			(code "11")
-			(name "/Power/EN_BUCK")
-			(class "Default")
-			(node
-				(ref "C1")
-				(pin "1")
-				(pintype "passive")
-			)
-			(node
-				(ref "R1")
+				(ref "R36")
 				(pin "2")
 				(pintype "passive")
 			)
 			(node
-				(ref "R2")
+				(ref "U5")
+				(pin "1")
+				(pinfunction "VBIAS_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "13")
+			(name "/Power/COMP")
+			(class "Default")
+			(node
+				(ref "C8")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R33")
 				(pin "1")
 				(pintype "passive")
 			)
 			(node
 				(ref "U1")
-				(pin "10")
-				(pinfunction "EN_10")
+				(pin "1")
+				(pinfunction "+_1")
 				(pintype "input")
+			)
+			(node
+				(ref "U5")
+				(pin "8")
+				(pinfunction "COMP_8")
+				(pintype "passive")
 			)
 		)
 		(net
-			(code "12")
+			(code "14")
+			(name "/Power/EN")
+			(class "Default")
+			(node
+				(ref "C7")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q7")
+				(pin "3")
+				(pinfunction "C_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "R31")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R32")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "5")
+				(pinfunction "EN_5")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "15")
 			(name "/Power/FUSE_OUT")
 			(class "Power_24V,Default")
 			(node
@@ -11873,13 +12878,13 @@
 			)
 		)
 		(net
-			(code "13")
+			(code "16")
 			(name "/Power/GATE_Q1")
 			(class "Default")
 			(node
 				(ref "D1")
-				(pin "2")
-				(pinfunction "A_2")
+				(pin "1")
+				(pinfunction "A_1")
 				(pintype "passive")
 			)
 			(node
@@ -11895,7 +12900,7 @@
 			)
 		)
 		(net
-			(code "14")
+			(code "17")
 			(name "/Power/JACK_24V_RAW")
 			(class "Power_24V,Default")
 			(node
@@ -11911,41 +12916,28 @@
 			)
 		)
 		(net
-			(code "15")
-			(name "/Power/VCC_AP66200")
+			(code "18")
+			(name "/Power/VREF_FAULT")
 			(class "Default")
 			(node
-				(ref "C2")
+				(ref "R1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R2")
 				(pin "1")
 				(pintype "passive")
 			)
 			(node
 				(ref "U1")
-				(pin "11")
-				(pinfunction "FS_11")
+				(pin "3")
+				(pinfunction "-_3")
 				(pintype "input")
-			)
-			(node
-				(ref "U1")
-				(pin "12")
-				(pinfunction "MSYNC_12")
-				(pintype "input")
-			)
-			(node
-				(ref "U1")
-				(pin "14")
-				(pinfunction "SS/TR_14")
-				(pintype "input")
-			)
-			(node
-				(ref "U1")
-				(pin "2")
-				(pinfunction "VCC_2")
-				(pintype "power_out")
 			)
 		)
 		(net
-			(code "16")
+			(code "19")
 			(name "3V3_MCU")
 			(class "Power_3V3,Default")
 			(node
@@ -11986,6 +12978,11 @@
 			)
 			(node
 				(ref "C18")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C22")
 				(pin "1")
 				(pintype "passive")
 			)
@@ -12058,11 +13055,6 @@
 				(pintype "passive")
 			)
 			(node
-				(ref "R4")
-				(pin "2")
-				(pintype "passive")
-			)
-			(node
 				(ref "R9")
 				(pin "1")
 				(pintype "passive")
@@ -12082,7 +13074,7 @@
 			(node
 				(ref "U2")
 				(pin "7")
-				(pinfunction "VREGIN_7")
+				(pinfunction "REGIN_7")
 				(pintype "power_in")
 			)
 			(node
@@ -12093,28 +13085,33 @@
 			)
 		)
 		(net
-			(code "17")
+			(code "20")
 			(name "24V_PROT")
 			(class "Power_24V,Default")
+			(node
+				(ref "C1")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C2")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C3")
+				(pin "1")
+				(pintype "passive")
+			)
 			(node
 				(ref "C5")
 				(pin "1")
 				(pintype "passive")
 			)
 			(node
-				(ref "C7")
-				(pin "1")
-				(pintype "passive")
-			)
-			(node
-				(ref "C9")
-				(pin "1")
-				(pintype "passive")
-			)
-			(node
 				(ref "D1")
-				(pin "1")
-				(pinfunction "K_1")
+				(pin "3")
+				(pinfunction "K_3")
 				(pintype "passive")
 			)
 			(node
@@ -12159,6 +13156,16 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "R31")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R5")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
 				(ref "TP1")
 				(pin "1")
 				(pinfunction "1_1")
@@ -12166,19 +13173,31 @@
 			)
 			(node
 				(ref "U1")
-				(pin "3")
-				(pinfunction "VIN_3")
+				(pin "5")
+				(pinfunction "V+_5")
 				(pintype "power_in")
 			)
 			(node
-				(ref "U1")
+				(ref "U5")
+				(pin "2")
+				(pinfunction "VIN_1_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "3")
+				(pinfunction "VIN_2_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
 				(pin "4")
-				(pinfunction "VIN_4")
-				(pintype "power_in")
+				(pinfunction "VCC_4")
+				(pintype "passive")
 			)
 		)
 		(net
-			(code "18")
+			(code "21")
 			(name "BTN_DOWN")
 			(class "Default")
 			(node
@@ -12200,7 +13219,7 @@
 			)
 		)
 		(net
-			(code "19")
+			(code "22")
 			(name "BTN_M")
 			(class "Default")
 			(node
@@ -12222,7 +13241,7 @@
 			)
 		)
 		(net
-			(code "20")
+			(code "23")
 			(name "BTN_ONOFF")
 			(class "Default")
 			(node
@@ -12244,7 +13263,7 @@
 			)
 		)
 		(net
-			(code "21")
+			(code "24")
 			(name "BTN_UP")
 			(class "Default")
 			(node
@@ -12266,7 +13285,7 @@
 			)
 		)
 		(net
-			(code "22")
+			(code "25")
 			(name "BUZ_DRV")
 			(class "Default")
 			(node
@@ -12282,7 +13301,7 @@
 			)
 		)
 		(net
-			(code "23")
+			(code "26")
 			(name "FAN_PWM")
 			(class "Default")
 			(node
@@ -12298,7 +13317,7 @@
 			)
 		)
 		(net
-			(code "24")
+			(code "27")
 			(name "GND")
 			(class "Default")
 			(node
@@ -12362,27 +13381,32 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "C21")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C22")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C3")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C4")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
 				(ref "C5")
 				(pin "2")
 				(pintype "passive")
 			)
 			(node
-				(ref "C6")
-				(pin "2")
-				(pintype "passive")
-			)
-			(node
 				(ref "C7")
-				(pin "2")
-				(pintype "passive")
-			)
-			(node
-				(ref "C8")
-				(pin "2")
-				(pintype "passive")
-			)
-			(node
-				(ref "C9")
 				(pin "2")
 				(pintype "passive")
 			)
@@ -12396,6 +13420,12 @@
 				(ref "D3")
 				(pin "1")
 				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D7")
+				(pin "2")
+				(pinfunction "A_2")
 				(pintype "passive")
 			)
 			(node
@@ -12460,12 +13490,18 @@
 			)
 			(node
 				(ref "Q5")
-				(pin "3")
-				(pinfunction "S_3")
+				(pin "2")
+				(pinfunction "S_2")
 				(pintype "passive")
 			)
 			(node
 				(ref "Q6")
+				(pin "2")
+				(pinfunction "E_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q7")
 				(pin "2")
 				(pinfunction "E_2")
 				(pintype "passive")
@@ -12496,12 +13532,37 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "R29")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
 				(ref "R3")
 				(pin "2")
 				(pintype "passive")
 			)
 			(node
-				(ref "R6")
+				(ref "R30")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R32")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R34")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R37")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R4")
 				(pin "2")
 				(pintype "passive")
 			)
@@ -12554,32 +13615,8 @@
 			)
 			(node
 				(ref "U1")
-				(pin "1")
-				(pinfunction "BIAS_1")
-				(pintype "power_in")
-			)
-			(node
-				(ref "U1")
-				(pin "16")
-				(pinfunction "GND_16")
-				(pintype "power_in")
-			)
-			(node
-				(ref "U1")
-				(pin "17")
-				(pinfunction "EPAD_17")
-				(pintype "power_in")
-			)
-			(node
-				(ref "U1")
-				(pin "8")
-				(pinfunction "PGND_8")
-				(pintype "power_in")
-			)
-			(node
-				(ref "U1")
-				(pin "9")
-				(pinfunction "PGND_9")
+				(pin "2")
+				(pinfunction "V-_2")
 				(pintype "power_in")
 			)
 			(node
@@ -12624,9 +13661,21 @@
 				(pinfunction "GND_39")
 				(pintype "power_in")
 			)
+			(node
+				(ref "U5")
+				(pin "16")
+				(pinfunction "GND_16")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "17")
+				(pinfunction "SGND_17")
+				(pintype "passive")
+			)
 		)
 		(net
-			(code "25")
+			(code "28")
 			(name "HEATER_PWM")
 			(class "Default")
 			(node
@@ -12642,7 +13691,7 @@
 			)
 		)
 		(net
-			(code "26")
+			(code "29")
 			(name "NTC")
 			(class "Default")
 			(node
@@ -12669,35 +13718,37 @@
 			)
 		)
 		(net
-			(code "27")
-			(name "Net-(C3-Pad1)")
+			(code "30")
+			(name "Net-(C9-Pad1)")
 			(class "Default")
 			(node
-				(ref "C3")
+				(ref "C9")
 				(pin "1")
 				(pintype "passive")
 			)
 			(node
-				(ref "L1")
-				(pin "1")
-				(pinfunction "1_1")
+				(ref "R33")
+				(pin "2")
 				(pintype "passive")
-			)
-			(node
-				(ref "U1")
-				(pin "6")
-				(pinfunction "SW_6")
-				(pintype "power_out")
-			)
-			(node
-				(ref "U1")
-				(pin "7")
-				(pinfunction "SW_7")
-				(pintype "power_out")
 			)
 		)
 		(net
-			(code "28")
+			(code "31")
+			(name "Net-(C20-Pad1)")
+			(class "Default")
+			(node
+				(ref "C20")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R35")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "32")
 			(name "Net-(D3-A)")
 			(class "Default")
 			(node
@@ -12713,7 +13764,7 @@
 			)
 		)
 		(net
-			(code "29")
+			(code "33")
 			(name "Net-(D5-A)")
 			(class "Default")
 			(node
@@ -12730,13 +13781,13 @@
 			)
 			(node
 				(ref "Q5")
-				(pin "2")
-				(pinfunction "D_2")
+				(pin "3")
+				(pinfunction "D_3")
 				(pintype "passive")
 			)
 		)
 		(net
-			(code "30")
+			(code "34")
 			(name "Net-(D6-A)")
 			(class "Default")
 			(node
@@ -12759,7 +13810,41 @@
 			)
 		)
 		(net
-			(code "31")
+			(code "35")
+			(name "Net-(D7-K)")
+			(class "Default")
+			(node
+				(ref "C6")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "D7")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "L1")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "13")
+				(pinfunction "LX_1_13")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "14")
+				(pinfunction "LX_2_14")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "36")
 			(name "Net-(J2-CC1)")
 			(class "Default")
 			(node
@@ -12775,7 +13860,7 @@
 			)
 		)
 		(net
-			(code "32")
+			(code "37")
 			(name "Net-(J2-CC2)")
 			(class "Default")
 			(node
@@ -12791,53 +13876,7 @@
 			)
 		)
 		(net
-			(code "33")
-			(name "Net-(J2-D+-PadA6)")
-			(class "Default")
-			(node
-				(ref "J2")
-				(pin "A6")
-				(pinfunction "D+_A6")
-				(pintype "bidirectional")
-			)
-			(node
-				(ref "J2")
-				(pin "B6")
-				(pinfunction "D+_B6")
-				(pintype "bidirectional")
-			)
-			(node
-				(ref "U3")
-				(pin "3")
-				(pinfunction "I/O2_3")
-				(pintype "passive")
-			)
-		)
-		(net
-			(code "34")
-			(name "Net-(J2-D--PadA7)")
-			(class "Default")
-			(node
-				(ref "J2")
-				(pin "A7")
-				(pinfunction "D-_A7")
-				(pintype "bidirectional")
-			)
-			(node
-				(ref "J2")
-				(pin "B7")
-				(pinfunction "D-_B7")
-				(pintype "bidirectional")
-			)
-			(node
-				(ref "U3")
-				(pin "1")
-				(pinfunction "I/O1_1")
-				(pintype "passive")
-			)
-		)
-		(net
-			(code "35")
+			(code "38")
 			(name "Net-(J3-Pin_2)")
 			(class "Default")
 			(node
@@ -12859,7 +13898,7 @@
 			)
 		)
 		(net
-			(code "36")
+			(code "39")
 			(name "Net-(J3-Pin_3)")
 			(class "Default")
 			(node
@@ -12881,7 +13920,7 @@
 			)
 		)
 		(net
-			(code "37")
+			(code "40")
 			(name "Net-(Q2-B)")
 			(class "Default")
 			(node
@@ -12904,7 +13943,7 @@
 			)
 		)
 		(net
-			(code "38")
+			(code "41")
 			(name "Net-(Q2-C)")
 			(class "Default")
 			(node
@@ -12938,7 +13977,7 @@
 			)
 		)
 		(net
-			(code "39")
+			(code "42")
 			(name "Net-(Q2-E)")
 			(class "Default")
 			(node
@@ -12961,7 +14000,7 @@
 			)
 		)
 		(net
-			(code "40")
+			(code "43")
 			(name "Net-(Q3-C)")
 			(class "Default")
 			(node
@@ -13000,7 +14039,7 @@
 			)
 		)
 		(net
-			(code "41")
+			(code "44")
 			(name "Net-(Q4-G)")
 			(class "Default")
 			(node
@@ -13021,7 +14060,7 @@
 			)
 		)
 		(net
-			(code "42")
+			(code "45")
 			(name "Net-(Q5-G)")
 			(class "Default")
 			(node
@@ -13042,7 +14081,7 @@
 			)
 		)
 		(net
-			(code "43")
+			(code "46")
 			(name "Net-(Q6-B)")
 			(class "Default")
 			(node
@@ -13056,32 +14095,37 @@
 				(pin "1")
 				(pintype "passive")
 			)
-		)
-		(net
-			(code "44")
-			(name "Net-(U1-BST)")
-			(class "Default")
 			(node
-				(ref "C3")
+				(ref "R37")
 				(pin "2")
-				(pintype "passive")
-			)
-			(node
-				(ref "U1")
-				(pin "5")
-				(pinfunction "BST_5")
 				(pintype "passive")
 			)
 		)
 		(net
-			(code "45")
-			(name "Net-(U1-FB)")
+			(code "47")
+			(name "Net-(Q7-B)")
 			(class "Default")
 			(node
-				(ref "C4")
+				(ref "Q7")
+				(pin "1")
+				(pinfunction "B_1")
+				(pintype "input")
+			)
+			(node
+				(ref "R30")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R6")
 				(pin "2")
 				(pintype "passive")
 			)
+		)
+		(net
+			(code "48")
+			(name "Net-(R5-Pad2)")
+			(class "Default")
 			(node
 				(ref "R5")
 				(pin "2")
@@ -13094,29 +14138,12 @@
 			)
 			(node
 				(ref "U1")
-				(pin "15")
-				(pinfunction "FB_15")
-				(pintype "input")
-			)
-		)
-		(net
-			(code "46")
-			(name "Net-(U1-PG)")
-			(class "Default")
-			(node
-				(ref "R4")
-				(pin "1")
-				(pintype "passive")
-			)
-			(node
-				(ref "U1")
-				(pin "13")
-				(pinfunction "PG_13")
+				(pin "4")
 				(pintype "open_collector")
 			)
 		)
 		(net
-			(code "47")
+			(code "49")
 			(name "Net-(U2-VBUS)")
 			(class "Default")
 			(node
@@ -13137,7 +14164,7 @@
 			)
 		)
 		(net
-			(code "48")
+			(code "50")
 			(name "Net-(U2-~{RST})")
 			(class "Default")
 			(node
@@ -13153,7 +14180,107 @@
 			)
 		)
 		(net
-			(code "49")
+			(code "51")
+			(name "Net-(U5-BOOT)")
+			(class "Default")
+			(node
+				(ref "C6")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "15")
+				(pinfunction "BOOT_15")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "52")
+			(name "Net-(U5-FB)")
+			(class "Default")
+			(node
+				(ref "C8")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C9")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R34")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R35")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R36")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "9")
+				(pinfunction "FB_9")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "53")
+			(name "Net-(U5-FSW)")
+			(class "Default")
+			(node
+				(ref "R4")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "10")
+				(pinfunction "FSW_10")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "54")
+			(name "Net-(U5-ILIM)")
+			(class "Default")
+			(node
+				(ref "R29")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "11")
+				(pinfunction "ILIM_11")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "55")
+			(name "Net-(U5-SS)")
+			(class "Default")
+			(node
+				(ref "C4")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "6")
+				(pinfunction "SS_6")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "56")
 			(name "unconnected-(BZ1-Pad3)")
 			(class "Default")
 			(node
@@ -13164,7 +14291,7 @@
 			)
 		)
 		(net
-			(code "50")
+			(code "57")
 			(name "unconnected-(BZ1-Pad4)")
 			(class "Default")
 			(node
@@ -13175,7 +14302,18 @@
 			)
 		)
 		(net
-			(code "51")
+			(code "58")
+			(name "unconnected-(D1-NC-Pad2)")
+			(class "Default")
+			(node
+				(ref "D1")
+				(pin "2")
+				(pinfunction "NC_2")
+				(pintype "no_connect")
+			)
+		)
+		(net
+			(code "59")
 			(name "unconnected-(J1-Pin_2-Pad2)")
 			(class "Default")
 			(node
@@ -13186,7 +14324,7 @@
 			)
 		)
 		(net
-			(code "52")
+			(code "60")
 			(name "unconnected-(J2-SBU1-PadA8)")
 			(class "Default")
 			(node
@@ -13197,7 +14335,7 @@
 			)
 		)
 		(net
-			(code "53")
+			(code "61")
 			(name "unconnected-(J2-SBU2-PadB8)")
 			(class "Default")
 			(node
@@ -13208,73 +14346,7 @@
 			)
 		)
 		(net
-			(code "54")
-			(name "unconnected-(U2-CHR0-Pad15)")
-			(class "Default")
-			(node
-				(ref "U2")
-				(pin "15")
-				(pinfunction "CHR0_15")
-				(pintype "output+no_connect")
-			)
-		)
-		(net
-			(code "55")
-			(name "unconnected-(U2-CHR1-Pad14)")
-			(class "Default")
-			(node
-				(ref "U2")
-				(pin "14")
-				(pinfunction "CHR1_14")
-				(pintype "output+no_connect")
-			)
-		)
-		(net
-			(code "56")
-			(name "unconnected-(U2-CHREN-Pad13)")
-			(class "Default")
-			(node
-				(ref "U2")
-				(pin "13")
-				(pinfunction "CHREN_13")
-				(pintype "output+no_connect")
-			)
-		)
-		(net
-			(code "57")
-			(name "unconnected-(U2-GPIO.4-Pad22)")
-			(class "Default")
-			(node
-				(ref "U2")
-				(pin "22")
-				(pinfunction "GPIO.4_22")
-				(pintype "bidirectional+no_connect")
-			)
-		)
-		(net
-			(code "58")
-			(name "unconnected-(U2-GPIO.5-Pad21)")
-			(class "Default")
-			(node
-				(ref "U2")
-				(pin "21")
-				(pinfunction "GPIO.5_21")
-				(pintype "bidirectional+no_connect")
-			)
-		)
-		(net
-			(code "59")
-			(name "unconnected-(U2-GPIO.6-Pad20)")
-			(class "Default")
-			(node
-				(ref "U2")
-				(pin "20")
-				(pinfunction "GPIO.6_20")
-				(pintype "bidirectional+no_connect")
-			)
-		)
-		(net
-			(code "60")
+			(code "62")
 			(name "unconnected-(U2-NC-Pad10)")
 			(class "Default")
 			(node
@@ -13285,18 +14357,117 @@
 			)
 		)
 		(net
-			(code "61")
-			(name "unconnected-(U2-RS485{slash}GPIO.2-Pad17)")
+			(code "63")
+			(name "unconnected-(U2-NC-Pad13)")
+			(class "Default")
+			(node
+				(ref "U2")
+				(pin "13")
+				(pinfunction "NC_13")
+				(pintype "no_connect")
+			)
+		)
+		(net
+			(code "64")
+			(name "unconnected-(U2-NC-Pad14)")
+			(class "Default")
+			(node
+				(ref "U2")
+				(pin "14")
+				(pinfunction "NC_14")
+				(pintype "no_connect")
+			)
+		)
+		(net
+			(code "65")
+			(name "unconnected-(U2-NC-Pad15)")
+			(class "Default")
+			(node
+				(ref "U2")
+				(pin "15")
+				(pinfunction "NC_15")
+				(pintype "no_connect")
+			)
+		)
+		(net
+			(code "66")
+			(name "unconnected-(U2-NC-Pad16)")
+			(class "Default")
+			(node
+				(ref "U2")
+				(pin "16")
+				(pinfunction "NC_16")
+				(pintype "no_connect")
+			)
+		)
+		(net
+			(code "67")
+			(name "unconnected-(U2-NC-Pad17)")
 			(class "Default")
 			(node
 				(ref "U2")
 				(pin "17")
-				(pinfunction "RS485/GPIO.2_17")
-				(pintype "bidirectional+no_connect")
+				(pinfunction "NC_17")
+				(pintype "no_connect")
 			)
 		)
 		(net
-			(code "62")
+			(code "68")
+			(name "unconnected-(U2-NC-Pad18)")
+			(class "Default")
+			(node
+				(ref "U2")
+				(pin "18")
+				(pinfunction "NC_18")
+				(pintype "no_connect")
+			)
+		)
+		(net
+			(code "69")
+			(name "unconnected-(U2-NC-Pad19)")
+			(class "Default")
+			(node
+				(ref "U2")
+				(pin "19")
+				(pinfunction "NC_19")
+				(pintype "no_connect")
+			)
+		)
+		(net
+			(code "70")
+			(name "unconnected-(U2-NC-Pad20)")
+			(class "Default")
+			(node
+				(ref "U2")
+				(pin "20")
+				(pinfunction "NC_20")
+				(pintype "no_connect")
+			)
+		)
+		(net
+			(code "71")
+			(name "unconnected-(U2-NC-Pad21)")
+			(class "Default")
+			(node
+				(ref "U2")
+				(pin "21")
+				(pinfunction "NC_21")
+				(pintype "no_connect")
+			)
+		)
+		(net
+			(code "72")
+			(name "unconnected-(U2-NC-Pad22)")
+			(class "Default")
+			(node
+				(ref "U2")
+				(pin "22")
+				(pinfunction "NC_22")
+				(pintype "no_connect")
+			)
+		)
+		(net
+			(code "73")
 			(name "unconnected-(U2-SUSPEND-Pad12)")
 			(class "Default")
 			(node
@@ -13307,7 +14478,7 @@
 			)
 		)
 		(net
-			(code "63")
+			(code "74")
 			(name "unconnected-(U2-~{CTS}-Pad23)")
 			(class "Default")
 			(node
@@ -13318,7 +14489,7 @@
 			)
 		)
 		(net
-			(code "64")
+			(code "75")
 			(name "unconnected-(U2-~{DCD}-Pad1)")
 			(class "Default")
 			(node
@@ -13329,7 +14500,7 @@
 			)
 		)
 		(net
-			(code "65")
+			(code "76")
 			(name "unconnected-(U2-~{DSR}-Pad27)")
 			(class "Default")
 			(node
@@ -13340,29 +14511,18 @@
 			)
 		)
 		(net
-			(code "66")
-			(name "unconnected-(U2-~{RI}{slash}CLK-Pad2)")
+			(code "77")
+			(name "unconnected-(U2-~{RI}-Pad2)")
 			(class "Default")
 			(node
 				(ref "U2")
 				(pin "2")
-				(pinfunction "~{RI}/CLK_2")
-				(pintype "bidirectional+no_connect")
+				(pinfunction "~{RI}_2")
+				(pintype "input+no_connect")
 			)
 		)
 		(net
-			(code "67")
-			(name "unconnected-(U2-~{RXT}{slash}GPIO.1-Pad18)")
-			(class "Default")
-			(node
-				(ref "U2")
-				(pin "18")
-				(pinfunction "~{RXT}/GPIO.1_18")
-				(pintype "bidirectional+no_connect")
-			)
-		)
-		(net
-			(code "68")
+			(code "78")
 			(name "unconnected-(U2-~{SUSPEND}-Pad11)")
 			(class "Default")
 			(node
@@ -13373,29 +14533,7 @@
 			)
 		)
 		(net
-			(code "69")
-			(name "unconnected-(U2-~{TXT}{slash}GPIO.0-Pad19)")
-			(class "Default")
-			(node
-				(ref "U2")
-				(pin "19")
-				(pinfunction "~{TXT}/GPIO.0_19")
-				(pintype "bidirectional+no_connect")
-			)
-		)
-		(net
-			(code "70")
-			(name "unconnected-(U2-~{WAKEUP}{slash}GPIO.3-Pad16)")
-			(class "Default")
-			(node
-				(ref "U2")
-				(pin "16")
-				(pinfunction "~{WAKEUP}/GPIO.3_16")
-				(pintype "bidirectional+no_connect")
-			)
-		)
-		(net
-			(code "71")
+			(code "79")
 			(name "unconnected-(U4-IO2-Pad24)")
 			(class "Default")
 			(node
@@ -13406,7 +14544,7 @@
 			)
 		)
 		(net
-			(code "72")
+			(code "80")
 			(name "unconnected-(U4-IO4-Pad26)")
 			(class "Default")
 			(node
@@ -13417,7 +14555,7 @@
 			)
 		)
 		(net
-			(code "73")
+			(code "81")
 			(name "unconnected-(U4-IO5-Pad29)")
 			(class "Default")
 			(node
@@ -13428,7 +14566,7 @@
 			)
 		)
 		(net
-			(code "74")
+			(code "82")
 			(name "unconnected-(U4-IO12-Pad14)")
 			(class "Default")
 			(node
@@ -13439,7 +14577,7 @@
 			)
 		)
 		(net
-			(code "75")
+			(code "83")
 			(name "unconnected-(U4-IO13-Pad16)")
 			(class "Default")
 			(node
@@ -13450,7 +14588,7 @@
 			)
 		)
 		(net
-			(code "76")
+			(code "84")
 			(name "unconnected-(U4-IO15-Pad23)")
 			(class "Default")
 			(node
@@ -13461,7 +14599,7 @@
 			)
 		)
 		(net
-			(code "77")
+			(code "85")
 			(name "unconnected-(U4-IO17-Pad28)")
 			(class "Default")
 			(node
@@ -13472,7 +14610,7 @@
 			)
 		)
 		(net
-			(code "78")
+			(code "86")
 			(name "unconnected-(U4-IO18-Pad30)")
 			(class "Default")
 			(node
@@ -13483,7 +14621,7 @@
 			)
 		)
 		(net
-			(code "79")
+			(code "87")
 			(name "unconnected-(U4-IO23-Pad37)")
 			(class "Default")
 			(node
@@ -13494,7 +14632,7 @@
 			)
 		)
 		(net
-			(code "80")
+			(code "88")
 			(name "unconnected-(U4-IO25-Pad10)")
 			(class "Default")
 			(node
@@ -13505,7 +14643,7 @@
 			)
 		)
 		(net
-			(code "81")
+			(code "89")
 			(name "unconnected-(U4-NC-Pad17)")
 			(class "Default")
 			(node
@@ -13516,7 +14654,7 @@
 			)
 		)
 		(net
-			(code "82")
+			(code "90")
 			(name "unconnected-(U4-NC-Pad18)")
 			(class "Default")
 			(node
@@ -13527,7 +14665,7 @@
 			)
 		)
 		(net
-			(code "83")
+			(code "91")
 			(name "unconnected-(U4-NC-Pad19)")
 			(class "Default")
 			(node
@@ -13538,7 +14676,7 @@
 			)
 		)
 		(net
-			(code "84")
+			(code "92")
 			(name "unconnected-(U4-NC-Pad20)")
 			(class "Default")
 			(node
@@ -13549,7 +14687,7 @@
 			)
 		)
 		(net
-			(code "85")
+			(code "93")
 			(name "unconnected-(U4-NC-Pad21)")
 			(class "Default")
 			(node
@@ -13560,7 +14698,7 @@
 			)
 		)
 		(net
-			(code "86")
+			(code "94")
 			(name "unconnected-(U4-NC-Pad22)")
 			(class "Default")
 			(node
@@ -13571,7 +14709,7 @@
 			)
 		)
 		(net
-			(code "87")
+			(code "95")
 			(name "unconnected-(U4-NC-Pad32)")
 			(class "Default")
 			(node
@@ -13582,7 +14720,7 @@
 			)
 		)
 		(net
-			(code "88")
+			(code "96")
 			(name "unconnected-(U4-SENSOR_VN-Pad5)")
 			(class "Default")
 			(node
@@ -13593,7 +14731,7 @@
 			)
 		)
 		(net
-			(code "89")
+			(code "97")
 			(name "unconnected-(U4-SENSOR_VP-Pad4)")
 			(class "Default")
 			(node
@@ -13601,6 +14739,28 @@
 				(pin "4")
 				(pinfunction "SENSOR_VP_4")
 				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "98")
+			(name "unconnected-(U5-PGOOD-Pad12)")
+			(class "Default")
+			(node
+				(ref "U5")
+				(pin "12")
+				(pinfunction "PGOOD_12")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "99")
+			(name "unconnected-(U5-SYNCH-Pad7)")
+			(class "Default")
+			(node
+				(ref "U5")
+				(pin "7")
+				(pinfunction "SYNCH_7")
+				(pintype "passive+no_connect")
 			)
 		)
 	)

@@ -1,10 +1,10 @@
 ** Drc report for Filament_Dryer_Monitor.kicad_pcb **
-** Created on 2026-08-06T21:18:01 **
+** Created on 2026-09-17T22:18:19 **
 ** Report includes: Errors, Warnings, Exclusions **
 
 ** Found 1 DRC violations **
 [silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1500 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
+    Rule: board setup constraints silk; warning (excluded)
     @(100.0000 mm, 81.0000 mm): Segment on Edge.Cuts
     @(100.3520 mm, 108.8660 mm): Polygon of U4 on B.Silkscreen
 

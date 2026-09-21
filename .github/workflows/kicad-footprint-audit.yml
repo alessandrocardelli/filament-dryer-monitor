@@ -1,0 +1,33 @@
+name: KiCad footprint sync
+
+on:
+  push:
+    branches:
+      - redesign/buck-sourcing
+    paths:
+      - .github/workflows/kicad-footprint-audit.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: redesign/buck-sourcing
+      - name: Apply and validate verified footprints
+        run: python .github/scripts/apply_footprints.py
+      - name: Commit footprint pass
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add hardware/*.kicad_sch hardware/libs/FilamentDryer.pretty hardware/libs/SamacSys_Parts.pretty/SOP65P640X120-17N.kicad_mod docs/BUCK_L7987L_DESIGN.md
+          git commit -m "Assign verified footprints for sourced components"
+          git push origin HEAD:redesign/buck-sourcing
