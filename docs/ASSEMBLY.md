@@ -4,19 +4,15 @@ Hand assembly with hot air and a fine-tip iron. This document covers only the st
 assembly order carries engineering meaning. Ordinary reflow/soldering sequence is not
 prescribed here.
 
-## Before assembly / fabrication release
+## Before assembly — current fabrication and purchasing checkpoint
 
-Do not use an in-progress PCB revision for assembly merely because routing is complete or DRC has no errors.
+The current prototype fabrication-source revision is `74a3000` (2026-09-17). Its stored ERC reports 0 errors / 0 warnings; DRC reports 0 active errors / 0 unconnected pads, plus one explicitly excluded U4 silkscreen/board-edge warning. The bare-board Gerbers/drills have been uploaded to JLCPCB and its CAM production file was reviewed, but manufacturing/shipping and physical assembly have not been independently confirmed by this repository. **Do not assemble from an earlier AP66200/CP2102N-era production BOM.** The suffixed `hardware/production/Filament_Dryer_Monitor_bom.csv`, current netlist and live `BOM TME` represent the released design.
 
-For the current 2026-09-16 hardware checkpoint, fabrication release still requires the gates in docs/PROJECT_STATE.md to be closed, especially:
+As of 2026-09-21 the TME component order has been placed but receipt is not confirmed. C11 (Samsung `CL21A226MAYNNNE`, 22 µF / 25 V X5R / 0805, on `3V3_MCU`) is **unresolved**: TME is checking for its unlocated stock unit. Do not claim C11 has been supplied, omit it from the completed build, or substitute an alternate until the actual part and electrical suitability have been confirmed. An alternative 16 V TDK part was only discussed with TME, **not ordered or approved for the build**. First-article bring-up should wait until the required rail decoupling and the safety-related off-board items are accounted for.
 
-- regenerate netlist/ERC after the latest schematic edit;
-- review the remaining DRC warnings;
-- regenerate final fabrication/assembly outputs from the same released revision.
+Before population, physically inventory the items marked `In casa` in the sheet (J5 plus 13 resistor rows), compare supplier deliveries with the order confirmation, and identify any missing off-board display/sensor/cutoff/cabling parts. One ordered parts set is sufficient for **one assembled PCB**, even if more bare PCBs are fabricated.
 
-The U5 exposed-pad implementation is already closed for the planned hand-assembly process; see the section below and decision D019.
-
-Once a fabrication revision is released, the R5 sequence below remains mandatory for first power-up.
+The U5 exposed-pad design remains closed for the planned manual assembly method (see D019). The **R5 assembly sequence below is mandatory** for the first power-up.
 
 ## U5 exposed pad — hand-assembly implementation
 
@@ -57,7 +53,10 @@ Background: `docs/BUCK_L7987L_DESIGN.md` section 11.3, decision D014.
 Step 3 is the point of the whole procedure: it separates "the buck does not work" from
 "AutoEN is shutting down a working buck".
 
-## Off-board items
+## Off-board items and first-article inventory
 
-The thermal cutoff (~100–110 °C) is off-board, in series on the HEATER+ wire. It is not a
-PCB component and must not be omitted when wiring the assembly into the enclosure.
+The thermal cutoff (~100–110 °C) is **off-board, in series with HEATER+**, and must not be omitted when wiring the assembly into the enclosure. Its physical procurement/installation and open-circuit behavior must be checked before the heater is enabled.
+
+The **94 PCB-mounted references** in the live `BOM TME` do not include the separate **1.54-inch SSD1309 OLED for J4**, **SHT45 humidity/temperature sensor for J3**, the thermal cutoff, mating JST housings/contacts/cables, heater/fan/NTC wiring or enclosure/mounting parts. Verify exact in-hand availability and pinout/fit rather than assuming that a complete PCB BOM covers the assembled dryer.
+
+For the first board, verify the actual mating J5 connector's polarization and fit, J4 OLED form factor, J3 SHT45 harness, and electrical isolation/current paths before energizing the heater. Do not enable normal heater operation until firmware NTC fault handling and independent thermal cutoff protections have been tested.
