@@ -4,7 +4,7 @@ Custom ESP32-based controller board that retrofits an **eSUN eBox** filament dry
 
 The PCB physically replaces the original front panel: display and buttons sit on the front face of the board, while the main electronics are on the back.
 
-> **Current status — 2026-09-16:** hardware work is on branch **pcb/l7987l-layout**. Latest hardware checkpoint before this documentation refresh: **9da46e7953f801073882fd1934802fa8ace1f1c2** (updated layout). L7987L + AutoEN routing is electrically complete enough for the current DRC to report **0 errors and 0 unconnected pads**. USB routing is configured for a **90 Ω differential target** on B.Cu/In2.Cu using **0.20 mm width / 0.25 mm gap**. U5 exposed-pad thermal/GND implementation is closed for the planned hand-assembly flow with six 0.60/0.30 mm GND vias arranged 3 above + 3 below the EP, outside the solderable pad. The board is **not manufacturing-ready** because stored netlist/ERC must be regenerated after the latest MCU edit, current DRC warnings need review, and production outputs must be regenerated/reconciled before release.
+> **Current status — 2026-09-21:** hardware branch **pcb/l7987l-layout**, fabrication-source checkpoint **`74a3000127371ac6c3b3b7197f9036dec5b58eef`** (2026-09-17, production files). The stored current ERC (2026-09-17) reports **0 errors / 0 warnings**; DRC reports **0 active errors / 0 unconnected pads** and one consciously excluded U4 silkscreen/board-edge warning. The final Gerbers/drills were uploaded to JLCPCB; a CAM production file was received and reviewed for the **bare PCB, hand-assembly** prototype. The exact factory production/shipping status is not tracked in GitHub. Component procurement: TME order placed 2026-09-20; **C11 is unresolved pending TME's warehouse search**. See `docs/PROJECT_STATE.md` and `hardware/docs/PROCUREMENT.md`.
 
 For a new work session, read AGENTS.md, docs/PROJECT_STATE.md, docs/DECISIONS.md and docs/TODO.md before changing the design.
 
@@ -35,7 +35,7 @@ This is a personal project and not a certified product.
 
 ## Hardware
 
-The board is a 4-layer KiCad 10 design intended for JLCPCB fabrication/assembly. TME is the preferred prototype component supplier. The current KiCad schematic and PCB on the active branch are the authoritative implementation.
+The board is a 4-layer KiCad 10 design intended for JLCPCB **bare-board fabrication and manual component assembly**. TME is the preferred prototype component supplier. The current KiCad schematic and PCB on the active branch are the authoritative implementation.
 
 ### Main blocks
 
@@ -49,7 +49,7 @@ The board is a 4-layer KiCad 10 design intended for JLCPCB fabrication/assembly.
 | Humidity/temp | SHT45 | I²C 0x44 |
 | Display | SSD1309 OLED 128×64 | I²C 0x3C |
 | Heater driver | IRLR3636TRPBF | 60 V DPAK N-MOSFET, about 1.6 A heater load |
-| Fan driver | CJ2310 | 24 V fan low-side switch |
+| Fan driver | IRLML2060TRPBF | 24 V fan low-side switch |
 | Heater temperature | Integrated ~82 kΩ NTC | GPIO34 / ADC1, R28 = 47 kΩ, C19 = 100 nF |
 | Buzzer | Passive buzzer + NPN | Defined startup state with base-emitter pull-down |
 
@@ -67,7 +67,7 @@ Key implemented parts/values:
 | U1 | TLV1701AIDBVR | AutoEN comparator |
 | Q7 | MMBT3904 | AutoEN EN pull-down |
 | L1 | SRN6045-150M, 15 µH | Inductor |
-| D7 | STPS2L60A | Catch diode |
+| D7 | PMEG6030EP,115 | Catch diode, 60 V / 3 A Schottky |
 | C1 | 10 µF / 100 V X7S | Main local input ceramic |
 | C3 | 1 µF / 100 V X7S | Current local VIN/VCC bypass present in source |
 | C6 | 100 nF | BOOT-LX bootstrap |
@@ -97,22 +97,17 @@ The L7987L + AutoEN engineering review completed on **2026-09-04**. The accepted
 
 These are engineering/simulation results; physical validation remains required.
 
-The stored hardware/ERC.rpt currently reports **1 power_pin_not_driven error on external GND and 0 warnings**, but it predates the latest MCU schematic edit and must be regenerated. The existing GitHub ERC workflow contains the reviewed waiver logic, but its automatic push trigger currently names redesign/buck-sourcing, not the active pcb/l7987l-layout branch.
+The current `hardware/ERC.rpt` (2026-09-17) reports **0 errors and 0 warnings**. The existing GitHub ERC workflow contains the reviewed waiver logic, but its automatic push trigger currently names redesign/buck-sourcing, not the active pcb/l7987l-layout branch.
 
 ### Current PCB integration
 
-The current board at hardware checkpoint 9da46e7 contains the L7987L stage and AutoEN block on **B.Cu**. The old AP66200 stage and /Power/VCC_AP66200 are absent.
+The current board at hardware checkpoint `74a3000` contains the L7987L stage and AutoEN block on **B.Cu**. The old AP66200 stage and /Power/VCC_AP66200 are absent.
 
-The fresh 2026-09-16 DRC reports:
-
-- **0 errors**;
-- **0 unconnected pads**;
-- 14 active warnings;
-- 1 excluded warning.
+The saved 2026-09-17 DRC reports **0 active errors, 0 active warnings, 0 unconnected pads** and one **excluded** U4 B.Silkscreen-to-board-edge warning.
 
 Local external copper/zones are present for 24V_PROT, /Power/3V3_BUCK, 3V3_MCU, HEATER_SW, LX and GND. Both internal layers remain solid GND.
 
-Routing connectivity is therefore complete, but the final engineering/manufacturing review remains open.
+The fabrication package has progressed to JLCPCB CAM review; this does **not** constitute physical validation of the assembled hardware.
 
 ### U5 exposed pad — resolved for planned hand assembly
 
@@ -146,7 +141,7 @@ USB differential routing:
 - U3 channel 1↔6 carries D+, channel 3↔4 carries D−;
 - the short Type-C duplicated D+ fanout uses two signal vias and a short F.Cu bridge, with a nearby GND stitching via; D− stays on B.Cu.
 
-The stored netlist is stale relative to the last MCU edit and still contains the pre-correction J2 D+/D− assignment. Regenerate it before using it for sign-off.
+The stored netlist was regenerated on 2026-09-17 after the MCU correction; USB pinout still requires first-board functional verification.
 
 ### Ground planes and stackup
 
@@ -190,7 +185,7 @@ USB data nets are USB_D+, USB_D−, USB_CONN_D+, USB_CONN_D−.
 
 The working purchasing BOM is the Google Sheet **Filament Dryer Monitor — BOM finale Mouser**, tab **BOM TME**.
 
-The live **BOM TME** was rechecked on 2026-09-16 and is already consistent with the current references: C1 is the 10 µF / 100 V VIN ceramic, C3 is the 1 µF / 100 V VCC bypass, and C22 appears only in the 1 µF / 25 V row for CP2102 REGIN. No C22 duplicate remains.
+The live **BOM TME** was checked against the current production BOM/netlist: **94 mounted component references**, of which **61 items / 43 TME purchase rows** and **33 references marked in-house** for one assembled board. TME order was placed 2026-09-20. **C11 (22 µF, 25 V, X5R, 0805)** is outstanding: TME confirmed a stock-location problem and is checking its warehouse. No replacement/cancellation has been approved. The display, external sensor, heater thermal cutoff and mating cabling are outside this PCB purchasing BOM; their actual inventory remains to be checked.
 
 See [hardware/docs/PROCUREMENT.md](hardware/docs/PROCUREMENT.md).
 
@@ -266,10 +261,8 @@ hardware/*.kicad_*              Actual KiCad implementation
 
 ## Current next steps
 
-1. regenerate the netlist and ERC from the latest schematic and verify USB mapping;
-2. review/close the current DRC warnings;
-3. complete final buck, USB, antenna, high-current and mechanical PCB review;
-4. regenerate production BOM/CPL/Gerbers/drills/netlist from the same final revision and reconcile them with the already-updated live BOM TME;
-5. perform fabrication/assembly review;
-6. follow docs/ASSEMBLY.md for first power-up and AutoEN R5 sequencing;
-7. perform first-board electrical, thermal, switching-stress and fault-recovery validation.
+1. Await TME's definitive response about **C11** and confirmation that the remaining available parts will ship; do not change the KiCad MPN or procurement BOM until an actual replacement/cancellation is agreed.
+2. Verify the physical delivery, identities, quantities and packages of the TME order against the live `BOM TME` / `TME_IMPORT`; verify the stock of all items marked `In casa`.
+3. Check availability and mechanical/electrical fit of off-board items (SSD1309 OLED, SHT45 sensor, independent heater thermal cutoff, mating connectors/cables and mounting hardware).
+4. On receipt of the bare PCBs, inspect fabrication/assembly details and follow `docs/ASSEMBLY.md`; **leave R5 unfitted for initial 3.3 V bring-up**.
+5. Perform first-board buck, USB, thermal and fault-recovery testing before normal heater operation. See `docs/PROJECT_STATE.md` and `docs/TODO.md`.
