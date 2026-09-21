@@ -1,18 +1,18 @@
 # L7987L buck redesign — current design record
 
-Status: **schematic design basis accepted; PCB routing connected; release review in progress**.
+Status: **schematic design basis accepted; bare-PCB fabrication files submitted, first-board validation pending** (2026-09-21).
 
 Repository: alessandrocardelli/filament-dryer-monitor  
 Current hardware branch: **pcb/l7987l-layout**  
-Hardware checkpoint before this documentation refresh: **9da46e7953f801073882fd1934802fa8ace1f1c2** (updated layout).  
+Fabrication-source checkpoint before documentation-only commits: **74a3000127371ac6c3b3b7197f9036dec5b58eef** (2026-09-17, `Production files`).  
 Hardware Design Manual-based schematic review completed on **2026-09-04**.  
-Current PCB DRC was generated on **2026-09-16** and reports 0 errors / 0 unconnected pads, with warnings still open.
+The saved 2026-09-17 PCB DRC reports 0 active errors, 0 active warnings, 0 unconnected pads and 1 deliberately excluded U4 silkscreen/board-edge warning. The 2026-09-17 ERC reports 0 errors / 0 warnings.
 
 The actual KiCad schematic and PCB override this document if they disagree. The active electrical implementation is in hardware/Power.kicad_sch; the current board implementation is hardware/Filament_Dryer_Monitor.kicad_pcb.
 
-> **Current manufacturing-state warning**
+> **Current prototype / fabrication state**
 >
-> The PCB contains the L7987L redesign and the legacy AP66200 implementation is absent. Routing connectivity is complete and USB geometry is now configured/routed. U5 exposed-pad thermal/GND implementation is also closed for the planned hand-assembly flow with six 0.60/0.30 mm peripheral GND vias arranged 3 above + 3 below the EP and no via-in-pad. The board is still **not manufacturing-ready** because stored netlist/ERC are stale after the latest MCU edit, DRC warnings still require review, and production outputs must be regenerated/reconciled before release.
+> The board contains the L7987L redesign, not legacy AP66200. U5 retains six 0.60/0.30 mm GND vias arranged 3+3 *outside* the exposed pad for hand assembly. The current netlist/ERC/DRC and suffixed production exports are dated 2026-09-17; bare-PCB Gerbers/drills were uploaded to JLCPCB and the CAM production file was reviewed. GitHub does not verify subsequent fabrication/shipping status. No JLC PCBA or stencil was ordered/planned. C11 procurement remains unresolved with TME; the electrical design has not been changed.
 
 > **Design-review result**
 >
@@ -112,7 +112,7 @@ Current source implementation:
 | U1 | TLV1701AIDBVR | AutoEN comparator |
 | Q7 | MMBT3904 | AutoEN EN pull-down |
 | L1 | SRN6045-150M, 15 µH | Buck inductor |
-| D7 | STPS2L60A | Catch Schottky |
+| D7 | PMEG6030EP,115 | Catch Schottky; Nexperia 60 V / 3 A CFP5/SOD-128 |
 
 ### Buck and AutoEN capacitors
 
@@ -192,7 +192,7 @@ At ~516 kHz over the 21.6–26.4 V design range:
 - normal peak at 1.0 A load ~1.18–1.19 A;
 - with L at -20%, normal high-line peak ~1.23 A.
 
-D7 = STPS2L60A, 60 V / 2 A Schottky. Its DC reverse-voltage rating covers the continuous input envelope, but first-board probing must still verify switching-node ringing and temperature.
+The actual released D7 is **Nexperia PMEG6030EP,115, 60 V / 3 A Schottky**, CFP5/SOD-128 (KiCad MPN `PMEG6030EP.115`). Earlier STPS2L60A references in design notes are historical and **not the populated source**. First-board probing must still verify LX ringing, D7 temperature and switching stress; the rating does not by itself establish measured margin.
 
 ---
 
@@ -369,44 +369,36 @@ bring-up; R30 then holds the Q7 base at ground, Q7 stays off and EN is free. See
 
 ## 12. ERC / schematic-regression state
 
-The stored hardware/ERC.rpt dated **2026-09-16 18:13:37** contains:
+The current saved `hardware/ERC.rpt` is dated **2026-09-17 22:18:03** and reports **0 errors / 0 warnings**. The regenerated `hardware/Filament_Dryer_Monitor.net` is dated 2026-09-17 21:13:01 and includes the corrected USB-C J2 D+/D− mapping. The older 2026-09-16 external-GND error and reversed netlist were pre-release checkpoints and are not current-source findings.
 
-- 1 power_pin_not_driven error on #PWR02 GND;
-- 0 warnings.
+The current ERC report lists specific ignored check classes. The repository workflow/branch trigger should be checked before assuming an automatic ERC run on future feature-branch hardware changes. A documentation-only commit does not change the validated KiCad source or require a fresh hardware report.
 
-The single GND item remains the reviewed KiCad modeling condition caused by external power entering through a passive connector.
-
-However, the report predates the latest MCU schematic correction committed in hardware checkpoint 9da46e7, so it is **not the final ERC for the present schematic**. Regenerate ERC after the current schematic is frozen.
-
-The repository workflow still contains explicit waiver logic for only that GND error and allows the historical warning classes only to decrease. Its automatic push trigger currently covers branch redesign/buck-sourcing, not pcb/l7987l-layout. Until that trigger is changed or the work is merged into a covered branch, run ERC explicitly on the active branch.
-
-**Gate:** the original buck-design ERC review remains accepted, but a fresh current-schematic ERC is a release requirement.
+**Gate:** schematic release evidence is recorded; electrical and thermal behavior remains to be verified on the assembled prototype.
 
 ## 13. Sourcing / footprint state
 
-TME sourcing, manufacturer/MPN synchronization and the main footprint audit remain the purchasing basis, but the live BOM now requires one reconciliation pass before release.
+The current released purchasing BOM is the live Google Sheet `BOM TME`, reconciled against the **suffixed** `hardware/production/Filament_Dryer_Monitor_bom.csv` and the current schematic netlist. The legacy unsuffixed `hardware/production/bom.csv` still describes the previous AP66200/CP2102N build and must **not** be used for this design. The old suffixed export's `LCSC Part #` heading is not a reliable TME code; use `BOM TME` column `Codice TME`.
 
-Important current footprint/manufacturing facts:
+Important current package/footprint facts:
+- C5 Panasonic EEEFK1H101P -> custom Panasonic size-F footprint.
+- J2 GCT USB4216-03-A -> custom USB-C footprint.
+- L1 SRN6045-150M -> custom Bourns footprint.
+- U2 CP2102-GM -> custom QFN28 footprint with 0.95 × 0.28 mm perimeter pads, +0.06 mm mask expansion, 3.25 × 3.25 mm EP and 3 × 3 array of 0.9 mm paste apertures.
+- SW1–SW6 GCT SWT0110-020010SSA -> custom footprint.
+- BZ1 LD-BZEL-T67-0808 -> custom footprint with conservative terminal lands.
+- U5 L7987L -> SamacSys_Parts:SOP65P640X120-17N HTSSOP-16 with exposed pad and six nearby peripheral ground/thermal vias; no via-in-pad for **U5**.
 
-- C5 Panasonic EEEFK1H101P -> custom Panasonic size-F footprint;
-- J2 GCT USB4216-03-A -> custom USB-C footprint;
-- L1 SRN6045-150M -> custom Bourns footprint;
-- U2 CP2102-GM -> custom QFN28 footprint now using 0.95 × 0.28 mm perimeter pads, +0.06 mm footprint mask expansion, 3.25 × 3.25 mm EP and a 3 × 3 array of 0.9 mm paste apertures;
-- SW1–SW6 GCT SWT0110-020010SSA -> custom footprint;
-- BZ1 LD-BZEL-T67-0808 -> custom footprint with conservative terminal lands;
-- U5 L7987L -> SamacSys_Parts:SOP65P640X120-17N, HTSSOP-16 exposed pad.
+Current CP2102 REGIN bypass is C22 = GCM188R71E105KA64J, 1 µF / 25 V / X7R / 0603. VIN/VCC bypass choices are C1 10 µF / 100 V and C3 1 µF / 100 V; no C22 duplicate.
 
-Current CP2102 REGIN bypass is C22 = GCM188R71E105KA64J, 1 µF / 25 V / X7R / 0603.
+**Current supply-only exception, not a circuit change:** one-board TME order placed 2026-09-20. C11 = Samsung `CL21A226MAYNNNE`, 22 µF / 25 V / X5R / 0805 on `3V3_MCU` is **not confirmed available for dispatch**; TME is investigating an unlocatable warehouse item. A TDK 22 µF / 16 V / X5R / 0805 equivalent (`C2012X5R1C226M125AC`, TME `C2012X5R1C226MAC`) has been discussed **only as a possible substitution**. No product swap or cancellation is authorized. Keep C11 in the final hand assembly and wait for TME's answer; check usable capacitance at 3.3 V before changing the sourced MPN.
 
-The live BOM TME was rechecked on 2026-09-16 and is already consistent: C22 appears only in the 1 µF / 25 V CP2102 REGIN row; C3 is the sole 1 µF / 100 V part. No C22 reference conflict remains.
+The U5 exposed-pad strategy remains closed for **manual** prototype assembly: lightly pre-tin the pad, use flux and hot air. If the assembly flow later switches to stencil/reflow or external PCBA, reopen solder-paste/via-treatment decisions explicitly.
 
-U5 exposed-pad implementation is closed for the planned hand-assembly process: six 0.60/0.30 mm GND vias sit immediately outside pad 17 in two rows of three, with no via-in-pad. The prototype soldering method is light pre-tin + flux + hot air, so the footprint's full B.Paste shape is not a release blocker unless the assembly process changes to stencil/reflow or external PCBA.
-
-See hardware/docs/PROCUREMENT.md for the sourcing/manufacturing record.
+The OLED, off-board SHT45, independent heater cutoff, cabling/mating JST parts and mechanical fasteners are not PCB-mounted BOM lines; check them separately. Full ordering details and open work: `hardware/docs/PROCUREMENT.md`.
 
 ## 14. PCB synchronization / routing checkpoint
 
-Verified at hardware checkpoint 9da46e7:
+Verified at released hardware checkpoint `74a3000`:
 
 - current PCB contains U5 = L7987L on B.Cu;
 - old AP66200 and /Power/VCC_AP66200 are absent;
@@ -417,7 +409,7 @@ Verified at hardware checkpoint 9da46e7:
 
 Therefore schematic-to-board integration and basic routing connectivity are no longer open tasks. The remaining gate is engineering/manufacturing review.
 
-The latest MCU schematic was edited after the stored netlist was generated. The current PCB has the corrected Type-C D+/D− mapping, while the stored netlist still shows the previous reversed connector labels. Regenerate the netlist before final connectivity sign-off.
+The stored netlist was regenerated on 2026-09-17 after the MCU correction and now maps J2 A6/B6 to D+ and A7/B7 to D−. Verify USB functionality on the assembled board; there is no current-source reversed-netlist blocker.
 
 ## 15. Current stackup and grounding decision
 
@@ -583,36 +575,19 @@ Avoid creating a large LX test pad. If LX probing is needed, use an existing swi
 
 ## 20. DRC / manufacturing state
 
-A fresh DRC was generated on **2026-09-16 20:12:47** from the current routed PCB.
+The saved `hardware/DRC.rpt` was generated on **2026-09-17 22:18:19** from the released routed PCB: **0 active errors / 0 active warnings / 0 unconnected pads / 0 footprint errors**, plus one **excluded** U4 B.Silkscreen-to-board-edge `silk_edge_clearance` item. The old 2026-09-16 list of 14 active warnings is obsolete.
 
-Current result:
+Current suffixed production BOM/position files and final Gerbers/drills were generated for the release-source checkpoint `74a3000`. The final Gerbers/drills were uploaded to JLCPCB for **bare-PCB** production; a supplier CAM/production ZIP was received and compared with the uploaded Gerbers. This review does not by itself confirm subsequent approval, manufacturing or shipment, and does not replace incoming physical inspection or prototype validation.
 
-- **0 DRC errors**;
-- **0 unconnected pads**;
-- 14 active warnings;
-- 1 excluded warning.
-
-Active warnings:
-
-- library-footprint mismatch: J4, U4, J6, J1, J5, J3;
-- eight BZ1 silkscreen-over-copper warnings.
-
-Excluded warning:
-
-- ESP32 silkscreen clipping the board edge.
-
-The report is now useful evidence that current routing is connected and free of DRC errors, but release still requires deliberate review of the warnings and a repeat DRC after any remaining hardware changes.
-
-Production Gerbers, drill files, position/CPL data, BOM exports and netlist remain stale until regenerated from the final released revision.
+No hardware change is made by this documentation update. Do not regenerate or overwrite the released fabrication outputs merely to reflect a later supplier replacement of one same-footprint component; record an actual assembly substitution explicitly and require fresh design outputs only if the hardware itself changes.
 
 ## 21. Next implementation sequence
 
-1. Regenerate netlist and ERC from the latest schematic; verify USB mapping.
-2. Review/fix or deliberately accept the current DRC warnings.
-3. Complete final buck current-loop/quiet-return review and full-board USB/antenna/high-current/mechanical review.
-4. Regenerate the final production outputs from the same released revision and reconcile them with the live BOM TME.
-5. Perform final fabrication/assembly review.
-6. Follow `docs/ASSEMBLY.md` for R5 sequencing and first power-up.
-7. Validate 3.3 V regulation/transients, LX ringing/stress, temperatures, current-limit behavior and AutoEN shutdown/recovery timing.
+1. Wait for the TME warehouse investigation of C11 and confirm dispatch of the other ordered components. Resolve any substitute/refund/reorder cost **before** changing the purchasing source.
+2. Audit actual delivered parts and the 33 component references marked in-house; verify availability of off-board OLED, SHT45, thermal cutoff, cabling/mating connectors and mounting hardware.
+3. Inspect the delivered bare board (JLCPCB status/stackup, mask, drill and component fit), especially U2 solderability and U4 antenna edge.
+4. Hand assemble with **R5 initially unpopulated**; verify 3.3 V before installing R5 and enabling AutoEN.
+5. Perform first-board USB, buck/load-transient, LX ringing, D7/U5/L1 thermal and current-limit/AutoEN tests. Complete independent heater TCO/NTC safety validation before normal heating.
+6. Any changes resulting from real-board tests belong to a new documented revision, not a silent rewrite of the already submitted fabrication checkpoint.
 
-**Current project gate:** routing connectivity, USB geometry, VIN/VCC bypass selection and the U5 exposed-pad thermal/GND implementation are closed for the current hand-assembly plan. **Fresh current-schematic netlist/ERC, DRC-warning review, final engineering review and release-output regeneration are the next gates.**
+**Current project gate:** the accepted L7987L + AutoEN electrical decisions and the 2026-09-17 hardware release remain the source of truth. The open tasks are **physical procurement, assembly and testing**; C11 is the one supplier-disclosed unlocated PCB-mounted part, not a resolved substitution.
