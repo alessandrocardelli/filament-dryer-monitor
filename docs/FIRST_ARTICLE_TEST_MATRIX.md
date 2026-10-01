@@ -195,3 +195,7 @@ The staged list above assigns all 94 production-BOM references exactly once:
 Total: **94**.
 
 Before using the list physically, perform one final cross-check against the delivered components and received PCB. Population order inside each gate should favor low-profile passives before large/hot-air parts where practical, but electrical completeness at the gate boundary is mandatory.
+
+## Bare-board preflight result — 2026-10-01
+
+Reported passed before soldering: `JACK_24V_RAW`, `24V_PROT`, `3V3_BUCK` and `3V3_MCU` showed no short to GND; FB1 pad 1-to-pad 2 was open with FB1 absent; J1 pad 3-to-TP1 was open with F1/Q1 absent. Proceed to Gate 1A.
