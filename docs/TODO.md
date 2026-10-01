@@ -4,6 +4,8 @@ Current phase: **received bare-PCB prototype, incoming inspection and hand assem
 
 ## Completed / recorded
 
+- [x] Bare-board rail/isolation preflight reported passed on 2026-10-01 before soldering: no short to GND on raw 24 V, protected 24 V, buck 3.3 V or MCU 3.3 V; FB1 pads isolated; J1 raw input isolated from TP1 with F1/Q1 absent.
+
 - [x] Bare PCBs and component shipment reported received on 2026-10-01; physical inspection and package/quantity reconciliation are still pending and must not be treated as completed.
 
 - [x] L7987L + AutoEN design basis, USB routing, two solid inner GND planes and U5's six peripheral thermal/GND vias accepted in `docs/DECISIONS.md`.
