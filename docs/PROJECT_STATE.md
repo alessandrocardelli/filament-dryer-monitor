@@ -215,3 +215,7 @@ Off-board OLED/J4, SHT45/J3, independent heater cutoff, mating housings/crimps/c
 4. Inspect the received bare PCBs for mask, drills, component fit, exposed pads and assembly clearances; reconcile the received component packages/quantities against the released BOM before soldering.
 5. Hand-assemble and bring up the first PCB following `docs/ASSEMBLY.md` (**R5 initially not populated**); verify 3.3 V, USB, sensor/display, buck temperature and fault handling before heater operation.
 6. Keep experimental PCB changes and future-revision review separate from the already submitted fabrication revision; do not retroactively rewrite the released Gerber/netlist/BOM checkpoint without new evidence and a deliberate revision.
+
+## 2026-10-01 bare-board preflight
+
+Bare-board preflight continuity/isolation checks were reported passed before assembly: no short to GND was observed on `JACK_24V_RAW`, `24V_PROT`, `3V3_BUCK` or `3V3_MCU`; the unpopulated FB1 pads were isolated from each other; and J1 pin 3 was isolated from TP1 with F1/Q1 still unpopulated. Exact resistance values were not recorded. Gate 1A assembly may proceed.
