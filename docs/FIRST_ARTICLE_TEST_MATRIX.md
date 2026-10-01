@@ -60,7 +60,7 @@ This grouping covers the **94 BOM-mounted references**. Test points TP1-TP7 and 
 
 Populate:
 
-`J1, F1, Q1, D1, D2, R3, C1, C2, C5, TP1, TP3`
+`J1, F1, Q1, D1, D2, R3, C5`
 
 Hold:
 
@@ -68,13 +68,13 @@ Hold:
 - Do not connect external heater/fan/sensor/display loads.
 - U5 buck group is added only at Gate 1B.
 
-Rationale from netlist: J1/F1/Q1 form the raw-to-protected 24 V path; D1/R3 are the Q1 gate network; D2 and C1/C2/C5 are on the protected input/GND rail. TP1 measures `24V_PROT`; TP3 is GND.
+Rationale from source/netlist: J1/F1/Q1 form the raw-to-protected 24 V path; D1/R3 are the Q1 gate network; D2 is the protected-rail TVS and C5 is the protected-rail bulk capacitor. TP1 and TP3 are bare-PCB test pads, not parts to populate. C1 is `Cin_buck1` and belongs with the buck stage; C2 is `C_autoen_vdd1` and belongs with the AutoEN stage.
 
 ### Gate 1B — complete isolated L7987L buck
 
 Add:
 
-`U5, L1, D7, C3, C4, C6, C8, C9, C10, C20, C21, R4, R29, R33, R34, R35, R36`
+`U5, L1, D7, C1, C3, C4, C6, C8, C9, C10, C20, C21, R4, R29, R33, R34, R35, R36`
 
 Also populate the EN default network needed with AutoEN disabled:
 
@@ -84,6 +84,7 @@ Also populate the EN default network needed with AutoEN disabled:
 
 Reasoning:
 
+- C1 is the local buck input capacitor (`Cin_buck1`) on `24V_PROT`/GND.
 - C3 is the U5 VCC bypass on `24V_PROT`/GND.
 - C4 = soft-start, R4 = FSW, R29 = ILIM.
 - C6/D7/L1 form the bootstrap/switch/output path.
@@ -96,9 +97,9 @@ Initial measurement: `3V3_BUCK` at C10 pad 1 or C21 pad 1 relative to TP3/GND. D
 
 ### Gate 2 — AutoEN, then 3V3_MCU distribution
 
-First add the complete AutoEN sensing path:
+First add the complete AutoEN sensing/supply-decoupling path:
 
-`U1, R1, R2, R6`
+`U1, R1, R2, R6, C2`
 
 Then, **only after the isolated buck has passed**, add `R5` and repeat the buck-start check. This preserves D014.
 
@@ -181,9 +182,9 @@ Do **not** energize the heater merely because this group is populated. Heater lo
 
 The staged list above assigns all 94 production-BOM references exactly once:
 
-- Gate 1A: 10
-- Gate 1B: 21
-- Gate 2: 13
+- Gate 1A: 7
+- Gate 1B: 22
+- Gate 2: 14
 - Gate 3: 16
 - Gate 4A: 6
 - Gate 4B: 10
