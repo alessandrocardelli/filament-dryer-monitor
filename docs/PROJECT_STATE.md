@@ -1,6 +1,6 @@
 # Project state
 
-Checkpoint date: **2026-09-21**  
+Checkpoint date: **2026-10-01**  
 Active hardware branch: **`pcb/l7987l-layout`**  
 Fabrication-source checkpoint (before documentation updates): **`74a3000127371ac6c3b3b7197f9036dec5b58eef`** (`Production files`, 2026-09-17). Documentation-only commits after this checkpoint do not change the released hardware.
 
@@ -8,7 +8,7 @@ Fabrication-source checkpoint (before documentation updates): **`74a3000127371ac
 
 The L7987L + AutoEN revision was released for a **bare-board, manual-assembly prototype**. The stored current KiCad reports date from 2026-09-17: ERC **0 errors / 0 warnings**; DRC **0 active errors / 0 unconnected pads / 0 footprint errors**, with **one excluded** U4 B.Silkscreen-to-board-edge warning. The stored netlist was regenerated on 2026-09-17 and has the corrected USB-C D+/D− mapping. The released production BOM and position file are `hardware/production/Filament_Dryer_Monitor_bom.csv` and `hardware/production/Filament_Dryer_Monitor_positions.csv`; the unsuffixed `hardware/production/bom.csv` / `positions.csv` are legacy AP66200-era exports and **must not** be used for the current design.
 
-Gerbers/drills were uploaded to JLCPCB for bare-PCB production. Its production/CAM package was received and checked against the uploaded Gerbers in the order discussion. The latest physical fab, production-approval and shipment status are **not recorded in GitHub** and should not be inferred from the existence of that package. No PCBA/stencil service is planned; all components are to be hand-assembled.
+Gerbers/drills were uploaded to JLCPCB for bare-PCB production. Its production/CAM package was received and checked against the uploaded Gerbers in the order discussion. **On 2026-10-01 the user reported that the bare PCBs and component shipment had arrived.** Incoming inspection, package/quantity reconciliation and first-article assembly have not yet been completed or recorded. No PCBA/stencil service is planned; all components are to be hand-assembled.
 
 **Procurement (2026-09-21):** the live `BOM TME` reconciles to the current production BOM/netlist with 94 PCB-mounted component references for one assembled board: 61 references in 43 TME purchase rows and 33 references on 14 rows marked `In casa`. TME order was placed 2026-09-20; shipment and receipt are unconfirmed. **C11, Samsung CL21A226MAYNNNE (22 µF / 25 V X5R / 0805), is an open supply issue.** The order confirmation listed it as available; TME later reported its warehouse unit could not be located and is searching for it. TME offered a cancellation/refund or reordering route, but no cancellation, replacement or revised PCB MPN has been authorized. TME's later "week 48/2026" delivery notification does not establish that the rest of the order is delayed; dispatch of other in-stock items remains **unconfirmed**.
 
@@ -212,6 +212,6 @@ Off-board OLED/J4, SHT45/J3, independent heater cutoff, mating housings/crimps/c
 1. Wait for TME's definitive result of the C11 warehouse search and a clear statement about shipping all other available order lines; do not cancel/reorder or silently replace the BOM until agreed.
 2. Reconcile received TME packages against `BOM TME`, the confirmed order quantities and all 33 in-house refs. In particular, confirm the actual capacitor supplied for C11 before soldering.
 3. Verify physical availability, pinout and fit of J4 OLED, external SHT45, thermal cutoff, mating connectors/cables and enclosure fasteners. The procurement sheet does not establish these are in house.
-4. Track JLCPCB bare-board production/shipment outside GitHub; inspect the actual PCBs for mask, drills, component fit, exposed pads and assembly clearances on arrival.
+4. Inspect the received bare PCBs for mask, drills, component fit, exposed pads and assembly clearances; reconcile the received component packages/quantities against the released BOM before soldering.
 5. Hand-assemble and bring up the first PCB following `docs/ASSEMBLY.md` (**R5 initially not populated**); verify 3.3 V, USB, sensor/display, buck temperature and fault handling before heater operation.
 6. Keep experimental PCB changes and future-revision review separate from the already submitted fabrication revision; do not retroactively rewrite the released Gerber/netlist/BOM checkpoint without new evidence and a deliberate revision.
