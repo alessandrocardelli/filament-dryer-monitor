@@ -1,8 +1,10 @@
 # TODO
 
-Current phase: **released bare-PCB prototype procurement, incoming inspection and hand assembly** (2026-09-21). Active hardware branch: `pcb/l7987l-layout`. Fabrication-source checkpoint: `74a3000127371ac6c3b3b7197f9036dec5b58eef` (2026-09-17, `Production files`). This file tracks remaining work; read `AGENTS.md` and `docs/PROJECT_STATE.md` before changes. Do not silently alter the already submitted fabrication revision.
+Current phase: **received bare-PCB prototype, incoming inspection and hand assembly** (2026-10-01). Active hardware branch: `pcb/l7987l-layout`. Fabrication-source checkpoint: `74a3000127371ac6c3b3b7197f9036dec5b58eef` (2026-09-17, `Production files`). This file tracks remaining work; read `AGENTS.md` and `docs/PROJECT_STATE.md` before changes. Do not silently alter the already submitted fabrication revision.
 
 ## Completed / recorded
+
+- [x] Bare PCBs and component shipment reported received on 2026-10-01; physical inspection and package/quantity reconciliation are still pending and must not be treated as completed.
 
 - [x] L7987L + AutoEN design basis, USB routing, two solid inner GND planes and U5's six peripheral thermal/GND vias accepted in `docs/DECISIONS.md`.
 - [x] Updated schematic, 2026-09-17 netlist (correct USB-C D+/D− mapping), ERC (0 errors/0 warnings) and DRC (0 active errors/0 unconnected pads; one intentionally excluded U4 silkscreen-to-board-edge warning) are stored on the active branch.
