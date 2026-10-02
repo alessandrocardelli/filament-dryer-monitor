@@ -200,3 +200,7 @@ Before using the list physically, perform one final cross-check against the deli
 ## Bare-board preflight result — 2026-10-01
 
 Reported passed before soldering: `JACK_24V_RAW`, `24V_PROT`, `3V3_BUCK` and `3V3_MCU` showed no short to GND; FB1 pad 1-to-pad 2 was open with FB1 absent; J1 pad 3-to-TP1 was open with F1/Q1 absent. Proceed to Gate 1A.
+
+## Gate 1A powered result — 2026-10-02
+
+Gate 1A powered test passed on 2026-10-02: supply current decayed to ~0 after capacitor charging at 5 V, 12 V and 24 V; TP1 tracked the applied input voltage; Q1 gate measured 0 V at 5 V, 0 V at 12 V and 9.31 V at 24 V, consistent with D1 clamping Q1 |VGS| to about 14.7 V.
