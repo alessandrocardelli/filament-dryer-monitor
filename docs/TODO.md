@@ -4,6 +4,8 @@ Current phase: **received bare-PCB prototype, incoming inspection and hand assem
 
 ## Completed / recorded
 
+- [x] Gate 1A powered test passed on 2026-10-02: supply current decayed to ~0 after capacitor charging at 5 V, 12 V and 24 V; TP1 tracked the applied input voltage; Q1 gate measured 0 V at 5 V, 0 V at 12 V and 9.31 V at 24 V, consistent with D1 clamping Q1 |VGS| to about 14.7 V.
+
 - [x] Bare-board rail/isolation preflight reported passed on 2026-10-01 before soldering: no short to GND on raw 24 V, protected 24 V, buck 3.3 V or MCU 3.3 V; FB1 pads isolated; J1 raw input isolated from TP1 with F1/Q1 absent.
 
 - [x] Bare PCBs and component shipment reported received on 2026-10-01; physical inspection and package/quantity reconciliation are still pending and must not be treated as completed.
