@@ -183,17 +183,17 @@ Do **not** energize the heater merely because this group is populated. Heater lo
 The staged list above assigns all 94 production-BOM references exactly once:
 
 - Gate 1A: 7
-- Gate 1B: 22
-- Gate 2: 14
+- Gate 1B: 23
+- Gate 2: 15
 - Gate 3: 16
-- Gate 4A: 6
+- Gate 4A: 5 production-BOM refs + J4 (schematic/PCB display footprint, excluded from production BOM/position files)
 - Gate 4B: 10
 - Gate 4C: 5
 - Gate 4D: 3
 - Gate 5A: 5
 - Gate 5B: 5
 
-Total: **94**.
+Total production-BOM coverage: **94** references, plus **J4** as the intentional non-production-BOM display footprint.
 
 Before using the list physically, perform one final cross-check against the delivered components and received PCB. Population order inside each gate should favor low-profile passives before large/hot-air parts where practical, but electrical completeness at the gate boundary is mandatory.
 
