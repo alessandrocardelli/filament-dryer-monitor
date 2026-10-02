@@ -219,3 +219,7 @@ Off-board OLED/J4, SHT45/J3, independent heater cutoff, mating housings/crimps/c
 ## 2026-10-01 bare-board preflight
 
 Bare-board preflight continuity/isolation checks were reported passed before assembly: no short to GND was observed on `JACK_24V_RAW`, `24V_PROT`, `3V3_BUCK` or `3V3_MCU`; the unpopulated FB1 pads were isolated from each other; and J1 pin 3 was isolated from TP1 with F1/Q1 still unpopulated. Exact resistance values were not recorded. Gate 1A assembly may proceed.
+
+## 2026-10-02 Gate 1A powered bring-up
+
+Gate 1A powered test passed on 2026-10-02: supply current decayed to ~0 after capacitor charging at 5 V, 12 V and 24 V; TP1 tracked the applied input voltage; Q1 gate measured 0 V at 5 V, 0 V at 12 V and 9.31 V at 24 V, consistent with D1 clamping Q1 |VGS| to about 14.7 V.
