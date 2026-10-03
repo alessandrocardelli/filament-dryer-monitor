@@ -80,7 +80,7 @@ Also populate the EN default network needed with AutoEN disabled:
 
 `C7, Q7, R30, R31, R32`
 
-**Leave unpopulated:** `FB1, R5, U1, R1, R2, R6`.
+**Gate 1B population is exactly the 23 references listed above. Do not populate any Gate 2 parts yet. In particular leave unpopulated:** `FB1, R5, U1, R1, R2, R6, C2`.
 
 Reasoning:
 
