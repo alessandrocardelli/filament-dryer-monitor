@@ -222,3 +222,8 @@ Result: isolated buck startup and no-load regulation passed over the tested 8/12
 ## AutoEN normal-operation check — 2026-10-03
 
 After fitting R5, normal 24 V operation was rechecked with FB1 and C11 still unpopulated. Measured EN ≈ 3.1 V and 3V3_BUCK ≈ 3.3 V. Result: AutoEN does not inhibit normal buck startup/regulation under this condition.
+
+
+## 3V3_MCU rail-link check — 2026-10-03
+
+After fitting C11 and FB1, powered at 24 V. Measured input current ≈ 1.8 mA, 3V3_BUCK ≈ 3.3 V, and TP2 / 3V3_MCU ≈ 3.3 V. Result: downstream 3.3 V rail distribution passed at no load.
