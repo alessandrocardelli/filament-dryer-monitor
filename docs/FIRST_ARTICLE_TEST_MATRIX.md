@@ -217,3 +217,8 @@ Measured results:
 - 24 V input: TP1 = 24 V, EN = 3.08 V, 3V3_BUCK = ~3.3 V, measured input current ~1.5 mA with DMM in series.
 
 Result: isolated buck startup and no-load regulation passed over the tested 8/12/24 V inputs. Load, ripple, transient and thermal validation remain pending.
+
+
+## AutoEN normal-operation check — 2026-10-03
+
+After fitting R5, normal 24 V operation was rechecked with FB1 and C11 still unpopulated. Measured EN ≈ 3.1 V and 3V3_BUCK ≈ 3.3 V. Result: AutoEN does not inhibit normal buck startup/regulation under this condition.
