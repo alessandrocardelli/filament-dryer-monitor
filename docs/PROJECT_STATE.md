@@ -223,3 +223,5 @@ Bare-board preflight continuity/isolation checks were reported passed before ass
 ## 2026-10-02 Gate 1A powered bring-up
 
 Gate 1A powered test passed on 2026-10-02: supply current decayed to ~0 after capacitor charging at 5 V, 12 V and 24 V; TP1 tracked the applied input voltage; Q1 gate measured 0 V at 5 V, 0 V at 12 V and 9.31 V at 24 V, consistent with D1 clamping Q1 |VGS| to about 14.7 V.
+
+- 2026-10-03: first-board power bring-up reached the 3V3_MCU rail. With R5, C11 and FB1 fitted, 24 V input produced ~1.8 mA no-load input current, 3V3_BUCK ~3.3 V and TP2/3V3_MCU ~3.3 V. Gate 1 power-path/buck/rail-link checks passed at no load; load/ripple/thermal validation remains pending.
