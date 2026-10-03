@@ -45,3 +45,5 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 - [ ] Verify U4 antenna-edge and keepout behavior, U2 pad/USB-C solderability, buck current-loop and quiet-feedback behavior, component-edge clearances, high-current heater/fan routing and all mating/assembly constraints during initial hardware tests.
 - [ ] The one excluded U4 B.Silkscreen/edge warning remains documented, not magically fixed. If manufacturing or assembly reveals problems, record evidence and open a **new hardware revision** under `AGENTS.md` and `docs/DECISIONS.md`.
 - [ ] Review GitHub CI branch triggers before expecting automatic ERC on future feature-branch PCB changes; for any actual future schematic/PCB revision, generate fresh netlist/ERC/DRC and all fabrication exports from the same revision.
+
+- [x] First-board no-load power bring-up through 3V3_MCU rail (24 V in; ~1.8 mA; 3V3_BUCK and TP2 ~3.3 V). Load/ripple/thermal validation still pending.
