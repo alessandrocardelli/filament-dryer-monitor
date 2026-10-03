@@ -204,3 +204,16 @@ Reported passed before soldering: `JACK_24V_RAW`, `24V_PROT`, `3V3_BUCK` and `3V
 ## Gate 1A powered result — 2026-10-02
 
 Gate 1A powered test passed on 2026-10-02: supply current decayed to ~0 after capacitor charging at 5 V, 12 V and 24 V; TP1 tracked the applied input voltage; Q1 gate measured 0 V at 5 V, 0 V at 12 V and 9.31 V at 24 V, consistent with D1 clamping Q1 |VGS| to about 14.7 V.
+
+
+## Gate 1B isolated buck result — 2026-10-03
+
+Initial no-load L7987L bring-up passed with R5 and FB1 unpopulated. C11 was also still unpopulated on the downstream MCU rail.
+
+Measured results:
+
+- 8 V input: TP1 = 8 V, EN = 1.00 V, 3V3_BUCK = ~3.3 V, bench-supply indication ~4 mA.
+- 12 V input: TP1 = 12 V, EN = 1.53 V, 3V3_BUCK = ~3.3 V, measured input current ~1.5 mA with DMM in series.
+- 24 V input: TP1 = 24 V, EN = 3.08 V, 3V3_BUCK = ~3.3 V, measured input current ~1.5 mA with DMM in series.
+
+Result: isolated buck startup and no-load regulation passed over the tested 8/12/24 V inputs. Load, ripple, transient and thermal validation remain pending.
