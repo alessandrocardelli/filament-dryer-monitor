@@ -1,8 +1,11 @@
 # TODO
 
-Current phase: **received bare-PCB prototype, incoming inspection and hand assembly** (2026-10-01). Active hardware branch: `pcb/l7987l-layout`. Fabrication-source checkpoint: `74a3000127371ac6c3b3b7197f9036dec5b58eef` (2026-09-17, `Production files`). This file tracks remaining work; read `AGENTS.md` and `docs/PROJECT_STATE.md` before changes. Do not silently alter the already submitted fabrication revision.
+Current phase: **first-article hand assembly and staged bring-up** (2026-10-04). Active hardware branch: `main`. Fabrication-source checkpoint: `74a3000127371ac6c3b3b7197f9036dec5b58eef` (2026-09-17, `Production files`). This file tracks remaining work; read `AGENTS.md` and `docs/PROJECT_STATE.md` before changes. Do not silently alter the already submitted fabrication revision.
 
 ## Completed / recorded
+
+- [x] Gate 3 MCU/USB group fully populated on 2026-10-04. Unpowered rail/node checks passed; at 24 V with a 50 mA current limit the board drew ~8 mA and TP2/3V3_MCU, EN_ESP and IO0 were all 3.3 V. RESET and BOOT switches each pulled their node to ~2.5 mV while pressed. No concerning hotspot was seen on the thermal camera.
+- [ ] Resolve Gate 3 USB enumeration failure before flashing diagnostic firmware: Windows reports Code 43 / `USB\\DEVICE_DESCRIPTOR_FAILURE`, unchanged with a different USB cable and host port. VBUS, divider/reset levels, U3 orientation/power, and D+/D− continuity from J2 through U3 to U2 have passed; inspect/verify remaining CP2102/QFN and signal-integrity possibilities before rework.
 
 - [x] Gate 1A powered test passed on 2026-10-02: supply current decayed to ~0 after capacitor charging at 5 V, 12 V and 24 V; TP1 tracked the applied input voltage; Q1 gate measured 0 V at 5 V, 0 V at 12 V and 9.31 V at 24 V, consistent with D1 clamping Q1 |VGS| to about 14.7 V.
 
