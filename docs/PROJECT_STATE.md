@@ -285,3 +285,13 @@ Gate 4A hardware population has begun: J3 and R14-R17 are fitted; J4 OLED and SH
 Gate 4A unloaded I2C bus validation passed: J3 power, SDA and SCL continuity/idle levels are correct with no off-board modules attached. Next hold point is physical pinout/orientation verification of the actual SHT45 board and J3 harness before connection.
 
 Gate 4A harness status (2026-10-04): the external SHT45 is still **not connected** to J3. The sensor currently has four loose color-coded leads: red = 3V3, yellow = SCL, green = SDA, black = GND. The first-article PCB already has J3 fitted as JST PH 4-way `B4B-PH-SM4-TB` (2.00 mm pitch), with released-netlist mapping pin 1 = GND, pin 2 = SDA, pin 3 = SCL, pin 4 = 3V3_MCU. The user currently has JST-XH connector parts, which do not mate with J3. A JST-PH 2.00 mm assortment with 2/3/4/5/6-way housings, pre-crimped 22 AWG leads and female crimp terminals is under consideration; do **not** mark it ordered/received until confirmed. The intended next bench step is to terminate the SHT45 leads in a 4-way PH mating housing with the above pin order, verify orientation/continuity with a meter, and only then connect/power the sensor for the I2C diagnostic. Historical README wording mentioning a STEMMA QT cable is not the released PCB interface; the fabricated PCB interface at J3 is JST-PH.
+
+## 2026-10-04 Gate 4B buttons + diagnostic LED
+
+Gate 4B is **PASSED** on the first article. SW3, SW4, SW5 and SW6 all read approximately 3.3 V at rest and pull their respective input net to approximately 0 V when pressed.
+
+During bring-up, SW6 / BTN_DOWN initially measured about 0.91 V at rest. The cause was a poor solder joint on R24, not the switch or ESP32. Reworking R24 restored the expected ~3.3 V idle level.
+
+D3/R18 was tested by flashing a temporary GPIO26 blink sketch; the LED blinked correctly, confirming the GPIO26 -> R18 -> D3 path. Because D3 is not visible outside the enclosure, D021 defines it as an **internal diagnostic/service LED**, not a user-facing status indicator.
+
+Gate 4A remains at the JST-PH SHT45 harness hold point. Gate 4C buzzer population/testing can proceed independently while the PH harness is pending.
