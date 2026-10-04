@@ -63,3 +63,5 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 - [x] Resolve stub-stage upload failure: raising the 24 V bench current limit from 50 mA to 100 mA allowed full esptool write/verify to complete successfully in manual download mode.
 - [ ] Repeat upload at 100 mA without touching BOOT/RESET to validate DTR/RTS automatic programming entry.
+
+- [ ] Auto-program remains open: at 100 mA, no-button upload gives `No serial data received`; manual BOOT/RESET upload succeeds. Scope TP4/EN_ESP and TP5/IO0 during automatic connect to identify the DTR/RTS/Q2/Q3 failure.
