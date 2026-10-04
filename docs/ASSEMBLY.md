@@ -82,3 +82,5 @@ Before soldering, inspect the released PCB, schematic, netlist, current firmware
 
 
 **First-article auto-program bodge (2026-10-04):** the released board's Q2/Q3 auto-download truth table is reversed. The validated prototype correction is to cross the two collector destinations: Q2 collector -> EN and Q3 collector -> IO0. After this bodge, automatic esptool programming and RTS reset work without manual BOOT/RESET. This is a first-article rework only; D020 records the required source correction for the next hardware revision.
+
+**Gate 3 completion (2026-10-04):** USB/UART programming and runtime serial diagnostics passed on the first article after the validated Q2/Q3 collector-cross bodge. The diagnostic sketch runs and prints periodic `alive` messages at 115200 baud. Gate 4A I2C support is the next staged population group.
