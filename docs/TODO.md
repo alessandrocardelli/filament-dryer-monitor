@@ -65,3 +65,5 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 - [ ] Repeat upload at 100 mA without touching BOOT/RESET to validate DTR/RTS automatic programming entry.
 
 - [ ] Auto-program remains open: at 100 mA, no-button upload gives `No serial data received`; manual BOOT/RESET upload succeeds. Scope TP4/EN_ESP and TP5/IO0 during automatic connect to identify the DTR/RTS/Q2/Q3 failure.
+
+- [ ] Auto-program hardware defect identified: current Q2/Q3 DTR/RTS cross-coupled network swaps the intended EN/IO0 truth-table behavior versus Espressif reference. Agree and implement a first-article bodge, then open a deliberate schematic/PCB revision; manual BOOT/RESET programming remains usable meanwhile.
