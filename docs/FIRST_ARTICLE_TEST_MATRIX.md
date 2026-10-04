@@ -1,6 +1,6 @@
 # First-article staged population matrix — working draft
 
-Status: **pre-assembly planning only; no physical tests performed**. Active branch `pcb/l7987l-layout`; released hardware source checkpoint `74a3000127371ac6c3b3b7197f9036dec5b58eef`. Derived from the stored 2026-09-17 KiCad netlist, current BOM, `docs/ASSEMBLY.md` and source sheets. This is **not yet a solder-by-reference instruction**: the released PCB has now been read successfully through the GitHub contents endpoint and key pad/net locations below are source-verified, but the exhaustive 94-reference population grouping and bench acceptance limits still require completion before assembly.
+Status: **first-article assembly and staged bring-up in progress**. Active branch `main`; released hardware source checkpoint `74a3000127371ac6c3b3b7197f9036dec5b58eef`. Derived from the stored 2026-09-17 KiCad netlist, current BOM, `docs/ASSEMBLY.md` and source sheets. This is **not yet a solder-by-reference instruction**: the released PCB has now been read successfully through the GitHub contents endpoint and key pad/net locations below are source-verified, but the exhaustive 94-reference population grouping and bench acceptance limits still require completion before assembly.
 
 ## Verified net relationships relevant to the staging
 
@@ -27,7 +27,7 @@ All of the following are on **B.Cu** in the released PCB:
 
 These coordinates establish connectivity/location from the KiCad source, not probe ergonomics. Confirm physical access on the received board before attaching clips or probes.
 
-## Planned assembly gates — pending exhaustive reference grouping
+## Planned assembly gates
 
 | Gate | Intended population | Verify / hold point |
 |---|---|---|
@@ -227,3 +227,27 @@ After fitting R5, normal 24 V operation was rechecked with FB1 and C11 still unp
 ## 3V3_MCU rail-link check — 2026-10-03
 
 After fitting C11 and FB1, powered at 24 V. Measured input current ≈ 1.8 mA, 3V3_BUCK ≈ 3.3 V, and TP2 / 3V3_MCU ≈ 3.3 V. Result: downstream 3.3 V rail distribution passed at no load.
+
+
+## Gate 3 MCU + USB/UART bring-up — 2026-10-04
+
+Gate 3 population was reported complete: U2/U3/U4/J2, Q2/Q3, R7-R13, C12-C18, C22 and SW1/SW2 fitted.
+
+Unpowered checks passed before energizing: TP2-to-GND settled at about 36 kΩ; TP4/EN_ESP-to-GND and TP5/IO0-to-GND both settled at about 39.5 kΩ, with capacitor-related transient readings during settling and no stable near-zero short.
+
+Initial 24 V powered check, current limit 50 mA: input current about 8 mA; TP2/3V3_MCU = 3.3 V; TP4/EN_ESP = 3.3 V; TP5/IO0 = 3.3 V. Thermal-camera inspection showed only mild warming around the buck, CP2102 and D2, with no concerning hotspot reported.
+
+Manual reset/boot checks passed: SW1 pulled EN_ESP from 3.3 V to about 2.5 mV while pressed and it returned to 3.3 V when released; SW2 did the same for IO0.
+
+USB enumeration is **not yet passing**. Windows detects a newly attached USB device but reports **Code 43 — Device Descriptor Request Failed** and exposes only `USB\\DEVICE_DESCRIPTOR_FAILURE`, not a CP2102 VID/PID or COM port. The same result persisted after changing both USB cable and host USB port.
+
+Checks completed while isolating the USB fault:
+
+- USB VBUS at R7/J2 side about 4.7 V; R7/R8 divider node about 3.1 V; both sides of R9 about 3.3 V.
+- U3 channel continuity: pin 1↔6 and pin 3↔4 continuous; D+ and D− channels not shorted to one another.
+- U3→U2 continuity: U3 pin 6→U2 pin 4 and U3 pin 4→U2 pin 5 continuous; crossed checks open.
+- J2 duplicated USB-C data pads to U3 were reported continuous for A6/B6→U3 pin 1 and A7/B7→U3 pin 3, with no D+/D− short.
+- U3 orientation/supply check passed: pin 5 about 4.7 V and pin 2 about 0 V.
+- U2 direct pin checks reported about 3.3 V on VDD, REGIN, VBUS-sense and /RST pins. U2 visual orientation appears consistent with the PCB pin-1 marking; no obvious perimeter solder bridge is visible in the supplied macro image, but hidden QFN joints/exposed-pad quality are not proven by visual inspection.
+
+Current Gate 3 state: MCU power/reset/boot behavior passes; USB descriptor enumeration fault remains open. Do not mark USB/UART or diagnostic-firmware flashing complete until this is resolved.
