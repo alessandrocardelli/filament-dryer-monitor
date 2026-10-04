@@ -256,3 +256,5 @@ Checks completed while isolating the USB fault:
 Current Gate 3 state: MCU power/reset/boot behavior passes; USB descriptor enumeration fault remains open. Do not mark USB/UART or diagnostic-firmware flashing complete until this is resolved.
 
 Further USB isolation (2026-10-04): repeating the 2 µs/div single-shot test with a single 10× probe on **U3 pin 3 (D−, connector side)** also produced no trigger. Therefore no D− rising transition has yet been observed either before or after U3. Next diagnostic step is an unpowered resistance/diode check of D− to GND (and comparison with D+) to look for a hard clamp/short before any U2 rework.
+
+Physical inspection follow-up (2026-10-04): U3 pin 3 (D− connector-side channel) was found to move mechanically when touched with a probe. Treat this as a defective/insufficient solder joint and repair U3 before continuing USB electrical diagnosis. Previous static continuity results on this path are no longer sufficient evidence of a reliable joint.
