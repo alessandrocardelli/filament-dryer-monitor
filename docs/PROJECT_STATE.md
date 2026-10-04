@@ -270,3 +270,5 @@ Automatic programming is not yet passing: esptool on COM5 reaches `Connecting...
 Manual BOOT/RESET proves bidirectional UART and ROM download mode: esptool identifies ESP32-D0WD-V3 rev 3.1 and reads chip information, but then fails while uploading/starting the RAM stub with `Invalid head of packet (0x65)`. Focus now shifts from UART connectivity to rail stability during stub start and possible esptool 5.3.x stub behavior.
 
 Gate 3 programming update: with the 24 V bench current limit raised from 50 mA to 100 mA, manual BOOT/RESET programming completes successfully; esptool stub runs, flash writes and hash verification pass. The prior stub-stage corruption was caused by the too-low 50 mA current limit. Auto-download entry still needs a separate no-button upload test.
+
+At 100 mA, automatic no-button upload still fails with `No serial data received`, while manual BOOT/RESET flashing succeeds. This isolates the remaining Gate 3 issue to the DTR/RTS automatic boot-control path. Capture TP4/EN_ESP and TP5/IO0 simultaneously during esptool connection.
