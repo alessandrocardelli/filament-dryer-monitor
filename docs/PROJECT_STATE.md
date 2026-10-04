@@ -268,3 +268,5 @@ Gate 3 UART progress: ESP32 ROM boot output is readable on COM5 at 115200 after 
 Automatic programming is not yet passing: esptool on COM5 reaches `Connecting...` but reports `Invalid head of packet (0x65)`. Since ESP32 ROM TX output is readable, next isolate automatic DTR/RTS boot control from the PC-to-ESP32 UART path using manual BOOT/RESET download mode.
 
 Manual BOOT/RESET proves bidirectional UART and ROM download mode: esptool identifies ESP32-D0WD-V3 rev 3.1 and reads chip information, but then fails while uploading/starting the RAM stub with `Invalid head of packet (0x65)`. Focus now shifts from UART connectivity to rail stability during stub start and possible esptool 5.3.x stub behavior.
+
+Gate 3 programming update: with the 24 V bench current limit raised from 50 mA to 100 mA, manual BOOT/RESET programming completes successfully; esptool stub runs, flash writes and hash verification pass. The prior stub-stage corruption was caused by the too-low 50 mA current limit. Auto-download entry still needs a separate no-button upload test.
