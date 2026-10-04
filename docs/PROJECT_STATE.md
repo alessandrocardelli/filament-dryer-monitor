@@ -264,3 +264,5 @@ U2 GND clarification: pin 3 and exposed pad 29 share GND, and the PCB EP copper 
 Gate 3 USB is now operational: following U2 perimeter-pin rework, Windows enumerates U2 as **Silicon Labs CP210x USB to UART Bridge (COM5)**. The prior descriptor failure is resolved. This strongly indicates a marginal U2 solder joint was the remaining assembly fault; exact pin not identified.
 
 Gate 3 UART progress: ESP32 ROM boot output is readable on COM5 at 115200 after SW1 RESET, confirming U4 TXD0 -> CP2102 -> USB and ESP32 reset/boot operation. Reverse UART and programming/auto-reset remain to be validated.
+
+Automatic programming is not yet passing: esptool on COM5 reaches `Connecting...` but reports `Invalid head of packet (0x65)`. Since ESP32 ROM TX output is readable, next isolate automatic DTR/RTS boot control from the PC-to-ESP32 UART path using manual BOOT/RESET download mode.
