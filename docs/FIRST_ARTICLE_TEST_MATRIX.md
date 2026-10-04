@@ -103,17 +103,17 @@ First add the complete AutoEN sensing/supply-decoupling path:
 
 Then, **only after the isolated buck has passed**, add `R5` and repeat the buck-start check. This preserves D014.
 
-After AutoEN behavior is confirmed sufficiently for normal rail bring-up, populate the MCU-rail bulk/local decoupling and rail link:
+After AutoEN behavior is confirmed sufficiently for normal rail bring-up, populate the rail link and bulk capacitor:
 
-`C11, C12, C13, C14, C16, C17, C18, C22, FB1, TP2`
+`C11, FB1, TP2`
 
-At this point TP2 is the intended `3V3_MCU` measurement node. C11 remains required; do not bridge this gate by omitting it because of procurement delay.
+At this point TP2 is the intended `3V3_MCU` measurement node. The device-local decouplers `C12, C13, C14, C16, C17, C18, C22` are populated with Gate 3 together with U2/U4; do not energize U2/U4 without their local decoupling fitted.
 
 ### Gate 3 — ESP32 + boot/reset + USB/UART programming
 
 Populate:
 
-`U4, U2, U3, J2, Q2, Q3, R7, R8, R9, R10, R11, R12, R13, C15, SW1, SW2`
+`U4, U2, U3, J2, Q2, Q3, R7, R8, R9, R10, R11, R12, R13, C12, C13, C14, C15, C16, C17, C18, C22, SW1, SW2`
 
 Test points already present in the PCB design:
 
@@ -184,8 +184,8 @@ The staged list above assigns all 94 production-BOM references exactly once:
 
 - Gate 1A: 7
 - Gate 1B: 23
-- Gate 2: 15
-- Gate 3: 16
+- Gate 2: 8
+- Gate 3: 23
 - Gate 4A: 5 production-BOM refs + J4 (schematic/PCB display footprint, excluded from production BOM/position files)
 - Gate 4B: 10
 - Gate 4C: 5
