@@ -134,7 +134,7 @@ Gate condition: flash and run the diagnostic firmware before adding the remainin
 
 Populate:
 
-`J3, J4, R14, R15, R16, R17`
+`J3, R14, R15, R16, R17`; J4 is the actual 1.54-inch SSD1309 OLED module, not a PCB connector, and should be added as an off-board/module load only after the unloaded I2C bus checks pass
 
 R14/R15 are the 3V3_MCU-side I2C pull-ups; R16/R17 are the series connections into the J3/J4 SDA/SCL wiring according to the stored netlist. Connect off-board modules only after their actual pinout/fit is checked.
 
