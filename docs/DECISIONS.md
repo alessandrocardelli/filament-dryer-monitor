@@ -269,3 +269,19 @@ The current board coordinates confirm the two rows at approximately y = 82.9 mm 
 The planned prototype assembly process is manual: lightly pre-tin the exposed pad, apply flux, place U5 and solder with hot air. Under this process the footprint's full B.Paste shape is not used to meter solder paste and is therefore not a release blocker. If the process changes to stencil/reflow or external PCBA, reopen the paste-aperture and via-treatment decision for that manufacturing process.
 
 First-board U5 temperature measurement remains mandatory validation. It does not mean the PCB thermal-via implementation is unfinished.
+
+
+## D020 — Correct ESP32 auto-program collector mapping in next hardware revision
+
+**Status:** accepted 2026-10-04 from first-article measurement and successful bodge validation.
+
+The released board's CP2102 DTR/RTS cross-coupled Q2/Q3 auto-program network produces the opposite EN/IO0 truth-table behavior required for ESP32 automatic download entry. On the released hardware, Q2 collector drives IO0 and Q3 collector drives EN. Scope capture during esptool connection showed IO0 returning high before EN was released, so the ESP32 did not sample GPIO0 low at reset release.
+
+The first-article correction was validated by crossing only the collector destinations:
+
+- Q2 collector -> **EN**;
+- Q3 collector -> **IO0**.
+
+With that bodge and a 24 V bench current limit of 100 mA, no-button Arduino/esptool upload completes normally, including automatic connection, stub execution, flash verification and `Hard resetting via RTS pin...`.
+
+Therefore the next deliberate schematic/PCB revision must implement the corrected collector mapping above, then regenerate the netlist, ERC, DRC and production outputs from the same revision. Do not silently modify the already-fabricated release checkpoint; the bodged first article remains the physical validation evidence for this correction.
