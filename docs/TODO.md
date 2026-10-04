@@ -81,3 +81,6 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 - [x] Verify unloaded J3 power/SDA/SCL continuity and powered idle levels before attaching I2C modules.
 - [ ] Verify the actual SHT45 board/harness pinout and JST-PH orientation, then connect and run an I2C/SHT45 diagnostic before adding the OLED.
+
+- [ ] Obtain/prepare the J3 mating harness: JST-PH 2.00 mm, 4-way housing/contacts or equivalent pre-crimped PH lead set. Current SHT45 loose leads are red=3V3, yellow=SCL, green=SDA, black=GND; current in-house connector assortment is JST-XH and does not mate with J3. A 420-piece JST-PH 2.00 mm 2/3/4/5/6-way kit with pre-crimped 22 AWG leads and female crimp terminals has been identified as a candidate only, not yet confirmed ordered/received.
+- [ ] Before plugging the SHT45 into J3, verify the completed PH harness pin-for-pin against the PCB: J3-1=GND/black, J3-2=SDA/green, J3-3=SCL/yellow, J3-4=3V3/red. Then power and run the SHT45 I2C diagnostic before adding the OLED.
