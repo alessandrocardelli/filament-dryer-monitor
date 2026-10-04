@@ -252,3 +252,5 @@ Gate 3 completeness was re-audited against the current MCU source and CP2102 dat
 CP2102 ground verification: U2 pin 3 to TP3/GND measured ~0.3 Ω unpowered, confirming the peripheral GND connection. The hidden exposed-pad joint remains unverified visually, but loss of the chip's only ground path is excluded.
 
 Android cross-check: an Android USB device-info app reported no device detected when the powered board was connected to the phone. Treat this as provisional until phone-side host/OTG operation is confirmed by measuring USB VBUS at J2/R7 during the connection.
+
+Android host validation: USB_VBUS measured only ~3.3 V with the phone connected, rather than the ~5 V expected from an active USB host. The Android no-device result is therefore inconclusive and must not be treated as an independent confirmation of the Windows descriptor failure.
