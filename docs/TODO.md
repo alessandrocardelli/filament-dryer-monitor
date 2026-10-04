@@ -60,3 +60,6 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 - [x] Manual BOOT/RESET reaches ESP32 ROM downloader and esptool reads chip type/revision/crystal/MAC, proving bidirectional UART.
 - [ ] Resolve failure at `Uploading stub flasher...` (`Invalid head of packet (0x65)`): first verify bench current limit/3V3 stability, then test no-stub or alternate esptool version if power is clean.
+
+- [x] Resolve stub-stage upload failure: raising the 24 V bench current limit from 50 mA to 100 mA allowed full esptool write/verify to complete successfully in manual download mode.
+- [ ] Repeat upload at 100 mA without touching BOOT/RESET to validate DTR/RTS automatic programming entry.
