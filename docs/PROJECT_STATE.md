@@ -258,3 +258,5 @@ Android host validation: USB_VBUS measured only ~3.3 V with the phone connected,
 USB VBUS backfeed check: with USB disconnected and only 24 V applied, the USB_VBUS node measured ~1 mV. The PCB is not backfeeding VBUS; the earlier ~3.3 V with the phone was external to the board and did not establish valid USB host mode.
 
 Android host test confirmed valid: USB_VBUS measured 5 V from the phone while connected, yet no USB device was detected. Since Windows also fails at the device-descriptor stage, the remaining leading suspects are the CP2102 device or its QFN soldering/hidden pad rather than host software.
+
+U2 GND clarification: pin 3 and exposed pad 29 share GND, and the PCB EP copper is tied to the GND network. The ~0.3 Ω pin-3-to-TP3 reading confirms board-side grounding; only the hidden package-EP solder bond remains unobservable. With peripheral GND working, perimeter U2 pins (especially USB/power/reset pins 4–9) are the next rework focus rather than the EP connection itself.
