@@ -1,14 +1,14 @@
 # Project state
 
-Checkpoint date: **2026-10-01**  
-Active hardware branch: **`pcb/l7987l-layout`**  
+Checkpoint date: **2026-10-04**  
+Active hardware branch: **`main`**  
 Fabrication-source checkpoint (before documentation updates): **`74a3000127371ac6c3b3b7197f9036dec5b58eef`** (`Production files`, 2026-09-17). Documentation-only commits after this checkpoint do not change the released hardware.
 
 ## Executive state
 
 The L7987L + AutoEN revision was released for a **bare-board, manual-assembly prototype**. The stored current KiCad reports date from 2026-09-17: ERC **0 errors / 0 warnings**; DRC **0 active errors / 0 unconnected pads / 0 footprint errors**, with **one excluded** U4 B.Silkscreen-to-board-edge warning. The stored netlist was regenerated on 2026-09-17 and has the corrected USB-C D+/D− mapping. The released production BOM and position file are `hardware/production/Filament_Dryer_Monitor_bom.csv` and `hardware/production/Filament_Dryer_Monitor_positions.csv`; the unsuffixed `hardware/production/bom.csv` / `positions.csv` are legacy AP66200-era exports and **must not** be used for the current design.
 
-Gerbers/drills were uploaded to JLCPCB for bare-PCB production. Its production/CAM package was received and checked against the uploaded Gerbers in the order discussion. **On 2026-10-01 the user reported that the bare PCBs and component shipment had arrived.** Incoming inspection, package/quantity reconciliation and first-article assembly have not yet been completed or recorded. No PCBA/stencil service is planned; all components are to be hand-assembled.
+Gerbers/drills were uploaded to JLCPCB for bare-PCB production. Its production/CAM package was received and checked against the uploaded Gerbers in the order discussion. **On 2026-10-01 the user reported that the bare PCBs and component shipment had arrived.** First-article hand assembly and staged bring-up are now in progress. Gate 1A, isolated buck, AutoEN normal-operation, 3V3_MCU rail-link, and Gate 3 MCU power/reset/boot checks have passed as recorded below. USB enumeration at Gate 3 currently fails at the device-descriptor stage. No PCBA/stencil service is planned; all components are hand-assembled.
 
 **Procurement (2026-09-21):** the live `BOM TME` reconciles to the current production BOM/netlist with 94 PCB-mounted component references for one assembled board: 61 references in 43 TME purchase rows and 33 references on 14 rows marked `In casa`. TME order was placed 2026-09-20; shipment and receipt are unconfirmed. **C11, Samsung CL21A226MAYNNNE (22 µF / 25 V X5R / 0805), is an open supply issue.** The order confirmation listed it as available; TME later reported its warehouse unit could not be located and is searching for it. TME offered a cancellation/refund or reordering route, but no cancellation, replacement or revised PCB MPN has been authorized. TME's later "week 48/2026" delivery notification does not establish that the rest of the order is delayed; dispatch of other in-stock items remains **unconfirmed**.
 
@@ -225,3 +225,10 @@ Bare-board preflight continuity/isolation checks were reported passed before ass
 Gate 1A powered test passed on 2026-10-02: supply current decayed to ~0 after capacitor charging at 5 V, 12 V and 24 V; TP1 tracked the applied input voltage; Q1 gate measured 0 V at 5 V, 0 V at 12 V and 9.31 V at 24 V, consistent with D1 clamping Q1 |VGS| to about 14.7 V.
 
 - 2026-10-03: first-board power bring-up reached the 3V3_MCU rail. With R5, C11 and FB1 fitted, 24 V input produced ~1.8 mA no-load input current, 3V3_BUCK ~3.3 V and TP2/3V3_MCU ~3.3 V. Gate 1 power-path/buck/rail-link checks passed at no load; load/ripple/thermal validation remains pending.
+
+
+## 2026-10-04 Gate 3 MCU / USB status
+
+Gate 3 was reported fully populated. With 24 V input and a 50 mA bench limit, the board drew about 8 mA; 3V3_MCU, EN_ESP and IO0 measured 3.3 V. SW1/RESET and SW2/BOOT each pulled their respective node to about 2.5 mV while pressed and returned to 3.3 V when released. Thermal-camera inspection found no concerning hotspot.
+
+USB enumeration remains open: Windows creates an unknown USB device but fails the device-descriptor request with Code 43 (`USB\\DEVICE_DESCRIPTOR_FAILURE`), and no CP2102 COM port or VID/PID is exposed. Changing the USB cable and host USB port did not change the result. Hardware checks so far found USB VBUS present (~4.7 V), the CP2102 VBUS-sense divider active (~3.1 V at R7/R8), CP2102 reset high, U3 correctly powered/oriented, D+/D− continuity from J2 through U3 to U2, no D+/D− short, and approximately 3.3 V on the directly probed U2 VDD/REGIN/VBUS-sense-/RST pins. U2 orientation appears visually correct; hidden QFN joint quality is not yet proven. Continue diagnosis before any rework or hardware revision.
