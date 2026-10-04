@@ -256,3 +256,5 @@ Android cross-check: an Android USB device-info app reported no device detected 
 Android host validation: USB_VBUS measured only ~3.3 V with the phone connected, rather than the ~5 V expected from an active USB host. The Android no-device result is therefore inconclusive and must not be treated as an independent confirmation of the Windows descriptor failure.
 
 USB VBUS backfeed check: with USB disconnected and only 24 V applied, the USB_VBUS node measured ~1 mV. The PCB is not backfeeding VBUS; the earlier ~3.3 V with the phone was external to the board and did not establish valid USB host mode.
+
+Android host test confirmed valid: USB_VBUS measured 5 V from the phone while connected, yet no USB device was detected. Since Windows also fails at the device-descriptor stage, the remaining leading suspects are the CP2102 device or its QFN soldering/hidden pad rather than host software.
