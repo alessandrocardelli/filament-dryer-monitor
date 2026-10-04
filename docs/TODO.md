@@ -78,3 +78,6 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 - [x] Gate 4A initial population: J3 and R14-R17 installed; J4 OLED and SHT45 still disconnected.
 - [ ] Verify unloaded J3 power/SDA/SCL continuity and powered idle levels before attaching I2C modules.
+
+- [x] Verify unloaded J3 power/SDA/SCL continuity and powered idle levels before attaching I2C modules.
+- [ ] Verify the actual SHT45 board/harness pinout and JST-PH orientation, then connect and run an I2C/SHT45 diagnostic before adding the OLED.
