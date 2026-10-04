@@ -285,3 +285,23 @@ The first-article correction was validated by crossing only the collector destin
 With that bodge and a 24 V bench current limit of 100 mA, no-button Arduino/esptool upload completes normally, including automatic connection, stub execution, flash verification and `Hard resetting via RTS pin...`.
 
 Therefore the next deliberate schematic/PCB revision must implement the corrected collector mapping above, then regenerate the netlist, ERC, DRC and production outputs from the same revision. Do not silently modify the already-fabricated release checkpoint; the bodged first article remains the physical validation evidence for this correction.
+
+## D021 — D3 is an internal diagnostic LED with defined firmware patterns
+
+**Status:** accepted 2026-10-04 after Gate 4B first-article validation.
+
+D3 is driven from ESP32 GPIO26 through R18 and is not visible from outside the intended enclosure. It is therefore **not a user-interface status indicator** and should not be relied upon to communicate normal operating state to the end user. User-visible state belongs on the OLED and, where appropriate, the buzzer.
+
+D3 is reserved as an internal service/diagnostic indicator for firmware bring-up and troubleshooting. Future application firmware should use these patterns:
+
+| Diagnostic state | D3 pattern |
+|---|---|
+| Early boot / initialization | solid ON from application startup until initialization completes |
+| Normal application running | heartbeat: ~100 ms ON every 2 s |
+| Recoverable peripheral/sensor warning | double pulse: ~100 ms ON, 100 ms OFF, 100 ms ON, repeated every 2 s |
+| Safety/fault state that inhibits controlled outputs | repeating 250 ms ON / 250 ms OFF |
+| Firmware halted before LED initialization, board unpowered, or GPIO26 unavailable | LED remains OFF; this state is intentionally not uniquely distinguishable by D3 alone |
+
+A solid ON indication persisting well beyond normal initialization therefore also acts as a useful clue that startup has stalled. The safety-fault LED pattern is diagnostic only: heater/fan safety behavior must never depend on the LED itself.
+
+Gate 4B first-article testing confirmed D3 can be controlled correctly from GPIO26.
