@@ -250,4 +250,7 @@ Checks completed while isolating the USB fault:
 - U3 orientation/supply check passed: pin 5 about 4.7 V and pin 2 about 0 V.
 - U2 direct pin checks reported about 3.3 V on VDD, REGIN, VBUS-sense and /RST pins. U2 visual orientation appears consistent with the PCB pin-1 marking; no obvious perimeter solder bridge is visible in the supplied macro image, but hidden QFN joints/exposed-pad quality are not proven by visual inspection.
 
+
+- Oscilloscope USB check: D+ was observed rising to the Full-Speed idle high level after connection. At 50 ms/div the host was observed forcing D+ low for a reset interval and then releasing it high again, confirming host-side bus reset activity. A subsequent 2 µs/div single-shot trigger on D− (rising, ~1 V) did **not** trigger, so no D− transition was captured on the CP2102 side during the attempted post-reset enumeration. Further scope isolation is required on the connector side of U3 before attributing the fault to U2.
+
 Current Gate 3 state: MCU power/reset/boot behavior passes; USB descriptor enumeration fault remains open. Do not mark USB/UART or diagnostic-firmware flashing complete until this is resolved.
