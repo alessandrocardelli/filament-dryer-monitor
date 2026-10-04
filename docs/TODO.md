@@ -57,3 +57,6 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 - [ ] Validate PC-to-ESP32 UART path and bootloader/programming, including automatic DTR/RTS reset/BOOT behavior.
 
 - [ ] Automatic upload currently fails at `Connecting...` with esptool `Invalid head of packet (0x65)`; test manual BOOT/RESET download mode next to separate UART RX from DTR/RTS auto-program behavior.
+
+- [x] Manual BOOT/RESET reaches ESP32 ROM downloader and esptool reads chip type/revision/crystal/MAC, proving bidirectional UART.
+- [ ] Resolve failure at `Uploading stub flasher...` (`Invalid head of packet (0x65)`): first verify bench current limit/3V3 stability, then test no-stub or alternate esptool version if power is clean.
