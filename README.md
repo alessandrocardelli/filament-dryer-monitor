@@ -266,3 +266,5 @@ hardware/*.kicad_*              Actual KiCad implementation
 3. Check availability and mechanical/electrical fit of off-board items (SSD1309 OLED, SHT45 sensor, independent heater thermal cutoff, mating connectors/cables and mounting hardware).
 4. On receipt of the bare PCBs, inspect fabrication/assembly details and follow `docs/ASSEMBLY.md`; **leave R5 unfitted for initial 3.3 V bring-up**.
 5. Perform first-board buck, USB, thermal and fault-recovery testing before normal heater operation. See `docs/PROJECT_STATE.md` and `docs/TODO.md`.
+
+**First-article bring-up update (2026-10-04):** Gate 3 MCU/USB/UART is validated. CP2102 enumeration, bidirectional UART, ESP32 flashing, runtime serial output and automatic programming all pass on the prototype after the documented Q2/Q3 collector-cross bodge (D020). Next staged bring-up is Gate 4A I2C support.
