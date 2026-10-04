@@ -75,3 +75,6 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 - [x] Close Gate 3 MCU/USB/UART bring-up: automatic programming works after the validated Q2/Q3 collector-cross bodge, and the flashed diagnostic sketch runs correctly at 115200 baud.
 - [ ] Gate 4A: populate and test J3 plus R14, R15, R16 and R17; verify the unloaded I2C bus first. J4 is the actual 1.54-inch SSD1309 OLED module (not a connector) and should be connected/tested separately after the bus checks, like the external SHT45 load.
+
+- [x] Gate 4A initial population: J3 and R14-R17 installed; J4 OLED and SHT45 still disconnected.
+- [ ] Verify unloaded J3 power/SDA/SCL continuity and powered idle levels before attaching I2C modules.
