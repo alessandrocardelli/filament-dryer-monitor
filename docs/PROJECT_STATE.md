@@ -236,3 +236,5 @@ USB enumeration remains open: Windows creates an unknown USB device but fails th
 Oscilloscope follow-up on 2026-10-04: CP2102-side D+ rises to ~3.3 V while D− idles low; a 50 ms/div capture shows a host-driven USB reset (D+ forced low, then returning high). A 2 µs/div single-shot trigger on a D− rising edge did not trigger. Continue by distinguishing connector-side USB activity from U3/U2-side activity before any rework.
 
 USB follow-up: no D− rising-edge trigger was obtained even with a single 10× probe on U3 pin 3 (connector side). This shifts the immediate diagnosis toward checking whether D− is being clamped/shorted low (or otherwise prevented from transitioning) before considering CP2102 rework.
+
+USB fault isolation update: U3 pin 3 was observed to move physically under probe contact, indicating an unreliable solder joint on the connector-side D− path. Repair and re-inspect U3 before further USB measurements or any U2 rework.
