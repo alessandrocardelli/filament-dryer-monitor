@@ -55,3 +55,5 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 - [x] Validate ESP32-to-PC UART path: ROM boot log is readable on COM5 at 115200 after SW1 RESET.
 - [ ] Validate PC-to-ESP32 UART path and bootloader/programming, including automatic DTR/RTS reset/BOOT behavior.
+
+- [ ] Automatic upload currently fails at `Connecting...` with esptool `Invalid head of packet (0x65)`; test manual BOOT/RESET download mode next to separate UART RX from DTR/RTS auto-program behavior.
