@@ -277,3 +277,5 @@ Gate 3 auto-program root cause is now identified from scope plus source review: 
 
 
 Gate 3 auto-program fix validated on the first article (2026-10-04): the Q2/Q3 collector destinations were crossed so Q2 collector drives EN and Q3 collector drives IO0. After this bodge, no-button Arduino/esptool programming succeeds through COM5, including stub start, flash verification and automatic RTS reset. This experimentally confirms the released PCB's auto-download truth table was reversed. The design sources have not yet been silently altered; the correction is recorded in D020 for the next hardware revision. Runtime output from the newly flashed diagnostic sketch remains to be checked before closing Gate 3.
+
+Gate 3 is closed on the first article (2026-10-04). After the Q2/Q3 collector-cross bodge, automatic USB/UART programming works without manual buttons, and the flashed diagnostic sketch runs correctly at 115200 baud (startup banner after reset, then periodic `alive`). Next assembly/test gate is Gate 4A I2C sensor/display support.
