@@ -254,3 +254,5 @@ Checks completed while isolating the USB fault:
 - Oscilloscope USB check: D+ was observed rising to the Full-Speed idle high level after connection. At 50 ms/div the host was observed forcing D+ low for a reset interval and then releasing it high again, confirming host-side bus reset activity. A subsequent 2 µs/div single-shot trigger on D− (rising, ~1 V) did **not** trigger, so no D− transition was captured on the CP2102 side during the attempted post-reset enumeration. Further scope isolation is required on the connector side of U3 before attributing the fault to U2.
 
 Current Gate 3 state: MCU power/reset/boot behavior passes; USB descriptor enumeration fault remains open. Do not mark USB/UART or diagnostic-firmware flashing complete until this is resolved.
+
+Further USB isolation (2026-10-04): repeating the 2 µs/div single-shot test with a single 10× probe on **U3 pin 3 (D−, connector side)** also produced no trigger. Therefore no D− rising transition has yet been observed either before or after U3. Next diagnostic step is an unpowered resistance/diode check of D− to GND (and comparison with D+) to look for a hard clamp/short before any U2 rework.
