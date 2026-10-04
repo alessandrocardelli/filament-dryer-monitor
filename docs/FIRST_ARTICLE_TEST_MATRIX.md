@@ -305,3 +305,14 @@ Gate 4A population started (2026-10-04): J3 plus R14/R15 10 kΩ I2C pull-ups and
 Gate 4A unloaded-bus check PASSED (2026-10-04): with J4 OLED and the external SHT45 still disconnected, J3 continuity/short checks were satisfactory and powered idle levels at J3 were correct (3V3_MCU, SDA and SCL all high at approximately the 3.3 V rail). Proceed only after verifying the actual SHT45 board/harness pinout and connector orientation.
 
 Gate 4A harness hold point (2026-10-04): the SHT45 remains disconnected after the unloaded-bus PASS. Its loose leads are red=3V3, yellow=SCL, green=SDA and black=GND. J3 is the fitted JST-PH 4-way board connector; mate the harness as J3-1 black/GND, J3-2 green/SDA, J3-3 yellow/SCL, J3-4 red/3V3. The currently available XH housings are not compatible with J3. A PH 2.00 mm assortment has been identified as a candidate source of the mating housing/pre-crimped leads, but purchase/receipt is not yet confirmed. Do not connect or energize the SHT45 until the finished harness orientation and continuity have been checked.
+
+## Gate 4B first-article result — 2026-10-04
+
+**PASS.**
+
+- SW3, SW4, SW5 and SW6: approximately 3.3 V at rest and approximately 0 V when pressed.
+- SW6 / BTN_DOWN initially remained near 0.91 V at rest; inspection/rework found a poor R24 solder joint. After rework the input returned to the expected ~3.3 V idle state.
+- D3/R18: GPIO26 blink test passed; LED drive path is functional.
+- D3 is not externally visible in the intended enclosure. Per D021 it is reserved for internal diagnostic/service patterns in future firmware.
+
+Gate 4A remains partially open only because the external SHT45 JST-PH harness is not yet available. Gate 4C may proceed independently.
