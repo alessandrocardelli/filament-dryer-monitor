@@ -240,3 +240,5 @@ USB follow-up: no D− rising-edge trigger was obtained even with a single 10× 
 USB fault isolation update: U3 pin 3 was observed to move physically under probe contact, indicating an unreliable solder joint on the connector-side D− path. Repair and re-inspect U3 before further USB measurements or any U2 rework.
 
 U3 was re-soldered on all six pins after the loose pin-3 finding. USB enumeration remains unchanged (unknown device / descriptor request failed), so further USB signal diagnosis is still required before any U2 rework or design conclusion.
+
+Post-rework USB scope update: after re-soldering all U3 pins, D− at U3 pin 3 (connector side) now triggers on a rising edge when USB is connected. The available capture was at 100 µs/div and is too slow to assess 12 Mbps waveform amplitude/shape. This confirms the U3 repair changed the D− signal path, but Windows still reports descriptor failure; continue with faster-timebase packet capture before further rework.
