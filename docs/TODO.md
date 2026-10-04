@@ -72,3 +72,6 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 - [x] Validate Gate 3 automatic programming on the first article: crossing the Q2/Q3 collector destinations (Q2 collector -> EN, Q3 collector -> IO0) restores no-button esptool upload and automatic RTS reset at a 100 mA bench limit.
 - [ ] Open Serial Monitor at 115200 and confirm the newly flashed Gate 3 diagnostic sketch runs and prints its expected messages.
 - [ ] Apply D020 in the next schematic/PCB revision: correct the Q2/Q3 auto-program output mapping in source, then regenerate netlist/ERC/DRC/production outputs.
+
+- [x] Close Gate 3 MCU/USB/UART bring-up: automatic programming works after the validated Q2/Q3 collector-cross bodge, and the flashed diagnostic sketch runs correctly at 115200 baud.
+- [ ] Gate 4A: populate and test J3, J4, R14, R15, R16 and R17; verify I2C bus behavior before connecting off-board SHT45/OLED modules.
