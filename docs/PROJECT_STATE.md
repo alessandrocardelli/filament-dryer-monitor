@@ -281,3 +281,5 @@ Gate 3 auto-program fix validated on the first article (2026-10-04): the Q2/Q3 c
 Gate 3 is closed on the first article (2026-10-04). After the Q2/Q3 collector-cross bodge, automatic USB/UART programming works without manual buttons, and the flashed diagnostic sketch runs correctly at 115200 baud (startup banner after reset, then periodic `alive`). Next assembly/test gate is Gate 4A I2C support: J3 plus R14-R17 first, with the unloaded bus checked before separately attaching the actual J4 SSD1309 OLED module and the external SHT45.
 
 Gate 4A hardware population has begun: J3 and R14-R17 are fitted; J4 OLED and SHT45 are not connected yet. J3 mapping is 1=GND, 2=SDA, 3=SCL, 4=3V3_MCU. Unloaded I2C bus checks are next.
+
+Gate 4A unloaded I2C bus validation passed: J3 power, SDA and SCL continuity/idle levels are correct with no off-board modules attached. Next hold point is physical pinout/orientation verification of the actual SHT45 board and J3 harness before connection.
