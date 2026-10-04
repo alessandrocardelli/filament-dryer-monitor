@@ -250,3 +250,5 @@ USB propagation update: after U3 rework, D− activity measured at U3 pin 4 (CP2
 Gate 3 completeness was re-audited against the current MCU source and CP2102 datasheet: no additional essential component is missing from the populated USB/UART group. Required VDD/REGIN bypassing, /RST pull-up, VBUS sensing, USB-C CC resistors and ESD/data path are present. A post-rework 100 ns/div D− capture shows full-swing high-speed transitions; this confirms bit-level bus activity but does not yet prove successful CP2102 descriptor response.
 
 CP2102 ground verification: U2 pin 3 to TP3/GND measured ~0.3 Ω unpowered, confirming the peripheral GND connection. The hidden exposed-pad joint remains unverified visually, but loss of the chip's only ground path is excluded.
+
+Android cross-check: an Android USB device-info app reported no device detected when the powered board was connected to the phone. Treat this as provisional until phone-side host/OTG operation is confirmed by measuring USB VBUS at J2/R7 during the connection.
