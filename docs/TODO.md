@@ -52,3 +52,6 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 - [x] First-board no-load power bring-up through 3V3_MCU rail (24 V in; ~1.8 mA; 3V3_BUCK and TP2 ~3.3 V). Load/ripple/thermal validation still pending.
 
 - [ ] Gate 3 USB fault: Android second-host test confirmed with 5 V VBUS from the phone, but no device was detected. Windows-specific causes are now unlikely; inspect/reflow U2 CP2102 before replacement or design changes.
+
+- [x] Validate ESP32-to-PC UART path: ROM boot log is readable on COM5 at 115200 after SW1 RESET.
+- [ ] Validate PC-to-ESP32 UART path and bootloader/programming, including automatic DTR/RTS reset/BOOT behavior.
