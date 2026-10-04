@@ -260,3 +260,5 @@ USB VBUS backfeed check: with USB disconnected and only 24 V applied, the USB_VB
 Android host test confirmed valid: USB_VBUS measured 5 V from the phone while connected, yet no USB device was detected. Since Windows also fails at the device-descriptor stage, the remaining leading suspects are the CP2102 device or its QFN soldering/hidden pad rather than host software.
 
 U2 GND clarification: pin 3 and exposed pad 29 share GND, and the PCB EP copper is tied to the GND network. The ~0.3 Ω pin-3-to-TP3 reading confirms board-side grounding; only the hidden package-EP solder bond remains unobservable. With peripheral GND working, perimeter U2 pins (especially USB/power/reset pins 4–9) are the next rework focus rather than the EP connection itself.
+
+Gate 3 USB is now operational: following U2 perimeter-pin rework, Windows enumerates U2 as **Silicon Labs CP210x USB to UART Bridge (COM5)**. The prior descriptor failure is resolved. This strongly indicates a marginal U2 solder joint was the remaining assembly fault; exact pin not identified.
