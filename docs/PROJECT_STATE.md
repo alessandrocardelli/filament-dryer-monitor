@@ -295,3 +295,13 @@ During bring-up, SW6 / BTN_DOWN initially measured about 0.91 V at rest. The cau
 D3/R18 was tested by flashing a temporary GPIO26 blink sketch; the LED blinked correctly, confirming the GPIO26 -> R18 -> D3 path. Because D3 is not visible outside the enclosure, D021 defines it as an **internal diagnostic/service LED**, not a user-facing status indicator.
 
 Gate 4A remains at the JST-PH SHT45 harness hold point. Gate 4C buzzer population/testing can proceed independently while the PH harness is pending.
+
+## 2026-10-05 Gate 4C buzzer
+
+Gate 4C is **PASSED** on the first article. BZ1, Q6, D6, R27 and R37 were populated and the buzzer path was verified from ESP32 GPIO33.
+
+A temporary firmware test drove the passive buzzer at approximately 2.7 kHz and produced the expected audible tone. A second test played a three-note ascending melody once at startup, confirming that firmware can vary pitch and timing.
+
+The initial 50% duty-cycle test was subjectively too loud. Future firmware should therefore expose buzzer loudness as a software-controlled setting using reduced PWM duty cycle (for example OFF / LOW / MED / HIGH after final tuning), with the understanding that this is an approximate acoustic level control rather than a calibrated linear volume control.
+
+Proceed to Gate 4D NTC input before fan/heater power-output bring-up.
