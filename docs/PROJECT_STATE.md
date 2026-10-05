@@ -305,3 +305,13 @@ A temporary firmware test drove the passive buzzer at approximately 2.7 kHz and 
 The initial 50% duty-cycle test was subjectively too loud. Future firmware should therefore expose buzzer loudness as a software-controlled setting using reduced PWM duty cycle (for example OFF / LOW / MED / HIGH after final tuning), with the understanding that this is an approximate acoustic level control rather than a calibrated linear volume control.
 
 Proceed to Gate 4D NTC input before fan/heater power-output bring-up.
+
+## 2026-10-05 Gate 4D NTC analog-front-end validation
+
+Gate 4D analog front end is **PASSED** on the first article with J7 intentionally still unpopulated pending reuse of the dryer-side mating connector.
+
+R28 = 47 kΩ and C19 = 100 nF were fitted. With J7 open, the NTC node measured 3.3 V as expected. A temporary 100 kΩ resistor was then connected from J7 pad 2 (NTC) to J7 pad 1 (GND), simulating the external NTC. The node measured 2.253 V by DMM, close to the ideal divider value of about 2.245 V.
+
+ESP32 GPIO34 / ADC1 then reported a stable raw reading around 2643-2647 and calibrated readings around 2300-2302 mV using Arduino `analogReadMilliVolts()`. The ADC therefore sees the divider correctly and stably. The ~47 mV offset versus the DMM is acceptable for functional validation but must not be treated as final temperature calibration.
+
+Remaining Gate 4D work: fit J7 when the dryer connector is available, connect the real NTC, characterize its resistance/temperature behavior and implement the final conversion and fault limits before any heater operation.
