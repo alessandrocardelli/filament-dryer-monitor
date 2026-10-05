@@ -4,6 +4,8 @@ Current phase: **first-article hand assembly and staged bring-up** (2026-10-04).
 
 ## Completed / recorded
 
+- [x] Gate 4D analog front end passed on 2026-10-05 with R28=47 kΩ and C19=100 nF: open NTC node ~3.3 V; temporary 100 kΩ to GND gave 2.253 V by DMM; GPIO34 ADC was stable at RAW ~2643-2647 / 2300-2302 mV. J7 and the real dryer NTC remain pending, as do final NTC calibration and fault limits.
+
 - [x] Gate 4C buzzer first-article test passed on 2026-10-05: BZ1/Q6/D6/R27/R37 populated; GPIO33 ~2.7 kHz tone and a three-note melody both worked. Reduced PWM duty cycle gives a quieter output than the initial ~50% drive; final firmware volume levels remain to be tuned.
 
 - [x] Gate 4B buttons/status-LED first-article test passed on 2026-10-04: SW3/SW4/SW5/SW6 each measure ~3.3 V at rest and ~0 V when pressed. BTN_DOWN initially sat at ~0.91 V because of a poor R24 solder joint; reworking R24 restored the expected level. D3/R18 was then validated with a GPIO26 blink test. D3 is an internal diagnostic LED; firmware semantics are fixed by D021. Gate 4A remains blocked only on the external JST-PH SHT45 harness, so Gate 4C buzzer bring-up may proceed independently.
