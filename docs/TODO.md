@@ -4,6 +4,8 @@ Current phase: **first-article hand assembly and staged bring-up** (2026-10-04).
 
 ## Completed / recorded
 
+- [x] Gate 4C buzzer first-article test passed on 2026-10-05: BZ1/Q6/D6/R27/R37 populated; GPIO33 ~2.7 kHz tone and a three-note melody both worked. Reduced PWM duty cycle gives a quieter output than the initial ~50% drive; final firmware volume levels remain to be tuned.
+
 - [x] Gate 4B buttons/status-LED first-article test passed on 2026-10-04: SW3/SW4/SW5/SW6 each measure ~3.3 V at rest and ~0 V when pressed. BTN_DOWN initially sat at ~0.91 V because of a poor R24 solder joint; reworking R24 restored the expected level. D3/R18 was then validated with a GPIO26 blink test. D3 is an internal diagnostic LED; firmware semantics are fixed by D021. Gate 4A remains blocked only on the external JST-PH SHT45 harness, so Gate 4C buzzer bring-up may proceed independently.
 
 - [x] Gate 3 MCU/USB group fully populated on 2026-10-04. Unpowered rail/node checks passed; at 24 V with a 50 mA current limit the board drew ~8 mA and TP2/3V3_MCU, EN_ESP and IO0 were all 3.3 V. RESET and BOOT switches each pulled their node to ~2.5 mV while pressed. No concerning hotspot was seen on the thermal camera.
