@@ -316,3 +316,14 @@ Gate 4A harness hold point (2026-10-04): the SHT45 remains disconnected after th
 - D3 is not externally visible in the intended enclosure. Per D021 it is reserved for internal diagnostic/service patterns in future firmware.
 
 Gate 4A remains partially open only because the external SHT45 JST-PH harness is not yet available. Gate 4C may proceed independently.
+
+## Gate 4C first-article result — 2026-10-05
+
+**PASS.**
+
+- BZ1, Q6, D6, R27 and R37 populated.
+- GPIO33 tone test at ~2.7 kHz produced the expected audible output.
+- Variable-frequency three-note test passed, confirming firmware control of pitch and timing.
+- Full-duty/near-50% drive was louder than desired; reduced duty cycle was tested successfully for a quieter result. Final firmware may expose discrete user volume levels after acoustic tuning.
+
+Next staged group: Gate 4D NTC input.
