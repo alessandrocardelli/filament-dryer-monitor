@@ -327,3 +327,16 @@ Gate 4A remains partially open only because the external SHT45 JST-PH harness is
 - Full-duty/near-50% drive was louder than desired; reduced duty cycle was tested successfully for a quieter result. Final firmware may expose discrete user volume levels after acoustic tuning.
 
 Next staged group: Gate 4D NTC input.
+
+## Gate 4D analog-front-end result — 2026-10-05
+
+**PASS for R28/C19/ADC path; J7 and real NTC remain pending.**
+
+- R28 = 47 kΩ and C19 = 100 nF fitted.
+- J7 intentionally left unpopulated so the dryer connector can be reused later.
+- J7 pad 2 / NTC node with no external resistor: ~3.3 V.
+- With 100 kΩ from J7 pad 2 to J7 pad 1/GND: 2.253 V by DMM; ideal divider value ≈2.245 V.
+- ESP32 GPIO34 ADC reading: RAW ~2643-2647; `analogReadMilliVolts()` ~2300-2302 mV, stable over repeated samples.
+- ADC offset versus DMM (~47 mV, ~2.1%) is acceptable for first-article functional validation; final NTC temperature conversion requires calibration/characterization and fault thresholds.
+
+Do not energize the heater until the real NTC path, calibration, fault handling and independent thermal cutoff requirements are closed.
