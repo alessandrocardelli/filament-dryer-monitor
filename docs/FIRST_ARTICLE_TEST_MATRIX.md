@@ -340,3 +340,17 @@ Next staged group: Gate 4D NTC input.
 - ADC offset versus DMM (~47 mV, ~2.1%) is acceptable for first-article functional validation; final NTC temperature conversion requires calibration/characterization and fault thresholds.
 
 Do not energize the heater until the real NTC path, calibration, fault handling and independent thermal cutoff requirements are closed.
+
+
+## Gate 4A SHT45 live result — 2026-10-07
+
+**PASS for the external SHT45/J3 path; J4 OLED remains pending.**
+
+- JST-PH 4-way mating harness assembled to J3-1=GND/black, J3-2=SDA/green, J3-3=SCL/yellow, J3-4=3V3/red.
+- With the sensor connected, J3 pin 4 remained at ~3.3 V.
+- I2C scan detected the SHT45 at `0x44`.
+- Direct SHT4x high-precision measurement command `0xFD` returned valid CRC-checked data.
+- Repeated readings were stable at about 22.28-22.30 °C and 65.44-65.58 %RH.
+- SHT45 power, harness and I2C communication are therefore functionally validated on the first article.
+
+Next Gate 4A step: connect and test the actual 1.54-inch SSD1309 OLED at J4 on the validated I2C bus.
