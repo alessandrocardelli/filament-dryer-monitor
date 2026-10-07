@@ -315,3 +315,12 @@ R28 = 47 kΩ and C19 = 100 nF were fitted. With J7 open, the NTC node measured 3
 ESP32 GPIO34 / ADC1 then reported a stable raw reading around 2643-2647 and calibrated readings around 2300-2302 mV using Arduino `analogReadMilliVolts()`. The ADC therefore sees the divider correctly and stably. The ~47 mV offset versus the DMM is acceptable for functional validation but must not be treated as final temperature calibration.
 
 Remaining Gate 4D work: fit J7 when the dryer connector is available, connect the real NTC, characterize its resistance/temperature behavior and implement the final conversion and fault limits before any heater operation.
+
+
+## 2026-10-07 Gate 4A SHT45 live validation
+
+The external SHT45/J3 portion of Gate 4A is **PASSED** on the first article. The JST-PH 4-way mating harness is now available and was assembled to the released J3 mapping (J3-1=GND/black, J3-2=SDA/green, J3-3=SCL/yellow, J3-4=3V3/red).
+
+With the SHT45 connected, J3 pin 4 remained at approximately 3.3 V. An I2C scan detected the sensor at address `0x44`. A direct SHT4x high-precision measurement test (command `0xFD`, heater off) then returned stable valid readings with CRC checks passing: approximately 22.28-22.30 °C and 65.44-65.58 %RH over repeated samples.
+
+This closes the SHT45 harness, power and I2C functional checks. The 1.54-inch SSD1309 OLED at J4 is still to be connected and tested separately on the already validated I2C bus before Gate 4A is considered fully complete.
