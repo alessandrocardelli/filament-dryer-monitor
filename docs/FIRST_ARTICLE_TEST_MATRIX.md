@@ -425,3 +425,10 @@ With SHT45 and SSD1309 both connected, the I2C scanner detected:
 - SHT45 sensor: `0x44`
 
 J4 bus connectivity/coexistence: PASS. Graphical initialization/output remains pending.
+
+
+### OLED graphical follow-up — 2026-10-08
+
+The installed 1.54-inch 128x64 SSD1309 OLED at J4 initialized successfully at `0x3C` using U8g2 with the SHT45 still connected at `0x44`. Frame and text rendering were visually confirmed.
+
+**Gate 4A: PASS.**
