@@ -151,3 +151,12 @@ USB tuning profile USB_90R targets 90 Ω differential on B.Cu referenced to In2.
 ## Production release sequence
 
 The 2026-09-17 production-source revision and ERC/DRC reports supersede the historical *pre-fabrication* checklist. For **this submitted prototype**, first confirm the manufacturer's current order/shipping status; then audit delivered bare PCBs and TME parts, close the C11 supply gap and off-board inventory, hand-assemble with R5 omitted initially, and perform first-board electrical/thermal/USB/safety checks. An actual **future hardware change** must restart schematic/PCB synchronization, ERC/DRC, production-output generation and BOM reconciliation under `AGENTS.md`; do not silently update already submitted fabrication data.
+
+
+### J7 first-article recovery tooling — 2026-10-08
+
+The fabricated board uses J7 = JST-GH BM02B-GHS-TBT, but the original eSUN NTC plug does not mate with it. J7 is already installed and will remain on the first article.
+
+A PEBA micro-crimping kit/tool advertised for JST-GH 1.25 mm and 0.03–0.34 mm² conductors was purchased on 2026-10-08, with delivery expected Saturday 2026-10-10. The original NTC leads are believed to be about 30 AWG. Before modifying the dryer harness, perform a sacrificial GH crimp and check conductor crimp, insulation support, terminal shape, housing retention and pull strength. If acceptable, remove the incompatible original plug and terminate the NTC leads directly into a 2-position GH housing for J7.
+
+This is first-article harness recovery, not a released PCB/BOM connector change. The J7 connector choice must be reviewed deliberately in the next hardware revision.
