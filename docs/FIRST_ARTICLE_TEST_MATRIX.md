@@ -369,3 +369,14 @@ Next Gate 4A step: connect and test the actual 1.54-inch SSD1309 OLED at J4 on t
 - Temporary GPIO16/FAN_PWM HIGH test pulled the switched node low as expected.
 
 Next step: verify the actual fan voltage/current/polarity and test static OFF/ON under the real fan load before PWM-speed characterization.
+
+
+### Real fan load follow-up — 2026-10-08
+
+The actual 24 V fan was connected to J6 and started normally using the static-ON test firmware.
+
+- Bench input current at startup: ~102 mA.
+- Bench input current after settling: ~89 mA.
+- No current-limit behavior or failed start was reported.
+
+**Gate 5A real-load static ON/OFF path: PASS.** Remaining work is PWM-speed characterization and final firmware behavior.
