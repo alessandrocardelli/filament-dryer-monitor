@@ -378,3 +378,10 @@ Measured first-article thresholds are therefore 25% minimum observed start duty 
 ## 2026-10-08 Gate 4A J4 I2C enumeration
 
 With both off-board I2C devices connected, the bus scanner detected the SSD1309 display at `0x3C` and the SHT45 at `0x44`. This confirms J4 power/bus connectivity and coexistence of both devices on the first-article I2C bus. Graphical initialization and pixel output of the SSD1309 remain to be tested before Gate 4A is fully closed.
+
+
+## 2026-10-08 Gate 4A OLED graphical test
+
+The installed 1.54-inch 128x64 SSD1309 OLED at J4 was initialized successfully over I2C at address `0x3C` using U8g2 while the SHT45 remained present at `0x44`. A graphical test frame and text rendered correctly on the display.
+
+Gate 4A is therefore **PASSED** on the first article: unloaded I2C electrical checks, SHT45 harness/live measurements, coexistence of both I2C devices, and SSD1309 graphical output are all validated.
