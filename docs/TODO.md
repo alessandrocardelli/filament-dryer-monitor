@@ -93,6 +93,6 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 - [x] Obtain/prepare the J3 mating harness: JST-PH 2.00 mm, 4-way housing/contacts or equivalent pre-crimped PH lead set. Kit received and 4-way SHT45 harness assembled by 2026-10-07.
 - [x] Before plugging the SHT45 into J3, verify the completed PH harness pin-for-pin against the PCB: J3-1=GND/black, J3-2=SDA/green, J3-3=SCL/yellow, J3-4=3V3/red. Powered diagnostic passed 2026-10-07.
 
-- [ ] Connect and test the actual J4 1.54-inch SSD1309 OLED on the validated I2C bus.
+- [x] Connect and test the actual J4 1.54-inch SSD1309 OLED on the validated I2C bus. Passed 2026-10-08 at `0x3C`; U8g2 graphical frame/text rendering confirmed with SHT45 simultaneously present at `0x44`. Gate 4A closed.
 
 - [x] Gate 5A PWM characterization completed for the current fan at 25 kHz: 25% was the first tested duty that started from rest (20% did not); 15% was the lowest tested duty that sustained rotation (10% did not). Earlier current points: 50% ~49 mA, 75% ~72 mA, 100% ~89 mA. Final firmware should retain margin above these observed limits and may use a brief full-duty startup boost.
