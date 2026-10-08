@@ -324,3 +324,19 @@ The external SHT45/J3 portion of Gate 4A is **PASSED** on the first article. The
 With the SHT45 connected, J3 pin 4 remained at approximately 3.3 V. An I2C scan detected the sensor at address `0x44`. A direct SHT4x high-precision measurement test (command `0xFD`, heater off) then returned stable valid readings with CRC checks passing: approximately 22.28-22.30 °C and 65.44-65.58 %RH over repeated samples.
 
 This closes the SHT45 harness, power and I2C functional checks. The 1.54-inch SSD1309 OLED at J4 is still to be connected and tested separately on the already validated I2C bus before Gate 4A is considered fully complete.
+
+
+## 2026-10-08 Gate 5A fan-driver bench validation
+
+Gate 5A driver-path validation is **PASSED without the actual fan load**.
+
+The originally installed Q5 was removed after J6 pin 1 measured approximately 1 ohm to GND. With Q5 removed, the same node rose to approximately 68 kohm. A GM328 component tester later failed to recognize the removed device as a MOSFET and instead reported low resistive paths, including approximately 1.69 ohm, confirming the removed Q5 was faulty.
+
+A replacement IRLML2060TRPBF-class N-channel SOT-23 device was checked on the GM328 before installation and was recognized as an enhancement-mode N-MOSFET with plausible body-diode/device readings. After fitting the replacement Q5, J6 pin 1 to GND measured about 130 kohm and rising with the board unpowered, so the previous hard short was gone.
+
+Powered at 24 V with the bench current limit at 100 mA and no fan connected:
+- Q5 gate (pad 1) measured 0 V in the safe-OFF state.
+- With a temporary 100 kohm pull-up from J6 pin 2 (+24 V) to J6 pin 1, the switched node measured 23.96 V with Q5 OFF.
+- A temporary firmware test then drove FAN_PWM / GPIO16 HIGH after a delay; Q5 switched the J6 pin 1 node low as expected.
+
+This validates the gate pull-down, MOSFET switching path and J6 switched output without a real load. Do not treat the actual fan as validated yet. Before connecting it, verify its rated voltage/current and polarity, then choose an appropriate bench current limit and perform static ON/OFF load testing before PWM characterization.
