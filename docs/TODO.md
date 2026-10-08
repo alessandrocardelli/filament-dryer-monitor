@@ -95,4 +95,4 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 - [ ] Connect and test the actual J4 1.54-inch SSD1309 OLED on the validated I2C bus.
 
-- [ ] Gate 5A: finish PWM characterization by determining minimum reliable cold-start duty and minimum stable-running duty. Initial 25 kHz tests passed at 50% (~49 mA), 75% (~72 mA), and 100% (~89 mA); the fan whistles similarly even at 100%, indicating fan-inherent acoustic noise rather than a PWM-frequency issue.
+- [x] Gate 5A PWM characterization completed for the current fan at 25 kHz: 25% was the first tested duty that started from rest (20% did not); 15% was the lowest tested duty that sustained rotation (10% did not). Earlier current points: 50% ~49 mA, 75% ~72 mA, 100% ~89 mA. Final firmware should retain margin above these observed limits and may use a brief full-duty startup boost.
