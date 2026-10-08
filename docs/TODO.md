@@ -4,6 +4,8 @@ Current phase: **first-article hand assembly and staged bring-up** (2026-10-04).
 
 ## Completed / recorded
 
+- [x] Front-panel V1 interaction model specified on 2026-10-08 in `docs/UI_SPEC.md` and accepted as D022: standalone OLED/button operation, safe standby after boot, no automatic cycle resume, temperature/time/fan-AUTO V1 setup, RH displayed/logged but not a standalone completion trigger, fault-priority UI, buzzer event semantics and D3 remaining internal diagnostics.
+
 - [x] Gate 5A real fan load test passed on 2026-10-08: actual 24 V fan started normally; bench input current peaked at ~102 mA and settled at ~89 mA. Static real-load switching path is validated; PWM characterization remains pending.
 
 - [x] Gate 4D analog front end passed on 2026-10-05 with R28=47 kΩ and C19=100 nF: open NTC node ~3.3 V; temporary 100 kΩ to GND gave 2.253 V by DMM; GPIO34 ADC was stable at RAW ~2643-2647 / 2300-2302 mV. The original eSUN NTC has already been empirically characterized and recorded in README.md; J7/real-NTC connection, ADC-path validation, final conversion and fault limits remain pending.
@@ -102,3 +104,15 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 
 - [x] Gate 5B unloaded switching path passed 2026-10-08: Q4/D4/R20/R21 installed, J5 left unpopulated, safe-OFF gate 0 V, temporary 100 kΩ pull-up gave 24 V at HEATER_SW when OFF, GPIO19 HIGH gave 3.3 V at Q4 gate and ~1 mV at HEATER_SW. Real heater remains blocked pending NTC/J7 validation, firmware safety handling and TCO.
+
+## Application firmware / front-panel UI
+
+- [ ] Create the application firmware structure with separate input, UI/rendering, cycle-control, sensor, safety, fan, buzzer/event, logging and web-interface modules; keep the normal loop cooperative/non-blocking.
+- [ ] Implement debounced active-low button handling with short press, ~1.5 s tunable long press and UP/DOWN autorepeat; when the OLED is asleep, consume the first press only as wake.
+- [ ] Implement the D022 state model: BOOT -> STANDBY -> SETUP -> DRYING -> COMPLETE, with FAULT overriding normal states. Do not auto-resume an interrupted cycle after reboot/reset.
+- [ ] Implement SSD1309 pages from `docs/UI_SPEC.md`: boot, standby, setup, drying main, technical/system, diagnostics, complete and fault. Keep chamber temperature/RH visually dominant on normal screens.
+- [ ] Implement buzzer event manager and persisted OFF/LOW/MED/HIGH loudness; start with empirically low duty and tune on the first article. Muting a fault must not clear it.
+- [ ] Implement D021 diagnostic LED patterns in the application firmware.
+- [ ] Decide and validate target-temperature range/step, cycle-duration range/step, defaults and persistence only after heater/NTC/safety validation supports safe values.
+- [ ] Define final fan AUTO policy using the measured first-article fan thresholds with adequate startup/run margin; decide whether a post-cycle cooldown state is required.
+- [ ] Keep material profiles and humidity/trend-based automatic completion deferred until their values/algorithm are deliberately designed and validated.
