@@ -4,7 +4,7 @@ Custom ESP32-based controller board that retrofits an **eSUN eBox** filament dry
 
 The PCB physically replaces the original front panel: display and buttons sit on the front face of the board, while the main electronics are on the back.
 
-> **Current status — 2026-10-08:** active hardware branch **main**. The released fabrication-source checkpoint remains **`74a3000127371ac6c3b3b7197f9036dec5b58eef`** (2026-09-17). First-article bring-up has validated MCU/USB/UART after the documented D020 collector-cross bodge, the four front-panel buttons, internal diagnostic LED, passive buzzer, SHT45, SSD1309 graphical output, fan driver/real fan and unloaded heater-switching path. The real heater remains blocked pending the real NTC/J7 path, final NTC conversion/fault handling and independent series TCO. The V1 front-panel interaction model is specified in `docs/UI_SPEC.md` and D022. A first **SAFE BRING-UP** application scaffold now exists under `firmware/`: Slewform startup branding/chime, OLED pages, SHT45 acquisition, button handling, buzzer events and D021 LED patterns are implemented while heater and fan outputs are hard-locked LOW. See `docs/PROJECT_STATE.md` and `hardware/docs/PROCUREMENT.md`.
+> **Current status — 2026-10-08:** active hardware branch **main**. The released fabrication-source checkpoint remains **`74a3000127371ac6c3b3b7197f9036dec5b58eef`** (2026-09-17). First-article bring-up has validated MCU/USB/UART after the documented D020 collector-cross bodge, the four front-panel buttons, internal diagnostic LED, passive buzzer, SHT45, SSD1309 graphical output, fan driver/real fan and unloaded heater-switching path. The real heater remains blocked pending the real NTC/J7 path, final NTC conversion/fault handling and independent series TCO. The V1 front-panel interaction model is specified in `docs/UI_SPEC.md` and D022. A **SAFE BRING-UP** application now exists under `firmware/`: Slewform startup branding/chime, OLED pages, SHT45 acquisition, button handling, persisted settings, modular cycle/fan/safety controllers and D021 LED patterns are implemented. The heater remains hard-locked LOW; the already-validated fan is now enabled only during DRYING test cycles with a provisional 100%/1 s kick-start followed by 40% at 25 kHz. See `docs/PROJECT_STATE.md` and `hardware/docs/PROCUREMENT.md`.
 
 For a new work session, read AGENTS.md, docs/PROJECT_STATE.md, docs/DECISIONS.md and docs/TODO.md before changing the design.
 
@@ -235,13 +235,13 @@ Firmware uses the ESP32 Arduino core 3.x and is intended to remain cooperative/n
 | Block | Status |
 |---|---|
 | SHT45 driver | Application driver implemented with non-blocking conversion wait and CRC validation |
-| Fan PWM | Done; kickstart/duty floor provisional |
+| Fan PWM | Real DRYING-test control implemented: 25 kHz, 100%/1 s kick-start then provisional 40%; final FAN AUTO/cooldown still open |
 | Heater + NTC safety | NTC characterized; conversion/calibration/safety implementation pending |
 | OLED | First-article graphical output validated; SAFE BRING-UP renderer implemented |
-| Buttons + UI state machine | Debounce, short/long press, UP/DOWN autorepeat and initial V1 state machine implemented in SAFE BRING-UP scaffold |
+| Buttons + UI state machine | Live-tested; SETUP and SETTINGS flows implemented, including persisted cycle/buzzer preferences |
 | LittleFS + CSV logging | Pending |
 | Web UI | Pending |
-| Buzzer / LED | Hardware validated; startup/start/complete buzzer sequences and D021 LED patterns integrated; final volume/fault behavior still pending |
+| Buzzer / LED | OFF/LOW/MED/HIGH volume, optional key click, startup/start/complete/warning/fault patterns and D021 LED semantics implemented; final acoustic tuning still pending |
 | Non-blocking SHT45 conversion | Implemented in SAFE BRING-UP scaffold |
 
 ---

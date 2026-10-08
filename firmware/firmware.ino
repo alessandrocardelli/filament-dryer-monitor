@@ -6,65 +6,81 @@
 #include "AppTypes.h"
 #include "ButtonManager.h"
 #include "Buzzer.h"
+#include "CycleController.h"
+#include "FanController.h"
+#include "SafetyController.h"
+#include "SettingsStore.h"
 #include "Sht45Sensor.h"
 #include "StatusLed.h"
 #include "Ui.h"
 
-// Exact constructor previously validated on the first article on 2026-10-08.
 U8G2_SSD1309_128X64_NONAME0_F_HW_I2C oled(U8G2_R0, U8X8_PIN_NONE);
 
 ButtonManager buttons;
 Buzzer buzzer;
+CycleController cycle;
+FanController fan;
+SafetyController safety;
+SettingsStore settingsStore;
 Sht45Sensor sht45(Wire);
 StatusLed statusLed;
 Ui ui(oled);
 
 AppState appState = AppState::Boot;
 SetupField setupField = SetupField::Temperature;
-CycleSettings cycleSettings;
+SettingsField settingsField = SettingsField::BuzzerVolume;
+PersistentSettings settings;
+
 uint32_t bootStartedMs = 0;
-uint32_t cycleStartedMs = 0;
 bool technicalPage = false;
 
-static void enforceSafeBringupOutputs() {
-  // Do not remove this guard while heater NTC conversion/fault handling and the
-  // independent series TCO are still open project gates.
-  digitalWrite(AppConfig::kPinHeaterPwm, LOW);
-  digitalWrite(AppConfig::kPinFanPwm, LOW);
-}
-
-static uint32_t remainingCycleSeconds(uint32_t nowMs) {
-  if (appState != AppState::Drying) return 0;
-  const uint32_t totalSeconds = static_cast<uint32_t>(cycleSettings.durationMinutes) * 60UL;
-  const uint32_t elapsedSeconds = (nowMs - cycleStartedMs) / 1000UL;
-  return elapsedSeconds >= totalSeconds ? 0 : totalSeconds - elapsedSeconds;
+static void applyBuzzerSettings() {
+  buzzer.setVolume(settings.buzzerVolume);
 }
 
 static void enterState(AppState next, uint32_t nowMs) {
+  if (appState == AppState::Drying && next != AppState::Drying) {
+    cycle.stop();
+    fan.stop();
+  }
+
   appState = next;
   technicalPage = false;
   ui.noteInteraction(nowMs);
 
   switch (next) {
     case AppState::Standby:
+      fan.stop();
       Serial.println("STATE -> STANDBY");
       break;
     case AppState::Setup:
+      fan.stop();
       Serial.println("STATE -> SETUP");
       break;
+    case AppState::Settings:
+      fan.stop();
+      settingsField = SettingsField::BuzzerVolume;
+      Serial.println("STATE -> SETTINGS");
+      break;
     case AppState::Drying:
-      cycleStartedMs = nowMs;
+      settingsStore.save(settings);
+      cycle.start(settings.cycle, nowMs);
+      fan.startAuto(nowMs);
       buzzer.playCycleStart(nowMs);
-      Serial.println("STATE -> DRYING (SAFE BRING-UP: outputs locked OFF)");
+      Serial.println("STATE -> DRYING TEST (fan active; heater locked OFF)");
       break;
     case AppState::Complete:
+      fan.stop();
       buzzer.playComplete(nowMs);
       Serial.println("STATE -> COMPLETE");
       break;
     case AppState::Fault:
+      fan.stop();
+      buzzer.startFaultAlarm(nowMs);
       Serial.println("STATE -> FAULT");
       break;
     case AppState::Boot:
+      fan.stop();
       break;
   }
 }
@@ -77,19 +93,49 @@ static void selectNextSetupField() {
   }
 }
 
-static void adjustSelected(int8_t direction) {
+static void selectNextSettingsField() {
+  settingsField = (settingsField == SettingsField::BuzzerVolume)
+                      ? SettingsField::KeyClick
+                      : SettingsField::BuzzerVolume;
+}
+
+static void adjustSetup(int8_t direction) {
   if (setupField == SetupField::Temperature) {
-    const int16_t next = cycleSettings.targetTempC + direction * AppConfig::kPrototypeTempStepC;
-    cycleSettings.targetTempC = constrain(next, AppConfig::kPrototypeTempMinC,
-                                           AppConfig::kPrototypeTempMaxC);
+    const int16_t next =
+        settings.cycle.targetTempC +
+        direction * AppConfig::kPrototypeTempStepC;
+    settings.cycle.targetTempC =
+        constrain(next, AppConfig::kPrototypeTempMinC,
+                  AppConfig::kPrototypeTempMaxC);
   } else if (setupField == SetupField::Duration) {
-    const int32_t next = static_cast<int32_t>(cycleSettings.durationMinutes) +
-                         direction * static_cast<int32_t>(AppConfig::kPrototypeDurationStepMinutes);
-    cycleSettings.durationMinutes = static_cast<uint16_t>(constrain(
-        next, static_cast<int32_t>(AppConfig::kPrototypeDurationMinMinutes),
+    const int32_t next =
+        static_cast<int32_t>(settings.cycle.durationMinutes) +
+        direction *
+            static_cast<int32_t>(AppConfig::kPrototypeDurationStepMinutes);
+    settings.cycle.durationMinutes = static_cast<uint16_t>(constrain(
+        next,
+        static_cast<int32_t>(AppConfig::kPrototypeDurationMinMinutes),
         static_cast<int32_t>(AppConfig::kPrototypeDurationMaxMinutes)));
   }
-  // Fan remains AUTO in V1; no user-adjustable percentage here.
+}
+
+static void adjustSettings(int8_t direction, uint32_t nowMs) {
+  if (settingsField == SettingsField::BuzzerVolume) {
+    int value = static_cast<int>(settings.buzzerVolume) + direction;
+    value = constrain(value, static_cast<int>(BuzzerVolume::Off),
+                      static_cast<int>(BuzzerVolume::High));
+    settings.buzzerVolume = static_cast<BuzzerVolume>(value);
+    applyBuzzerSettings();
+    buzzer.playVolumePreview(nowMs);
+  } else {
+    settings.keyClick = !settings.keyClick;
+    if (settings.keyClick) buzzer.playKeyClick(nowMs);
+  }
+}
+
+static void maybePlayKeyClick(ButtonEventType type, uint32_t nowMs) {
+  if (!settings.keyClick || type == ButtonEventType::Repeat) return;
+  buzzer.playKeyClick(nowMs);
 }
 
 static void handleButtonEvent(ButtonId id, ButtonEventType type) {
@@ -101,16 +147,23 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
   }
   ui.noteInteraction(nowMs);
 
+  if (appState != AppState::Fault) {
+    maybePlayKeyClick(type, nowMs);
+  }
+
   switch (appState) {
     case AppState::Boot:
-      // Ignore front-panel commands during the short branding splash.
       return;
 
     case AppState::Standby:
       if (id == ButtonId::Mode && type == ButtonEventType::ShortPress) {
         setupField = SetupField::Temperature;
         enterState(AppState::Setup, nowMs);
-      } else if (id == ButtonId::OnOff && type == ButtonEventType::ShortPress) {
+      } else if (id == ButtonId::Mode &&
+                 type == ButtonEventType::LongPress) {
+        enterState(AppState::Settings, nowMs);
+      } else if (id == ButtonId::OnOff &&
+                 type == ButtonEventType::ShortPress) {
         enterState(AppState::Drying, nowMs);
       }
       return;
@@ -118,33 +171,54 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
     case AppState::Setup:
       if (id == ButtonId::Mode && type == ButtonEventType::ShortPress) {
         selectNextSetupField();
-      } else if (id == ButtonId::Mode && type == ButtonEventType::LongPress) {
+      } else if (id == ButtonId::Mode &&
+                 type == ButtonEventType::LongPress) {
+        settingsStore.save(settings);
         enterState(AppState::Standby, nowMs);
-      } else if (id == ButtonId::OnOff && type == ButtonEventType::ShortPress) {
+      } else if (id == ButtonId::OnOff &&
+                 type == ButtonEventType::ShortPress) {
         enterState(AppState::Drying, nowMs);
       } else if ((id == ButtonId::Up || id == ButtonId::Down) &&
-                 (type == ButtonEventType::ShortPress || type == ButtonEventType::Repeat)) {
-        adjustSelected(id == ButtonId::Up ? +1 : -1);
+                 (type == ButtonEventType::ShortPress ||
+                  type == ButtonEventType::Repeat)) {
+        adjustSetup(id == ButtonId::Up ? +1 : -1);
+      }
+      return;
+
+    case AppState::Settings:
+      if (id == ButtonId::Mode && type == ButtonEventType::ShortPress) {
+        selectNextSettingsField();
+      } else if (id == ButtonId::Mode &&
+                 type == ButtonEventType::LongPress) {
+        settingsStore.save(settings);
+        enterState(AppState::Standby, nowMs);
+      } else if ((id == ButtonId::Up || id == ButtonId::Down) &&
+                 (type == ButtonEventType::ShortPress ||
+                  type == ButtonEventType::Repeat)) {
+        adjustSettings(id == ButtonId::Up ? +1 : -1, nowMs);
       }
       return;
 
     case AppState::Drying:
       if (id == ButtonId::Mode && type == ButtonEventType::ShortPress) {
         technicalPage = !technicalPage;
-      } else if (id == ButtonId::OnOff && type == ButtonEventType::LongPress) {
+      } else if (id == ButtonId::OnOff &&
+                 type == ButtonEventType::LongPress) {
         enterState(AppState::Standby, nowMs);
       }
       return;
 
     case AppState::Complete:
-      if (id == ButtonId::OnOff && type == ButtonEventType::ShortPress) {
+      if (id == ButtonId::OnOff &&
+          type == ButtonEventType::ShortPress) {
         enterState(AppState::Standby, nowMs);
       }
       return;
 
     case AppState::Fault:
-      if (id == ButtonId::Mode && type == ButtonEventType::ShortPress) {
-        buzzer.stop();
+      if (id == ButtonId::Mode &&
+          type == ButtonEventType::ShortPress) {
+        buzzer.muteFault();
         Serial.println("Fault buzzer muted; fault remains active");
       }
       return;
@@ -152,50 +226,63 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
 }
 
 void setup() {
-  // Establish safe actuator states before display, I2C, Serial, or UI startup.
-  pinMode(AppConfig::kPinHeaterPwm, OUTPUT);
-  pinMode(AppConfig::kPinFanPwm, OUTPUT);
-  enforceSafeBringupOutputs();
-
+  safety.begin();
   statusLed.begin();
   buttons.begin();
+  fan.begin();
 
-  // Bring the OLED under firmware control as early as possible to suppress
-  // random power-up RAM contents before the Slewform splash.
-  Wire.begin(AppConfig::kPinSda, AppConfig::kPinScl, AppConfig::kI2cFrequencyHz);
+  Wire.begin(AppConfig::kPinSda, AppConfig::kPinScl,
+             AppConfig::kI2cFrequencyHz);
   const uint32_t nowMs = millis();
   ui.begin(nowMs);
 
   Serial.begin(115200);
   Serial.println();
-  Serial.println("Filament Dryer Monitor - SAFE BRING-UP UI firmware");
-  Serial.println("Heater and fan outputs are hard-locked LOW in this build.");
+  Serial.println("Filament Dryer Monitor - SAFE BRING-UP application");
+  Serial.println("Heater locked OFF. Fan test control enabled.");
+
+  const bool settingsOk = settingsStore.begin(settings);
+  if (!settingsOk) {
+    Serial.println("WARNING: Preferences/NVS unavailable; using defaults");
+  }
 
   sht45.begin(nowMs);
   buzzer.begin();
+  applyBuzzerSettings();
 
   bootStartedMs = nowMs;
   appState = AppState::Boot;
   buzzer.playStartup(nowMs);
-  ui.render(nowMs, appState, setupField, cycleSettings, sht45.snapshot(), 0);
+
+  if (!fan.attached()) {
+    Serial.println("WARNING: fan LEDC attachment failed; fan remains OFF");
+  }
+
+  ui.render(nowMs, appState, setupField, settingsField, settings,
+            sht45.snapshot(), 0, fan.dutyPercent(), false);
 }
 
 void loop() {
   const uint32_t nowMs = millis();
 
-  // Safety invariant for this development build.
-  enforceSafeBringupOutputs();
+  safety.update();
 
   buttons.update(nowMs, handleButtonEvent);
   buzzer.update(nowMs);
   sht45.update(nowMs);
+  fan.update(nowMs, safety.fanPermitted());
 
-  if (appState == AppState::Boot && (nowMs - bootStartedMs) >= AppConfig::kBootSplashMs) {
+  if (appState == AppState::Boot &&
+      (nowMs - bootStartedMs) >= AppConfig::kBootSplashMs) {
     enterState(AppState::Standby, nowMs);
   }
 
-  if (appState == AppState::Drying && remainingCycleSeconds(nowMs) == 0) {
+  if (cycle.update(nowMs) == CycleEvent::Completed) {
     enterState(AppState::Complete, nowMs);
+  }
+
+  if (safety.faultActive() && appState != AppState::Fault) {
+    enterState(AppState::Fault, nowMs);
   }
 
   const bool sensorHealthy = sht45.healthy(nowMs);
@@ -212,6 +299,7 @@ void loop() {
   statusLed.update(nowMs, ledState);
 
   ui.updateSleep(nowMs, appState);
-  ui.render(nowMs, appState, setupField, cycleSettings, sht45.snapshot(),
-            remainingCycleSeconds(nowMs), technicalPage);
+  ui.render(nowMs, appState, setupField, settingsField, settings,
+            sht45.snapshot(), cycle.remainingSeconds(nowMs),
+            fan.dutyPercent(), technicalPage);
 }

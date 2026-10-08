@@ -30,9 +30,8 @@ constexpr uint32_t kSht45PeriodMs = 2000;
 constexpr uint32_t kSht45ConversionMs = 12;
 constexpr uint32_t kSht45StaleMs = 10000;
 
-// SAFE BRING-UP firmware: actuator outputs are intentionally hard-disabled.
-// These UI-only bounds exist solely to exercise the setup screen and buttons.
-// They are NOT heater safety limits or accepted product settings.
+// SAFE BRING-UP: heater remains hard-disabled.
+// These UI bounds are provisional and are NOT heater safety limits.
 constexpr int16_t kPrototypeTempMinC = 30;
 constexpr int16_t kPrototypeTempMaxC = 80;
 constexpr int16_t kPrototypeTempStepC = 1;
@@ -40,8 +39,21 @@ constexpr uint16_t kPrototypeDurationMinMinutes = 15;
 constexpr uint16_t kPrototypeDurationMaxMinutes = 12 * 60;
 constexpr uint16_t kPrototypeDurationStepMinutes = 15;
 
+// Fan first-article bring-up policy.
+// Measured at 25 kHz: 25% first tested start duty, 15% sustained-running floor.
+constexpr uint32_t kFanPwmFrequencyHz = 25000;
+constexpr uint8_t kFanPwmResolutionBits = 8;
+constexpr uint8_t kFanLedcChannel = 9;
+constexpr uint32_t kFanKickstartMs = 1000;
+constexpr uint8_t kFanKickstartPercent = 100;
+constexpr uint8_t kFanBringupRunPercent = 40;
+
 constexpr uint8_t kBuzzerResolutionBits = 8;
-constexpr uint8_t kBuzzerLedcChannel = 8; // ESP32 group 1; keep independent from future fan PWM.
-constexpr uint8_t kBuzzerDutyLow = 18;    // ~7% of 8-bit full scale; tune on the first article.
+constexpr uint8_t kBuzzerLedcChannel = 8;
+constexpr uint8_t kBuzzerDutyLow = 12;
+constexpr uint8_t kBuzzerDutyMedium = 24;
+constexpr uint8_t kBuzzerDutyHigh = 48;
+
+constexpr uint16_t kSettingsSchemaVersion = 1;
 
 }  // namespace AppConfig

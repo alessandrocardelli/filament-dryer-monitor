@@ -353,3 +353,30 @@ After live testing of the SAFE BRING-UP UI, the interaction felt somewhat indire
 A trial of small context-sensitive labels aligned with the four physical buttons (`START`, `SET`, `NEXT`, `+`, `-`, `STOP`, `PAGE`) was implemented briefly, then **rejected** because the 128×64 display is too constrained and the labels compete with or overlap more important content.
 
 Do not reserve OLED space for persistent button hints in the normal V1 screens. Primary measurements, cycle state and fault information take priority.
+
+## D025 — SAFE BRING-UP fan policy and persisted local settings
+
+**Status:** accepted for first-article application testing 2026-10-08.
+
+The already-validated fan may now operate during application DRYING test cycles while the heater remains hard-locked OFF.
+
+Temporary bring-up fan policy:
+
+- PWM frequency: 25 kHz;
+- start of cycle: 100% duty for 1 s;
+- after kick-start: 40% duty;
+- stop/complete/fault: fan OFF;
+- no post-cycle cooldown yet.
+
+The 40% run point intentionally retains margin over the measured first-article thresholds (25% first tested start-from-rest, 15% lowest tested sustained operation). These values are **not** the final FAN AUTO policy.
+
+Application architecture is split into dedicated cycle, fan and safety controllers. The current safety controller continuously forces HEATER_PWM LOW and does not expose any heater-enable path.
+
+Local settings are persisted in ESP32 Preferences/NVS:
+
+- last target-temperature UI value;
+- last cycle duration;
+- buzzer volume OFF/LOW/MED/HIGH;
+- key-click preference.
+
+Writes are performed only when values have changed and a setup/settings flow is committed, rather than on each autorepeat increment. Active-cycle/running state is deliberately not persisted, so reset/power loss cannot cause an automatic cycle restart.

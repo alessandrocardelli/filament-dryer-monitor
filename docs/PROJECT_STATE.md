@@ -453,3 +453,18 @@ The mechanics are therefore validated on the first article, but the interaction 
 The first contextual-label layout trial was rejected before further first-article testing because the small edge labels competed with existing screen content on the 128×64 OLED. The labels were removed and the prior clean layouts restored.
 
 The independent usability improvement remains: in SETUP, M short advances to the next field and M long returns to STANDBY; ON/OFF remains dedicated to starting the cycle.
+
+## 2026-10-08 application phase 2: fan, controllers, persistence and buzzer
+
+The SAFE BRING-UP application was expanded after the first UI/button tests.
+
+New firmware structure:
+
+- `CycleController.h`: cycle start/stop/countdown/completion;
+- `FanController.h`: real 25 kHz fan PWM with 100% 1 s kick-start then provisional 40%;
+- `SafetyController.h`: heater safety scaffold that continuously forces GPIO19 LOW; no heater-enable path exists;
+- `SettingsStore.h`: ESP32 Preferences/NVS persistence for cycle UI values, buzzer volume and key-click preference;
+- expanded `Buzzer.h`: OFF/LOW/MED/HIGH levels, optional key click, startup/start/complete/warning/fault sequences;
+- SETTINGS UI entered by long M from STANDBY.
+
+The fan is now the only application-controlled power output. It operates only during DRYING test cycles and is stopped on stop, completion or fault. The heater remains hard-locked OFF on every loop pass. Fan cooldown and final FAN AUTO behavior remain open.

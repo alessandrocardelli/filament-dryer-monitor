@@ -107,15 +107,19 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 ## Application firmware / front-panel UI
 
+- [ ] Validate real fan application control on the first article: with the actual fan connected, start a DRYING test cycle and confirm ~1 s at 100% followed by steady 40% at 25 kHz; confirm long ON/OFF stop and cycle completion both turn the fan fully OFF. Keep the heater disconnected/locked and use an adequate bench current limit.
+- [ ] Validate Preferences/NVS persistence across reset/power cycle: change cycle time/temperature UI values and buzzer settings, exit with M-long or start a cycle, reset, and confirm values return; confirm no active cycle auto-resumes.
+- [ ] Validate SETTINGS UI: from STANDBY hold M, test buzzer OFF/LOW/MED/HIGH preview and KEY CLICK ON/OFF, then hold M to save/back.
+
 - [ ] Verify on first article that the cleaned-up layout is restored and M-long exits SETUP. Contextual button hints were rejected because they competed with the 128×64 screen content.
 
 - [ ] Reflash after first live UI corrections and verify: Slewform splash now remains visible 3.5 s, pre-logo horizontal/random lines are eliminated or reduced to an unavoidable power-up transient, all temperature fields show `°C`, and heater/fan pins remain LOW.
 
-- [ ] Expand the application scaffold into separate cycle-control, safety, fan, logging and web-interface modules. Input/UI/SHT45/buzzer/LED structure and a cooperative SAFE BRING-UP main loop were added in commit `030cb5c`.
+- [x] Split cycle, fan and safety responsibilities into `CycleController`, `FanController` and `SafetyController`; heater remains hard-locked OFF. Logging and web-interface modules remain future work.
 - [x] Implement and live-test debounced active-low button handling with short press, ~1.5 s long press, UP/DOWN autorepeat and wake-consume behavior. First-article interaction test passed 2026-10-08.
 - [ ] Complete the D022 state model. BOOT -> STANDBY -> SETUP -> DRYING-demo -> COMPLETE is implemented in `030cb5c` with no auto-resume; real FAULT entry/reset remains pending the safety controller.
 - [ ] Complete SSD1309 pages from `docs/UI_SPEC.md`. Slewform boot splash, standby, setup, drying main, technical/system, complete and generic fault screens are implemented in `030cb5c`; final diagnostics and safety-specific fault content remain.
-- [ ] Complete buzzer event manager and persistence. `030cb5c` implements low-duty Slewform startup chime plus cycle-start/completion sequences; OFF/LOW/MED/HIGH persistence, warnings and repeating fault alarm remain.
+- [ ] Live-test the expanded buzzer manager: persisted OFF/LOW/MED/HIGH levels, optional key click, warning pattern and repeating fault pattern. Code is implemented; acoustic tuning and real safety-fault triggering remain to be validated.
 - [x] Implement D021 diagnostic LED patterns in the application firmware (`030cb5c`).
 - [ ] Decide and validate target-temperature range/step, cycle-duration range/step, defaults and persistence only after heater/NTC/safety validation supports safe values.
 - [ ] Define final fan AUTO policy using the measured first-article fan thresholds with adequate startup/run margin; decide whether a post-cycle cooldown state is required.

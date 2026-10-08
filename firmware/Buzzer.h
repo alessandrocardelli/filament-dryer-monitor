@@ -1,6 +1,7 @@
 #pragma once
 #include <Arduino.h>
 #include "AppConfig.h"
+#include "AppTypes.h"
 
 class Buzzer {
  public:
@@ -11,25 +12,64 @@ class Buzzer {
     stopTone();
   }
 
+  void setVolume(BuzzerVolume volume) {
+    volume_ = volume;
+    if (volume_ == BuzzerVolume::Off) stop();
+  }
+
+  BuzzerVolume volume() const { return volume_; }
+
   void update(uint32_t nowMs) {
     if (!playing_ || sequence_ == nullptr || sequenceLength_ == 0) return;
-    if ((int32_t)(nowMs - stepEndsMs_) < 0) return;
+    if (static_cast<int32_t>(nowMs - stepEndsMs_) < 0) return;
 
     ++stepIndex_;
     if (stepIndex_ >= sequenceLength_) {
-      playing_ = false;
-      stopTone();
+      if (repeat_) {
+        stepIndex_ = 0;
+        applyStep(nowMs);
+      } else {
+        playing_ = false;
+        stopTone();
+      }
       return;
     }
     applyStep(nowMs);
   }
 
-  void playStartup(uint32_t nowMs) { startSequence(kStartupChime, countOf(kStartupChime), nowMs); }
-  void playCycleStart(uint32_t nowMs) { startSequence(kStartBeep, countOf(kStartBeep), nowMs); }
-  void playComplete(uint32_t nowMs) { startSequence(kCompleteChime, countOf(kCompleteChime), nowMs); }
+  void playStartup(uint32_t nowMs) {
+    startSequence(kStartupChime, countOf(kStartupChime), nowMs, false);
+  }
+
+  void playKeyClick(uint32_t nowMs) {
+    startSequence(kKeyClick, countOf(kKeyClick), nowMs, false);
+  }
+
+  void playCycleStart(uint32_t nowMs) {
+    startSequence(kStartBeep, countOf(kStartBeep), nowMs, false);
+  }
+
+  void playComplete(uint32_t nowMs) {
+    startSequence(kCompleteChime, countOf(kCompleteChime), nowMs, false);
+  }
+
+  void playWarning(uint32_t nowMs) {
+    startSequence(kWarning, countOf(kWarning), nowMs, false);
+  }
+
+  void startFaultAlarm(uint32_t nowMs) {
+    startSequence(kFaultAlarm, countOf(kFaultAlarm), nowMs, true);
+  }
+
+  void muteFault() { stop(); }
+
+  void playVolumePreview(uint32_t nowMs) {
+    startSequence(kVolumePreview, countOf(kVolumePreview), nowMs, false);
+  }
 
   void stop() {
     playing_ = false;
+    repeat_ = false;
     stopTone();
   }
 
@@ -39,16 +79,26 @@ class Buzzer {
     uint16_t durationMs;
   };
 
-  // Original short rising power-on chime: intentionally evokes a 1990s handheld
-  // startup feel without reproducing the Game Boy startup sound note-for-note.
   static constexpr ToneStep kStartupChime[] = {
       {1047, 90}, {0, 35}, {1568, 210},
+  };
+  static constexpr ToneStep kKeyClick[] = {
+      {1800, 22},
   };
   static constexpr ToneStep kStartBeep[] = {
       {1400, 80},
   };
   static constexpr ToneStep kCompleteChime[] = {
       {880, 90}, {0, 45}, {1175, 90}, {0, 45}, {1568, 180},
+  };
+  static constexpr ToneStep kWarning[] = {
+      {1200, 100}, {0, 80}, {1200, 100},
+  };
+  static constexpr ToneStep kFaultAlarm[] = {
+      {900, 140}, {0, 90}, {900, 140}, {0, 900},
+  };
+  static constexpr ToneStep kVolumePreview[] = {
+      {1350, 110},
   };
 
   template <size_t N>
@@ -62,12 +112,29 @@ class Buzzer {
   uint32_t stepEndsMs_ = 0;
   bool attached_ = false;
   bool playing_ = false;
+  bool repeat_ = false;
+  BuzzerVolume volume_ = BuzzerVolume::Low;
 
-  void startSequence(const ToneStep *sequence, uint8_t length, uint32_t nowMs) {
-    if (!attached_ || sequence == nullptr || length == 0) return;
+  uint8_t dutyForVolume() const {
+    switch (volume_) {
+      case BuzzerVolume::Off: return 0;
+      case BuzzerVolume::Low: return AppConfig::kBuzzerDutyLow;
+      case BuzzerVolume::Medium: return AppConfig::kBuzzerDutyMedium;
+      case BuzzerVolume::High: return AppConfig::kBuzzerDutyHigh;
+    }
+    return AppConfig::kBuzzerDutyLow;
+  }
+
+  void startSequence(const ToneStep *sequence, uint8_t length,
+                     uint32_t nowMs, bool repeat) {
+    if (!attached_ || sequence == nullptr || length == 0 ||
+        volume_ == BuzzerVolume::Off) {
+      return;
+    }
     sequence_ = sequence;
     sequenceLength_ = length;
     stepIndex_ = 0;
+    repeat_ = repeat;
     playing_ = true;
     applyStep(nowMs);
   }
@@ -79,7 +146,7 @@ class Buzzer {
     } else {
       ledcChangeFrequency(AppConfig::kPinBuzzer, step.frequencyHz,
                           AppConfig::kBuzzerResolutionBits);
-      ledcWrite(AppConfig::kPinBuzzer, AppConfig::kBuzzerDutyLow);
+      ledcWrite(AppConfig::kPinBuzzer, dutyForVolume());
     }
     stepEndsMs_ = nowMs + step.durationMs;
   }

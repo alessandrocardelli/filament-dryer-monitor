@@ -81,11 +81,20 @@ Default long-press threshold: approximately **1.5 s**, implemented as a firmware
 | Button | Short press | Long press |
 |---|---|---|
 | ON/OFF | Start the currently configured cycle | Same as short press or no extra action |
-| M | Enter/cycle through setup fields | Enter settings menu |
+| M | Enter setup | Enter settings menu |
 | UP | No direct action | No direct action |
 | DOWN | No direct action | No direct action |
 
 If the OLED is asleep, the first key press wakes the display and is consumed; it must not also start or modify a cycle.
+
+### SETTINGS
+
+From STANDBY, a long press on M opens SETTINGS. Initial persisted options:
+
+- buzzer volume: OFF / LOW / MED / HIGH;
+- key click: ON / OFF.
+
+M short selects the next setting; UP/DOWN modify it; M long saves and returns to STANDBY. Settings are stored in ESP32 Preferences/NVS. Active-cycle state is never persisted for automatic restart.
 
 ### SETUP
 
@@ -289,7 +298,7 @@ V1 completion is therefore time/control based. Humidity-driven or trend-driven c
 
 V1 exposes the fan as `AUTO` to the normal user.
 
-The already measured first-article 25 kHz fan thresholds (25% first tested start from rest, 15% lowest tested sustained rotation) are characterization data, not direct UI limits. Firmware fan-control policy must retain margin and may use a brief full-duty startup boost.
+The already measured first-article 25 kHz fan thresholds are 25% as the first tested start-from-rest duty and 15% as the lowest tested sustained-running duty. The current SAFE BRING-UP policy deliberately retains margin: 100% for 1 s at cycle start, then 40% for the remainder of the DRYING test cycle. This is a validation policy, not the final FAN AUTO algorithm. The fan stops immediately on cycle stop/completion for now; post-cycle cooldown remains open.
 
 Manual fan percentage can remain available only on a technical/service page if needed for development. It is not a normal V1 cycle-setting requirement.
 
