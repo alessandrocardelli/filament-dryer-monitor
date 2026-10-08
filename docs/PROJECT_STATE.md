@@ -391,4 +391,11 @@ Gate 4A is therefore **PASSED** on the first article: unloaded I2C electrical ch
 
 First-article physical fit check found that the installed J7 JST-GH BM02B-GHS-TBT (1.25 mm) does not mate with the original eSUN heater NTC plug. The earlier assumption that the OEM NTC plug was JST-GH-compatible was not physically validated and is incorrect for this dryer.
 
-Electrical J7 mapping remains valid (pin 1 GND, pin 2 NTC). Do not modify the OEM NTC harness merely to force compatibility. Identify or reuse the original controller-side mating connector for the prototype, and correct J7 connector/footprint deliberately in the next hardware revision once the OEM connector is positively identified.
+Electrical J7 mapping remains valid (pin 1 GND, pin 2 NTC). For this first article, J7 will remain installed. The current recovery plan is to remove the incompatible plug from the original NTC leads and terminate those leads directly into a JST-GH 2-position housing, after validating a sample crimp first. The NTC leads are believed to be about 30 AWG. A PEBA micro-crimping kit/tool advertised for JST-GH 1.25 mm and 0.03–0.34 mm² conductors was purchased on 2026-10-08 and is expected on Saturday 2026-10-10. Do not cut the NTC harness until a sacrificial GH crimp has been checked mechanically. The next hardware revision should still revisit J7 connector choice deliberately.
+
+
+## 2026-10-08 Gate 5B unloaded switching test
+
+Q4, D4, R20 and R21 were installed with J5 still unpopulated and no heater connected. J5 pin 1 / HEATER_SW was not shorted to GND with power removed. At 24 V with a 100 mA bench limit, Q4 gate measured 0 V in the safe-OFF state. With a temporary 100 kΩ pull-up from J5 pin 2 (24V_PROT) to J5 pin 1, the OFF-state switched node measured 24 V. Driving HEATER_PWM (GPIO19) HIGH produced 3.3 V at the Q4 gate and approximately 1 mV at J5 pin 1.
+
+The unloaded Q4 driver path therefore passes static OFF/ON validation. The real heater remains disconnected pending the real NTC/J7 path, firmware conversion/fault handling and independent series TCO.
