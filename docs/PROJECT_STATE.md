@@ -441,3 +441,9 @@ The first SAFE BRING-UP firmware was flashed successfully to the first article a
 - displayed temperatures were missing the degree symbol.
 
 The firmware was corrected to hold the Slewform splash for 3.5 s, initialize/blank the SSD1309 as early as practical before enabling its visible frame, and render temperature units consistently as `°C` using U8g2 UTF-8 rendering. Heater and fan remain hard-locked LOW.
+
+## 2026-10-08 first button/UI usability test
+
+The first-article SAFE BRING-UP UI was exercised through the front panel. The user confirmed that the tested behavior works: STANDBY -> SETUP, temperature/time edits, UP/DOWN autorepeat, FAN AUTO non-editability, start into DRYING-demo, M page switching, short ON/OFF ignored during drying, long ON/OFF stop, setup cancellation, and OLED sleep/wake with the first wake press consumed.
+
+The mechanics are therefore validated on the first article, but the interaction was judged somewhat cumbersome. D024 records the next usability trial: M-long becomes SETUP back/cancel and small context-sensitive button hints are drawn at the OLED edges aligned with the four physical buttons. Heater and fan remain hard-locked LOW.

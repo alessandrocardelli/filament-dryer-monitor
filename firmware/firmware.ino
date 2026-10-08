@@ -118,10 +118,10 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
     case AppState::Setup:
       if (id == ButtonId::Mode && type == ButtonEventType::ShortPress) {
         selectNextSetupField();
+      } else if (id == ButtonId::Mode && type == ButtonEventType::LongPress) {
+        enterState(AppState::Standby, nowMs);
       } else if (id == ButtonId::OnOff && type == ButtonEventType::ShortPress) {
         enterState(AppState::Drying, nowMs);
-      } else if (id == ButtonId::OnOff && type == ButtonEventType::LongPress) {
-        enterState(AppState::Standby, nowMs);
       } else if ((id == ButtonId::Up || id == ButtonId::Down) &&
                  (type == ButtonEventType::ShortPress || type == ButtonEventType::Repeat)) {
         adjustSelected(id == ButtonId::Up ? +1 : -1);

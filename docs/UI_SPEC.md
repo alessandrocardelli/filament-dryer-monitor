@@ -99,12 +99,24 @@ Material presets are intentionally deferred until their actual values and safety
 
 | Button | Short press | Long press |
 |---|---|---|
-| ON/OFF | Start cycle using displayed settings | Cancel/return to standby |
-| M | Select next editable field | Enter settings menu |
+| ON/OFF | Start cycle using displayed settings | No additional action |
+| M | Select next editable field | Cancel/return to standby |
 | UP | Increase selected value | Autorepeat increase |
 | DOWN | Decrease selected value | Autorepeat decrease |
 
 The selected value is visually highlighted/inverted.
+
+### Contextual button hints
+
+Because the four physical buttons flank the OLED (ON/OFF upper-left, M lower-left, UP upper-right, DOWN lower-right), V1 should show very small context-sensitive action labels at the corresponding screen edges when useful. Initial first-article trial:
+
+- STANDBY: `START` / `SET` on the left;
+- SETUP: `START` / `NEXT` on the left and `+` / `-` on the right;
+- DRYING / SYSTEM: `STOP` / `PAGE` on the left;
+- COMPLETE: `OK` at upper-left;
+- FAULT: `MUTE` at lower-left.
+
+The hints use a very small font and must remain secondary to measurements/status. If first-article readability is poor or the display feels crowded, remove or abbreviate them rather than shrinking primary data.
 
 ### DRYING
 

@@ -341,3 +341,14 @@ The splash is paired with a short **original two-step rising power-on chime** wh
 First-article use testing found the original ~1.5 s splash too brief; the accepted current timing is **3.5 s**. Heater/fan safe output state and other safety-critical initialization take precedence over branding: the splash/chime must never delay forcing controlled outputs safe.
 
 The first SAFE BRING-UP implementation is in `firmware/firmware.ino` and `firmware/Buzzer.h`.
+
+## D024 — Contextual front-panel button hints and setup back action
+
+**Status:** accepted for first-article usability trial 2026-10-08.
+
+After live testing of the first SAFE BRING-UP UI, all button mechanics worked but the interaction felt somewhat indirect. The next UI iteration therefore makes two usability changes:
+
+- in `SETUP`, **M short = next field** and **M long = cancel/back to STANDBY**; ON/OFF remains dedicated to starting the cycle;
+- the OLED shows small context-sensitive action labels aligned with the physical buttons where useful (for example `START`, `SET`, `NEXT`, `+`, `-`, `STOP`, `PAGE`).
+
+This is intentionally a first-article usability trial rather than a commitment to exact typography. Primary temperature/RH/status information retains display priority; labels may be shortened or removed if the real 128×64 display becomes visually crowded.

@@ -84,6 +84,7 @@ class Ui {
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(20, 9, "FILAMENT DRYER");
     display_.drawHLine(0, 12, 128);
+    drawButtonHints("START", "SET", nullptr, nullptr);
 
     display_.setFont(u8g2_font_helvB12_tf);
     char left[16];
@@ -95,27 +96,30 @@ class Ui {
       snprintf(left, sizeof(left), "--.- °C");
       snprintf(right, sizeof(right), "--.-%%");
     }
-    display_.drawUTF8(2, 36, left);
+    display_.drawUTF8(2, 40, left);
     const int16_t rw = display_.getUTF8Width(right);
-    display_.drawUTF8(126 - rw, 36, right);
+    display_.drawUTF8(126 - rw, 40, right);
 
-    display_.setFont(u8g2_font_6x10_tf);
-    display_.drawStr(2, 60, sensor.valid ? "Ready" : "SHT45 waiting...");
+    if (!sensor.valid) {
+      display_.setFont(u8g2_font_4x6_tf);
+      display_.drawStr(32, 61, "SHT45 waiting...");
+    }
   }
 
   void drawSetup(SetupField selected, const CycleSettings &settings) {
     display_.setFont(u8g2_font_6x10_tf);
-    display_.drawStr(2, 9, "SET CYCLE   SAFE MODE");
+    display_.drawStr(38, 9, "SET CYCLE");
     display_.drawHLine(0, 12, 128);
+    drawButtonHints("START", "NEXT", "+", "-");
 
     char temp[18];
     char time[18];
-    snprintf(temp, sizeof(temp), "TEMP        %d °C", settings.targetTempC);
-    snprintf(time, sizeof(time), "TIME        %02u:%02u",
+    snprintf(temp, sizeof(temp), "TEMP %d °C", settings.targetTempC);
+    snprintf(time, sizeof(time), "TIME %02u:%02u",
              settings.durationMinutes / 60, settings.durationMinutes % 60);
-    drawSelectableRow(15, temp, selected == SetupField::Temperature);
-    drawSelectableRow(31, time, selected == SetupField::Duration);
-    drawSelectableRow(47, "FAN         AUTO", selected == SetupField::Fan);
+    drawSelectableField(17, temp, selected == SetupField::Temperature);
+    drawSelectableField(33, time, selected == SetupField::Duration);
+    drawSelectableField(49, "FAN  AUTO", selected == SetupField::Fan);
   }
 
   void drawDrying(const CycleSettings &settings, const SensorSnapshot &sensor,
@@ -127,6 +131,7 @@ class Ui {
              static_cast<unsigned long>((remainingSeconds / 60UL) % 60UL));
     display_.drawStr(0, 9, header);
     display_.drawHLine(0, 12, 128);
+    drawButtonHints("STOP", "PAGE", nullptr, nullptr);
 
     char values[24];
     if (sensor.valid) {
@@ -148,6 +153,7 @@ class Ui {
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(2, 9, "SYSTEM / BRING-UP");
     display_.drawHLine(0, 12, 128);
+    drawButtonHints("STOP", "PAGE", nullptr, nullptr);
     char line[24];
     if (sensor.valid) {
       snprintf(line, sizeof(line), "Chamber      %.1f °C", sensor.temperatureC);
@@ -162,6 +168,7 @@ class Ui {
   }
 
   void drawComplete(const SensorSnapshot &sensor) {
+    drawButtonHints("OK", nullptr, nullptr, nullptr);
     display_.setFont(u8g2_font_helvB12_tf);
     display_.drawStr(24, 18, "COMPLETE");
     display_.setFont(u8g2_font_6x10_tf);
@@ -174,6 +181,7 @@ class Ui {
   }
 
   void drawFault() {
+    drawButtonHints(nullptr, "MUTE", nullptr, nullptr);
     display_.setFont(u8g2_font_helvB12_tf);
     display_.drawStr(27, 17, "FAULT");
     display_.setFont(u8g2_font_6x10_tf);
@@ -182,15 +190,38 @@ class Ui {
     display_.drawStr(24, 62, "M = mute");
   }
 
-  void drawSelectableRow(uint8_t y, const char *text, bool selected) {
+  void drawSelectableField(uint8_t y, const char *text, bool selected) {
+    constexpr uint8_t kX = 24;
+    constexpr uint8_t kW = 82;
+    constexpr uint8_t kH = 14;
+    display_.setFont(u8g2_font_6x10_tf);
     if (selected) {
       display_.setDrawColor(1);
-      display_.drawBox(0, y, 128, 15);
+      display_.drawBox(kX, y, kW, kH);
       display_.setDrawColor(0);
-      display_.drawUTF8(2, y + 11, text);
+      display_.drawUTF8(kX + 3, y + 11, text);
       display_.setDrawColor(1);
     } else {
-      display_.drawUTF8(2, y + 11, text);
+      display_.drawUTF8(kX + 3, y + 11, text);
+    }
+  }
+
+  void drawButtonHints(const char *leftTop, const char *leftBottom,
+                       const char *rightTop, const char *rightBottom) {
+    display_.setFont(u8g2_font_4x6_tf);
+    constexpr uint8_t kTopY = 23;
+    constexpr uint8_t kBottomY = 62;
+
+    if (leftTop) display_.drawStr(0, kTopY, leftTop);
+    if (leftBottom) display_.drawStr(0, kBottomY, leftBottom);
+
+    if (rightTop) {
+      const int16_t w = display_.getStrWidth(rightTop);
+      display_.drawStr(127 - w, kTopY, rightTop);
+    }
+    if (rightBottom) {
+      const int16_t w = display_.getStrWidth(rightBottom);
+      display_.drawStr(127 - w, kBottomY, rightBottom);
     }
   }
 };

@@ -107,10 +107,12 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 ## Application firmware / front-panel UI
 
+- [ ] Test D024 contextual button hints on the real OLED: STANDBY `START/SET`, SETUP `START/NEXT/+/-`, DRYING `STOP/PAGE`. Check that the tiny labels are readable and do not make the 128×64 layout feel crowded; verify M-long now exits SETUP.
+
 - [ ] Reflash after first live UI corrections and verify: Slewform splash now remains visible 3.5 s, pre-logo horizontal/random lines are eliminated or reduced to an unavoidable power-up transient, all temperature fields show `°C`, and heater/fan pins remain LOW.
 
 - [ ] Expand the application scaffold into separate cycle-control, safety, fan, logging and web-interface modules. Input/UI/SHT45/buzzer/LED structure and a cooperative SAFE BRING-UP main loop were added in commit `030cb5c`.
-- [x] Implement debounced active-low button handling with short press, ~1.5 s tunable long press and UP/DOWN autorepeat; when the OLED is asleep, consume the first press only as wake. Implemented in `030cb5c`; live first-article UI validation still required.
+- [x] Implement and live-test debounced active-low button handling with short press, ~1.5 s long press, UP/DOWN autorepeat and wake-consume behavior. First-article interaction test passed 2026-10-08.
 - [ ] Complete the D022 state model. BOOT -> STANDBY -> SETUP -> DRYING-demo -> COMPLETE is implemented in `030cb5c` with no auto-resume; real FAULT entry/reset remains pending the safety controller.
 - [ ] Complete SSD1309 pages from `docs/UI_SPEC.md`. Slewform boot splash, standby, setup, drying main, technical/system, complete and generic fault screens are implemented in `030cb5c`; final diagnostics and safety-specific fault content remain.
 - [ ] Complete buzzer event manager and persistence. `030cb5c` implements low-duty Slewform startup chime plus cycle-start/completion sequences; OFF/LOW/MED/HIGH persistence, warnings and repeating fault alarm remain.
