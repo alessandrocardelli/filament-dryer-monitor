@@ -373,3 +373,8 @@ The fan remained audibly "whistling" at 50%, 75%, and 100%. Because the same aco
 At 25 kHz PWM, the actual fan was tested for minimum reliable operation in 5% duty-cycle steps. From a complete stop, 20% did not start the fan and 25% was the first tested duty that started it. Once already rotating, the fan continued to run down to 15%; 10% did not sustain rotation.
 
 Measured first-article thresholds are therefore 25% minimum observed start duty and 15% minimum observed running duty. These are characterization points, not yet final firmware limits; production firmware should retain margin above the observed thresholds and may use a brief full-duty startup boost before settling to a lower commanded speed.
+
+
+## 2026-10-08 Gate 4A J4 I2C enumeration
+
+With both off-board I2C devices connected, the bus scanner detected the SSD1309 display at `0x3C` and the SHT45 at `0x44`. This confirms J4 power/bus connectivity and coexistence of both devices on the first-article I2C bus. Graphical initialization and pixel output of the SSD1309 remain to be tested before Gate 4A is fully closed.
