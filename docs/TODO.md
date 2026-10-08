@@ -98,4 +98,7 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 - [x] Gate 5A PWM characterization completed for the current fan at 25 kHz: 25% was the first tested duty that started from rest (20% did not); 15% was the lowest tested duty that sustained rotation (10% did not). Earlier current points: 50% ~49 mA, 75% ~72 mA, 100% ~89 mA. Final firmware should retain margin above these observed limits and may use a brief full-duty startup boost.
 
 
-- [ ] J7 connector mismatch confirmed 2026-10-08: released JST-GH BM02B-GHS-TBT does not mate with the original eSUN NTC plug. Preserve the OEM NTC harness; identify/reuse the original controller-side mating connector for first-article connection, then correct J7 connector/footprint in the next deliberate hardware revision.
+- [ ] J7 connector mismatch confirmed 2026-10-08: released JST-GH BM02B-GHS-TBT does not mate with the original eSUN NTC plug. First-article plan: keep J7 installed, validate a sacrificial GH crimp, then cut the incompatible NTC plug and reterminate the original ~30 AWG NTC leads into a GH 2-position housing. PEBA micro-crimping kit/tool for GH 1.25 mm purchased 2026-10-08; expected Saturday 2026-10-10. Do not cut the NTC leads until the sample crimp passes. Revisit J7 connector choice in the next deliberate hardware revision.
+
+
+- [x] Gate 5B unloaded switching path passed 2026-10-08: Q4/D4/R20/R21 installed, J5 left unpopulated, safe-OFF gate 0 V, temporary 100 kΩ pull-up gave 24 V at HEATER_SW when OFF, GPIO19 HIGH gave 3.3 V at Q4 gate and ~1 mV at HEATER_SW. Real heater remains blocked pending NTC/J7 validation, firmware safety handling and TCO.
