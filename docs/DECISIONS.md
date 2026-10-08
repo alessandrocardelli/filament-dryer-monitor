@@ -305,3 +305,24 @@ D3 is reserved as an internal service/diagnostic indicator for firmware bring-up
 A solid ON indication persisting well beyond normal initialization therefore also acts as a useful clue that startup has stalled. The safety-fault LED pattern is diagnostic only: heater/fan safety behavior must never depend on the LED itself.
 
 Gate 4B first-article testing confirmed D3 can be controlled correctly from GPIO26.
+
+## D022 — Front-panel V1 interaction model
+
+**Status:** accepted 2026-10-08 after first-article validation of OLED, buttons and buzzer.
+
+The local front panel is the primary standalone operating interface; ordinary drying cycles must not require Wi-Fi, a phone or the web UI. Detailed behavior is defined in `docs/UI_SPEC.md`.
+
+Durable V1 rules:
+
+- ON/OFF is a **cycle-control** button, not a hardware power switch. On boot/reset the application enters safe `STANDBY`; an interrupted cycle is not automatically resumed.
+- User-facing states are `BOOT`, `STANDBY`, `SETUP`, `DRYING`, `COMPLETE` and overriding `FAULT`. A later explicit `COOLDOWN` state may be added if final fan-control policy requires it.
+- Normal V1 cycle settings are target chamber temperature, duration and fan `AUTO`. Material profiles are deferred until their values and control/safety implications are deliberately agreed.
+- Relative humidity is displayed/logged but is **not by itself a V1 automatic end-of-cycle criterion**.
+- During `SETUP`, M selects the next field and UP/DOWN adjust it with long-hold autorepeat. During `DRYING`, parameters are locked in V1; M changes information pages and ON/OFF requires a long press (nominally ~1.5 s, tunable) to stop the cycle.
+- If the OLED has entered standby sleep, the first button press only wakes the display and is consumed.
+- `FAULT` overrides normal UI presentation. M may mute/acknowledge the audible alarm, but muting never clears the fault or re-enables the heater. Reset is permitted only after the underlying condition clears and the independent safety logic accepts it.
+- The buzzer provides event feedback: short start confirmation, one-shot ascending completion melody, warning tones and a distinctive repeating fault alarm; loudness is software controlled approximately as OFF/LOW/MED/HIGH and must be empirically tuned.
+- D3 remains the hidden internal diagnostic/service LED defined by D021; it is not a user-facing normal status indicator.
+- UI/menu code is architecturally separate from cycle control and the heater safety controller. No menu, display or buzzer state may bypass heater safety.
+
+Final temperature/time ranges, NTC thresholds, control gains, fan AUTO/cooldown policy, material presets and exact graphics remain intentionally open pending physical validation.
