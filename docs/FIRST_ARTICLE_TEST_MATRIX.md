@@ -354,3 +354,18 @@ Do not energize the heater until the real NTC path, calibration, fault handling 
 - SHT45 power, harness and I2C communication are therefore functionally validated on the first article.
 
 Next Gate 4A step: connect and test the actual 1.54-inch SSD1309 OLED at J4 on the validated I2C bus.
+
+
+## Gate 5A fan-driver result — 2026-10-08
+
+**PASS for the driver path without the actual fan load; real-fan validation remains pending.**
+
+- Original Q5 gave about 1 ohm from J6 pin 1 to GND; removing Q5 raised that node to about 68 kohm.
+- The removed device was not recognized as a MOSFET by the GM328 and showed a low-resistance path of about 1.69 ohm.
+- The replacement device was recognized by the GM328 as an enhancement-mode N-MOSFET before installation.
+- After replacement, unpowered J6 pin 1 to GND measured about 130 kohm and rising.
+- Powered safe-OFF: Q5 pad 1 / gate = 0 V.
+- With 100 kohm temporarily from J6 pin 2 (+24 V) to J6 pin 1, OFF-state J6 pin 1 = 23.96 V.
+- Temporary GPIO16/FAN_PWM HIGH test pulled the switched node low as expected.
+
+Next step: verify the actual fan voltage/current/polarity and test static OFF/ON under the real fan load before PWM-speed characterization.
