@@ -6,7 +6,7 @@ Current phase: **first-article hand assembly and staged bring-up** (2026-10-04).
 
 - [x] Gate 5A real fan load test passed on 2026-10-08: actual 24 V fan started normally; bench input current peaked at ~102 mA and settled at ~89 mA. Static real-load switching path is validated; PWM characterization remains pending.
 
-- [x] Gate 4D analog front end passed on 2026-10-05 with R28=47 kΩ and C19=100 nF: open NTC node ~3.3 V; temporary 100 kΩ to GND gave 2.253 V by DMM; GPIO34 ADC was stable at RAW ~2643-2647 / 2300-2302 mV. J7 and the real dryer NTC remain pending, as do final NTC calibration and fault limits.
+- [x] Gate 4D analog front end passed on 2026-10-05 with R28=47 kΩ and C19=100 nF: open NTC node ~3.3 V; temporary 100 kΩ to GND gave 2.253 V by DMM; GPIO34 ADC was stable at RAW ~2643-2647 / 2300-2302 mV. The original eSUN NTC has already been empirically characterized and recorded in README.md; J7/real-NTC connection, ADC-path validation, final conversion and fault limits remain pending.
 
 - [x] Gate 4C buzzer first-article test passed on 2026-10-05: BZ1/Q6/D6/R27/R37 populated; GPIO33 ~2.7 kHz tone and a three-note melody both worked. Reduced PWM duty cycle gives a quieter output than the initial ~50% drive; final firmware volume levels remain to be tuned.
 
