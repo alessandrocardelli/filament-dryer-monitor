@@ -347,3 +347,15 @@ This validates the gate pull-down, MOSFET switching path and J6 switched output 
 The actual 24 V fan was connected to J6 after the replacement-Q5 no-load checks passed. With the temporary static-ON firmware, the fan started normally. Bench-supply current peaked at approximately 102 mA during startup and settled at approximately 89 mA while running. With the fan running and Q5 commanded fully ON, J6 pin 1 measured only 7.7 mV to GND.
 
 This confirms successful first-article operation of the J6/Q5 fan power path under the real fan load, with negligible switched-node voltage drop in the static-ON state. The measured currents are total input current from the 24 V bench supply, not an isolated fan-only current measurement. PWM-speed characterization and any final firmware control policy remain separate follow-up work.
+
+
+## 2026-10-08 Gate 5A PWM characterization
+
+Initial PWM characterization was performed on the actual fan using GPIO16/FAN_PWM at 25 kHz.
+
+- 50% duty: fan starts and runs; bench input current ~49 mA.
+- 75% duty: fan starts and runs; bench input current ~72 mA.
+- 100% static ON reference: bench input current ~89 mA after startup.
+- The fan produces audible noise/fan whine even outside the PWM test, so the observed sound is not attributable solely to PWM frequency. A quieter replacement fan may be considered later without changing the validated driver architecture.
+
+Further characterization should determine the minimum reliable startup/running duty before final firmware limits are chosen.
