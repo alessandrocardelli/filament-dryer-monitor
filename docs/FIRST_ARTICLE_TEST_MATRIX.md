@@ -392,3 +392,14 @@ At 25 kHz PWM:
 - Audible noise is also present with the fan generally, so it is not treated as a PWM-only fault.
 
 Next: determine minimum reliable startup/running duty and then define final firmware limits.
+
+
+### PWM follow-up — 2026-10-08
+
+At 25 kHz the actual fan operated at all tested duty cycles:
+
+- 50%: ~49 mA bench input current.
+- 75%: ~72 mA.
+- 100%: ~89 mA.
+
+The fan remained audibly whistling at 50%, 75%, and 100%. Since the same character is present at 100% duty, the noise is primarily a property of the fan rather than an audible PWM-frequency artifact. Driver operation remains normal.
