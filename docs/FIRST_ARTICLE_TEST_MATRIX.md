@@ -415,3 +415,13 @@ At 25 kHz PWM, using 5% duty steps:
 - 10%: did not sustain rotation.
 
 Observed thresholds: startup 25%, running 15%. Final firmware limits should include operating margin rather than using these boundary values directly.
+
+
+### J4 enumeration follow-up — 2026-10-08
+
+With SHT45 and SSD1309 both connected, the I2C scanner detected:
+
+- SSD1309 display: `0x3C`
+- SHT45 sensor: `0x44`
+
+J4 bus connectivity/coexistence: PASS. Graphical initialization/output remains pending.
