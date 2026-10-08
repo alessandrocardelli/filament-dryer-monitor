@@ -96,3 +96,6 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 - [x] Connect and test the actual J4 1.54-inch SSD1309 OLED on the validated I2C bus. Passed 2026-10-08 at `0x3C`; U8g2 graphical frame/text rendering confirmed with SHT45 simultaneously present at `0x44`. Gate 4A closed.
 
 - [x] Gate 5A PWM characterization completed for the current fan at 25 kHz: 25% was the first tested duty that started from rest (20% did not); 15% was the lowest tested duty that sustained rotation (10% did not). Earlier current points: 50% ~49 mA, 75% ~72 mA, 100% ~89 mA. Final firmware should retain margin above these observed limits and may use a brief full-duty startup boost.
+
+
+- [ ] J7 connector mismatch confirmed 2026-10-08: released JST-GH BM02B-GHS-TBT does not mate with the original eSUN NTC plug. Preserve the OEM NTC harness; identify/reuse the original controller-side mating connector for first-article connection, then correct J7 connector/footprint in the next deliberate hardware revision.
