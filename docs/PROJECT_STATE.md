@@ -344,6 +344,6 @@ This validates the gate pull-down, MOSFET switching path and J6 switched output 
 
 ## 2026-10-08 Gate 5A real fan load test
 
-The actual 24 V fan was connected to J6 after the replacement-Q5 no-load checks passed. With the temporary static-ON firmware, the fan started normally. Bench-supply current peaked at approximately 102 mA during startup and settled at approximately 89 mA while running.
+The actual 24 V fan was connected to J6 after the replacement-Q5 no-load checks passed. With the temporary static-ON firmware, the fan started normally. Bench-supply current peaked at approximately 102 mA during startup and settled at approximately 89 mA while running. With the fan running and Q5 commanded fully ON, J6 pin 1 measured only 7.7 mV to GND.
 
-This confirms successful first-article operation of the J6/Q5 fan power path under the real fan load. The measured currents are total input current from the 24 V bench supply, not an isolated fan-only current measurement. PWM-speed characterization and any final firmware control policy remain separate follow-up work.
+This confirms successful first-article operation of the J6/Q5 fan power path under the real fan load, with negligible switched-node voltage drop in the static-ON state. The measured currents are total input current from the 24 V bench supply, not an isolated fan-only current measurement. PWM-speed characterization and any final firmware control policy remain separate follow-up work.
