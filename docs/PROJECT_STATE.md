@@ -359,3 +359,10 @@ Initial PWM characterization was performed on the actual fan using GPIO16/FAN_PW
 - The fan produces audible noise/fan whine even outside the PWM test, so the observed sound is not attributable solely to PWM frequency. A quieter replacement fan may be considered later without changing the validated driver architecture.
 
 Further characterization should determine the minimum reliable startup/running duty before final firmware limits are chosen.
+
+
+## 2026-10-08 Gate 5A PWM characterization
+
+Initial fan PWM checks were performed at 25 kHz with the actual fan connected. The fan started and ran at all tested duty cycles. Bench input current was approximately 49 mA at 50%, 72 mA at 75%, and 89 mA at 100% (the 100% value is consistent with the prior static-ON result).
+
+The fan remained audibly "whistling" at 50%, 75%, and 100%. Because the same acoustic character remains at 100% duty, where the MOSFET drive is effectively continuously ON rather than chopping the fan supply, the observed whistle is attributed primarily to the fan itself rather than to PWM switching. A quieter replacement fan may be considered later without changing the validated driver topology.
