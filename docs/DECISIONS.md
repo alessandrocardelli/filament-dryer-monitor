@@ -342,13 +342,14 @@ First-article use testing found the original ~1.5 s splash too brief; the accept
 
 The first SAFE BRING-UP implementation is in `firmware/firmware.ino` and `firmware/Buzzer.h`.
 
-## D024 — Contextual front-panel button hints and setup back action
+## D024 — Setup back action; contextual button-label trial rejected
 
-**Status:** accepted for first-article usability trial 2026-10-08.
+**Status:** revised 2026-10-08 after first layout review.
 
-After live testing of the first SAFE BRING-UP UI, all button mechanics worked but the interaction felt somewhat indirect. The next UI iteration therefore makes two usability changes:
+After live testing of the SAFE BRING-UP UI, the interaction felt somewhat indirect. The accepted usability change is:
 
-- in `SETUP`, **M short = next field** and **M long = cancel/back to STANDBY**; ON/OFF remains dedicated to starting the cycle;
-- the OLED shows small context-sensitive action labels aligned with the physical buttons where useful (for example `START`, `SET`, `NEXT`, `+`, `-`, `STOP`, `PAGE`).
+- in `SETUP`, **M short = next field** and **M long = cancel/back to STANDBY**; ON/OFF remains dedicated to starting the cycle.
 
-This is intentionally a first-article usability trial rather than a commitment to exact typography. Primary temperature/RH/status information retains display priority; labels may be shortened or removed if the real 128×64 display becomes visually crowded.
+A trial of small context-sensitive labels aligned with the four physical buttons (`START`, `SET`, `NEXT`, `+`, `-`, `STOP`, `PAGE`) was implemented briefly, then **rejected** because the 128×64 display is too constrained and the labels compete with or overlap more important content.
+
+Do not reserve OLED space for persistent button hints in the normal V1 screens. Primary measurements, cycle state and fault information take priority.

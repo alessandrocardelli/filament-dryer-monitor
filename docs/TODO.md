@@ -107,7 +107,7 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 ## Application firmware / front-panel UI
 
-- [ ] Test D024 contextual button hints on the real OLED: STANDBY `START/SET`, SETUP `START/NEXT/+/-`, DRYING `STOP/PAGE`. Check that the tiny labels are readable and do not make the 128×64 layout feel crowded; verify M-long now exits SETUP.
+- [ ] Verify on first article that the cleaned-up layout is restored and M-long exits SETUP. Contextual button hints were rejected because they competed with the 128×64 screen content.
 
 - [ ] Reflash after first live UI corrections and verify: Slewform splash now remains visible 3.5 s, pre-logo horizontal/random lines are eliminated or reduced to an unavoidable power-up transient, all temperature fields show `°C`, and heater/fan pins remain LOW.
 

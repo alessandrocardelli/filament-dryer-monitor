@@ -447,3 +447,9 @@ The firmware was corrected to hold the Slewform splash for 3.5 s, initialize/bla
 The first-article SAFE BRING-UP UI was exercised through the front panel. The user confirmed that the tested behavior works: STANDBY -> SETUP, temperature/time edits, UP/DOWN autorepeat, FAN AUTO non-editability, start into DRYING-demo, M page switching, short ON/OFF ignored during drying, long ON/OFF stop, setup cancellation, and OLED sleep/wake with the first wake press consumed.
 
 The mechanics are therefore validated on the first article, but the interaction was judged somewhat cumbersome. D024 records the next usability trial: M-long becomes SETUP back/cancel and small context-sensitive button hints are drawn at the OLED edges aligned with the four physical buttons. Heater and fan remain hard-locked LOW.
+
+## 2026-10-08 contextual button labels rejected
+
+The first contextual-label layout trial was rejected before further first-article testing because the small edge labels competed with existing screen content on the 128×64 OLED. The labels were removed and the prior clean layouts restored.
+
+The independent usability improvement remains: in SETUP, M short advances to the next field and M long returns to STANDBY; ON/OFF remains dedicated to starting the cycle.
