@@ -385,3 +385,10 @@ With both off-board I2C devices connected, the bus scanner detected the SSD1309 
 The installed 1.54-inch 128x64 SSD1309 OLED at J4 was initialized successfully over I2C at address `0x3C` using U8g2 while the SHT45 remained present at `0x44`. A graphical test frame and text rendered correctly on the display.
 
 Gate 4A is therefore **PASSED** on the first article: unloaded I2C electrical checks, SHT45 harness/live measurements, coexistence of both I2C devices, and SSD1309 graphical output are all validated.
+
+
+## 2026-10-08 J7 OEM connector mismatch
+
+First-article physical fit check found that the installed J7 JST-GH BM02B-GHS-TBT (1.25 mm) does not mate with the original eSUN heater NTC plug. The earlier assumption that the OEM NTC plug was JST-GH-compatible was not physically validated and is incorrect for this dryer.
+
+Electrical J7 mapping remains valid (pin 1 GND, pin 2 NTC). Do not modify the OEM NTC harness merely to force compatibility. Identify or reuse the original controller-side mating connector for the prototype, and correct J7 connector/footprint deliberately in the next hardware revision once the OEM connector is positively identified.
