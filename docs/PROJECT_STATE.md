@@ -407,3 +407,8 @@ The first-article front-panel hardware is now sufficiently validated to define a
 D022 now fixes the V1 interaction model and `docs/UI_SPEC.md` contains the detailed screen/button specification. The controller is standalone from the front panel, boots into safe `STANDBY`, does not auto-resume a cycle after reset/power loss, uses temperature + time + fan AUTO as the initial cycle-setting model, and treats RH as displayed/logged information rather than a standalone V1 cycle-completion criterion. Fault presentation has priority, and buzzer mute never clears a safety fault.
 
 This is a firmware/UI decision only. It does not change the released PCB, connector recovery plan, current hardware bring-up gates or heater-safety prerequisites. Final parameter ranges, heater/NTC thresholds, fan AUTO/cooldown policy and material-profile values remain open until physical validation supports them.
+
+
+## 2026-10-08 Slewform OLED branding asset
+
+The Slewform logo **with wordmark** was selected for firmware branding / startup use on the 128x64 SSD1309 OLED. The original vector source is stored at `firmware/assets/slewform/Slewform_logo.svg`; the tested 1-bit U8g2/XBM derivative is stored at `firmware/assets/slewform/slewform_logo_128x64.h` (90x60 pixels, `slewform_full_logo`). The symbol-only variant is not the selected firmware branding asset.
