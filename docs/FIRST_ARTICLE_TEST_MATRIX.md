@@ -377,6 +377,7 @@ The actual 24 V fan was connected to J6 and started normally using the static-ON
 
 - Bench input current at startup: ~102 mA.
 - Bench input current after settling: ~89 mA.
+- J6 pin 1 to GND with Q5 fully ON and the fan running: 7.7 mV.
 - No current-limit behavior or failed start was reported.
 
 **Gate 5A real-load static ON/OFF path: PASS.** Remaining work is PWM-speed characterization and final firmware behavior.
