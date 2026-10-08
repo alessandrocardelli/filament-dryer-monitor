@@ -412,3 +412,22 @@ This is a firmware/UI decision only. It does not change the released PCB, connec
 ## 2026-10-08 Slewform OLED branding asset
 
 The Slewform logo **with wordmark** was selected for firmware branding / startup use on the 128x64 SSD1309 OLED. The original vector source is stored at `firmware/assets/slewform/Slewform_logo.svg`; the tested 1-bit U8g2/XBM derivative is stored at `firmware/assets/slewform/slewform_logo_128x64.h` (90x60 pixels, `slewform_full_logo`). The symbol-only variant is not the selected firmware branding asset.
+
+## 2026-10-08 SAFE BRING-UP application firmware scaffold
+
+Commit `030cb5c` adds the first application firmware scaffold under `firmware/`. This is deliberately a **SAFE BRING-UP** build rather than heater-control firmware.
+
+Implemented now:
+
+- exact first-article SSD1309 U8g2 path and the selected Slewform 90×60 startup logo;
+- original short two-step rising startup chime, plus cycle-start and completion sounds;
+- direct SHT45 high-repeatability command `0xFD`, non-blocking conversion wait, CRC validation and T/RH conversion;
+- active-low four-button debounce, short/long press and UP/DOWN autorepeat;
+- BOOT, STANDBY, SETUP, DRYING-demo and COMPLETE interaction states, plus technical/fault rendering scaffolding;
+- OLED standby sleep/wake behavior;
+- D021 internal diagnostic LED patterns;
+- cooperative timestamp/state-driven main loop.
+
+Critical safety limitation: GPIO19 (heater) and GPIO16 (fan) are configured as outputs and forcibly driven LOW on every loop iteration. The current DRYING state is therefore only a UI/countdown demonstration. The UI prototype temperature/time bounds are not accepted heater-control limits.
+
+A host-side C++ syntax check passed. The sketch has not yet been compiled/flashed through the actual Arduino ESP32 toolchain in this checkpoint, so first-article compile/flash and live UI validation are the immediate firmware test.

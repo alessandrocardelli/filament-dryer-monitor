@@ -107,12 +107,14 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 ## Application firmware / front-panel UI
 
-- [ ] Create the application firmware structure with separate input, UI/rendering, cycle-control, sensor, safety, fan, buzzer/event, logging and web-interface modules; keep the normal loop cooperative/non-blocking.
-- [ ] Implement debounced active-low button handling with short press, ~1.5 s tunable long press and UP/DOWN autorepeat; when the OLED is asleep, consume the first press only as wake.
-- [ ] Implement the D022 state model: BOOT -> STANDBY -> SETUP -> DRYING -> COMPLETE, with FAULT overriding normal states. Do not auto-resume an interrupted cycle after reboot/reset.
-- [ ] Implement SSD1309 pages from `docs/UI_SPEC.md`: boot, standby, setup, drying main, technical/system, diagnostics, complete and fault. Keep chamber temperature/RH visually dominant on normal screens.
-- [ ] Implement buzzer event manager and persisted OFF/LOW/MED/HIGH loudness; start with empirically low duty and tune on the first article. Muting a fault must not clear it.
-- [ ] Implement D021 diagnostic LED patterns in the application firmware.
+- [ ] Flash `firmware/firmware.ino` to the first article and validate the actual Slewform splash, startup chime loudness/timing, live SHT45 readings, all four button gestures, OLED sleep/wake and D021 LED behavior. Confirm heater/fan pins remain LOW throughout the test.
+
+- [ ] Expand the application scaffold into separate cycle-control, safety, fan, logging and web-interface modules. Input/UI/SHT45/buzzer/LED structure and a cooperative SAFE BRING-UP main loop were added in commit `030cb5c`.
+- [x] Implement debounced active-low button handling with short press, ~1.5 s tunable long press and UP/DOWN autorepeat; when the OLED is asleep, consume the first press only as wake. Implemented in `030cb5c`; live first-article UI validation still required.
+- [ ] Complete the D022 state model. BOOT -> STANDBY -> SETUP -> DRYING-demo -> COMPLETE is implemented in `030cb5c` with no auto-resume; real FAULT entry/reset remains pending the safety controller.
+- [ ] Complete SSD1309 pages from `docs/UI_SPEC.md`. Slewform boot splash, standby, setup, drying main, technical/system, complete and generic fault screens are implemented in `030cb5c`; final diagnostics and safety-specific fault content remain.
+- [ ] Complete buzzer event manager and persistence. `030cb5c` implements low-duty Slewform startup chime plus cycle-start/completion sequences; OFF/LOW/MED/HIGH persistence, warnings and repeating fault alarm remain.
+- [x] Implement D021 diagnostic LED patterns in the application firmware (`030cb5c`).
 - [ ] Decide and validate target-temperature range/step, cycle-duration range/step, defaults and persistence only after heater/NTC/safety validation supports safe values.
 - [ ] Define final fan AUTO policy using the measured first-article fan thresholds with adequate startup/run margin; decide whether a post-cycle cooldown state is required.
 - [ ] Keep material profiles and humidity/trend-based automatic completion deferred until their values/algorithm are deliberately designed and validated.

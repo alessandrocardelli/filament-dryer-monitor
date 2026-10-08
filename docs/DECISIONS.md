@@ -326,3 +326,18 @@ Durable V1 rules:
 - UI/menu code is architecturally separate from cycle control and the heater safety controller. No menu, display or buzzer state may bypass heater safety.
 
 Final temperature/time ranges, NTC thresholds, control gains, fan AUTO/cooldown policy, material presets and exact graphics remain intentionally open pending physical validation.
+
+## D023 — Slewform startup branding and power-on chime
+
+**Status:** accepted 2026-10-08.
+
+At application startup/reset, the OLED presents the selected **Slewform logo with wordmark** as the product splash screen. The canonical source/derived assets are:
+
+- `firmware/assets/slewform/Slewform_logo.svg`;
+- `firmware/assets/slewform/slewform_logo_128x64.h` (90×60 px XBM/U8g2 bitmap).
+
+The splash is paired with a short **original two-step rising power-on chime** whose design intent is the concise, recognizable feel of a classic handheld-console startup. It must not be a note-for-note reproduction of the Nintendo Game Boy startup sound.
+
+Initial splash timing is approximately 1.5 s and may be tuned empirically. Heater/fan safe output state and other safety-critical initialization take precedence over branding: the splash/chime must never delay forcing controlled outputs safe.
+
+The first SAFE BRING-UP implementation is in `firmware/firmware.ino` and `firmware/Buzzer.h`.

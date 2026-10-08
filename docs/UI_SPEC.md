@@ -2,7 +2,7 @@
 
 Status: **V1 interaction model accepted 2026-10-08**.  
 Applies to the current first-article hardware on branch `main`.  
-Detailed firmware implementation is still pending.
+A first SAFE BRING-UP implementation now exists; actuator control and final safety integration remain pending.
 
 This document defines the intended user interaction for the 1.54-inch SSD1309 128×64 OLED, the four front-panel buttons, the passive buzzer and the internal diagnostic LED. It does not define final heater-control gains, safety thresholds, temperature/time ranges or material-profile values; those remain gated by thermal/NTC validation.
 
@@ -141,18 +141,11 @@ The display is 128×64 monochrome. Layouts below are functional wireframes, not 
 
 ### 6.1 BOOT
 
-Show a short startup screen while hardware and firmware initialize:
+On power-up/reset, show the selected **Slewform logo with wordmark** centered on the OLED. The current branding asset is `firmware/assets/slewform/slewform_logo_128x64.h` (90×60 px).
 
-```text
- FILAMENT DRYER
+The splash is accompanied by a **short original two-step rising startup chime**, intentionally giving a classic handheld-console startup feel without reproducing the Game Boy sound note-for-note. Initial target splash duration is about **1.5 s**, tunable after first-article use testing.
 
- Initializing...
- SHT45     ...
- OLED      ...
- NTC       ...
-```
-
-Do not hold boot solely for cosmetic animation. Initialization must remain non-blocking where practical.
+Safety-critical initialization and safe output defaults happen before/under the splash; the branding sequence must not delay putting heater/fan outputs into their safe state. Initialization should remain non-blocking where practical.
 
 ### 6.2 STANDBY home screen
 
@@ -296,6 +289,7 @@ Recommended V1 event mapping:
 
 | Event | Audible behavior |
 |---|---|
+| Power-up / reset | short original two-step rising Slewform startup chime |
 | Button/key feedback | optional very short tick; user-configurable |
 | Cycle start | one short confirmation beep |
 | Cycle complete | three-note ascending melody, played once |
