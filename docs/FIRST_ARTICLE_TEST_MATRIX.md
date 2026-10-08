@@ -403,3 +403,15 @@ At 25 kHz the actual fan operated at all tested duty cycles:
 - 100%: ~89 mA.
 
 The fan remained audibly whistling at 50%, 75%, and 100%. Since the same character is present at 100% duty, the noise is primarily a property of the fan rather than an audible PWM-frequency artifact. Driver operation remains normal.
+
+
+### Minimum-duty follow-up — 2026-10-08
+
+At 25 kHz PWM, using 5% duty steps:
+
+- 20%: did not start from rest.
+- 25%: first tested duty that started from rest.
+- 15%: lowest tested duty that sustained rotation once already running.
+- 10%: did not sustain rotation.
+
+Observed thresholds: startup 25%, running 15%. Final firmware limits should include operating margin rather than using these boundary values directly.
