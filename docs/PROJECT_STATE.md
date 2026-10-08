@@ -366,3 +366,10 @@ Further characterization should determine the minimum reliable startup/running d
 Initial fan PWM checks were performed at 25 kHz with the actual fan connected. The fan started and ran at all tested duty cycles. Bench input current was approximately 49 mA at 50%, 72 mA at 75%, and 89 mA at 100% (the 100% value is consistent with the prior static-ON result).
 
 The fan remained audibly "whistling" at 50%, 75%, and 100%. Because the same acoustic character remains at 100% duty, where the MOSFET drive is effectively continuously ON rather than chopping the fan supply, the observed whistle is attributed primarily to the fan itself rather than to PWM switching. A quieter replacement fan may be considered later without changing the validated driver topology.
+
+
+## 2026-10-08 Gate 5A minimum fan duty characterization
+
+At 25 kHz PWM, the actual fan was tested for minimum reliable operation in 5% duty-cycle steps. From a complete stop, 20% did not start the fan and 25% was the first tested duty that started it. Once already rotating, the fan continued to run down to 15%; 10% did not sustain rotation.
+
+Measured first-article thresholds are therefore 25% minimum observed start duty and 15% minimum observed running duty. These are characterization points, not yet final firmware limits; production firmware should retain margin above the observed thresholds and may use a brief full-duty startup boost before settling to a lower commanded speed.
