@@ -381,3 +381,14 @@ The actual 24 V fan was connected to J6 and started normally using the static-ON
 - No current-limit behavior or failed start was reported.
 
 **Gate 5A real-load static ON/OFF path: PASS.** Remaining work is PWM-speed characterization and final firmware behavior.
+
+
+### PWM characterization follow-up — 2026-10-08
+
+At 25 kHz PWM:
+- 50% duty: fan starts and runs, ~49 mA bench input current.
+- 75% duty: fan starts and runs, ~72 mA bench input current.
+- Full-speed reference remains ~89 mA at steady state.
+- Audible noise is also present with the fan generally, so it is not treated as a PWM-only fault.
+
+Next: determine minimum reliable startup/running duty and then define final firmware limits.
