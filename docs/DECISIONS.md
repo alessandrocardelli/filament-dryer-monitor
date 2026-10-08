@@ -338,6 +338,6 @@ At application startup/reset, the OLED presents the selected **Slewform logo wit
 
 The splash is paired with a short **original two-step rising power-on chime** whose design intent is the concise, recognizable feel of a classic handheld-console startup. It must not be a note-for-note reproduction of the Nintendo Game Boy startup sound.
 
-Initial splash timing is approximately 1.5 s and may be tuned empirically. Heater/fan safe output state and other safety-critical initialization take precedence over branding: the splash/chime must never delay forcing controlled outputs safe.
+First-article use testing found the original ~1.5 s splash too brief; the accepted current timing is **3.5 s**. Heater/fan safe output state and other safety-critical initialization take precedence over branding: the splash/chime must never delay forcing controlled outputs safe.
 
 The first SAFE BRING-UP implementation is in `firmware/firmware.ino` and `firmware/Buzzer.h`.

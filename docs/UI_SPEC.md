@@ -143,9 +143,9 @@ The display is 128×64 monochrome. Layouts below are functional wireframes, not 
 
 On power-up/reset, show the selected **Slewform logo with wordmark** centered on the OLED. The current branding asset is `firmware/assets/slewform/slewform_logo_128x64.h` (90×60 px).
 
-The splash is accompanied by a **short original two-step rising startup chime**, intentionally giving a classic handheld-console startup feel without reproducing the Game Boy sound note-for-note. Initial target splash duration is about **1.5 s**, tunable after first-article use testing.
+The splash is accompanied by a **short original two-step rising startup chime**, intentionally giving a classic handheld-console startup feel without reproducing the Game Boy sound note-for-note. After first-article use testing, the splash duration is **3.5 s**; 1.5 s was judged too brief to read the branding comfortably.
 
-Safety-critical initialization and safe output defaults happen before/under the splash; the branding sequence must not delay putting heater/fan outputs into their safe state. Initialization should remain non-blocking where practical.
+Safety-critical initialization and safe output defaults happen before/under the splash; the branding sequence must not delay putting heater/fan outputs into their safe state. OLED initialization should blank the display before the first visible frame to suppress random power-up RAM artifacts. Initialization should remain non-blocking where practical.
 
 ### 6.2 STANDBY home screen
 

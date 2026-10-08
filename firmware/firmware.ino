@@ -160,15 +160,17 @@ void setup() {
   statusLed.begin();
   buttons.begin();
 
+  // Bring the OLED under firmware control as early as possible to suppress
+  // random power-up RAM contents before the Slewform splash.
+  Wire.begin(AppConfig::kPinSda, AppConfig::kPinScl, AppConfig::kI2cFrequencyHz);
+  const uint32_t nowMs = millis();
+  ui.begin(nowMs);
+
   Serial.begin(115200);
   Serial.println();
   Serial.println("Filament Dryer Monitor - SAFE BRING-UP UI firmware");
   Serial.println("Heater and fan outputs are hard-locked LOW in this build.");
 
-  Wire.begin(AppConfig::kPinSda, AppConfig::kPinScl, AppConfig::kI2cFrequencyHz);
-
-  const uint32_t nowMs = millis();
-  ui.begin(nowMs);
   sht45.begin(nowMs);
   buzzer.begin();
 

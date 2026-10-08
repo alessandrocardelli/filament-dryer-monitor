@@ -12,7 +12,15 @@ class Ui {
   void begin(uint32_t nowMs) {
     display_.setI2CAddress(AppConfig::kOledAddress << 1);
     display_.begin();
+
+    // Prevent uninitialized OLED RAM from being visible before the first UI frame.
+    // Keep the panel dark, write a known-black framebuffer, then enable it.
+    display_.setPowerSave(1);
+    display_.clearBuffer();
+    display_.sendBuffer();
     display_.setContrast(180);
+    display_.setPowerSave(0);
+
     awake_ = true;
     lastInteractionMs_ = nowMs;
     lastRenderMs_ = nowMs - AppConfig::kRenderPeriodMs;
@@ -81,15 +89,15 @@ class Ui {
     char left[16];
     char right[16];
     if (sensor.valid) {
-      snprintf(left, sizeof(left), "%.1f C", sensor.temperatureC);
+      snprintf(left, sizeof(left), "%.1f °C", sensor.temperatureC);
       snprintf(right, sizeof(right), "%.1f%%", sensor.humidityRh);
     } else {
-      snprintf(left, sizeof(left), "--.- C");
+      snprintf(left, sizeof(left), "--.- °C");
       snprintf(right, sizeof(right), "--.-%%");
     }
-    display_.drawStr(2, 36, left);
-    const int16_t rw = display_.getStrWidth(right);
-    display_.drawStr(126 - rw, 36, right);
+    display_.drawUTF8(2, 36, left);
+    const int16_t rw = display_.getUTF8Width(right);
+    display_.drawUTF8(126 - rw, 36, right);
 
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(2, 60, sensor.valid ? "Ready" : "SHT45 waiting...");
@@ -102,7 +110,7 @@ class Ui {
 
     char temp[18];
     char time[18];
-    snprintf(temp, sizeof(temp), "TEMP        %d C", settings.targetTempC);
+    snprintf(temp, sizeof(temp), "TEMP        %d °C", settings.targetTempC);
     snprintf(time, sizeof(time), "TIME        %02u:%02u",
              settings.durationMinutes / 60, settings.durationMinutes % 60);
     drawSelectableRow(15, temp, selected == SetupField::Temperature);
@@ -122,17 +130,17 @@ class Ui {
 
     char values[24];
     if (sensor.valid) {
-      snprintf(values, sizeof(values), "%.1f C   %.1f %%RH", sensor.temperatureC, sensor.humidityRh);
+      snprintf(values, sizeof(values), "%.1f °C   %.1f %%RH", sensor.temperatureC, sensor.humidityRh);
     } else {
-      snprintf(values, sizeof(values), "--.- C   --.- %%RH");
+      snprintf(values, sizeof(values), "--.- °C   --.- %%RH");
     }
     display_.setFont(u8g2_font_7x14B_tf);
-    display_.drawStr(1, 32, values);
+    display_.drawUTF8(1, 32, values);
 
     display_.setFont(u8g2_font_6x10_tf);
     char target[24];
-    snprintf(target, sizeof(target), "SET %d C   FAN LOCK", settings.targetTempC);
-    display_.drawStr(1, 47, target);
+    snprintf(target, sizeof(target), "SET %d °C   FAN LOCK", settings.targetTempC);
+    display_.drawUTF8(1, 47, target);
     display_.drawStr(1, 61, "HEATER LOCKED");
   }
 
@@ -142,8 +150,8 @@ class Ui {
     display_.drawHLine(0, 12, 128);
     char line[24];
     if (sensor.valid) {
-      snprintf(line, sizeof(line), "Chamber      %.1f C", sensor.temperatureC);
-      display_.drawStr(2, 27, line);
+      snprintf(line, sizeof(line), "Chamber      %.1f °C", sensor.temperatureC);
+      display_.drawUTF8(2, 27, line);
       snprintf(line, sizeof(line), "Humidity     %.1f %%", sensor.humidityRh);
       display_.drawStr(2, 39, line);
     } else {
@@ -159,8 +167,8 @@ class Ui {
     display_.setFont(u8g2_font_6x10_tf);
     char line[24];
     if (sensor.valid) {
-      snprintf(line, sizeof(line), "%.1f C     %.1f %%RH", sensor.temperatureC, sensor.humidityRh);
-      display_.drawStr(14, 38, line);
+      snprintf(line, sizeof(line), "%.1f °C     %.1f %%RH", sensor.temperatureC, sensor.humidityRh);
+      display_.drawUTF8(14, 38, line);
     }
     display_.drawStr(2, 61, "ON/OFF = acknowledge");
   }
@@ -179,10 +187,10 @@ class Ui {
       display_.setDrawColor(1);
       display_.drawBox(0, y, 128, 15);
       display_.setDrawColor(0);
-      display_.drawStr(2, y + 11, text);
+      display_.drawUTF8(2, y + 11, text);
       display_.setDrawColor(1);
     } else {
-      display_.drawStr(2, y + 11, text);
+      display_.drawUTF8(2, y + 11, text);
     }
   }
 };

@@ -431,3 +431,13 @@ Implemented now:
 Critical safety limitation: GPIO19 (heater) and GPIO16 (fan) are configured as outputs and forcibly driven LOW on every loop iteration. The current DRYING state is therefore only a UI/countdown demonstration. The UI prototype temperature/time bounds are not accepted heater-control limits.
 
 A host-side C++ syntax check passed. The sketch has not yet been compiled/flashed through the actual Arduino ESP32 toolchain in this checkpoint, so first-article compile/flash and live UI validation are the immediate firmware test.
+
+## 2026-10-08 first live UI corrections
+
+The first SAFE BRING-UP firmware was flashed successfully to the first article and the application starts. Initial live observations:
+
+- Slewform splash at 1.5 s was too short to view comfortably;
+- brief horizontal/random OLED content appeared before the logo;
+- displayed temperatures were missing the degree symbol.
+
+The firmware was corrected to hold the Slewform splash for 3.5 s, initialize/blank the SSD1309 as early as practical before enabling its visible frame, and render temperature units consistently as `°C` using U8g2 UTF-8 rendering. Heater and fan remain hard-locked LOW.

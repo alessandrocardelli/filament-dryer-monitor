@@ -19,7 +19,7 @@ constexpr uint8_t kOledAddress = 0x3C;
 constexpr uint8_t kSht45Address = 0x44;
 constexpr uint32_t kI2cFrequencyHz = 100000;
 
-constexpr uint32_t kBootSplashMs = 1500;
+constexpr uint32_t kBootSplashMs = 3500;
 constexpr uint32_t kDisplaySleepMs = 60000;
 constexpr uint32_t kRenderPeriodMs = 100;
 constexpr uint32_t kButtonDebounceMs = 30;

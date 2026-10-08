@@ -107,7 +107,7 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 ## Application firmware / front-panel UI
 
-- [ ] Flash `firmware/firmware.ino` to the first article and validate the actual Slewform splash, startup chime loudness/timing, live SHT45 readings, all four button gestures, OLED sleep/wake and D021 LED behavior. Confirm heater/fan pins remain LOW throughout the test.
+- [ ] Reflash after first live UI corrections and verify: Slewform splash now remains visible 3.5 s, pre-logo horizontal/random lines are eliminated or reduced to an unavoidable power-up transient, all temperature fields show `°C`, and heater/fan pins remain LOW.
 
 - [ ] Expand the application scaffold into separate cycle-control, safety, fan, logging and web-interface modules. Input/UI/SHT45/buzzer/LED structure and a cooperative SAFE BRING-UP main loop were added in commit `030cb5c`.
 - [x] Implement debounced active-low button handling with short press, ~1.5 s tunable long press and UP/DOWN autorepeat; when the OLED is asleep, consume the first press only as wake. Implemented in `030cb5c`; live first-article UI validation still required.
