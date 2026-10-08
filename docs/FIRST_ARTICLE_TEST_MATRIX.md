@@ -432,3 +432,16 @@ J4 bus connectivity/coexistence: PASS. Graphical initialization/output remains p
 The installed 1.54-inch 128x64 SSD1309 OLED at J4 initialized successfully at `0x3C` using U8g2 with the SHT45 still connected at `0x44`. Frame and text rendering were visually confirmed.
 
 **Gate 4A: PASS.**
+
+
+### Gate 5B unloaded switching follow-up — 2026-10-08
+
+Q4, D4, R20 and R21 installed; J5 left unpopulated and no real heater connected.
+
+- Unpowered J5 pin 1 / HEATER_SW to GND: no short.
+- 24 V / 100 mA bench limit: Q4 gate = 0 V in safe-OFF.
+- Temporary 100 kΩ from J5 pin 2 to pin 1: OFF-state J5 pin 1 = 24 V.
+- HEATER_PWM (GPIO19) HIGH: Q4 gate = 3.3 V.
+- Static ON: J5 pin 1 ≈ 1 mV to GND.
+
+**Gate 5B unloaded driver path: PASS.** Real-heater operation remains blocked pending the real NTC/J7 path, firmware conversion/fault handling and the independent series TCO.
