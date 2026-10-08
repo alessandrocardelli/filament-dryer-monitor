@@ -314,7 +314,7 @@ R28 = 47 kΩ and C19 = 100 nF were fitted. With J7 open, the NTC node measured 3
 
 ESP32 GPIO34 / ADC1 then reported a stable raw reading around 2643-2647 and calibrated readings around 2300-2302 mV using Arduino `analogReadMilliVolts()`. The ADC therefore sees the divider correctly and stably. The ~47 mV offset versus the DMM is acceptable for functional validation but must not be treated as final temperature calibration.
 
-Remaining Gate 4D work: fit J7 when the dryer connector is available, connect the real NTC, characterize its resistance/temperature behavior and implement the final conversion and fault limits before any heater operation.
+Remaining Gate 4D work: fit J7 when the dryer connector is available, connect the real NTC, validate the already-recorded empirical NTC characterization through the PCB ADC path, and implement the final conversion and fault limits before any heater operation. The original eSUN NTC characterization is already recorded in README.md (82.5 kΩ at 25 °C through 28.8 kΩ at 50 °C, with a single-beta approximation near 4100 K).
 
 
 ## 2026-10-07 Gate 4A SHT45 live validation
