@@ -399,3 +399,11 @@ Electrical J7 mapping remains valid (pin 1 GND, pin 2 NTC). For this first artic
 Q4, D4, R20 and R21 were installed with J5 still unpopulated and no heater connected. J5 pin 1 / HEATER_SW was not shorted to GND with power removed. At 24 V with a 100 mA bench limit, Q4 gate measured 0 V in the safe-OFF state. With a temporary 100 kΩ pull-up from J5 pin 2 (24V_PROT) to J5 pin 1, the OFF-state switched node measured 24 V. Driving HEATER_PWM (GPIO19) HIGH produced 3.3 V at the Q4 gate and approximately 1 mV at J5 pin 1.
 
 The unloaded Q4 driver path therefore passes static OFF/ON validation. The real heater remains disconnected pending the real NTC/J7 path, firmware conversion/fault handling and independent series TCO.
+
+## 2026-10-08 front-panel V1 interaction specification
+
+The first-article front-panel hardware is now sufficiently validated to define application behavior: all four buttons are functional, the SSD1309 OLED renders graphics at `0x3C` while the SHT45 operates at `0x44`, and the passive buzzer can generate tones/melodies with software-adjustable PWM duty. D3 remains the hidden diagnostic LED under D021.
+
+D022 now fixes the V1 interaction model and `docs/UI_SPEC.md` contains the detailed screen/button specification. The controller is standalone from the front panel, boots into safe `STANDBY`, does not auto-resume a cycle after reset/power loss, uses temperature + time + fan AUTO as the initial cycle-setting model, and treats RH as displayed/logged information rather than a standalone V1 cycle-completion criterion. Fault presentation has priority, and buzzer mute never clears a safety fault.
+
+This is a firmware/UI decision only. It does not change the released PCB, connector recovery plan, current hardware bring-up gates or heater-safety prerequisites. Final parameter ranges, heater/NTC thresholds, fan AUTO/cooldown policy and material-profile values remain open until physical validation supports them.
