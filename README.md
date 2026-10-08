@@ -4,7 +4,7 @@ Custom ESP32-based controller board that retrofits an **eSUN eBox** filament dry
 
 The PCB physically replaces the original front panel: display and buttons sit on the front face of the board, while the main electronics are on the back.
 
-> **Current status — 2026-10-01:** hardware branch **pcb/l7987l-layout**, fabrication-source checkpoint **`74a3000127371ac6c3b3b7197f9036dec5b58eef`** (2026-09-17, production files). The stored current ERC (2026-09-17) reports **0 errors / 0 warnings**; DRC reports **0 active errors / 0 unconnected pads** and one consciously excluded U4 silkscreen/board-edge warning. The final Gerbers/drills were uploaded to JLCPCB; a CAM production file was received and reviewed for the **bare PCB, hand-assembly** prototype. **The user reported receipt of the bare PCBs and component shipment on 2026-10-01; incoming inspection and reconciliation are now the active gate.** C11 still requires physical confirmation against the received shipment before soldering. See `docs/PROJECT_STATE.md` and `hardware/docs/PROCUREMENT.md`.
+> **Current status — 2026-10-08:** active hardware branch **main**. The released fabrication-source checkpoint remains **`74a3000127371ac6c3b3b7197f9036dec5b58eef`** (2026-09-17). First-article bring-up has validated MCU/USB/UART after the documented D020 collector-cross bodge, the four front-panel buttons, internal diagnostic LED, passive buzzer, SHT45, SSD1309 graphical output, fan driver/real fan and unloaded heater-switching path. The real heater remains blocked pending the real NTC/J7 path, final NTC conversion/fault handling and independent series TCO. The V1 front-panel interaction model is now specified in `docs/UI_SPEC.md` and D022; application firmware implementation remains pending. See `docs/PROJECT_STATE.md` and `hardware/docs/PROCUREMENT.md`.
 
 For a new work session, read AGENTS.md, docs/PROJECT_STATE.md, docs/DECISIONS.md and docs/TODO.md before changing the design.
 
@@ -237,11 +237,11 @@ Firmware uses the ESP32 Arduino core 3.x and is intended to remain cooperative/n
 | SHT45 driver | Done |
 | Fan PWM | Done; kickstart/duty floor provisional |
 | Heater + NTC safety | NTC characterized; conversion/calibration/safety implementation pending |
-| OLED | Pending |
-| Buttons + UI state machine | Pending |
+| OLED | First-article graphical output validated; application renderer pending |
+| Buttons + UI state machine | Buttons validated; V1 interaction model specified in `docs/UI_SPEC.md`; implementation pending |
 | LittleFS + CSV logging | Pending |
 | Web UI | Pending |
-| Buzzer / LED | Pending |
+| Buzzer / LED | Hardware validated; LED semantics fixed by D021, buzzer/UI semantics by D022; application integration pending |
 | Non-blocking SHT45 conversion | Pending |
 
 ---
@@ -255,6 +255,7 @@ docs/DECISIONS.md               Durable engineering decisions
 docs/TODO.md                    Immediate work list
 docs/BUCK_L7987L_DESIGN.md      Detailed L7987L design/layout record
 docs/ASSEMBLY.md                Assembly/bring-up sequencing
+docs/UI_SPEC.md                 Front-panel V1 interaction specification
 hardware/docs/PROCUREMENT.md    Sourcing/footprint/manufacturing state
 hardware/*.kicad_*              Actual KiCad implementation
 ~~~
