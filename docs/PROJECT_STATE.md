@@ -340,3 +340,10 @@ Powered at 24 V with the bench current limit at 100 mA and no fan connected:
 - A temporary firmware test then drove FAN_PWM / GPIO16 HIGH after a delay; Q5 switched the J6 pin 1 node low as expected.
 
 This validates the gate pull-down, MOSFET switching path and J6 switched output without a real load. Do not treat the actual fan as validated yet. Before connecting it, verify its rated voltage/current and polarity, then choose an appropriate bench current limit and perform static ON/OFF load testing before PWM characterization.
+
+
+## 2026-10-08 Gate 5A real fan load test
+
+The actual 24 V fan was connected to J6 after the replacement-Q5 no-load checks passed. With the temporary static-ON firmware, the fan started normally. Bench-supply current peaked at approximately 102 mA during startup and settled at approximately 89 mA while running.
+
+This confirms successful first-article operation of the J6/Q5 fan power path under the real fan load. The measured currents are total input current from the 24 V bench supply, not an isolated fan-only current measurement. PWM-speed characterization and any final firmware control policy remain separate follow-up work.
