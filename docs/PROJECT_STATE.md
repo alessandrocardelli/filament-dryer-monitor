@@ -486,3 +486,22 @@ contains exactly 720 data bytes (12 bytes × 60 rows) and preserves the
 existing macro/symbol names used by `Ui.h`. The selected 128×64 black/white
 preview is committed alongside the generator. Actual on-device appearance
 remains to be checked after reflashing.
+
+## 2026-10-10 Slewform animated splash and synchronized wordmark chime
+
+After approval of a larger standalone emblem and separate SLEWFORM page, the
+SAFE BRING-UP firmware now draws the stationary 54×60 upper emblem and reveals
+root pixels radially in 11 timestamped stages. It then switches to a completely
+separate centered 122×18 SLEWFORM wordmark at 2.1 s and starts the existing
+two-note rising startup chime at that instant, rather than at application entry.
+The BOOT interval remains 3.5 s: growth for 1.5 s, full emblem silent through
+2.1 s, and solo wordmark through 3.5 s.
+
+All 1,128 bytes of bitmap data derive from the unchanged SVG using
+`firmware/assets/slewform/generate_animation_compact.py`, which checks XBM
+pack/unpack. `Ui::requestRender` forces the wordmark redraw in the same loop
+iteration as the startup chime trigger; there is no blocking animation delay.
+The existing heater hard-OFF safety control and fan operation are unchanged.
+
+**Outstanding:** run actual ESP32 Arduino build/flash, then inspect OLED
+smoothness and verify the sound/display synchronization on the first article.

@@ -331,10 +331,20 @@ Final temperature/time ranges, NTC thresholds, control gains, fan AUTO/cooldown 
 
 **Status:** accepted 2026-10-08.
 
-At application startup/reset, the OLED presents the selected **Slewform logo with wordmark** as the product splash screen. The canonical source/derived assets are:
+At application startup/reset, the OLED presents Slewform branding.
+On 2026-10-10 the user approved replacing the single logo+wordmark image
+with two **separate display phases** from the unmodified canonical
+`firmware/assets/slewform/Slewform_logo.svg`:
 
-- `firmware/assets/slewform/Slewform_logo.svg`;
-- `firmware/assets/slewform/slewform_logo_128x64.h` (90×60 px XBM/U8g2 bitmap).
+- **0–1.5 s:** large stationary upper symbol with roots growing outward;
+- **1.5–2.1 s:** the complete symbol remains visible, still silent;
+- **2.1–3.5 s:** only the centered SLEWFORM wordmark, with no symbol.
+
+The original rising power-on chime now starts **only when the solo wordmark
+appears**, at 2.1 s. The previous 3.5 s total BOOT interval is preserved.
+Active generated asset: `firmware/assets/slewform/slewform_animation_compact.h`;
+generator: `firmware/assets/slewform/generate_animation_compact.py`.
+The old `slewform_logo_128x64.h` remains available as a legacy static splash.
 
 The splash is paired with a short **original two-step rising power-on chime** whose design intent is the concise, recognizable feel of a classic handheld-console startup. It must not be a note-for-note reproduction of the Nintendo Game Boy startup sound.
 
@@ -385,12 +395,14 @@ Writes are performed only when values have changed and a setup/settings flow is 
 
 **Status:** implemented for first-article visual validation 2026-10-10.
 
-This refines the raster export only; **D023** (canonical Slewform SVG and logo
-with wordmark at startup) remains unchanged. `generate_logo.py` builds a 90×60
+This records the earlier combined static logo conversion. D023 was
+subsequently revised on 2026-10-10 to show the symbol and wordmark on
+separate screens. `generate_logo.py` builds a 90×60
 XBM bitmap from the repository's vector source by combining the source-colored
 geometry into a single alpha mask, rendering at high resolution, filtering
 and thresholding to one bit. Three reproducible thresholds are provided:
 light 165, balanced 115, strong 72. The balanced version is currently selected,
-pending physical OLED inspection. Maintain the original SVG, preserve the
-`slewform_full_logo` API, and test on the target display before calling the
-raster artwork final. No electrical or heater-control behavior is changed.
+pending physical OLED inspection. This historical static bitmap preserves
+`slewform_full_logo` for reference but is no longer selected by the UI. The
+canonical SVG is unchanged; test the animated graphics on the target display
+before calling the artwork final. No heater-control behavior is changed.

@@ -32,6 +32,7 @@ SettingsField settingsField = SettingsField::BuzzerVolume;
 PersistentSettings settings;
 
 uint32_t bootStartedMs = 0;
+bool bootWordmarkChimeStarted = false;
 bool technicalPage = false;
 
 static void applyBuzzerSettings() {
@@ -252,14 +253,15 @@ void setup() {
 
   bootStartedMs = nowMs;
   appState = AppState::Boot;
-  buzzer.playStartup(nowMs);
+  bootWordmarkChimeStarted = false;  // Roots grow in silence.
 
   if (!fan.attached()) {
     Serial.println("WARNING: fan LEDC attachment failed; fan remains OFF");
   }
 
   ui.render(nowMs, appState, setupField, settingsField, settings,
-            sht45.snapshot(), 0, fan.dutyPercent(), false);
+            sht45.snapshot(), 0, fan.dutyPercent(), false,
+            nowMs - bootStartedMs);
 }
 
 void loop() {
@@ -272,9 +274,16 @@ void loop() {
   sht45.update(nowMs);
   fan.update(nowMs, safety.fanPermitted());
 
-  if (appState == AppState::Boot &&
-      (nowMs - bootStartedMs) >= AppConfig::kBootSplashMs) {
-    enterState(AppState::Standby, nowMs);
+  if (appState == AppState::Boot) {
+    const uint32_t elapsedMs = nowMs - bootStartedMs;
+    if (elapsedMs >= AppConfig::kBootSplashMs) {
+      enterState(AppState::Standby, nowMs);
+    } else if (!bootWordmarkChimeStarted &&
+               elapsedMs >= AppConfig::kBootWordmarkStartMs) {
+      bootWordmarkChimeStarted = true;
+      ui.requestRender(nowMs);  // Make the wordmark appear in this loop pass.
+      buzzer.playStartup(nowMs);
+    }
   }
 
   if (cycle.update(nowMs) == CycleEvent::Completed) {
@@ -301,5 +310,5 @@ void loop() {
   ui.updateSleep(nowMs, appState);
   ui.render(nowMs, appState, setupField, settingsField, settings,
             sht45.snapshot(), cycle.remainingSeconds(nowMs),
-            fan.dutyPercent(), technicalPage);
+            fan.dutyPercent(), technicalPage, nowMs - bootStartedMs);
 }

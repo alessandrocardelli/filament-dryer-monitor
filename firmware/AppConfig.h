@@ -20,6 +20,8 @@ constexpr uint8_t kSht45Address = 0x44;
 constexpr uint32_t kI2cFrequencyHz = 100000;
 
 constexpr uint32_t kBootSplashMs = 3500;
+// First show the growing roots silently; start chime on the solo wordmark.
+constexpr uint32_t kBootWordmarkStartMs = 2100;
 constexpr uint32_t kDisplaySleepMs = 60000;
 constexpr uint32_t kRenderPeriodMs = 100;
 constexpr uint32_t kButtonDebounceMs = 30;

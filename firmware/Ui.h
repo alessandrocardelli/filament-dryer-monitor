@@ -3,7 +3,7 @@
 #include <U8g2lib.h>
 #include "AppConfig.h"
 #include "AppTypes.h"
-#include "assets/slewform/slewform_logo_128x64.h"
+#include "assets/slewform/slewform_animation_compact.h"
 
 class Ui {
  public:
@@ -23,6 +23,11 @@ class Ui {
   }
 
   void noteInteraction(uint32_t nowMs) { lastInteractionMs_ = nowMs; }
+
+  // Force a display refresh on the same pass as the wordmark startup chime.
+  void requestRender(uint32_t nowMs) {
+    lastRenderMs_ = nowMs - AppConfig::kRenderPeriodMs;
+  }
 
   bool wakeAndConsumeIfSleeping(uint32_t nowMs) {
     if (awake_) return false;
@@ -45,13 +50,14 @@ class Ui {
               SettingsField settingsField,
               const PersistentSettings &settings,
               const SensorSnapshot &sensor, uint32_t remainingSeconds,
-              uint8_t fanDutyPercent, bool technicalPage = false) {
+              uint8_t fanDutyPercent, bool technicalPage = false,
+              uint32_t bootElapsedMs = 0) {
     if (!awake_ || (nowMs - lastRenderMs_) < AppConfig::kRenderPeriodMs) return;
     lastRenderMs_ = nowMs;
 
     display_.clearBuffer();
     switch (state) {
-      case AppState::Boot: drawSplash(); break;
+      case AppState::Boot: drawSplash(bootElapsedMs); break;
       case AppState::Standby: drawStandby(sensor); break;
       case AppState::Setup: drawSetup(setupField, settings.cycle); break;
       case AppState::Settings: drawSettings(settingsField, settings); break;
@@ -82,11 +88,36 @@ class Ui {
     return "LOW";
   }
 
-  void drawSplash() {
-    const int16_t x = (128 - SLEWFORM_FULL_LOGO_WIDTH) / 2;
-    const int16_t y = (64 - SLEWFORM_FULL_LOGO_HEIGHT) / 2;
-    display_.drawXBMP(x, y, SLEWFORM_FULL_LOGO_WIDTH,
-                      SLEWFORM_FULL_LOGO_HEIGHT, slewform_full_logo);
+  void drawSplash(uint32_t bootElapsedMs) {
+    // Separate full-screen page; never display the wordmark below the emblem.
+    if (bootElapsedMs >= AppConfig::kBootWordmarkStartMs) {
+      display_.drawXBMP(SLEWFORM_WORDMARK_X, SLEWFORM_WORDMARK_Y,
+                        SLEWFORM_WORDMARK_WIDTH, SLEWFORM_WORDMARK_HEIGHT,
+                        slewform_wordmark);
+      return;
+    }
+
+    // Upper symbol never moves; roots emerge from its central stem.
+    display_.drawXBMP(SLEWFORM_SYMBOL_X, SLEWFORM_SYMBOL_Y,
+                      SLEWFORM_SYMBOL_WIDTH, SLEWFORM_SYMBOL_HEIGHT,
+                      slewform_symbol_upper);
+    const uint8_t step = static_cast<uint8_t>(
+        min(static_cast<uint32_t>(SLEWFORM_ROOT_STEPS - 1),
+            bootElapsedMs / SLEWFORM_ROOT_STEP_MS));
+    const uint16_t radiusSq4 = slewform_root_radius_sq_x4[step];
+    const uint8_t stride = (SLEWFORM_SYMBOL_WIDTH + 7) / 8;
+    for (uint8_t y = 0; y < SLEWFORM_SYMBOL_HEIGHT; ++y) {
+      for (uint8_t x = 0; x < SLEWFORM_SYMBOL_WIDTH; ++x) {
+        const uint16_t idx = y * stride + x / 8;
+        const uint8_t packed = pgm_read_byte(&slewform_symbol_roots[idx]);
+        if (!(packed & (1u << (x & 7)))) continue;
+        const int16_t dx2 = 2 * x - SLEWFORM_ROOT_ORIGIN_X2;
+        const int16_t dy2 = 2 * y - SLEWFORM_ROOT_ORIGIN_Y2;
+        if (dx2 * dx2 + dy2 * dy2 <= radiusSq4) {
+          display_.drawPixel(SLEWFORM_SYMBOL_X + x, SLEWFORM_SYMBOL_Y + y);
+        }
+      }
+    }
   }
 
   void drawStandby(const SensorSnapshot &sensor) {
