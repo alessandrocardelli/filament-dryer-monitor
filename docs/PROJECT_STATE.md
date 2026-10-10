@@ -468,3 +468,21 @@ New firmware structure:
 - SETTINGS UI entered by long M from STANDBY.
 
 The fan is now the only application-controlled power output. It operates only during DRYING test cycles and is stopped on stop, completion or fault. The heater remains hard-locked OFF on every loop pass. Fan cooldown and final FAN AUTO behavior remain open.
+ 
+## 2026-10-10 Slewform SVG-to-OLED bitmap refinement
+
+The canonical `firmware/assets/slewform/Slewform_logo.svg` remains unchanged.
+After the first-article OLED test revealed some unattractive/potentially
+erroneous pixels in the old rasterized logo, a repeatable export was added at
+`firmware/assets/slewform/generate_logo.py`. It uses a combined geometry
+alpha mask (not brightness-based grayscale of the original blue/orange fills),
+high-resolution SVG rendering, Lanczos reduction and adjustable 1-bit
+thresholding. Three candidates were compared visually (light, balanced,
+strong); the **balanced** candidate with threshold 115 is selected for the
+current 90×60 XBM header, retaining the logo **with wordmark**.
+
+The generator verifies the XBM pack/unpack round trip. The resulting header
+contains exactly 720 data bytes (12 bytes × 60 rows) and preserves the
+existing macro/symbol names used by `Ui.h`. The selected 128×64 black/white
+preview is committed alongside the generator. Actual on-device appearance
+remains to be checked after reflashing.

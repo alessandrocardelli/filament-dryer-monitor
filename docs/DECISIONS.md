@@ -380,3 +380,17 @@ Local settings are persisted in ESP32 Preferences/NVS:
 - key-click preference.
 
 Writes are performed only when values have changed and a setup/settings flow is committed, rather than on each autorepeat increment. Active-cycle/running state is deliberately not persisted, so reset/power loss cannot cause an automatic cycle restart.
+
+## D026 — Reproducible Slewform OLED bitmap conversion
+
+**Status:** implemented for first-article visual validation 2026-10-10.
+
+This refines the raster export only; **D023** (canonical Slewform SVG and logo
+with wordmark at startup) remains unchanged. `generate_logo.py` builds a 90×60
+XBM bitmap from the repository's vector source by combining the source-colored
+geometry into a single alpha mask, rendering at high resolution, filtering
+and thresholding to one bit. Three reproducible thresholds are provided:
+light 165, balanced 115, strong 72. The balanced version is currently selected,
+pending physical OLED inspection. Maintain the original SVG, preserve the
+`slewform_full_logo` API, and test on the target display before calling the
+raster artwork final. No electrical or heater-control behavior is changed.

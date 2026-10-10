@@ -57,3 +57,30 @@ The store avoids writes when values have not changed. Active/running-cycle state
 - Serial monitor: 115200 baud
 
 Open `firmware/firmware.ino` as the sketch.
+
+## Slewform logo — reproducible monochrome export
+
+The source of truth is `assets/slewform/Slewform_logo.svg` (logo **with wordmark**).
+The firmware includes `assets/slewform/slewform_logo_128x64.h`: a **90×60 pixel**,
+1-bit XBM bitmap drawn by U8g2 at **(19, 2)** on the 128×64 OLED.
+
+Regenerate locally:
+
+```sh
+python -m pip install cairosvg pillow
+python firmware/assets/slewform/generate_logo.py
+```
+
+The generator normalizes all original SVG colors to the same white silhouette
+while preserving transparency, renders at 1536×1024, crops to artwork,
+downsamples with Lanczos and applies a 1-bit threshold. Three alternatives
+are generated: `light` (165), `balanced` (115, **selected**), and `strong`
+(72). Default output is `slewform_logo_128x64.h` plus native 128×64
+previews and a 5× comparison image. The selected preview is committed as
+`slewform_logo_balanced_128x64.png`.
+
+For another variant, run `python firmware/assets/slewform/generate_logo.py --select strong`.
+The script self-checks that every packed bitmap round-trips to its original
+90×60 1-bit image. The 1px artwork border prevents cutting off antialiased
+edges. **Inspect on the physical OLED before declaring the logo final.**
+
