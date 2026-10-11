@@ -336,14 +336,16 @@ On 2026-10-10 the user approved replacing the single logo+wordmark image
 with two **separate display phases** from the unmodified canonical
 `firmware/assets/slewform/Slewform_logo.svg`:
 
-- **0–0.55 s:** stationary symbol without roots (timer starts after OLED initialization);
-- **0.55–1.75 s:** roots grow outward in 11 incremental stages at 120 ms;
-- **1.75–2.1 s:** the complete symbol remains visible, still silent;
-- **2.1–3.5 s:** only the centered SLEWFORM wordmark, with no symbol.
+- **0–1.2 s:** stationary symbol without roots (timer starts after OLED initialization;
+  extended on user feedback 2026-10-11);
+- **1.2–2.4 s:** roots grow outward in 11 incremental stages at 120 ms;
+- **2.4–2.75 s:** the complete symbol remains visible, still silent;
+- **2.75–4.15 s:** only the centered SLEWFORM wordmark, with no symbol.
 
 The original rising power-on chime starts **only after the solo wordmark
-has been fully written and revealed**, following the transition requested at
-2.1 s. The previous 3.5 s total BOOT interval is preserved.
+has been fully written and revealed**, following the transition at
+2.75 s. The overall BOOT interval is now **4.15 s** (previously 3.5 s)
+to extend the initial rootless frame without accelerating the growth.
 The 2026-10-11 first-article feedback revealed that the previous 11-entry
 growth-radius table contained only 10 initializers. The implicit final zero
 caused the roots to disappear for one frame before the wordmark. This is now
@@ -357,7 +359,9 @@ The old `slewform_logo_128x64.h` remains available as a legacy static splash.
 
 The splash is paired with a short **original two-step rising power-on chime** whose design intent is the concise, recognizable feel of a classic handheld-console startup. It must not be a note-for-note reproduction of the Nintendo Game Boy startup sound.
 
-First-article use testing found the original ~1.5 s splash too brief; the accepted current timing is **3.5 s**. Heater/fan safe output state and other safety-critical initialization take precedence over branding: the splash/chime must never delay forcing controlled outputs safe.
+First-article use testing found the original ~1.5 s splash too brief; the
+previous accepted timing was 3.5 s, later extended to **4.15 s** when the
+user requested an approximately 1–1.5 s initial rootless frame. Heater/fan safe output state and other safety-critical initialization take precedence over branding: the splash/chime must never delay forcing controlled outputs safe.
 
 The first SAFE BRING-UP implementation is in `firmware/firmware.ino` and `firmware/Buzzer.h`.
 

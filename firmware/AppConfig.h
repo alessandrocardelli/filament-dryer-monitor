@@ -19,11 +19,11 @@ constexpr uint8_t kOledAddress = 0x3C;
 constexpr uint8_t kSht45Address = 0x44;
 constexpr uint32_t kI2cFrequencyHz = 100000;
 
-constexpr uint32_t kBootSplashMs = 3500;
-// Explicit stationary first frame before root pixels begin to appear.
-constexpr uint32_t kBootRootHoldMs = 550;
-// First show the growing roots silently; start chime on the solo wordmark.
-constexpr uint32_t kBootWordmarkStartMs = 2100;
+// Keep all three phases at their original pace; extend the opening still frame.
+// 1200 ms static + 1200 ms growth + 350 ms full emblem + 1400 ms wordmark.
+constexpr uint32_t kBootSplashMs = 4150;
+constexpr uint32_t kBootRootHoldMs = 1200;
+constexpr uint32_t kBootWordmarkStartMs = 2750;
 constexpr uint32_t kDisplaySleepMs = 60000;
 constexpr uint32_t kRenderPeriodMs = 100;
 constexpr uint32_t kButtonDebounceMs = 30;

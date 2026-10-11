@@ -65,15 +65,14 @@ The active asset is `assets/slewform/slewform_animation_compact.h`, regenerated
 with `assets/slewform/generate_animation_compact.py`. The old combined
 `slewform_logo_128x64.h` and `generate_logo.py` remain as legacy references.
 
-The OLED boot sequence still lasts **3.5 s**:
+The OLED boot sequence lasts **4.15 s** after initialization:
 
-- **0–0.55 s:** stationary emblem without roots, timed after display and
-  settings initialization so the entire hold is visible.
-- **0.55–1.75 s:** 11 progressive root-growth stages at 120 ms intervals.
-- **1.75–2.1 s:** complete emblem held, still silent.
-- **2.1–3.5 s:** separate solo SLEWFORM wordmark; the rising chime starts
+- **0–1.20 s:** stationary emblem without roots (extended on user request).
+- **1.20–2.40 s:** 11 progressive root-growth stages at 120 ms intervals.
+- **2.40–2.75 s:** complete emblem held, still silent.
+- **2.75–4.15 s:** separate solo SLEWFORM wordmark; the rising chime starts
   immediately **after** the complete wordmark has been sent and revealed.
-- **3.5 s:** STANDBY. The heater stays hard-locked OFF.
+- **4.15 s:** STANDBY. The heater stays hard-locked OFF.
 
 The 1-bit XBM/PROGMEM bitmap masks are: upper symbol 54×60 (420 bytes),
 root geometry 54×60 (420 bytes), and wordmark 122×18 (288 bytes).
@@ -92,6 +91,14 @@ the complete wordmark is uploaded, and the OLED is turned back on before
 starting the chime. This eliminates intermediate, partially refreshed logo
 frames, at the cost of a brief black transition while I2C data is transferred.
 Firmware cannot prevent images shown *before* the ESP32 initializes the OLED.
+The user reported intermittent horizontal lines or the previous screen at
+power-on: they temporarily appeared absent after the previous `initDisplay()`
+change but reappeared in testing without a change to that initialization path.
+This remains unresolved. To separate controller retained RAM/power sequencing
+from firmware effects, compare cold power-on after a long off interval,
+immediate power-cycle, and ESP32 RESET while 24 V remains on. Record when
+the artifact appears (before the first emblem or during it). Do not infer a
+hardware solution without those observations.
 
 Regenerate from the repository root:
 

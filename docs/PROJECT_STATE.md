@@ -561,3 +561,32 @@ The previously effective OLED cold-start preload and hidden wordmark
 transition remain unchanged. No heater/fan/safety logic changed.
 **Flashing and checking both corrections on the physical first article
 remain necessary.**
+
+## 2026-10-11 continued OLED field observations and longer rootless intro
+
+User confirms the preceding fixes appear to have resolved (2) the brief
+root disappearance at the end of growth and (3) the too-short rootless frame,
+but asks for a longer static symbol of approximately 1–1.5 s. Selected
+**1.2 s** hold while retaining the existing 11 × 120 ms root-growth cadence,
+the ~350 ms complete-emblem hold and ~1.4 s solo wordmark display:
+
+- 0–1.20 s rootless static emblem;
+- 1.20–2.40 s root growth;
+- 2.40–2.75 s complete emblem;
+- 2.75–4.15 s wordmark and chime;
+- 4.15 s STANDBY.
+
+Only `firmware/AppConfig.h` timing constants and their documentation changed:
+no bitmap, buzzer, safety, fan or OLED initialization modifications.
+
+User also reports **(1) startup horizontal lines or previous screen have
+returned**, after having appeared resolved during earlier testing.
+The OLED initialization code is unchanged in the prior/this revision:
+`initDisplay()` followed by a preloaded first emblem frame, then
+`setPowerSave(0)`. The initial observation of success was therefore not
+conclusive; intermittent power-on/reset sequencing or retained controller
+display RAM remains possible, not confirmed. Before changing hardware or
+claiming an OLED fix, compare cold power-on, fast power-cycle, and ESP32 RESET
+with the OLED still powered. Note when the artifact appears relative to the
+first emblem; inspecting actual power rise/reset with a scope may be warranted
+if a controlled test supports that hypothesis.
