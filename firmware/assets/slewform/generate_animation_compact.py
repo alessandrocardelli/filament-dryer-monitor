@@ -94,6 +94,8 @@ def main():
         p = i/(STEPS-1)
         r = 2+(rmax-2)*(1-(1-p)**1.35)
         radii.append(math.ceil(4*r*r))
+    assert len(radii) == STEPS, 'Every root-growth step must have its own radius'
+    assert radii[-1] >= math.ceil(4 * rmax * rmax), 'Last growth step must show every root pixel'
     assert max(radii) <= 65535 and all(a < b for a,b in zip(radii,radii[1:]))
 
     out = f'''#pragma once
@@ -112,14 +114,19 @@ def main():
 #define SLEWFORM_WORDMARK_HEIGHT {word.height}
 #define SLEWFORM_WORDMARK_X {(128-word.width)//2}
 #define SLEWFORM_WORDMARK_Y {(64-word.height)//2}
-#define SLEWFORM_ROOT_STEP_MS 150UL
+#define SLEWFORM_ROOT_STEP_MS 120UL
 #define SLEWFORM_ROOT_STEPS {STEPS}
 
 '''
     out += emit('slewform_symbol_upper', upper)
     out += emit('slewform_symbol_roots', roots)
     out += emit('slewform_wordmark', word)
-    out += 'static const uint16_t slewform_root_radius_sq_x4[SLEWFORM_ROOT_STEPS] = {' + ', '.join(map(str,radii)) + '};\n'
+    out += ('// Unsized: missing initializer must fail compilation, not become zero.\n'
+            'static const uint16_t slewform_root_radius_sq_x4[] = {' +
+            ', '.join(map(str, radii)) + '};\n'
+            'static_assert(sizeof(slewform_root_radius_sq_x4) / '
+            'sizeof(slewform_root_radius_sq_x4[0]) == SLEWFORM_ROOT_STEPS, '
+            '"Every growth stage requires a radius");\n')
     path = ROOT / 'slewform_animation_compact.h'
     path.write_text(out, encoding='utf-8')
     print(f'Wrote {path}; 420 + 420 + 288 = 1128 bitmap bytes')

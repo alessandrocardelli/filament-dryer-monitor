@@ -67,9 +67,10 @@ with `assets/slewform/generate_animation_compact.py`. The old combined
 
 The OLED boot sequence still lasts **3.5 s**:
 
-- **0–0.35 s:** stationary emblem without any roots (initial hold).
-- **0.35–1.85 s:** 11 progressive root-growth stages at 150 ms intervals.
-- **1.85–2.1 s:** complete emblem held, still silent.
+- **0–0.55 s:** stationary emblem without roots, timed after display and
+  settings initialization so the entire hold is visible.
+- **0.55–1.75 s:** 11 progressive root-growth stages at 120 ms intervals.
+- **1.75–2.1 s:** complete emblem held, still silent.
 - **2.1–3.5 s:** separate solo SLEWFORM wordmark; the rising chime starts
   immediately **after** the complete wordmark has been sent and revealed.
 - **3.5 s:** STANDBY. The heater stays hard-locked OFF.
@@ -79,7 +80,12 @@ root geometry 54×60 (420 bytes), and wordmark 122×18 (288 bytes).
 **Total bitmap data: 1,128 bytes** plus eleven 16-bit growth radii.
 The renderer reveals root pixels by radius, non-blockingly, rather than
 storing complete animation frames. Boot images are transmitted only when
-changing stage; repeated 100 ms redraws have been removed. On initial power-up
+changing stage; repeated 100 ms redraws have been removed.
+The packed radius table now contains **11 explicit values**. Previously the
+declared 11-element array included only ten initializers, so C++ supplied a
+zero for the last growth stage: that briefly removed all roots just before
+the wordmark. It is now unsized with a compile-time count assertion, and the
+last radius covers every root-mask pixel. The generator checks this too. On initial power-up
 `initDisplay()` keeps the OLED hidden until the first logo frame is uploaded.
 At the symbol-to-wordmark transition, the display is temporarily blanked,
 the complete wordmark is uploaded, and the OLED is turned back on before

@@ -21,7 +21,7 @@ constexpr uint32_t kI2cFrequencyHz = 100000;
 
 constexpr uint32_t kBootSplashMs = 3500;
 // Explicit stationary first frame before root pixels begin to appear.
-constexpr uint32_t kBootRootHoldMs = 350;
+constexpr uint32_t kBootRootHoldMs = 550;
 // First show the growing roots silently; start chime on the solo wordmark.
 constexpr uint32_t kBootWordmarkStartMs = 2100;
 constexpr uint32_t kDisplaySleepMs = 60000;

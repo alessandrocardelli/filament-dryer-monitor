@@ -532,3 +532,32 @@ full-frame I2C transfer tearing, not a deliberate animation step.
 Nothing in this revision enables the heater or changes fan control.
 Compile/flash and observe repeated power cycles and ESP32 resets before
 marking the boot artifacts solved.
+
+## 2026-10-11 follow-up: actual causes identified for remaining boot symptoms
+
+The user reports that horizontal lines/previous-screen power-on artifacts seem
+resolved after the previous OLED startup fix, but (a) the full-grown roots
+briefly disappear before the wordmark and (b) the initial static frame is no
+more noticeable.
+
+Source inspection found **two deterministic faults**:
+
+1. `bootStartedMs` had been taken before blocking OLED initialization and
+   subsequent Preferences/buzzer/sensor setup. By the time the first frame was
+   displayed, the nominal 350 ms hold was partly (or largely) consumed.
+   The BOOT timer now starts after all initialization, with a 550 ms
+   rootless static frame and 120 ms per growth step. The full emblem now
+   remains visible from ~1.75 to 2.1 s.
+2. `slewform_root_radius_sq_x4[SLEWFORM_ROOT_STEPS]` declared **11**
+   elements but initialized only **10**. In C++, the final element silently
+   became zero; during the final 150 ms step, roots disappeared exactly as
+   observed. An explicit 11th radius of 4039 (root-mask maximum squared
+   radius in 2× coordinates: 4034) now restores all 308 root pixels. The
+   table is unsized and protected by `static_assert` against missing
+   entries; the SVG generator also validates stage count and final coverage.
+
+No OLED rendering refactor is required to fix the confirmed second cause.
+The previously effective OLED cold-start preload and hidden wordmark
+transition remain unchanged. No heater/fan/safety logic changed.
+**Flashing and checking both corrections on the physical first article
+remain necessary.**

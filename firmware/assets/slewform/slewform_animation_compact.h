@@ -14,7 +14,7 @@
 #define SLEWFORM_WORDMARK_HEIGHT 18
 #define SLEWFORM_WORDMARK_X 3
 #define SLEWFORM_WORDMARK_Y 23
-#define SLEWFORM_ROOT_STEP_MS 150UL
+#define SLEWFORM_ROOT_STEP_MS 120UL
 #define SLEWFORM_ROOT_STEPS 11
 
 static const uint8_t slewform_symbol_upper[420] PROGMEM = {
@@ -98,4 +98,12 @@ static const uint8_t slewform_wordmark[288] PROGMEM = {
   0xFF, 0x83, 0xFF, 0xE3, 0xFF, 0x80, 0x81, 0x01, 0x06, 0x00, 0xFF, 0xC1, 0x80, 0x61, 0x00, 0x03
 };
 
-static const uint16_t slewform_root_radius_sq_x4[SLEWFORM_ROOT_STEPS] = {16, 142, 380, 716, 1134, 1616, 2141, 2687, 3223, 3708};
+// Unsized on purpose: a missing initializer must fail compilation, not
+// silently become a zero-radius final frame.
+static const uint16_t slewform_root_radius_sq_x4[] = {
+  16, 142, 380, 716, 1134, 1616, 2141, 2687, 3223, 3708, 4039
+};
+static_assert(sizeof(slewform_root_radius_sq_x4) /
+                  sizeof(slewform_root_radius_sq_x4[0]) ==
+                  SLEWFORM_ROOT_STEPS,
+              "The root animation needs exactly 11 explicit radii");

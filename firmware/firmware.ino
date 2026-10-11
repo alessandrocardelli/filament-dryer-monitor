@@ -250,16 +250,16 @@ void setup() {
   buzzer.begin();
   applyBuzzerSettings();
 
-  bootStartedMs = nowMs;
   appState = AppState::Boot;  // Roots grow in silence.
 
   if (!fan.attached()) {
     Serial.println("WARNING: fan LEDC attachment failed; fan remains OFF");
   }
 
-  ui.render(nowMs, appState, setupField, settingsField, settings,
-            sht45.snapshot(), 0, fan.dutyPercent(), false,
-            nowMs - bootStartedMs);
+  // ui.begin() already displayed the initial rootless frame. Do not start
+  // the BOOT timer before OLED initialization or Preferences setup: doing so
+  // consumed most of the nominal initial hold before the user could see it.
+  bootStartedMs = millis();
 }
 
 void loop() {
