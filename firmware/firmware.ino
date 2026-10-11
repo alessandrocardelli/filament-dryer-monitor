@@ -8,6 +8,7 @@
 #include "Buzzer.h"
 #include "CycleController.h"
 #include "FanController.h"
+#include "NtcSensor.h"
 #include "SafetyController.h"
 #include "SettingsStore.h"
 #include "Sht45Sensor.h"
@@ -20,6 +21,7 @@ ButtonManager buttons;
 Buzzer buzzer;
 CycleController cycle;
 FanController fan;
+NtcSensor ntc;
 SafetyController safety;
 SettingsStore settingsStore;
 Sht45Sensor sht45(Wire);
@@ -32,6 +34,7 @@ SettingsField settingsField = SettingsField::BuzzerVolume;
 PersistentSettings settings;
 
 uint32_t bootStartedMs = 0;
+uint32_t lastNtcLogMs = 0;
 bool technicalPage = false;
 
 static void applyBuzzerSettings() {
@@ -246,6 +249,7 @@ void setup() {
     Serial.println("WARNING: Preferences/NVS unavailable; using defaults");
   }
 
+  ntc.begin(nowMs);
   sht45.begin(nowMs);
   buzzer.begin();
   applyBuzzerSettings();
@@ -265,7 +269,8 @@ void setup() {
 void loop() {
   const uint32_t nowMs = millis();
 
-  safety.update();
+  ntc.update(nowMs);
+  safety.update(ntc.snapshot());
 
   buttons.update(nowMs, handleButtonEvent);
   buzzer.update(nowMs);
@@ -298,11 +303,32 @@ void loop() {
   }
   statusLed.update(nowMs, ledState);
 
+  if ((nowMs - lastNtcLogMs) >= 2000) {
+    lastNtcLogMs = nowMs;
+    const NtcSnapshot &n = ntc.snapshot();
+    Serial.print("NTC adc=");
+    Serial.print(n.reportedMv, 1);
+    Serial.print("mV corr=");
+    Serial.print(n.correctedMv, 1);
+    Serial.print("mV R=");
+    if (n.valid) {
+      Serial.print(n.resistanceOhms / 1000.0f, 2);
+      Serial.print("k T=");
+      Serial.print(n.temperatureC, 2);
+      Serial.print("C empirical=");
+      Serial.println(n.insideEmpiricalRange ? "yes" : "no");
+    } else {
+      Serial.print("-- fault=");
+      Serial.println(static_cast<int>(n.fault));
+    }
+  }
+
   ui.updateSleep(nowMs, appState);
   const bool wordmarkJustRevealed =
       ui.render(nowMs, appState, setupField, settingsField, settings,
-                sht45.snapshot(), cycle.remainingSeconds(nowMs),
-                fan.dutyPercent(), technicalPage, nowMs - bootStartedMs);
+                sht45.snapshot(), ntc.snapshot(),
+                cycle.remainingSeconds(nowMs), fan.dutyPercent(),
+                technicalPage, nowMs - bootStartedMs);
   if (wordmarkJustRevealed) {
     // Trigger the first note only after the fully refreshed wordmark is visible.
     buzzer.playStartup(millis());
