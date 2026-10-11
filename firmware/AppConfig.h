@@ -34,6 +34,22 @@ constexpr uint32_t kSht45PeriodMs = 2000;
 constexpr uint32_t kSht45ConversionMs = 12;
 constexpr uint32_t kSht45StaleMs = 10000;
 
+// Heater NTC first-article ADC calibration, measured 2026-10-11.
+// analogReadMilliVolts() was compared with a DMM using 33.03k, 47.0k,
+// 68.0k, 81.9k and 99.9k substitutes on J7. The linear correction maps
+// ESP32-reported mV to the DMM node voltage over the characterized range.
+constexpr uint32_t kNtcSamplePeriodMs = 500;
+constexpr uint8_t kNtcSamplesPerReading = 16;
+constexpr float kNtcAdcCorrectionSlope = 0.984369f;
+constexpr float kNtcAdcCorrectionOffsetMv = -2.322f;
+// Effective divider parameters fitted to those same first-article points.
+// They include the actual R28 tolerance and measured 3V3 rail behavior.
+constexpr float kNtcDividerSupplyMv = 3311.0f;
+constexpr float kNtcEffectivePullupOhms = 46572.0f;
+// Electrical bring-up fault windows only; final thermal trip thresholds remain TBD.
+constexpr float kNtcShortThresholdMv = 150.0f;
+constexpr float kNtcOpenThresholdMv = 3000.0f;
+
 // SAFE BRING-UP: heater remains hard-disabled.
 // These UI bounds are provisional and are NOT heater safety limits.
 constexpr int16_t kPrototypeTempMinC = 30;
