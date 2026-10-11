@@ -129,6 +129,6 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 - [ ] Keep material profiles and humidity/trend-based automatic completion deferred until their values/algorithm are deliberately designed and validated.
 
 
-- [ ] Live-test calibrated NTC application firmware on the first article with heater power disconnected: verify serial NTC diagnostic values, heater-temperature display on SYSTEM page, and deliberate open-circuit fault entry by unplugging J7. Heater must remain hard-locked OFF.
+- [x] Live-test calibrated NTC application firmware on the first article with heater power disconnected: stable serial NTC diagnostics, heater-temperature display on SYSTEM page, and deliberate J7 unplug correctly entering latched open-circuit FAULT. Heater remained hard-locked OFF. Passed 2026-10-11.
 - [ ] Define and validate final heater thermal fault thresholds/control limits only after the NTC conversion live test; do not treat the current open/short electrical windows as final thermal safety limits.
 - [ ] Procure/install/verify the independent off-board TCO in series with HEATER+ before any real heater energization.
