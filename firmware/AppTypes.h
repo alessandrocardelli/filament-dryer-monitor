@@ -29,6 +29,13 @@ enum class BuzzerVolume : uint8_t {
   High = 3,
 };
 
+enum class NtcFault : uint8_t {
+  None,
+  OpenCircuit,
+  ShortCircuit,
+  InvalidReading,
+};
+
 struct CycleSettings {
   int16_t targetTempC = 55;
   uint16_t durationMinutes = 240;
@@ -45,4 +52,16 @@ struct SensorSnapshot {
   float temperatureC = NAN;
   float humidityRh = NAN;
   uint32_t lastSuccessMs = 0;
+};
+
+struct NtcSnapshot {
+  bool sampled = false;
+  bool valid = false;
+  bool insideEmpiricalRange = false;
+  float reportedMv = NAN;
+  float correctedMv = NAN;
+  float resistanceOhms = NAN;
+  float temperatureC = NAN;
+  NtcFault fault = NtcFault::InvalidReading;
+  uint32_t lastSampleMs = 0;
 };
