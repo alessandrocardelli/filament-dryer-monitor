@@ -8,7 +8,7 @@ Current phase: **first-article hand assembly and staged bring-up** (2026-10-04).
 
 - [x] Gate 5A real fan load test passed on 2026-10-08: actual 24 V fan started normally; bench input current peaked at ~102 mA and settled at ~89 mA. Static real-load switching path is validated; PWM characterization remains pending.
 
-- [x] Gate 4D analog front end passed on 2026-10-05 with R28=47 kΩ and C19=100 nF: open NTC node ~3.3 V; temporary 100 kΩ to GND gave 2.253 V by DMM; GPIO34 ADC was stable at RAW ~2643-2647 / 2300-2302 mV. The original eSUN NTC has already been empirically characterized and recorded in README.md; J7/real-NTC connection, ADC-path validation, final conversion and fault limits remain pending.
+- [x] Gate 4D analog front end passed on 2026-10-05 with R28=47 kΩ and C19=100 nF. Real NTC/J7 path then passed on 2026-10-11: real NTC connected, 2.368 V at J7 pin 2, GPIO34 RAW 2779-2783 / 2409-2412 mV. Five-point 33.03k-99.9k substitute-resistor calibration was completed and the application now contains measured ADC correction plus NTC resistance/temperature conversion. Live-test of the integrated firmware and final thermal limits remain pending.
 
 - [x] Gate 4C buzzer first-article test passed on 2026-10-05: BZ1/Q6/D6/R27/R37 populated; GPIO33 ~2.7 kHz tone and a three-note melody both worked. Reduced PWM duty cycle gives a quieter output than the initial ~50% drive; final firmware volume levels remain to be tuned.
 
@@ -100,7 +100,7 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 - [x] Gate 5A PWM characterization completed for the current fan at 25 kHz: 25% was the first tested duty that started from rest (20% did not); 15% was the lowest tested duty that sustained rotation (10% did not). Earlier current points: 50% ~49 mA, 75% ~72 mA, 100% ~89 mA. Final firmware should retain margin above these observed limits and may use a brief full-duty startup boost.
 
 
-- [ ] J7 connector mismatch confirmed 2026-10-08: released JST-GH BM02B-GHS-TBT does not mate with the original eSUN NTC plug. First-article plan: keep J7 installed, validate a sacrificial GH crimp, then cut the incompatible NTC plug and reterminate the original ~30 AWG NTC leads into a GH 2-position housing. PEBA micro-crimping kit/tool for GH 1.25 mm purchased 2026-10-08; expected Saturday 2026-10-10. Do not cut the NTC leads until the sample crimp passes. Revisit J7 connector choice in the next deliberate hardware revision.
+- [x] First-article J7 recovery completed by 2026-10-11: J7 remains installed and the original eSUN NTC leads were reterminated for the JST-GH connection; the real NTC is now connected and electrically validated through the PCB. Revisit the connector choice deliberately in the next hardware revision.
 
 
 - [x] Gate 5B unloaded switching path passed 2026-10-08: Q4/D4/R20/R21 installed, J5 left unpopulated, safe-OFF gate 0 V, temporary 100 kΩ pull-up gave 24 V at HEATER_SW when OFF, GPIO19 HIGH gave 3.3 V at Q4 gate and ~1 mV at HEATER_SW. Real heater remains blocked pending NTC/J7 validation, firmware safety handling and TCO.
@@ -127,3 +127,8 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 - [ ] Decide and validate target-temperature range/step, cycle-duration range/step, defaults and persistence only after heater/NTC/safety validation supports safe values.
 - [ ] Define final fan AUTO policy using the measured first-article fan thresholds with adequate startup/run margin; decide whether a post-cycle cooldown state is required.
 - [ ] Keep material profiles and humidity/trend-based automatic completion deferred until their values/algorithm are deliberately designed and validated.
+
+
+- [ ] Live-test calibrated NTC application firmware on the first article with heater power disconnected: verify serial NTC diagnostic values, heater-temperature display on SYSTEM page, and deliberate open-circuit fault entry by unplugging J7. Heater must remain hard-locked OFF.
+- [ ] Define and validate final heater thermal fault thresholds/control limits only after the NTC conversion live test; do not treat the current open/short electrical windows as final thermal safety limits.
+- [ ] Procure/install/verify the independent off-board TCO in series with HEATER+ before any real heater energization.
