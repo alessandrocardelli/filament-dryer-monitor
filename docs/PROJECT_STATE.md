@@ -617,3 +617,14 @@ A linear first-article correction over this range is `V_DMM_mV ≈ 0.984369 * V_
 Application firmware now contains `NtcSensor.h`. It averages ADC readings, applies the measured ADC correction, converts node voltage to NTC resistance, and converts resistance to heater temperature using piecewise interpolation of the existing empirical 25-50 °C table. Outside that measured interval it reports a diagnostic estimate from the previously recorded β≈4100 K model and marks the value as outside the empirical range.
 
 The safety controller now latches obvious electrical NTC faults (open/short/invalid) while continuing to force HEATER_PWM LOW. These are bring-up electrical fault windows only; final thermal trip thresholds, heater control limits and control gains remain deliberately open. The real heater must remain unpowered until the independent series TCO is physically installed/verified and the new NTC firmware is live-tested.
+
+
+## 2026-10-11 Gate 4D live NTC firmware / open-fault validation
+
+The calibrated NTC application firmware was flashed and tested on the first article with the real heater power path still disconnected.
+
+With J7 connected, serial diagnostics were stable around 2.33 V corrected, 110-111 kΩ and about 18.6-18.8 °C. The SYSTEM page simultaneously displayed chamber temperature from the SHT45 (~22.8 °C) and heater temperature from the NTC (~18.8 °C), confirming the two independent sensor paths are presented correctly. These temperatures are not expected to match because the SHT45 measures chamber air while the NTC is thermally coupled to the heater.
+
+Unplugging J7 while powered triggered the intended latched NTC open-circuit FAULT, including the user-visible fault state, while HEATER_PWM remained hard-locked OFF. Reconnecting J7 requires reset to clear the current latched fault behavior.
+
+The real NTC sensing path and the first electrical safety-fault path are therefore live-validated. Final heater thermal trip thresholds, heater control policy and the independent series TCO remain open prerequisites before any real heater energization.
