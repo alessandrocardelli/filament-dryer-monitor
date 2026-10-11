@@ -449,7 +449,7 @@ Q4, D4, R20 and R21 installed; J5 left unpopulated and no real heater connected.
 
 ### Gate 4D real NTC / ADC follow-up — 2026-10-11
 
-**PASS for the real J7 -> divider -> GPIO34 sensing path; firmware live-test still pending.**
+**PASS for the real J7 -> divider -> GPIO34 sensing path and integrated firmware live test.**
 
 With the heater power path disconnected, the reterminated original eSUN NTC was connected to J7. J7 pin 2 measured 2.368 V; direct NTC resistance after settling was 114.9 kΩ. GPIO34 then reported RAW 2779-2783 and 2409-2412 mV using `analogReadMilliVolts()`.
 
@@ -465,4 +465,6 @@ First-article substitute-resistor calibration:
 
 Firmware correction: `V_DMM_mV ≈ 0.984369 * V_ESP32_mV - 2.322`. The application now implements NTC resistance/temperature conversion and electrical open/short/invalid fault classification, but heater control remains unavailable.
 
-Next: flash/live-test the integrated NTC firmware with the real NTC connected. Do not power the heater. Independent series TCO validation and final thermal safety thresholds remain open.
+Integrated firmware live test passed on 2026-10-11: serial diagnostics were stable at about 110-111 kΩ / 18.6-18.8 °C, the SYSTEM page displayed the heater NTC temperature alongside the independent SHT45 chamber temperature, and unplugging J7 triggered the intended latched NTC open-circuit FAULT while the heater remained hard-locked OFF.
+
+**Gate 4D sensing + open-circuit fault path: PASS.** Independent series TCO validation and final thermal safety thresholds remain open; do not power the real heater yet.
