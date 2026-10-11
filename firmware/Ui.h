@@ -11,23 +11,21 @@ class Ui {
 
   void begin(uint32_t nowMs) {
     display_.setI2CAddress(AppConfig::kOledAddress << 1);
-    display_.begin();
-    display_.setPowerSave(1);
+    // initDisplay() leaves the SSD1309 in power-save mode, unlike begin().
+    // Write the first complete emblem frame before allowing it to illuminate.
+    display_.initDisplay();
     display_.clearBuffer();
+    drawSplash(0);  // The static crown/trunk only; no root pixels yet.
     display_.sendBuffer();
     display_.setContrast(180);
     display_.setPowerSave(0);
     awake_ = true;
+    lastBootStage_ = 0;
     lastInteractionMs_ = nowMs;
-    lastRenderMs_ = nowMs - AppConfig::kRenderPeriodMs;
+    lastRenderMs_ = nowMs;
   }
 
   void noteInteraction(uint32_t nowMs) { lastInteractionMs_ = nowMs; }
-
-  // Force a display refresh on the same pass as the wordmark startup chime.
-  void requestRender(uint32_t nowMs) {
-    lastRenderMs_ = nowMs - AppConfig::kRenderPeriodMs;
-  }
 
   bool wakeAndConsumeIfSleeping(uint32_t nowMs) {
     if (awake_) return false;
@@ -46,18 +44,38 @@ class Ui {
     }
   }
 
-  void render(uint32_t nowMs, AppState state, SetupField setupField,
+  // Returns true only after the solo wordmark has been sent AND revealed.
+  // The caller starts the chime after this returns, avoiding an audio lead
+  // during the ~100 ms full-frame I2C transfer.
+  bool render(uint32_t nowMs, AppState state, SetupField setupField,
               SettingsField settingsField,
               const PersistentSettings &settings,
               const SensorSnapshot &sensor, uint32_t remainingSeconds,
               uint8_t fanDutyPercent, bool technicalPage = false,
               uint32_t bootElapsedMs = 0) {
-    if (!awake_ || (nowMs - lastRenderMs_) < AppConfig::kRenderPeriodMs) return;
+    if (!awake_) return false;
+
+    const uint8_t stage = (state == AppState::Boot)
+                              ? bootStage(bootElapsedMs) : 0;
+    // Only send boot frames when their image changes, not every 100 ms.
+    // In particular, never resend a partial/no-roots frame at the end.
+    if (state == AppState::Boot && stage == lastBootStage_) return false;
+    if (state != AppState::Boot &&
+        (nowMs - lastRenderMs_) < AppConfig::kRenderPeriodMs) return false;
     lastRenderMs_ = nowMs;
 
+    const bool revealingWordmark =
+        state == AppState::Boot &&
+        stage == SLEWFORM_ROOT_STEPS + 1 &&
+        lastBootStage_ != stage;
+
+    // The SSD1309 doesn't swap full frames atomically over I2C. Turn pixels
+    // off only for the logo-to-wordmark page transition, send the entire new
+    // image while hidden, then turn pixels back on. No half-erased roots.
+    if (revealingWordmark) display_.setPowerSave(1);
     display_.clearBuffer();
     switch (state) {
-      case AppState::Boot: drawSplash(bootElapsedMs); break;
+      case AppState::Boot: drawSplash(stage); break;
       case AppState::Standby: drawStandby(sensor); break;
       case AppState::Setup: drawSetup(setupField, settings.cycle); break;
       case AppState::Settings: drawSettings(settingsField, settings); break;
@@ -70,6 +88,9 @@ class Ui {
       case AppState::Fault: drawFault(); break;
     }
     display_.sendBuffer();
+    if (state == AppState::Boot) lastBootStage_ = stage;
+    if (revealingWordmark) display_.setPowerSave(0);
+    return revealingWordmark;
   }
 
  private:
@@ -77,6 +98,19 @@ class Ui {
   bool awake_ = true;
   uint32_t lastInteractionMs_ = 0;
   uint32_t lastRenderMs_ = 0;
+  uint8_t lastBootStage_ = 0;
+
+  static uint8_t bootStage(uint32_t bootElapsedMs) {
+    // 0 = upper emblem only; 1..11 = progressively longer roots;
+    // 12 = separate wordmark screen.
+    if (bootElapsedMs >= AppConfig::kBootWordmarkStartMs)
+      return SLEWFORM_ROOT_STEPS + 1;
+    if (bootElapsedMs < AppConfig::kBootRootHoldMs) return 0;
+    const uint32_t step =
+        (bootElapsedMs - AppConfig::kBootRootHoldMs) / SLEWFORM_ROOT_STEP_MS;
+    return 1 + static_cast<uint8_t>(
+        min(static_cast<uint32_t>(SLEWFORM_ROOT_STEPS - 1), step));
+  }
 
   static const char *volumeName(BuzzerVolume volume) {
     switch (volume) {
@@ -88,23 +122,21 @@ class Ui {
     return "LOW";
   }
 
-  void drawSplash(uint32_t bootElapsedMs) {
+  void drawSplash(uint8_t stage) {
     // Separate full-screen page; never display the wordmark below the emblem.
-    if (bootElapsedMs >= AppConfig::kBootWordmarkStartMs) {
+    if (stage == SLEWFORM_ROOT_STEPS + 1) {
       display_.drawXBMP(SLEWFORM_WORDMARK_X, SLEWFORM_WORDMARK_Y,
                         SLEWFORM_WORDMARK_WIDTH, SLEWFORM_WORDMARK_HEIGHT,
                         slewform_wordmark);
       return;
     }
 
-    // Upper symbol never moves; roots emerge from its central stem.
+    // Upper symbol stays fixed. Stage 0 is an intentional roots-free hold.
     display_.drawXBMP(SLEWFORM_SYMBOL_X, SLEWFORM_SYMBOL_Y,
                       SLEWFORM_SYMBOL_WIDTH, SLEWFORM_SYMBOL_HEIGHT,
                       slewform_symbol_upper);
-    const uint8_t step = static_cast<uint8_t>(
-        min(static_cast<uint32_t>(SLEWFORM_ROOT_STEPS - 1),
-            bootElapsedMs / SLEWFORM_ROOT_STEP_MS));
-    const uint16_t radiusSq4 = slewform_root_radius_sq_x4[step];
+    if (stage == 0) return;
+    const uint16_t radiusSq4 = slewform_root_radius_sq_x4[stage - 1];
     const uint8_t stride = (SLEWFORM_SYMBOL_WIDTH + 7) / 8;
     for (uint8_t y = 0; y < SLEWFORM_SYMBOL_HEIGHT; ++y) {
       for (uint8_t x = 0; x < SLEWFORM_SYMBOL_WIDTH; ++x) {

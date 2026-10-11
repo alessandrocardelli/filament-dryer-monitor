@@ -67,17 +67,25 @@ with `assets/slewform/generate_animation_compact.py`. The old combined
 
 The OLED boot sequence still lasts **3.5 s**:
 
-- **0–1.5 s:** 11 levels of root growth (150 ms each); upper emblem fixed.
-- **1.5–2.1 s:** full emblem held; **silent**.
-- **2.1–3.5 s:** separate solo SLEWFORM wordmark; start rising chime on entry.
+- **0–0.35 s:** stationary emblem without any roots (initial hold).
+- **0.35–1.85 s:** 11 progressive root-growth stages at 150 ms intervals.
+- **1.85–2.1 s:** complete emblem held, still silent.
+- **2.1–3.5 s:** separate solo SLEWFORM wordmark; the rising chime starts
+  immediately **after** the complete wordmark has been sent and revealed.
 - **3.5 s:** STANDBY. The heater stays hard-locked OFF.
 
 The 1-bit XBM/PROGMEM bitmap masks are: upper symbol 54×60 (420 bytes),
 root geometry 54×60 (420 bytes), and wordmark 122×18 (288 bytes).
 **Total bitmap data: 1,128 bytes** plus eleven 16-bit growth radii.
 The renderer reveals root pixels by radius, non-blockingly, rather than
-storing complete animation frames. `Ui::requestRender` forces the wordmark
-refresh during the same main-loop pass as the chime's first note.
+storing complete animation frames. Boot images are transmitted only when
+changing stage; repeated 100 ms redraws have been removed. On initial power-up
+`initDisplay()` keeps the OLED hidden until the first logo frame is uploaded.
+At the symbol-to-wordmark transition, the display is temporarily blanked,
+the complete wordmark is uploaded, and the OLED is turned back on before
+starting the chime. This eliminates intermediate, partially refreshed logo
+frames, at the cost of a brief black transition while I2C data is transferred.
+Firmware cannot prevent images shown *before* the ESP32 initializes the OLED.
 
 Regenerate from the repository root:
 

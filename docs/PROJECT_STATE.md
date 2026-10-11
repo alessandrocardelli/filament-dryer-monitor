@@ -505,3 +505,30 @@ The existing heater hard-OFF safety control and fan operation are unchanged.
 
 **Outstanding:** run actual ESP32 Arduino build/flash, then inspect OLED
 smoothness and verify the sound/display synchronization on the first article.
+
+## 2026-10-11 OLED first-article boot observations and software mitigation
+
+Physical first-article user report: some cold starts briefly show horizontal
+lines or the previous screen; the final roots frame can briefly look like the
+upper emblem without roots before the wordmark; the initial static emblem hold
+is too short. Software changes in this revision:
+
+- replace U8g2 `begin()` with `initDisplay()`, which leaves the panel off,
+  and upload the first **rootless emblem** before enabling the panel;
+- hold the rootless emblem 350 ms, then 11 growth steps at 150 ms, completing
+  the symbol at 1.85 s; wordmark begins at 2.1 s and BOOT ends at 3.5 s;
+- skip duplicate transfers of unchanged boot frames;
+- temporarily turn off visible OLED pixels while writing the complete
+  wordmark image at the page transition, preventing partial framebuffer
+  transfer from momentarily displaying the rootless emblem;
+- trigger the existing chime **after** sending and revealing the new wordmark
+  frame rather than before its I2C transfer completes.
+
+An OLED controller that powers up before ESP32 application initialization may
+still briefly expose stale/undefined RAM; this cannot be fully eliminated by
+firmware alone, especially without an independently driven OLED reset.
+**Hypothesis requiring hardware validation:** the rootless moment was
+full-frame I2C transfer tearing, not a deliberate animation step.
+Nothing in this revision enables the heater or changes fan control.
+Compile/flash and observe repeated power cycles and ESP32 resets before
+marking the boot artifacts solved.

@@ -32,7 +32,6 @@ SettingsField settingsField = SettingsField::BuzzerVolume;
 PersistentSettings settings;
 
 uint32_t bootStartedMs = 0;
-bool bootWordmarkChimeStarted = false;
 bool technicalPage = false;
 
 static void applyBuzzerSettings() {
@@ -252,8 +251,7 @@ void setup() {
   applyBuzzerSettings();
 
   bootStartedMs = nowMs;
-  appState = AppState::Boot;
-  bootWordmarkChimeStarted = false;  // Roots grow in silence.
+  appState = AppState::Boot;  // Roots grow in silence.
 
   if (!fan.attached()) {
     Serial.println("WARNING: fan LEDC attachment failed; fan remains OFF");
@@ -274,16 +272,9 @@ void loop() {
   sht45.update(nowMs);
   fan.update(nowMs, safety.fanPermitted());
 
-  if (appState == AppState::Boot) {
-    const uint32_t elapsedMs = nowMs - bootStartedMs;
-    if (elapsedMs >= AppConfig::kBootSplashMs) {
-      enterState(AppState::Standby, nowMs);
-    } else if (!bootWordmarkChimeStarted &&
-               elapsedMs >= AppConfig::kBootWordmarkStartMs) {
-      bootWordmarkChimeStarted = true;
-      ui.requestRender(nowMs);  // Make the wordmark appear in this loop pass.
-      buzzer.playStartup(nowMs);
-    }
+  if (appState == AppState::Boot &&
+      (nowMs - bootStartedMs) >= AppConfig::kBootSplashMs) {
+    enterState(AppState::Standby, nowMs);
   }
 
   if (cycle.update(nowMs) == CycleEvent::Completed) {
@@ -308,7 +299,12 @@ void loop() {
   statusLed.update(nowMs, ledState);
 
   ui.updateSleep(nowMs, appState);
-  ui.render(nowMs, appState, setupField, settingsField, settings,
-            sht45.snapshot(), cycle.remainingSeconds(nowMs),
-            fan.dutyPercent(), technicalPage, nowMs - bootStartedMs);
+  const bool wordmarkJustRevealed =
+      ui.render(nowMs, appState, setupField, settingsField, settings,
+                sht45.snapshot(), cycle.remainingSeconds(nowMs),
+                fan.dutyPercent(), technicalPage, nowMs - bootStartedMs);
+  if (wordmarkJustRevealed) {
+    // Trigger the first note only after the fully refreshed wordmark is visible.
+    buzzer.playStartup(millis());
+  }
 }

@@ -107,7 +107,8 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 ## Application firmware / front-panel UI
 
-- [ ] Flash and visually validate the new Slewform root-growth boot animation on the real SSD1309: continuous growth, faithful complete emblem, **separate** wordmark appearing at 2.1 s, no audio before that transition, chime synchronized with wordmark, STANDBY at 3.5 s. Original SVG remains authoritative.
+- [ ] Flash/retest Slewform startup revision: 350 ms static emblem before roots, 11 growth steps, full emblem hold, **separate** wordmark starting at approximately 2.1 s, chime only once the wordmark is visible, STANDBY at 3.5 s. Check especially the disappearance/reappearance of roots at page transition. Note any brief blank cut is intentional.
+- [ ] Observe OLED at true cold power-on vs fast power-cycle vs ESP32 reset: determine whether horizontal lines/previous content still appear **before** firmware can issue `initDisplay()`. Current software preloads initial emblem while display is powered off; a pre-initialization artifact cannot be guaranteed away in software.
 
 - [ ] Validate real fan application control on the first article: with the actual fan connected, start a DRYING test cycle and confirm ~1 s at 100% followed by steady 40% at 25 kHz; confirm long ON/OFF stop and cycle completion both turn the fan fully OFF. Keep the heater disconnected/locked and use an adequate bench current limit.
 - [ ] Validate Preferences/NVS persistence across reset/power cycle: change cycle time/temperature UI values and buzzer settings, exit with M-long or start a cycle, reset, and confirm values return; confirm no active cycle auto-resumes.

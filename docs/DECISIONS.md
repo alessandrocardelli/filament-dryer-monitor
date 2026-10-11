@@ -336,12 +336,16 @@ On 2026-10-10 the user approved replacing the single logo+wordmark image
 with two **separate display phases** from the unmodified canonical
 `firmware/assets/slewform/Slewform_logo.svg`:
 
-- **0–1.5 s:** large stationary upper symbol with roots growing outward;
-- **1.5–2.1 s:** the complete symbol remains visible, still silent;
+- **0–0.35 s:** stationary symbol without roots (extended by user feedback 2026-10-11);
+- **0.35–1.85 s:** roots grow outward in 11 incremental stages;
+- **1.85–2.1 s:** the complete symbol remains visible, still silent;
 - **2.1–3.5 s:** only the centered SLEWFORM wordmark, with no symbol.
 
-The original rising power-on chime now starts **only when the solo wordmark
-appears**, at 2.1 s. The previous 3.5 s total BOOT interval is preserved.
+The original rising power-on chime starts **only after the solo wordmark
+has been fully written and revealed**, following the transition requested at
+2.1 s. The previous 3.5 s total BOOT interval is preserved.
+The OLED is hidden while transferring the wordmark page to prevent a momentary
+partially erased symbol; no electrical reset/PCB change is implied.
 Active generated asset: `firmware/assets/slewform/slewform_animation_compact.h`;
 generator: `firmware/assets/slewform/generate_animation_compact.py`.
 The old `slewform_logo_128x64.h` remains available as a legacy static splash.
