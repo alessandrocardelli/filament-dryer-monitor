@@ -50,9 +50,9 @@ class Ui {
   bool render(uint32_t nowMs, AppState state, SetupField setupField,
               SettingsField settingsField,
               const PersistentSettings &settings,
-              const SensorSnapshot &sensor, uint32_t remainingSeconds,
-              uint8_t fanDutyPercent, bool technicalPage = false,
-              uint32_t bootElapsedMs = 0) {
+              const SensorSnapshot &sensor, const NtcSnapshot &ntc,
+              uint32_t remainingSeconds, uint8_t fanDutyPercent,
+              bool technicalPage = false, uint32_t bootElapsedMs = 0) {
     if (!awake_) return false;
 
     const uint8_t stage = (state == AppState::Boot)
@@ -80,12 +80,12 @@ class Ui {
       case AppState::Setup: drawSetup(setupField, settings.cycle); break;
       case AppState::Settings: drawSettings(settingsField, settings); break;
       case AppState::Drying:
-        technicalPage ? drawSystem(sensor, fanDutyPercent)
+        technicalPage ? drawSystem(sensor, ntc, fanDutyPercent)
                       : drawDrying(settings.cycle, sensor, remainingSeconds,
                                   fanDutyPercent);
         break;
       case AppState::Complete: drawComplete(sensor); break;
-      case AppState::Fault: drawFault(); break;
+      case AppState::Fault: drawFault(ntc.fault); break;
     }
     display_.sendBuffer();
     if (state == AppState::Boot) lastBootStage_ = stage;
@@ -235,24 +235,35 @@ class Ui {
     display_.drawStr(1, 61, "HEATER LOCKED");
   }
 
-  void drawSystem(const SensorSnapshot &sensor, uint8_t fanDutyPercent) {
+  void drawSystem(const SensorSnapshot &sensor, const NtcSnapshot &ntc,
+                  uint8_t fanDutyPercent) {
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(2, 9, "SYSTEM / BRING-UP");
     display_.drawHLine(0, 12, 128);
     char line[24];
+
     if (sensor.valid) {
-      snprintf(line, sizeof(line), "Chamber      %.1f °C",
-               sensor.temperatureC);
+      snprintf(line, sizeof(line), "Chamber    %.1f °C", sensor.temperatureC);
       display_.drawUTF8(2, 27, line);
-      snprintf(line, sizeof(line), "Humidity     %.1f %%",
-               sensor.humidityRh);
-      display_.drawStr(2, 39, line);
     } else {
-      display_.drawStr(2, 27, "SHT45        WAIT");
+      display_.drawStr(2, 27, "Chamber    WAIT");
     }
-    display_.drawStr(2, 51, "Heater       LOCK");
-    snprintf(line, sizeof(line), "Fan          %u%%", fanDutyPercent);
-    display_.drawStr(2, 63, line);
+
+    if (ntc.valid) {
+      snprintf(line, sizeof(line), "Heater     %.1f °C", ntc.temperatureC);
+      display_.drawUTF8(2, 39, line);
+    } else {
+      display_.drawStr(2, 39, "Heater     NTC FAULT");
+    }
+
+    if (sensor.valid) {
+      snprintf(line, sizeof(line), "H %.0f%%       F %u%%",
+               sensor.humidityRh, fanDutyPercent);
+    } else {
+      snprintf(line, sizeof(line), "H --%%       F %u%%", fanDutyPercent);
+    }
+    display_.drawStr(2, 54, line);
+    display_.drawStr(2, 63, "HEATER LOCKED");
   }
 
   void drawComplete(const SensorSnapshot &sensor) {
@@ -268,13 +279,31 @@ class Ui {
     display_.drawStr(2, 61, "ON/OFF = acknowledge");
   }
 
-  void drawFault() {
+  void drawFault(NtcFault ntcFault) {
     display_.setFont(u8g2_font_helvB12_tf);
     display_.drawStr(27, 17, "FAULT");
     display_.setFont(u8g2_font_6x10_tf);
-    display_.drawStr(8, 35, "Safety controller fault");
-    display_.drawStr(16, 49, "HEATER OFF");
-    display_.drawStr(24, 62, "M = mute");
+
+    switch (ntcFault) {
+      case NtcFault::OpenCircuit:
+        display_.drawStr(24, 34, "HEATER NTC");
+        display_.drawStr(20, 45, "invalid / open");
+        break;
+      case NtcFault::ShortCircuit:
+        display_.drawStr(24, 34, "HEATER NTC");
+        display_.drawStr(17, 45, "invalid / short");
+        break;
+      case NtcFault::InvalidReading:
+        display_.drawStr(24, 34, "HEATER NTC");
+        display_.drawStr(27, 45, "invalid");
+        break;
+      case NtcFault::None:
+        display_.drawStr(8, 35, "Safety controller fault");
+        break;
+    }
+
+    display_.drawStr(28, 55, "HEATER OFF");
+    display_.drawStr(40, 64, "M=mute");
   }
 
   void drawSelectableRow(uint8_t y, const char *text, bool selected) {
