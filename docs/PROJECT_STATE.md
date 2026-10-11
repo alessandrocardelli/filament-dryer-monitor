@@ -590,3 +590,30 @@ claiming an OLED fix, compare cold power-on, fast power-cycle, and ESP32 RESET
 with the OLED still powered. Note when the artifact appears relative to the
 first emblem; inspecting actual power rise/reset with a scope may be warranted
 if a controlled test supports that hypothesis.
+
+
+## 2026-10-11 Gate 4D real NTC path and ADC calibration
+
+The original eSUN heater NTC has now been reterminated to the installed J7 JST-GH connection and connected to the first article. With the heater power connector still disconnected, the real NTC path is electrically functional.
+
+Initial room-state checks:
+- J7 pin 2 / NTC node: 2.368 V by DMM.
+- Direct NTC resistance after settling: 114.9 kΩ (an earlier reading was 116.7 kΩ).
+- SHT45 air temperature at the same time: 21.8 °C. This is not used to recalibrate the heater NTC because the SHT45 measures chamber air rather than the heater body.
+- ESP32 GPIO34 reading with the real NTC: RAW 2779-2783 and `analogReadMilliVolts()` 2409-2412 mV.
+
+A five-point first-article ADC/divider calibration was then performed with known resistors substituted at J7 while the heater remained disconnected:
+
+| Measured resistor | DMM node voltage | ESP32 `analogReadMilliVolts()` |
+|---:|---:|---:|
+| 33.03 kΩ | 1.373 V | 1.394 V |
+| 47.0 kΩ | 1.663 V | 1.696-1.698 V |
+| 68.0 kΩ | 1.967 V | 1.998-2.002 V |
+| 81.9 kΩ | 2.111 V | 2.143-2.146 V |
+| 99.9 kΩ | 2.257 V | 2.294-2.296 V |
+
+A linear first-article correction over this range is `V_DMM_mV ≈ 0.984369 * V_ESP32_mV - 2.322`. Fitting the corrected divider data gives effective parameters of about 3.311 V supply and 46.572 kΩ pull-up, which absorb the actual first-article R28 tolerance and rail behavior.
+
+Application firmware now contains `NtcSensor.h`. It averages ADC readings, applies the measured ADC correction, converts node voltage to NTC resistance, and converts resistance to heater temperature using piecewise interpolation of the existing empirical 25-50 °C table. Outside that measured interval it reports a diagnostic estimate from the previously recorded β≈4100 K model and marks the value as outside the empirical range.
+
+The safety controller now latches obvious electrical NTC faults (open/short/invalid) while continuing to force HEATER_PWM LOW. These are bring-up electrical fault windows only; final thermal trip thresholds, heater control limits and control gains remain deliberately open. The real heater must remain unpowered until the independent series TCO is physically installed/verified and the new NTC firmware is live-tested.
