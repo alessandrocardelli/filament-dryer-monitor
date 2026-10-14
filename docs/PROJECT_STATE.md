@@ -628,3 +628,25 @@ With J7 connected, serial diagnostics were stable around 2.33 V corrected, 110-1
 Unplugging J7 while powered triggered the intended latched NTC open-circuit FAULT, including the user-visible fault state, while HEATER_PWM remained hard-locked OFF. Reconnecting J7 requires reset to clear the current latched fault behavior.
 
 The real NTC sensing path and the first electrical safety-fault path are therefore live-validated. Final heater thermal trip thresholds, heater control policy and the independent series TCO remain open prerequisites before any real heater energization.
+
+## 2026-10-14 Gate 5B real-heater load validation
+
+Gate 5B has now progressed from the previously validated unloaded switch test to a real-heater load test on the first article.
+
+Physical first-article configuration:
+- original eSUN heater element measured about **15 ohm cold**;
+- J5 is populated and the original heater cable is reused;
+- an off-board one-shot thermal cutoff marked **105 °C / 15 A / 250 V** is crimped in series with **HEATER+ / J5 pin 2**, with insulated crimp sleeves/heat-shrink and the TCO body held against the flex heater with Kapton;
+- complete heater path measured about **15 ohm across J5 pins 1-2** after TCO installation;
+- real heater NTC remained connected at J7.
+
+A standalone diagnostic sketch (not the normal application firmware) forced GPIO19 LOW at boot, required an explicit serial `H` command, allowed only one pulse per reset, aborted on invalid NTC or a conservative temporary temperature ceiling, and automatically returned HEATER_PWM LOW.
+
+Measured results:
+- **1 s pulse:** bench current about **1.59 A** at 24 V; NTC responded upward and continued rising briefly after switch-off from thermal inertia.
+- **5 s pulse:** stable heating response, NTC approximately 16.8 -> 23.0 °C during ON with a post-off peak around 24.0 °C.
+- **10 s pulse:** start **16.55 °C**, temperature at switch-off **28.90 °C**, peak **29.36 °C**, temperature after 10 s cooldown **25.13 °C**, actual ON time **10.000 s**, shutdown reason **timer**, final NTC status **OK**.
+
+At 24 V and 1.59 A, observed heater input is about **38.2 W**, consistent with the measured ~15 ohm cold resistance and the intended ~1.6 A load. No current-limit event, NTC fault, or abnormal switch-off was observed.
+
+**Gate 5B real-load switching / short thermal-response test: PASS.** This validates the first-article Q4/J5/heater current path and live NTC response for short controlled pulses. It does **not** establish final closed-loop heater control, final thermal fault thresholds, control gains, long-duration thermal equilibrium, or the TCO's destructive 105 °C trip point. The normal application firmware remains heater-hard-locked until those control/safety limits are deliberately implemented and validated.
