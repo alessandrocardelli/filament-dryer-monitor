@@ -131,4 +131,5 @@ The 2026-09-17 reports replace the obsolete 2026-09-16 release checklist. The PC
 
 - [x] Live-test calibrated NTC application firmware on the first article with heater power disconnected: stable serial NTC diagnostics, heater-temperature display on SYSTEM page, and deliberate J7 unplug correctly entering latched open-circuit FAULT. Heater remained hard-locked OFF. Passed 2026-10-11.
 - [ ] Define and validate final heater thermal fault thresholds/control limits only after the NTC conversion live test; do not treat the current open/short electrical windows as final thermal safety limits.
-- [ ] Procure/install/verify the independent off-board TCO in series with HEATER+ before any real heater energization.
+- [x] Procure and install the independent off-board TCO in series with HEATER+: first article now uses a one-shot 105 °C / 15 A / 250 V cutoff on J5 pin 2 / HEATER+, with post-install path continuity confirmed by the ~15 ohm complete heater resistance. Short controlled real-heater pulses passed on 2026-10-14. The TCO's destructive 105 °C trip point was not intentionally tested.
+- [ ] Continue heater characterization beyond the passed 1 s / 5 s / 10 s pulses and define/validate final thermal fault thresholds and closed-loop control before enabling heater operation in the normal application firmware.
