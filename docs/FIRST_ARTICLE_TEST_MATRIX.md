@@ -468,3 +468,16 @@ Firmware correction: `V_DMM_mV ≈ 0.984369 * V_ESP32_mV - 2.322`. The applicati
 Integrated firmware live test passed on 2026-10-11: serial diagnostics were stable at about 110-111 kΩ / 18.6-18.8 °C, the SYSTEM page displayed the heater NTC temperature alongside the independent SHT45 chamber temperature, and unplugging J7 triggered the intended latched NTC open-circuit FAULT while the heater remained hard-locked OFF.
 
 **Gate 4D sensing + open-circuit fault path: PASS.** Independent series TCO validation and final thermal safety thresholds remain open; do not power the real heater yet.
+
+### Gate 5B real-heater load result — 2026-10-14
+
+**PASS for short controlled real-heater load operation.**
+
+The original heater measured about 15 ohm cold. A one-shot 105 °C / 15 A / 250 V thermal cutoff was installed off-board in series with HEATER+ (J5 pin 2); after installation the complete path still measured about 15 ohm across J5.
+
+Using a standalone one-shot diagnostic sketch with NTC validity checks and automatic HEATER_PWM LOW:
+- 1 s real-load pulse: about 1.59 A at 24 V.
+- 5 s pulse: NTC rose from about 16.8 °C to about 23.0 °C, with expected thermal-inertia rise after switch-off.
+- 10 s pulse: 16.55 °C start, 28.90 °C at switch-off, 29.36 °C peak, 25.13 °C after 10 s cooldown; exact heater ON time 10.000 s; timer shutdown; final NTC status OK.
+
+This closes the **short-duration real-load Gate 5B functional check**. Final heater thermal limits/control law, long-duration thermal behavior and closed-loop application control remain open. The installed TCO provides the independent series hardware cutoff; its destructive 105 °C trip point was not intentionally tested.
