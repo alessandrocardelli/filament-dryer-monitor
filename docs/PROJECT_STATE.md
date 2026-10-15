@@ -666,3 +666,18 @@ Reported first-article result:
 - final NTC status: **OK**.
 
 The observed overshoot above the switch-off temperature was only about **0.34 °C**, confirming that the heater NTC responds quickly enough for short controlled characterization in this range and that thermal inertia after power removal is modest at 40 °C. This remains characterization data, not a final control law or safety threshold.
+
+## 2026-10-15 Heater characterization to 50 C
+
+Controlled first-article real-heater characterization to the top of the **existing empirical NTC calibration range (50 °C)** completed with the standalone diagnostic sketch (not integrated application firmware). GPIO19/HEATER_PWM defaults OFF; an explicit one-shot `H` command starts the heater, and NTC-invalid fault, 50 °C target, and 60 s maximum-ON timer all stop heater drive; 20 s cooldown is logged.
+
+Actual user-reported diagnostic summary:
+- Start temperature: **17.32 °C**.
+- Threshold-crossing times from heater ON: **25 °C 6.000 s**, **28 °C 7.900 s**, **30 °C 10.600 s**, **35 °C 18.000 s**, **40 °C 23.800 s**, **44 °C 31.500 s**, **50 °C 42.800 s**.
+- Temperature at OFF: **50.00 °C**.
+- Maximum temperature: **50.14 °C**, **43.300 s** after heater start (**0.500 s** after switch-off).
+- Temperature after 20 s cooldown: **39.28 °C**.
+- Actual heater ON time: **42.800 s**.
+- Shutdown reason: **50 C TARGET REACHED**; final NTC status **OK**.
+
+**PASS for controlled real-load NTC response and automatic target stop to 50 °C.** Observed post-OFF NTC overshoot was only **0.14 °C**. This does not independently prove absolute NTC accuracy, thermal uniformity across the heater, case/plastic temperatures, crimp/J5 joint temperatures, or suitability for higher settings. Original empirical NTC points end at 50 °C; above that the temporary sketch uses beta-model extrapolation, not new measured calibration points. Before intentionally extending tests to 60 °C or higher, inspect the nearby case, heater and TCO/J5 cabling for heat effects and obtain independent surface/plastic temperature measurements at representative locations. The standalone sketch remains separate from normal firmware, which still hard-inhibits heater operation.
