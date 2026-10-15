@@ -681,3 +681,23 @@ Actual user-reported diagnostic summary:
 - Shutdown reason: **50 C TARGET REACHED**; final NTC status **OK**.
 
 **PASS for controlled real-load NTC response and automatic target stop to 50 °C.** Observed post-OFF NTC overshoot was only **0.14 °C**. This does not independently prove absolute NTC accuracy, thermal uniformity across the heater, case/plastic temperatures, crimp/J5 joint temperatures, or suitability for higher settings. Original empirical NTC points end at 50 °C; above that the temporary sketch uses beta-model extrapolation, not new measured calibration points. Before intentionally extending tests to 60 °C or higher, inspect the nearby case, heater and TCO/J5 cabling for heat effects and obtain independent surface/plastic temperature measurements at representative locations. The standalone sketch remains separate from normal firmware, which still hard-inhibits heater operation.
+
+
+## 2026-10-15 Independent Sanwa thermocouple / NTC comparison — calibration OPEN
+
+With the first-article heater OFF at room state, the original eSUN NTC connected to J7 was read by a standalone diagnostic sketch as **124.4 kΩ / 16.35 °C (beta extrapolation below 25 °C)**; the SHT45 located in ambient air about 10 cm from the case read **19.99–20.01 °C**, and a Sanwa RD701 with type-K probe held against the heater near the original NTC read **20 °C**. With J7 disconnected and power removed, direct NTC resistance was **122.3 kΩ**; these two resistance readings were made in **different electrical configurations**, NOT simultaneously, and agree to about 1.7%. The 2026-10-11 checkout had already measured direct NTC resistance **114.9 kΩ** (earlier 116.7 kΩ), while SHT45 read ~21.8 °C, and the then-running application showed ~18.6–18.8 °C NTC with room air ~22.8 °C. Do not request redundant baseline resistance measurements.
+
+A temporary standalone 50 °C NTC-target diagnostic was used for direct comparison with the Sanwa probe fixed near the NTC. User-recorded pairs (manual readings, not synchronized instrument datalogging):
+
+| Phase | Sanwa type-K | ESP32 NTC estimate |
+|---|---:|---:|
+| Ambient/rest | 20 °C | 16.5 °C |
+| Heating | 30 °C | 34.7 °C |
+| Heating | 40 °C | 45.6 °C |
+| At NTC-target shutdown | 44 °C | 50 °C |
+| Cooling | 40 °C | 40.7 °C |
+| Cooling | 35 °C | 33.97 °C |
+
+**Interpretation, not yet proven calibration:** heating-phase offset increasing to +6 °C (NTC estimate minus thermocouple), followed by convergence and sign reversal during cooling, is consistent with probe/attachment thermal response lag and/or heater temperature gradients. The persistent ambient NTC estimate below both independent measurements also indicates the previously recorded 25–50 °C NTC resistance/temperature curve plus beta extrapolation must be revalidated. Original eSUN NTC manufacturer/part identity is unknown; 25–50 °C values were collected during original-system cooldown and must not be treated as certified calibration. Sanwa has integer-degree readout and non-negligible measurement uncertainty. Dynamic readings must NOT be blindly used as equilibrium calibration points, and 50 °C indicated NTC must NOT be assumed to equal actual heater surface 50 °C.
+
+**Next gate:** evaluate time lag by watching the Sanwa during the first seconds after automatic heater switch-off (NTC log continues). For accurate resistance/temperature mapping obtain stabilized, co-located reference measurements at several temperatures; only then update firmware's NTC conversion. Keep upper-temperature tests (>50 °C indicated) paused until thermal reference and enclosure safety checks are addressed. This is distinct from the SHT45: SHT45 measures chamber air, NTC measures heater body.
