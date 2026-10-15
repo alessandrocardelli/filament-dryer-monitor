@@ -650,3 +650,19 @@ Measured results:
 At 24 V and 1.59 A, observed heater input is about **38.2 W**, consistent with the measured ~15 ohm cold resistance and the intended ~1.6 A load. No current-limit event, NTC fault, or abnormal switch-off was observed.
 
 **Gate 5B real-load switching / short thermal-response test: PASS.** This validates the first-article Q4/J5/heater current path and live NTC response for short controlled pulses. It does **not** establish final closed-loop heater control, final thermal fault thresholds, control gains, long-duration thermal equilibrium, or the TCO's destructive 105 °C trip point. The normal application firmware remains heater-hard-locked until those control/safety limits are deliberately implemented and validated.
+
+## 2026-10-15 Heater characterization to 40 C
+
+A controlled real-heater characterization was extended to a **40 °C NTC target** using the standalone diagnostic sketch with GPIO19 default-OFF, explicit single-run serial start, continuous NTC validity checks, a 60 s absolute heater timeout, automatic shutdown at the target and 20 s post-off logging.
+
+Reported first-article result:
+- time to 40 °C target: **26.000 s**;
+- temperature at heater switch-off: **39.97 °C**;
+- post-off peak: **40.31 °C**;
+- peak occurred **26.600 s** after heater start, i.e. about **0.600 s after switch-off**;
+- temperature after 20 s cooldown: **31.45 °C**;
+- actual heater ON time: **26.000 s**;
+- shutdown reason: **40 °C TARGET REACHED**;
+- final NTC status: **OK**.
+
+The observed overshoot above the switch-off temperature was only about **0.34 °C**, confirming that the heater NTC responds quickly enough for short controlled characterization in this range and that thermal inertia after power removal is modest at 40 °C. This remains characterization data, not a final control law or safety threshold.
