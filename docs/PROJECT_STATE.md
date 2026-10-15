@@ -701,3 +701,16 @@ A temporary standalone 50 °C NTC-target diagnostic was used for direct comparis
 **Interpretation, not yet proven calibration:** heating-phase offset increasing to +6 °C (NTC estimate minus thermocouple), followed by convergence and sign reversal during cooling, is consistent with probe/attachment thermal response lag and/or heater temperature gradients. The persistent ambient NTC estimate below both independent measurements also indicates the previously recorded 25–50 °C NTC resistance/temperature curve plus beta extrapolation must be revalidated. Original eSUN NTC manufacturer/part identity is unknown; 25–50 °C values were collected during original-system cooldown and must not be treated as certified calibration. Sanwa has integer-degree readout and non-negligible measurement uncertainty. Dynamic readings must NOT be blindly used as equilibrium calibration points, and 50 °C indicated NTC must NOT be assumed to equal actual heater surface 50 °C.
 
 **Next gate:** evaluate time lag by watching the Sanwa during the first seconds after automatic heater switch-off (NTC log continues). For accurate resistance/temperature mapping obtain stabilized, co-located reference measurements at several temperatures; only then update firmware's NTC conversion. Keep upper-temperature tests (>50 °C indicated) paused until thermal reference and enclosure safety checks are addressed. This is distinct from the SHT45: SHT45 measures chamber air, NTC measures heater body.
+
+## 2026-10-15 NTC steady-state thermal reference checks (30 and ~40 C)
+
+The user completed two supervised temporary diagnostic heater-hold tests with the Sanwa RD701 type-K thermocouple positioned near the eSUN heater NTC. Unlike the preceding rapidly rising temperature comparison, these readings were taken near the end of **120 s holds**:
+
+| Sanwa reference | ESP32 ADC-derived NTC resistance | Old firmware curve equivalent |
+|---|---:|---:|
+| 30 °C | 64.62 kΩ | 30.89 °C |
+| 39 °C | 42.27 kΩ | 40.69 °C |
+
+These are steady-state *comparison points*, not proof of absolute NTC calibration: the Sanwa reads integer °C with finite uncertainty; contact/placement and residual ON/OFF cycle thermal ripple also matter. The first-article ADC calibration was already separately established. Note that a prior room-state measurement showed 122.3 kΩ directly at J7-disconnected NTC with both independent temperature instruments near 20 °C, for which the old below-25 °C beta extrapolation predicts ~16.6 °C. The room-state inconsistency remains unresolved; do not apply a blanket offset.
+
+Next proposed gate: one stabilized 50 °C NTC hold with thermocouple supervision and bounded heater control, then jointly assess 20/30/39/50 °C resistance-temperature evidence before editing NtcSensor.h. The previously proposed intermediate 35 °C hold is not necessary if the 50 °C hold yields a suitable reference. Do not extrapolate beyond the independently characterized temperature/safety envelope.
