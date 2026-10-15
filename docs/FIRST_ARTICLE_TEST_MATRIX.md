@@ -510,3 +510,7 @@ Measured NTC temperature response and target shutdown are validated up to the up
 ### Heater NTC / thermocouple dynamic comparison — 2026-10-15
 
 Calibration NOT PASSED: direct J7-disconnected NTC 122.3 kOhm at about 20 C by Sanwa probe and SHT45 air; ADC-derived J7-connected NTC ~124.4 kOhm / 16.35 C estimated. Separate manual test pairs [Sanwa C / NTC-estimated C]: ambient 20/16.5; heating 30/34.7, 40/45.6, 44/50 at target-off; cooling 40/40.7 and 35/33.97. Probe thermal lag/placement likely contributes to dynamic difference; original 25–50 C empirical table and below-range beta conversion need equilibrium validation before modifying calibration or testing higher targets. SHT45 is an air sensor, not a second heater-contact probe. See PROJECT_STATE.md for full notes.
+
+### NTC steady-state Sanwa comparison — 2026-10-15
+
+Using the temporary 120 s heater hold diagnostic: at Sanwa 39 °C, J7 NTC resistance reported 42.27 kΩ, corresponding to 40.69 °C under existing lookup; at Sanwa 30 °C, reported 64.62 kΩ, corresponding to 30.89 °C under existing lookup. Both were near the end of the hold, not 60-second assumptions. Existing reference below 25 °C still inconsistent: Sanwa and SHT45 ~20 °C while disconnected NTC 122.3 kΩ and firmware beta estimate ~16.6 °C. Do not overwrite NTC table before verifying a stabilized upper point at 50 °C and accounting for thermocouple uncertainty.
