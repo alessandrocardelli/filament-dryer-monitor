@@ -481,3 +481,20 @@ Using a standalone one-shot diagnostic sketch with NTC validity checks and autom
 - 10 s pulse: 16.55 °C start, 28.90 °C at switch-off, 29.36 °C peak, 25.13 °C after 10 s cooldown; exact heater ON time 10.000 s; timer shutdown; final NTC status OK.
 
 This closes the **short-duration real-load Gate 5B functional check**. Final heater thermal limits/control law, long-duration thermal behavior and closed-loop application control remain open. The installed TCO provides the independent series hardware cutoff; its destructive 105 °C trip point was not intentionally tested.
+
+### Heater characterization to 40 C — 2026-10-15
+
+Controlled target-temperature test to **40 °C** passed.
+
+Diagnostic conditions: real heater + installed series TCO + real J7 NTC, 24 V bench supply, single-run diagnostic firmware, NTC fault abort, 60 s timeout, automatic shutdown at 40 °C, then 20 s cooldown observation.
+
+Result:
+- 40 °C reached in **26.000 s**;
+- temperature at OFF **39.97 °C**;
+- peak **40.31 °C** at **26.600 s** from heater start;
+- post-off overshoot about **0.34 °C**;
+- after 20 s cooldown **31.45 °C**;
+- final NTC status **OK**;
+- shutdown by target, not by timeout or fault.
+
+**PASS.** This extends Gate 5B real-load validation into the empirically characterized NTC range. Final closed-loop limits/control and higher-temperature/longer-duration characterization remain open.
