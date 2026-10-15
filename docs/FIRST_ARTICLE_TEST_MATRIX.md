@@ -498,3 +498,11 @@ Result:
 - shutdown by target, not by timeout or fault.
 
 **PASS.** This extends Gate 5B real-load validation into the empirically characterized NTC range. Final closed-loop limits/control and higher-temperature/longer-duration characterization remain open.
+
+### Heater characterization to 50 C — 2026-10-15
+
+**PASS — 50 °C controlled real-load test.** First article, original heater via J5 and installed 105 °C series TCO, J7 NTC, one-shot standalone diagnostic with NTC-invalid abort and 60 s heater-ON timeout.
+
+Reported crossing times: 25 °C at 6.000 s, 28 °C at 7.900 s, 30 °C at 10.600 s, 35 °C at 18.000 s, 40 °C at 23.800 s, 44 °C at 31.500 s, and 50 °C at 42.800 s. Start 17.32 °C; OFF at 50.00 °C after 42.800 s; maximum 50.14 °C at 43.300 s (0.14 °C overshoot after 0.5 s); 39.28 °C after 20 s cooldown. Shutdown by **50 C TARGET REACHED**, NTC final OK.
+
+Measured NTC temperature response and target shutdown are validated up to the upper end of the originally characterized 25–50 °C interval; this is not independent confirmation of actual surface temperature or of case/joint thermal safety. Before extending to higher temperatures, verify enclosure/plastic and heater/joint thermal behavior with appropriate independent measurement. Keep normal application heater hard-locked OFF until final safe limits and control are validated.
