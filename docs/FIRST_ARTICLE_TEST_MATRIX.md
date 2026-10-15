@@ -506,3 +506,7 @@ Result:
 Reported crossing times: 25 °C at 6.000 s, 28 °C at 7.900 s, 30 °C at 10.600 s, 35 °C at 18.000 s, 40 °C at 23.800 s, 44 °C at 31.500 s, and 50 °C at 42.800 s. Start 17.32 °C; OFF at 50.00 °C after 42.800 s; maximum 50.14 °C at 43.300 s (0.14 °C overshoot after 0.5 s); 39.28 °C after 20 s cooldown. Shutdown by **50 C TARGET REACHED**, NTC final OK.
 
 Measured NTC temperature response and target shutdown are validated up to the upper end of the originally characterized 25–50 °C interval; this is not independent confirmation of actual surface temperature or of case/joint thermal safety. Before extending to higher temperatures, verify enclosure/plastic and heater/joint thermal behavior with appropriate independent measurement. Keep normal application heater hard-locked OFF until final safe limits and control are validated.
+
+### Heater NTC / thermocouple dynamic comparison — 2026-10-15
+
+Calibration NOT PASSED: direct J7-disconnected NTC 122.3 kOhm at about 20 C by Sanwa probe and SHT45 air; ADC-derived J7-connected NTC ~124.4 kOhm / 16.35 C estimated. Separate manual test pairs [Sanwa C / NTC-estimated C]: ambient 20/16.5; heating 30/34.7, 40/45.6, 44/50 at target-off; cooling 40/40.7 and 35/33.97. Probe thermal lag/placement likely contributes to dynamic difference; original 25–50 C empirical table and below-range beta conversion need equilibrium validation before modifying calibration or testing higher targets. SHT45 is an air sensor, not a second heater-contact probe. See PROJECT_STATE.md for full notes.
