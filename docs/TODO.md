@@ -1,5 +1,18 @@
 # TODO
 
+
+## Current priorities — 2026-10-17 (see docs/PROJECT_ROADMAP.md)
+
+- [ ] **P0 Mechanical:** locate the current new front-panel Inventor/CAD master outside the repository, check real PCB/OLED/buttons/USB/mounting/cable clearances and make a low-cost **dimensional test print now**; do not wait for the disassembled heater/dryer to be ready. Store approved mechanical source and printable export with a revision when provided.
+- [ ] **P1 Safe integrated front-panel demo:** install the tested PCB mechanically, leave application heater **locked OFF**, verify physical controls, display viewing/early OLED boot artifacts, NVS persistence, SHT45, buzzer and validated fan 100%/1s -> 40% PWM behavior; fix fit and firmware UI issues without heater.
+- [x] **NTC analytical comparison documented** in `docs/NTC_CALIBRATION_ANALYSIS.md` with seven Sanwa-equivalent reference points, single-beta fit (~4421.6 K/R25 ~80.69 kΩ), non-extrapolating log-R interpolation and unverified 100k/B3950 thermistor identity hypothesis (explains ambient better but hot Sanwa difference may be placement gradient). Passive diagnostics: `firmware/diagnostics/ntc_reference_viewer/ntc_reference_viewer.ino`; no application NTC calibration or safety changes.
+- [ ] **P2 NTC gate:** when convenient, take a cold co-located bead-region thermocouple / direct-ohms reading. Treat open-box/fan-OFF comparisons as local diagnostic equivalence rather than bead calibration or final hot limits. No redundant seven-plateau repeats.
+- [ ] **P3 Safety gate BEFORE closed-case heating:** review 105 °C one-shot in-series TCO location/rating, wiring and failure behavior vs eBOX Lite 105–118 °C nominal plate levels; do not bypass. Keep application heater OFF until explicit independent protection/control signoff.
+- [ ] **P4 Integrated fan-on dryer qualification:** after panel/cables/sensor routing and safe heater-control firmware, verify complete enclosure closed with fan running; log heater NTC, nearby Sanwa reference, SHT45 chamber temp/humidity, case temperatures, supply current and fault reactions with measured safe targets.
+- [ ] **P5 Full firmware V1:** finalize DRYING/FAULT/cooldown and fan AUTO rules, then CSV history and local web UI as separate follow-ons, and any deliberate PCB V2 after D020 and actual fit findings. Respect fresh ERC/DRC for changed PCB sources.
+
+*Historical tasks below contain superseded test requests and should not override the dated current checkpoints.*
+
 Current phase: **first-article hand assembly and staged bring-up** (2026-10-04). Active hardware branch: `main`. Fabrication-source checkpoint: `74a3000127371ac6c3b3b7197f9036dec5b58eef` (2026-09-17, `Production files`). This file tracks remaining work; read `AGENTS.md` and `docs/PROJECT_STATE.md` before changes. Do not silently alter the already submitted fabrication revision.
 
 ## Completed / recorded
