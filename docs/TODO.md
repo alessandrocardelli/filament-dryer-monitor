@@ -1,5 +1,14 @@
 # TODO
 
+## 2026-10-19 test firmware archive and fan regression
+
+- [x] Recover the **exact historical integrated 2026-10-08 source** (all 14 source/asset blobs) and archive on `main` under `firmware/test_archive/validated_integrated_2026_10_08/`.
+- [x] Archive eight explicitly labeled reconstructions of previously passing ventola, I2C, SHT45, OLED and NTC bench test procedures; provenance and original gaps documented in `firmware/test_archive/TEST_FIRMWARE_ARCHIVE.md`.
+- [ ] Do not claim original .ino byte-for-byte recovery of chat-only standalones: seek original local files if they still exist. Do not recreate 80/90 C heater-enable diagnostic as an unreviewed executable.
+- [ ] For DRYING fan failure, confirm active flash image first (the user log contains no `FAN PWM` diagnostic lines). Compare 2026-10-08 known-working integrated firmware: it used **the same original fan channel 9 and buzzer channel 8**, making the presumed LEDC-channel clash an unproven diagnosis.
+- [ ] Physically retest isolated candidate on `fix/isolated-fan-ledc-2026-10-19` or a carefully selected standalone fan sketch, preferably with J5 isolated, log real PWM and fan current, then decide on firmware fix; do not merge candidate into `main` without this validation.
+
+
 
 ## Current priorities — 2026-10-17 (see docs/PROJECT_ROADMAP.md)
 
