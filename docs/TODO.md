@@ -1,5 +1,13 @@
 # TODO
 
+## Immediate — 2026-10-19 assembled fan regression
+
+- [x] Reported pass: five SETUP controls and five SETTINGS controls, including persistence after full power cycle.
+- [ ] Flash/test the candidate LEDC isolation fix on branch `fix/isolated-fan-ledc-2026-10-19` with heater path physically isolated where practical. The original fan channel 9 and buzzer 8 shared the same ESP32 LEDC group, but a timer conflict is NOT proven on all Arduino Core 3.x versions.
+- [ ] During DRYING TEST inspect 115200-baud `FAN PWM` logs: `attached`, `writeOK`, `rawDuty`, `freq` (25 kHz expected). These are software/peripheral readbacks, not a substitute for a physical GPIO/J6 measurement.
+- [ ] Verify real 100% one-second startup -> 40% fan movement and long ON/OFF stop, with no heater activity; if not restored, inspect GPIO16 PWM using a scope and re-evaluate the surprising pin-27-probe activation before touching solder joints.
+
+
 
 ## Current priorities — 2026-10-17 (see docs/PROJECT_ROADMAP.md)
 
