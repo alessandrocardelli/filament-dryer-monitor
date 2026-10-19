@@ -45,18 +45,21 @@ class FanController {
     phase_ = FanPhase::Off;
     dutyPercent_ = 0;
     if (attached_) {
-      ledcWrite(AppConfig::kPinFanPwm, 0);
+      lastWriteOk_ = ledcWrite(AppConfig::kPinFanPwm, 0);
     } else {
+      lastWriteOk_ = false;
       digitalWrite(AppConfig::kPinFanPwm, LOW);
     }
   }
 
   bool attached() const { return attached_; }
+  bool lastWriteOk() const { return lastWriteOk_; }
   FanPhase phase() const { return phase_; }
   uint8_t dutyPercent() const { return dutyPercent_; }
 
  private:
   bool attached_ = false;
+  bool lastWriteOk_ = false;
   FanPhase phase_ = FanPhase::Off;
   uint8_t dutyPercent_ = 0;
   uint32_t kickstartEndsMs_ = 0;
@@ -68,6 +71,8 @@ class FanController {
 
   void writePercent(uint8_t percent) {
     dutyPercent_ = constrain(percent, 0, 100);
-    ledcWrite(AppConfig::kPinFanPwm, percentToDuty(dutyPercent_));
+    // Duty shown in the UI is a request; check the driver API for failure.
+    lastWriteOk_ = ledcWrite(AppConfig::kPinFanPwm,
+                             percentToDuty(dutyPercent_));
   }
 };
