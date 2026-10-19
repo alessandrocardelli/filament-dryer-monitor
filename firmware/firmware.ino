@@ -41,6 +41,23 @@ static void applyBuzzerSettings() {
   buzzer.setVolume(settings.buzzerVolume);
 }
 
+// LEDC readback reflects peripheral configuration, not an electrical GPIO measurement.
+static void logFanPwm(const char *stage) {
+  const bool attached = fan.attached();
+  const uint32_t rawDuty = attached ? ledcRead(AppConfig::kPinFanPwm) : 0;
+  const uint32_t frequencyHz =
+      attached ? ledcReadFreq(AppConfig::kPinFanPwm) : 0;
+  Serial.printf(
+      "FAN PWM [%s] GPIO%u ch%u attached=%u command=%u%% "
+      "rawDuty=%lu freq=%luHz writeOK=%u\n",
+      stage, static_cast<unsigned>(AppConfig::kPinFanPwm),
+      static_cast<unsigned>(AppConfig::kFanLedcChannel),
+      attached ? 1U : 0U, static_cast<unsigned>(fan.dutyPercent()),
+      static_cast<unsigned long>(rawDuty),
+      static_cast<unsigned long>(frequencyHz),
+      fan.lastWriteOk() ? 1U : 0U);
+}
+
 static void enterState(AppState next, uint32_t nowMs) {
   if (appState == AppState::Drying && next != AppState::Drying) {
     cycle.stop();
@@ -71,6 +88,7 @@ static void enterState(AppState next, uint32_t nowMs) {
       fan.startAuto(nowMs);
       buzzer.playCycleStart(nowMs);
       Serial.println("STATE -> DRYING TEST (fan active; heater locked OFF)");
+      logFanPwm("kickstart");
       break;
     case AppState::Complete:
       fan.stop();
@@ -253,6 +271,7 @@ void setup() {
   sht45.begin(nowMs);
   buzzer.begin();
   applyBuzzerSettings();
+  logFanPwm("setup");
 
   appState = AppState::Boot;  // Roots grow in silence.
 
@@ -275,7 +294,12 @@ void loop() {
   buttons.update(nowMs, handleButtonEvent);
   buzzer.update(nowMs);
   sht45.update(nowMs);
+  const FanPhase previousFanPhase = fan.phase();
   fan.update(nowMs, safety.fanPermitted());
+  if (previousFanPhase == FanPhase::Kickstart &&
+      fan.phase() == FanPhase::Running) {
+    logFanPwm("running");
+  }
 
   if (appState == AppState::Boot &&
       (nowMs - bootStartedMs) >= AppConfig::kBootSplashMs) {
@@ -305,6 +329,7 @@ void loop() {
 
   if ((nowMs - lastNtcLogMs) >= 2000) {
     lastNtcLogMs = nowMs;
+    if (appState == AppState::Drying) logFanPwm("periodic");
     const NtcSnapshot &n = ntc.snapshot();
     Serial.print("NTC adc=");
     Serial.print(n.reportedMv, 1);
