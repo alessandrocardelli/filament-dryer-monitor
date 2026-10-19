@@ -11,6 +11,10 @@
 | Ventola PWM 50% | [fan_pwm_50](reconstructed_fan_2026_10_08/fan_pwm_50/) | **RICOSTRUITA**, non identica all'originale | Chat 2026-10-08 17:10: GPIO16, analogWrite PWM 25 kHz, 0→50% dopo 3 s; ventola avviata |
 | Ventola PWM 50/75/100% | [fan_pwm_50_75_100](reconstructed_fan_2026_10_08/fan_pwm_50_75_100/) | **RICOSTRUITA**, non identica all'originale | Chat 2026-10-08 17:16: 7 s a livello; circa 49/72/89 mA dal banco; tutti funzionanti |
 | Ricerca soglie 20→60% e 50→10% | [fan_pwm_thresholds](reconstructed_fan_2026_10_08/fan_pwm_thresholds/) | **RICOSTRUITA**, non identica all'originale | Chat 2026-10-08 17:18–17:22: 25% primo avvio riuscito, 15% minimo mantenimento |
+| Scanner I²C SHT45/OLED | [i2c_scan](reconstructed_sensors_2026_10_07_11/i2c_scan/) | **RICOSTRUITA** | Chat 2026-10-07/08: SHT45 `0x44`, SSD1309 `0x3C` confermati |
+| SHT45 misura diretta | [sht45_raw](reconstructed_sensors_2026_10_07_11/sht45_raw/) | **RICOSTRUITA** | Chat 2026-10-07: comando `0xFD`, CRC8; ~22.28–22.30 °C, 65.44–65.58 %RH |
+| OLED SSD1309 frame U8g2 | [oled_ssd1309_frame](reconstructed_sensors_2026_10_07_11/oled_ssd1309_frame/) | **RICOSTRUITA** | Chat 2026-10-08: OLED 128x64 cornice/testi funzionanti |
+| NTC lettura ADC grezza | [ntc_raw_adc](reconstructed_sensors_2026_10_07_11/ntc_raw_adc/) | **RICOSTRUITA** | Chat 2026-10-11: GPIO34, ADC_11db, raw 2779–2783, 2409–2412 mV prima correzione |
 | NTC viewer senza riscaldamento | [ntc_reference_viewer](../diagnostics/ntc_reference_viewer/) | **Già salvato in repository** | Analisi NTC 2026-10-17; non implica test fisico completo di questo viewer |
 
 L'archivio dell'applicazione integrata contiene i **blob sorgenti originali** di `firmware/` del commit `3535dba9643e77d48e14eccc109606e3a5d758cf`, incluso bitmap/header, copiati senza modifiche di contenuto (solo il nome dell'INO è allineato alla directory di sketch per l'IDE). Non è la versione più recente e non deve sostituire automaticamente l'app corrente.
@@ -19,7 +23,7 @@ L'archivio dell'applicazione integrata contiene i **blob sorgenti originali** di
 
 Dalle conversazioni e dai resoconti in `docs/PROJECT_STATE.md` emergono anche le seguenti prove:
 - Gate 3: USB/CP2102, UART, programmazione ESP32; codice di test integrale non rintracciato nell'albero Git.
-- Gate 4A: scanner I²C con SSD1309 `0x3C` e SHT45 `0x44`; OLED visualizzazione; il nome locale `slewform_logo_test.ino` appare nei messaggi, ma quel file originale non è salvato in Git.
+- Gate 4A: scanner I²C, SHT45 con comando diretto, e OLED visualizzazione sono ora ricostruiti, **non** recuperati byte per byte; il nome locale `slewform_logo_test.ino` appare nei messaggi, ma quel file originale non è salvato in Git.
 - Gate 4: pulsanti, buzzer, LED. La versione integrata del commit storico contiene questi controller; alcuni test standalone originali non sono stati archiviati.
 - Gate 5A: test Q5 senza ventola con pull-up temporaneo 100 kΩ e pilotaggio statico; comportamento conservato nei resoconti, non i byte dello sketch originale.
 - Gate 5B / successivi: sketch riscaldatore comandato via seriale `H` per 80/90 °C; **non recuperato come sorgente identico**; non si ricrea o rende eseguibile alla cieca un firmware che abilita il carico termico.
