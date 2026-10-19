@@ -63,7 +63,10 @@ constexpr uint16_t kPrototypeDurationStepMinutes = 15;
 // Measured at 25 kHz: 25% first tested start duty, 15% sustained-running floor.
 constexpr uint32_t kFanPwmFrequencyHz = 25000;
 constexpr uint8_t kFanPwmResolutionBits = 8;
-constexpr uint8_t kFanLedcChannel = 9;
+// The ESP32 has separate LEDC timer groups for channels 0-7 and 8-15.
+// Keep the fan in group 0 and the frequency-changing buzzer in group 1.
+// Different channel numbers in the same group alone do not ensure timer isolation.
+constexpr uint8_t kFanLedcChannel = 0;
 constexpr uint32_t kFanKickstartMs = 1000;
 constexpr uint8_t kFanKickstartPercent = 100;
 constexpr uint8_t kFanBringupRunPercent = 40;
