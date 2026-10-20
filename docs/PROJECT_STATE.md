@@ -877,3 +877,8 @@ After the user flagged that previously working temporary Arduino sketches were n
 **Live issue outstanding:** user's assembled DRYING TEST showed `F 40%` with fan stopped. J6 pin 2 ≈24 V, switched J6 pin 1 ≈23 V OFF and commanded ON, Q5 gate ≈0 V, GPIO16-side R25 ≈0 V, U4 pin 27 ↔ R25 pin 2 0.3 Ω unpowered; touching U4 pin 27 with DMM probe made fan start. The user's subsequent NTC/STATE-only serial log shows **no `FAN PWM` diagnostic lines** introduced on the separate `fix/isolated-fan-ledc-2026-10-19` branch, so actual testing of that firmware remains unconfirmed. The fix branch is **not merged**, and current main app remains unchanged.
 
 Next: identify flashed firmware version, use physically isolated fan tests as appropriate, distinguish GPIO waveform from UI command, and verify electrical conditions without powering heater. The hardware and heater safety decisions remain unchanged.
+
+
+## 2026-10-20 GPIO16 test plan for unresolved fan OFF — NOT PHYSICALLY TESTED
+
+A bounded standalone diagnostic was committed on branch `diagnostics/fan-gpio16-static-2026-10-20` as `firmware/diagnostics/fan_gpio16_static_check/`. It drives GPIO19 LOW, holds GPIO16 LOW for 3 seconds, HIGH for 15 seconds (no PWM/LEDC, no buzzer/UI), then LOW permanently. This is a **new candidate diagnostic, not a recovered historical original**. It has not been compiled or flashed on the prototype yet. The README includes safety requirement to isolate heater J5 electrically and DC voltage decision table across R25 pin 2 (GPIO16 side), R25 pin 1 (gate side), and J6 pin 1. It responds to the recorded R25/GPIO16 zero-volt and probe-activation anomaly without guessing Q5 or ESP32 replacement.
