@@ -926,3 +926,16 @@ The released netlist directly confirms **J5 pin 2 = 24V_PROT**, **J5 pin 1 = /IO
 **Pending controlled nonheating measurement** (not physically performed by assistant): power fully removed before placing any insulated leads, DC voltmeter only, avoid bridging exposed neighboring J5 terminals. After wiring prepared and inspected, energize to STANDBY under supervision with emergency 24 V disconnection. Read J5 pin2→GND and pin1→GND; both nominally about +24 V if Q4 does not sink load, subject to circuit continuity; any pin1 near 0 V and/or thermal/current rise => stop immediately, do not proceed with heater experiments. Bench supply current can be a noninvasive first screen if direct connector measurements are not safely accessible. No current result or PASS has yet been reported.
 
 Open thermal gate: independent series 105°C cutoff suitability and closed heater operation remain unverified; no deliberate heater enable is authorized.
+
+
+## 2026-10-20 correction: do not repeat completed Q4/J5 heater switching tests
+
+Following the user's objection to yet another J5 electrical-voltage-probing request, the existing engineering records were rechecked. **Already completed and passed:**
+
+- **2026-10-08 Gate 5B unloaded drive test:** Q4 gate 0 V safe-OFF, 100k pull-up to the switched output showed J5 pin1 = 24 V OFF, GPIO19 commanded HIGH produced gate 3.3 V and J5 pin1 around 1 mV ON.
+- **2026-10-14 Gate 5B actual heater load test:** J5 connected to actual heater with series 105 °C TCO and NTC J7; one-shot 1/5/10 s timed pulses, roughly 1.59 A at 24 V, rising NTC and automatic shutoff; no current-limit, fault or abnormal switching reported.
+- **By 2026-10-17:** seven open-box, fan-OFF NTC/Sanwa heater temperature plateaus completed, with highest nominal 90 °C NTC / 85 °C nearby Sanwa. These did not validate sealed, fan-running thermal behavior.
+
+Consequently **do not put repeated Gate 5B switch OFF/ON measurements on the immediate to-do list**, and do not ask the user to re-probe J5 for a previously passed bench functional test. On the current assembled fan-only firmware, the user confirms J5 is physically connected, the app is `HEATER LOCKED`, and no unexpected warming was reported during the 2–3 min DRYING test; this is **not proof of independently safe heating control or full electric OFF across all failures**. When commissioning a **new integrated heater-control firmware**, separately validate startup/off-state, sensor-fault inhibition, and physical heater disconnect/independent TCO under the approved **future safety gate**. These are not the same as repeating historical functional bench checks.
+
+The next *new* work is mechanical sensor/TCO positioning and safety requirement review, then an intentionally authorized heater regulation design. No heating code, circuit decisions, or bench test results were changed by this documentation correction.
