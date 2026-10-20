@@ -1,6 +1,6 @@
 # Assembled eBOX Lite: integrated UI/fan bring-up with heater wired but software locked
 
-**2026-10-20 | Status: ongoing; startup/ramp, extended run, long stop and full power-cycle no-auto-resume passed on user report; sensor values and physical heater-off checks pending.**
+**2026-10-20 | Status: ongoing; OLED sensor readings photographed; electrical heater-OFF and enclosure checks pending.**
 > **Power-cycle follow-up — 2026-10-20:** User confirms power removal of 24 V and USB, then normal Slewform boot into STANDBY with fan OFF and no automatic cycle resume. **PASS (user report)**. No new heater electrical measurement or numeric sensor value accompanied this result.
 
 > **Follow-up — 2026-10-20:** The user completed the requested 2–3 min DRYING run and long ON/OFF return-to-STANDBY/stop, reporting «Tutto ok». Record **sustained fan and stop PASS (reported)** with no observable anomaly reported. No measured heater current/temperatures or numeric SHT45 readings supplied; heater electric OFF and physically isolated J5 acceptance remain **not established**. Next: power cycle to STANDBY/fan OFF with no auto-resume, then live SHT45 C/RH, mechanical/material and remaining physical-off checks.
@@ -46,3 +46,13 @@ User wishes to resume the **integrated Slewform logo/menu application**, not the
 **This only validates integrated UI/PCB/fan/sensing in assembled geometry.** It does not verify heater safety, absolute NTC calibration, independent cutoff suitability or original eBOX Lite nominal 105/116/118 C plate temperatures.
 
 After reporting outcomes: fix reproducible OLED startup artifacts/UI flaws and button mechanics while preserving heater OFF, then finish SHT45 chamber location and independent 105 C TCO choice. A separate reviewed stage may later integrate safe heater control and perform *closed box, fan ON* qualification. No heater enable until that gate.
+
+
+## 2026-10-20 visual observation — SHT45/NTC
+
+Three user-provided screen photographs:
+- STANDBY: 19.4 °C / 69.7% RH.
+- DRYING TEST: 19.4 °C / 69.7% RH; set 54 °C is nonoperative prototype target; fan 40%; HEATER LOCKED.
+- SYSTEM: Chamber 19.4 °C, Heater 15.5 °C (NTC provisional reading), RH 70% rounded, fan 40%, HEATER LOCKED.
+
+**PASS: display integration and present readings.** This is not an independent sensor calibration, heater-output measurement or closed-enclosure qualification. NTC cold discrepancy 3.9 °C is documented, not corrected. J5 electrical heater-off gate and case/wire/sensor placement remain OPEN. Source photos are in conversation; only readings documented in this repository.

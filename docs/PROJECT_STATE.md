@@ -901,3 +901,17 @@ Following the repaired ESP32 U4 pin 27 solder joint, user was instructed to run 
 The user completed the requested complete 24 V + USB removal and subsequent reapplication following the long-ON/OFF DRYING stop, and reported **«Test passato»**. For the specified test this confirms user-observed normal Slewform boot, return to **STANDBY**, fan **OFF**, and **no automatic cycle restart**. This closes the application restart/no-auto-resume observation; it is not a validated fault-injection safety test. The earlier first-article **SETUP 5/5**, **SETTINGS 5/5** (including persistence), fan 100%→40% startup after GPIO16 solder repair, sustained fan-only DRYING run and long-ON/OFF stop are still accepted as user-reported passes.
 
 **Next:** capture present SHT45 chamber temperature/RH and NTC on UI/SYSTEM page, with heater command locked OFF; record enclosure/wire route observations and actual electrical heater OFF separately. The series 105°C TCO compatibility and closed-box hot-use qualification remain unresolved. Physical heater J5 disconnection has not been reported for the currently assembled test. Do not change heater safety decisions or mark closed-enclosure heater qualification passed.
+
+
+## 2026-10-20 photo evidence of OLED SHT45/NTC display — PASS for reporting, not calibration
+
+The user supplied three photographs of the assembled control panel OLED:
+- STANDBY: Filament Dryer, SHT45 chamber temperature **19.4 °C**, relative humidity **69.7%**, Ready.
+- DRYING TEST: **19.4 °C**, **69.7% RH**, prototype target **SET 54 °C**, FAN **40%**, HEATER LOCKED.
+- SYSTEM / BRING-UP: Chamber **19.4 °C** (SHT45), Heater **15.5 °C** (NTC/J7, provisional conversion), H **70%** (rounded from 69.7% by Ui.h), F **40%**, HEATER LOCKED.
+
+No sensor WAIT/FAULT was shown. This is a PASS for observing valid-looking digital measurements and the correct screen/state formatting, *not* independent confirmation of sensor accuracy, steadiness over time, or final NTC calibration. The **3.9 °C discrepancy** between NTC-indicated heater temperature and SHT45 air is not automatically evidence of a defect; the two sensors have different locations and the cold NTC model remains unresolved in docs/NTC_CALIBRATION_ANALYSIS.md. Prior cold log showed NTC empirical=no.
+
+The photographs show screens and panel, not a verified sealed-dryer mechanical/airflow acceptance. HEATER LOCKED is software/UI only, not measured Q4/J5 off-current; physical J5 status has not been freshly reconfirmed, and independent 105 °C TCO suitability / closed-hot operation remain OPEN. Images were supplied in chat; their observed readings, not the image binaries, are archived here.
+
+Next: confirm J5 is actually connected/disconnected, check physical heater OFF independently before any hotter stages, document housing fit/wiring/filament and SHT45 location, then plan safety/NTC research without modifying heater control. Experimental fan LEDC-channel0 branch remains separate and not a proven repair.
