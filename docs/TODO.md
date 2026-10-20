@@ -1,5 +1,12 @@
 # TODO
 
+## 2026-10-20 GPIO16 DC drive discrimination (not yet physically tested)
+
+- [ ] Flash the 15-second bounded STATIC GPIO16=HIGH test from branch `diagnostics/fan-gpio16-static-2026-10-20` (`firmware/diagnostics/fan_gpio16_static_check/`), with J5 heater electrically disconnected. This test avoids PWM, buzzer, and UI; do not touch adjacent live ESP32 pins with metallic probes.
+- [ ] Record actual ventola movement and, if safely accessible, static R25 pin 2 (~3.3 V HIGH), R25 pin 1/gate (~3.3 V HIGH), J6 pin 1 (~0 V when Q5 ON), all relative to GND during the 15 s window; maintain continuous physical supervision. Avoid concluding damaged Q5 or MCU before those measurements.
+- [ ] If the static digital test passes, investigate LEDC/firmware hardware behavior. If static HIGH is absent, verify no low-impedance load on GPIO16 and check ESP32 pad/solder/driver rather than replacing Q5 blindly.
+
+
 ## 2026-10-19 test firmware archive and fan regression
 
 - [x] Recover the **exact historical integrated 2026-10-08 source** (all 14 source/asset blobs) and archive on `main` under `firmware/test_archive/validated_integrated_2026_10_08/`.
