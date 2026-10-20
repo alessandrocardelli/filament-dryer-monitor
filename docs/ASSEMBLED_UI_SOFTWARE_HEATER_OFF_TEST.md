@@ -1,6 +1,8 @@
 # Assembled eBOX Lite: integrated UI/fan bring-up with heater wired but software locked
 
-**2026-10-19 | Status: planned, not physically executed or accepted.**
+**2026-10-20 | Status: ongoing; fan startup/ramp passed after solder repair; overall acceptance not yet completed.**
+> **Progress checkpoint — 2026-10-20 (not a complete PASS):** User has reported SETUP **5/5**, SETTINGS **5/5** with persistence after power cycle, DRYING entry/technical page accessible. Physical fan startup blocker was diagnosed as poor solder joint at ESP32 U4 **physical pin 27/GPIO16**: initially probing the pin made fan run; after solder repair fan now runs immediate **100% kickstart then 40%**. Fan start/ramp is therefore **passed on user observation**. Still outstanding: supervised 2–3 min run, physical heater-off check with the actual J5 state, SHT45 C/%RH, noise/airflow and cable clearance, ON/OFF long stop/fan OFF, restart into standby/no autoresume. This is NOT evidence of safe heater switching or thermal qualification. The experimental channel0 PWM firmware was tested at some point, but no evidence establishes it was necessary; do not merge it as a proven fix.
+
 **Authoritative source:** `firmware/firmware.ino`, `firmware/SafetyController.h`, `firmware/FanController.h`, `firmware/Ui.h`, `firmware/AppConfig.h`, and active KiCad wiring. This is a **software-only heater-off** check, not a substitute for the earlier hardware-isolated test `docs/CLOSED_ENCLOSURE_NO_HEAT_TEST.md`.
 
 ## User-reported assembly and changed test conditions

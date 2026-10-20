@@ -4,6 +4,8 @@ Custom ESP32-based controller board that retrofits an **eSUN eBOX Lite** filamen
 
 The PCB physically replaces the original front panel: display and buttons sit on the front face of the board, while the main electronics are on the back.
 
+> **2026-10-20 fan regression RESOLVED (user-reported physical repair):** The assembled-board fan failed because of an unreliable solder joint at U4 **physical pin 27 = GPIO16**. Touching that lead with a DMM probe temporarily restored the fan; after addressing its solder joint the user confirms normal kick-start at **100%**, followed by **40%** running duty. Earlier SETUP (5 checks) and SETTINGS (5 checks including power-cycle persistence) were reported passed. This fixes the *fan startup* blocker but does **not** yet establish full assembled acceptance (sustained run, ON/OFF-long stop, cold restart, heater physically off, wire/fan clearance). The separate LEDC channel-change branch is **not demonstrated to be the cause or cure**; do not merge it for this repair. See [docs/ASSEMBLED_UI_SOFTWARE_HEATER_OFF_TEST.md](docs/ASSEMBLED_UI_SOFTWARE_HEATER_OFF_TEST.md) and [docs/PROJECT_STATE.md](docs/PROJECT_STATE.md).
+
 > **2026-10-19 recovered bench firmware:** [firmware/test_archive/TEST_FIRMWARE_ARCHIVE.md](firmware/test_archive/TEST_FIRMWARE_ARCHIVE.md) now tracks the 2026-10-08 full integrated firmware as **exact historical Git blobs** and eight **explicitly reconstructed, not original** fan/I²C/SHT45/OLED/NTC bench sketches based on passing test conversations. Standalone hot-heater sketch originals are NOT recovered. This addition was merged without changing active `firmware/firmware.ino`; an experimental LEDC fix remains separate and **not verified** on hardware.
 
 

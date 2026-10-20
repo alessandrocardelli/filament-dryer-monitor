@@ -1,5 +1,17 @@
 # TODO
 
+## 2026-10-20 — fan GPIO16 solder repair and resumed UI acceptance
+
+- [x] **Root cause resolved on assembled first article (user-reported):** unreliable solder joint at ESP32 U4 physical pin 27 (GPIO16/FAN_PWM). Before repair, touching that pin with DMM positive probe caused fan to start. After solder correction, DRYING fan now runs with immediate 100% kickstart -> 40% duty, without probing.
+- [x] User-reported initial integrated UI checks: **SETUP 5/5** and **SETTINGS 5/5**, including settings surviving a full power cycle; DRYING entered and technical page accessible.
+- [ ] **NEXT — finish supervised 2–3 min DRYING fan-only run:** stable 40% rotation, no rubbing/stall/reset, SHT45 plausible live temperature/RH, no heater warmth/current rise. If J5 is still physically attached, software-only heater lockout is not equivalent to isolation; immediate 24 V cutoff available. Do not mark heater electrical OFF or enclosure accepted without checking.
+- [ ] Test ON/OFF **long press ~1.5 s** returns to STANDBY with fan stopped; then full power-cycle remains STANDBY with fan OFF and no cycle auto-resume.
+- [ ] Capture DRYING technical page's SHT45 C/%RH and NTC, noting NTC bead calibration remains provisional; record any OLED boot/artifact/clearance issues and polymer material of installed front bezel.
+- [ ] Verify physical J5 heater-off behavior/independent safety gate separately; no heater energization until TCO and thermal qualification review.
+- [ ] Identify exact flashed firmware revision. Earlier serial screenshot showed LEDC **channel 0** (consistent with experimental `fix/isolated-fan-ledc-2026-10-19`), while `main` still uses channel **9**. The working fan following solder repair does **not** prove changing the channel was necessary; do not automatically merge experimental firmware into main. The standalone static GPIO16 diagnostic was prepared but **not reported executed**.
+- [ ] Retain recovered test sketches and historical provenance in `firmware/test_archive`. No need to repeat already passed SETUP/SETTINGS or seven NTC plateau measurements.
+
+
 ## 2026-10-19 test firmware archive and fan regression
 
 - [x] Recover the **exact historical integrated 2026-10-08 source** (all 14 source/asset blobs) and archive on `main` under `firmware/test_archive/validated_integrated_2026_10_08/`.
