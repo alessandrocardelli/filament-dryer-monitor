@@ -6,7 +6,8 @@
 - [x] User-reported initial integrated UI checks: **SETUP 5/5** and **SETTINGS 5/5**, including settings surviving a full power cycle; DRYING entered and technical page accessible.
 - [x] **User-reported pass:** supervised 2–3 min DRYING fan at 40%, no reported rubbing/stall/reset or apparent heater activation. No numeric SHT45/current/thermal measurement provided; actual heater-off electrical verification still OPEN.
 - [x] Long ON/OFF (~1.5 s) returned to STANDBY and stopped the fan, user-reported PASS.
-- [ ] **NEXT — complete 24 V / USB power cycle** and verify normal fresh boot into STANDBY, fan OFF, no automatic DRYING resume.
+- [x] Full power removal (24 V and USB), restore power: normal Slewform startup -> STANDBY, fan OFF, no automatic DRYING resume (**user-reported PASS 2026-10-20**).
+- [ ] **NEXT — capture live SHT45 chamber temperature/RH and NTC diagnostic** from STANDBY and, if desired, DRYING → M short → SYSTEM. Record displayed values and whether plausible/stable; no hot testing for this step.
 - [ ] Capture DRYING technical page's SHT45 C/%RH and NTC, noting NTC bead calibration remains provisional; record any OLED boot/artifact/clearance issues and polymer material of installed front bezel.
 - [ ] Verify physical J5 heater-off behavior/independent safety gate separately; no heater energization until TCO and thermal qualification review.
 - [ ] Identify exact flashed firmware revision. Earlier serial screenshot showed LEDC **channel 0** (consistent with experimental `fix/isolated-fan-ledc-2026-10-19`), while `main` still uses channel **9**. The working fan following solder repair does **not** prove changing the channel was necessary; do not automatically merge experimental firmware into main. The standalone static GPIO16 diagnostic was prepared but **not reported executed**.
