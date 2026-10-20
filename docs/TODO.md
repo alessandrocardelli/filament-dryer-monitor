@@ -8,7 +8,9 @@
 - [x] Long ON/OFF (~1.5 s) returned to STANDBY and stopped the fan, user-reported PASS.
 - [x] Full power removal (24 V and USB), restore power: normal Slewform startup -> STANDBY, fan OFF, no automatic DRYING resume (**user-reported PASS 2026-10-20**).
 - [x] **2026-10-20 photo-confirmed SHT45 and NTC UI readings**: STANDBY 19.4 °C / 69.7% RH; DRYING 19.4 °C / 69.7% RH, FAN 40%, SET 54 °C UI-only, HEATER LOCKED; SYSTEM Chamber 19.4 °C, Heater NTC 15.5 °C, H 70% rounded, F 40%. Valid-looking data/display observed, not calibrated sensor or electrically proven heater OFF.
-- [ ] **NEXT — confirm physical J5 heater connection and check heater remains truly unenergized** with firmware locked OFF. Preserve accessible 24 V cutoff, review wiring and clearances before any enclosure qualification; do not heat.
+- [x] **2026-10-20** User confirmed heater power connector **J5 remains physically connected** on the assembled PCB.
+- [ ] **NEXT — verify Q4/J5 actually remains OFF electrically (NO heater activation)**. Released netlist: J5 pin2 = 24V_PROT; J5 pin1 = HEATER_SW / Q4 drain. With J5 heater/TCO path intact and OFF, each pin about +24 V to GND, negligible DC differential voltage across heater. Power OFF for placement of insulated voltmeter leads; measure DC with supervised 24 V STANDBY, no shorts. If pin1 ≈0V, unexplained supply current or warming, cut 24 V immediately. If inaccessible, begin with 24 V bench input current instead of risky probing. Record values before any PASS.
+- [ ] Keep previous J5-disconnected hard-isolation gate **not passed**: user is intentionally using connected-J5 software lockout. No heater-enable or closed thermal test until independent TCO / system safety review.
 - [ ] Keep the 3.9 °C cold NTC-vs-SHT45 discrepancy open; follow docs/NTC_CALIBRATION_ANALYSIS.md without unreviewed changes to NTC conversion.
 - [x] Capture DRYING technical page: SYSTEM screenshot confirms SHT45 19.4 °C / RH 70% rounded, heater NTC 15.5 °C (provisional).
 - [ ] Inspect final enclosure fit, covers/wire strain relief and OLED artifacts, record front-panel print filament material and SHT45 placement.

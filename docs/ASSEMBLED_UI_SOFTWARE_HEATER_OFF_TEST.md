@@ -56,3 +56,12 @@ Three user-provided screen photographs:
 - SYSTEM: Chamber 19.4 °C, Heater 15.5 °C (NTC provisional reading), RH 70% rounded, fan 40%, HEATER LOCKED.
 
 **PASS: display integration and present readings.** This is not an independent sensor calibration, heater-output measurement or closed-enclosure qualification. NTC cold discrepancy 3.9 °C is documented, not corrected. J5 electrical heater-off gate and case/wire/sensor placement remain OPEN. Source photos are in conversation; only readings documented in this repository.
+
+
+## 2026-10-20 J5 installed confirmation and next electrical OFF check
+
+User explicitly reconfirmed **J5 plugged into the PCB**. Circuit per released netlist: J5 pin2 24V_PROT, J5 pin1 /IO_Power/HEATER_SW with Q4-drain connection. External heater/TCO is between the J5 contacts. There is no isolated-heater acceptance at this point.
+
+**To be measured** (never claim PASS without user's measured numbers): ensure only SAFE BRING-UP application is loaded, choose accessible and insulated contacts while ALL power sources are off, use DC volts only and an easy 24 V power disconnect. With heater connected and intact, an OFF Q4 should yield J5 pin2 ≈+24 V and pin1 ≈+24 V relative to GND (≈0 V across heater). Live contacts must never be bridged with a probe. An ON/shorted Q4 would pull J5 pin1 low and may apply approximately 24 V/1.6 A to the heater; stop immediately if that or unexpected rise in current/temperature occurs. If J5 is inaccessible, use power-supply current as a first noninvasive indicator instead. Individual readings depend on actual TCO and load continuity.
+
+Software display `HEATER LOCKED` is not this electrical observation. Closed hot operation and TCO suitability remain OPEN.

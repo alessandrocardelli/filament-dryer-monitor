@@ -915,3 +915,14 @@ No sensor WAIT/FAULT was shown. This is a PASS for observing valid-looking digit
 The photographs show screens and panel, not a verified sealed-dryer mechanical/airflow acceptance. HEATER LOCKED is software/UI only, not measured Q4/J5 off-current; physical J5 status has not been freshly reconfirmed, and independent 105 °C TCO suitability / closed-hot operation remain OPEN. Images were supplied in chat; their observed readings, not the image binaries, are archived here.
 
 Next: confirm J5 is actually connected/disconnected, check physical heater OFF independently before any hotter stages, document housing fit/wiring/filament and SHT45 location, then plan safety/NTC research without modifying heater control. Experimental fan LEDC-channel0 branch remains separate and not a proven repair.
+
+
+## 2026-10-20 assembled heater connector J5 still physically connected — confirmed
+
+User answered `Confermato`: the **actual heater power cable remains connected at J5** on the assembled prototype while the SAFE BRING-UP application is displayed with HEATER LOCKED. This establishes actual test-harness status by user report; does **not** demonstrate MOSFET Q4 electrically off. Do not mark the J5-disconnected isolated-enclosure acceptance as passed.
+
+The released netlist directly confirms **J5 pin 2 = 24V_PROT**, **J5 pin 1 = /IO_Power/HEATER_SW = Q4 drain**. The off-board heater and series TCO bridge between J5 pins 2 and 1. In the DC **OFF** state with intact load/TCO, about 24 V is expected on both pins relative to GND (nearly zero differential voltage across heater). With Q4 on, pin1 can fall to about 0 V and approximately 24 V across the heater; do not deliberately energize Q4. Software `SafetyController.h` keeps GPIO19 LOW, but this must be verified electrically. An open TCO/connector can alter predicted floating-voltage readings; absence of heater temperature rise and supply current can independently corroborate OFF.
+
+**Pending controlled nonheating measurement** (not physically performed by assistant): power fully removed before placing any insulated leads, DC voltmeter only, avoid bridging exposed neighboring J5 terminals. After wiring prepared and inspected, energize to STANDBY under supervision with emergency 24 V disconnection. Read J5 pin2→GND and pin1→GND; both nominally about +24 V if Q4 does not sink load, subject to circuit continuity; any pin1 near 0 V and/or thermal/current rise => stop immediately, do not proceed with heater experiments. Bench supply current can be a noninvasive first screen if direct connector measurements are not safely accessible. No current result or PASS has yet been reported.
+
+Open thermal gate: independent series 105°C cutoff suitability and closed heater operation remain unverified; no deliberate heater enable is authorized.
