@@ -4,8 +4,9 @@
 
 - [x] **Root cause resolved on assembled first article (user-reported):** unreliable solder joint at ESP32 U4 physical pin 27 (GPIO16/FAN_PWM). Before repair, touching that pin with DMM positive probe caused fan to start. After solder correction, DRYING fan now runs with immediate 100% kickstart -> 40% duty, without probing.
 - [x] User-reported initial integrated UI checks: **SETUP 5/5** and **SETTINGS 5/5**, including settings surviving a full power cycle; DRYING entered and technical page accessible.
-- [ ] **NEXT — finish supervised 2–3 min DRYING fan-only run:** stable 40% rotation, no rubbing/stall/reset, SHT45 plausible live temperature/RH, no heater warmth/current rise. If J5 is still physically attached, software-only heater lockout is not equivalent to isolation; immediate 24 V cutoff available. Do not mark heater electrical OFF or enclosure accepted without checking.
-- [ ] Test ON/OFF **long press ~1.5 s** returns to STANDBY with fan stopped; then full power-cycle remains STANDBY with fan OFF and no cycle auto-resume.
+- [x] **User-reported pass:** supervised 2–3 min DRYING fan at 40%, no reported rubbing/stall/reset or apparent heater activation. No numeric SHT45/current/thermal measurement provided; actual heater-off electrical verification still OPEN.
+- [x] Long ON/OFF (~1.5 s) returned to STANDBY and stopped the fan, user-reported PASS.
+- [ ] **NEXT — complete 24 V / USB power cycle** and verify normal fresh boot into STANDBY, fan OFF, no automatic DRYING resume.
 - [ ] Capture DRYING technical page's SHT45 C/%RH and NTC, noting NTC bead calibration remains provisional; record any OLED boot/artifact/clearance issues and polymer material of installed front bezel.
 - [ ] Verify physical J5 heater-off behavior/independent safety gate separately; no heater energization until TCO and thermal qualification review.
 - [ ] Identify exact flashed firmware revision. Earlier serial screenshot showed LEDC **channel 0** (consistent with experimental `fix/isolated-fan-ledc-2026-10-19`), while `main` still uses channel **9**. The working fan following solder repair does **not** prove changing the channel was necessary; do not automatically merge experimental firmware into main. The standalone static GPIO16 diagnostic was prepared but **not reported executed**.
