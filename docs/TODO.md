@@ -1,5 +1,12 @@
 # TODO
 
+## 2026-10-22 active sequence — closed dryer thermal readiness
+
+- [ ] **STEP 1 NOW (only):** examine actual SHT45 mount in chamber, Sanwa thermocouple contact on heater-adjacent plate, wire routes/heater/NTC/fan/TCO isolation, and whether both top/bottom covers close without crushing probe leads; see `docs/CLOSED_CASE_STAGE1_SENSOR_PROBE_FAN_NO_HEAT.md`. No need to repeat previously passed fan driver, Q4/J5 or seven open-case thermal tests.
+- [ ] With correct mechanical/sensor conditions and heater physically isolated for formal no-heat acceptance, perform **one** closed-case fan-only 2–3 min airflow check. SHT45 chamber T/RH before/after and stable rotation; no new firmware required.
+- [ ] **STEP 2 AFTER STEP 1:** review 105 °C one-shot heater-series TCO manufacturer data and actual thermal mounting; determine protection suitability for OEM nominal plate 105/116/118 °C WITHOUT bypass/silent replacement. No heating until this gate is resolved.
+
+
 ## 2026-10-20 — fan GPIO16 solder repair and resumed UI acceptance
 
 - [x] **Root cause resolved on assembled first article (user-reported):** unreliable solder joint at ESP32 U4 physical pin 27 (GPIO16/FAN_PWM). Before repair, touching that pin with DMM positive probe caused fan to start. After solder correction, DRYING fan now runs with immediate 100% kickstart -> 40% duty, without probing.
