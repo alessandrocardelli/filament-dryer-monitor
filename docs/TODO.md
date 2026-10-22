@@ -1,5 +1,12 @@
 # TODO
 
+## 2026-10-22 — phases A then B, closed dryer (branch-only plan, not executed)
+
+- [ ] **A — sensor/cable/probe preparation:** with 24 V and USB disconnected, verify SHT45 actually samples air around spool rather than heater surface/direct radiant/forced jet, Sanwa contacts same plate region as earlier OPEN-case runs, and its cable passes while both covers close; confirm J5/J6/J7/J3 harness protected with fan clear. Do not repeat historical bench fan/NTC/Q4 tests. Do not run heater yet. See `docs/PHASE_A_B_CLOSED_DRYER_PREP_2026-10-22.md`.
+- [ ] **B — 105 °C TCO review:** identify exact current 105 °C/15 A/250 V one-shot unit, photograph marking and placement in contact with flex heater, obtain Tf/Th/Tm and confirm appropriate DC interrupt ratings; determine safety compatibility with 105–118 °C nominal *plate* reference. Do not bypass/reposition arbitrarily or choose a higher trip value without evidence and a recorded decision.
+- [ ] Only after A+B: separate reviewed heating-test firmware, independent fault handling and supervised representative closed, fan-ON staged hot characterization; 118 °C is a plate reference, not an NTC command.
+
+
 ## 2026-10-22 active sequence — closed dryer thermal readiness
 
 - [ ] **STEP 1 NOW (only):** examine actual SHT45 mount in chamber, Sanwa thermocouple contact on heater-adjacent plate, wire routes/heater/NTC/fan/TCO isolation, and whether both top/bottom covers close without crushing probe leads; see `docs/CLOSED_CASE_STAGE1_SENSOR_PROBE_FAN_NO_HEAT.md`. No need to repeat previously passed fan driver, Q4/J5 or seven open-case thermal tests.
