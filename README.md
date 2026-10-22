@@ -1,5 +1,8 @@
 # Filament Dryer Monitor
 
+> **2026-10-22 completion planning (feature branch only):** the single gated plan [docs/COMPLETION_PLAN_2026-10-22.md](docs/COMPLETION_PLAN_2026-10-22.md) covers A–H from closed-case SHT45/Sanwa/cable preparation and independent TCO qualification through controlled heater tests, production-style V1 firmware, CSV/web and final documentation. **Next: gate A1, with power disconnected, verify actual sensor/probe/TCO locations and whether both lids close without pinching wires.** No heater test, TCO change or firmware heater enable was authorized; previously passed fan/UI/Q4 benchmarks remain passed. This plan is currently on `plan/closed-heater-qualification-2026-10-20`, not `main`.
+
+
 Custom ESP32-based controller board that retrofits an **eSUN eBOX Lite** filament dryer with closed-loop humidity/temperature control, a local OLED interface, data logging and a web UI.
 
 The PCB physically replaces the original front panel: display and buttons sit on the front face of the board, while the main electronics are on the back.
