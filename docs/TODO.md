@@ -1,5 +1,8 @@
 # TODO
 
+> **Piano maestro di completamento (2026-10-22):** [COMPLETION_PLAN_2026-10-22.md](COMPLETION_PLAN_2026-10-22.md) contiene i gate A–H, responsabilità, criteri di PASS e regole antistallo. **Gate corrente A1: ispezione fisica SHT45/Sanwa/TCO/cavi/chiusura a dispositivo spento; poi B TCO.** Nessun collaudo termico chiuso è stato eseguito o autorizzato dal piano. Le checklist storiche sotto restano registri, non richieste di rieseguire prove già concluse.
+
+
 ## 2026-10-22 — phases A then B, closed dryer (branch-only plan, not executed)
 
 - [ ] **A — sensor/cable/probe preparation:** with 24 V and USB disconnected, verify SHT45 actually samples air around spool rather than heater surface/direct radiant/forced jet, Sanwa contacts same plate region as earlier OPEN-case runs, and its cable passes while both covers close; confirm J5/J6/J7/J3 harness protected with fan clear. Do not repeat historical bench fan/NTC/Q4 tests. Do not run heater yet. See `docs/PHASE_A_B_CLOSED_DRYER_PREP_2026-10-22.md`.
