@@ -5,6 +5,8 @@
 **Branch:** `plan/closed-heater-qualification-2026-10-20`, basato su `main` commit `87d24c5f618822b81496f25b4f16d3d7736e08af`.  
 **Non modifica:** `firmware/`, KiCad, `docs/DECISIONS.md`, né i risultati collaudati.
 
+**2026-10-22 user-prioritized scope:** carry out **Phase A (closed dryer SHT45/Sanwa/harness)**, then **Phase B (TCO independent protection)** before developing heat firmware or hot tests. Do not divert into front-panel discussion or repeat prior Q4/fan electrical benchmarks. The phase-specific actionable record is [PHASE_A_B_CLOSED_DRYER_PREP_2026-10-22.md](PHASE_A_B_CLOSED_DRYER_PREP_2026-10-22.md). This does not mark either gate passed.
+
 ## Scopo esatto
 
 Portare il retrofit eSUN **eBOX Lite** al funzionamento finale rappresentativo in **configurazione chiusa**, ventola operativa e riscaldatore controllato, confrontando la risposta con i riferimenti OEM del manuale eSUN:
