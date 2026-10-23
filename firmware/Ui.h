@@ -255,7 +255,12 @@ class Ui {
     }
 
     if (ntc.valid) {
-      snprintf(line, sizeof(line), "Heater     %.1f °C", ntc.temperatureC);
+      if (AppConfig::kHeaterCommissioningMode) {
+        snprintf(line, sizeof(line), "NTC raw  %.2f kOhm",
+                 ntc.resistanceOhms / 1000.0f);
+      } else {
+        snprintf(line, sizeof(line), "Heater     %.1f °C", ntc.temperatureC);
+      }
       display_.drawUTF8(2, 39, line);
     } else {
       display_.drawStr(2, 39, "Heater     NTC FAULT");
