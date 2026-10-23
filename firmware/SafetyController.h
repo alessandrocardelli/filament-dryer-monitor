@@ -138,6 +138,7 @@ class SafetyController {
   bool commissioningComplete() const {
     return AppConfig::kHeaterCommissioningMode && commission_.finished();
   }
+  bool commissioningCanStart() const { return commission_.canStart(); }
   bool coolingRequired(uint32_t nowMs) const {
     return AppConfig::kHeaterCommissioningMode && commission_.cooldownNeeded(nowMs);
   }
