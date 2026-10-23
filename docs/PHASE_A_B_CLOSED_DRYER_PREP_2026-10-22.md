@@ -1,5 +1,8 @@
 # Fasi A e B — predisposizione dryer chiuso e verifica TCO
 
+> **2026-10-23 SUPERSEDED PRIORITY (D029):** this is a preserved 2026-10-22 prep checklist, not a requirement to finish optional TCO selection B before heater control and controlled thermal characterization. The original dryer reportedly had no separate TCO; retrofit TCO is an optional enhancement. Mechanical readiness A, NTC/fault checks C and reviewed bounded heater control D are the priorities; the 105 °C physically installed in series must still be accounted for, with no implicit bypass/heat-test authorization. See [active plan](COMPLETION_PLAN_2026-10-22.md).
+
+
 **2026-10-22 — Bozza operativa, NON un collaudo superato né autorizzazione ad attivare il riscaldatore.**  
 **Scope richiesto:** solo (1) disposizione del dryer chiuso e (2) protezione termica. Si esclude la discussione del pannello frontale. Nessuna modifica firmware/KiCad/DECISIONS.
 
