@@ -1,0 +1,27 @@
+name: ESP32 firmware compile
+
+on:
+  push:
+    branches:
+      - feature/integrated-heater-controller-2026-10-23
+  workflow_dispatch:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/setup-arduino-cli@v2
+      - name: Install ESP32 Arduino core
+        run: |
+          arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core install esp32:esp32 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+      - name: Install OLED library
+        run: arduino-cli lib install U8g2
+      - name: Compile firmware without heater actuation
+        run: |
+          grep -q 'constexpr bool kHeaterOutputEnabled = false;' firmware/AppConfig.h
+          arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all
+      - name: Native control logic tests
+        run: bash firmware/tests/host/run_heater_tests.sh
