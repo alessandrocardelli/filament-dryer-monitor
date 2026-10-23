@@ -52,7 +52,8 @@ class Ui {
               const PersistentSettings &settings,
               const SensorSnapshot &sensor, const NtcSnapshot &ntc,
               uint32_t remainingSeconds, uint8_t fanDutyPercent,
-              bool technicalPage = false, uint32_t bootElapsedMs = 0) {
+              bool technicalPage = false, uint32_t bootElapsedMs = 0,
+              bool heaterLocked = true, bool heaterOn = false) {
     if (!awake_) return false;
 
     const uint8_t stage = (state == AppState::Boot)
@@ -80,9 +81,10 @@ class Ui {
       case AppState::Setup: drawSetup(setupField, settings.cycle); break;
       case AppState::Settings: drawSettings(settingsField, settings); break;
       case AppState::Drying:
-        technicalPage ? drawSystem(sensor, ntc, fanDutyPercent)
+        technicalPage ? drawSystem(sensor, ntc, fanDutyPercent,
+                                   heaterLocked, heaterOn)
                       : drawDrying(settings.cycle, sensor, remainingSeconds,
-                                  fanDutyPercent);
+                                  fanDutyPercent, heaterLocked, heaterOn);
         break;
       case AppState::Complete: drawComplete(sensor); break;
       case AppState::Fault: drawFault(ntc.fault); break;
@@ -208,7 +210,8 @@ class Ui {
   }
 
   void drawDrying(const CycleSettings &settings, const SensorSnapshot &sensor,
-                   uint32_t remainingSeconds, uint8_t fanDutyPercent) {
+                   uint32_t remainingSeconds, uint8_t fanDutyPercent,
+                   bool heaterLocked, bool heaterOn) {
     display_.setFont(u8g2_font_6x10_tf);
     char header[22];
     snprintf(header, sizeof(header), "DRYING TEST   %02lu:%02lu",
@@ -232,13 +235,15 @@ class Ui {
     snprintf(target, sizeof(target), "SET %d °C   FAN %u%%",
              settings.targetTempC, fanDutyPercent);
     display_.drawUTF8(1, 47, target);
-    display_.drawStr(1, 61, "HEATER LOCKED");
+    display_.drawStr(1, 61, heaterLocked ? "HEATER LOCKED" :
+                     (heaterOn ? "HEATER ON" : "HEATER OFF"));
   }
 
   void drawSystem(const SensorSnapshot &sensor, const NtcSnapshot &ntc,
-                  uint8_t fanDutyPercent) {
+                  uint8_t fanDutyPercent, bool heaterLocked,
+                  bool heaterOn) {
     display_.setFont(u8g2_font_6x10_tf);
-    display_.drawStr(2, 9, "SYSTEM / BRING-UP");
+    display_.drawStr(2, 9, "SYSTEM / HEATER");
     display_.drawHLine(0, 12, 128);
     char line[24];
 
@@ -263,7 +268,8 @@ class Ui {
       snprintf(line, sizeof(line), "H --%%       F %u%%", fanDutyPercent);
     }
     display_.drawStr(2, 54, line);
-    display_.drawStr(2, 63, "HEATER LOCKED");
+    display_.drawStr(2, 63, heaterLocked ? "HEATER LOCKED" :
+                     (heaterOn ? "HEATER ON" : "HEATER OFF"));
   }
 
   void drawComplete(const SensorSnapshot &sensor) {
