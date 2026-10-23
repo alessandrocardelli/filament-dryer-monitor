@@ -42,11 +42,13 @@ For a new work session, read AGENTS.md, docs/PROJECT_STATE.md, docs/DECISIONS.md
 
 ## Safety concept
 
-The project keeps three independent safety layers for the heater:
+The custom controller's heater-control and safety behavior must be qualified for the modified unit. The mandatory engineering work is to verify actual temperature feedback (heater NTC and chamber SHT45), fault/off behavior, fan/cabling/material safety and bounded heater actuation.
 
-1. **Hardware TCO** in series with HEATER+, off-board and independent of the MCU.
-2. **Firmware safety loop** using the heater NTC; an invalid/open sensor is treated as a fault and disables the heater.
-3. **Compile-time gate**: heater drive is disabled until NTC calibration is explicitly enabled.
+- **Firmware:** the current application still hard-disables heater drive. A future controller must shut down on missing/invalid/stale sensor signals and other identified faults; these protections are **not implemented/validated in the current heater-locked application**.
+- **Optional hardware TCO enhancement:** the user reports no separate TCO on the original unit. A 105 °C one-shot TCO is nevertheless currently installed in series with HEATER+ on the modified unit, and may limit the OEM temperature range. Its future retention/replacement is optional as a design requirement, but its current physical presence must be considered; removal/bypass or heater-enable requires separate engineering review/authorization, not merely this documentation change.
+- **Cold-test gate:** keep drive disabled until the new heater-control and safeguards are developed/reviewed; supervised hot tests need a specific test plan and authorization.
+
+See D029: TCO procurement is **not** a mandatory prerequisite to designing or testing the heater controller; modified-system safety still needs demonstrated validation.
 
 This is a personal project and not a certified product.
 
