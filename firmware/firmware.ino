@@ -179,7 +179,12 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
         enterState(AppState::Settings, nowMs);
       } else if (id == ButtonId::OnOff &&
                  type == ButtonEventType::ShortPress) {
-        enterState(AppState::Drying, nowMs);
+        if (AppConfig::kHeaterCommissioningMode &&
+            !safety.commissioningCanStart()) {
+          Serial.println("Heater pulse test already used. Power-cycle to retry.");
+        } else {
+          enterState(AppState::Drying, nowMs);
+        }
       }
       return;
 
@@ -192,7 +197,12 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
         enterState(AppState::Standby, nowMs);
       } else if (id == ButtonId::OnOff &&
                  type == ButtonEventType::ShortPress) {
-        enterState(AppState::Drying, nowMs);
+        if (AppConfig::kHeaterCommissioningMode &&
+            !safety.commissioningCanStart()) {
+          Serial.println("Heater pulse test already used. Power-cycle to retry.");
+        } else {
+          enterState(AppState::Drying, nowMs);
+        }
       } else if ((id == ButtonId::Up || id == ButtonId::Down) &&
                  (type == ButtonEventType::ShortPress ||
                   type == ButtonEventType::Repeat)) {
