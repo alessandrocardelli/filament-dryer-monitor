@@ -35,6 +35,7 @@ PersistentSettings settings;
 
 uint32_t bootStartedMs = 0;
 uint32_t lastNtcLogMs = 0;
+uint32_t lastCommissionCsvMs = 0;
 bool technicalPage = false;
 
 static void applyBuzzerSettings() {
@@ -54,7 +55,8 @@ static void enterState(AppState next, uint32_t nowMs) {
 
   switch (next) {
     case AppState::Standby:
-      fan.stop();
+      if (safety.coolingRequired(nowMs)) fan.startAuto(nowMs);
+      else fan.stop();
       Serial.println("STATE -> STANDBY");
       break;
     case AppState::Setup:
@@ -71,17 +73,24 @@ static void enterState(AppState next, uint32_t nowMs) {
       cycle.start(settings.cycle, nowMs);
       fan.startAuto(nowMs);
       buzzer.playCycleStart(nowMs);
-      Serial.println(safety.heaterLocked()
-          ? "STATE -> DRYING (fan active; heater output locked OFF)"
-          : "STATE -> DRYING (heater regulated by air and NTC limits)");
+      if (AppConfig::kHeaterCommissioningMode) {
+        Serial.println("STATE -> HEATER PULSE TEST: 3 x 1.5 s, fan ON, supervised");
+        Serial.println("HOT_CSV,ms,phase,pulses,heater,NTC_kOhm,air_C,RH,fan_pct");
+      } else {
+        Serial.println(safety.heaterLocked()
+            ? "STATE -> DRYING (fan active; heater output locked OFF)"
+            : "STATE -> DRYING (heater regulated by air and NTC limits)");
+      }
       break;
     case AppState::Complete:
-      fan.stop();
+      if (safety.coolingRequired(nowMs)) fan.startAuto(nowMs);
+      else fan.stop();
       buzzer.playComplete(nowMs);
       Serial.println("STATE -> COMPLETE");
       break;
     case AppState::Fault:
-      fan.stop();
+      if (safety.coolingRequired(nowMs)) fan.startAuto(nowMs);
+      else fan.stop();
       buzzer.startFaultAlarm(nowMs);
       Serial.println("STATE -> FAULT");
       break;
@@ -245,9 +254,14 @@ void setup() {
   Serial.begin(115200);
   Serial.println();
   Serial.println("Filament Dryer Monitor - integrated heater-control firmware");
-  Serial.println(safety.heaterLocked()
-      ? "Heater OUTPUT LOCKED: configuration/calibration not approved."
-      : "Heater regulation ENABLED: supervised qualification required.");
+  if (AppConfig::kHeaterCommissioningMode) {
+    Serial.println("EXPERIMENTAL 3-PULSE HEATER TEST MODE; no auto-repeat");
+    Serial.println("NTC absolute degrees NOT calibrated; raw resistance gate");
+  } else {
+    Serial.println(safety.heaterLocked()
+        ? "Heater OUTPUT LOCKED: configuration/calibration not approved."
+        : "Heater regulation ENABLED: supervised qualification required.");
+  }
 
   const bool settingsOk = settingsStore.begin(settings);
   if (!settingsOk) {
@@ -300,7 +314,38 @@ void loop() {
                 static_cast<float>(settings.cycle.targetTempC));
 
   if (safety.faultActive() && appState != AppState::Fault) {
+    if (AppConfig::kHeaterCommissioningMode) {
+      Serial.print("HEATER_TEST_ABORT fault=");
+      Serial.println(safety.commissioningFault());
+    }
     enterState(AppState::Fault, nowMs);
+  }
+  if (AppConfig::kHeaterCommissioningMode &&
+      safety.commissioningComplete() && appState == AppState::Drying) {
+    Serial.println("HEATER_TEST_DONE: all pulses and cooldown completed");
+    enterState(AppState::Complete, nowMs);
+  }
+
+  if (AppConfig::kHeaterCommissioningMode &&
+      appState == AppState::Drying &&
+      (nowMs - lastCommissionCsvMs) >= 250) {
+    lastCommissionCsvMs = nowMs;
+    const NtcSnapshot &n = ntc.snapshot();
+    const SensorSnapshot &a = sht45.snapshot();
+    Serial.print("HOT_CSV,"); Serial.print(nowMs);
+    Serial.print(','); Serial.print(safety.commissioningPhase());
+    Serial.print(','); Serial.print(safety.commissioningPulsesDone());
+    Serial.print(','); Serial.print(safety.heaterOn() ? 1 : 0);
+    Serial.print(',');
+    if (n.valid) Serial.print(n.resistanceOhms / 1000.0f, 2);
+    else Serial.print("NA");
+    Serial.print(',');
+    if (a.valid) Serial.print(a.temperatureC, 2);
+    else Serial.print("NA");
+    Serial.print(',');
+    if (a.valid) Serial.print(a.humidityRh, 2);
+    else Serial.print("NA");
+    Serial.print(','); Serial.println(fan.dutyPercent());
   }
 
   const bool sensorHealthy = sht45.healthy(nowMs);
