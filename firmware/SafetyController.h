@@ -4,6 +4,10 @@
 #include "AppConfig.h"
 #include "AppTypes.h"
 #include "HeaterControlPolicy.h"
+#include "HeaterPulseCommissioning.h"
+#ifdef ARDUINO_ARCH_ESP32
+#include "driver/gpio.h"
+#endif
 
 // Integrates the real GPIO19 output with the host-tested control policy.
 // HEATER OUTPUT REMAINS OFF IN THE SHIPPED CONFIGURATION.
@@ -15,11 +19,25 @@ class SafetyController {
     // GPIO is driven LOW before any other peripheral is initialized.
     pinMode(AppConfig::kPinHeaterPwm, OUTPUT);
     forceHeaterOff();
+#ifdef ARDUINO_ARCH_ESP32
+    if (AppConfig::kHeaterCommissioningMode) {
+      // ESP32 hardware timer cuts the pulse off even if loop() stalls.
+      pulseTimer_ = timerBegin(1000000); // one tick per microsecond
+      if (!pulseTimer_) {
+        faultActive_ = true;
+        return; // never heat without the independent pulse deadline
+      }
+      timerAttachInterrupt(pulseTimer_, &SafetyController::pulseTimerIsr);
+      timerAlarm(pulseTimer_, 2200000, false, 0); // 2.2 s hardware ceiling
+      timerStop(pulseTimer_);
+    }
+#endif
   }
 
   // Synchronous immediate shutdown for STOP / COMPLETE / FAULT / BOOT.
   void stop() {
     forceHeaterOff();
+    commission_.cancel();
     HeaterControl::Inputs stopped{};
     policy_.evaluate(0, HeaterControl::Limits{}, stopped);
   }
@@ -28,6 +46,15 @@ class SafetyController {
               const SensorSnapshot &chamber, bool cycleActive,
               bool fanPwmRunning, uint32_t elapsedCycleMs,
               float targetChamberC) {
+    lastNowMs_ = nowMs;
+#ifdef ARDUINO_ARCH_ESP32
+    if (AppConfig::kHeaterCommissioningMode && pulseTimerFired_) {
+      commission_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
+      faultActive_ = true;
+      forceHeaterOff();
+      return;
+    }
+#endif
     // Carry over the previously validated electrical NTC fault latch even
     // when heating is disabled.
     if (ntc.sampled && ntc.fault != NtcFault::None) {
@@ -35,8 +62,33 @@ class SafetyController {
       ntcFault_ = ntc.fault;
     }
 
+    if (faultActive_) {
+      forceHeaterOff();
+      return;
+    }
+
+    if (AppConfig::kHeaterCommissioningMode) {
+      HeaterCommissioning::Inputs t{};
+      t.cycleActive = cycleActive;
+      t.fanRunning = fanPwmRunning;
+      t.ntcValid = ntc.sampled && ntc.valid && ntc.fault == NtcFault::None;
+      t.ntcResistanceOhms = ntc.resistanceOhms;
+      t.ntcAgeMs = ntc.sampled ? nowMs - ntc.lastSampleMs : UINT32_MAX;
+      t.airValid = chamber.valid;
+      t.chamberC = chamber.temperatureC;
+      t.airAgeMs = chamber.valid ? nowMs - chamber.lastSuccessMs : UINT32_MAX;
+      const bool pulse = commission_.update(nowMs, t);
+      if (commission_.fault() != HeaterCommissioning::Fault::None) {
+        faultActive_ = true;
+        forceHeaterOff();
+        return;
+      }
+      setHeater(pulse);
+      return;
+    }
+
     if (!AppConfig::kHeaterOutputEnabled || !AppConfig::kHeaterProfileApproved ||
-        !AppConfig::kHeaterNtcModelApproved || faultActive_) {
+        !AppConfig::kHeaterNtcModelApproved) {
       forceHeaterOff();
       return;
     }
@@ -83,19 +135,45 @@ class SafetyController {
   }
 
   bool heaterPermitted() const { return !heaterLocked() && !faultActive_; }
+  bool commissioningComplete() const {
+    return AppConfig::kHeaterCommissioningMode && commission_.finished();
+  }
+  bool coolingRequired(uint32_t nowMs) const {
+    return AppConfig::kHeaterCommissioningMode && commission_.cooldownNeeded(nowMs);
+  }
+  uint8_t commissioningPhase() const {
+    return static_cast<uint8_t>(commission_.phase());
+  }
+  uint8_t commissioningPulsesDone() const { return commission_.pulsesDone(); }
+  uint8_t commissioningFault() const {
+    return static_cast<uint8_t>(commission_.fault());
+  }
   bool heaterLocked() const {
+    if (AppConfig::kHeaterCommissioningMode) return false;
     return !AppConfig::kHeaterOutputEnabled ||
            !AppConfig::kHeaterProfileApproved ||
            !AppConfig::kHeaterNtcModelApproved;
   }
   bool heaterOn() const { return heaterOn_; }
   HeaterControl::Fault heaterFault() const { return policy_.fault(); }
-  bool fanPermitted() const { return !faultActive_; }
+  bool fanPermitted() const {
+    return !faultActive_ || coolingRequired(lastNowMs_);
+  }
   bool faultActive() const { return faultActive_; }
   NtcFault ntcFault() const { return ntcFault_; }
 
  private:
   HeaterControl::Policy policy_{};
+  HeaterCommissioning::Sequence commission_{};
+  uint32_t lastNowMs_ = 0;
+#ifdef ARDUINO_ARCH_ESP32
+  hw_timer_t *pulseTimer_ = nullptr;
+  inline static volatile bool pulseTimerFired_ = false;
+  static void ARDUINO_ISR_ATTR pulseTimerIsr() {
+    gpio_set_level(static_cast<gpio_num_t>(AppConfig::kPinHeaterPwm), 0);
+    pulseTimerFired_ = true;
+  }
+#endif
   bool faultActive_ = false;
   bool heaterOn_ = false;
   NtcFault ntcFault_ = NtcFault::None;
@@ -103,14 +181,33 @@ class SafetyController {
   void forceHeaterOff() {
     digitalWrite(AppConfig::kPinHeaterPwm, LOW);
     heaterOn_ = false;
+#ifdef ARDUINO_ARCH_ESP32
+    if (pulseTimer_) timerStop(pulseTimer_);
+#endif
   }
 
   void setHeater(bool requested) {
-    const bool desired = AppConfig::kHeaterOutputEnabled && requested;
-    // No PWM here: hysteretic chamber thermostat, not analog PID.
-    if (heaterOn_ != desired) {
-      digitalWrite(AppConfig::kPinHeaterPwm, desired ? HIGH : LOW);
-      heaterOn_ = desired;
+    const bool desired =
+        (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterOutputEnabled) &&
+        requested;
+    if (heaterOn_ == desired) return;
+    if (desired) {
+#ifdef ARDUINO_ARCH_ESP32
+      if (AppConfig::kHeaterCommissioningMode) {
+        if (!pulseTimer_ || pulseTimerFired_) {
+          commission_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
+          faultActive_ = true;
+          forceHeaterOff();
+          return;
+        }
+        timerWrite(pulseTimer_, 0);
+        timerRestart(pulseTimer_); // hardware ceiling before GPIO HIGH
+      }
+#endif
+      digitalWrite(AppConfig::kPinHeaterPwm, HIGH);
+      heaterOn_ = true;
+    } else {
+      forceHeaterOff();
     }
   }
 };
