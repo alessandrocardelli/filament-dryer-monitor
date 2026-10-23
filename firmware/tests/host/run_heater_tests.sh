@@ -8,6 +8,10 @@ mkdir -p "$TMP/firmware/tests/host"
 cp "$ROOT/firmware/SafetyController.h" "$ROOT/firmware/HeaterControlPolicy.h" \
    "$ROOT/firmware/AppConfig.h" "$ROOT/firmware/AppTypes.h" "$TMP/firmware/"
 cp "$ROOT/firmware/tests/host/test_safety_integration.cpp" "$TMP/firmware/tests/host/"
+# The original regression tests exercise the normal (heater-locked) profile.
+# The new experimental pulse controller has its OWN dedicated 12-test suite.
+sed -i 's/kHeaterCommissioningMode = true/kHeaterCommissioningMode = false/' "$TMP/firmware/AppConfig.h"
+
 cat > "$TMP/firmware/Arduino.h" <<'HDR'
 #pragma once
 #include <cstdint>
@@ -59,3 +63,7 @@ g++ "${FLAGS[@]}" -DENABLE_APPROVED_FIXTURE \
 g++ -std=c++17 -Wall -Wextra -Werror -pedantic \
     "$ROOT/firmware/tests/host/test_heater_policy.cpp" -o "$TMP/policy"
 "$TMP/policy"
+
+g++ -std=c++17 -Wall -Wextra -Werror -pedantic \
+    "$ROOT/firmware/tests/host/test_heater_pulse.cpp" -o "$TMP/pulse"
+"$TMP/pulse"
