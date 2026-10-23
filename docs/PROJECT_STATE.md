@@ -1,5 +1,7 @@
 # Project state
 
+> **2026-10-23 — decisione D028 sul flusso di lavoro:** TCO/protezione esterna resta da qualificare per prove con calore e funzione autonoma, ma **non blocca** sviluppo e verifiche senza riscaldamento (UI/fault simulati, logging CSV, web locale, analisi sensori, predisposizione fisica a freddo). Codice `firmware/SafetyController.h` mantiene heater hard-OFF; nessuna modifica a firmware/KiCad, né prova a caldo o bypass autorizzata. Operativamente prioritario un branch separato per logging/web heater-OFF, mentre gate A1 e B restano OPEN. Documento [piano aggiornato](COMPLETION_PLAN_2026-10-22.md); decisioni D027–D028.
+
 > **2026-10-23 — TCO, aggiornamento ricerca Italia:** codice tecnico **MICROTEMP G4A00152C** invariato (Tf152/Th137/Tm205 °C; 5 A/24 V DC resistivi; riferimento continuativo127 °C). ElcoTeam non più prima scelta commerciale per trasporto7 EUR + IVA. Candidato economico eBay **114700828131**, oggetto **Bolzano, Italia**, **3,31 + 3 = 6,31 EUR**, Posta4 stimata30 ottobre–5 novembre al CAP predefinito40121; **MPN completo ancora da confermare**, codice commerciale4_10326 collegato alla famigliaG4 dalla schedaElcart. ElectronicCenter4 pezzi5,76 EUR nel carrello, spedizione finale NON verificata. [Evidenze e verifiche puntuali residue](TCO_PURCHASE_DECISION_2026-10-23.md). Nessun acquisto; gateA/B OPEN, nessun test caldo autorizzato.
 
 
