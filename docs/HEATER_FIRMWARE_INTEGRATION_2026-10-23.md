@@ -1,5 +1,7 @@
 # Firmware principale con controllo riscaldatore integrato — 23 ottobre 2026
 
+**2026-10-23 AGGIORNAMENTO:** [CI GitHub Actions SUCCESS](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40009733825) — compilazione completa firmware **ESP32 Arduino core 3.x e U8g2 PASS**, test C++ nativi PASS. Questo supera le precedenti note 'non compilato'; non equivale al flash o al collaudo fisico. La build mantiene heater output disabled (`kHeaterOutputEnabled=false`).
+
 ## Stato
 
 **IMPLEMENTATO nel codice sorgente, NON ancora collaudato sull'ESP32, heater OFF nel build corrente.**
@@ -21,7 +23,7 @@ Nessun cambio KiCad, NTC di produzione, registrazioni delle impostazioni, pin de
 - **14 casi C++ nativi della policy: PASS**, già nel ramo precedente, rieseguiti il 23 ottobre.
 - **Controller fisico simulato su GNU g++ C++17** con `digitalWrite` e `pinMode` fittizi: **PASS**, configurazione reale `kHeaterOutputEnabled=false` -> **ZERO scritture HIGH**; copia temporanea con dati sintetici qualificati -> richiesta HIGH dopo prerun e ritorno LOW allo STOP e al fault NTC. Questa è una prova del controller con stub, non una prova sulla PCB.
 - Riproduzione host automatizzata in `firmware/tests/host/run_heater_tests.sh`, che compila **gli header veri del repository** in copie temporanee; il secondo run modifica **solo la copia** della configurazione con soglie artificiali da simulazione. Eseguire: `bash firmware/tests/host/run_heater_tests.sh`.
-- **NON eseguiti:** compilazione completa con core ESP32 Arduino/U8g2 (toolchain assente nell'ambiente), flash su PCB, test riscaldatore o test temperatura a box chiuso. Non descrivere il firmware come già pronto per asciugare filament o come collaudato su eBOX Lite.
+- **Eseguiti con SUCCESS nella CI:** compilazione Arduino ESP32 core 3.x con U8g2 e test host. **Non eseguiti:** flash sulla PCB, test riscaldatore o test temperatura a box chiuso. Non descrivere il firmware come già pronto per asciugare filament o come collaudato su eBOX Lite.
 
 ## Condizioni mancanti prima di un vero GPIO19 HIGH
 
@@ -32,6 +34,6 @@ Nessun cambio KiCad, NTC di produzione, registrazioni delle impostazioni, pin de
 
 ## Prossimo lavoro prioritario
 
-Compilare il firmware integrato per la scheda **ESP32-WROOM-32E e Arduino ESP32 core 3.x** con le librerie attuali; risolvere qualsiasi errore, mantenendo `kHeaterOutputEnabled=false`. Solo dopo test di regressione software/UI/ventola con riscaldatore elettricamente isolato e review della misura NTC, passare alla preparazione del primo test termico supervisionato. Non riaprire la ricerca dei TCO per procedere con la compilazione.
+**Compilazione completa riuscita.** Successiva prova sulla scheda con **J5 fisicamente isolato** e build ancora heater-locked, verificando che UI/sensori/ventola restino funzionanti; poi procedere alla revisione NTC/limiti prima di qualsiasi prova a caldo. Non riaprire il sourcing TCO. Non riaprire la ricerca dei TCO per procedere con la compilazione.
 
 **Riferimenti:** D025 (fan), D029 (TCO opzionale), `docs/NTC_CALIBRATION_ANALYSIS.md`, `docs/HEATER_CONTROL_COLD_STAGE_2026-10-23.md`.
