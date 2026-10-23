@@ -50,7 +50,45 @@ constexpr float kNtcEffectivePullupOhms = 46572.0f;
 constexpr float kNtcShortThresholdMv = 150.0f;
 constexpr float kNtcOpenThresholdMv = 3000.0f;
 
-// SAFE BRING-UP: heater remains hard-disabled.
+
+// Integrated heater regulation. The application contains the full controller,
+// but the output is intentionally DISABLED until real thermal limits and the
+// NTC model have been validated for the actual closed enclosure. No TCO
+// purchase is a prerequisite for software development (D029).
+//
+// Neither the old donor 82.5k / B4100 conversion nor the seven Sanwa contact
+// points qualify as a calibrated heater-bead thermometer. Never switch these
+// booleans on simply to make a build heat.
+constexpr bool kHeaterOutputEnabled = false;
+constexpr bool kHeaterProfileApproved = false;
+constexpr bool kHeaterNtcModelApproved = false;
+
+// Zeros intentionally mean UNCONFIGURED, not temperature recommendations.
+// Values must be independently set/reviewed for actual board/materials.
+constexpr float kHeaterMaxMeasuredC = 0.0f;
+constexpr float kChamberMaxMeasuredC = 0.0f;
+constexpr float kChamberControlHysteresisC = 0.0f;
+constexpr uint32_t kHeaterNtcMaxAgeMs = 0;
+constexpr uint32_t kHeaterChamberMaxAgeMs = 0;
+constexpr uint32_t kHeaterFanPrerunMs = 0;
+constexpr uint32_t kHeaterMaxContinuousOnMs = 0;
+constexpr uint32_t kHeaterMaxCycleMs = 0;
+
+// Prevent accidental heater ON by toggling a single flag.
+// These are compile-time guards, while the policy has additional runtime ones.
+static_assert(!kHeaterOutputEnabled ||
+              (kHeaterProfileApproved && kHeaterNtcModelApproved &&
+               kHeaterMaxMeasuredC > 0.0f &&
+               kChamberMaxMeasuredC > 0.0f &&
+               kChamberControlHysteresisC > 0.0f &&
+               kHeaterNtcMaxAgeMs > 0 &&
+               kHeaterChamberMaxAgeMs > 0 &&
+               kHeaterFanPrerunMs > 0 &&
+               kHeaterMaxContinuousOnMs > 0 &&
+               kHeaterMaxCycleMs > 0),
+              "Heater cannot be enabled without reviewed calibration, limits and timers.");
+
+// Legacy UI setup temperature bounds are NOT heater safety limits.
 // These UI bounds are provisional and are NOT heater safety limits.
 constexpr int16_t kPrototypeTempMinC = 30;
 constexpr int16_t kPrototypeTempMaxC = 80;
