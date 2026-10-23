@@ -1,6 +1,6 @@
 # Project state
 
-> **2026-10-23 — selezione acquisto TCO:** MICROTEMP/Therm-O-Disc **G4A00152C**, Tf152/Th137/Tm205 °C; rating produttore **5 A/24 V DC resistivi**, riferimento continuativo consigliato **Tf−25=127 °C**. ElcoTeam SKU3604-10326, disponibile e aggiunto al carrello; 3,16 EUR IVA inclusa, totale carrello 10,16 EUR ma condizioni trasporto 7 EUR + IVA → calcolo prudenziale 11,70 EUR; prezzo definitivo non certificato dal checkout. Dettagli/fonti/evidenza e verifiche residue: [TCO_PURCHASE_DECISION_2026-10-23.md](TCO_PURCHASE_DECISION_2026-10-23.md). Acquisto non eseguito; selezione commerciale distinta da installazione e qualifica: gate A/B restano OPEN, nessun riscaldamento autorizzato.
+> **2026-10-23 — TCO, aggiornamento ricerca Italia:** codice tecnico **MICROTEMP G4A00152C** invariato (Tf152/Th137/Tm205 °C; 5 A/24 V DC resistivi; riferimento continuativo127 °C). ElcoTeam non più prima scelta commerciale per trasporto7 EUR + IVA. Candidato economico eBay **114700828131**, oggetto **Bolzano, Italia**, **3,31 + 3 = 6,31 EUR**, Posta4 stimata30 ottobre–5 novembre al CAP predefinito40121; **MPN completo ancora da confermare**, codice commerciale4_10326 collegato alla famigliaG4 dalla schedaElcart. ElectronicCenter4 pezzi5,76 EUR nel carrello, spedizione finale NON verificata. [Evidenze e verifiche puntuali residue](TCO_PURCHASE_DECISION_2026-10-23.md). Nessun acquisto; gateA/B OPEN, nessun test caldo autorizzato.
 
 
 Checkpoint date: **2026-10-04**  

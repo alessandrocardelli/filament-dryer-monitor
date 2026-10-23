@@ -1,6 +1,44 @@
 # TCO — decisione d'acquisto verificata, 23 ottobre 2026
 
-## Esito operativo
+## Aggiornamento commerciale — Italia e spedizione contenuta (23 ottobre, successivo al primo checkpoint)
+
+**Il codice tecnico resta G4A00152C. La precedente preferenza commerciale ElcoTeam è superata dal vincolo esplicito dell'utente contro 7 EUR di trasporto per pochi euro di prodotto.** Nessuna nuova sostituzione tecnica autorizzata o applicata. Non è ancora verificata un'offerta che combini MPN completo dichiarato, spedizione nazionale rapida e trasporto basso.
+
+**Miglior candidato economico nazionale: eBay ruzzica, articolo 114700828131**, 152 °C, codice commerciale **4_10326**, un pezzo:
+https://www.ebay.it/itm/114700828131
+Pagina effettiva aperta: attiva, **7 disponibili**, Compralo Subito/Aggiungi al carrello selezionabili. Prezzo **3,31 EUR**, inclusi **0,31 EUR Protezione acquisti**; trasporto **3,00 EUR Posta 4 medio standard**; totale pubblicato **6,31 EUR** per un pezzo. Venditore privato, nessuna IVA aggiuntiva esposta. Campo oggetto e dettaglio spedizione: **Bolzano, Italia**; destinazione Italia. Imballaggio entro 2 giorni lavorativi; consegna stimata **30 ottobre–5 novembre** alla destinazione predefinita eBay **40121** (non indirizzo verificato dell'utente). È nazionale ma non una consegna rapida garantita. Dettaglio tariffe aperto; successivamente il selettore destinazione ha mostrato un errore di connessione, conservando i dati sopra: nessun totale di checkout o altro CAP verificato. Carrello eBay non aggiunto.
+**Limite preciso: MPN MICROTEMP G4A00152C non scritto nell'annuncio e non leggibile con certezza nelle tre foto.** Non presentare 4_10326 come prova certa del suffisso A00. Miglior candidato per costo, **acquisto dell'esatto MPN subordinato a conferma della marcatura G4A00/152**; nessun contatto inviato.
+
+**Alternativa più rapida, con costo trasporto meno favorevole: WTT Elettronica, articolo 291602208480**
+https://www.ebay.it/itm/291602208480
+Pagina attiva, oltre 10 disponibili, marca **Omega**, MPN **TC152**, codice descrizione **FT152G**, EAN 8029564057789. **1,85 + 5,90 EUR = 7,75 EUR**, trasporto spedizione veloce 2–3 giorni lavorativi, stima **27–28 ottobre** al CAP predefinito 40121. **Luogo oggetto: Italia, Italia**. Anche qui MPN completo G4A00152C non esplicito e marcatura foto insufficiente. Non è la proposta principale con il nuovo vincolo sulle spese; non trasferire automaticamente i dati G4 a un generico TC152 senza conferma identità. Carrello non aggiunto.
+
+### Collegamento documentale Elcart: nuova evidenza, con limiti
+
+Il produttore/distributore Elcart per **04/10326-00**:
+https://www.elcart.com/it/041032600
+collega questa scheda tecnica originale, scaricata e letta integralmente (1 pagina):
+https://www.elcart.com/it/productpdf/product/download/file/4_10300ST.pdf/sku/041032600/
+La scheda comprende articoli 4/10300–4/10336, tipo **TC152**, e riporta **“Cod. omologazione disc G4”**. Questa è una base concreta per cercare la famiglia G4 anche attraverso i codici commerciali italiani; non scartare questi annunci come generici privi di qualunque documentazione. Tuttavia la scheda non scrive G4A00152C e usa 12 A/250 V e tolleranza ±2 °C: **questi dati non sostituiscono né ampliano i limiti Sensience del preciso G4 selezionato**, né provano il contenuto dell'attuale lotto del venditore. Verificare esatto MPN prima di trattare l'offerta come ricambio identificato. Copia archivio: [Elcart](evidence/tco-2026-10-23/elcart-4-10300ST.pdf).
+
+### Electronic Center: prezzo basso, trasporto non concluso al checkout
+
+https://electronic-center.it/product/25163309/fusibile-a-temperatura-152-c
+Negozio fisico indicato nelle condizioni: **via Bicocchi 40/42, Follonica (GR), Italia**.
+SKU **04-10326**, articolo **1,44 EUR tasse incluse**, pagina dice “Spese di spedizione: gratis” e consegna lunedì **26/10**. Pulsante funzionante dopo un ricaricamento; carrello iniziale rivela **ordine minimo 5 EUR**: aggiunti **4 pezzi = 5,76 EUR** e raggiunto checkout ospite. Screenshot: [carrello quattro pezzi](evidence/tco-2026-10-23/electronic-center-cart.jpg).
+Condizioni effettive aperte https://electronic-center.it/page/page-conditions : merce tramite corriere, costi a carico acquirente e tariffe nel modulo d'ordine. Per raggiungere Spedizione occorre compilare nome, email, telefono, CF/P.IVA e indirizzo completo. Fermato senza dati personali o inventati; selezionata soltanto Italia. **5,76 EUR è totale prodotti, NON totale consegnato verificato; il “gratis” e la data sono indicazioni della pagina, non garanzie confermate dal checkout.** MPN completo non esplicito, stessa cautela Elcart. Perciò questa opportunità non viene dichiarata soluzione gratuita già verificata.
+
+### Altri esiti concreti
+
+- DGM Elettronica eBay https://www.ebay.it/itm/256522913837 : Elcart 04/10326-00, oltre 10 disponibili, luogo **55049, Italia**, 1,51 + 5,90 = **7,41 EUR**, Posta raccomandata extra, stima 3–6 novembre al CAP predefinito. Peggiore combinazione trasporto/tempi rispetto a ruzzica, MPN completo non esplicito.
+- Link breve fornito dall'utente https://ebay.io/m/nlJvx5 risolve alla pagina https://www.ebay.it/itm/406215326674 : **5 pezzi G4A00152**, 3,64 + 3,66 = 7,30 EUR mostrati, ma **luogo Shenzhen, Cina**. Escluso per provenienza, non per prezzo o confezione.
+- Ricercati anche codici G4A00152C/G4A01152C e 4-10326/04-10326/TC152 presso siti italiani (Elcart, Omega, Antei & Paolucci, Klemi, Sacchi e risultati di rivenditori Elcart). Non convertire risultati di ricerca, listini senza prezzo o richieste offerta industriali in acquisti verificati. Non è una prova che non esistano offerte migliori.
+- Non riproposta l'inserzione scaduta 206514925231. Nessun acquisto, ordine, messaggio al venditore, intervento o test caldo eseguito.
+
+**Azione commerciale minima per chiudere l'esatto MPN a basso costo:** ottenere dal venditore ruzzica una foto leggibile o conferma “MICROTEMP G4A00152C, Tf152; non equivalente generico”; il prezzo e l'origine sono già documentati. Per tempi 27–28 ottobre, stessa conferma a WTT, accettando 5,90 EUR trasporto. Per Electronic Center occorre anche tariffa corriere effettiva. Sono verifiche puntuali d'identità e costo, non una nuova discussione sulla scelta termica o sul rating DC della famiglia G4.
+
+
+## Primo checkpoint commerciale — storico, preferenza ElcoTeam superata
 
 **Selezionato per l'acquisto: MICROTEMP / Therm-O-Disc (Sensience) G4A00152C, Tf 152 °C, distribuito da Omega Fusibili.**
 Negozio: ElcoTeam / Elco Elettronica Srl, SKU **3604-10326**.
@@ -52,9 +90,9 @@ Fonte SCHOTT, pp. 7 e 21 stampate: https://media.schott.com/api/public/content/f
 2. **eBay Italia economico realmente attivo:** https://www.ebay.it/itm/182203697116 , ROSSI RICAMBI, 152 °C, 1 EUR IVA inclusa + 6 EUR trasporto verso destinazione italiana mostrata, oltre 10 disponibili e pulsanti acquisto/carrello attivi. **Campo oggetto: Venetico, ME, Italia.** MPN non applicabile / senza marca, foto priva di marcature leggibili. Non attribuibili dati SCHOTT o MICROTEMP a questo generico. Escluso come protezione finale per identità/parametri non verificabili; prezzo basso da solo non è il motivo dello scarto. Carrello non necessario una volta emersa l'identità insufficiente.
 3. Ricerca eBay “microtemp 152” con filtro Italia aperta: **0 corrispondenze esatte nazionali**, poi risultati internazionali esplicitamente etichettati Cina/USA esclusi. Inserzione G4A01152C 205975437957 recuperata dalla ricerca: oggetto a EPSOM, Regno Unito, esclusa per provenienza. Non è sufficiente eBay.it.
 4. Inserzione scaduta 206514925231 NON riaperta né riproposta. RS non scelto come soluzione principale e nessuna disponibilità RS precedente presentata come nuova verifica.
-5. **ElcoTeam G4A00152C**: pagina, inserimento carrello, CAP e checkout ospite verificati come sopra. Fonte concreta preferita.
+5. **ElcoTeam G4A00152C**: pagina, inserimento carrello, CAP e checkout ospite verificati come sopra. Fonte verificata al primo checkpoint, preferenza commerciale successivamente superata.
 
-Non si raccomandano cinque equivalenti: **un solo acquisto selezionato**, G4A00152C da ElcoTeam; nessuna alternativa economica viene spacciata per elettricamente qualificata.
+Il codice selezionato resta G4A00152C; vedere l'aggiornamento commerciale iniziale per i candidati italiani con trasporto inferiore e i precisi limiti ancora aperti.
 
 ## Verifiche residue prima dell'impiego — nessun test caldo autorizzato
 
