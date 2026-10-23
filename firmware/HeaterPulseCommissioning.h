@@ -12,7 +12,7 @@ enum class Phase : uint8_t {
 enum class Fault : uint8_t {
   None, NtcInvalid, NtcStale, AirInvalid, AirStale, AirLimit,
   NtcResistanceLimit, FanUnavailable, FanLost, OverallTimeout,
-  PulseWatchdog
+  PulseWatchdog, ManualStop
 };
 struct Inputs {
   bool cycleActive = false;
@@ -50,7 +50,9 @@ class Sequence {
 
   bool update(uint32_t nowMs, Inputs in) {
     if (!in.cycleActive) {
-      if (phase_ != Phase::Aborted && phase_ != Phase::Complete) phase_ = Phase::Idle;
+      // Once started, a stopped test cannot be restarted without a reset.
+      if (phase_ != Phase::Idle && phase_ != Phase::Complete &&
+          phase_ != Phase::Aborted) abort(Fault::ManualStop);
       requestOn_ = false;
       return false;
     }
@@ -136,7 +138,8 @@ class Sequence {
   // can continue through cooldown even after an operator abort / fault.
   void cancel() {
     requestOn_ = false;
-    if (phase_ != Phase::Aborted && phase_ != Phase::Complete) phase_ = Phase::Idle;
+    if (phase_ != Phase::Idle && phase_ != Phase::Aborted &&
+        phase_ != Phase::Complete) abort(Fault::ManualStop);
   }
   void emergencyStop(Fault reason) { abort(reason); }
   bool cooldownNeeded(uint32_t nowMs) const {
