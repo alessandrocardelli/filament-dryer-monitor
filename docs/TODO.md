@@ -1,5 +1,7 @@
 # TODO
 
+> **2026-10-23 — PRIORITÀ AGGIORNATA (D028):** il **TCO non blocca sviluppo e test a freddo**. Prossimo lavoro software autonomo: preparare storico LittleFS/CSV (obiettivo 12 h/1 campione al minuto), lettura web locale e fault simulati, mantenendo **heater sempre disabilitato**; nessuna ripetizione delle prove UI/ventola già PASS. Gate A1 (disposizione sensori/cavi a secco) resta aperto e parallelizzabile. Gate B (TCO) resta una condizione per **prove con riscaldatore attivo**, NON per UI, logging, web, calibrazione analitica e test a freddo. Il candidato tecnico D027 G4A00152C è già individuato; reperimento economico e montaggio ancora da chiudere, senza bloccare il resto. Vedi [piano aggiornato](COMPLETION_PLAN_2026-10-22.md).
+
 > **2026-10-23 — TCO, aggiornamento ricerca Italia:** codice tecnico **MICROTEMP G4A00152C** invariato (Tf152/Th137/Tm205 °C; 5 A/24 V DC resistivi; riferimento continuativo127 °C). ElcoTeam non più prima scelta commerciale per trasporto7 EUR + IVA. Candidato economico eBay **114700828131**, oggetto **Bolzano, Italia**, **3,31 + 3 = 6,31 EUR**, Posta4 stimata30 ottobre–5 novembre al CAP predefinito40121; **MPN completo ancora da confermare**, codice commerciale4_10326 collegato alla famigliaG4 dalla schedaElcart. ElectronicCenter4 pezzi5,76 EUR nel carrello, spedizione finale NON verificata. [Evidenze e verifiche puntuali residue](TCO_PURCHASE_DECISION_2026-10-23.md). Nessun acquisto; gateA/B OPEN, nessun test caldo autorizzato.
 
 
