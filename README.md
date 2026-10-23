@@ -1,5 +1,7 @@
 # Filament Dryer Monitor
 
+> **2026-10-23 — sviluppo sbloccato (D028):** gate TCO B necessario prima delle prove a caldo, **non** per attività senza calore. Proseguire da subito su firmware/CSV 12 h, web locale, fault simulati, UI e verifiche meccaniche a freddo, mantenendo heater hard-OFF. Il modello G4A00152C resta candidato tecnico selezionato (D027); montaggio/qualifica non completati. [Piano aggiornato](docs/COMPLETION_PLAN_2026-10-22.md).
+
 > **2026-10-23 — TCO, aggiornamento ricerca Italia:** codice tecnico **MICROTEMP G4A00152C** invariato (Tf152/Th137/Tm205 °C; 5 A/24 V DC resistivi; riferimento continuativo127 °C). ElcoTeam non più prima scelta commerciale per trasporto7 EUR + IVA. Candidato economico eBay **114700828131**, oggetto **Bolzano, Italia**, **3,31 + 3 = 6,31 EUR**, Posta4 stimata30 ottobre–5 novembre al CAP predefinito40121; **MPN completo ancora da confermare**, codice commerciale4_10326 collegato alla famigliaG4 dalla schedaElcart. ElectronicCenter4 pezzi5,76 EUR nel carrello, spedizione finale NON verificata. [Evidenze e verifiche puntuali residue](docs/TCO_PURCHASE_DECISION_2026-10-23.md). Nessun acquisto; gateA/B OPEN, nessun test caldo autorizzato.
 
 
