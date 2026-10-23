@@ -1,5 +1,7 @@
 # Prima prova termica CHIUSA con ventola — solo firmware sperimentale 2026-10-23
 
+> **VERIFIED SOFTWARE CHECKPOINT — 2026-10-23:** [GitHub Actions build + native tests SUCCESS](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40022340102) for commit `aabc5b647a60d99efaee956e6033ae5aaaffb8f8`. ESP32 Arduino core 3.x / U8g2 compilation succeeded; 354347 bytes flash (27%), 25472 RAM (7%). Host scenarios: 14 original policy + 12 pulse + normal/fixture GPIO mocks PASS. **Not flashed to hardware, no closed heating performed.**
+
 ## Perché questa prova, e non le precedenti
 
 I sette punti 30–85 °C sono stati raccolti con eBOX Lite **aperto e ventola spenta**; il driver heater 24 V / ~1.59 A e la ventola sono già stati provati separatamente. Questo firmware produce invece **un unico breve ciclo di calore con ventola inserita** per caratterizzare la risposta combinata, senza fingere di conoscere già la curva assoluta NTC.
