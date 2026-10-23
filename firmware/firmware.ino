@@ -42,6 +42,7 @@ static void applyBuzzerSettings() {
 }
 
 static void enterState(AppState next, uint32_t nowMs) {
+  if (next != AppState::Drying) safety.stop();  // Immediate GPIO19 OFF.
   if (appState == AppState::Drying && next != AppState::Drying) {
     cycle.stop();
     fan.stop();
@@ -70,7 +71,9 @@ static void enterState(AppState next, uint32_t nowMs) {
       cycle.start(settings.cycle, nowMs);
       fan.startAuto(nowMs);
       buzzer.playCycleStart(nowMs);
-      Serial.println("STATE -> DRYING TEST (fan active; heater locked OFF)");
+      Serial.println(safety.heaterLocked()
+          ? "STATE -> DRYING (fan active; heater output locked OFF)"
+          : "STATE -> DRYING (heater regulated by air and NTC limits)");
       break;
     case AppState::Complete:
       fan.stop();
@@ -241,8 +244,10 @@ void setup() {
 
   Serial.begin(115200);
   Serial.println();
-  Serial.println("Filament Dryer Monitor - SAFE BRING-UP application");
-  Serial.println("Heater locked OFF. Fan test control enabled.");
+  Serial.println("Filament Dryer Monitor - integrated heater-control firmware");
+  Serial.println(safety.heaterLocked()
+      ? "Heater OUTPUT LOCKED: configuration/calibration not approved."
+      : "Heater regulation ENABLED: supervised qualification required.");
 
   const bool settingsOk = settingsStore.begin(settings);
   if (!settingsOk) {
@@ -270,11 +275,10 @@ void loop() {
   const uint32_t nowMs = millis();
 
   ntc.update(nowMs);
-  safety.update(ntc.snapshot());
+  sht45.update(nowMs);
 
   buttons.update(nowMs, handleButtonEvent);
   buzzer.update(nowMs);
-  sht45.update(nowMs);
   fan.update(nowMs, safety.fanPermitted());
 
   if (appState == AppState::Boot &&
@@ -285,6 +289,15 @@ void loop() {
   if (cycle.update(nowMs) == CycleEvent::Completed) {
     enterState(AppState::Complete, nowMs);
   }
+
+  // Actual controller integration: air is the regulated variable; heater NTC
+  // provides the upper-temperature observation. GPIO19 remains build-locked
+  // until both thermal validation flags and all bounded limits are approved.
+  safety.update(nowMs, ntc.snapshot(), sht45.snapshot(),
+                appState == AppState::Drying && cycle.isRunning(),
+                fan.attached() && fan.phase() == FanPhase::Running,
+                cycle.elapsedMs(nowMs),
+                static_cast<float>(settings.cycle.targetTempC));
 
   if (safety.faultActive() && appState != AppState::Fault) {
     enterState(AppState::Fault, nowMs);
@@ -316,10 +329,17 @@ void loop() {
       Serial.print("k T=");
       Serial.print(n.temperatureC, 2);
       Serial.print("C empirical=");
-      Serial.println(n.insideEmpiricalRange ? "yes" : "no");
+      Serial.print(n.insideEmpiricalRange ? "yes" : "no");
+      Serial.print(" heater=");
+      Serial.print(safety.heaterLocked() ? "LOCKED" :
+                   (safety.heaterOn() ? "ON" : "OFF"));
+      Serial.print(" safetyFault=");
+      Serial.println(static_cast<int>(safety.heaterFault()));
     } else {
       Serial.print("-- fault=");
-      Serial.println(static_cast<int>(n.fault));
+      Serial.print(static_cast<int>(n.fault));
+      Serial.print(" heater=OFF safetyFault=");
+      Serial.println(static_cast<int>(safety.heaterFault()));
     }
   }
 
@@ -328,7 +348,8 @@ void loop() {
       ui.render(nowMs, appState, setupField, settingsField, settings,
                 sht45.snapshot(), ntc.snapshot(),
                 cycle.remainingSeconds(nowMs), fan.dutyPercent(),
-                technicalPage, nowMs - bootStartedMs);
+                technicalPage, nowMs - bootStartedMs,
+                safety.heaterLocked(), safety.heaterOn());
   if (wordmarkJustRevealed) {
     // Trigger the first note only after the fully refreshed wordmark is visible.
     buzzer.playStartup(millis());
