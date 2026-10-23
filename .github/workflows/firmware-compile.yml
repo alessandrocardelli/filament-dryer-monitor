@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/integrated-heater-controller-2026-10-23
+      - test/closed-case-heater-pulses-2026-10-23
   workflow_dispatch:
 
 jobs:
@@ -19,9 +20,12 @@ jobs:
           arduino-cli core install esp32:esp32 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
       - name: Install OLED library
         run: arduino-cli lib install U8g2
-      - name: Compile firmware without heater actuation
+      - name: Compile branch firmware for ESP32
         run: |
           grep -q 'constexpr bool kHeaterOutputEnabled = false;' firmware/AppConfig.h
+          if [ "$GITHUB_REF_NAME" = "test/closed-case-heater-pulses-2026-10-23" ]; then
+            grep -q 'constexpr bool kHeaterCommissioningMode = true;' firmware/AppConfig.h
+          fi
           arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all
       - name: Native control logic tests
         run: bash firmware/tests/host/run_heater_tests.sh
