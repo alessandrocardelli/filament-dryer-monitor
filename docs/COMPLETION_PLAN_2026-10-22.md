@@ -1,5 +1,7 @@
 # Piano maestro di completamento — Filament Dryer Monitor
 
+> **2026-10-23 — checkpoint C/D software:** su branch feature/heater-policy-cold-tests-2026-10-23 aggiunti firmware/HeaterControlPolicy.h (modulo senza GPIO/non integrato) e 14 test nativi PASS, documentati in [HEATER_CONTROL_COLD_STAGE_2026-10-23.md](HEATER_CONTROL_COLD_STAGE_2026-10-23.md). Non equivale al PASS di C (calibrazione termica) né D (firmware integrato); serve a sbloccare sviluppo e test a freddo. Nessuna autorizzazione prove calde; TCO rimane opzionale ai sensi D029, tenere conto del 105 °C fisicamente installato.
+
 **Data:** 2026-10-22  
 **Stato:** piano operativo; NON autorizza a scaldare, cambiare protezioni, firmware attivo o KiCad.  
 **Lavoro corrente:** branch `plan/closed-heater-qualification-2026-10-20`, 8 commit di preparazione oltre `main` al checkpoint. Verificare sempre HEAD/branch prima di riprendere.  
