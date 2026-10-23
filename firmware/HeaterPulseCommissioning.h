@@ -138,9 +138,12 @@ class Sequence {
   // can continue through cooldown even after an operator abort / fault.
   void cancel() {
     requestOn_ = false;
+    // An intentional STOP leaves STANDBY usable; the heat test itself cannot
+    // be restarted in the same boot.
     if (phase_ != Phase::Idle && phase_ != Phase::Aborted &&
-        phase_ != Phase::Complete) abort(Fault::ManualStop);
+        phase_ != Phase::Complete) phase_ = Phase::Aborted;
   }
+  bool canStart() const { return phase_ == Phase::Idle; }
   void emergencyStop(Fault reason) { abort(reason); }
   bool cooldownNeeded(uint32_t nowMs) const {
     return hadHeat_ && (nowMs - lastHeatMs_) < p_.cooldownMs;
