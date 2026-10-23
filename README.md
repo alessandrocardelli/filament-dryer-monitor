@@ -1,5 +1,8 @@
 # Filament Dryer Monitor
 
+> **2026-10-23 — selezione acquisto TCO:** MICROTEMP/Therm-O-Disc **G4A00152C**, Tf152/Th137/Tm205 °C; rating produttore **5 A/24 V DC resistivi**, riferimento continuativo consigliato **Tf−25=127 °C**. ElcoTeam SKU3604-10326, disponibile e aggiunto al carrello; 3,16 EUR IVA inclusa, totale carrello 10,16 EUR ma condizioni trasporto 7 EUR + IVA → calcolo prudenziale 11,70 EUR; prezzo definitivo non certificato dal checkout. Dettagli/fonti/evidenza e verifiche residue: [TCO_PURCHASE_DECISION_2026-10-23.md](docs/TCO_PURCHASE_DECISION_2026-10-23.md). Acquisto non eseguito; selezione commerciale distinta da installazione e qualifica: gate A/B restano OPEN, nessun riscaldamento autorizzato.
+
+
 > **2026-10-22 completion planning (feature branch only):** the single gated plan [docs/COMPLETION_PLAN_2026-10-22.md](docs/COMPLETION_PLAN_2026-10-22.md) covers A–H from closed-case SHT45/Sanwa/cable preparation and independent TCO qualification through controlled heater tests, production-style V1 firmware, CSV/web and final documentation. **Next: gate A1, with power disconnected, verify actual sensor/probe/TCO locations and whether both lids close without pinching wires.** No heater test, TCO change or firmware heater enable was authorized; previously passed fan/UI/Q4 benchmarks remain passed. This plan is currently on `plan/closed-heater-qualification-2026-10-20`, not `main`.
 
 

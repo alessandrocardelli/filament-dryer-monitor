@@ -160,3 +160,10 @@ The fabricated board uses J7 = JST-GH BM02B-GHS-TBT, but the original eSUN NTC p
 A PEBA micro-crimping kit/tool advertised for JST-GH 1.25 mm and 0.03–0.34 mm² conductors was purchased on 2026-10-08, with delivery expected Saturday 2026-10-10. The original NTC leads are believed to be about 30 AWG. Before modifying the dryer harness, perform a sacrificial GH crimp and check conductor crimp, insulation support, terminal shape, housing retention and pull strength. If acceptable, remove the incompatible original plug and terminate the NTC leads directly into a 2-position GH housing for J7.
 
 This is first-article harness recovery, not a released PCB/BOM connector change. The J7 connector choice must be reviewed deliberately in the next hardware revision.
+
+
+## 2026-10-23 — off-board heater TCO purchase selection
+
+**2026-10-23 — selezione acquisto TCO:** MICROTEMP/Therm-O-Disc **G4A00152C**, Tf152/Th137/Tm205 °C; rating produttore **5 A/24 V DC resistivi**, riferimento continuativo consigliato **Tf−25=127 °C**. ElcoTeam SKU3604-10326, disponibile e aggiunto al carrello; 3,16 EUR IVA inclusa, totale carrello 10,16 EUR ma condizioni trasporto 7 EUR + IVA → calcolo prudenziale 11,70 EUR; prezzo definitivo non certificato dal checkout. Dettagli/fonti/evidenza e verifiche residue: [TCO_PURCHASE_DECISION_2026-10-23.md](../../docs/TCO_PURCHASE_DECISION_2026-10-23.md). Acquisto non eseguito; selezione commerciale distinta da installazione e qualifica: gate A/B restano OPEN, nessun riscaldamento autorizzato.
+
+Purchase URL: https://www.elcoteam.com/thermal-fuse-152-c-format-g4-10a-250v-microtemp-g4a00152c . Qty 1 selected for procurement; NOT purchased, NOT received, NOT installed. Not a PCB BOM/footprint change. No generic 152 °C substitution.

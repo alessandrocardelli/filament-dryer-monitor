@@ -1,5 +1,8 @@
 # TODO
 
+> **2026-10-23 — selezione acquisto TCO:** MICROTEMP/Therm-O-Disc **G4A00152C**, Tf152/Th137/Tm205 °C; rating produttore **5 A/24 V DC resistivi**, riferimento continuativo consigliato **Tf−25=127 °C**. ElcoTeam SKU3604-10326, disponibile e aggiunto al carrello; 3,16 EUR IVA inclusa, totale carrello 10,16 EUR ma condizioni trasporto 7 EUR + IVA → calcolo prudenziale 11,70 EUR; prezzo definitivo non certificato dal checkout. Dettagli/fonti/evidenza e verifiche residue: [TCO_PURCHASE_DECISION_2026-10-23.md](TCO_PURCHASE_DECISION_2026-10-23.md). Acquisto non eseguito; selezione commerciale distinta da installazione e qualifica: gate A/B restano OPEN, nessun riscaldamento autorizzato.
+
+
 > **Piano maestro di completamento (2026-10-22):** [COMPLETION_PLAN_2026-10-22.md](COMPLETION_PLAN_2026-10-22.md) contiene i gate A–H, responsabilità, criteri di PASS e regole antistallo. **Gate corrente A1: ispezione fisica SHT45/Sanwa/TCO/cavi/chiusura a dispositivo spento; poi B TCO.** Nessun collaudo termico chiuso è stato eseguito o autorizzato dal piano. Le checklist storiche sotto restano registri, non richieste di rieseguire prove già concluse.
 
 
