@@ -86,9 +86,9 @@ int main() {
     assert(!s.update(0,v));
     assert(s.update(5000,v));
     s.cancel();
-    assert(!s.heaterRequested() && s.fault()==Fault::ManualStop);
+    assert(!s.heaterRequested() && s.fault()==Fault::None);
     assert(s.cooldownNeeded(5000));
-    assert(!s.update(6000,v) && s.phase()==Phase::Aborted);
+    assert(!s.update(6000,v) && s.phase()==Phase::Aborted);\n    assert(!s.canStart());
   }
   {
     Sequence s; auto v=ok();
