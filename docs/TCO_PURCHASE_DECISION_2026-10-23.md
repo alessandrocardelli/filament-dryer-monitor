@@ -1,5 +1,45 @@
 # TCO — decisione d'acquisto verificata, 23 ottobre 2026
 
+## Decisione operativa aggiornata — WTT identificato e carrello verificato (23 ottobre 2026)
+
+**Prima scelta d'acquisto: MICROTEMP / Therm-O-Disc G4A00152C, Tf152 °C, venduto da WTT Elettronica come FT152G / Omega.**
+**Link eBay esatto:** https://www.ebay.it/itm/291602208480
+**Totale effettivamente verificato nel carrello eBay per 1 pezzo: 7,75 EUR = 1,85 EUR articolo + 5,90 EUR trasporto.** Annuncio dichiara prezzo IVA inclusa; nessun altro costo obbligatorio osservato. Non è stata completata la pagina pagamento né inviato un ordine. Il carrello non riserva lo stock.
+
+### Identificazione risolta mediante il catalogo dello stesso venditore
+
+La pagina ufficiale WTT, raggiunta dal motore di ricerca interno FT152G e aperta nel browser, dichiara esplicitamente:
+https://www.wttelettronica.com/fusibili-termici-fusibile-termico-assiale-152-c-250v-10a.1.18.37.gp.575.uw
+
+- Codice articolo **FT152G**.
+- **Codice produttore G4A00152C**, marca commerciale Omega.
+- **EAN 8029564057789**.
+- Disponibile, prezzo **1,75 EUR IVA22% inclusa**.
+- Stesso FT152G, marca Omega ed EAN presenti nell'annuncio eBay. L'annuncio conserva MPN generico TC152: il collegamento al codice preciso è ora sostenuto dal catalogo diretto del medesimo venditore, non dal colore del cono, da una semplice somiglianza o da un altro negozio.
+- [Screenshot pagina con MPN ed EAN](evidence/tco-2026-10-23/wtt-product-code.jpg).
+
+**Questa nuova evidenza supera il precedente limite “WTT: MPN completo da confermare”.** È una identificazione documentale incrociata del prodotto offerto; rimane il normale controllo della marcatura/corrispondenza al ricevimento. Non è una certificazione di autenticità del singolo pezzo. I limiti tecnici Sensience del G4 già riportati sotto restano applicabili al codice selezionato; nessun rating dedotto dal solo TC152.
+
+### Verifica commerciale e spedizione
+
+- Pagina eBay attiva, inizialmente oltre 10 disponibili / 93 venduti, pulsante carrello funzionante. Il carrello segnala “quasi esaurito”: prevale la comprabilità corrente, non si garantisce una quantità futura.
+- **Campo oggetto nell'annuncio: Italia, Italia**. Sede operativa del sito del venditore: **Via F.lli Bandiera11/B, 07026 Olbia (SS), Italia**, P.IVA08067431216.
+- Trasporto eBay **5,90 EUR**, “Altro corriere1–2 giorni”, indicazione complessiva “spedizione in2–4 giorni”; evasione dichiarata entro1 giorno lavorativo. Stima pubblicata **27–29 ottobre2026**.
+- Inserito **CAP48018** nel dettaglio spedizione e premuto Aggiorna: annuncio principale successivo mostra la stessa tariffa5,90 e stima27–29 ottobre a48018. Il dettaglio presenta anche un avviso di connessione, perciò non è da usare come garanzia dell'esatta data; la tariffa è confermata separatamente nel **carrello**, che riporta articolo1,85, trasporto5,90 e totale7,75.
+- 1 pezzo effettivamente aggiunto e pagina carrello aperta. [Screenshot carrello](evidence/tco-2026-10-23/wtt-ebay-cart.jpg). Fermato prima di “Vai al pagamento”. Nessun accesso, registrazione, dato personale completo, pagamento, ordine o messaggio inviato.
+- Il sito diretto costa10 centesimi meno: **1,75 +5,90 =7,65 EUR**, ma questo totale è **calcolato dalla scheda e dal preventivo di trasporto**, non verificato al checkout. Anche sul sito1 pezzo aggiunto al carrello, rigaFT152G1,75 confermata.
+- “Maggiori dettagli” della scheda apre un preventivo **Nazione Italy — GLS24/72 ore5,90 EUR IVA inclusa**. Le condizioni generali https://www.wttelettronica.com/Spedizioni-e-Pagamenti citano Posta1 “da3 EUR” per piccoli invii, ma **per questo articolo il calcolatore mostra solo GLS5,90**: non promettere un totale4,75 non disponibile nel preventivo. Prezzo effettivo del sito dopo login/registrazione secondo la politica; nessun account creato.
+- La spedizione5,90 rimane elevata rispetto al pezzo: è un **compromesso esplicito**, non una spedizione economica da3 EUR. Si preferisce l'offerta eBay per il totale7,75 realmente verificato, l'identificazione ora documentata e l'origine nazionale; nessuna spesa da12 EUR. Differenza rispetto al candidato ruzzica6,31: **1,44 EUR complessivi**.
+
+### Esito della risposta del venditore ruzzica
+
+L'utente ha riportato la risposta: neppure ingrandendo il venditore legge la sigla, identifica soltanto il cono grigio; consegna alle Poste entro2 giorni dall'ordine. Questo non conferma G4A00152C né un arrivo entro2 giorni. **Non scelto per l'acquisto del codice identificato**; non dichiarato difettoso o pericoloso. La precedente ricerca6,31 resta storico delle verifiche commerciali, non raccomandazione corrente.
+
+**Decisione:** acquistare, se l'utente procede autonomamente, **1 G4A00152C da WTT su eBay a7,75 EUR nel carrello verificato**. Il componente tecnico di D027 resta invariato. Ricevimento/controllo sigla e successiva qualifica fisica/termica restano aperti. Il TCO non blocca sviluppo senza calore secondo D028; nessuna modifica a hardware o firmware, nessun test caldo autorizzato o compiuto.
+
+
+## Ricerche precedenti — storico superato dalla decisione WTT sopra
+
 ## Aggiornamento commerciale — Italia e spedizione contenuta (23 ottobre, successivo al primo checkpoint)
 
 **Il codice tecnico resta G4A00152C. La precedente preferenza commerciale ElcoTeam è superata dal vincolo esplicito dell'utente contro 7 EUR di trasporto per pochi euro di prodotto.** Nessuna nuova sostituzione tecnica autorizzata o applicata. Non è ancora verificata un'offerta che combini MPN completo dichiarato, spedizione nazionale rapida e trasporto basso.
