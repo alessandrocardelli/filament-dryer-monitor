@@ -98,7 +98,7 @@ class Sequence {
           phase_ = Phase::Pulse;
           phaseSinceMs_ = nowMs;
         } else return false;
-        // deliberate fallthrough: first pulse begins after prerun
+        [[fallthrough]]; // first pulse begins after prerun
       case Phase::Pulse:
         if (nowMs - phaseSinceMs_ >= p_.pulseMs) {
           ++pulsesDone_;
