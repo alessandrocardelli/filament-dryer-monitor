@@ -59,19 +59,22 @@ class NetworkService {
   void tick(uint32_t nowMs, bool permitHttp, bool permitOta) {
     otaAllowed_ = permitOta && !uploadActive_;
     if (ssid_.length() && WiFi.status() == WL_CONNECTED) {
-      if (!mdnsStarted_) {
+      if (!staAnnounced_) {
+        staAnnounced_ = true;
         mdnsStarted_ = MDNS.begin("filament-dryer");
         if (mdnsStarted_) MDNS.addService("http", "tcp", 80);
         Serial.print("WiFi address: http://");
         Serial.println(WiFi.localIP());
+        note("WIFI CONNECTED");
       }
       if (setupApActive_) {
         WiFi.softAPdisconnect(true);
         setupApActive_ = false;
       }
-    } else if (ssid_.length() && !setupApActive_ &&
-               nowMs - connectingSinceMs_ >= 15000) {
-      startSetupAp();
+    } else {
+      staAnnounced_ = false;
+      if (ssid_.length() && !setupApActive_ &&
+          nowMs - connectingSinceMs_ >= 15000) startSetupAp();
     }
 
     // A synchronous network request must never extend a heater pulse.
@@ -83,6 +86,7 @@ class NetworkService {
   }
 
   bool uploadActive() const { return uploadActive_; }
+  bool updateBusy() const { return uploadActive_ || rebootPending_; }
   bool setupApActive() const { return setupApActive_; }
   const char *setupSsid() const { return apSsid_.c_str(); }
   const char *setupPass() const { return apPass_.c_str(); }
@@ -102,7 +106,7 @@ class NetworkService {
   Preferences prefs_;
   Status live_{};
   String ssid_, wifiPass_, adminPass_, apSsid_, apPass_;
-  bool setupApActive_ = false, mdnsStarted_ = false;
+  bool setupApActive_ = false, mdnsStarted_ = false, staAnnounced_ = false;
   bool otaAllowed_ = false, uploadActive_ = false, updateOk_ = false;
   bool rebootPending_ = false;
   uint32_t rebootAtMs_ = 0, connectingSinceMs_ = 0;
