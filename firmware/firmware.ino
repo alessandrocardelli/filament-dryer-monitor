@@ -10,6 +10,8 @@
 #include "FanController.h"
 #include "FirmwareBuild.h"
 #include "NtcSensor.h"
+#include "ThermalLog.h"
+#include "NetworkService.h"
 #include "SafetyController.h"
 #include "SettingsStore.h"
 #include "Sht45Sensor.h"
@@ -28,6 +30,8 @@ SettingsStore settingsStore;
 Sht45Sensor sht45(Wire);
 StatusLed statusLed;
 Ui ui(oled);
+ThermalLog thermalLog;
+NetworkService network(thermalLog);
 
 AppState appState = AppState::Boot;
 SetupField setupField = SetupField::Temperature;
@@ -38,6 +42,7 @@ uint32_t bootStartedMs = 0;
 uint32_t lastNtcLogMs = 0;
 uint32_t lastCommissionCsvMs = 0;
 bool technicalPage = false;
+bool loggingSession = false;
 
 static void applyBuzzerSettings() {
   buzzer.setVolume(settings.buzzerVolume);
@@ -70,6 +75,8 @@ static void enterState(AppState next, uint32_t nowMs) {
       Serial.println("STATE -> SETTINGS");
       break;
     case AppState::Drying:
+      thermalLog.start();
+      loggingSession = true;
       settingsStore.save(settings);
       cycle.start(settings.cycle, nowMs);
       fan.startAuto(nowMs);
@@ -287,6 +294,8 @@ void setup() {
   sht45.begin(nowMs);
   buzzer.begin();
   applyBuzzerSettings();
+  thermalLog.begin();  // mounts CSV partition, does not write while heating
+  network.begin();     // non-blocking Wi-Fi STA or random-key setup AP
 
   appState = AppState::Boot;  // Roots grow in silence.
 
@@ -306,7 +315,7 @@ void loop() {
   ntc.update(nowMs);
   sht45.update(nowMs);
 
-  buttons.update(nowMs, handleButtonEvent);
+  if (!network.uploadActive()) buttons.update(nowMs, handleButtonEvent);
   buzzer.update(nowMs);
   fan.update(nowMs, safety.fanPermitted());
 
@@ -339,6 +348,18 @@ void loop() {
       safety.commissioningComplete() && appState == AppState::Drying) {
     Serial.println("HEATER_TEST_DONE: all pulses and cooldown completed");
     enterState(AppState::Complete, nowMs);
+  }
+
+  if (loggingSession &&
+      (appState == AppState::Drying || safety.coolingRequired(nowMs))) {
+    thermalLog.sample(nowMs, sht45.snapshot(), ntc.snapshot(),
+                      safety.heaterOn(), fan.dutyPercent(),
+                      safety.commissioningPhase(),
+                      safety.commissioningPulsesDone());
+  } else if (loggingSession) {
+    loggingSession = false;
+    Serial.println(thermalLog.saveWhenSafe() ?
+        "CSV stored: /last-test.csv" : "CSV not stored; RAM trace still available");
   }
 
   if (AppConfig::kHeaterCommissioningMode &&
@@ -403,6 +424,27 @@ void loop() {
     }
   }
 
+  NetworkService::Status telem{};
+  telem.ms = nowMs;
+  const auto &airNow = sht45.snapshot();
+  const auto &ntcNow = ntc.snapshot();
+  telem.airValid = airNow.valid;
+  telem.airC = airNow.valid ? airNow.temperatureC : 0;
+  telem.rh = airNow.valid ? airNow.humidityRh : 0;
+  telem.ntcValid = ntcNow.valid;
+  telem.ntcOhms = ntcNow.valid ? ntcNow.resistanceOhms : 0;
+  telem.heaterCommand = safety.heaterOn();
+  telem.fanPercent = fan.dutyPercent();
+  telem.cycle = appState == AppState::Drying;
+  telem.fault = appState == AppState::Fault;
+  telem.phase = safety.commissioningPhase();
+  telem.pulses = safety.commissioningPulsesDone();
+  telem.pulseFault = safety.commissioningFault();
+  network.publish(telem);
+  const bool canOta = appState == AppState::Standby && !safety.faultActive() &&
+       !cycle.isRunning() && !safety.coolingRequired(nowMs) && !safety.heaterOn();
+  network.tick(nowMs, !safety.heaterOn(), canOta);
+
   ui.updateSleep(nowMs, appState);
   const bool wordmarkJustRevealed =
       ui.render(nowMs, appState, setupField, settingsField, settings,
@@ -412,7 +454,10 @@ void loop() {
                 safety.heaterLocked(), safety.heaterOn(),
                 safety.commissioningPhase(),
                 safety.commissioningPulsesDone(),
-                safety.commissioningFault());
+                safety.commissioningFault(),
+                network.setupApActive() ? network.setupSsid() : nullptr,
+                network.setupApActive() ? network.setupPass() : nullptr,
+                network.connected() ? network.address().c_str() : nullptr);
   if (wordmarkJustRevealed) {
     // Trigger the first note only after the fully refreshed wordmark is visible.
     buzzer.playStartup(millis());
