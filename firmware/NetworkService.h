@@ -47,6 +47,15 @@ class NetworkService {
 
   void publish(const Status &s) { live_ = s; }
 
+  // Small RAM diagnostic console. Mirrors relevant state/fault transitions,
+  // not arbitrary strings or credentials from Serial.
+  void note(const char *message) {
+    snprintf(events_[eventHead_], sizeof(events_[eventHead_]),
+             "[%lu ms] %s", (unsigned long)millis(), message);
+    eventHead_ = (eventHead_ + 1) % kEventCapacity;
+    if (eventCount_ < kEventCapacity) ++eventCount_;
+  }
+
   void tick(uint32_t nowMs, bool permitHttp, bool permitOta) {
     otaAllowed_ = permitOta && !uploadActive_;
     if (ssid_.length() && WiFi.status() == WL_CONNECTED) {
@@ -85,6 +94,9 @@ class NetworkService {
   bool connected() const { return WiFi.status() == WL_CONNECTED; }
 
  private:
+  static constexpr size_t kEventCapacity = 32;
+  char events_[kEventCapacity][88]{};
+  size_t eventHead_ = 0, eventCount_ = 0;
   ThermalLog &log_;
   WebServer server_{80};
   Preferences prefs_;
@@ -189,6 +201,16 @@ class NetworkService {
       j += "}";
       server_.sendHeader("Cache-Control", "no-store");
       server_.send(200,"application/json",j);
+    });
+    server_.on("/api/events", HTTP_GET, [this]() {
+      server_.setContentLength(CONTENT_LENGTH_UNKNOWN);
+      server_.send(200, "text/plain; charset=utf-8", "");
+      for (size_t i = 0; i < eventCount_; ++i) {
+        const size_t ix = (eventHead_ + kEventCapacity - eventCount_ + i) %
+                          kEventCapacity;
+        server_.sendContent(String(events_[ix]) + "\\n");
+      }
+      server_.sendContent("");
     });
     server_.on("/api/history.csv", HTTP_GET, [this]() {
       server_.setContentLength(CONTENT_LENGTH_UNKNOWN);
@@ -300,7 +322,8 @@ button{padding:9px 14px}
 <a href="/api/last-test.csv">Scarica ultimo test salvato</a> ·
 <a href="/ota">Aggiorna firmware OTA</a></p>
 <canvas id="trend" width="850" height="220" style="width:100%;max-width:850px"></canvas>
-<pre id="rows">...</pre></div>
+<pre id="rows">...</pre>
+<h3>Console eventi</h3><pre id="events">...</pre></div>
 <script>
 const $=x=>document.getElementById(x);
 const phases=['IDLE','PRERUN','HEATER ON','PAUSE','COOLING','COMPLETE','ABORT'];
@@ -335,7 +358,8 @@ async function history(){
  vals.forEach((v,i)=>{let x=35+(795*i/(vals.length-1)),y=200-180*(v-min)/(max-min);if(!i)g.moveTo(x,y);else g.lineTo(x,y)});g.stroke();
  }catch(e){}
 }
-status();history();setInterval(status,1000);setInterval(history,4000);
+async function events(){try{let r=await fetch('/api/events',{cache:'no-store'});if(r.ok)$('events').textContent=await r.text();}catch(e){}}
+status();history();events();setInterval(status,1000);setInterval(history,4000);setInterval(events,2000);
 </script></html>)HTML";
   }
 };
