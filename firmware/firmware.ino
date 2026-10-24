@@ -43,6 +43,7 @@ uint32_t lastNtcLogMs = 0;
 uint32_t lastCommissionCsvMs = 0;
 bool technicalPage = false;
 bool loggingSession = false;
+uint8_t previousPhaseReported = 255;
 
 static void applyBuzzerSettings() {
   buzzer.setVolume(settings.buzzerVolume);
@@ -106,6 +107,11 @@ static void enterState(AppState next, uint32_t nowMs) {
       fan.stop();
       break;
   }
+  static const char *const kStateText[] = {
+    "STATE BOOT", "STATE STANDBY", "STATE SETUP", "STATE SETTINGS",
+    "STATE DRYING", "STATE COMPLETE", "STATE FAULT"
+  };
+  network.note(kStateText[static_cast<uint8_t>(next)]);
 }
 
 static void selectNextSetupField() {
@@ -296,6 +302,7 @@ void setup() {
   applyBuzzerSettings();
   thermalLog.begin();  // mounts CSV partition, does not write while heating
   network.begin();     // non-blocking Wi-Fi STA or random-key setup AP
+  network.note(FirmwareBuild::kId);
 
   appState = AppState::Boot;  // Roots grow in silence.
 
@@ -338,6 +345,11 @@ void loop() {
                 static_cast<float>(settings.cycle.targetTempC));
 
   if (safety.faultActive() && appState != AppState::Fault) {
+    char event[60];
+    snprintf(event, sizeof(event), "FAULT ntc=%u pulse=%u",
+             static_cast<unsigned>(safety.ntcFault()),
+             static_cast<unsigned>(safety.commissioningFault()));
+    network.note(event);
     if (AppConfig::kHeaterCommissioningMode) {
       Serial.print("HEATER_TEST_ABORT fault=");
       Serial.println(safety.commissioningFault());
@@ -422,6 +434,17 @@ void loop() {
       Serial.print(" heater=OFF safetyFault=");
       Serial.println(static_cast<int>(safety.heaterFault()));
     }
+  }
+
+  const uint8_t currentPhase = safety.commissioningPhase();
+  if (currentPhase != previousPhaseReported) {
+    previousPhaseReported = currentPhase;
+    static const char *const kPhaseText[] = {
+      "PULSE IDLE", "FAN PRERUN", "HEATER ON", "HEATER GAP",
+      "COOLDOWN", "PULSE COMPLETE", "PULSE ABORTED"
+    };
+    if (currentPhase < sizeof(kPhaseText) / sizeof(kPhaseText[0]))
+      network.note(kPhaseText[currentPhase]);
   }
 
   NetworkService::Status telem{};
