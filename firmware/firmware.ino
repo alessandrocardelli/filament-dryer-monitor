@@ -8,6 +8,7 @@
 #include "Buzzer.h"
 #include "CycleController.h"
 #include "FanController.h"
+#include "FirmwareBuild.h"
 #include "NtcSensor.h"
 #include "SafetyController.h"
 #include "SettingsStore.h"
@@ -264,6 +265,10 @@ void setup() {
   Serial.begin(115200);
   Serial.println();
   Serial.println("Filament Dryer Monitor - integrated heater-control firmware");
+  Serial.print("FW BUILD: ");
+  Serial.println(FirmwareBuild::kId);
+  Serial.print("FW MODE: ");
+  Serial.println(FirmwareBuild::kMode);
   if (AppConfig::kHeaterCommissioningMode) {
     Serial.println("EXPERIMENTAL 3-PULSE HEATER TEST MODE; no auto-repeat");
     Serial.println("NTC absolute degrees NOT calibrated; raw resistance gate");
@@ -404,7 +409,10 @@ void loop() {
                 sht45.snapshot(), ntc.snapshot(),
                 cycle.remainingSeconds(nowMs), fan.dutyPercent(),
                 technicalPage, nowMs - bootStartedMs,
-                safety.heaterLocked(), safety.heaterOn());
+                safety.heaterLocked(), safety.heaterOn(),
+                safety.commissioningPhase(),
+                safety.commissioningPulsesDone(),
+                safety.commissioningFault());
   if (wordmarkJustRevealed) {
     // Trigger the first note only after the fully refreshed wordmark is visible.
     buzzer.playStartup(millis());
