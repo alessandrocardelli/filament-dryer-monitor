@@ -71,3 +71,24 @@ Questo upgrade non serve a validare il riscaldamento: il precedente test PULSE-R
 L'utente ha aggiornato via Wi-Fi dalla pagina web con Microsoft Edge ed ha verificato che la dashboard dopo il riavvio mostra i tre titoli modificati della build **WIFI-241024-R2**. Il **primo aggiornamento OTA web su PCB è PASS**, senza cavo USB. Con Google Chrome, invece, prima del caricamento la pagina `/ota` restituiva HTTP 401; con Edge la medesima autenticazione ha funzionato. La causa specifica di Chrome non è verificata. Nessun dato sensibile della connessione va pubblicato nel repository.
 
 **Distinzione fra due protocolli OTA:** il firmware attuale usa `WebServer`/`Update` (upload `.bin` dal browser); non contiene la libreria `ArduinoOTA`, né il servizio upload via IDE, quindi l'ESP32 non apparirà automaticamente come porta OTA nell'IDE. Arduino IDE può già compilare ed esportare `.bin`, ma per un clic sul tasto Carica via Wi-Fi occorre sviluppare e validare separatamente ArduinoOTA e la pubblicazione mDNS, le credenziali e il gate esclusivo STANDBY/heater OFF, preservando la sicurezza del ciclo. Un problema di Chrome non impedisce necessariamente ArduinoOTA; sono metodi diversi. Il prossimo ciclo caldo **non è richiesto** per questi lavori.
+
+## Arduino IDE OTA — nuova implementazione WIFI-241024-R3 (24 ottobre 2026)
+
+L'utente ha confermato Chrome **funzionante in incognito** sul percorso `/ota`, mentre il profilo Chrome ordinario restituisce HTTP 401. Il problema è pertanto specifico della sessione/profilo normale: verificare credenziali memorizzate/chiusura completa di Chrome; **non** rimuovere l'autenticazione HTTP. Anche il primo Web OTA R2 via Edge e le etichette aggiornate sono PASS fisicamente.
+
+### Cosa è stato sviluppato
+
+- `ArduinoOTA` integrato dal core Espressif ESP32, sulla porta **UDP 3232**; si avvia esclusivamente con ESP32 collegata alla rete STA e password OTA di almeno 12 caratteri precedentemente salvata in NVS (`dryer_net/admin`). Nessun SSID o segreto nel codice.
+- Il servizio Arduino IDE OTA è registrato come `_arduino._tcp` tramite **lo stesso `MDNS` già usato da `filament-dryer.local` e dal servizio web**, evitando una doppia chiamata concorrente a `MDNS.begin` (uso di `ArduinoOTA.setMdnsEnabled(false)` seguito da `MDNS.enableArduino(3232, true)` sul responder esistente).
+- `ArduinoOTA.handle()` non viene chiamato durante riscaldamento, DRYING, FAULT o cooldown; soltanto quando l'app considera OTA consentito (STANDBY e riscaldatore OFF). Una volta iniziato, il trasferimento non consente interazioni con i pulsanti; il callback `onStart` applica **`safety.stop()` e `fan.stop()`** in difesa aggiuntiva.
+- Il servizio Web OTA `/ota` rimane attivo. Nessuna modifica alle tre durate degli impulsi heater, alle soglie di interlock o al TCO opzionale.
+
+### Primo test IDE OTA (R3)
+
+1. Sul PC, apri GitHub Actions relativo al branch corrente e scarica il file `firmware.ino.bin` dall'**artifact** dell'ultimo workflow verde compilato da R3 o successivi (non usare il vecchio R2). Carica una sola volta R3 via `/ota` in **STANDBY**, col metodo web già verificato (Chrome incognito o Edge). Dopo il reboot, controlla sul display `WIFI-241024-R3` e se possibile API `firmware`.
+2. In **Arduino IDE 2.x**, dal repository aggiornato con GitHub Desktop apri esattamente `firmware/firmware.ino`, scegli `ESP32 Dev Module` e `Partition Scheme: Default 4MB with spiffs (OTA enabled)` compatibile con il flash già montato. PC e ESP32 devono essere sulla **stessa rete hotspot**; alimentazione 24V stabile, nessun ciclo DRYING o cooldown.
+3. Vai in **Strumenti > Porta** (o il selettore porte in alto). Cerca la voce di **porta di rete** `filament-dryer` con indirizzo IP dell'ESP32 e porta 3232. Attendi la rilevazione dopo l'avvio R3; su alcuni PC/hotspot, firewall, multicast mDNS o dispositivo possono impedire l'annuncio pur con `filament-dryer.local` funzionante.
+4. Seleziona la porta di rete e premi **Carica** nell'IDE; quando richiesto inserisci **la password OTA configurata in precedenza** (non la password del telefono/hotspot). Un upload della stessa build R3 è valido come collaudo del protocollo anche se la sigla non cambia: conserva l'esito della console IDE.
+5. Dopo il reboot conferma che la dashboard sia disponibile e che `heater_command` sia `false` in STANDBY. Il metodo web rimane disponibile come ripiego. **Non serve ripetere la prova fisica a 3 impulsi.**
+
+Il supporto della porta di rete e la comunicazione OTA da Arduino IDE vanno confermati sul **PC Windows e hotspot reale**; una compilazione CI non equivale a quel test. Se il profilo IDE installato non espone la porta di rete, non selezionare una COM USB erroneamente.
