@@ -5,6 +5,7 @@
 #include <ESPmDNS.h>
 #include <Preferences.h>
 #include <Update.h>
+#include <esp_system.h>
 #include "FirmwareBuild.h"
 #include "ThermalLog.h"
 
@@ -154,9 +155,10 @@ class NetworkService {
           admin.length() < 12 || admin.length() > 63) {
         server_.send(400, "text/plain", "Invalid SSID or password sizes"); return;
       }
-      if (!prefs_.putString("ssid", ssid) ||
-          !prefs_.putString("wifi", pass) ||
-          !prefs_.putString("admin", admin)) {
+      const size_t savedSsid = prefs_.putString("ssid", ssid);
+      const size_t savedWifi = prefs_.putString("wifi", pass);
+      const size_t savedAdmin = prefs_.putString("admin", admin);
+      if (!savedSsid || (!savedWifi && !pass.isEmpty()) || !savedAdmin) {
         server_.send(500, "text/plain", "NVS write failed"); return;
       }
       server_.send(200, "text/html",
