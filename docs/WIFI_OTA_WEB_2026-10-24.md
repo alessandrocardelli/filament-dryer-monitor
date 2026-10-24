@@ -65,3 +65,9 @@ L'utente ha confermato: connessione dell'ESP32 all'hotspot del telefono, pagina 
 6. Se compare un errore OTA o il dispositivo non torna online, **non ripetere upload né tentare un test caldo**: conserva l'errore/esito e verifica in modo diagnostico prima di procedere. Il firmware precedente dovrebbe mantenersi se l'aggiornamento non viene finalizzato correttamente, ma non è ancora verificato sulla PCB.
 
 Questo upgrade non serve a validare il riscaldamento: il precedente test PULSE-R1 era già concluso; il test corrente riguarda solo aggiornamento OTA e presentazione web.
+
+## Primo OTA hardware riuscito, compatibilità Chrome, IDE (24 ottobre 2026)
+
+L'utente ha aggiornato via Wi-Fi dalla pagina web con Microsoft Edge ed ha verificato che la dashboard dopo il riavvio mostra i tre titoli modificati della build **WIFI-241024-R2**. Il **primo aggiornamento OTA web su PCB è PASS**, senza cavo USB. Con Google Chrome, invece, prima del caricamento la pagina `/ota` restituiva HTTP 401; con Edge la medesima autenticazione ha funzionato. La causa specifica di Chrome non è verificata. Nessun dato sensibile della connessione va pubblicato nel repository.
+
+**Distinzione fra due protocolli OTA:** il firmware attuale usa `WebServer`/`Update` (upload `.bin` dal browser); non contiene la libreria `ArduinoOTA`, né il servizio upload via IDE, quindi l'ESP32 non apparirà automaticamente come porta OTA nell'IDE. Arduino IDE può già compilare ed esportare `.bin`, ma per un clic sul tasto Carica via Wi-Fi occorre sviluppare e validare separatamente ArduinoOTA e la pubblicazione mDNS, le credenziali e il gate esclusivo STANDBY/heater OFF, preservando la sicurezza del ciclo. Un problema di Chrome non impedisce necessariamente ArduinoOTA; sono metodi diversi. Il prossimo ciclo caldo **non è richiesto** per questi lavori.
