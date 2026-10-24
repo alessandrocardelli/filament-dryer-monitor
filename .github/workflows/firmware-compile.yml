@@ -27,6 +27,25 @@ jobs:
           if [ "$GITHUB_REF_NAME" = "test/closed-case-heater-pulses-2026-10-23" ] || [ "$GITHUB_REF_NAME" = "feature/wifi-ota-web-logging-2026-10-24" ]; then
             grep -q 'constexpr bool kHeaterCommissioningMode = true;' firmware/AppConfig.h
           fi
-          arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all
+          arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all --output-dir build/firmware
+      - name: Check OTA application image
+        if: github.ref_name == 'feature/wifi-ota-web-logging-2026-10-24'
+        run: |
+          test -s build/firmware/firmware.ino.bin
+          python3 - <<'PY'
+          import os
+          image = 'build/firmware/firmware.ino.bin'
+          size = os.path.getsize(image)
+          print(f'OTA application image: {size} bytes')
+          assert size <= 0x140000, 'App exceeds default ESP32 4MB OTA slot'
+          PY
+      - name: Upload OTA application binary
+        if: github.ref_name == 'feature/wifi-ota-web-logging-2026-10-24'
+        uses: actions/upload-artifact@v4
+        with:
+          name: filament-dryer-wifi-ota-${{ github.sha }}
+          path: build/firmware/firmware.ino.bin
+          if-no-files-found: error
+          retention-days: 30
       - name: Native control logic tests
         run: bash firmware/tests/host/run_heater_tests.sh
