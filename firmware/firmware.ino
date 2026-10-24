@@ -427,7 +427,7 @@ void loop() {
     if (n.valid) {
       Serial.print(n.resistanceOhms / 1000.0f, 2);
       // No NTC Celsius estimate is shown: its local thermal model is unverified.
-      Serial.print("k heater=");
+      Serial.print(" kOhm heater=");
       Serial.print(safety.heaterLocked() ? "LOCKED" :
                    (safety.heaterOn() ? "ON" : "OFF"));
       Serial.print(" safetyFault=");
