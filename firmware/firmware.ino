@@ -322,7 +322,8 @@ void loop() {
   ntc.update(nowMs);
   sht45.update(nowMs);
 
-  if (!network.uploadActive()) buttons.update(nowMs, handleButtonEvent);
+  // Once an OTA image is accepted, no new heating cycle may start before reboot.
+  if (!network.updateBusy()) buttons.update(nowMs, handleButtonEvent);
   buzzer.update(nowMs);
   fan.update(nowMs, safety.fanPermitted());
 
