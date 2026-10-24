@@ -44,3 +44,7 @@ Versione OLED: **WIFI-241024-R1** all'accensione. Test precedente `PULSE-241024-
 - L'ESP32 eBOX Lite ha antenna interna: controllare connessione e qualità del segnale con scatola chiusa. Wi-Fi non deve cambiare stop/interlock locale. Non vi è tachimetro che confermi il moto reale della ventola.
 - Per la prima verifica usa soltanto STANDBY + lettura dashboard: **non serve rifare il collaudo dei tre impulsi**. Dopo testare una prima OTA del firmware, preservando i parametri heat attuali.
 - La prova dell'utente `PULSE-241024-R1` su scatola chiusa ha riportato +4 °C sul Sanwa vicino piastra, non verifica assoluta della curva NTC o del limite termico finale.
+
+### Console diagnostica in tempo reale
+
+È presente anche `GET /api/events`, con un buffer circolare degli ultimi **32 messaggi**: versione, entrata negli stati BOOT/STANDBY/DRYING/COMPLETE/FAULT, transizioni PRERUN/HEATER ON/GAP/COOLDOWN e cause numeriche di eventuale FAULT. La dashboard aggiorna la console ogni 2 s. È un estratto strutturato delle informazioni diagnostiche utili, **non** un mirror byte-per-byte di tutta la UART `Serial`. Il buffer eventi è volatile; lo storico numerico CSV, quando salvato, è recuperabile anche dopo il riavvio.
