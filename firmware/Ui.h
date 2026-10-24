@@ -57,7 +57,10 @@ class Ui {
               bool technicalPage = false, uint32_t bootElapsedMs = 0,
               bool heaterLocked = true, bool heaterOn = false,
               uint8_t pulsePhase = 0, uint8_t pulsesDone = 0,
-              uint8_t pulseFault = 0) {
+              uint8_t pulseFault = 0,
+              const char *apName = nullptr,
+              const char *apPassword = nullptr,
+              const char *stationIp = nullptr) {
     if (!awake_) return false;
 
     const uint8_t stage = (state == AppState::Boot)
@@ -86,8 +89,10 @@ class Ui {
             (bootElapsedMs - AppConfig::kBootSplashMs) <
                 FirmwareBuild::kSplashExtraMs)
           drawFirmwareSplash();
+        else if (apName && apPassword)
+          drawWifiSetup(apName, apPassword);
         else
-          drawStandby(sensor);
+          drawStandby(sensor, stationIp);
         break;
       case AppState::Setup: drawSetup(setupField, settings.cycle); break;
       case AppState::Settings: drawSettings(settingsField, settings); break;
@@ -179,7 +184,17 @@ class Ui {
     display_.drawStr(22, 60, FirmwareBuild::kMode);
   }
 
-  void drawStandby(const SensorSnapshot &sensor) {
+  void drawWifiSetup(const char *ssid, const char *password) {
+    display_.setFont(u8g2_font_6x10_tf);
+    display_.drawStr(34, 10, "WIFI SETUP");
+    display_.drawHLine(0, 13, 128);
+    display_.drawStr(2, 26, ssid);
+    display_.drawStr(2, 39, "KEY:");
+    display_.drawStr(30, 39, password);
+    display_.drawStr(2, 57, "Go to 192.168.4.1");
+  }
+
+  void drawStandby(const SensorSnapshot &sensor, const char *stationIp) {
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(20, 9, "FILAMENT DRYER");
     display_.drawHLine(0, 12, 128);
@@ -199,8 +214,13 @@ class Ui {
     display_.drawUTF8(126 - rw, 36, right);
 
     display_.setFont(u8g2_font_6x10_tf);
-    display_.drawStr(2, 60, sensor.valid ? "Ready" : "SHT45 waiting...");
-    display_.drawStr(88, 60, FirmwareBuild::kShortId);
+    if (stationIp && stationIp[0]) {
+      display_.drawStr(2, 60, stationIp);
+      display_.drawStr(88, 60, "W24-R1");
+    } else {
+      display_.drawStr(2, 60, sensor.valid ? "Ready" : "SHT45 waiting...");
+      display_.drawStr(88, 60, FirmwareBuild::kShortId);
+    }
   }
 
   void drawSetup(SetupField selected, const CycleSettings &settings) {
