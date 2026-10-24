@@ -9,6 +9,8 @@
 #include <esp_system.h>
 #include "FirmwareBuild.h"
 #include "ThermalLog.h"
+#include "NtcQualification.h"
+#include "AppConfig.h"
 
 // Local-only read-only telemetry + browser OTA. No remote heater controls.
 // Provisioning AP uses a fresh random WPA2 key displayed on the OLED.
@@ -20,6 +22,8 @@ class NetworkService {
     float airC = 0, rh = 0, ntcOhms = 0;
     bool airValid = false, ntcValid = false;
     bool heaterCommand = false, cycle = false, fault = false;
+    float ntcReportedMv = 0, ntcCorrectedMv = 0;
+    uint32_t ntcAgeMs = UINT32_MAX, airAgeMs = UINT32_MAX;
     uint8_t fanPercent = 0, phase = 0, pulses = 0, pulseFault = 0;
   };
   explicit NetworkService(ThermalLog &log) : log_(log) {}
@@ -274,6 +278,45 @@ class NetworkService {
       server_.sendHeader("Cache-Control", "no-store");
       server_.send(200,"application/json",j);
     });
+    server_.on("/api/ntc-qualification", HTTP_GET, [this]() {
+      const bool airFresh = live_.airValid &&
+           live_.airAgeMs <= AppConfig::kSht45StaleMs;
+      const bool ntcFresh = live_.ntcValid &&
+           live_.ntcAgeMs <= AppConfig::kNtcSamplePeriodMs * 3u;
+      const bool modelComparison = airFresh && ntcFresh &&
+           !live_.cycle && !live_.heaterCommand;
+      String j; j.reserve(500);
+      j += "{\"qualified\":false,\"use_for_heater\":false";
+      j += ",\"reference\":\"SHT45 air temperature - only if cold-equilibrated\"";
+      j += ",\"air_valid\":"; j += airFresh ? "true" : "false";
+      j += ",\"ntc_valid\":"; j += ntcFresh ? "true" : "false";
+      j += ",\"air_age_ms\":"; j += live_.airAgeMs;
+      j += ",\"ntc_age_ms\":"; j += live_.ntcAgeMs;
+      if (airFresh) {j += ",\"air_c\":"; j += String(live_.airC, 2);}
+      if (ntcFresh) {
+        j += ",\"ntc_ohms\":"; j += String(live_.ntcOhms, 1);
+        j += ",\"adc_reported_mv\":"; j += String(live_.ntcReportedMv, 1);
+        j += ",\"adc_corrected_mv\":"; j += String(live_.ntcCorrectedMv, 1);
+      }
+      j += ",\"comparison_available\":"; j += modelComparison ? "true" : "false";
+      if (modelComparison) {
+        const float donor = NtcQualification::expectedResistanceOhms(
+            live_.airC, NtcQualification::kDonor);
+        const float alt = NtcQualification::expectedResistanceOhms(
+            live_.airC, NtcQualification::kAlternative);
+        j += ",\"donor_82k5_b4100_expected_ohms\":"; j += String(donor, 1);
+        j += ",\"hypothesis_100k_b3950_expected_ohms\":"; j += String(alt, 1);
+        j += ",\"donor_difference_percent\":"; j += String(
+            NtcQualification::differencePercent(live_.ntcOhms,live_.airC,
+                       NtcQualification::kDonor), 2);
+        j += ",\"hypothesis_difference_percent\":"; j += String(
+            NtcQualification::differencePercent(live_.ntcOhms,live_.airC,
+                       NtcQualification::kAlternative), 2);
+      }
+      j += "}";
+      server_.sendHeader("Cache-Control", "no-store");
+      server_.send(200,"application/json",j);
+    });
     server_.on("/api/events", HTTP_GET, [this]() {
       server_.setContentLength(CONTENT_LENGTH_UNKNOWN);
       server_.send(200, "text/plain; charset=utf-8", "");
@@ -395,6 +438,11 @@ button{padding:9px 14px}
 <a href="/ota">Aggiorna firmware OTA</a></p>
 <canvas id="trend" width="850" height="220" style="width:100%;max-width:850px"></canvas>
 <pre id="rows">...</pre>
+<h3>Verifica NTC a freddo (solo diagnostica)</h3>
+<p class="sub">Confronto della resistenza NTC con due IPOTESI, usando la temperatura
+dell'aria SHT45 come riferimento solo a equilibrio termico.
+Non calibra il sensore e non modifica il riscaldamento.</p>
+<pre id="ntccold">In attesa di letture...</pre>
 <h3>Console eventi</h3><pre id="events">...</pre></div>
 <script>
 const $=x=>document.getElementById(x);
@@ -431,7 +479,23 @@ async function history(){
  }catch(e){}
 }
 async function events(){try{let r=await fetch('/api/events',{cache:'no-store'});if(r.ok)$('events').textContent=await r.text();}catch(e){}}
-status();history();events();setInterval(status,1000);setInterval(history,4000);setInterval(events,2000);
+async function ntcCold(){
+ try {
+ const r=await fetch('/api/ntc-qualification',{cache:'no-store'});
+ if(!r.ok)return;
+ const d=await r.json();
+ if(!d.comparison_available){
+   $('ntccold').textContent='Letture non valide, vecchie o dryer in ciclo. Solo STANDBY.';
+   return;
+ }
+ $('ntccold').textContent='SHT45 aria: '+d.air_c.toFixed(2)+' °C'
+ +'  NTC: '+(d.ntc_ohms/1000).toFixed(2)+' kΩ'
+ +'  ADC: '+d.adc_corrected_mv.toFixed(1)+' mV\\n'
+ +'Modello donor 82.5k/B4100: attesi '+(d.donor_82k5_b4100_expected_ohms/1000).toFixed(2)+' kΩ; scarto '+d.donor_difference_percent.toFixed(1)+' %\\n'
+ +'Ipotesi 100k/B3950: attesi '+(d.hypothesis_100k_b3950_expected_ohms/1000).toFixed(2)+' kΩ; scarto '+d.hypothesis_difference_percent.toFixed(1)+' %';
+ }catch(e){$('ntccold').textContent='Diagnostica NTC non disponibile';}
+}
+status();history();events();ntcCold();setInterval(status,1000);setInterval(history,4000);setInterval(events,2000);setInterval(ntcCold,4000);
 </script></html>)HTML";
   }
 };
