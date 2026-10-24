@@ -3,6 +3,8 @@
 #include <U8g2lib.h>
 #include "AppConfig.h"
 #include "AppTypes.h"
+#include "FirmwareBuild.h"
+#include "HeaterPulseCommissioning.h"
 #include "assets/slewform/slewform_animation_compact.h"
 
 class Ui {
@@ -53,7 +55,9 @@ class Ui {
               const SensorSnapshot &sensor, const NtcSnapshot &ntc,
               uint32_t remainingSeconds, uint8_t fanDutyPercent,
               bool technicalPage = false, uint32_t bootElapsedMs = 0,
-              bool heaterLocked = true, bool heaterOn = false) {
+              bool heaterLocked = true, bool heaterOn = false,
+              uint8_t pulsePhase = 0, uint8_t pulsesDone = 0,
+              uint8_t pulseFault = 0) {
     if (!awake_) return false;
 
     const uint8_t stage = (state == AppState::Boot)
@@ -77,17 +81,26 @@ class Ui {
     display_.clearBuffer();
     switch (state) {
       case AppState::Boot: drawSplash(stage); break;
-      case AppState::Standby: drawStandby(sensor); break;
+      case AppState::Standby:
+        if (bootElapsedMs >= AppConfig::kBootSplashMs &&
+            (bootElapsedMs - AppConfig::kBootSplashMs) <
+                FirmwareBuild::kSplashExtraMs)
+          drawFirmwareSplash();
+        else
+          drawStandby(sensor);
+        break;
       case AppState::Setup: drawSetup(setupField, settings.cycle); break;
       case AppState::Settings: drawSettings(settingsField, settings); break;
       case AppState::Drying:
         technicalPage ? drawSystem(sensor, ntc, fanDutyPercent,
-                                   heaterLocked, heaterOn)
+                                   heaterLocked, heaterOn,
+                                   pulsePhase, pulsesDone)
                       : drawDrying(settings.cycle, sensor, remainingSeconds,
-                                  fanDutyPercent, heaterLocked, heaterOn);
+                                  fanDutyPercent, heaterLocked, heaterOn,
+                                  pulsePhase, pulsesDone);
         break;
       case AppState::Complete: drawComplete(sensor); break;
-      case AppState::Fault: drawFault(ntc.fault); break;
+      case AppState::Fault: drawFault(ntc.fault, pulseFault); break;
     }
     display_.sendBuffer();
     if (state == AppState::Boot) lastBootStage_ = stage;
@@ -154,6 +167,17 @@ class Ui {
     }
   }
 
+  // Keep the existing animated Slewform logo untouched. Immediately AFTER it,
+  // identify the compiled test firmware for three seconds with no USB needed.
+  void drawFirmwareSplash() {
+    display_.setFont(u8g2_font_helvB12_tf);
+    display_.drawStr(13, 21, "HEATER TEST");
+    display_.drawHLine(0, 28, 128);
+    display_.setFont(u8g2_font_6x10_tf);
+    display_.drawStr(9, 44, "FW PULSE-241024-R1");
+    display_.drawStr(22, 60, FirmwareBuild::kMode);
+  }
+
   void drawStandby(const SensorSnapshot &sensor) {
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(20, 9, "FILAMENT DRYER");
@@ -175,6 +199,7 @@ class Ui {
 
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(2, 60, sensor.valid ? "Ready" : "SHT45 waiting...");
+    display_.drawStr(88, 60, FirmwareBuild::kShortId);
   }
 
   void drawSetup(SetupField selected, const CycleSettings &settings) {
@@ -211,7 +236,8 @@ class Ui {
 
   void drawDrying(const CycleSettings &settings, const SensorSnapshot &sensor,
                    uint32_t remainingSeconds, uint8_t fanDutyPercent,
-                   bool heaterLocked, bool heaterOn) {
+                   bool heaterLocked, bool heaterOn,
+                   uint8_t pulsePhase, uint8_t pulsesDone) {
     display_.setFont(u8g2_font_6x10_tf);
     char header[22];
     snprintf(header, sizeof(header), "DRYING TEST   %02lu:%02lu",
@@ -235,13 +261,44 @@ class Ui {
     snprintf(target, sizeof(target), "SET %d °C   FAN %u%%",
              settings.targetTempC, fanDutyPercent);
     display_.drawUTF8(1, 47, target);
-    display_.drawStr(1, 61, heaterLocked ? "HEATER LOCKED" :
-                     (heaterOn ? "HEATER ON" : "HEATER OFF"));
+    if (AppConfig::kHeaterCommissioningMode) {
+      char progress[23];
+      switch (static_cast<HeaterCommissioning::Phase>(pulsePhase)) {
+        case HeaterCommissioning::Phase::Prerun:
+          snprintf(progress, sizeof(progress), "FAN PRERUN - 0/3");
+          break;
+        case HeaterCommissioning::Phase::Pulse:
+          snprintf(progress, sizeof(progress), "HEATER ON - %u/3",
+                   static_cast<unsigned>(pulsesDone + 1));
+          break;
+        case HeaterCommissioning::Phase::Gap:
+          snprintf(progress, sizeof(progress), "HEATER OFF - %u/3",
+                   static_cast<unsigned>(pulsesDone));
+          break;
+        case HeaterCommissioning::Phase::Cooldown:
+          snprintf(progress, sizeof(progress), "COOLING - 3/3");
+          break;
+        case HeaterCommissioning::Phase::Complete:
+          snprintf(progress, sizeof(progress), "TEST COMPLETE");
+          break;
+        case HeaterCommissioning::Phase::Aborted:
+          snprintf(progress, sizeof(progress), "TEST ABORTED");
+          break;
+        case HeaterCommissioning::Phase::Idle:
+        default:
+          snprintf(progress, sizeof(progress), "PREPARING TEST");
+          break;
+      }
+      display_.drawStr(1, 61, progress);
+    } else {
+      display_.drawStr(1, 61, heaterLocked ? "HEATER LOCKED" :
+                       (heaterOn ? "HEATER ON" : "HEATER OFF"));
+    }
   }
 
   void drawSystem(const SensorSnapshot &sensor, const NtcSnapshot &ntc,
                   uint8_t fanDutyPercent, bool heaterLocked,
-                  bool heaterOn) {
+                  bool heaterOn, uint8_t pulsePhase, uint8_t pulsesDone) {
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(2, 9, "SYSTEM / HEATER");
     display_.drawHLine(0, 12, 128);
@@ -273,8 +330,16 @@ class Ui {
       snprintf(line, sizeof(line), "H --%%       F %u%%", fanDutyPercent);
     }
     display_.drawStr(2, 54, line);
-    display_.drawStr(2, 63, heaterLocked ? "HEATER LOCKED" :
-                     (heaterOn ? "HEATER ON" : "HEATER OFF"));
+    if (AppConfig::kHeaterCommissioningMode) {
+      snprintf(line, sizeof(line), "PH %u  PULSES %u/3  H:%s",
+               static_cast<unsigned>(pulsePhase),
+               static_cast<unsigned>(pulsesDone),
+               heaterOn ? "ON" : "OFF");
+      display_.drawStr(2, 63, line);
+    } else {
+      display_.drawStr(2, 63, heaterLocked ? "HEATER LOCKED" :
+                       (heaterOn ? "HEATER ON" : "HEATER OFF"));
+    }
   }
 
   void drawComplete(const SensorSnapshot &sensor) {
@@ -290,12 +355,34 @@ class Ui {
     display_.drawStr(2, 61, "ON/OFF = acknowledge");
   }
 
-  void drawFault(NtcFault ntcFault) {
+  static const char *commissionFaultText(uint8_t code) {
+    switch (static_cast<HeaterCommissioning::Fault>(code)) {
+      case HeaterCommissioning::Fault::NtcInvalid: return "NTC INVALID";
+      case HeaterCommissioning::Fault::NtcStale: return "NTC STALE";
+      case HeaterCommissioning::Fault::AirInvalid: return "SHT45 INVALID";
+      case HeaterCommissioning::Fault::AirStale: return "SHT45 STALE";
+      case HeaterCommissioning::Fault::AirLimit: return "AIR LIMIT 35C";
+      case HeaterCommissioning::Fault::NtcResistanceLimit: return "NTC R LIMIT";
+      case HeaterCommissioning::Fault::FanUnavailable: return "FAN NO START";
+      case HeaterCommissioning::Fault::FanLost: return "FAN LOST";
+      case HeaterCommissioning::Fault::OverallTimeout: return "TEST TIMEOUT";
+      case HeaterCommissioning::Fault::PulseWatchdog: return "PULSE TIMEOUT";
+      case HeaterCommissioning::Fault::ManualStop: return "MANUAL STOP";
+      case HeaterCommissioning::Fault::None: return "NO TEST FAULT";
+    }
+    return "UNKNOWN";
+  }
+
+  void drawFault(NtcFault ntcFault, uint8_t pulseFault) {
     display_.setFont(u8g2_font_helvB12_tf);
     display_.drawStr(27, 17, "FAULT");
     display_.setFont(u8g2_font_6x10_tf);
 
-    switch (ntcFault) {
+    if (AppConfig::kHeaterCommissioningMode &&
+        pulseFault != static_cast<uint8_t>(HeaterCommissioning::Fault::None)) {
+      display_.drawStr(11, 35, "HEATER TEST STOP");
+      display_.drawStr(11, 45, commissionFaultText(pulseFault));
+    } else switch (ntcFault) {
       case NtcFault::OpenCircuit:
         display_.drawStr(24, 34, "HEATER NTC");
         display_.drawStr(20, 45, "invalid / open");
