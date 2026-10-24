@@ -325,22 +325,20 @@ class Ui {
     char line[24];
 
     if (sensor.valid) {
-      snprintf(line, sizeof(line), "Chamber    %.1f °C", sensor.temperatureC);
+      snprintf(line, sizeof(line), "Air SHT45 %.1f °C", sensor.temperatureC);
       display_.drawUTF8(2, 27, line);
     } else {
-      display_.drawStr(2, 27, "Chamber    WAIT");
+      display_.drawStr(2, 27, "Air SHT45 WAIT");
     }
 
+    // Only the electrical NTC resistance has been validated for diagnostics.
+    // SHT45 reads chamber air; the NTC is embedded in the heater assembly.
     if (ntc.valid) {
-      if (AppConfig::kHeaterCommissioningMode) {
-        snprintf(line, sizeof(line), "NTC raw  %.2f kOhm",
-                 ntc.resistanceOhms / 1000.0f);
-      } else {
-        snprintf(line, sizeof(line), "Heater     %.1f °C", ntc.temperatureC);
-      }
-      display_.drawUTF8(2, 39, line);
+      snprintf(line, sizeof(line), "NTC R  %.2f kOhm",
+               ntc.resistanceOhms / 1000.0f);
+      display_.drawStr(2, 39, line);
     } else {
-      display_.drawStr(2, 39, "Heater     NTC FAULT");
+      display_.drawStr(2, 39, "NTC R  FAULT");
     }
 
     if (sensor.valid) {
