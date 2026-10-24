@@ -57,7 +57,7 @@ class NetworkService {
   }
 
   void tick(uint32_t nowMs, bool permitHttp, bool permitOta) {
-    otaAllowed_ = permitOta && !uploadActive_;
+    otaAllowed_ = permitOta && !uploadActive_ && !rebootPending_;
     if (ssid_.length() && WiFi.status() == WL_CONNECTED) {
       if (!staAnnounced_) {
         staAnnounced_ = true;
