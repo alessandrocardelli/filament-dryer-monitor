@@ -313,9 +313,9 @@ button{padding:9px 14px}
 </style>
 <header><h1>Filament Dryer Monitor</h1><small id="net">Connessione...</small></header>
 <div class="grid">
-<div class="card">Aria<div class="value" id="air">--</div></div>
-<div class="card">Umidita<div class="value" id="rh">--</div></div>
-<div class="card">NTC (R, non C)<div class="value" id="ntc">--</div></div>
+<div class="card">Temperatura camera (SHT45)<div class="value" id="air">--</div></div>
+<div class="card">Umidità camera (SHT45)<div class="value" id="rh">--</div></div>
+<div class="card">Resistenza piastra (NTC)<div class="value" id="ntc">--</div></div>
 <div class="card">Riscaldatore<div class="value" id="heat">--</div></div>
 <div class="card">Ventola<div class="value" id="fan">--</div></div>
 <div class="card">Test<div class="value" id="phase">--</div></div>
