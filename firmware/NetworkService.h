@@ -284,7 +284,7 @@ class NetworkService {
       const bool ntcFresh = live_.ntcValid &&
            live_.ntcAgeMs <= AppConfig::kNtcSamplePeriodMs * 3u;
       const bool modelComparison = airFresh && ntcFresh &&
-           !live_.cycle && !live_.heaterCommand;
+           !live_.cycle && !live_.heaterCommand && live_.fanPercent == 0;
       String j; j.reserve(500);
       j += "{\"qualified\":false,\"use_for_heater\":false";
       j += ",\"reference\":\"SHT45 air temperature - only if cold-equilibrated\"";
@@ -490,8 +490,8 @@ async function ntcCold(){
  }
  $('ntccold').textContent='SHT45 aria: '+d.air_c.toFixed(2)+' °C'
  +'  NTC: '+(d.ntc_ohms/1000).toFixed(2)+' kΩ'
- +'  ADC: '+d.adc_corrected_mv.toFixed(1)+' mV\\n'
- +'Modello donor 82.5k/B4100: attesi '+(d.donor_82k5_b4100_expected_ohms/1000).toFixed(2)+' kΩ; scarto '+d.donor_difference_percent.toFixed(1)+' %\\n'
+ +'  ADC: '+d.adc_corrected_mv.toFixed(1)+' mV\n'
+ +'Modello donor 82.5k/B4100: attesi '+(d.donor_82k5_b4100_expected_ohms/1000).toFixed(2)+' kΩ; scarto '+d.donor_difference_percent.toFixed(1)+' %\n'
  +'Ipotesi 100k/B3950: attesi '+(d.hypothesis_100k_b3950_expected_ohms/1000).toFixed(2)+' kΩ; scarto '+d.hypothesis_difference_percent.toFixed(1)+' %';
  }catch(e){$('ntccold').textContent='Diagnostica NTC non disponibile';}
 }
