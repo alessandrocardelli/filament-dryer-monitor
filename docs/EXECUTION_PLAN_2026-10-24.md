@@ -57,3 +57,23 @@ La protezione TCO aggiuntiva è opzionale (D029); resta però presente un **105 
 **Utente: nessuna nuova prova adesso.** Quando si passa allo STEP 02, sarà richiesta un'unica documentazione fotografica del montaggio chiuso/sensori/cavi, non ripetizione di Q4/PWM/OTA o sette plateau.
 
 **Stato complessivo:** funzionamento piastra/fan/OTA base PASS nei limiti dei dati; **dryer termostatica autonoma NON ancora PASS**. Primo gate OPEN: **01**.
+
+## Modalità ChatGPT assegnata per step (2026-10-24)
+
+I nomi qui descrivono lo strumento di lavoro **preferenziale**, non un obbligo tecnico. Il primo requisito per ogni modalità resta leggere `AGENTS.md` e il branch/HEAD reale; tutte le modifiche vanno sul ramo di sviluppo appropriato, senza portare automaticamente firmware heater-on in `main`.
+
+| Step | Modalità primaria | Supporto / responsabilità |
+|---|---|---|
+| 01 — Diagnostica SHT45/NTC | **Codex** | Chat per valutare testo e significato delle misure. Codex modifica sorgenti, compila e testa; nessun cambiamento della logica heater. |
+| 02 — Montaggio e cablaggi | **Chat** | L'utente esamina/fotografa fisicamente l'unità spenta; Chat analizza e registra eventuali correzioni. Né Work né Codex possono verificare direttamente il box. |
+| 03 — Termostato OFF simulato | **Codex** | Codex modifica/testa C++, mock, CI e diff; Chat verifica i requisiti e le condizioni di passaggio. |
+| 04 — Limiti piastra e NTC | **Chat** | Analisi tecnica dei dati reali e del Sanwa, con eventuale Work solo se si apre una ricerca estesa su datasheet/standard. Non inventare curve o soglie validate. |
+| 05 — Safety review + test breve | **Chat → Codex** | In Chat si fissano protocollo, stop e condizioni di sicurezza. Codex prepara, compila e testa il firmware; il test caldo necessita approvazione esplicita successiva. |
+| 06 — Misure termiche chiuse | **Chat** | L'utente esegue test approvato e fornisce log/misure; Chat elabora. Work solo in caso di dataset grandi. |
+| 07 — Controllo V1 prima T | **Codex → Chat** | Codex implementa/testa il controller; Chat guida interpretazione di misure e collaudo fisico esplicitamente autorizzato. |
+| 08 — Campo utile, FAN AUTO | **Chat → Codex** | Chat valuta prove termiche per step e determina esigenze di regolazione; Codex cambia e testa la logica secondo risultati. |
+| 09 — Autonomia/UI V1 | **Codex** | Codex completa stati timer/cooldown/fault/UI e relativi test; Chat gestisce l'accettazione fisica da OLED. |
+| 10 — CSV, Web/OTA e resilienza | **Codex** | Codex testa codice e CI; Chat segue verifiche browser e hardware. Work cloud non presume accesso alla LAN privata del dryer. |
+| 11 — Audit finale e release | **Work → Codex** | Work per audit documentale, evidenze e checklist trasversali; Codex per test finali, fix, commit e tag; Chat per approvazione finale. |
+
+**Regola pratica:** Chat resta il punto di coordinamento; Codex riceve un task software chiuso con branch, output e test; Work si usa soltanto quando il compito richiede un audit/documento trasversale sostanziale. Nessuna modalità sostituisce le verifiche fisiche né l'approvazione del riscaldamento reale.
