@@ -463,6 +463,12 @@ void loop() {
   telem.rh = airNow.valid ? airNow.humidityRh : 0;
   telem.ntcValid = ntcNow.valid;
   telem.ntcOhms = ntcNow.valid ? ntcNow.resistanceOhms : 0;
+  telem.ntcReportedMv = ntcNow.sampled ? ntcNow.reportedMv : 0;
+  telem.ntcCorrectedMv = ntcNow.sampled ? ntcNow.correctedMv : 0;
+  telem.ntcAgeMs = ntcNow.sampled ?
+      (uint32_t)(nowMs - ntcNow.lastSampleMs) : UINT32_MAX;
+  telem.airAgeMs = airNow.valid ?
+      (uint32_t)(nowMs - airNow.lastSuccessMs) : UINT32_MAX;
   telem.heaterCommand = safety.heaterOn();
   telem.fanPercent = fan.dutyPercent();
   telem.cycle = appState == AppState::Drying;
