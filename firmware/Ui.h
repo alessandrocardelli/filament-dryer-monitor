@@ -216,7 +216,6 @@ class Ui {
     display_.setFont(u8g2_font_6x10_tf);
     if (stationIp && stationIp[0]) {
       display_.drawStr(2, 60, stationIp);
-      display_.drawStr(88, 60, "W24-R1");
     } else {
       display_.drawStr(2, 60, sensor.valid ? "Ready" : "SHT45 waiting...");
       display_.drawStr(88, 60, FirmwareBuild::kShortId);
