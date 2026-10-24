@@ -1,5 +1,7 @@
 # Project state
 
+> **2026-10-24 — housekeeping repository eseguito:** PR #3 `feature/heater-policy-cold-tests` → `main` mergiata commit `78278575dd97cb7b244ffe46df1bd87f80b73221`. I blob `firmware.ino`, `AppConfig.h`, `SafetyController.h` in `main` sono risultati identici prima/dopo merge. Verificati e cancellati **6 branch** (5 già ancestrali a main/branch attivo, più `archive/recover-tested-firmware` già mergiato PR #2 e stessa cartella firmware/test_archive). Restano **6 branch**, di cui 4 con modifiche non integrate da preservare. Branch operativo e source of truth per il prototipo **`feature/wifi-ota-web-logging-2026-10-24`**; `main` non contiene ancora il firmware sperimentale/OTA. Obiettivo utente: completare controllo temperatura SHT45/NTC e fail-safe; storico 12h rinviato. [Audit](BRANCH_CLEANUP_2026-10-24.md).
+
 > **2026-10-24 — aggiornamento su prototipo:** Arduino IDE 2.3.10 ha riconosciuto e usato con successo la porta ESP32 via Wi-Fi, come confermato dall'utente. Web OTA e monitor SHT45/NTC funzionano. Priorità corrente: completare la regolazione termica reale del dryer, non uno storico di 12 ore. Rimossi dal branch i sorgenti della funzione ambient-history anticipata senza autorizzazione; codice R3 collaudato preservato. Controllo continuo riscaldatore non ancora attivo: `kHeaterCommissioningMode=true`, `kHeaterOutputEnabled=false`, calibrazione NTC e limiti definitivi aperti. Prossima fase C/D/E: NTC, regolazione camera SHT45, arresti e test a caldo graduati.
 
 
