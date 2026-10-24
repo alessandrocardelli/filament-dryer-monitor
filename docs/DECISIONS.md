@@ -419,3 +419,34 @@ pending physical OLED inspection. This historical static bitmap preserves
 `slewform_full_logo` for reference but is no longer selected by the UI. The
 canonical SVG is unchanged; test the animated graphics on the target display
 before calling the artwork final. No heater-control behavior is changed.
+
+
+## D027 — G4A00152C selected for off-board TCO procurement; installation qualification remains open
+
+**Status: purchase selection delegated by user and recorded 2026-10-23; no installation/heating authorization.**
+
+Select MICROTEMP/Therm-O-Disc G4A00152C, Tf152/Th137/Tm205 °C, rather than the earlier SF150R0 purchase candidate: Sensience documents **5 A/24 V DC resistive** for G4, covering the nominal 24 V/~1.59 A heater load. ElcoTeam SKU3604-10326 declares the exact MPN, but its source preference was subsequently superseded by the user's explicit low-shipping requirement; see the report's Italy sourcing update. **Subsequent sourcing closure 2026-10-23:** WTT's own product page explicitly maps FT152G to G4A00152C and EAN8029564057789, matching its eBay291602208480 listing. WTT is now the preferred source: Italy item location, one piece7.75 EUR verified in cart (1.85+5.90 shipping), no purchase. This supersedes the earlier WTT exact-MPN uncertainty; ruzzica remains unconfirmed after the seller could not read its marking. Recommended continuous thermal exposure is Tf−25=127 °C, not Th137; validate actual body temperature and material protection before final acceptance. Preserve independent series-HEATER+ architecture. This does not replace the currently mounted 105 °C cutoff, enable heater firmware, or pass closed thermal gates.
+
+See [TCO_PURCHASE_DECISION_2026-10-23.md](TCO_PURCHASE_DECISION_2026-10-23.md) for exact URL, primary specifications, pricing discrepancy (10.16 EUR cart vs 11.70 EUR conservative VAT-inclusive calculation), excluded Italian/foreign marketplace listings, mechanical constraints and remaining application/DC tests. No circuit or firmware sources changed.
+
+## D028 — TCO non-blocking for development with heater OFF
+
+**Status:** accepted user priority 2026-10-23; this changes **execution sequencing**, not physical heater-safety requirements or D027.
+
+The TCO is an independent additional hardware safeguard and should **not stall the Filament Dryer Monitor project as a whole**. Procurement/placement qualification (gate B) proceeds as a parallel task, not a prerequisite for unrelated firmware, enclosure preparation, UI, data logging, Wi-Fi/web, sensor calibration analysis without heater power, or cold simulated control/fault tests.
+
+**Safety boundary remains:** the normal application's heater output stays hard-disabled (SafetyController) during these tasks. No heater-enabling flash, powered closed-case heater test, or autonomous heated operation is authorized by this decision. Before enabling the modified heating system, the appropriate independent thermal protection, installation/material limits, temperature sensing and fail-safe behavior must be qualified for the actual setup; a 152 °C purchase candidate alone is insufficient. No bypass of the existing TCO is approved. Do not infer from its not being visible that the OEM had no thermal safety mechanism.
+
+**Immediate practical priority:** implement/test an independent heater-OFF workstream (e.g., LittleFS/CSV history and local web readout, preserving UI/fan behavior). Perform physical gate A when enclosure access is available; close gate B later, before real heater testing rather than before all other engineering.
+
+## D029 — TCO is an optional enhancement, not an intrinsic dryer requirement
+
+**Status: 2026-10-23, explicit user clarification correcting the over-restrictive assistant interpretation in D028 and the completion plan.** This supersedes the TCO-as-mandatory-gate interpretation of D028 and of previous heater-readiness roadmap descriptions; it does not erase historical procurement research D027.
+
+The user states that the **original eSUN eBOX Lite had no separate TCO**; record this as the user's observation, not a verified statement about every OEM safety mechanism. The added one-shot TCO was intended as **an optional enhancement** to the original design. It is not essential to the dryer being able to heat/control its chamber and its procurement **must not itself be a prerequisite for developing the heater control or planning the staged supervised heater characterization**. Stop prioritizing repeated TCO commercial searches.
+
+**Separate the optional component from necessary safety engineering:** replacing the OEM controller changes the system, so relevant electrical, heater/air temperature feedback, sensor fault response, fan operation, shutdown/thermal behavior, and wiring/material safety must be examined before safe heated use. There is no automatic requirement to add a discrete TCO on the sole basis that the control PCB is custom. Conversely OEM behavior is not proof that the modified unit is safe.
+
+**Current physical state is a separate fact:** the prototype reportedly has a 105 °C one-shot TCO actually installed in series with the heater. Calling this component optional **does not automatically authorize bypass/removal or establish suitability** for the OEM 118 °C plate reference. Its actual influence on achievable temperatures should be accounted for in heat-test planning; any change to the series wiring/component requires a conscious, separately documented choice after examining that wiring and safety consequences. The current integrated firmware continues to lock heating OFF pending reviewed heater-control work and separately authorized, bounded tests. No heater test or firmware change is authorized by this documentation decision alone.
+
+**Near-term priorities:** after enclosure/sensor preparation, assess NTC/temperature feedback and implement fail-safe bounded heater-control logic as a separate, testable branch; CSV/web may proceed independently. Treat purchasing/qualifying a higher-temperature TCO as optional follow-up, not the organizing bottleneck.

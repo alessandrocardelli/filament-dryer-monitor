@@ -1,5 +1,17 @@
 # Filament Dryer Monitor
 
+> **2026-10-23 — controllo riscaldamento, lavoro concreto senza attuazione:** sul ramo feature/heater-policy-cold-tests-2026-10-23 è stato introdotto un modello C++ isolato di richiesta calore, **14 test nativi g++ PASS**, con fault per sensori, temperatura, ventola comandata e timeout. Nessuna GPIO attivata, SafetyController di produzione invariato: HEATER OFF. Calibrazione assoluta NTC non risolta e prove calde non autorizzate. Priorità NTC/sensori/cablaggi; TCO opzionale (D029). [Risultati e prossime misure](docs/HEATER_CONTROL_COLD_STAGE_2026-10-23.md).
+
+> **2026-10-23 — rettifica D029:** il TCO è un'**aggiunta opzionale**, non un requisito necessario al funzionamento del dryer; il precedente vincolo D028 che ne rendeva l'installazione obbligatoria per qualsiasi prova a caldo era eccessivo e viene superato. Priorità: sensori/NTC, controllo heater sicuro, verifiche termiche progressive; CSV/web in parallelo. Il prototipo ha tuttora un TCO 105 °C fisicamente in serie: documentarne gli effetti, nessun bypass automatico. Il codice integrato mantiene heater OFF; nessuna prova riscaldamento autorizzata da questa rettifica. [D029](docs/DECISIONS.md), [piano](docs/COMPLETION_PLAN_2026-10-22.md).
+
+> **2026-10-23 — sviluppo sbloccato (D028):** gate TCO B necessario prima delle prove a caldo, **non** per attività senza calore. Proseguire da subito su firmware/CSV 12 h, web locale, fault simulati, UI e verifiche meccaniche a freddo, mantenendo heater hard-OFF. Il modello G4A00152C resta candidato tecnico selezionato (D027); montaggio/qualifica non completati. [Piano aggiornato](docs/COMPLETION_PLAN_2026-10-22.md).
+
+> **2026-10-23 — TCO, acquisto ora identificato:** prima scelta **MICROTEMP G4A00152C da WTT Elettronica**, articolo FT152G, [eBay291602208480](https://www.ebay.it/itm/291602208480). **1 pezzo7,75 EUR nel carrello verificato =1,85+5,90 trasporto**, oggetto **Italia**, stima27–29 ottobre al CAP48018. Il sito dello stesso WTT dichiara esplicitamente **G4A00152C** e lo stesso EAN8029564057789: risolto il precedente dubbio sul codiceTC152. Trasporto5,90 è un compromesso esplicito; nessun acquisto. [Fonti, prove e limiti](docs/TCO_PURCHASE_DECISION_2026-10-23.md). D027 invariata (Tf152/Th137/Tm205;5 A/24 V DC); qualifica termica ancora OPEN, sviluppo heater-OFF prosegue secondo D028.
+
+
+> **2026-10-22 completion planning (feature branch only):** the single gated plan [docs/COMPLETION_PLAN_2026-10-22.md](docs/COMPLETION_PLAN_2026-10-22.md) covers A–H from closed-case SHT45/Sanwa/cable preparation and independent TCO qualification through controlled heater tests, production-style V1 firmware, CSV/web and final documentation. **Next: gate A1, with power disconnected, verify actual sensor/probe/TCO locations and whether both lids close without pinching wires.** No heater test, TCO change or firmware heater enable was authorized; previously passed fan/UI/Q4 benchmarks remain passed. This plan is currently on `plan/closed-heater-qualification-2026-10-20`, not `main`.
+
+
 Custom ESP32-based controller board that retrofits an **eSUN eBOX Lite** filament dryer with closed-loop humidity/temperature control, a local OLED interface, data logging and a web UI.
 
 The PCB physically replaces the original front panel: display and buttons sit on the front face of the board, while the main electronics are on the back.
@@ -32,11 +44,13 @@ For a new work session, read AGENTS.md, docs/PROJECT_STATE.md, docs/DECISIONS.md
 
 ## Safety concept
 
-The project keeps three independent safety layers for the heater:
+The custom controller's heater-control and safety behavior must be qualified for the modified unit. The mandatory engineering work is to verify actual temperature feedback (heater NTC and chamber SHT45), fault/off behavior, fan/cabling/material safety and bounded heater actuation.
 
-1. **Hardware TCO** in series with HEATER+, off-board and independent of the MCU.
-2. **Firmware safety loop** using the heater NTC; an invalid/open sensor is treated as a fault and disables the heater.
-3. **Compile-time gate**: heater drive is disabled until NTC calibration is explicitly enabled.
+- **Firmware:** the current application still hard-disables heater drive. A future controller must shut down on missing/invalid/stale sensor signals and other identified faults; these protections are **not implemented/validated in the current heater-locked application**.
+- **Optional hardware TCO enhancement:** the user reports no separate TCO on the original unit. A 105 °C one-shot TCO is nevertheless currently installed in series with HEATER+ on the modified unit, and may limit the OEM temperature range. Its future retention/replacement is optional as a design requirement, but its current physical presence must be considered; removal/bypass or heater-enable requires separate engineering review/authorization, not merely this documentation change.
+- **Cold-test gate:** keep drive disabled until the new heater-control and safeguards are developed/reviewed; supervised hot tests need a specific test plan and authorization.
+
+See D029: TCO procurement is **not** a mandatory prerequisite to designing or testing the heater controller; modified-system safety still needs demonstrated validation.
 
 This is a personal project and not a certified product.
 

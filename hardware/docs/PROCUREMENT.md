@@ -160,3 +160,20 @@ The fabricated board uses J7 = JST-GH BM02B-GHS-TBT, but the original eSUN NTC p
 A PEBA micro-crimping kit/tool advertised for JST-GH 1.25 mm and 0.03–0.34 mm² conductors was purchased on 2026-10-08, with delivery expected Saturday 2026-10-10. The original NTC leads are believed to be about 30 AWG. Before modifying the dryer harness, perform a sacrificial GH crimp and check conductor crimp, insulation support, terminal shape, housing retention and pull strength. If acceptable, remove the incompatible original plug and terminate the NTC leads directly into a 2-position GH housing for J7.
 
 This is first-article harness recovery, not a released PCB/BOM connector change. The J7 connector choice must be reviewed deliberately in the next hardware revision.
+
+
+## 2026-10-23 — off-board heater TCO purchase selection
+
+**2026-10-23 — selezione acquisto TCO:** MICROTEMP/Therm-O-Disc **G4A00152C**, Tf152/Th137/Tm205 °C; rating produttore **5 A/24 V DC resistivi**, riferimento continuativo consigliato **Tf−25=127 °C**. ElcoTeam SKU3604-10326, disponibile e aggiunto al carrello; 3,16 EUR IVA inclusa, totale carrello 10,16 EUR ma condizioni trasporto 7 EUR + IVA → calcolo prudenziale 11,70 EUR; prezzo definitivo non certificato dal checkout. Dettagli/fonti/evidenza e verifiche residue: [TCO_PURCHASE_DECISION_2026-10-23.md](../../docs/TCO_PURCHASE_DECISION_2026-10-23.md). Acquisto non eseguito; selezione commerciale distinta da installazione e qualifica: gate A/B restano OPEN, nessun riscaldamento autorizzato.
+
+Purchase URL: https://www.elcoteam.com/thermal-fuse-152-c-format-g4-10a-250v-microtemp-g4a00152c . Qty 1 selected for procurement; NOT purchased, NOT received, NOT installed. Not a PCB BOM/footprint change. No generic 152 °C substitution.
+
+
+## 2026-10-23 — successivo aggiornamento sourcing Italia
+
+Codice tecnico G4A00152C invariato. Superata preferenza commerciale ElcoTeam per richiesta esplicita di trasporto basso. eBay114700828131, oggetto Bolzano Italia, 6,31 EUR (3,31+3), attivo7 disponibili: miglior candidato economico, **MPN completo da confermare prima dell'acquisto dell'esatto componente**, Posta4 stimata30 ottobre–5 novembre a40121. WTT291602208480, Italia, 7,75 EUR (1,85+5,90), stima27–28 ottobre, TC152/Omega ma MPN completo non esplicito. ElectronicCenter04-10326: carrello4 pezzi5,76 EUR dopo minimoordine5 EUR; totale consegnato non verificato, perché richiede dati personali prima del metodo trasporto. Elcart documenta codicecommerciale/famigliaG4; nessuna equiparazione automatica al precisoMPN. [Report aggiornato](../../docs/TCO_PURCHASE_DECISION_2026-10-23.md). Nessun acquisto, messaggio o test caldo; gateA/B restanoOPEN.
+
+
+## 2026-10-23 — aggiornamento prevalente: prima scelta WTT identificata
+
+**G4A00152C / FT152G da WTT**, eBay https://www.ebay.it/itm/291602208480 , **1 pezzo7,75 EUR effettivi nel carrello (1,85+5,90)**, oggetto Italia, stima27–29 ottobre al CAP48018. Identità risolta dal sito ufficiale dello stesso venditore: https://www.wttelettronica.com/fusibili-termici-fusibile-termico-assiale-152-c-250v-10a.1.18.37.gp.575.uw , codice produttoreG4A00152C e EAN8029564057789 uguale all'annuncio. Il precedente limite “MPN completo da confermare” per WTT è superato; ruzzica non scelto dopo risposta sigla illeggibile. Trasporto5,90 ancora relativamente alto ma totale inferiore8 EUR, compromesso dichiarato. Sito diretto7,65 calcolati, non checkout finale; nessuna Posta1 da3 EUR verificata per questo articolo. [Report completo](../../docs/TCO_PURCHASE_DECISION_2026-10-23.md). Nessun acquisto, installazione, test caldo o modifica firmware/KiCad. D028 heater-OFF preservata, gate termico OPEN.

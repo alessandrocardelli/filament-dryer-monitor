@@ -1,5 +1,8 @@
 # Project roadmap from first-article bring-up to assembled eBOX Lite
 
+> **2026-10-23 — D029 correction of this historical roadmap:** this older stage sequence treats **acquiring/qualifying an added TCO as a compulsory gate for all heater work**. That was an assistant-imposed prerequisite and is **superseded**: the user specifies that no separate TCO was present on the original eBOX Lite and the retrofit TCO is optional as an enhancement. The current prototype physically has a 105 °C TCO in series, which must be accounted for and not bypassed by implication. For the active sequencing prioritize mechanical/sensors A, NTC/fault C, revised heater-control D, then planned/reviewed progressive supervised tests E. Thermal/electrical safety checks remain essential independent of TCO. See [D029](DECISIONS.md) and [updated plan](COMPLETION_PLAN_2026-10-22.md). Historical steps below are preserved as records, **not active gate ordering**.
+
+
 > **2026-10-19 later assembly update:** user reports the whole unit assembled, **heater J5 connected** by choice, and wishes to resume the existing logo/menu application. The previously prescribed J5-DISCONNECTED first integration test has not been carried out with its originally specified independent heater isolation. Verified `firmware/SafetyController.h` continues to force GPIO19 LOW; this is **software-only OFF**, not an electrically isolated heater. Actual next test is the supervised assembled UI/fan bring-up in `docs/ASSEMBLED_UI_SOFTWARE_HEATER_OFF_TEST.md`, **after restoring integrated `firmware/firmware.ino` instead of standalone heating diagnostics**. This does not mark any heater safety gate as passed.
 
 
