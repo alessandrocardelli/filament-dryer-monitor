@@ -1,0 +1,53 @@
+name: Temporary branch cleanup (verified ancestors only)
+
+on:
+  push:
+    branches:
+      - feature/wifi-ota-web-logging-2026-10-24
+    paths:
+      - .github/workflows/branch-prune-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Safely prune fully integrated development refs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin '+refs/heads/*:refs/remotes/origin/*' --prune
+          active='origin/feature/wifi-ota-web-logging-2026-10-24'
+          for branch in \
+            'redesign/buck-sourcing' \
+            'plan/closed-heater-qualification-2026-10-20' \
+            'feature/heater-policy-cold-tests-2026-10-23' \
+            'feature/integrated-heater-controller-2026-10-23' \
+            'test/closed-case-heater-pulses-2026-10-23'
+          do
+            if git show-ref --verify --quiet "refs/remotes/origin/$branch" && \
+               { git merge-base --is-ancestor "origin/$branch" origin/main || \
+                 git merge-base --is-ancestor "origin/$branch" "$active"; }; then
+              echo "SAFE DELETE (commit fully reachable): $branch"
+              git push origin --delete "$branch"
+            else
+              echo "::error::Ref is missing or has unmerged commits: $branch"
+              exit 1
+            fi
+          done
+          # PR #2 is already merged, but its commits were squash-merged.
+          # Do not delete it unless ALL archived files exactly equal main.
+          old='archive/recover-tested-firmware-2026-10-19'
+          if git show-ref --verify --quiet "refs/remotes/origin/$old" && \
+             git diff --quiet origin/main "origin/$old" -- firmware/test_archive; then
+            echo "SAFE DELETE (merged PR #2, same archived tree): $old"
+            git push origin --delete "$old"
+          else
+            echo "::warning::Archive branch retained because tree differs from main"
+          fi
+          echo "No PCB or unmerged diagnostic branches deleted."
