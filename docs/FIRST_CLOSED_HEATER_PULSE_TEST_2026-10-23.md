@@ -36,3 +36,20 @@ La configurazione attiva `AppConfig::kHeaterCommissioningMode=true` è deliberat
 File: `firmware/HeaterPulseCommissioning.h`, `firmware/SafetyController.h`, `firmware/firmware.ino`, `firmware/AppConfig.h`, `firmware/Ui.h`; test: `firmware/tests/host/test_heater_pulse.cpp` e test regressione. Compilazione e test CI da associare al commit dopo esecuzione, senza attribuire un PASS prima dei risultati.
 
 **Non è il firmware definitivo:** il profilo di asciugatura continua sarà impostato dopo i dati a scatola chiusa e la verifica dei limiti termici/cavi. Il TCO aggiuntivo resta opzionale.
+
+## Risultato primo test fisico a dryer chiuso — comunicato 24 ottobre 2026
+
+L'utente ha confermato che il firmware **PULSE-241024-R1** era correttamente installato. In scatola chiusa, con ventola funzionante, termocoppia Sanwa vicino alla piastra:
+
+| Osservazione | Risultato |
+| --- | --- |
+| Sanwa iniziale | **19 °C** |
+| Sanwa massimo | **23 °C** |
+| Incremento osservato | **+4 °C** |
+| Indicazioni sul display HEATER ON | **3** |
+| Stato finale | **COMPLETE** |
+| Anomalie riferite | **nessuna** |
+
+**Esito:** sequenza firmware a tre impulsi fisicamente osservata e completata; incremento Sanwa positivo. Non è una calibrazione NTC né una misurazione di corrente heater; i dati non qualificano il funzionamento prolungato o la sicurezza termica finale. **Test non da ripetere.**
+
+Come nuovo passo è stato richiesto dall'utente il **Wi-Fi OTA e monitor web** per non dover aprire il dryer quando la USB interna non è raggiungibile. Sviluppo isolato nel branch `feature/wifi-ota-web-logging-2026-10-24`: [manuale](WIFI_OTA_WEB_2026-10-24.md). Nessuna ripetizione del test a tre impulsi è necessaria per validare connettività in STANDBY.
