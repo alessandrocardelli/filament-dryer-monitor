@@ -301,6 +301,12 @@ void setup() {
   buzzer.begin();
   applyBuzzerSettings();
   thermalLog.begin();  // mounts CSV partition, does not write while heating
+  network.setIdeOtaStartSafetyCallback([]() {
+    // Defense in depth even though IDE OTA is serviced only in STANDBY.
+    // Never allow the updater to operate with GPIO19 enabled.
+    safety.stop();
+    fan.stop();
+  });
   network.begin();     // non-blocking Wi-Fi STA or random-key setup AP
   network.note(FirmwareBuild::kId);
 
