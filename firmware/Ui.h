@@ -174,7 +174,8 @@ class Ui {
     display_.drawStr(13, 21, "HEATER TEST");
     display_.drawHLine(0, 28, 128);
     display_.setFont(u8g2_font_6x10_tf);
-    display_.drawStr(9, 44, "FW PULSE-241024-R1");
+    display_.drawStr(9, 44, "FW");
+    display_.drawStr(27, 44, FirmwareBuild::kId);
     display_.drawStr(22, 60, FirmwareBuild::kMode);
   }
 
