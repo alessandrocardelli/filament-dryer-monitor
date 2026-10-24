@@ -93,8 +93,9 @@ class NtcSensor {
     snapshot_.lastSampleMs = nowMs;
     lastSampleMs_ = nowMs;
 
-    // Bring-up electrical fault windows only. Final thermal limits remain
-    // deliberately TBD and the heater is still hard-locked OFF.
+    // Bring-up electrical fault windows only; these do NOT qualify any
+    // local heater temperature or final thermal protection thresholds.
+    // The separate commissioning mode can pulse the heater under its own gates.
     if (!isfinite(correctedMv)) {
       snapshot_.fault = NtcFault::InvalidReading;
       return;
