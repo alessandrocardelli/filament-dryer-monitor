@@ -5,6 +5,7 @@
 #include <ESPmDNS.h>
 #include <Preferences.h>
 #include <Update.h>
+#include <ArduinoOTA.h>
 #include <esp_system.h>
 #include "FirmwareBuild.h"
 #include "ThermalLog.h"
@@ -47,6 +48,12 @@ class NetworkService {
 
   void publish(const Status &s) { live_ = s; }
 
+  // Owned by application; called synchronously before the IDE OTA transfer.
+  // Hard-off safety controller and stop fan even though standby is required.
+  void setIdeOtaStartSafetyCallback(void (*callback)()) {
+    ideOtaStartSafetyCallback_ = callback;
+  }
+
   // Small RAM diagnostic console. Mirrors relevant state/fault transitions,
   // not arbitrary strings or credentials from Serial.
   void note(const char *message) {
@@ -57,7 +64,8 @@ class NetworkService {
   }
 
   void tick(uint32_t nowMs, bool permitHttp, bool permitOta) {
-    otaAllowed_ = permitOta && !uploadActive_ && !rebootPending_;
+    otaAllowed_ = permitOta && !uploadActive_ && !rebootPending_ &&
+                  !ideOtaBusy_;
     if (ssid_.length() && WiFi.status() == WL_CONNECTED) {
       if (!staAnnounced_) {
         staAnnounced_ = true;
@@ -67,26 +75,48 @@ class NetworkService {
         Serial.println(WiFi.localIP());
         note("WIFI CONNECTED");
       }
+      if (!ideOtaStarted_) startIdeOta();
       if (setupApActive_) {
         WiFi.softAPdisconnect(true);
         setupApActive_ = false;
       }
     } else {
+      if (staAnnounced_) {
+        if (ideOtaStarted_) {
+          ArduinoOTA.end();
+          ideOtaStarted_ = false;
+        }
+        if (mdnsStarted_) {
+          MDNS.end();
+          mdnsStarted_ = false;
+        }
+      }
       staAnnounced_ = false;
       if (ssid_.length() && !setupApActive_ &&
           nowMs - connectingSinceMs_ >= 15000) startSetupAp();
     }
 
-    // A synchronous network request must never extend a heater pulse.
-    // No server.handleClient() at all while the GPIO19 heat command is ON.
-    if (permitHttp || uploadActive_) server_.handleClient();
+    // ArduinoOTA.handle() may block while receiving an entire application.
+    // It is NEVER serviced during a cycle or a heater/cooldown/fault state.
+    // An already authenticated upload finishes without running the loop.
+    if (permitOta && ideOtaStarted_ && !uploadActive_ &&
+        !rebootPending_ && !ideOtaBusy_) {
+      ArduinoOTA.handle();
+    }
+
+    // A synchronous HTTP request must never extend a heater pulse.
+    if ((permitHttp || uploadActive_) && !ideOtaBusy_)
+      server_.handleClient();
     if (rebootPending_ && (int32_t)(nowMs - rebootAtMs_) >= 0) {
       ESP.restart();
     }
   }
 
   bool uploadActive() const { return uploadActive_; }
-  bool updateBusy() const { return uploadActive_ || rebootPending_; }
+  bool updateBusy() const {
+    return uploadActive_ || rebootPending_ || ideOtaBusy_;
+  }
+  bool ideOtaReady() const { return ideOtaStarted_ && otaAllowed_; }
   bool setupApActive() const { return setupApActive_; }
   const char *setupSsid() const { return apSsid_.c_str(); }
   const char *setupPass() const { return apPass_.c_str(); }
@@ -107,9 +137,46 @@ class NetworkService {
   Status live_{};
   String ssid_, wifiPass_, adminPass_, apSsid_, apPass_;
   bool setupApActive_ = false, mdnsStarted_ = false, staAnnounced_ = false;
+  bool ideOtaStarted_ = false, ideOtaBusy_ = false;
+  void (*ideOtaStartSafetyCallback_)() = nullptr;
   bool otaAllowed_ = false, uploadActive_ = false, updateOk_ = false;
   bool rebootPending_ = false;
   uint32_t rebootAtMs_ = 0, connectingSinceMs_ = 0;
+
+  void startIdeOta() {
+    if (ideOtaStarted_ || adminPass_.length() < 12 ||
+        WiFi.status() != WL_CONNECTED) return;
+
+    ArduinoOTA.setPort(3232);
+    ArduinoOTA.setHostname("filament-dryer");
+    ArduinoOTA.setPassword(adminPass_.c_str());
+    // NetworkService owns mDNS for HTTP and IDE: don't call MDNS.begin()
+    // twice. Advertise _arduino._tcp explicitly on the existing responder.
+    ArduinoOTA.setMdnsEnabled(false);
+    ArduinoOTA.onStart([this]() {
+      ideOtaBusy_ = true;
+      if (ideOtaStartSafetyCallback_) ideOtaStartSafetyCallback_();
+      note("IDE OTA START (HEATER OFF)");
+      Serial.println("IDE OTA accepted in idle; heater forced OFF");
+    });
+    ArduinoOTA.onEnd([this]() {
+      note("IDE OTA COMPLETE");
+      Serial.println("IDE OTA COMPLETE; reboot");
+      // Keep the button interlock latched until the core reboots.
+    });
+    ArduinoOTA.onError([this](ota_error_t code) {
+      char msg[48];
+      snprintf(msg, sizeof(msg), "IDE OTA ERROR %u", (unsigned)code);
+      note(msg);
+      Serial.println(msg);
+      ideOtaBusy_ = false;  // old firmware stays active if update failed
+    });
+    ArduinoOTA.begin();
+    ideOtaStarted_ = true;
+    if (mdnsStarted_) MDNS.enableArduino(3232, true);
+    Serial.println("IDE OTA enabled: filament-dryer.local:3232");
+    note("IDE OTA READY");
+  }
 
   void startSetupAp() {
     if (setupApActive_) return;
@@ -138,8 +205,8 @@ class NetworkService {
     server_.requestAuthentication(BASIC_AUTH, "Filament Dryer OTA");
   }
   bool safeForOta() const {
-    return otaAllowed_ && !live_.heaterCommand && !live_.cycle &&
-           !live_.fault;
+    return otaAllowed_ && !ideOtaBusy_ &&
+           !live_.heaterCommand && !live_.cycle && !live_.fault;
   }
 
   void configureRoutes() {
@@ -202,6 +269,7 @@ class NetworkService {
       j += ",\"saved_log\":"; j += (log_.hasSaved() ? "true" : "false");
       j += ",\"ram_samples\":"; j += (unsigned)log_.size();
       j += ",\"ota_idle\":"; j += (safeForOta() ? "true" : "false");
+      j += ",\"ide_ota_ready\":"; j += (ideOtaReady() ? "true" : "false");
       j += "}";
       server_.sendHeader("Cache-Control", "no-store");
       server_.send(200,"application/json",j);
