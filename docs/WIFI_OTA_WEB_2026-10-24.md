@@ -48,3 +48,20 @@ Versione OLED: **WIFI-241024-R1** all'accensione. Test precedente `PULSE-241024-
 ### Console diagnostica in tempo reale
 
 È presente anche `GET /api/events`, con un buffer circolare degli ultimi **32 messaggi**: versione, entrata negli stati BOOT/STANDBY/DRYING/COMPLETE/FAULT, transizioni PRERUN/HEATER ON/GAP/COOLDOWN e cause numeriche di eventuale FAULT. La dashboard aggiorna la console ogni 2 s. È un estratto strutturato delle informazioni diagnostiche utili, **non** un mirror byte-per-byte di tutta la UART `Serial`. Il buffer eventi è volatile; lo storico numerico CSV, quando salvato, è recuperabile anche dopo il riavvio.
+
+## Stato delle prove sulla PCB e primo aggiornamento OTA R2 (24 ottobre 2026)
+
+L'utente ha confermato: connessione dell'ESP32 all'hotspot del telefono, pagina web raggiungibile dal PC sia via IP sia via `filament-dryer.local`, letture della dashboard, `/api/status` e `/api/events` funzionanti. Questo è un PASS riportato per **rete/mDNS/telemetria**. Non è ancora un test OTA, logging persistente, gestione perdita Wi-Fi o sicurezza termica continua.
+
+**Firmware `WIFI-241024-R2`:** modificati solo i titoli dei tre riquadri della dashboard: `Temperatura camera (SHT45)`, `Umidità camera (SHT45)`, `Resistenza piastra (NTC)`. La NTC mostra la propria resistenza elettrica e **non** una misura calibrata della temperatura della piastra. Le soglie heater, GPIO19 e test dei tre impulsi sono invariate. Identificativo nel display splash e API JSON modificato per consentire prova OTA inequivocabile.
+
+### Procedura prima OTA senza riaprire il dryer
+
+1. Su GitHub apri **Actions → ESP32 firmware compile** nel branch `feature/wifi-ota-web-logging-2026-10-24`, seleziona il run più recente del firmware **R2**, controlla che sia `Success`. Alla fine della pagina scarica l'**Artifact** denominato `filament-dryer-wifi-ota-<SHA>`. Devi essere loggato su GitHub con accesso al repository.
+2. Estrai lo ZIP in una cartella sul PC e controlla che il file si chiami `firmware.ino.bin`. È **solo il binario dell'applicazione**, non bootloader, merged firmware o filesystem. La CI verifica la sua dimensione rispetto alla partizione OTA default 4 MB.
+3. Mantieni l'ESP32 alimentato a 24 V e collegato alla rete di fiducia; dal browser sul PC apri `http://filament-dryer.local/api/status`. Verifica `cycle:false`, `heater_command:false`, `fault:false` e `ota_idle:true`. **Non avviare alcun test termico**.
+4. Apri `http://filament-dryer.local/ota`: inserisci utente `admin` e **password OTA** (quella separata di almeno 12 caratteri già scelta durante la configurazione, non la password dell'hotspot). Carica `firmware.ino.bin`. Non spegnere, chiudere il browser né interrompere l'hotspot durante l'upload e il riavvio. HTTP Basic non è protetto da TLS: farlo solo su rete privata e fidata.
+5. Dopo il riavvio verifica sull'OLED `WIFI-241024-R2`, riapri la dashboard e controlla i tre nuovi titoli. `/api/status` deve indicare `firmware: WIFI-241024-R2`; controlla che SHT45 e NTC continuino a leggere e che `heater_command:false` in STANDBY.
+6. Se compare un errore OTA o il dispositivo non torna online, **non ripetere upload né tentare un test caldo**: conserva l'errore/esito e verifica in modo diagnostico prima di procedere. Il firmware precedente dovrebbe mantenersi se l'aggiornamento non viene finalizzato correttamente, ma non è ancora verificato sulla PCB.
+
+Questo upgrade non serve a validare il riscaldamento: il precedente test PULSE-R1 era già concluso; il test corrente riguarda solo aggiornamento OTA e presentazione web.
