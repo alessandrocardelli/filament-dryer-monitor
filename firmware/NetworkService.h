@@ -388,6 +388,7 @@ button{padding:9px 14px}
 <div class="card">Ventola<div class="value" id="fan">--</div></div>
 <div class="card">Test<div class="value" id="phase">--</div></div>
 </div>
+<p class="sub">SHT45: temperatura e umidità dell'aria nella camera. NTC: resistenza del sensore incorporato nel riscaldatore; temperatura locale non ancora validata. Non confrontare direttamente le due temperature.</p>
 <p id="ver" class="sub"></p>
 <div class="card"><h2>Misure live (CSV, memoria RAM)</h2>
 <p><a href="/api/history.csv">Scarica campioni live</a> ·
