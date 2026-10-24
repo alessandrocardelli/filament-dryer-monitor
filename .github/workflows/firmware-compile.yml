@@ -5,6 +5,7 @@ on:
     branches:
       - feature/integrated-heater-controller-2026-10-23
       - test/closed-case-heater-pulses-2026-10-23
+      - feature/wifi-ota-web-logging-2026-10-24
   workflow_dispatch:
 
 jobs:
@@ -23,7 +24,7 @@ jobs:
       - name: Compile branch firmware for ESP32
         run: |
           grep -q 'constexpr bool kHeaterOutputEnabled = false;' firmware/AppConfig.h
-          if [ "$GITHUB_REF_NAME" = "test/closed-case-heater-pulses-2026-10-23" ]; then
+          if [ "$GITHUB_REF_NAME" = "test/closed-case-heater-pulses-2026-10-23" ] || [ "$GITHUB_REF_NAME" = "feature/wifi-ota-web-logging-2026-10-24" ]; then
             grep -q 'constexpr bool kHeaterCommissioningMode = true;' firmware/AppConfig.h
           fi
           arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all
