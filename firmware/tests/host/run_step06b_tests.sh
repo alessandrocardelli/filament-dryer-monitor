@@ -11,7 +11,8 @@ cp "$ROOT/firmware/SafetyController.h" "$ROOT/firmware/HeaterControlPolicy.h" \
    "$ROOT/firmware/AppConfig.h" "$ROOT/firmware/AppTypes.h" \
    "$ROOT/firmware/HeaterPulseCommissioning.h" \
    "$ROOT/firmware/HeaterStep06Candidate.h" \
-   "$ROOT/firmware/HeaterStep06Extended.h" "$TMP/firmware/"
+   "$ROOT/firmware/HeaterStep06Extended.h" \
+  "$ROOT/firmware/HeaterStep07GuardTrial.h" "$TMP/firmware/"
 cp "$ROOT/firmware/tests/host/test_step06b_enabled_gpio.cpp" "$TMP/firmware/tests/host/"
 cat >"$TMP/firmware/Arduino.h" <<'HDR'
 #pragma once
