@@ -5,6 +5,9 @@
 #include <iostream>
 int highWrites=0, lowWrites=0, lastPinState=-1;
 #include "../../SafetyController.h"
+// Historical S6B fixture must include its own profile directly: the actual
+// S7 controller intentionally no longer imports this earlier profile.
+#include "../../HeaterStep06Extended.h"
 static NtcSnapshot ntc(uint32_t ms,float ohms=90000.f) {
   NtcSnapshot n{};n.sampled=true;n.valid=true;n.fault=NtcFault::None;
   n.lastSampleMs=ms;n.resistanceOhms=ohms;return n;
