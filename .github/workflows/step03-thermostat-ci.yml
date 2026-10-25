@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - feature/step03-heater-locked-thermostat-sim-2026-10-25
-  pull_request:
-    branches:
-      - feature/wifi-ota-web-logging-2026-10-24
+  # Historical Step03 regression: its strict byte equality to the old
+  # SafetyController is intentionally NOT a gate for reviewed Step05 changes.
+  # The stage-specific Step05 CI now tests post-heat cooling and cold flags.
   workflow_dispatch:
 
 permissions:
