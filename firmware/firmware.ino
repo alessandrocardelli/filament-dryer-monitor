@@ -83,7 +83,7 @@ static void enterState(AppState next, uint32_t nowMs) {
       fan.startAuto(nowMs);
       buzzer.playCycleStart(nowMs);
       if (AppConfig::kHeaterCommissioningMode) {
-        Serial.println("STATE -> HEATER PULSE TEST: 3 x 1.5 s, fan ON, supervised");
+        Serial.println("STATE -> HEATER STAGE05 CANDIDATE: 4 x 1.5 s, fan ON, supervised");
         Serial.println("HOT_CSV,ms,phase,pulses,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else {
         Serial.println(safety.heaterLocked()
@@ -283,7 +283,7 @@ void setup() {
   Serial.print("FW MODE: ");
   Serial.println(FirmwareBuild::kMode);
   if (AppConfig::kHeaterCommissioningMode) {
-    Serial.println("EXPERIMENTAL 3-PULSE HEATER TEST MODE; no auto-repeat");
+    Serial.println("EXPERIMENTAL 4-PULSE STAGE05 TEST MODE; no auto-repeat");
     Serial.println("NTC absolute degrees NOT calibrated; raw resistance gate");
   } else {
     Serial.println(safety.heaterLocked()
@@ -332,6 +332,13 @@ void loop() {
   if (!network.updateBusy()) buttons.update(nowMs, handleButtonEvent);
   buzzer.update(nowMs);
   fan.update(nowMs, safety.fanPermitted());
+  // After STOP / COMPLETE / FAULT keep the fan only for required post-heat
+  // cooldown. Previously it could remain ON indefinitely in standby, or
+  // stop immediately after a continuous-heater fault. No fan on cold boot.
+  if (appState != AppState::Drying && !safety.coolingRequired(nowMs) &&
+      fan.phase() != FanPhase::Off) {
+    fan.stop();
+  }
 
   if (appState == AppState::Boot &&
       (nowMs - bootStartedMs) >= AppConfig::kBootSplashMs) {
