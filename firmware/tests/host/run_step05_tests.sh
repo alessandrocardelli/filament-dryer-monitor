@@ -21,6 +21,10 @@ cp "$ROOT/firmware/SafetyController.h" "$ROOT/firmware/HeaterControlPolicy.h" \
   "$ROOT/firmware/HeaterStep06Candidate.h" \
   "$ROOT/firmware/AppConfig.h" "$ROOT/firmware/AppTypes.h" "$TMP/firmware/"
 cp "$ROOT/firmware/tests/host/test_step05_cooldown.cpp" "$TMP/firmware/tests/host/"
+# Historical Step05 cold-fixture test still requires LOCKED mode.
+# Isolate the change to the disposable mock copy only; the experiment's
+# actual compiled firmware and separate test_step06_enabled_gpio.cpp are HEAT mode.
+sed -i 's/kHeaterCommissioningMode = true/kHeaterCommissioningMode = false/' "$TMP/firmware/AppConfig.h"
 cat > "$TMP/firmware/Arduino.h" <<'HDR'
 #pragma once
 #include <cstdint>
