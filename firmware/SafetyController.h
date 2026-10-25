@@ -5,7 +5,7 @@
 #include "AppTypes.h"
 #include "HeaterControlPolicy.h"
 #include "HeaterPulseCommissioning.h"
-#include "HeaterStep06Candidate.h"
+#include "HeaterStep06Extended.h"
 #ifdef ARDUINO_ARCH_ESP32
 #include "driver/gpio.h"
 #endif
@@ -30,7 +30,7 @@ class SafetyController {
         return; // never heat without the independent pulse deadline
       }
       timerAttachInterrupt(pulseTimer_, &SafetyController::pulseTimerIsr);
-      timerAlarm(pulseTimer_, HeaterStep06Candidate::kPulseHardwareCeilingUs,
+      timerAlarm(pulseTimer_, HeaterStep06Extended::kPulseHardwareCeilingUs,
                  false, 0); // bounded 10.5 s; never continuous
       timerStop(pulseTimer_);
     }
@@ -176,7 +176,7 @@ class SafetyController {
 
  private:
   HeaterControl::Policy policy_{};
-  HeaterCommissioning::Sequence commission_{HeaterStep06Candidate::parameters()};
+  HeaterCommissioning::Sequence commission_{HeaterStep06Extended::parameters()};
   uint32_t lastNowMs_ = 0;
   uint32_t lastHeaterOnMs_ = 0;
   bool everHeated_ = false;
