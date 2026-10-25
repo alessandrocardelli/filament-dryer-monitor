@@ -8,7 +8,8 @@ mkdir -p "$TMP/firmware/tests/host"
 cp "$ROOT/firmware/SafetyController.h" "$ROOT/firmware/HeaterControlPolicy.h" \
    "$ROOT/firmware/AppConfig.h" "$ROOT/firmware/AppTypes.h" \
    "$ROOT/firmware/HeaterPulseCommissioning.h" \
-   "$ROOT/firmware/HeaterStage05Candidate.h" "$TMP/firmware/"
+   "$ROOT/firmware/HeaterStage05Candidate.h" \
+   "$ROOT/firmware/HeaterStep06Candidate.h" "$TMP/firmware/"
 cp "$ROOT/firmware/tests/host/test_safety_integration.cpp" "$TMP/firmware/tests/host/"
 # The original regression tests exercise the normal (heater-locked) profile.
 # The new experimental pulse controller has its OWN dedicated 12-test suite.
