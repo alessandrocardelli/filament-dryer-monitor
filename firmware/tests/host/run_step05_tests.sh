@@ -20,6 +20,7 @@ cp "$ROOT/firmware/SafetyController.h" "$ROOT/firmware/HeaterControlPolicy.h" \
   "$ROOT/firmware/HeaterStage05Candidate.h" \
   "$ROOT/firmware/HeaterStep06Candidate.h" \
   "$ROOT/firmware/HeaterStep06Extended.h" \
+  "$ROOT/firmware/HeaterStep07GuardTrial.h" \
   "$ROOT/firmware/AppConfig.h" "$ROOT/firmware/AppTypes.h" "$TMP/firmware/"
 cp "$ROOT/firmware/tests/host/test_step05_cooldown.cpp" "$TMP/firmware/tests/host/"
 # Historical Step05 cold-fixture test still requires LOCKED mode.
