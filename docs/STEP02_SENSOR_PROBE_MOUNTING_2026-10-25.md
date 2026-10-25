@@ -1,6 +1,6 @@
 # Step 02 — ispezione fisica e fissaggio Sanwa (25 ottobre 2026)
 
-**Status:** PARTIAL / OPEN. Descrizione dell'utente e **tre foto fornite in chat** il 25 ottobre; le immagini non sono archiviate come file nella repository. Non dichiarare PASS fotografico oltre le parti visibili, né sostituire queste descrizioni a un collaudo a dispositivo chiuso.
+**Status:** STEP 02 CHIUSO PER CONFERMA UTENTE (25 ottobre 2026), senza certificazione fisica indipendente. Le tre foto mostrano il montaggio **prima** del fissaggio definitivo; l'utente ha successivamente comunicato «A posto. L'ho fissata possiamo considerare lo step 2 completato». Non dichiarare verificati fotograficamente la nuova ritenzione della sonda, il numero di aperture/chiusure né lo stato dei cablaggi al termine dell'intervento.
 
 ## Evidenze dall'utente / fotografie
 
@@ -26,3 +26,9 @@
 **Accertato da foto/dichiarazione:** ubicazioni generali piastra/fan/NTC/TCO/SHT45 e percorso di uscita cavi provvisorio.
 
 **OPEN e unica attività fisica immediata:** realizzare **scarico di trazione + fissaggio di contatto** della punta Sanwa; prova meccanica a freddo con coperchi realmente chiusi. L'esito andrà riportato qui e nel piano. Fino ad allora Step 02 non è PASS. Se il cavo via foro jack DC resta libero su uno spigolo, dovrà essere protetto/fissato prima di successive prove termiche.
+
+## Chiusura riferita dall'utente — 25 ottobre 2026
+
+- **Utente conferma:** la sonda Sanwa, prima soggetta a distacco, **è stata fissata**; considera concluso lo step 02. Accettato come **PASS operazionale dichiarato dall'utente**, non come prova di resistenza meccanica strumentale né revisione sul nuovo montaggio.
+- **Non attestato separatamente:** foto del fissaggio finale, controllo ripetuto apertura/chiusura e scarico di trazione, eventuale protezione degli spigoli del foro jack DC in cui transitano termocoppia e cavi 24 V, tenuta nel tempo/alle alte temperature. Non chiedere di ripetere ora tutta l'ispezione; annotare queste condizioni come preflight da osservare quando si preparerà la prova termica realmente autorizzata.
+- **Prossimo step:** 03, controllo termostatico SHT45 simulato **heater output fisicamente OFF** con test host/ESP32 CI e preservazione firmware R4 su branch operativo. Nessun riscaldamento aggiuntivo autorizzato dalla chiusura dello step 02.
