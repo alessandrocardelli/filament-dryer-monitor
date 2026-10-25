@@ -123,7 +123,10 @@ constexpr uint8_t kFanPwmResolutionBits = 8;
 constexpr uint8_t kFanLedcChannel = 9;
 constexpr uint32_t kFanKickstartMs = 1000;
 constexpr uint8_t kFanKickstartPercent = 100;
-constexpr uint8_t kFanBringupRunPercent = 40;
+// STEP06B experiment ONLY: maximize available commanded airflow while
+// characterizing heater-to-air response. D025's 40% is historical safe bring-up,
+// NOT a proven best duty for the dryer.
+constexpr uint8_t kFanBringupRunPercent = 100;
 
 constexpr uint8_t kBuzzerResolutionBits = 8;
 constexpr uint8_t kBuzzerLedcChannel = 8;
