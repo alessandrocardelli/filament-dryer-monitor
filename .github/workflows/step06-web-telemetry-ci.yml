@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - fix/step06-web-telemetry-2026-10-25
-  pull_request:
-    branches:
-      - experiment/step06-supervised-heat-2026-10-25
+  # Historical web-only gate; Step06B has a dedicated full heat-profile CI.
+  # Do not run stale 'heater files unchanged' assertions against new trial PRs.
   workflow_dispatch:
 
 permissions:
