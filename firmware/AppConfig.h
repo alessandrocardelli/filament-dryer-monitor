@@ -51,15 +51,17 @@ constexpr float kNtcShortThresholdMv = 150.0f;
 constexpr float kNtcOpenThresholdMv = 3000.0f;
 
 
-// EXPERIMENTAL STEP06 supervised, one-shot 4x10s thermal test with fan.
-// NOT a thermostat, NOT an autonomous dryer, NOT a qualified NTC model.
-// Stage 06 experimental source must stay off the operational branch.
+// EXPERIMENTAL STEP07-G: supervised early raw-NTC shutdown trial.
+// Six 20s windows are a MAXIMUM; abort if R_NTC <= 40kΩ.
+// Fan100; NOT autonomous air regulation or a qualified NTC model.
+// Do not merge this experiment into main or the operational COLD branch.
 constexpr bool kHeaterCommissioningMode = true;
 // STEP05 candidate heater profile is NEVER implicitly approved.
 // Dedicated heater-enabled trial: explicit two review flags and candidate limits.
 constexpr bool kHeaterStage05TrialReviewed = true;
-// STEP06: user approved exact 4x10s trial in chat on 2026-10-25.
-// This TRUE flag is isolated to the EXPERIMENT branch, NOT operational.
+// Historical STEP06 approval flags gate the pulse code path only.
+// They do NOT constitute user approval of a new STEP07-G physical run.
+// No new physical test before independent user review and preflight.
 constexpr bool kHeaterStep06TrialReviewed = true;
 static_assert(!kHeaterCommissioningMode ||
                   (kHeaterStage05TrialReviewed && kHeaterStep06TrialReviewed),
