@@ -5,14 +5,14 @@
 #include "AppTypes.h"
 #include "HeaterControlPolicy.h"
 #include "HeaterPulseCommissioning.h"
-#include "HeaterStep06Extended.h"
+#include "HeaterStep07GuardTrial.h"
 #ifdef ARDUINO_ARCH_ESP32
 #include "driver/gpio.h"
 #endif
 
 // Integrates the real GPIO19 output with the host-tested control policy.
-// Both heater output modes are DISABLED in the current cold-only build.
- // The stage05 candidate cannot heat without explicit compile-time review.
+// STEP07 experimental branch: only one-shot supervised heater pulses are
+// enabled; the normal thermostatic path is explicitly DISABLED.
 // Sensor/thermal qualification and independent physical safeguards are
 // separate from the optional added TCO (D029).
 class SafetyController {
@@ -30,7 +30,7 @@ class SafetyController {
         return; // never heat without the independent pulse deadline
       }
       timerAttachInterrupt(pulseTimer_, &SafetyController::pulseTimerIsr);
-      timerAlarm(pulseTimer_, HeaterStep06Extended::kPulseHardwareCeilingUs,
+      timerAlarm(pulseTimer_, HeaterStep07GuardTrial::kPulseHardwareCeilingUs,
                  false, 0); // bounded 10.5 s; never continuous
       timerStop(pulseTimer_);
     }
@@ -176,7 +176,7 @@ class SafetyController {
 
  private:
   HeaterControl::Policy policy_{};
-  HeaterCommissioning::Sequence commission_{HeaterStep06Extended::parameters()};
+  HeaterCommissioning::Sequence commission_{HeaterStep07GuardTrial::parameters()};
   uint32_t lastNowMs_ = 0;
   uint32_t lastHeaterOnMs_ = 0;
   bool everHeated_ = false;
