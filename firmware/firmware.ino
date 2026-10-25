@@ -83,7 +83,7 @@ static void enterState(AppState next, uint32_t nowMs) {
       fan.startAuto(nowMs);
       buzzer.playCycleStart(nowMs);
       if (AppConfig::kHeaterCommissioningMode) {
-        Serial.println("STATE -> HEATER STEP06B: 6 x 20 s, fan 100%, supervised");
+        Serial.println("STATE -> HEATER STEP07 GUARD: 6 x 20 s MAX, NTC 40k abort, fan 100%");
         Serial.println("HOT_CSV,ms,phase,pulses,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else {
         Serial.println(safety.heaterLocked()
@@ -283,8 +283,8 @@ void setup() {
   Serial.print("FW MODE: ");
   Serial.println(FirmwareBuild::kMode);
   if (AppConfig::kHeaterCommissioningMode) {
-    Serial.println("EXPERIMENTAL 6-PULSE STEP06B TEST MODE; no auto-repeat");
-    Serial.println("NTC absolute degrees NOT calibrated; raw resistance gate");
+    Serial.println("EXPERIMENTAL 6-PULSE STEP07 NTC-GUARD TEST; no auto-repeat");
+    Serial.println("NTC absolute degrees NOT calibrated; experimental raw R_NTC abort at 40k");
   } else {
     Serial.println(safety.heaterLocked()
         ? "Heater OUTPUT LOCKED: configuration/calibration not approved."
