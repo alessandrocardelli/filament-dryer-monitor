@@ -83,7 +83,7 @@ static void enterState(AppState next, uint32_t nowMs) {
       fan.startAuto(nowMs);
       buzzer.playCycleStart(nowMs);
       if (AppConfig::kHeaterCommissioningMode) {
-        Serial.println("STATE -> HEATER STAGE05 CANDIDATE: 4 x 1.5 s, fan ON, supervised");
+        Serial.println("STATE -> HEATER STEP06 CANDIDATE: 4 x 10 s, fan ON, supervised");
         Serial.println("HOT_CSV,ms,phase,pulses,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else {
         Serial.println(safety.heaterLocked()
@@ -283,7 +283,7 @@ void setup() {
   Serial.print("FW MODE: ");
   Serial.println(FirmwareBuild::kMode);
   if (AppConfig::kHeaterCommissioningMode) {
-    Serial.println("EXPERIMENTAL 4-PULSE STAGE05 TEST MODE; no auto-repeat");
+    Serial.println("EXPERIMENTAL 4-PULSE STEP06 TEST MODE; no auto-repeat");
     Serial.println("NTC absolute degrees NOT calibrated; raw resistance gate");
   } else {
     Serial.println(safety.heaterLocked()
