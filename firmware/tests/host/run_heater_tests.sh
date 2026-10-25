@@ -10,7 +10,8 @@ cp "$ROOT/firmware/SafetyController.h" "$ROOT/firmware/HeaterControlPolicy.h" \
    "$ROOT/firmware/HeaterPulseCommissioning.h" \
    "$ROOT/firmware/HeaterStage05Candidate.h" \
    "$ROOT/firmware/HeaterStep06Candidate.h" \
-  "$ROOT/firmware/HeaterStep06Extended.h" "$TMP/firmware/"
+  "$ROOT/firmware/HeaterStep06Extended.h" \
+  "$ROOT/firmware/HeaterStep07GuardTrial.h" "$TMP/firmware/"
 cp "$ROOT/firmware/tests/host/test_safety_integration.cpp" "$TMP/firmware/tests/host/"
 # The original regression tests exercise the normal (heater-locked) profile.
 # The new experimental pulse controller has its OWN dedicated 12-test suite.
