@@ -59,8 +59,11 @@ constexpr bool kHeaterCommissioningMode = false;
 // STEP05 candidate heater profile is NEVER implicitly approved.
 // The existing commissioning mode cannot be enabled by toggling one flag.
 constexpr bool kHeaterStage05TrialReviewed = false;
-static_assert(!kHeaterCommissioningMode || kHeaterStage05TrialReviewed,
-              "STEP05 heating requires a separately reviewed trial profile");
+// STEP06: separate authorization for a real fan-on test. FALSE in Git.
+constexpr bool kHeaterStep06TrialReviewed = false;
+static_assert(!kHeaterCommissioningMode ||
+                  (kHeaterStage05TrialReviewed && kHeaterStep06TrialReviewed),
+              "STEP06 heating requires independent physical-trial approval");
 // Integrated heater regulation exists but remains DISABLED for Step 03.
 // Test-only synthetic profiles in host fixtures are NOT hardware approvals.
 // Real thermal limits, NTC protection and physical safeguards remain OPEN.
