@@ -1,0 +1,64 @@
+name: Step 03 - locked heater and thermostat simulation
+
+on:
+  push:
+    branches:
+      - feature/step03-heater-locked-thermostat-sim-2026-10-25
+  pull_request:
+    branches:
+      - feature/wifi-ota-web-logging-2026-10-24
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cold-compile-and-simulate:
+    name: ESP32 cold build + simulated thermostat
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout source under test
+        uses: actions/checkout@v4
+      - name: Enforce physically non-actuating cold firmware configuration
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          config = Path("firmware/AppConfig.h").read_text()
+          required = {
+              "kHeaterCommissioningMode": "false",
+              "kHeaterOutputEnabled": "false",
+              "kHeaterProfileApproved": "false",
+              "kHeaterNtcModelApproved": "false",
+          }
+          for name, expected in required.items():
+              values = re.findall(r"constexpr\s+bool\s+" + name + r"\s*=\s*(true|false)\s*;", config)
+              if values != [expected]:
+                  raise SystemExit(f"UNSAFE STEP03 CONFIG: {name} values={values}, expected={expected}")
+          print("PASS: no pulse commissioning, no normal heater output, no thermal approval")
+          PY
+      - name: Confirm physical heater safety and peripherals unchanged
+        run: |
+          git fetch --no-tags origin feature/wifi-ota-web-logging-2026-10-24
+          for path in firmware/SafetyController.h firmware/HeaterPulseCommissioning.h firmware/FanController.h firmware/NetworkService.h firmware/NtcSensor.h firmware/Sht45Sensor.h firmware/Ui.h firmware/CycleController.h firmware/firmware.ino; do
+            baseline_sha="$(git rev-parse "FETCH_HEAD:$path")"
+            current_sha="$(git hash-object "$path")"
+            if [ "$baseline_sha" != "$current_sha" ]; then
+              echo "::error file=$path::Step03 must not modify existing heater/peripherals/runtime path"
+              exit 1
+            fi
+            echo "UNCHANGED: $path"
+          done
+      - name: Set up Arduino CLI
+        uses: arduino/setup-arduino-cli@v2
+      - name: Install ESP32 Arduino core 3.3.12
+        run: |
+          arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+      - name: Install U8g2 2.36.19
+        run: arduino-cli lib install U8g2@2.36.19
+      - name: Compile real cold-disabled ESP32 application (no flash)
+        run: arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all
+      - name: Run existing host and scripted cycle simulation
+        run: bash firmware/tests/host/run_step03_tests.sh
