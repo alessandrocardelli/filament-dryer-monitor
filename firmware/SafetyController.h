@@ -31,7 +31,7 @@ class SafetyController {
       }
       timerAttachInterrupt(pulseTimer_, &SafetyController::pulseTimerIsr);
       timerAlarm(pulseTimer_, HeaterStep07GuardTrial::kPulseHardwareCeilingUs,
-                 false, 0); // bounded 10.5 s; never continuous
+                 false, 0); // bounded 20.5 s per window; never continuous
       timerStop(pulseTimer_);
     }
 #endif
