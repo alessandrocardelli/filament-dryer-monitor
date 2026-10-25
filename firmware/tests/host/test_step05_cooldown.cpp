@@ -61,7 +61,11 @@ int main() {
     assert(faulty.coolingRequired(201202) && faulty.fanPermitted());
     faulty.stop(); // transitioning to FAULT calls stop(); history preserved
     assert(faulty.coolingRequired(201203) && faulty.fanPermitted());
-    assert(!faulty.coolingRequired(201201 + AppConfig::kPostHeatCooldownMs));
+    const uint32_t cooldownExpiresMs =
+        201201 + AppConfig::kPostHeatCooldownMs;
+    faulty.update(cooldownExpiresMs, openNtc, airAt(cooldownExpiresMs),
+                  false, true, 0, 40);
+    assert(!faulty.coolingRequired(cooldownExpiresMs));
     assert(!faulty.fanPermitted()); // no endless fan after cooldown in fault
 
     SafetyController noFan;
