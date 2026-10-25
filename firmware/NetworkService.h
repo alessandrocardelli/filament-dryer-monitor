@@ -9,7 +9,7 @@
 #include <esp_system.h>
 #include "FirmwareBuild.h"
 #include "ThermalLog.h"
-#include "HeaterStage05Candidate.h"
+#include "HeaterStep06Candidate.h"
 
 // Local-only read-only telemetry + browser OTA. No remote heater controls.
 // Provisioning AP uses a fresh random WPA2 key displayed on the OLED.
@@ -266,7 +266,7 @@ class NetworkService {
       j += ",\"fan_percent\":"; j += live_.fanPercent;
       j += ",\"phase\":"; j += live_.phase;
       j += ",\"pulses\":"; j += live_.pulses;
-      j += ",\"pulse_goal\":"; j += HeaterStage05Candidate::parameters().pulseCount;
+      j += ",\"pulse_goal\":"; j += HeaterStep06Candidate::parameters().pulseCount;
       j += ",\"pulse_fault\":"; j += live_.pulseFault;
       j += ",\"saved_log\":"; j += (log_.hasSaved() ? "true" : "false");
       j += ",\"ram_samples\":"; j += (unsigned)log_.size();
