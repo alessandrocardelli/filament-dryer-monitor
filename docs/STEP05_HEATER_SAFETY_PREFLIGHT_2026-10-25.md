@@ -79,3 +79,9 @@ Per la V1 continua (Step07+) serviranno almeno una guardia NTC qualificata in Ω
 - **Tre warning preesistenti `Ui.h` su possibili troncamenti snprintf** restano aperti; la build è PASS, ma non è una verifica visiva della UI sulla scheda.
 - La prima CI della stessa fase era FAIL **nel test di simulazione**: il mock interrogava `fanPermitted()` per un futuro cooldown senza avanzare il suo orologio interno. La correzione ha introdotto `SafetyController::update()` nel test all'istante di scadenza, senza allentare alcun controllo. Il nuovo run è PASS.
 - **Non verificato su hardware:** watchdog ESP32 con CPU bloccata, ventola/aria reali, proprietà del TCO 105°C, termocoppia Sanwa, funzionamento con profilo 4 impulsi o tempi reali di cooldown. Non dare PASS fisico.
+
+## 2026-10-25 — PR #6 merge approvato sul solo branch operativo
+
+- [PR #6](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/6) MERGED in `feature/wifi-ota-web-logging-2026-10-24` al commit [`ec6ce53`](https://github.com/alessandrocardelli/filament-dryer-monitor/commit/ec6ce53e4710849dadb10477d42e19185183083b). **Main** `f576b64` non modificato; nessun flash sulla PCB.
+- CI eseguita sul commit PR finale `986d1f6`: [Actions #40195971805 PASS](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40195971805). Nuova build sorgente `COLD-251025-S5`, entrambe le modalità heater DISABILITATE; nuova salvaguardia di compilazione su consenso al profilo 4×1,5s.
+- La chiusura STEP05 vale **solo per la predisposizione software/safety review**. Lo STEP06 per la prima caratterizzazione reale resta **NON APPROVATO e non svolto**: mancano il gate di approvazione separata, la verifica delle condizioni preflight (ventola fisica e cablaggi Sanwa/DC, TCO105 presente, disponibilità di power cut, lettura Sanwa affidabile) e la qualifica fisica dei limiti/ISR watchdog. Non scalare automaticamente 4 impulsi, soglie o setpoint V1.
