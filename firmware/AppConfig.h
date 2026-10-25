@@ -51,17 +51,14 @@ constexpr float kNtcShortThresholdMv = 150.0f;
 constexpr float kNtcOpenThresholdMv = 3000.0f;
 
 
-// EXPERIMENTAL: exactly three 1.5-second heater pulses in one supervised
-// DRYING cycle, with 5 s fan prerun, 12 s between pulses, then 45 s cooldown.
-// This is a separately versioned first closed-case CHARACTERIZATION build.
-// It does not use the unvalidated NTC temperature conversion as a trip limit;
-// the raw NTC resistance and SHT45 chamber temperature are observed instead.
-// Production thermostat output stays disabled below.
-constexpr bool kHeaterCommissioningMode = true;
-// Integrated heater regulation. The application contains the full controller,
-// but the output is intentionally DISABLED until real thermal limits and the
-// NTC model have been validated for the actual closed enclosure. No TCO
-// purchase is a prerequisite for software development (D029).
+// STEP 03: software-only thermostat verification build.
+// Both the previous supervised heater-pulse path AND normal heater drive are
+// disabled. This source must NOT be used for thermal characterization.
+// The last physically tested 3-pulse firmware is preserved in Git history.
+constexpr bool kHeaterCommissioningMode = false;
+// Integrated heater regulation exists but remains DISABLED for Step 03.
+// Test-only synthetic profiles in host fixtures are NOT hardware approvals.
+// Real thermal limits, NTC protection and physical safeguards remain OPEN.
 //
 // Neither the old donor 82.5k / B4100 conversion nor the seven Sanwa contact
 // points qualify as a calibrated heater-bead thermometer. Never switch these
