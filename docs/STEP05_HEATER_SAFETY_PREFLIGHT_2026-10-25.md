@@ -68,3 +68,14 @@ Identificativo compilazione `COLD-251025-S5`. Non produrre né distribuire un'im
 Lo step05 è concluso **soltanto come safety preflight e predisposizione software** quando il commit esatto avrà compile ESP32, test host e diff review PASS. Qualificazione del profilo reale, comando heater ON, ventilazione fisica e integrità termica NON verificati né autorizzati. La discussione dei parametri proposti e la separata approvazione della nuova prova avverranno **prima** dello Step06.
 
 Per la V1 continua (Step07+) serviranno almeno una guardia NTC qualificata in Ω o una curva di termistore realmente provata, watchdog fisico per il controllo ON, cooldown coerente con Sanwa post-OFF, gestione fallimento fan/airflow, limiti materiali/TCO e verifica autonoma reale; i test con dati sintetici non bastano.
+
+## Verifica CI reale del firmware freddo — PASS
+
+- [Actions run **#40195612529**](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40195612529): **PASS** su branch di sviluppo prima dei commit di consolidamento documentale.
+- Compilazione ESP32 core 3.3.12, U8g2 2.36.19: **1.117.266 B di flash (85%)**; **73.736 B RAM globale (22%)** dopo espansione buffer a 640 campioni; **253.944 B** residui dichiarati dal compilatore.
+- Test esistenti: mock reale `SafetyController` in configurazione OFF **GPIO HIGH writes=0**; fixture APPROVED su copia temporanea separata **HIGH writes=1**, non nel firmware. **14 policy PASS**, **12 impulse PASS**, **41 assertion SHT45/ciclo PASS**.
+- Nuove prove: candidato 4×1,5s / 12s gap / 60s cooldown / limiti in Ω e °C aria, sequenza non ripetibile, stop e fan-loss PASS; test `SafetyController` su configurazione cold e fixture sintetica dopo STOP, FAULT NTC open e perdita comando fan PASS.
+- Gate `kHeaterCommissioningMode=false`, `kHeaterStage05TrialReviewed=false`, `kHeaterOutputEnabled=false` PASS. Test negativo di compilazione: cambiare SOLO `kHeaterCommissioningMode=true` produce errore static_assert atteso PASS.
+- **Tre warning preesistenti `Ui.h` su possibili troncamenti snprintf** restano aperti; la build è PASS, ma non è una verifica visiva della UI sulla scheda.
+- La prima CI della stessa fase era FAIL **nel test di simulazione**: il mock interrogava `fanPermitted()` per un futuro cooldown senza avanzare il suo orologio interno. La correzione ha introdotto `SafetyController::update()` nel test all'istante di scadenza, senza allentare alcun controllo. Il nuovo run è PASS.
+- **Non verificato su hardware:** watchdog ESP32 con CPU bloccata, ventola/aria reali, proprietà del TCO 105°C, termocoppia Sanwa, funzionamento con profilo 4 impulsi o tempi reali di cooldown. Non dare PASS fisico.
