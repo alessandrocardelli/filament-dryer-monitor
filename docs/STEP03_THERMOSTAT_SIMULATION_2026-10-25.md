@@ -31,3 +31,7 @@
 **NON verificati:** flash su PCB, pagine OTA/OLED della nuova build, flusso d'aria fisico, riscaldamento reale, modello T NTC assoluto, trip piastra, comportamento termico closed-loop, TCO o materiali in regime. Il firmware nuovo, anche se venisse caricato, è **fan-only** e non un dryer autonomo termico. Il firmware precedentemente caricato sull'hardware resta invariato.
 
 **Passo successivo STEP 04:** analisi di NTC in resistenza, errori elettrici separati da limiti termici fisici, rapporto locale Sanwa/NTC tenendo conto della diversa posizione, definizione di una strategia per caratterizzazione progressiva e dei gate delle future prove a caldo. Non riaprire 12h history o acquisti TCO opzionale. Step 04 non autorizza nessuna prova a caldo di per sé.
+
+## Stato dopo la revisione — 25 ottobre 2026
+
+La [PR #5](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/5) è stata **mergiata esclusivamente** in `feature/wifi-ota-web-logging-2026-10-24`, commit [`3b584a5`](https://github.com/alessandrocardelli/filament-dryer-monitor/commit/3b584a53660dd706bd5bc3d689c214465b28a9d4), dopo [CI finale PASS](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40192935185). Le limitazioni fisiche/termiche sopra restano aperte e `main` non è stato modificato.
