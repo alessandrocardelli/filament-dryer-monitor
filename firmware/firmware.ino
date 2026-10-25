@@ -426,11 +426,8 @@ void loop() {
     Serial.print("mV R=");
     if (n.valid) {
       Serial.print(n.resistanceOhms / 1000.0f, 2);
-      Serial.print("k T=");
-      Serial.print(n.temperatureC, 2);
-      Serial.print("C empirical=");
-      Serial.print(n.insideEmpiricalRange ? "yes" : "no");
-      Serial.print(" heater=");
+      // No NTC Celsius estimate is shown: its local thermal model is unverified.
+      Serial.print(" kOhm heater=");
       Serial.print(safety.heaterLocked() ? "LOCKED" :
                    (safety.heaterOn() ? "ON" : "OFF"));
       Serial.print(" safetyFault=");

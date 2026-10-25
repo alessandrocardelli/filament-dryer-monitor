@@ -223,13 +223,13 @@ If space is tight, temperature/RH and remaining time take precedence over second
 Accessible with M while drying or from standby:
 
 ```text
- SYSTEM
- Chamber    54.8 C
- Heater     72.3 C
+ SYSTEM / HEATER
+ Air SHT45  54.8 C
+ NTC R      12.34 kOhm
  H 63%       F 65%
 ```
 
-The heater NTC temperature is intentionally a secondary/service value rather than the largest number on the normal screen.
+The displayed values above are illustrative, not qualification measurements. SHT45 is the **chamber-air temperature**; NTC is the **electrical resistance of the thermistor embedded in the heater assembly**. Until a heater-local thermal model and limits have been validated, the technical page shows NTC resistance (kOhm) and faults, **not an unqualified NTC temperature in °C**. A future approved heater-temperature estimate, if introduced, must remain explicitly separate from SHT45 chamber air and must not be treated as a co-located measurement.
 
 ### 6.6 Diagnostics page
 
