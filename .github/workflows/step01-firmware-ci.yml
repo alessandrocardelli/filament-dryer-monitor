@@ -9,9 +9,10 @@ on:
       - "firmware/**"
       - "docs/**"
       - "README.md"
-  pull_request:
-    branches:
-      - feature/wifi-ota-web-logging-2026-10-24
+  # This is the historical Step 01 diagnostics-only validator.
+  # Its AppConfig-hash equality gate is invalid for Step 03, which *safely*
+  # disables previously authorized short pulse commissioning by design.
+  # Future branches use stage-specific workflows; manual replay remains possible.
   workflow_dispatch:
 
 permissions:
