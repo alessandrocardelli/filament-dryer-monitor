@@ -5,6 +5,7 @@
 #include "AppTypes.h"
 #include "FirmwareBuild.h"
 #include "HeaterPulseCommissioning.h"
+#include "HeaterStage05Candidate.h"
 #include "assets/slewform/slewform_animation_compact.h"
 
 class Ui {
@@ -282,21 +283,23 @@ class Ui {
              settings.targetTempC, fanDutyPercent);
     display_.drawUTF8(1, 47, target);
     if (AppConfig::kHeaterCommissioningMode) {
+      const unsigned totalPulses =
+          static_cast<unsigned>(HeaterStage05Candidate::parameters().pulseCount);
       char progress[23];
       switch (static_cast<HeaterCommissioning::Phase>(pulsePhase)) {
         case HeaterCommissioning::Phase::Prerun:
-          snprintf(progress, sizeof(progress), "FAN PRERUN - 0/3");
+          snprintf(progress, sizeof(progress), "FAN PRERUN - 0/%u", totalPulses);
           break;
         case HeaterCommissioning::Phase::Pulse:
-          snprintf(progress, sizeof(progress), "HEATER ON - %u/3",
-                   static_cast<unsigned>(pulsesDone + 1));
+          snprintf(progress, sizeof(progress), "HEATER ON - %u/%u",
+                   static_cast<unsigned>(pulsesDone + 1), totalPulses);
           break;
         case HeaterCommissioning::Phase::Gap:
-          snprintf(progress, sizeof(progress), "HEATER OFF - %u/3",
-                   static_cast<unsigned>(pulsesDone));
+          snprintf(progress, sizeof(progress), "HEATER OFF - %u/%u",
+                   static_cast<unsigned>(pulsesDone), totalPulses);
           break;
         case HeaterCommissioning::Phase::Cooldown:
-          snprintf(progress, sizeof(progress), "COOLING - 3/3");
+          snprintf(progress, sizeof(progress), "COOLING - %u/%u", totalPulses, totalPulses);
           break;
         case HeaterCommissioning::Phase::Complete:
           snprintf(progress, sizeof(progress), "TEST COMPLETE");
@@ -349,9 +352,10 @@ class Ui {
     }
     display_.drawStr(2, 54, line);
     if (AppConfig::kHeaterCommissioningMode) {
-      snprintf(line, sizeof(line), "PH %u  PULSES %u/3  H:%s",
+      snprintf(line, sizeof(line), "PH %u  PULSES %u/%u  H:%s",
                static_cast<unsigned>(pulsePhase),
                static_cast<unsigned>(pulsesDone),
+               static_cast<unsigned>(HeaterStage05Candidate::parameters().pulseCount),
                heaterOn ? "ON" : "OFF");
       display_.drawStr(2, 63, line);
     } else {

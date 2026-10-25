@@ -1,0 +1,79 @@
+name: Step 05 - heater safety preflight, COLD default
+
+on:
+  push:
+    branches:
+      - feature/step05-heater-safety-preflight-2026-10-25
+  pull_request:
+    branches:
+      - feature/wifi-ota-web-logging-2026-10-24
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cold-only:
+    name: Cold ESP32 + preflight safety mock
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout exact branch source
+        uses: actions/checkout@v4
+      - name: Check NO hardware heat enable in committed config
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          conf=Path('firmware/AppConfig.h').read_text()
+          required={
+            'kHeaterCommissioningMode':'false',
+            'kHeaterStage05TrialReviewed':'false',
+            'kHeaterOutputEnabled':'false',
+            'kHeaterProfileApproved':'false',
+            'kHeaterNtcModelApproved':'false',
+          }
+          for key,expected in required.items():
+            found=re.findall(r'constexpr\s+bool\s+'+key+r'\s*=\s*(true|false)\s*;',conf)
+            if found!=[expected]:
+              raise SystemExit('Unsafe Step05 committed flags: '+key+'='+str(found))
+          assert 'static_assert(!kHeaterCommissioningMode || kHeaterStage05TrialReviewed' in conf
+          assert 'constexpr uint32_t kPostHeatCooldownMs = 45000;' in conf
+          print('PASS: cold-only flags, separate approval gate, no heater output')
+          PY
+      - name: Check peripheral implementations unchanged
+        run: |
+          git fetch --no-tags origin feature/wifi-ota-web-logging-2026-10-24
+          for path in firmware/HeaterPulseCommissioning.h firmware/HeaterControlPolicy.h firmware/FanController.h firmware/NtcSensor.h firmware/Sht45Sensor.h firmware/CycleController.h; do
+            [ "$(git rev-parse "FETCH_HEAD:$path")" = "$(git hash-object "$path")" ] || {
+              echo "::error file=$path::Unreviewed change to hardware/peripheral baseline"
+              exit 1
+            }
+            echo "UNCHANGED: $path"
+          done
+      - name: Confirm single toggle cannot accidentally enable pulse mode
+        run: |
+          tmp="$(mktemp -d)"
+          trap 'rm -rf "$tmp"' EXIT
+          cp firmware/AppConfig.h "$tmp/AppConfig.h"
+          printf '#pragma once\n#include <cstdint>\n' >"$tmp/Arduino.h"
+          sed -i 's/kHeaterCommissioningMode = false/kHeaterCommissioningMode = true/' "$tmp/AppConfig.h"
+          printf '#include "AppConfig.h"\n' >"$tmp/rejected.cpp"
+          if g++ -std=c++17 -I "$tmp" -c "$tmp/rejected.cpp" -o "$tmp/rejected.o" >"$tmp/log" 2>&1; then
+            echo "::error::Enabling just commissioning bypassed approval gate"
+            exit 1
+          fi
+          grep -q 'STEP05 heating requires a separately reviewed trial profile' "$tmp/log" || { cat "$tmp/log"; exit 1; }
+          echo "PASS: compiler rejects heater pulse re-enable without approval"
+      - name: Set up Arduino CLI
+        uses: arduino/setup-arduino-cli@v2
+      - name: Install ESP32 Arduino core 3.3.12
+        run: |
+          arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+      - name: Install U8g2 2.36.19
+        run: arduino-cli lib install U8g2@2.36.19
+      - name: Compile ESP32 source WITHOUT flashing
+        run: arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all
+      - name: Run legacy and Step05 mocked tests
+        run: bash firmware/tests/host/run_step05_tests.sh
