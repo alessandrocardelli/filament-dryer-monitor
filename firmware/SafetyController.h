@@ -5,12 +5,14 @@
 #include "AppTypes.h"
 #include "HeaterControlPolicy.h"
 #include "HeaterPulseCommissioning.h"
+#include "HeaterStage05Candidate.h"
 #ifdef ARDUINO_ARCH_ESP32
 #include "driver/gpio.h"
 #endif
 
 // Integrates the real GPIO19 output with the host-tested control policy.
-// HEATER OUTPUT REMAINS OFF IN THE SHIPPED CONFIGURATION.
+// Both heater output modes are DISABLED in the current cold-only build.
+ // The stage05 candidate cannot heat without explicit compile-time review.
 // Sensor/thermal qualification and independent physical safeguards are
 // separate from the optional added TCO (D029).
 class SafetyController {
@@ -47,6 +49,9 @@ class SafetyController {
               bool fanPwmRunning, uint32_t elapsedCycleMs,
               float targetChamberC) {
     lastNowMs_ = nowMs;
+    // Remember the last known physical ON while the loop remains responsive.
+    // stop()/FAULT must not erase residual plate heat and fan-overrun needs.
+    if (heaterOn_) lastHeaterOnMs_ = nowMs;
 #ifdef ARDUINO_ARCH_ESP32
     if (AppConfig::kHeaterCommissioningMode && pulseTimerFired_) {
       commission_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
@@ -140,7 +145,12 @@ class SafetyController {
   }
   bool commissioningCanStart() const { return commission_.canStart(); }
   bool coolingRequired(uint32_t nowMs) const {
-    return AppConfig::kHeaterCommissioningMode && commission_.cooldownNeeded(nowMs);
+    const bool commissioningCooldown =
+        AppConfig::kHeaterCommissioningMode && commission_.cooldownNeeded(nowMs);
+    const bool recentPhysicalHeating = everHeated_ &&
+        static_cast<uint32_t>(nowMs - lastHeaterOnMs_) <
+            AppConfig::kPostHeatCooldownMs;
+    return commissioningCooldown || recentPhysicalHeating;
   }
   uint8_t commissioningPhase() const {
     return static_cast<uint8_t>(commission_.phase());
@@ -165,8 +175,10 @@ class SafetyController {
 
  private:
   HeaterControl::Policy policy_{};
-  HeaterCommissioning::Sequence commission_{};
+  HeaterCommissioning::Sequence commission_{HeaterStage05Candidate::parameters()};
   uint32_t lastNowMs_ = 0;
+  uint32_t lastHeaterOnMs_ = 0;
+  bool everHeated_ = false;
 #ifdef ARDUINO_ARCH_ESP32
   hw_timer_t *pulseTimer_ = nullptr;
   inline static volatile bool pulseTimerFired_ = false;
@@ -205,8 +217,11 @@ class SafetyController {
         timerRestart(pulseTimer_); // hardware ceiling before GPIO HIGH
       }
 #endif
+      // Applies only after all mode-specific gates and watchdog setup.
       digitalWrite(AppConfig::kPinHeaterPwm, HIGH);
       heaterOn_ = true;
+      everHeated_ = true;
+      lastHeaterOnMs_ = lastNowMs_;
     } else {
       forceHeaterOff();
     }
