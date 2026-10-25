@@ -18,6 +18,7 @@ echo "STEP05: mock real SafetyController in cold and synthetic-thermal fixture"
 cp "$ROOT/firmware/SafetyController.h" "$ROOT/firmware/HeaterControlPolicy.h" \
   "$ROOT/firmware/HeaterPulseCommissioning.h" \
   "$ROOT/firmware/HeaterStage05Candidate.h" \
+  "$ROOT/firmware/HeaterStep06Candidate.h" \
   "$ROOT/firmware/AppConfig.h" "$ROOT/firmware/AppTypes.h" "$TMP/firmware/"
 cp "$ROOT/firmware/tests/host/test_step05_cooldown.cpp" "$TMP/firmware/tests/host/"
 cat > "$TMP/firmware/Arduino.h" <<'HDR'
