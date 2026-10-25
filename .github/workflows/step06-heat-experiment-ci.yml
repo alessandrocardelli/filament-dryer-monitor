@@ -1,0 +1,93 @@
+name: Step 06 - approved supervised HEAT experiment (isolated)
+
+on:
+  push:
+    branches:
+      - experiment/step06-supervised-heat-2026-10-25
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: Verify actual experimental heater firmware
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout exact experimental commit
+        uses: actions/checkout@v4
+      - name: Assert ONLY one-shot pulse path is enabled
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("firmware/AppConfig.h").read_text()
+          required={
+            "kHeaterCommissioningMode":"true",
+            "kHeaterStage05TrialReviewed":"true",
+            "kHeaterStep06TrialReviewed":"true",
+            "kHeaterOutputEnabled":"false",
+            "kHeaterProfileApproved":"false",
+            "kHeaterNtcModelApproved":"false",
+          }
+          for key,val in required.items():
+            found=re.findall(r"constexpr\s+bool\s+"+key+r"\s*=\s*(true|false)\s*;",s)
+            if found!=[val]:raise SystemExit(f"Unexpected heater flags {key}: {found}")
+          c=Path("firmware/HeaterStep06Candidate.h").read_text()
+          for required in [
+            "p.pulseMs = 10000;", "p.gapMs = 12000;",
+            "p.prerunMs = 5000;", "p.cooldownMs = 60000;",
+            "p.pulseCount = kPulseCount;", "p.minimumNtcOhms = 19680.0f;",
+            "p.maximumChamberC = 40.0f;", "kPulseHardwareCeilingUs = 10500000;",
+          ]:
+            if required not in c:raise SystemExit("Profile unexpectedly modified: "+required)
+          fan=Path("firmware/AppConfig.h").read_text()
+          for required in [
+            "kFanKickstartMs = 1000;", "kFanKickstartPercent = 100;",
+            "kFanBringupRunPercent = 40;",
+          ]:
+            if required not in fan:raise SystemExit("Fan baseline unexpectedly changed: "+required)
+          assert 'HOT-251025-S6A' in Path("firmware/FirmwareBuild.h").read_text()
+          assert "gpio_set_level" in Path("firmware/SafetyController.h").read_text()
+          print("PASS: real experimental 4x10s, GPIO ISR limit, fan 1s kickstart, thermostat OFF")
+          PY
+      - name: Ensure normal runtime sources unchanged from candidate
+        run: |
+          git fetch --no-tags origin feature/step06-fan-on-thermal-characterization-2026-10-25
+          for path in firmware/HeaterPulseCommissioning.h firmware/HeaterStep06Candidate.h firmware/SafetyController.h firmware/firmware.ino firmware/FanController.h firmware/NtcSensor.h firmware/Sht45Sensor.h firmware/ThermalLog.h firmware/Ui.h firmware/NetworkService.h firmware/CycleController.h; do
+            [ "$(git rev-parse "FETCH_HEAD:$path")" = "$(git hash-object "$path")" ] || {
+              echo "::error file=$path::Unexpected change to reviewed candidate runtime"
+              exit 1
+            }
+            echo "UNCHANGED: $path"
+          done
+      - name: Run host mock tests first
+        run: bash firmware/tests/host/run_step06_enabled_tests.sh
+      - name: Set up Arduino CLI
+        uses: arduino/setup-arduino-cli@v2
+      - name: Install ESP32 Arduino core 3.3.12
+        run: |
+          arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+      - name: Install U8g2 2.36.19
+        run: arduino-cli lib install U8g2@2.36.19
+      - name: Compile real HEAT-enabled ESP32 OTA application binary (NO FLASH)
+        run: |
+          arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all --output-dir build/step06
+          test -s build/step06/firmware.ino.bin
+          sha256sum build/step06/firmware.ino.bin | tee build/step06/SHA256SUMS.txt
+          echo "Git commit: ${GITHUB_SHA}" >build/step06/BUILD_COMMIT.txt
+          echo "Firmware: HOT-251025-S6A" >>build/step06/BUILD_COMMIT.txt
+          echo "Hardware heating: NOT performed. Supervised experimental use only." >>build/step06/BUILD_COMMIT.txt
+          ls -lah build/step06
+      - name: Store exactly the OTA application binary and checksum
+        uses: actions/upload-artifact@v4
+        with:
+          name: step06-HOT-251025-S6A-OTA
+          path: |
+            build/step06/firmware.ino.bin
+            build/step06/SHA256SUMS.txt
+            build/step06/BUILD_COMMIT.txt
+          if-no-files-found: error
+          retention-days: 14
