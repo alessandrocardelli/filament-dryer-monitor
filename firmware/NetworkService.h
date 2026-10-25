@@ -9,6 +9,7 @@
 #include <esp_system.h>
 #include "FirmwareBuild.h"
 #include "ThermalLog.h"
+#include "HeaterStage05Candidate.h"
 
 // Local-only read-only telemetry + browser OTA. No remote heater controls.
 // Provisioning AP uses a fresh random WPA2 key displayed on the OLED.
@@ -265,6 +266,7 @@ class NetworkService {
       j += ",\"fan_percent\":"; j += live_.fanPercent;
       j += ",\"phase\":"; j += live_.phase;
       j += ",\"pulses\":"; j += live_.pulses;
+      j += ",\"pulse_goal\":"; j += HeaterStage05Candidate::parameters().pulseCount;
       j += ",\"pulse_fault\":"; j += live_.pulseFault;
       j += ",\"saved_log\":"; j += (log_.hasSaved() ? "true" : "false");
       j += ",\"ram_samples\":"; j += (unsigned)log_.size();
@@ -408,7 +410,7 @@ async function status(){
  $('ntc').textContent=d.ntc_valid?(d.ntc_ohms/1000).toFixed(2)+' kΩ':'--';
  $('heat').textContent=d.heater_command?'ON':'OFF';
  $('fan').textContent=d.fan_percent+' %';
- $('phase').textContent=(phases[d.phase]||'--')+' '+d.pulses+'/3';
+ $('phase').textContent=(phases[d.phase]||'--')+' '+d.pulses+'/'+d.pulse_goal;
  $('ver').textContent='Firmware '+d.firmware+' | campioni '+d.ram_samples+
  (d.fault?' | FAULT '+d.pulse_fault:'')+' | '+(d.ota_idle?'OTA pronto':'OTA non disponibile');
  $('net').textContent='Online';
