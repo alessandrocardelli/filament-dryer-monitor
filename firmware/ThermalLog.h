@@ -13,9 +13,10 @@ class ThermalLog {
     float airC = 0, humidity = 0, ntcOhms = 0;
     uint8_t phase = 0, pulses = 0, heater = 0, fan = 0, valid = 0;
   };
-  // 160 seconds covers the 140-second bounded Step05 diagnostic envelope.
-  // Increases RAM only; LittleFS writes still occur only after cooldown.
-  static constexpr size_t kCapacity = 640;  // 160 s at 250 ms
+  // 350 seconds x 4 samples/s: capture the entire ~276-second STEP06B
+  // sequence + 90-second cooldown, even when callbacks delay some records.
+  // Do not write flash while the heater can be commanded HIGH.
+  static constexpr size_t kCapacity = 1400; // 350 s at 250 ms
   void begin() {
     // On the first clean prototype install there is no LittleFS signature.
     mounted_ = LittleFS.begin(false);
