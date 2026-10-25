@@ -1,0 +1,62 @@
+name: Step07G - conservative NTC shutdown using S6C history
+
+on:
+  push:
+    branches:
+      - experiment/step07-ntc-guard-verified-history-2026-10-25
+  pull_request:
+    branches:
+      - experiment/step06b-fan100-extended-2026-10-25
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Review exact guarded trial conditions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          cfg=Path('firmware/AppConfig.h').read_text()
+          hdr=Path('firmware/HeaterStep07GuardTrial.h').read_text()
+          safety=Path('firmware/SafetyController.h').read_text()
+          assert 'kHeaterCommissioningMode = true;' in cfg
+          assert 'kHeaterOutputEnabled = false;' in cfg
+          assert 'kHeaterNtcModelApproved = false;' in cfg
+          assert 'kFanBringupRunPercent = 100;' in cfg
+          assert 'kConservativeRawNtcTripOhms = 40000.0f;' in hdr
+          assert 'p.pulseCount = 6;' in hdr
+          assert 'p.pulseMs = 20000;' in hdr
+          assert 'p.gapMs = 12000;' in hdr
+          assert 'p.cooldownMs = 90000;' in hdr
+          assert 'p.maximumChamberC = 40.0f;' in hdr
+          assert 'kPulseHardwareCeilingUs = 20500000;' in hdr
+          assert 'HeaterStep07GuardTrial::parameters()' in safety
+          assert 'HeaterStep07GuardTrial::kPulseHardwareCeilingUs' in safety
+          assert 'HOT-251025-S7G' in Path('firmware/FirmwareBuild.h').read_text()
+          print('PASS: fixed conservatively earlier 40k NTC stop, fan100, original heat budget')
+          PY
+      - name: Confirm unchanged board-heater driver, sensor and fan classes
+        run: |
+          git fetch --no-tags origin experiment/step06b-fan100-extended-2026-10-25
+          for path in firmware/HeaterPulseCommissioning.h firmware/HeaterControlPolicy.h firmware/FanController.h firmware/NtcSensor.h firmware/Sht45Sensor.h firmware/ThermalLog.h firmware/CycleController.h firmware/AppTypes.h; do
+            [ "$(git rev-parse FETCH_HEAD:$path)" = "$(git hash-object "$path")" ] || {
+              echo "::error file=$path::unexpected driver or sensor change"
+              exit 1
+            }
+          done
+      - name: Full historical and guarded-GPIO mock suite
+        run: bash firmware/tests/host/run_step07_tests.sh
+      - uses: arduino/setup-arduino-cli@v2
+      - name: Install ESP32 3.3.12 and U8g2 2.36.19
+        run: |
+          arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli lib install U8g2@2.36.19
+      - name: Compile actual experimental ESP32 sketch (no flash)
+        run: arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all
