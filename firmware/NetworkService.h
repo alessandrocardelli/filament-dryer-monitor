@@ -217,6 +217,9 @@ class NetworkService {
         server_.send(302, "text/plain", "Setup");
         return;
       }
+      // HTML carries inlined JavaScript. Do not let the browser keep a prior
+      // firmware's pulse-count UI across OTA upgrades.
+      server_.sendHeader("Cache-Control", "no-store, no-cache, must-revalidate");
       server_.send(200, "text/html; charset=utf-8", dashboardHtml());
     });
     server_.on("/setup", HTTP_GET, [this]() {
@@ -391,6 +394,7 @@ button{padding:9px 14px}
 <div class="card">Test<div class="value" id="phase">--</div></div>
 </div>
 <p class="sub">SHT45: temperatura e umidità dell'aria nella camera. NTC: resistenza del sensore incorporato nel riscaldatore; temperatura locale non ancora validata. Non confrontare direttamente le due temperature.</p>
+<p class="sub">Durante gli impulsi HEATER ON il firmware sospende le richieste HTTP per evitare ritardi del controllo: questa pagina NON visualizza in tempo reale l'accensione. Se mancano aggiornamenti, lo stato è NON AGGIORNATO (non OFF). Consultare il CSV a prova conclusa per la sequenza ON/OFF.</p>
 <p id="ver" class="sub"></p>
 <div class="card"><h2>Misure live (CSV, memoria RAM)</h2>
 <p><a href="/api/history.csv">Scarica campioni live</a> ·
@@ -401,20 +405,57 @@ button{padding:9px 14px}
 <h3>Console eventi</h3><pre id="events">...</pre></div>
 <script>
 const $=x=>document.getElementById(x);
-const phases=['IDLE','PRERUN','HEATER ON','PAUSE','COOLING','COMPLETE','ABORT'];
+// During heater ON the device deliberately does not service HTTP. Polling
+// must not treat an old OFF reply as proof that GPIO19 is still OFF.
+let statusReceivedAt=0, statusBusy=false;
+function phaseLabel(d){
+ const done=Number(d.pulses)||0, total=Number(d.pulse_goal)||0;
+ switch(Number(d.phase)){
+  case 1: return 'Preparazione ventola';
+  case 2: return 'Riscaldamento · impulso '+Math.min(done+1,total)+' di '+total;
+  case 3: return 'Pausa dopo impulso '+done+' di '+total;
+  case 4: return 'Raffreddamento';
+  case 5: return 'Test completato';
+  case 6: return 'Test interrotto';
+  default: return 'Standby';
+ }
+}
+function refreshTelemetryAge(){
+ const elapsed=statusReceivedAt?Date.now()-statusReceivedAt:Infinity;
+ if(elapsed>2500){
+  $('heat').textContent='NON AGGIORNATO';
+  $('fan').textContent='--';
+  $('net').textContent=statusReceivedAt
+   ?'Telemetria sospesa ('+Math.round(elapsed/1000)+' s senza aggiornamenti)'
+   :'In attesa di dati';
+ }
+}
 async function status(){
- try { const r=await fetch('/api/status',{cache:'no-store'});if(!r.ok)throw Error(r.status);
- const d=await r.json();
- $('air').textContent=d.air_valid?d.air_c.toFixed(1)+' °C':'--';
- $('rh').textContent=d.air_valid?d.rh.toFixed(1)+' %':'--';
- $('ntc').textContent=d.ntc_valid?(d.ntc_ohms/1000).toFixed(2)+' kΩ':'--';
- $('heat').textContent=d.heater_command?'ON':'OFF';
- $('fan').textContent=d.fan_percent+' %';
- $('phase').textContent=(phases[d.phase]||'--')+' '+d.pulses+'/'+d.pulse_goal;
- $('ver').textContent='Firmware '+d.firmware+' | campioni '+d.ram_samples+
- (d.fault?' | FAULT '+d.pulse_fault:'')+' | '+(d.ota_idle?'OTA pronto':'OTA non disponibile');
- $('net').textContent='Online';
- }catch(e){$('net').textContent='Disconnesso'}
+ if(statusBusy)return;
+ statusBusy=true;
+ const controller=new AbortController();
+ const timeout=setTimeout(()=>controller.abort(),1800);
+ try{
+  const r=await fetch('/api/status',{cache:'no-store',signal:controller.signal});
+  if(!r.ok)throw Error(r.status);
+  const d=await r.json();
+  $('air').textContent=d.air_valid?d.air_c.toFixed(1)+' °C':'--';
+  $('rh').textContent=d.air_valid?d.rh.toFixed(1)+' %':'--';
+  $('ntc').textContent=d.ntc_valid?(d.ntc_ohms/1000).toFixed(2)+' kΩ':'--';
+  $('heat').textContent=d.heater_command?'ON':'OFF';
+  $('fan').textContent=d.fan_percent+' %';
+  $('phase').textContent=phaseLabel(d);
+  $('ver').textContent='Firmware '+d.firmware+' | campioni '+d.ram_samples+
+    (d.fault?' | FAULT '+d.pulse_fault:'')+' | '+(d.ota_idle?'OTA pronto':'OTA non disponibile');
+  statusReceivedAt=Date.now();
+  $('net').textContent='Dati aggiornati';
+ }catch(e){
+  // On an intentional HTTP pause, never keep presenting a stale OFF as live.
+ }finally{
+  clearTimeout(timeout);
+  statusBusy=false;
+  refreshTelemetryAge();
+ }
 }
 async function history(){
  try { const r=await fetch('/api/history.csv',{cache:'no-store'});if(!r.ok)return;
@@ -434,7 +475,9 @@ async function history(){
  }catch(e){}
 }
 async function events(){try{let r=await fetch('/api/events',{cache:'no-store'});if(r.ok)$('events').textContent=await r.text();}catch(e){}}
-status();history();events();setInterval(status,1000);setInterval(history,4000);setInterval(events,2000);
+status();history();events();
+setInterval(()=>{status();refreshTelemetryAge()},1000);
+setInterval(history,4000);setInterval(events,2000);
 </script></html>)HTML";
   }
 };
