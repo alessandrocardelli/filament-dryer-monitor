@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - experiment/step06-supervised-heat-2026-10-25
+  pull_request:
+    branches:
+      - feature/step06-fan-on-thermal-characterization-2026-10-25
   workflow_dispatch:
 
 permissions:
