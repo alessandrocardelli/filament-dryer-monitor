@@ -27,4 +27,6 @@ HDR
 g++ -std=c++17 -Wall -Wextra -Werror -pedantic -I"$TMP/firmware" \
  "$TMP/firmware/tests/host/test_step07_guard_gpio.cpp" -o "$TMP/guard-test"
 "$TMP/guard-test"
+echo "STEP07: replay the actual physical S6C CSV (652 samples)"
+python3 "$ROOT/firmware/tests/host/test_step07_replay.py"
 echo "PASS: Step07 guard trial tests passed (native mock only)"
