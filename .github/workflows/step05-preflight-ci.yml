@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - feature/step05-heater-safety-preflight-2026-10-25
-  pull_request:
-    branches:
-      - feature/wifi-ota-web-logging-2026-10-24
+  # The Step05-only CI has a stage-specific compile guard and is historical.
+  # Step06 has its own workflow. Retain workflow_dispatch for manual replay.
   workflow_dispatch:
 
 permissions:
