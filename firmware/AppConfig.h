@@ -51,20 +51,20 @@ constexpr float kNtcShortThresholdMv = 150.0f;
 constexpr float kNtcOpenThresholdMv = 3000.0f;
 
 
-// STEP 03: software-only thermostat verification build.
-// Both the previous supervised heater-pulse path AND normal heater drive are
-// disabled. This source must NOT be used for thermal characterization.
-// The last physically tested 3-pulse firmware is preserved in Git history.
-constexpr bool kHeaterCommissioningMode = false;
+// EXPERIMENTAL STEP06 supervised, one-shot 4x10s thermal test with fan.
+// NOT a thermostat, NOT an autonomous dryer, NOT a qualified NTC model.
+// Stage 06 experimental source must stay off the operational branch.
+constexpr bool kHeaterCommissioningMode = true;
 // STEP05 candidate heater profile is NEVER implicitly approved.
-// The existing commissioning mode cannot be enabled by toggling one flag.
-constexpr bool kHeaterStage05TrialReviewed = false;
-// STEP06: separate authorization for a real fan-on test. FALSE in Git.
-constexpr bool kHeaterStep06TrialReviewed = false;
+// Dedicated heater-enabled trial: explicit two review flags and candidate limits.
+constexpr bool kHeaterStage05TrialReviewed = true;
+// STEP06: user approved exact 4x10s trial in chat on 2026-10-25.
+// This TRUE flag is isolated to the EXPERIMENT branch, NOT operational.
+constexpr bool kHeaterStep06TrialReviewed = true;
 static_assert(!kHeaterCommissioningMode ||
                   (kHeaterStage05TrialReviewed && kHeaterStep06TrialReviewed),
               "STEP06 heating requires independent physical-trial approval");
-// Integrated heater regulation exists but remains DISABLED for Step 03.
+// The normal closed-loop heater regulator remains DISABLED.
 // Test-only synthetic profiles in host fixtures are NOT hardware approvals.
 // Real thermal limits, NTC protection and physical safeguards remain OPEN.
 //
