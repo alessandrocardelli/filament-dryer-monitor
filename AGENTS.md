@@ -46,6 +46,16 @@ Keep the handoff files current:
 
 When a substantial checkpoint is reached, update these before handing work to a new chat.
 
+## Latest S7U physical evidence status — 2026-10-26
+
+**The S7U physical test HAS NOW BEEN PERFORMED and recorded** (earlier lines in this file stating "not physically tested" are historical pre-test information). The user provided **Sanwa17°C initial,17°C at first HEATER ON,36°C before third,43°C at FAULT `NTC R LIMIT`, falling normally to25°C when fan stopped**, plus the genuine **717-sample S7U CSV**. Its byte-identical repository copy was verified with original Git blob SHA1 `891ea18eb00efdb6690e7b7e3c0c6466e6a39674`, SHA256 `c417313414eede75f2269dbfb8717ac6d8246625172e315a007b8056def834ae`. Numeric data show commanded ON20s+20s+19.25s, `R_NTC=39789.3Ω` at cutoff, SHT45 air18.20→19.52°C at cutoff→20.89°C at last cooling sample. **G1 acquisition PASS limited, NOT V1 or hardware safety qualification. NEXT G2/G3 review without rerun.** Before making any new recommendation, read:
+- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/fix/step07-clear-test-feedback-2026-10-26/docs/evidence/thermal/2026-10-26-S7U-RETEST-SESSION.md
+- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/fix/step07-clear-test-feedback-2026-10-26/docs/evidence/thermal/2026-10-26-S7U-retest-raw.csv
+- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/fix/step07-clear-test-feedback-2026-10-26/docs/evidence/thermal/2026-10-26-S7U-retest-analysis.md
+- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/main/docs/THERMAL_EXPERIMENT_LEDGER.md
+
+Never conflate **Sanwa contact temperature** with SHT45 camera air or NTC resistance. Software PWM fan100 ≠ RPM; heater command ON/OFF ≠ independently measured current. Earlier S7G CSV is not required. No new HEAT run authorized by this document; preserve separation of HEAT-experimental PR#12 and cold/main.
+
 ## Mandatory experiment recording and cross-chat continuity (2026-10-26)
 
 **User requirement: EVERY physical or software test must be reproducible from GitHub alone.** Do not rely on previous ChatGPT conversations for operating instructions or physical measurements. Summaries alone do not satisfy this rule.
