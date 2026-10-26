@@ -58,7 +58,15 @@ class Buzzer {
   }
 
   void startFaultAlarm(uint32_t nowMs) {
+    // D022: retain repeating alarm for the eventual normal product mode.
     startSequence(kFaultAlarm, countOf(kFaultAlarm), nowMs, true);
+  }
+
+  // Commissioning requires the operator to watch the independent Sanwa.
+  // Sound the distinctive two-beep alarm ONCE, then become silent without
+  // clearing the latched heater fault. MODE can still mute immediately.
+  void playCommissionFaultOnce(uint32_t nowMs) {
+    startSequence(kFaultAlarm, countOf(kFaultAlarm), nowMs, false);
   }
 
   void muteFault() { stop(); }
