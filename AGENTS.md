@@ -45,3 +45,19 @@ Keep the handoff files current:
 - `hardware/docs/PROCUREMENT.md`: sourcing/footprint/manufacturing-preparation state.
 
 When a substantial checkpoint is reached, update these before handing work to a new chat.
+
+## Mandatory experiment recording and cross-chat continuity (2026-10-26)
+
+**User requirement: EVERY physical or software test must be reproducible from GitHub alone.** Do not rely on previous ChatGPT conversations for operating instructions or physical measurements. Summaries alone do not satisfy this rule.
+
+**BEFORE each test**, commit or otherwise persist a concrete protocol in the repository, naming: engineering question and why the test is needed (avoid repeating already passed tests), exact branch/commit/firmware build, actual wiring/assembly, instrument make/model and probe contact LOCATION, power/enclosure/fan conditions, control inputs/buttons, expected chronological behavior, explicitly approved thresholds and abort actions, which values must be read at which events (including POST-OFF peaks for thermal tests), independent physical safety preflight, and data-file paths.
+
+**DURING / AFTER each test**, capture and commit a structured run record, not only conclusions: timestamp/time zone, firmware ID, all numerical readings in chronological order and where/when read, explicitly missing or unobserved fields, actual OLED/serial/HTTP messages, operator interventions, abnormal behavior, outcome, original unedited CSV/log or a recorded reason why absent, raw-file hash/sample count when supplied, photos/video links when supplied, separate derived analysis and uncertainty, and the exact *next* engineering decision/gate. Never invent readings, complete a test from a CI pass, or call a prior file the new run. Sanwa/external-instrument readings cannot be inferred from the ESP32 CSV.
+
+**HANDOFF GATE:** Before treating a test as finished or asking a user to start the next test, commit its record and update README, docs/PROJECT_STATE.md and docs/TODO.md (DECISIONS only if a durable decision actually changed). Record branch, commit/PR links, exact outcomes, and one next action. If data is unavailable, mark it explicitly rather than forcing unnecessary repetition. If write permission/tool fails, say so explicitly; do not claim the repository was updated.
+
+**Current STEP07 context:** canonical physical S7G history in the operative branch `docs/HANDOFF_2026-10-26_STEP07_S7G_TO_S7U.md`. New S7U procedure plus pre-created evidence record are on `fix/step07-clear-test-feedback-2026-10-26`:
+- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/fix/step07-clear-test-feedback-2026-10-26/docs/STEP07_S7U_PHYSICAL_RETEST_PROTOCOL_2026-10-26.md
+- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/fix/step07-clear-test-feedback-2026-10-26/docs/evidence/thermal/2026-10-26-S7U-RETEST-SESSION.md
+
+User specifically requested **a new supervised S7U acquisition**, not recovery of prior S7G CSV and not repeat of passed cold-only/OTA/menu/fan checks. The previously communicated S7G **manual Sanwa 50°C veto** must not be silently overwritten with **55°C** from the older S6C protocol; the new SOP records source/limits and requires explicit decision for changes. Neither S7U's passed CI nor this documentation is proof of a physical S7U run. Keep normal heater regulation disabled and do not silently merge HEAT-experimental firmware into main/COLD.
