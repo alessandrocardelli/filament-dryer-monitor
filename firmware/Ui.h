@@ -392,7 +392,7 @@ class Ui {
       case HeaterCommissioning::Fault::NtcStale: return "NTC STALE";
       case HeaterCommissioning::Fault::AirInvalid: return "SHT45 INVALID";
       case HeaterCommissioning::Fault::AirStale: return "SHT45 STALE";
-      case HeaterCommissioning::Fault::AirLimit: return "AIR LIMIT 35C";
+      case HeaterCommissioning::Fault::AirLimit: return "AIR LIMIT 40C";
       case HeaterCommissioning::Fault::NtcResistanceLimit: return "NTC R LIMIT";
       case HeaterCommissioning::Fault::FanUnavailable: return "FAN NO START";
       case HeaterCommissioning::Fault::FanLost: return "FAN LOST";
