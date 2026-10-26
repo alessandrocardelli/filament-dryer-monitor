@@ -28,11 +28,11 @@ Usare ESATTAMENTE [il protocollo pre-registrato](../../STEP07_S7U_PHYSICAL_RETES
 | Comparsa HEATER ON 1/6 | — | NON MISURATO | — |
 | Prima di HEATER ON 3/6, **solo se raggiunto** | — | NON MISURATO | oppure NON RAGGIUNTO |
 | Primo stop/HEATER OFF **definitivo** (FAULT/STOP/fine impulsi) | — | NON MISURATO | testo esatto da trascrivere |
-| **Massimo Sanwa osservato DOPO OFF definitivo** | — | NON MISURATO | può essere **uguale** alla lettura al taglio; annotare eventuale incremento e i secondi trascorsi, oppure «nessun aumento post-OFF osservato» |
+| **Andamento Sanwa dopo OFF definitivo** | — | NON OSSERVATO | indica semplicemente se scende / resta stabile; annotare una risalita SOLO se effettivamente osservata. Non è obbligatorio misurare un secondo picco |
 | Ventola ferma a fine cooldown | — | NON MISURATO | display finale |
 | Altre letture numeriche con evento/tempo | — | — | — |
 
-**NOTA:** il picco Sanwa post-OFF non si può ricostruire dai CSV (strumento esterno) né dal valore finale. Se non osservato scrivere NON OSSERVATO, senza inventare.
+**NOTA:** essendo la termocoppia appoggiata direttamente alla zona riscaldante, dopo l'OFF ci si aspetta normalmente una stabilizzazione o discesa. Non presumere una salita post-OFF, non chiedere una seconda temperatura massima come condizione per completare il test. Registrare una risalita solo se si osserva. Il Sanwa non viene registrato dalla MCU.
 
 ## C. Esito reale del firmware / sicurezza
 
@@ -68,7 +68,7 @@ Non contiene Sanwa né motivo FAULT; annotarli dalla misura indipendente/UI/even
 - R_NTC inizio/min/fine, eventuale crossing40kΩ e sincronizzazione col comando OFF: **OPEN**.
 - SHT45 aria inizio/alla fine HEAT/max durante cooldown/fine, RH corrispondente: **OPEN**.
 - Trigger FAULT: dichiarare **solo se verificato** da messaggio/codice; CSV può non bastare: **OPEN**.
-- Confronto Sanwa alla disattivazione/picco post-OFF/ritardo rispetto a NTC: **OPEN**.
+- Confronto Sanwa alla disattivazione/andamento dopo OFF e possibile ritardo rispetto a NTC: **OPEN**.
 - Limitazioni strumentali (contatto, dinamica, non sincronizzazione): **OPEN**.
 - Analisi di sicurezza (TCO105, fan command != airflow, materiali, comportamento FAULT, RTC): **OPEN**.
 - Criterio G1 acquisizione: OPEN / PASS limitato / INCOMPLETO, motivazione: **OPEN**.
