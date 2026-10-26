@@ -28,7 +28,7 @@ Usare ESATTAMENTE [il protocollo pre-registrato](../../STEP07_S7U_PHYSICAL_RETES
 | Comparsa HEATER ON 1/6 | — | NON MISURATO | — |
 | Prima di HEATER ON 3/6, **solo se raggiunto** | — | NON MISURATO | oppure NON RAGGIUNTO |
 | Primo stop/HEATER OFF **definitivo** (FAULT/STOP/fine impulsi) | — | NON MISURATO | testo esatto da trascrivere |
-| **Massimo Sanwa misurato DOPO OFF definitivo** | — | NON MISURATO | secondi dal taglio, se disponibili |
+| **Massimo Sanwa osservato DOPO OFF definitivo** | — | NON MISURATO | può essere **uguale** alla lettura al taglio; annotare eventuale incremento e i secondi trascorsi, oppure «nessun aumento post-OFF osservato» |
 | Ventola ferma a fine cooldown | — | NON MISURATO | display finale |
 | Altre letture numeriche con evento/tempo | — | — | — |
 
