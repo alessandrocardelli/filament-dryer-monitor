@@ -145,6 +145,16 @@ class SafetyController {
     return AppConfig::kHeaterCommissioningMode && commission_.finished();
   }
   bool commissioningCanStart() const { return commission_.canStart(); }
+  // Display-only estimate of the fan cooling countdown. No control decision
+  // relies on this value; coolingRequired() below remains authoritative.
+  uint32_t coolingSecondsRemaining(uint32_t nowMs) const {
+    if (!coolingRequired(nowMs) || !everHeated_) return 0;
+    const uint32_t elapsed = nowMs - lastHeaterOnMs_;
+    const uint32_t total = AppConfig::kHeaterCommissioningMode
+        ? HeaterStep07GuardTrial::parameters().cooldownMs
+        : AppConfig::kPostHeatCooldownMs;
+    return elapsed < total ? (total - elapsed + 999U) / 1000U : 0;
+  }
   bool coolingRequired(uint32_t nowMs) const {
     const bool commissioningCooldown =
         AppConfig::kHeaterCommissioningMode && commission_.cooldownNeeded(nowMs);
