@@ -39,6 +39,9 @@ int main(){
   assert(s.commissioningFault() ==
          static_cast<uint8_t>(HeaterCommissioning::Fault::NtcResistanceLimit));
   assert(s.coolingRequired(70901)&&s.fanPermitted());
+  assert(s.coolingSecondsRemaining(70901)==90);
+  assert(s.coolingSecondsRemaining(115900)>0);
+  assert(s.coolingSecondsRemaining(160901)==0);
   const int onCount=highWrites;
   tick(s,120000,true,90000.f);
   assert(highWrites==onCount); // an abort is LATCHED, no restart
