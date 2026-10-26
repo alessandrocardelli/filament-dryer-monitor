@@ -43,6 +43,10 @@ uint32_t lastNtcLogMs = 0;
 uint32_t lastCommissionCsvMs = 0;
 bool technicalPage = false;
 bool loggingSession = false;
+// The previous /last-test.csv belongs to an earlier trial until this session
+// has actually finished cooldown and been saved successfully.
+bool csvSavedThisRun = false;
+bool csvSaveFailed = false;
 uint8_t previousPhaseReported = 255;
 
 static void applyBuzzerSettings() {
@@ -78,6 +82,8 @@ static void enterState(AppState next, uint32_t nowMs) {
     case AppState::Drying:
       thermalLog.start();
       loggingSession = true;
+      csvSavedThisRun = false;
+      csvSaveFailed = false;
       settingsStore.save(settings);
       cycle.start(settings.cycle, nowMs);
       fan.startAuto(nowMs);
@@ -100,8 +106,13 @@ static void enterState(AppState next, uint32_t nowMs) {
     case AppState::Fault:
       if (safety.coolingRequired(nowMs)) fan.startAuto(nowMs);
       else fan.stop();
-      buzzer.startFaultAlarm(nowMs);
-      Serial.println("STATE -> FAULT");
+      // Supervised experiment: beep once and stay electrically FAULT-latched.
+      // The normal product-mode repeating D022 alarm is unchanged.
+      if (AppConfig::kHeaterCommissioningMode)
+        buzzer.playCommissionFaultOnce(nowMs);
+      else
+        buzzer.startFaultAlarm(nowMs);
+      Serial.println("STATE -> FAULT: HEATER OFF; watch Sanwa during cooldown");
       break;
     case AppState::Boot:
       fan.stop();
@@ -384,8 +395,11 @@ void loop() {
                       safety.commissioningPulsesDone());
   } else if (loggingSession) {
     loggingSession = false;
-    Serial.println(thermalLog.saveWhenSafe() ?
+    csvSavedThisRun = thermalLog.saveWhenSafe();
+    csvSaveFailed = !csvSavedThisRun;
+    Serial.println(csvSavedThisRun ?
         "CSV stored: /last-test.csv" : "CSV not stored; RAM trace still available");
+    network.note(csvSavedThisRun ? "NEW CSV READY" : "NEW CSV SAVE FAILED");
   }
 
   if (AppConfig::kHeaterCommissioningMode &&
@@ -491,7 +505,9 @@ void loop() {
                 safety.commissioningFault(),
                 network.setupApActive() ? network.setupSsid() : nullptr,
                 network.setupApActive() ? network.setupPass() : nullptr,
-                network.connected() ? network.address().c_str() : nullptr);
+                network.connected() ? network.address().c_str() : nullptr,
+                safety.coolingSecondsRemaining(nowMs),
+                csvSavedThisRun, csvSaveFailed);
   if (wordmarkJustRevealed) {
     // Trigger the first note only after the fully refreshed wordmark is visible.
     buzzer.playStartup(millis());
