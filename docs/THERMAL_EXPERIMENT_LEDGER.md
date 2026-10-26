@@ -3,7 +3,7 @@
 **Creato 26 ottobre 2026 per garantire continuità fra chat.** Questo file è un **indice di test, evidenze e gate**, non sostituisce il protocollo dettagliato, i sorgenti firmware né i file CSV raw. Ogni nuova sessione deve avere un proprio verbale con tutti i numeri e i tempi osservati. Non inventare i file che non sono presenti. I collegamenti sono URL con il branch sorgente esplicito (perché gli esperimenti HEAT non sono stati mergiati in `main`).
 
 **Regole permanenti**: [AGENTS.md](../AGENTS.md), sezione *Mandatory experiment recording and cross-chat continuity*.
-**NEXT attuale, deciso dall'utente il 26 ottobre**: ripetere **una sola nuova sessione supervisionata S7U**, registrando il dato Sanwa POST-OFF mancante, senza recuperare CSV S7G e senza ripetere test COLD/OTA/ventola/menù.
+**NEXT attuale, deciso dall'utente il 26 ottobre**: ripetere **una sola nuova sessione supervisionata S7U**, registrando la lettura Sanwa al definitivo HEATER OFF e verificando la discesa/stabilità durante il raffreddamento (un'eventuale risalita si annota solo se realmente vista), senza recuperare CSV S7G e senza ripetere test COLD/OTA/ventola/menù.
 **Protocollo attivo**: [S7U procedura completa](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/fix/step07-clear-test-feedback-2026-10-26/docs/STEP07_S7U_PHYSICAL_RETEST_PROTOCOL_2026-10-26.md).
 **Verbale predisposto**: [S7U sessione non eseguita](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/fix/step07-clear-test-feedback-2026-10-26/docs/evidence/thermal/2026-10-26-S7U-RETEST-SESSION.md).
 
@@ -19,11 +19,11 @@
 
 ## Come interpretare le misure
 
-- **Sanwa RD701 / termocoppia K**: temperatura **del contatto vicino alla zona piastra/NTC**, esterna al sistema. Registrare sempre posizione/fissaggio, lettura al primo ON, prima impulso 3 se raggiunto, al definitivo OFF, **massimo successivo all'OFF** e fine raffreddamento se osservata. Il picco POST-OFF non esiste nel CSV MCU. Il Sanwa può avere ritardo ed è un punto fisico differente dal bead NTC.
+- **Sanwa RD701 / termocoppia K**: temperatura **del contatto vicino alla zona piastra/NTC**, esterna al sistema. Registrare sempre posizione/fissaggio, lettura al primo ON, prima impulso 3 se raggiunto, al definitivo OFF e osservazione se il Sanwa scende o resta stabile durante il raffreddamento. **Non è richiesto un secondo massimo post-OFF**: annotare una risalita soltanto se realmente osservata. Il Sanwa non esiste nel CSV MCU. Il Sanwa può avere ritardo ed è un punto fisico differente dal bead NTC.
 - **NTC integrato**: resistenza letta via J7, non una temperatura validata del bead o del punto Sanwa. I sette plateau della vecchia analisi furono **box APERTO e fan OFF**; non sostituiscono prove chiuse con flusso. Il confronto dinamico 15 ottobre registrava discrepanze di alcuni °C, fino a +6°C di indicazione relativa in una fase; consultare `PROJECT_STATE` e `FIRST_ARTICLE_TEST_MATRIX` per il contesto.
 - **SHT45**: temperatura e RH dell'**aria** nella camera, non temperatura della superficie riscaldante. 40°C è limite di stop SHT45 per S7G/S7U, **non** obiettivo già qualificato di asciugatura. 
 - **Ventola**: il CSV registra PWM comandato (`fan_percent`) non rotazione o portata. **HEATER** CSV è il comando software `heater_command`, non misurazione indipendente della corrente. Il TCO monouso 105°C è presente in serie, ma non termicamente qualificato.
-- **Sessione S7U**: il web può non aggiornarsi mentre GPIO19 è ON; guardare OLED e Sanwa; dopo stop/FAULT sorvegliare il picco Sanwa POST-OFF, lasciare raffreddare quando sicuro e scaricare *il nuovo* `/api/last-test.csv`. Il FAULT resta latched, non aspettarne la scomparsa. Il veto operatore **50°C** indicato nell'ultima chat S7G non è lo stesso valore **55°C** degli esperimenti precedenti; viene mantenuto conservativamente nel nuovo protocollo. Interrompere prima per anomalie.
+- **Sessione S7U**: il web può non aggiornarsi mentre GPIO19 è ON; guardare OLED e Sanwa; dopo stop/FAULT osservare la normale discesa o stabilità della lettura Sanwa, registrando solo eventuali anomalie osservate, lasciare raffreddare quando sicuro e scaricare *il nuovo* `/api/last-test.csv`. Il FAULT resta latched, non aspettarne la scomparsa. Il veto operatore **50°C** indicato nell'ultima chat S7G non è lo stesso valore **55°C** degli esperimenti precedenti; viene mantenuto conservativamente nel nuovo protocollo. Interrompere prima per anomalie.
 
 ## Gate sequenziali verso un Dryer V1
 
