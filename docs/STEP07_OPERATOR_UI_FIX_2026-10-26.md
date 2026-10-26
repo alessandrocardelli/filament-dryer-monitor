@@ -1,5 +1,7 @@
 # Step07: prima prova S7G ed errore di interfaccia operatore — 26 ottobre 2026
 
+> **ADDENDUM DEL 26 OTTOBRE 2026 — DECISIONE UTENTE SUCCESSIVA:** l'indicazione storica più sotto «non caricare né lanciare questa versione per ripetere S7G» significava **non sprecare una prova soltanto per visualizzare le scritte OLED**, ma l'utente ha ora deciso espressamente di **eseguire UNA NUOVA sessione supervisionata S7U con acquisizione Sanwa + CSV completa**, senza recuperare CSV S7G e senza ripetere test freddi. Si deve usare [protocollo dettagliato STEP07-S7U](STEP07_S7U_PHYSICAL_RETEST_PROTOCOL_2026-10-26.md) e [verbale di sessione precompilato](evidence/thermal/2026-10-26-S7U-RETEST-SESSION.md). Il limite manuale Sanwa 50°C è quello comunicato nella precedente istruzione S7G in chat, distinto dai 55°C della precedente S6C. **La nuova sessione non è ancora stata eseguita e i suoi risultati non vanno inventati.** Tutti i dati effettivi, i file grezzi e le decisioni successive devono essere committati come impone AGENTS.md. La documentazione originale segue come storia del fix UI, non come prossimo ordine operativo.
+
 ## Prova fisica già eseguita (NON ripetere per testare il display)
 
 - Firmware effettivamente provato: `HOT-251025-S7G`, branch `experiment/step07-ntc-guard-verified-history-2026-10-25`, sorgente `ab17acf4e816a32cc58a4e1d6735ad0c1cb0cdf4`.
