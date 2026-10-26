@@ -61,7 +61,9 @@ class Ui {
               uint8_t pulseFault = 0,
               const char *apName = nullptr,
               const char *apPassword = nullptr,
-              const char *stationIp = nullptr) {
+              const char *stationIp = nullptr,
+              uint32_t coolingSecondsLeft = 0,
+              bool csvReady = false, bool csvSaveFailed = false) {
     if (!awake_) return false;
 
     const uint8_t stage = (state == AppState::Boot)
@@ -103,10 +105,13 @@ class Ui {
                                    pulsePhase, pulsesDone)
                       : drawDrying(settings.cycle, sensor, remainingSeconds,
                                   fanDutyPercent, heaterLocked, heaterOn,
-                                  pulsePhase, pulsesDone);
+                                  pulsePhase, pulsesDone, coolingSecondsLeft);
         break;
       case AppState::Complete: drawComplete(sensor); break;
-      case AppState::Fault: drawFault(ntc.fault, pulseFault); break;
+      case AppState::Fault:
+        drawFault(ntc.fault, pulseFault, coolingSecondsLeft,
+                  csvReady, csvSaveFailed);
+        break;
     }
     display_.sendBuffer();
     if (state == AppState::Boot) lastBootStage_ = stage;
@@ -258,12 +263,17 @@ class Ui {
   void drawDrying(const CycleSettings &settings, const SensorSnapshot &sensor,
                    uint32_t remainingSeconds, uint8_t fanDutyPercent,
                    bool heaterLocked, bool heaterOn,
-                   uint8_t pulsePhase, uint8_t pulsesDone) {
+                   uint8_t pulsePhase, uint8_t pulsesDone,
+                   uint32_t coolingSecondsLeft) {
     display_.setFont(u8g2_font_6x10_tf);
     char header[22];
-    snprintf(header, sizeof(header), "DRYING TEST   %02lu:%02lu",
-             static_cast<unsigned long>(remainingSeconds / 3600UL),
-             static_cast<unsigned long>((remainingSeconds / 60UL) % 60UL));
+    if (AppConfig::kHeaterCommissioningMode) {
+      snprintf(header, sizeof(header), "NTC GUARD TEST FAN100");
+    } else {
+      snprintf(header, sizeof(header), "DRYING TEST   %02lu:%02lu",
+               static_cast<unsigned long>(remainingSeconds / 3600UL),
+               static_cast<unsigned long>((remainingSeconds / 60UL) % 60UL));
+    }
     display_.drawStr(0, 9, header);
     display_.drawHLine(0, 12, 128);
 
@@ -279,40 +289,39 @@ class Ui {
 
     display_.setFont(u8g2_font_6x10_tf);
     char target[24];
-    snprintf(target, sizeof(target), "SET %d °C   FAN %u%%",
-             settings.targetTempC, fanDutyPercent);
+    if (AppConfig::kHeaterCommissioningMode) {
+      if (static_cast<HeaterCommissioning::Phase>(pulsePhase) ==
+          HeaterCommissioning::Phase::Cooldown) {
+        snprintf(target, sizeof(target), "COOLING LEFT %lu s",
+                 static_cast<unsigned long>(coolingSecondsLeft));
+      } else {
+        snprintf(target, sizeof(target), "NTC TRIP 40k FAN %u%%",
+                 fanDutyPercent);
+      }
+    } else {
+      snprintf(target, sizeof(target), "SET %d °C   FAN %u%%",
+               settings.targetTempC, fanDutyPercent);
+    }
     display_.drawUTF8(1, 47, target);
     if (AppConfig::kHeaterCommissioningMode) {
       const unsigned totalPulses =
           static_cast<unsigned>(HeaterStep07GuardTrial::parameters().pulseCount);
-      char progress[23];
+      char progress[24];
       switch (static_cast<HeaterCommissioning::Phase>(pulsePhase)) {
-        case HeaterCommissioning::Phase::Prerun:
-          snprintf(progress, sizeof(progress), "FAN PRERUN - 0/%u", totalPulses);
-          break;
         case HeaterCommissioning::Phase::Pulse:
-          snprintf(progress, sizeof(progress), "HEATER ON - %u/%u",
+          snprintf(progress, sizeof(progress), "HEATER ON %u/%u",
                    static_cast<unsigned>(pulsesDone + 1), totalPulses);
-          break;
-        case HeaterCommissioning::Phase::Gap:
-          snprintf(progress, sizeof(progress), "HEATER OFF - %u/%u",
-                   static_cast<unsigned>(pulsesDone), totalPulses);
-          break;
-        case HeaterCommissioning::Phase::Cooldown:
-          snprintf(progress, sizeof(progress), "COOLING - %u/%u", totalPulses, totalPulses);
           break;
         case HeaterCommissioning::Phase::Complete:
           snprintf(progress, sizeof(progress), "TEST COMPLETE");
           break;
-        case HeaterCommissioning::Phase::Aborted:
-          snprintf(progress, sizeof(progress), "TEST ABORTED");
-          break;
-        case HeaterCommissioning::Phase::Idle:
         default:
-          snprintf(progress, sizeof(progress), "PREPARING TEST");
+          snprintf(progress, sizeof(progress), "HEATER OFF");
           break;
       }
-      display_.drawStr(1, 61, progress);
+      // Large high-contrast actual heater command, not PH/code ambiguity.
+      display_.setFont(u8g2_font_7x14B_tf);
+      display_.drawStr(1, 62, progress);
     } else {
       display_.drawStr(1, 61, heaterLocked ? "HEATER LOCKED" :
                        (heaterOn ? "HEATER ON" : "HEATER OFF"));
@@ -395,16 +404,38 @@ class Ui {
     return "UNKNOWN";
   }
 
-  void drawFault(NtcFault ntcFault, uint8_t pulseFault) {
+  void drawFault(NtcFault ntcFault, uint8_t pulseFault,
+                 uint32_t coolingSecondsLeft, bool csvReady,
+                 bool csvSaveFailed) {
+    display_.setFont(u8g2_font_6x10_tf);
+    if (AppConfig::kHeaterCommissioningMode) {
+      // Sanwa is external: prompt the operator, never imply MCU measures it.
+      display_.drawStr(1, 9, "FAULT / HEATER OFF");
+      display_.drawHLine(0, 12, 128);
+      display_.drawStr(1, 24, commissionFaultText(pulseFault));
+      display_.drawStr(1, 36, "SANWA: WATCH PEAK");
+      char line[24];
+      if (coolingSecondsLeft > 0) {
+        snprintf(line, sizeof(line), "COOLING  %lu:%02lu",
+                 static_cast<unsigned long>(coolingSecondsLeft / 60U),
+                 static_cast<unsigned long>(coolingSecondsLeft % 60U));
+      } else if (csvReady) {
+        snprintf(line, sizeof(line), "COOL DONE / CSV READY");
+      } else if (csvSaveFailed) {
+        snprintf(line, sizeof(line), "CSV SAVE FAILED");
+      } else {
+        snprintf(line, sizeof(line), "COOL DONE / SAVING");
+      }
+      display_.drawStr(1, 48, line);
+      display_.drawStr(1, 62, "MODE = MUTE BEEP");
+      return;
+    }
+
+    // Original V1 alarm presentation retained; D022 is not reopened.
     display_.setFont(u8g2_font_helvB12_tf);
     display_.drawStr(27, 17, "FAULT");
     display_.setFont(u8g2_font_6x10_tf);
-
-    if (AppConfig::kHeaterCommissioningMode &&
-        pulseFault != static_cast<uint8_t>(HeaterCommissioning::Fault::None)) {
-      display_.drawStr(11, 35, "HEATER TEST STOP");
-      display_.drawStr(11, 45, commissionFaultText(pulseFault));
-    } else switch (ntcFault) {
+    switch (ntcFault) {
       case NtcFault::OpenCircuit:
         display_.drawStr(24, 34, "HEATER NTC");
         display_.drawStr(20, 45, "invalid / open");
@@ -421,7 +452,6 @@ class Ui {
         display_.drawStr(8, 35, "Safety controller fault");
         break;
     }
-
     display_.drawStr(28, 55, "HEATER OFF");
     display_.drawStr(40, 64, "M=mute");
   }
