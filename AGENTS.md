@@ -49,9 +49,9 @@ When a substantial checkpoint is reached, update these before handing work to a 
 ## Latest S7U physical evidence status — 2026-10-26
 
 **The S7U physical test HAS NOW BEEN PERFORMED and recorded** (earlier lines in this file stating "not physically tested" are historical pre-test information). The user provided **Sanwa17°C initial,17°C at first HEATER ON,36°C before third,43°C at FAULT `NTC R LIMIT`, falling normally to25°C when fan stopped**, plus the genuine **717-sample S7U CSV**. Its byte-identical repository copy was verified with original Git blob SHA1 `891ea18eb00efdb6690e7b7e3c0c6466e6a39674`, SHA256 `c417313414eede75f2269dbfb8717ac6d8246625172e315a007b8056def834ae`. Numeric data show commanded ON20s+20s+19.25s, `R_NTC=39789.3Ω` at cutoff, SHT45 air18.20→19.52°C at cutoff→20.89°C at last cooling sample. **G1 acquisition PASS limited, NOT V1 or hardware safety qualification. NEXT G2/G3 review without rerun.** Before making any new recommendation, read:
-- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/fix/step07-clear-test-feedback-2026-10-26/docs/evidence/thermal/2026-10-26-S7U-RETEST-SESSION.md
-- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/fix/step07-clear-test-feedback-2026-10-26/docs/evidence/thermal/2026-10-26-S7U-retest-raw.csv
-- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/fix/step07-clear-test-feedback-2026-10-26/docs/evidence/thermal/2026-10-26-S7U-retest-analysis.md
+- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/main/docs/evidence/thermal/2026-10-26-S7U-RETEST-SESSION.md
+- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/main/docs/evidence/thermal/2026-10-26-S7U-retest-raw.csv
+- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/main/docs/evidence/thermal/2026-10-26-S7U-retest-analysis.md
 - https://github.com/alessandrocardelli/filament-dryer-monitor/blob/main/docs/THERMAL_EXPERIMENT_LEDGER.md
 
 Never conflate **Sanwa contact temperature** with SHT45 camera air or NTC resistance. Software PWM fan100 ≠ RPM; heater command ON/OFF ≠ independently measured current. Earlier S7G CSV is not required. No new HEAT run authorized by this document; preserve separation of HEAT-experimental PR#12 and cold/main.
@@ -67,7 +67,7 @@ Never conflate **Sanwa contact temperature** with SHT45 camera air or NTC resist
 **HANDOFF GATE:** Before treating a test as finished or asking a user to start the next test, commit its record and update README, docs/PROJECT_STATE.md and docs/TODO.md (DECISIONS only if a durable decision actually changed). Record branch, commit/PR links, exact outcomes, and one next action. If data is unavailable, mark it explicitly rather than forcing unnecessary repetition. If write permission/tool fails, say so explicitly; do not claim the repository was updated.
 
 **Current STEP07 context:** canonical physical S7G history in the operative branch `docs/HANDOFF_2026-10-26_STEP07_S7G_TO_S7U.md`. New S7U procedure plus pre-created evidence record are on `fix/step07-clear-test-feedback-2026-10-26`:
-- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/fix/step07-clear-test-feedback-2026-10-26/docs/STEP07_S7U_PHYSICAL_RETEST_PROTOCOL_2026-10-26.md
-- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/fix/step07-clear-test-feedback-2026-10-26/docs/evidence/thermal/2026-10-26-S7U-RETEST-SESSION.md
+- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/main/docs/STEP07_S7U_PHYSICAL_RETEST_PROTOCOL_2026-10-26.md
+- https://github.com/alessandrocardelli/filament-dryer-monitor/blob/main/docs/evidence/thermal/2026-10-26-S7U-RETEST-SESSION.md
 
 User specifically requested **a new supervised S7U acquisition**, not recovery of prior S7G CSV and not repeat of passed cold-only/OTA/menu/fan checks. The previously communicated S7G **manual Sanwa 50°C veto** must not be silently overwritten with **55°C** from the older S6C protocol; the new SOP records source/limits and requires explicit decision for changes. Neither S7U's passed CI nor this documentation is proof of a physical S7U run. Keep normal heater regulation disabled and do not silently merge HEAT-experimental firmware into main/COLD.
