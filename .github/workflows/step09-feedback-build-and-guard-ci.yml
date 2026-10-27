@@ -61,7 +61,9 @@ jobs:
           done
           echo "PASS: existing sensors/drivers and test trace original"
       - name: Native GPIO-mock with REAL SafetyController, timers and fault tests
-        run: bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step09-mock.log"
+        run: |
+          set -euo pipefail
+          bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step09-mock.log"
       - uses: arduino/setup-arduino-cli@v2
       - name: Install ESP32 core 3.3.12 and U8g2 2.36.19
         run: |
