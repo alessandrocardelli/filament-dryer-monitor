@@ -18,7 +18,7 @@ struct Parameters {
   uint32_t minimumOffMs = 12000;
   uint32_t cooldownMs = 90000;
   uint32_t maximumRunMs = 600000;
-  uint32_t maximumTotalHeatMs = 120000;
+  uint32_t maximumTotalHeatMs = 200000;
   uint32_t fanStartupTimeoutMs = 12000;
   uint32_t maxNtcAgeMs = 1500;
   uint32_t maxAirAgeMs = 5000;
@@ -177,6 +177,8 @@ class Controller {
 };
 
 inline constexpr uint32_t kHardwareWindowCeilingUs = 20500000;
+// STEP09B only: 200 seconds cumulative HEATER command budget (vs S9A 120s).
+// All independent guard bands and 600s experiment deadline remain identical.
 // Candidate one-shot supervised trial parameters. These are *proposals*,
 // not production ratings and not permission for a physical test.
 inline Parameters parameters() { return Parameters{}; }
