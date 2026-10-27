@@ -1,43 +1,48 @@
-# STEP09-B — Registro ORIGINALE della futura prova fisica SHT45 target25°C (budget200s)
+# STEP09-B — Verbale della nuova prova fisica HEATER-ON target ARIA25°C (precompilato)
 
-**STATO: NON ESEGUITO, NON AUTORIZZATO AL 27/10/2026.** Questo file è un modulo preregistrato, NON evidenza che S9B sia stato caricato, acceso, misurato o abbia PASS.
+> **Identity correction 2026-10-27:** the sole active draft S9B 180-second firmware is **`HOT-261027-S9B180` / OLED `H27-B180`** in [PR #17](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/17). Superseded [200s PR #15](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/15) and duplicate [PR #16](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/16) are **CLOSED WITHOUT MERGE**. Older images labeled `H27-S9B` are **AMBIGUOUS** and MUST NOT be flashed. Real physical S9B still UNRUN; new operator approval for 180s budget and physical setup review still REQUIRED; NO flashing until latest firmware identity CI PASS.
 
-**Prima lettura:** [protocollo S9B](../../STEP09_S9B_NEXT_PHYSICAL_TEST_2026-10-27.md), [review numerica del budget e rischi](2026-10-27-S9B-budget-feasibility-and-safety-review.md), [S9A real dataset già archiviato su main](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/main/docs/evidence/thermal/2026-10-27-S9A-PHYSICAL-SESSION.md).
+> **CI S9B SOFTWARE ESEGUITA E PASSATA (non prova fisica):** [Actions run #40562778719](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40562778719), job `122395977499`: test C++ sul `SafetyController` reale con GPIO simulato **PASS** (incluso precedente120s NON termina e nuovo180s termina con cooldown, target aria25°C/isteresi, NTC soft50/resume65/hard40, fault/STOP/stale); compilazione Arduino ESP32 **PASS** con 1.126.854 byte FLASH (85%) e 92.096 byte RAM statica (28%), senza overflow. Commit testato `ca5c0e5bf6ea3f9cccd531456649e384c19eda6e`; SHA blob di tutti i file firmware e workflow verificati identici fra tale commit e il branch dopo le aggiunte dei soli documenti. **Non abilitato né installato su prototipo e nessuna qualifica di sicurezza fisica:** `H27-B180` è solo l'identità che l'utente dovrà verificare dopo un eventuale flash, previo consenso specifico alla prova. [PR #17 DRAFT](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/17), base branch S9A PR14.
 
-## Profilo proposto, non ancora autorizzato
+**STATO: NON ESEGUITO, NESSUNA MISURA FISICA S9B ANCORA FORNITA.** Preparato27 ottobre2026 per test proposto che aumenta solamente il budget HEATER ON cumulativo da120s S9A a180s; tutti gli altri limiti/soglie restano invariati. **Non confondere con S9A già eseguita e archiviata**.
 
-- Branch sorgente `experiment/step09-s9b-25c-200s-2026-10-27`, PR dedicata DRAFT, compilazione/CI da registrare.
-- Firmware proposto `HOT-261027-S9B`, OLED `H27-S9B`.
-- Cambio rispetto S9A: **HEATER cumulativo 120→200s**, entro massimo di600s sessione. SHT45 target25°C con ON<=24/OFF>=25. NTC soft pause<=50kΩ e ripresa>=65kΩ, hard FAULT<=40kΩ, altri fault invariati. Singolo ON<=20s con ISR20,5s; gap OFF>=12s; fan PWM100%, cooling90s; Sanwa50°C veto manuale; TCO105 esistente invariato.
-- Data/ora effettive, set completo letture Sanwa, conferma fisica ventola/TCO, CSV e firmware effettivamente caricati: **NON FORNITI**. Nessuna approvazione al nuovo budget è per ora registrata.
+**Protocollo indispensabile:** [STEP09B_REAL_AIR25_FEEDBACK_PROTOCOL_2026-10-27.md](../../STEP09B_REAL_AIR25_FEEDBACK_PROTOCOL_2026-10-27.md).
+**Repo branch:** `experiment/step09b-air25-budget180-2026-10-27`; PR #17 DRAFT. Identità attesa OLED `H27-B180`, firmware `HOT-261027-S9B180` (**non ancora letto su prototipo**).
+**CI compilazione e GPIO-mock:** PASS su commit firmware esatto (vedi nota CI sopra); NON verifica la temperatura del prototipo.
+**Approvazione utente specifica di 180s cum HEAT:** **NON ANCORA REGISTRATA** al momento creazione modulo. I 120s di S9A erano stati accettati separatamente; "procediamo col prossimo test" non contiene valori di budget/sicurezza esplicitati.
+**Data/ora fisica:** NON FORNITA.
+**Setup:** Sanwa tipo K fissata stessa posizione S9A; SHT45 aria camera; box chiuso, fan libera realmente funzionante, TCO105 in serie e cablaggio/alimentazione integri: **NON CONFERMATI IN S9B**. Non desumere dal passato una verifica attuale.
 
-## Gate prima della sessione
-- [x] **CI software su ultimo commit codice S9B PASS**, [run40560081934](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40560081934), job122386410479, commit `6b7e67e08e61edc3a06dc8c7eeaf0f0d1313c8e4`; [report completo](2026-10-27-S9B-software-build-and-review.md). Post-run modifiche esclusivamente documentali.
-- [ ] Review delle modifiche e del rischio di esposizione aggiuntiva.
-- [ ] L'utente acconsente ESPRESSAMENTE a **una sola prova S9B HEATER-ON target25°C con limite cumulativo200s** e veto Sanwa50°C; il consenso S9A non vale.
-- [ ] Verifica assemblaggio attuale (Sanwa punto contatto, ventola libera e funzionante, cablaggi integri, TCO105 in serie, alimentazione24V isolabile, box chiuso). Stato attuale NON RIFERITO.
-- [ ] Sul dispositivo si legge **`H27-S9B`** prima di ogni HEATER ON.
+## Parametri pre-registrati (NON misure)
 
-## Letture durante la prova — ancora ASSENTI
+Target aria25°C, ON possibile ad aria<=24°C, OFF al>=25°C; NTC SOFT OFF<=50kΩ/riprende>=65kΩ e gap>=12s; FAULT hard<=40kΩ o >=250kΩ, invalid/stale sensori; ON per finestra<=20s con ISR20,5s; **ON totale<=180s (NUOVO S9B)** e runtime<=600s, fan PWM comandata100% e cooldown90s; Sanwa veto MANUALE50°C, STOP lungo e24V disconnettibili.
 
-| Finestra o evento | Sanwa °C (reale) | SHT45 aria °C (reale) | Ora / stato HEATER / note |
+## Registro osservazioni reale — completare SOLTANTO dopo test
+
+| Quando leggere | Sanwa °C | SHT45 aria °C | HEATER ON/OFF, altri dettagli |
 | --- | --- | --- | --- |
-| Avvio da freddo | NON FORNITO | NON FORNITO | — |
-| HEATER ON1 | NON FORNITO | NON FORNITO | — |
-| HEATER OFF1 | NON FORNITO | NON FORNITO | — |
-| Ogni ONn/OFFn successivo | NON FORNITO | NON FORNITO | Trascrivere OGNI evento, anche video |
-| Primo attraversamento SHT45 25°C (se avviene) | NON FORNITO | NON FORNITO | Era HEATER già OFF o ON→OFF? |
-| Spegnimento definitivo / STOP / FAULT | NON FORNITO | NON FORNITO | Causa, eventuale errore OLED |
-| Ventola fermata dopo cooling | NON FORNITO | NON FORNITO | Sanwa finale |
+| Prima di avviare, dryer freddo | NON FORNITO | NON FORNITO | — |
+| Primo HEATER ON | NON FORNITO | NON FORNITO | — |
+| Primo HEATER OFF | NON FORNITO | NON FORNITO | — |
+| Quinto HEATER OFF (se presente) | NON FORNITO | NON FORNITO | — |
+| Decimo HEATER OFF (se presente) | NON FORNITO | NON FORNITO | — |
+| Quindicesimo HEATER OFF (se presente) | NON FORNITO | NON FORNITO | — |
+| Primo raggiungimento aria25°C (se presente) | NON FORNITO | NON FORNITO | — |
+| Inizio COOLING/STOP/FAULT | NON FORNITO | NON FORNITO | — |
+| Fine cooling, ventola ferma | NON FORNITO | NON FORNITO | — |
 
-**Il Sanwa va sorvegliato continuamente; STOP manuale immediato se arriva50°C o se fan/materiali si comportano in modo anomalo.** Non inventare OFF Sanwa dove non letto. Non confondere display, CSV ed eventuali letture termocoppia.
+- Sanwa massimo osservato durante intera sessione: NON FORNITO.
+- Ventola realmente ruotava? NON FORNITO; CSV PWM100% non prova velocità.
+- Cause precise STOP/FAULT/cooling e messaggi OLED/serial: NON FORNITO.
+- Andamento temperature dopo OFF e post-cooling: NON FORNITO.
+- SHT45 arrivata25°C? NON OSSERVATO/TEST NON ESEGUITO.
+- Ripartenza spontanea dopo discesa naturale <=24°C? NON OSSERVATO.
+- Note odore, cablaggio, TCO, posizione sonde: NON FORNITO.
 
-## Evidenza file
-- `docs/evidence/thermal/2026-10-27-S9B-raw.csv`: **NON ESISTE ANCORA** (corretto finché non arriva l'originale utente).
-- Nome originale file, byte, SHA256, campioni, transizioni, cause OFF, RH, NTC, trend aria/cooling: **DA ACQUISIRE**; non copiare dati S9A nel futuro CSV.
-- Esito tecnico cutoff target25°C / cap200s / fault / STOP: **NON DETERMINABILE**.
+## CSV originale NUOVO S9B, non quello precedente
 
-## A test avvenuto
-Archiviare CSV byte-identico, hash, verbale originale, report derivato e link del commit sul branch/main (solo evidenza, mai integrare automaticamente firmware HEAT). Aggiornare AGENTS, README, PROJECT_STATE, TODO, ledger, PR; mantenere `docs/DECISIONS.md` invariato salvo una vera approvazione ingegneristica.
+**NON DISPONIBILE — PROVA NON ANCORA ESEGUITA.** Non riutilizzare il file S9A `docs/evidence/thermal/2026-10-27-S9A-raw.csv` (33.096 byte,778 righe). Al ricevimento salvare come `docs/evidence/thermal/2026-10-27-S9B-raw.csv` byte-identico, calcolare SHA256 e blob Git, contare campioni, annotare righe missing, analisi per eventi/NTC/aria/RH e tempo totale ON **senza assumere che il setpoint25 sia stato raggiunto**. Non inventare valori da script o simulazione.
 
-**Nessuna prova S9B va avviata sulla base di questo file senza review e nuova approvazione dell'utente.**
+## Decisione al momento della preregistrazione
+
+Nessun nuovo dato fisico; prossimo vero gate è CI ESP32+mock e review/conferma del profilo180s prima di flash/HEAT. Nessun firmware unito in `main` e nessun test automatico fisico iniziato.
