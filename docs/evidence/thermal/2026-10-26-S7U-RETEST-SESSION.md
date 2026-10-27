@@ -1,8 +1,13 @@
 # STEP07-S7U — Verbale completo della sessione fisica supervisionata
 
+## Nota di provenienza temporale (27 ottobre 2026)
+
+**Correzione fattuale della data, senza alterare CSV o misure:** il messaggio dell'utente contenente `PROVA S7U` e l'allegato CSV risulta ricevuto in questa conversazione il **27 ottobre 2026, circa 08:05 Europe/Rome**. La **data/ora reale di avvio della prova non è stata fornita**. Il prefisso file `2026-10-26-` identifica il protocollo/dossier predisposto e NON costituisce prova che la sessione si sia svolta il 26; analogamente il giorno del resoconto non coincide necessariamente con la sessione fisica. I passaggi storici in questo verbale che chiamano «26 ottobre» il giorno del messaggio sono rettificati da questa nota. Nessuna misura sperimentale o file raw è stato cambiato.
+
+
 **Stato: PROVA FISICA ESEGUITA, FAULT NTC R LIMIT — ACQUISIZIONE G1 PASS LIMITATA, QUALIFICA V1 NON PASS.**
 
-**Fonte diretta n.1:** messaggio dell'utente del 26 ottobre 2026 intitolato `PROVA S7U`, trascritto integralmente sotto.
+**Fonte diretta n.1:** messaggio dell'utente ricevuto il 27 ottobre 2026 intitolato `PROVA S7U`, trascritto integralmente sotto.
 **Fonte diretta n.2:** allegato utente originale `filament-last-test (2).csv`, conservato byte-identico come [2026-10-26-S7U-retest-raw.csv](2026-10-26-S7U-retest-raw.csv).
 **Fonte derivata (non sostituisce dati grezzi):** [analisi numerica indipendente con tabella timeline](2026-10-26-S7U-retest-analysis.md).
 **Protocollo prima della sessione:** [STEP07_S7U_PHYSICAL_RETEST_PROTOCOL_2026-10-26.md](../../STEP07_S7U_PHYSICAL_RETEST_PROTOCOL_2026-10-26.md).
@@ -29,7 +34,7 @@ I numeri Sanwa sono **°C** secondo strumento e protocollo. Le letture sono osse
 
 | Campo | Evidenza effettiva di questa sessione |
 | --- | --- |
-| Giorno del resoconto/acquisizione | **26 ottobre 2026**; ora civile *esatta della prova* **NON FORNITA**, timezone progetto Europe/Rome; non assumere che l'ora di upload coincida con l'inizio prova |
+| Giorno del resoconto/acquisizione | **27 ottobre 2026 (consegna del resoconto in chat)**; ora civile *esatta della prova* **NON FORNITA**, timezone progetto Europe/Rome; non assumere che l'ora di upload coincida con l'inizio prova |
 | Operatore | **utente del prototipo**, test supervisionato riferito dall'utente; nessuna attestazione metrologica esterna |
 | Prova/firmware | `PROVA S7U` secondo utente; ID display `H26-S7U` **NON allegato visivamente**, versione CSV non autoidentificabile |
 | Forma test | UNA sessione con impulsi attivi, non test heater-OFF. Dati `heater_command=1` nel CSV per 237 campioni |
