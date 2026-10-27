@@ -182,7 +182,7 @@ class Ui {
   // identify the compiled test firmware for three seconds with no USB needed.
   void drawFirmwareSplash() {
     display_.setFont(u8g2_font_helvB12_tf);
-    display_.drawStr(13, 21, "HEATER TEST");
+    display_.drawStr(13, 21, "AIR FEEDBACK");
     display_.drawHLine(0, 28, 128);
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(9, 44, "FW");
@@ -230,12 +230,13 @@ class Ui {
 
   void drawSetup(SetupField selected, const CycleSettings &settings) {
     display_.setFont(u8g2_font_6x10_tf);
-    display_.drawStr(2, 9, "SET CYCLE   SAFE MODE");
+    display_.drawStr(2, 9, AppConfig::kHeaterStep09TrialMode
+        ? "S09 FIXED AIR TEST" : "SET CYCLE   SAFE MODE");
     display_.drawHLine(0, 12, 128);
 
     char temp[22];
     char time[22];
-    snprintf(temp, sizeof(temp), "TEMP        %d °C", settings.targetTempC);
+    snprintf(temp, sizeof(temp), "TEMP        %d °C", AppConfig::kHeaterStep09TrialMode ? 25 : settings.targetTempC);
     snprintf(time, sizeof(time), "TIME        %02u:%02u",
              settings.durationMinutes / 60, settings.durationMinutes % 60);
     drawSelectableRow(15, temp, selected == SetupField::Temperature);
@@ -267,7 +268,9 @@ class Ui {
                    uint32_t coolingSecondsLeft) {
     display_.setFont(u8g2_font_6x10_tf);
     char header[22];
-    if (AppConfig::kHeaterCommissioningMode) {
+    if (AppConfig::kHeaterStep09TrialMode) {
+      snprintf(header, sizeof(header), "STEP09 AIR FEEDBACK");
+    } else if (AppConfig::kHeaterCommissioningMode) {
       snprintf(header, sizeof(header), "NTC GUARD TEST FAN100");
     } else {
       snprintf(header, sizeof(header), "DRYING TEST   %02lu:%02lu",
@@ -289,7 +292,13 @@ class Ui {
 
     display_.setFont(u8g2_font_6x10_tf);
     char target[24];
-    if (AppConfig::kHeaterCommissioningMode) {
+    if (AppConfig::kHeaterStep09TrialMode) {
+      if (static_cast<HeaterCommissioning::Phase>(pulsePhase) ==
+          HeaterCommissioning::Phase::Cooldown)
+        snprintf(target, sizeof(target), "COOLING %lu s",
+            static_cast<unsigned long>(coolingSecondsLeft));
+      else snprintf(target, sizeof(target), "SET 25C NTC HARD 40k");
+    } else if (AppConfig::kHeaterCommissioningMode) {
       if (static_cast<HeaterCommissioning::Phase>(pulsePhase) ==
           HeaterCommissioning::Phase::Cooldown) {
         snprintf(target, sizeof(target), "COOLING LEFT %lu s",
@@ -303,7 +312,19 @@ class Ui {
                settings.targetTempC, fanDutyPercent);
     }
     display_.drawUTF8(1, 47, target);
-    if (AppConfig::kHeaterCommissioningMode) {
+    if (AppConfig::kHeaterStep09TrialMode) {
+      const char *progress = "HEATER OFF";
+      switch (static_cast<HeaterCommissioning::Phase>(pulsePhase)) {
+        case HeaterCommissioning::Phase::Pulse: progress = "HEATER ON"; break;
+        case HeaterCommissioning::Phase::Prerun: progress = "FAN PRERUN"; break;
+        case HeaterCommissioning::Phase::Gap: progress = "HEATER OFF"; break;
+        case HeaterCommissioning::Phase::Cooldown: progress = "COOLING"; break;
+        case HeaterCommissioning::Phase::Complete: progress = "TEST COMPLETE"; break;
+        default: break;
+      }
+      display_.setFont(u8g2_font_7x14B_tf);
+      display_.drawStr(1, 62, progress);
+    } else if (AppConfig::kHeaterCommissioningMode) {
       const unsigned totalPulses =
           static_cast<unsigned>(HeaterStep07GuardTrial::parameters().pulseCount);
       char progress[24];
@@ -360,7 +381,12 @@ class Ui {
       snprintf(line, sizeof(line), "H --%%       F %u%%", fanDutyPercent);
     }
     display_.drawStr(2, 54, line);
-    if (AppConfig::kHeaterCommissioningMode) {
+    if (AppConfig::kHeaterStep09TrialMode) {
+      snprintf(line, sizeof(line), "PH%u WIN%u H:%s",
+        static_cast<unsigned>(pulsePhase),
+        static_cast<unsigned>(pulsesDone), heaterOn ? "ON" : "OFF");
+      display_.drawStr(2, 63, line);
+    } else if (AppConfig::kHeaterCommissioningMode) {
       snprintf(line, sizeof(line), "PH %u  PULSES %u/%u  H:%s",
                static_cast<unsigned>(pulsePhase),
                static_cast<unsigned>(pulsesDone),
@@ -408,12 +434,12 @@ class Ui {
                  uint32_t coolingSecondsLeft, bool csvReady,
                  bool csvSaveFailed) {
     display_.setFont(u8g2_font_6x10_tf);
-    if (AppConfig::kHeaterCommissioningMode) {
+    if (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) {
       // Sanwa is external: prompt the operator, never imply MCU measures it.
       display_.drawStr(1, 9, "FAULT / HEATER OFF");
       display_.drawHLine(0, 12, 128);
       display_.drawStr(1, 24, commissionFaultText(pulseFault));
-      display_.drawStr(1, 36, "SANWA: WATCH PEAK");
+      display_.drawStr(1, 36, "SANWA: CHECK FALL");
       char line[24];
       if (coolingSecondsLeft > 0) {
         snprintf(line, sizeof(line), "COOLING  %lu:%02lu",
