@@ -1,5 +1,16 @@
 # STEP09 — Preparazione tecnica al controllo reale aria SHT45 con protezione heater NTC
 
+## Checkpoint STEP09-A 27 ottobre 2026 — candidato HEATER ON compilato e testato (NON ancora collaudato)
+
+**STATO CORRENTE, PREVALE SULLE SEZIONI DEL PIANO PREPARATORIO QUI SOTTO:**
+- Sviluppata la [PR #14 DRAFT](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/14) sul branch experiment/step09-real-sht45-feedback-2026-10-27, distinta da S7U/PR12 e dai test host PR13.
+- La build del **vero firmware HEAT-CAPABLE** HOT-261027-S9A / OLED H27-S9A è ora **ESP32 PASS** e il GPIO-mock con SafetyController reale è **PASS**: [GitHub Actions run 40485007834](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40485007834), 85% flash e 28% RAM statica, no DRAM overflow, output originali verificati.
+- Il primo workflow aveva un **falso verde** per pipe priva di pipefail e **DRAM overflow5920 byte** causato dal buffer CSV espanso. Sono stati corretti: buffer tornato a1400 righe, campionamento **500ms** in STEP09 per coprire10min+90s, script compile con **set -euo pipefail**. Non dichiarare valido il vecchio run.
+- **Architettura fisicamente azionabile ma NON FLASHATA:** controllo SHT45 aria target **25°C** fisso, ON<=24°C, OFF>=25°C; guardia R_NTC in OHM: pausa preventiva50kΩ, ripresa65kΩ e OFF>=12s, FAULT duro <=40kΩ **invariato da S7U**. Limiti max20s ON/ISR20,5s, max120s ON cumulativi (benchmark S6C), max10min e cooldown90s, fan100 comandata; Sanwa veto50°C come S7U. Limiti sperimentali NON V1 approvati, termistore non calibrato in°C.
+- [**Protocollo fisico HEATER ON STEP09-A, con introduzione cosa/perché/precedente/futuro e sequenza**](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step09-real-sht45-feedback-2026-10-27/docs/STEP09_REAL_HEAT_AIR_FEEDBACK_PROTOCOL_2026-10-27.md). [**Rapporto CI dettagliato con errori corretti e limiti**](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step09-real-sht45-feedback-2026-10-27/docs/evidence/thermal/2026-10-27-S9A-CODE-AND-CI-REPORT.md).
+- **NEXT UNICO:** revisione del profilo e del montaggio fisico TCO105/fan/Sanwa, **consenso ESPLICITO dell'utente per questa specifica sessione**; poi eventuale flash OTA da STANDBY e **una vera prova HEATER ON con feedback SHT45**, non altri test heater-OFF. Non modificare TCO, NTC cutoff o fan né fare merge della PR automaticamente.
+
+
 ## Rettifica operativa del 27 ottobre — obiettivo immediato: PROSSIMA PROVA REALE HEATER ON CON FEEDBACK ARIA
 
 **Direzione chiarita esplicitamente dall'utente:** non tornare indietro a ulteriori test fisici heater-OFF, né trasformare il progetto in una sequenza indefinita di simulazioni. Dopo S6C, S7U e lo STEP08 host PASS, **il prossimo collaudo sul prototipo deve usare davvero il riscaldatore con una regolazione SHT45 della temperatura in camera**, non solo impulsi prestabiliti. Gli eventuali controlli software/build prima di flash sono verifiche di pre-rilascio e NON un nuovo test utente con heater disabilitato.
