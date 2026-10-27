@@ -1,5 +1,13 @@
 # STEP09 — Preparazione tecnica al controllo reale aria SHT45 con protezione heater NTC
 
+## CHECKPOINT FINALE S9A — FISICAMENTE ESEGUITO, 27 OTTOBRE 2026
+
+**STATO PIÙ RECENTE (supera i checkpoint preparatori sottostanti):** La sessione S9A **è stata svolta dall'utente con HEATER ON reale** e il file originale completo è stato salvato su `main` e sul branch sperimentale, senza modifiche al firmware. [Verbale con 13 Sanwa ON/OFF](evidence/thermal/2026-10-27-S9A-PHYSICAL-SESSION.md), [CSV raw 778 righe, 33.096 byte, SHA256 6632f79b9e815965fe7f78b6ed31ec39f4a4bcb35b3c4f0c17da655ab4b877e0](evidence/thermal/2026-10-27-S9A-raw.csv), [analisi indipendente](evidence/thermal/2026-10-27-S9A-analysis.md), [protocollo storico](STEP09_REAL_HEAT_AIR_FEEDBACK_PROTOCOL_2026-10-27.md).
+
+**Risultati:** 13 accensioni, Sanwa iniziale17°C e ON/OFF stabilizzati 35/38°C nelle finestre6–12, tredicesima ON35°C poi COOLING, Sanwa26°C a fine cooling; SHT45 aria17,64°C iniziale, **22,59°C al cooling** (utente ha letto circa22,7°C), max22,97°C durante cooling. Min NTC48,7167kΩ, pause SOFT vicino50kΩ, nessuna fase FAULT; ~120s totali comandati HEATER ON. Il software ha interrotto per **budget HEAT cumulativo120s**, non perché SHT45 abbia raggiunto25°C: **feedback aria sul raggiungimento del target NON ANCORA QUALIFICATO fisicamente**. Fan100% è PWM comandato; nessuna prova RPM. Non modificare limiti TCO/NTC/fan in base alla sola prova.
+
+**UNICO NEXT:** capire quale budget di riscaldamento sia giustificabile con protezioni e montaggio reali, e **solo dopo** definire un esperimento successivo S9B orientato a verificare il passaggio del target aria, con protocollo e nuova approvazione. **NON ripetere S9A**. La PR #14 resta DRAFT e separata da `main`; i soli dati fisici sono archiviati anche su main.
+
 ## Checkpoint STEP09-A 27 ottobre 2026 — candidato HEATER ON compilato e testato (NON ancora collaudato)
 
 **STATO CORRENTE, PREVALE SULLE SEZIONI DEL PIANO PREPARATORIO QUI SOTTO:**
