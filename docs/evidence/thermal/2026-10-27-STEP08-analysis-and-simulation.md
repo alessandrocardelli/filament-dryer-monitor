@@ -1,6 +1,6 @@
 # STEP08 — Analisi G2/G3 dei dati reali e prossimo test di integrazione
 
-**Stato al 27 ottobre 2026:** **G2 confronto dei CSV ESEGUITO; G3 review preliminare ESEGUITA, qualificazione sicurezza OPEN; G4 test host di integrazione NON ESEGUITO.** Non è stata eseguita nessuna nuova prova fisica né cambiato il firmware. Non dichiarare CI PASS o integrazione del controllo aria finché non effettivamente testati.
+**Stato aggiornato 27 ottobre 2026:** **G2 confronto S6C/S7U ESEGUITO; G3 review effettuata ma QUALIFICA SICUREZZA OPEN; G4 NUOVO REPLAY HOST C++ ESEGUITO / CI PASS LIMITATO.** Test effettivo su [PR #13 DRAFT](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/13), [Actions run 40476716231](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40476716231), branch `test/step08-ntc-air-replay-2026-10-27` (commit sorgente `1057a633aa1cc75b1c1dac3643a04a94d342e69a`). Nessuna nuova prova fisica, nessun cambiamento di firmware di produzione, limiti o installazione. **PASS della simulazione integrata non significa che il prodotto sia qualificato né che il termostato fisico sia attivo.**
 
 **Protocollo preregistrato:** [STEP08_NEXT_TEST_2026-10-27.md](../../STEP08_NEXT_TEST_2026-10-27.md).
 
@@ -84,17 +84,35 @@
 
 **G3 review effettuata, gate di sicurezza ancora OPEN.** I dati di due prove con 100% PWM non permettono scegliere fan AUTO o limite heater definitivo. Non cambiare circuito/TCO, flag enable, PWM o trip senza ulteriore review e decisione esplicita. Nessuna prova fisica autorizzata implicitamente.
 
-## G. STEP08-C — prossimo test SOFTWARE concreto (NON ESEGUITO)
+## G. STEP08-C — TEST INTEGRATO HOST REALMENTE ESEGUITO / CI PASS LIMITATO
 
-**Oggetto nuovo, diverso da STEP03:** replay delle **717 righe reali** S7U attraverso un harness/mock che accoppi la *richiesta di calore del termostato SHT45* alla *guardia RAW NTC≤40kΩ* e imponga priorità all'arresto. In una prima fase la policy attuale `HeaterControlPolicy.h` non può usare fisicamente `heaterTemperatureC` dalla R_NTC: il modello termico del bead non è approvato. Il replay deve usare un adapter di prova e **marcare esplicitamente** eventuali temperature heater sintetiche; non spacciare la simulazione per firmware pronto. Devono essere verificati: richiesta aria teoricamente ancora ON al trip19,52°C, veto di guardia, latch FAULT/no retry, STOP, sensori invalid/stale, fan command lost, cooldown e nessuna uscita reale GPIO. Riprodurre poi con test automatici e commit (esito PASS solo dopo esecuzione), senza rifare le41 assertion STEP03 già superate.
+**NOVITÀ rispetto a STEP03:** test sorgente reale C++ `firmware/tests/host/test_step08_real_trace.cpp`, runner `run_step08_real_trace.sh`, workflow `.github/workflows/step08-real-trace-replay.yml`; [PR #13 DRAFT e NON MERGIATA](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/13), branch `test/step08-ntc-air-replay-2026-10-27`. Basato sul branch S7U; **non** sovrascrive il regolatore, non cambia la logica del firmware, nessun GPIO o alimentatore coinvolto.
 
-**Passi software**: scrivere harness nel ramo COLD dedicato; mantenerlo senza dipendenze dal circuito; eseguire test e CI reali, preservare output e commit; aggiornare questo documento e `README/PROJECT_STATE/TODO`. **Nessuna azione richiesta all'utente sul dryer adesso.**
+**CI realmente verificata:** [run #40476716231](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40476716231), job ID **122096639812**, Ubuntu24.04; PASS di compilazione nativa `g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic`, controllo dei quattro flag di sicurezza originali (commissioning true; tre approvazioni/regolatore false), verifica SHA-256 e Git blob originali del CSV, test C++ e upload del log. Tutti gli step della job riportati **success**, log letto in chiaro. Nessun flash ESP32; nessuna pretesa di build firmware V1.
+
+**Output significativi letti dal vero job log:**
+
+```text
+PASS: original 717-sample S7U CSV verified
+PASS: 717 REAL samples; sequence and mock-AND commands match 237 heater_command=1 rows; raw NTC guard trips at ms=96056 despite AIR request still ON below40C. NO GPIO.
+PASS: 8 NEW injected abort cases (latched + cooldown)
+PASS: STEP08 HOST ONLY; no firmware flags/thresholds changed, no heater temperature calibration claimed.
+PASS: STEP08 host replay completed; thermal safety G3 still OPEN
+```
+
+**Scenari e limiti esatti:**
+1. Il test legge **tutte le 717 righe originali S7U** ed esegue il vero `HeaterCommissioning::Sequence` (`HeaterPulseCommissioning.h`, profilo `HeaterStep07GuardTrial.h`). Riproduce `phase`, `pulses` e `heater_command` per tutte le righe; risultano **237 campioni con comando ON** e latch `NtcResistanceLimit` a `ms=96056`. Questo verifica coerenza di replay del software con il CSV, non la corrente fisica.
+2. La richiesta `HeaterControl::Policy` usa la **temperatura aria SHT45 autentica** e target di prova 40°C, ma una **temperatura locale heater sintetica di 35°C e approvazione modello fittizia** esclusivamente nell'eseguibile host. Esiste perché il NTC reale non ha ancora curva termica validata: **non attribuire 35°C all'heater, non interpretare l'host `approved=true` come firmware approvato**. Combinazione mock `pulseRequest && airWantsHeat && noFault`: a 19,52°C aria il termostato richiederebbe calore, ma la guardia RAW40kΩ ferma tutto. È **un harness di integrazione simulata**, non il percorso termostatico già attivo in `SafetyController`.
+3. **Otto NUOVI test di fault-injection** sul vero `HeaterCommissioning::Sequence`: `NtcResistanceLimit`, `NtcInvalid`, `NtcStale`, `AirInvalid`, `AirStale`, `AirLimit`, `FanLost` e `ManualStop`. In ciascun caso abort latching, richiesta OFF e coolingNeeded ancora vero dopo calore. Verifica meccanismo host, non lo stato elettrico o la ventola fisica.
+4. **Limitazioni esplicite dell'adapter:** lo stato `fanRunning` è simulato da un prerun di circa1s perché il CSV ha soltanto PWM comando; `ntcAgeMs` e `airAgeMs` reali non sono nel CSV e nel replay sono assunti0; nessuna misura RPM, materiale o temperatura corpo TCO. Le soglie artificiali e l'approvazione fittizia sono locali al test C++ e non scritte in `AppConfig.h`. La PR resta draft separata dal firmware reale.
+
+**G4 / replay host = PASS limitato**: una volta verificata la precedenza tra controllo aria e veto NTC nel mock, rimane da progettare e qualificare il **vero percorso attivo** con NTC/protezione, componenti termici, fan e TCO; non abilitarlo semplicemente perché la simulazione ha PASS. Il termostato standalone STEP03 non è stato rieseguito inutilmente.
 
 ## H. Riepilogo checkpoint
 
 - Acquisizione S7U G1: **PASS limitato** e CSV originale salvato.
 - Analisi G2 confronto con S6C: **ESEGUITA / PASS come analisi**, senza qualificazione sicurezza.
 - G3 review: **ESEGUITA**, salvaguardie reali ancora **OPEN**.
-- G4 integrazione replay codice/CI: **NON ESEGUITA**.
+- G4 replay integrato host con codice C++ reale e CI: **PASS LIMITATO**; implementazione della regolazione fisica e validazione sicurezza ancora **OPEN**.
 - Decisioni permanenti `docs/DECISIONS.md`: **NESSUNA NUOVA DECISIONE approvata**; non alterata.
-- Unico prossimo lavoro nuovo: **harness/CI di replay integrato**, seguito da riesame G3 prima di un nuovo profilo fisico autorizzato.
+- **Prossimo lavoro NUOVO: review G3 dei requisiti termici/protezioni e progettazione del percorso di controllo aria attuabile con interlock qualificati**, senza flash né nuova prova heater prima di decisione esplicita. La PR #13 è DRAFT e non si fonde automaticamente.
