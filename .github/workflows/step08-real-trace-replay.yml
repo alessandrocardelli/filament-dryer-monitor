@@ -1,0 +1,43 @@
+name: Step08 - real S7U NTC/air-policy host replay (NO GPIO)
+
+on:
+  push:
+    branches:
+      - test/step08-ntc-air-replay-2026-10-27
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay-no-gpio:
+    name: Compile real policy headers and replay original S7U CSV
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce separation of experimental pulse mode vs physical thermostat
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('firmware/AppConfig.h').read_text()
+          assert 'kHeaterCommissioningMode = true;' in p
+          assert 'kHeaterOutputEnabled = false;' in p
+          assert 'kHeaterProfileApproved = false;' in p
+          assert 'kHeaterNtcModelApproved = false;' in p
+          assert 'kFanBringupRunPercent = 100;' in p
+          assert 'kConservativeRawNtcTripOhms = 40000.0f;' in Path('firmware/HeaterStep07GuardTrial.h').read_text()
+          print('PASS: no active production thermostat; commissioning still bounded')
+          PY
+      - name: Check committed original S7U CSV integrity
+        run: |
+          echo 'c417313414eede75f2269dbfb8717ac6d8246625172e315a007b8056def834ae  docs/evidence/thermal/2026-10-26-S7U-retest-raw.csv' | sha256sum --check
+          [ "$(git hash-object docs/evidence/thermal/2026-10-26-S7U-retest-raw.csv)" = 891ea18eb00efdb6690e7b7e3c0c6466e6a39674 ]
+          echo 'PASS: original 717-sample S7U CSV verified'
+      - name: Compile and execute NEW replay and fault-injection assertions
+        run: bash firmware/tests/host/run_step08_real_trace.sh | tee "$RUNNER_TEMP/step08-replay.log"
+      - name: Store verifiable host output
+        uses: actions/upload-artifact@v4
+        with:
+          name: step08-real-trace-no-gpio
+          path: ${{ runner.temp }}/step08-replay.log
