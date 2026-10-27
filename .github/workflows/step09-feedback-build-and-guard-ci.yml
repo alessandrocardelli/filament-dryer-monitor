@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - experiment/step09-real-sht45-feedback-2026-10-27
+      - experiment/step09-s9b-25c-200s-2026-10-27
   pull_request:
     branches:
       - fix/step07-clear-test-feedback-2026-10-26
+      - experiment/step09-real-sht45-feedback-2026-10-27
   workflow_dispatch:
 
 permissions:
@@ -39,13 +41,13 @@ jobs:
               "ntcResumeOhms = 65000.0f;",
               "maximumOnWindowMs = 20000;",
               "minimumOffMs = 12000;",
-              "maximumTotalHeatMs = 120000;",
+              "maximumTotalHeatMs = 200000;",
               "cooldownMs = 90000;",
               "targetAirC = 25.0f;",
               "kHardwareWindowCeilingUs = 20500000",
           ):
               assert t in h, f"Candidate review required: {t}"
-          assert "HOT-261027-S9A" in Path("firmware/FirmwareBuild.h").read_text()
+          assert "HOT-261027-S9B" in Path("firmware/FirmwareBuild.h").read_text()
           print("PASS: candidate constraints match documented review, no V1 heater approvals")
           PY
       - name: Verify known driver/sensor source files unchanged from S7U
