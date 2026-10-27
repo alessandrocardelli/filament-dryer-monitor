@@ -84,13 +84,23 @@ static void enterState(AppState next, uint32_t nowMs) {
       loggingSession = true;
       csvSavedThisRun = false;
       csvSaveFailed = false;
-      settingsStore.save(settings);
-      cycle.start(settings.cycle, nowMs);
+      // Keep stored user settings unchanged: this isolated physical trial
+      // always uses fixed 25 C air and 15 min cycle guard.
+      if (!AppConfig::kHeaterStep09TrialMode) settingsStore.save(settings);
+      if (AppConfig::kHeaterStep09TrialMode) {
+        CycleSettings trial{};
+        trial.targetTempC = 25;
+        trial.durationMinutes = 15; // > 10m trial + 90s cooldown
+        cycle.start(trial, nowMs);
+      } else cycle.start(settings.cycle, nowMs);
       fan.startAuto(nowMs);
       buzzer.playCycleStart(nowMs);
       if (AppConfig::kHeaterCommissioningMode) {
         Serial.println("STATE -> HEATER STEP07 GUARD: 6 x 20 s MAX, NTC 40k abort, fan 100%");
         Serial.println("HOT_CSV,ms,phase,pulses,heater,NTC_kOhm,air_C,RH,fan_pct");
+      } else if (AppConfig::kHeaterStep09TrialMode) {
+        Serial.println("STATE -> STEP09 REAL AIR FEEDBACK: 25C target, NTC soft 50/65k, HARD 40k, max 120s heat / 10min, fan100");
+        Serial.println("HOT_CSV,ms,phase,windows,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else {
         Serial.println(safety.heaterLocked()
             ? "STATE -> DRYING (fan active; heater output locked OFF)"
@@ -108,7 +118,7 @@ static void enterState(AppState next, uint32_t nowMs) {
       else fan.stop();
       // Supervised experiment: beep once and stay electrically FAULT-latched.
       // The normal product-mode repeating D022 alarm is unchanged.
-      if (AppConfig::kHeaterCommissioningMode)
+      if (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode)
         buzzer.playCommissionFaultOnce(nowMs);
       else
         buzzer.startFaultAlarm(nowMs);
@@ -140,6 +150,7 @@ static void selectNextSettingsField() {
 }
 
 static void adjustSetup(int8_t direction) {
+  if (AppConfig::kHeaterStep09TrialMode) return; // Fixed trial parameters
   if (setupField == SetupField::Temperature) {
     const int16_t next =
         settings.cycle.targetTempC +
@@ -204,7 +215,7 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
         enterState(AppState::Settings, nowMs);
       } else if (id == ButtonId::OnOff &&
                  type == ButtonEventType::ShortPress) {
-        if (AppConfig::kHeaterCommissioningMode &&
+        if ((AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) &&
             !safety.commissioningCanStart()) {
           Serial.println("Heater pulse test already used. Power-cycle to retry.");
         } else {
@@ -222,7 +233,7 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
         enterState(AppState::Standby, nowMs);
       } else if (id == ButtonId::OnOff &&
                  type == ButtonEventType::ShortPress) {
-        if (AppConfig::kHeaterCommissioningMode &&
+        if ((AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) &&
             !safety.commissioningCanStart()) {
           Serial.println("Heater pulse test already used. Power-cycle to retry.");
         } else {
@@ -296,6 +307,8 @@ void setup() {
   if (AppConfig::kHeaterCommissioningMode) {
     Serial.println("EXPERIMENTAL 6-PULSE STEP07 NTC-GUARD TEST; no auto-repeat");
     Serial.println("NTC absolute degrees NOT calibrated; experimental raw R_NTC abort at 40k");
+  } else if (AppConfig::kHeaterStep09TrialMode) {
+    Serial.println("STEP09 HEATER-CAPABLE CANDIDATE, NOT V1: fixed SHT45 air25C, NTC hard40k, 100% fan, timed windows");
   } else {
     Serial.println(safety.heaterLocked()
         ? "Heater OUTPUT LOCKED: configuration/calibration not approved."
@@ -367,7 +380,9 @@ void loop() {
                 appState == AppState::Drying && cycle.isRunning(),
                 fan.attached() && fan.phase() == FanPhase::Running,
                 cycle.elapsedMs(nowMs),
-                static_cast<float>(settings.cycle.targetTempC));
+                AppConfig::kHeaterStep09TrialMode
+                    ? HeaterStep09AirFeedback::parameters().targetAirC
+                    : static_cast<float>(settings.cycle.targetTempC));
 
   if (safety.faultActive() && appState != AppState::Fault) {
     char event[60];
@@ -375,13 +390,13 @@ void loop() {
              static_cast<unsigned>(safety.ntcFault()),
              static_cast<unsigned>(safety.commissioningFault()));
     network.note(event);
-    if (AppConfig::kHeaterCommissioningMode) {
+    if (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) {
       Serial.print("HEATER_TEST_ABORT fault=");
       Serial.println(safety.commissioningFault());
     }
     enterState(AppState::Fault, nowMs);
   }
-  if (AppConfig::kHeaterCommissioningMode &&
+  if ((AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) &&
       safety.commissioningComplete() && appState == AppState::Drying) {
     Serial.println("HEATER_TEST_DONE: all pulses and cooldown completed");
     enterState(AppState::Complete, nowMs);
@@ -402,7 +417,7 @@ void loop() {
     network.note(csvSavedThisRun ? "NEW CSV READY" : "NEW CSV SAVE FAILED");
   }
 
-  if (AppConfig::kHeaterCommissioningMode &&
+  if ((AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) &&
       appState == AppState::Drying &&
       (nowMs - lastCommissionCsvMs) >= 250) {
     lastCommissionCsvMs = nowMs;
@@ -468,8 +483,15 @@ void loop() {
       "PULSE IDLE", "FAN PRERUN", "HEATER ON", "HEATER GAP",
       "COOLDOWN", "PULSE COMPLETE", "PULSE ABORTED"
     };
-    if (currentPhase < sizeof(kPhaseText) / sizeof(kPhaseText[0]))
-      network.note(kPhaseText[currentPhase]);
+    if (currentPhase < sizeof(kPhaseText) / sizeof(kPhaseText[0])) {
+      if (AppConfig::kHeaterStep09TrialMode) {
+        static const char* const kFeedbackText[] = {
+          "AIR FEEDBACK IDLE", "FAN PRERUN", "AIR HEAT ON",
+          "NTC/AIR PAUSE", "COOLDOWN", "FEEDBACK COMPLETE", "FEEDBACK ABORTED"
+        };
+        network.note(kFeedbackText[currentPhase]);
+      } else network.note(kPhaseText[currentPhase]);
+    }
   }
 
   NetworkService::Status telem{};
