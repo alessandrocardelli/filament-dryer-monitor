@@ -1,6 +1,6 @@
 # STEP09B — Seconda prova proposta HEATER ON, controllo aria SHT45 a25°C
 
-**STATO: PROTOCOLLO PREPARATO, NON ESEGUITO, NON ANCORA AUTORIZZATO DALL'UTENTE.** Questa procedura sarà utilizzabile **solo dopo** CI S9B PASS e nuovo consenso esplicito al **budget ON cumulativo200s**, che è maggiore del S9A approvato a120s. Non flashare né avviare il riscaldamento sulla sola base di questo documento.
+**STATO: SOFTWARE S9B CI PASS VERIFICATO; PROVA FISICA NON ESEGUITA E NON ANCORA AUTORIZZATA DALL'UTENTE.** Questa procedura sarà utilizzabile **solo dopo** CI S9B PASS e nuovo consenso esplicito al **budget ON cumulativo200s**, che è maggiore del S9A approvato a120s. Non flashare né avviare il riscaldamento sulla sola base di questo documento.
 
 ## Introduzione per l'operatore (COSA / PERCHÉ / TEST PRECEDENTE / DOPO)
 
@@ -33,14 +33,14 @@
 ## Identità software e sicurezza
 
 - Repository `alessandrocardelli/filament-dryer-monitor`. **Branch S9B dedicato:** `experiment/step09b-chamber25-extended-budget-2026-10-27` (non `main` né S9A). **PR DRAFT** rispetto al branch S9A, non mergiare in firmware V1.
-- Build **`HOT-261027-S9B`**, OLED **`H27-S9B`**. Il codice è HEAT-CAPABLE e può energizzare **GPIO19** quando flashato. **CI S9B e commit esatto da verificare dopo le ultime modifiche**.
+- Build **`HOT-261027-S9B`**, OLED **`H27-S9B`**. Il codice è HEAT-CAPABLE e può energizzare **GPIO19** quando flashato. **CI S9B realmente verificata PASS:** [run 40562607894](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40562607894), job 122395369479, codice al commit `92e7920f0df15b349e5462528725c5cab65864f3`, Arduino ESP32 3.3.12/U8g2 2.36.19, FLASH1.126.854 byte (85%), RAM statica92.096 byte (28%), mock reale `SafetyController` PASS con budget200s. I commit successivi fino al `9fe7c6dc641cd44fab785b4e99aa50f86c36e1b5` sono stati verificati come **solo README/PROJECT_STATE/TODO**, nessun firmware modificato; documenti aggiornati dopo. Il firmware fisico non è stato flashato né testato.
 - Uscita su `SafetyController.h` / `HeaterStep09AirFeedback.h`, guardia NTC RAW in ohm, NTC bead non calibrato in°C nel closed box. Fan100 è comando PWM non misurazione tach. MOSFET stuck ON non misurato indipendentemente.
 - Ultimo CSV su LittleFS: [endpoint `/api/last-test.csv`](http://filament-dryer.local/api/last-test.csv), salvato dopo heater OFF e cooling. Buffer massimo1400 righe e campionamento nominale500ms, sufficiente al tetto600s+90s se nessun altro rallentamento anomalo.
 - Fusibile termico monouso **105°C attualmente montato in serie**: NON scollegarlo, bypassarlo o sostituirlo per questo test. La sua qualifica DC e condizioni corpo/placement restano aperte. Non è un consenso implicito ad aumentare oltre50°C sul Sanwa.
 
 ## Prerequisiti obbligatori prima di flash e HEAT
 
-1. **CI su commit esatto S9B PASS per build ESP32 e host mock**: verificare run completo e log del linker (nessun falso verde `tee`), test fault, watchdog/cooldown, target/isteresi e cap200s. Non utilizzare vecchio CI PASS S9A come prova di build S9B.
+1. **[x] CI S9B realizzata e PASS** per `92e7920f0df15b349e5462528725c5cab65864f3`: [run 40562607894](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40562607894), vero log linker ESP32, host GPIO-mock `SafetyController`, budget200s, fault, controllo SHT45 e cooldown. Nessuna nuova build fisica/flash eseguita.
 2. **Controllo fisico effettuato dall'operatore**: montaggio invariato rispetto a S9A, Sanwa saldamente fissato sulla stessa zona di contatto presso l'NTC heater, sensore SHT45 nella camera, ventola libera e realmente ruotante durante prova, cablaggi integri, box chiuso, TCO105 in serie invariato, alimentazione24V facilmente isolabile. Se differenze/anomalie, non iniziare.
 3. **Consenso esplicito distinto** dell'utente al nuovo incremento HEATER cumulativo **120→200s** mantenendo il veto manuale **Sanwa50°C**, le soglie NTC e il massimo10min. L'autorizzazione alla sola preparazione software NON è approvazione alla prova calda S9B.
 4. Dryer sufficientemente raffreddato, Sanwa e SHT45 iniziali annotati. **SHT45 aria<=24°C** per aspettarsi HEATER ON da standby; se più calda, non forzare né alterare la sonda: registrare e fermarsi.
@@ -70,4 +70,4 @@ Se il primo OFF coincide con l'ultimo, basta una lettura. Se il target25°C arri
 - Allegare CSV **originale** e tutte le temperature Sanwa cronologiche (anche se solo alcune misure disponibili), eventuali messaggi OLED, ora effettiva e foto/video facoltativi. Archiviare su GitHub con hash, conteggio righe, rapporto e confronto S9A.
 - Conclusioni possibili: a) target25°C raggiunto con OFF termostatico osservato; b)25°C raggiunto durante pausa NTC, si verifica la persistenza OFF; c) budget200s o timeout600s scaduti prima target; d) FAULT/STOP per sicurezza. Nessun successo viene dichiarato prima di dati reali.
 
-**Stato:** SOFTWARE IN PREPARAZIONE; **NESSUNA PROVA FISICA S9B ESEGUITA**; **CONSENSO S9B NON ANCORA ACQUISITO**. Gli esiti S9A non sono sostituiti né riutilizzati come nuovo CSV.
+**Stato:** SOFTWARE COMPILATO / HOST CI PASS; **NESSUNA PROVA FISICA S9B ESEGUITA**; **CONSENSO S9B NON ANCORA ACQUISITO**. Proseguire solo dopo preflight e approvazione esplicita del budget aumentato. Gli esiti S9A non sono sostituiti né riutilizzati come nuovo CSV.
