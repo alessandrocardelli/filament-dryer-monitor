@@ -1,4 +1,4 @@
-// STEP09: actual SafetyController HEADERS, GPIO mocked. No physical heater.
+// STEP09B: actual SafetyController HEADERS, GPIO mocked. No physical heater.
 // Fixed 25C SHT45 air target; NTC-ohm soft pause above unchanged 40k fault.
 #include <cassert>
 #include <cstdint>
@@ -52,7 +52,7 @@ int main() {
          settings.ntcHardTripOhms == 40000.0f &&
          settings.maximumOnWindowMs == 20000 &&
          settings.minimumOffMs == 12000 &&
-         settings.maximumTotalHeatMs == 120000 &&
+         settings.maximumTotalHeatMs == 200000 &&
          settings.maximumRunMs == 600000 &&
          settings.cooldownMs == 90000);
   {
@@ -119,25 +119,55 @@ int main() {
   }
   {
     SafetyController s; start(s);
-    // 6 bounded windows * 20 seconds = 120s maximum ON; each
-    // minimum 12s rest, no auto-repeat after budget.
-    const uint32_t on[] = {6000,38000,70000,102000,134000,166000};
+    // S9B 10 bounded windows * 20s = 200s maximum ON, separated
+    // by >=12s rests. This is the ONLY increased heat limit from S9A.
+    const uint32_t on[] = {6000,38000,70000,102000,134000,166000,
+                           198000,230000,262000,294000};
     for (uint32_t t : on) {
       assert(s.heaterOn());
       tick(s, t + 20000);
       assert(!s.heaterOn() && !s.faultActive());
-      if (t != 166000) {
+      if (t != 294000) {
         tick(s, t + 32000);
         assert(s.heaterOn());
       }
     }
     assert(!s.commissioningComplete());
-    assert(s.coolingRequired(186001));
-    tick(s, 275999);
+    assert(s.coolingRequired(314001));
+    tick(s, 403999);
     assert(!s.commissioningComplete());
-    tick(s, 276001);
+    tick(s, 404001);
     assert(s.commissioningComplete() && !s.heaterOn());
     assert(!s.commissioningCanStart());
+  }
+  // The 25C air cutoff is reached *after* >120s cumulative HEAT,
+  // the situation S9A could not test before its old 120s budget expired.
+  {
+    SafetyController s; start(s);
+    const uint32_t firstSevenOn[] = {6000,38000,70000,102000,134000,
+                                     166000,198000};
+    for (uint32_t t : firstSevenOn) {
+      assert(s.heaterOn());
+      tick(s, t + 20000, 90000, 22.0f);
+      assert(!s.heaterOn() && !s.faultActive());
+      if (t != 198000) {
+        tick(s, t + 32000, 90000, 22.0f);
+        assert(s.heaterOn());
+      }
+    }
+    tick(s, 230000, 90000, 24.0f);
+    assert(s.heaterOn() && s.commissioningPhase() == 2);
+    // This OFF must be caused by the SHT45 chamber reaching 25 C,
+    // rather than local NTC or end-of-budget shutdown.
+    tick(s, 230250, 90000, 25.0f);
+    assert(!s.heaterOn() && !s.faultActive());
+    assert(s.commissioningPhase() == 3);
+    tick(s, 242249, 90000, 24.5f);
+    assert(!s.heaterOn());
+    tick(s, 242500, 90000, 24.0f);
+    assert(s.heaterOn() && !s.faultActive());
+    s.stop();
+    assert(!s.heaterOn() && s.coolingRequired(242501));
   }
   {
     SafetyController s; start(s);
@@ -147,6 +177,6 @@ int main() {
   }
   std::cout << "PASS STEP09 actual SafetyController GPIO-MOCK: real ON, "
       "SHT45 25C feedback/hysteresis, NTC soft50k/hard40k, "
-      "20s/12s windows, 120s cumulative heat cap, STOP, "
+      "20s/12s windows, 200s cumulative heat cap, STOP, "
       "cooldown, stale/fault/no restart. NO REAL GPIO.\n";
 }
