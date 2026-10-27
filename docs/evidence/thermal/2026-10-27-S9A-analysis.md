@@ -63,6 +63,6 @@ Il principale collo di bottiglia osservato **non è che NTC e aria hanno tempera
 - [CSV originale S9A](2026-10-27-S9A-raw.csv)
 - [Verbale misure Sanwa e tutti gli eventi](2026-10-27-S9A-PHYSICAL-SESSION.md)
 - [Protocollo precedente](../../STEP09_REAL_HEAT_AIR_FEEDBACK_PROTOCOL_2026-10-27.md)
-- [Controller reale](../../../firmware/HeaterStep09AirFeedback.h)
-- [SafetyController](../../../firmware/SafetyController.h)
+- [Controller reale (branch sperimentale)](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step09-real-sht45-feedback-2026-10-27/firmware/HeaterStep09AirFeedback.h)
+- [SafetyController (branch sperimentale)](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step09-real-sht45-feedback-2026-10-27/firmware/SafetyController.h)
 - [S6C dati originali su main](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/main/docs/evidence/thermal/2026-10-25-S6C-fan100.csv)
