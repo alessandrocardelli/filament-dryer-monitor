@@ -1,12 +1,12 @@
-name: STEP09 - real-feedback candidate (GPIO-mock + ESP32 build)
+name: STEP09B - 180s air-feedback candidate (GPIO-mock + ESP32 build)
 
 on:
   push:
     branches:
-      - experiment/step09-real-sht45-feedback-2026-10-27
+      - experiment/step09b-air25-budget180-2026-10-27
   pull_request:
     branches:
-      - fix/step07-clear-test-feedback-2026-10-26
+      - experiment/step09-real-sht45-feedback-2026-10-27
   workflow_dispatch:
 
 permissions:
@@ -39,14 +39,14 @@ jobs:
               "ntcResumeOhms = 65000.0f;",
               "maximumOnWindowMs = 20000;",
               "minimumOffMs = 12000;",
-              "maximumTotalHeatMs = 120000;",
+              "maximumTotalHeatMs = 180000;",
               "cooldownMs = 90000;",
               "targetAirC = 25.0f;",
               "kHardwareWindowCeilingUs = 20500000",
           ):
               assert t in h, f"Candidate review required: {t}"
-          assert "HOT-261027-S9A" in Path("firmware/FirmwareBuild.h").read_text()
-          print("PASS: candidate constraints match documented review, no V1 heater approvals")
+          assert "HOT-261027-S9B" in Path("firmware/FirmwareBuild.h").read_text()
+          print("PASS: STEP09B 180s budget, same NTC/fan limits, no V1 heater approvals")
           PY
       - name: Verify known driver/sensor source files unchanged from S7U
         run: |
@@ -58,8 +58,10 @@ jobs:
             }
           done
           echo "PASS: existing sensors/drivers and test trace original"
-      - name: Native GPIO-mock with REAL SafetyController, timers and fault tests
-        run: bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step09-mock.log"
+      - name: Native GPIO-mock with NEW 180s budget, 25C air, NTC FAULT, STOP and cooldown
+        run: |
+          set -euo pipefail
+          bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step09b-mock.log"
       - uses: arduino/setup-arduino-cli@v2
       - name: Install ESP32 core 3.3.12 and U8g2 2.36.19
         run: |
@@ -69,14 +71,14 @@ jobs:
       - name: Compile actual STEP09 ESP32 image (DO NOT FLASH)
         run: |
           set -euo pipefail
-          arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step09-esp32-build.log"
+          arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step09b-esp32-build.log"
           echo "PASS: ESP32 binary linked with no DRAM overflow"
       - name: Upload reproducible results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: step09-candidate-logs
+          name: step09b-candidate-logs
           path: |
-            ${{ runner.temp }}/step09-mock.log
-            ${{ runner.temp }}/step09-esp32-build.log
+            ${{ runner.temp }}/step09b-mock.log
+            ${{ runner.temp }}/step09b-esp32-build.log
           if-no-files-found: warn
