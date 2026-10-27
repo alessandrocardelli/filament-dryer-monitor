@@ -12,7 +12,7 @@
 - Data/ora effettive, set completo letture Sanwa, conferma fisica ventola/TCO, CSV e firmware effettivamente caricati: **NON FORNITI**. Nessuna approvazione al nuovo budget è per ora registrata.
 
 ## Gate prima della sessione
-- [ ] CI pass S9B sull'ultimo commit codice; job/log reali, link e SHA registrati.
+- [x] **CI software su ultimo commit codice S9B PASS**, [run40560081934](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40560081934), job122386410479, commit `6b7e67e08e61edc3a06dc8c7eeaf0f0d1313c8e4`; [report completo](2026-10-27-S9B-software-build-and-review.md). Post-run modifiche esclusivamente documentali.
 - [ ] Review delle modifiche e del rischio di esposizione aggiuntiva.
 - [ ] L'utente acconsente ESPRESSAMENTE a **una sola prova S9B HEATER-ON target25°C con limite cumulativo200s** e veto Sanwa50°C; il consenso S9A non vale.
 - [ ] Verifica assemblaggio attuale (Sanwa punto contatto, ventola libera e funzionante, cablaggi integri, TCO105 in serie, alimentazione24V isolabile, box chiuso). Stato attuale NON RIFERITO.
