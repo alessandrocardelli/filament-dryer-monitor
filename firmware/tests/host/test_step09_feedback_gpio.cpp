@@ -1,4 +1,4 @@
-// STEP09: actual SafetyController HEADERS, GPIO mocked. No physical heater.
+// STEP09B: real SafetyController, GPIO mocked; NEW180s budget, no physical heater.
 // Fixed 25C SHT45 air target; NTC-ohm soft pause above unchanged 40k fault.
 #include <cassert>
 #include <cstdint>
@@ -52,7 +52,7 @@ int main() {
          settings.ntcHardTripOhms == 40000.0f &&
          settings.maximumOnWindowMs == 20000 &&
          settings.minimumOffMs == 12000 &&
-         settings.maximumTotalHeatMs == 120000 &&
+         settings.maximumTotalHeatMs == 180000 &&
          settings.maximumRunMs == 600000 &&
          settings.cooldownMs == 90000);
   {
@@ -119,23 +119,35 @@ int main() {
   }
   {
     SafetyController s; start(s);
-    // 6 bounded windows * 20 seconds = 120s maximum ON; each
-    // minimum 12s rest, no auto-repeat after budget.
-    const uint32_t on[] = {6000,38000,70000,102000,134000,166000};
-    for (uint32_t t : on) {
+    // STEP09B-only regression: new cumulative budget is 180s.
+    // Nine 20s software windows with at least12s OFF, not a single 180s ON.
+    // MOST IMPORTANT: reaching former S9A budget120s MUST NOT prematurely
+    // start cooldown. At180s, no auto restart and 90s fan cooling.
+    const uint32_t on[] = {
+      6000,38000,70000,102000,134000,166000,198000,230000,262000
+    };
+    for (unsigned index = 0; index < 9; ++index) {
+      const uint32_t t = on[index];
       assert(s.heaterOn());
       tick(s, t + 20000);
       assert(!s.heaterOn() && !s.faultActive());
-      if (t != 166000) {
+      if (index == 5) { // exactly 120s HEATER commanded in 6 full windows
+        assert(s.commissioningPhase() ==
+               static_cast<uint8_t>(HeaterCommissioning::Phase::Gap));
+        assert(!s.commissioningComplete());
+      }
+      if (index != 8) {
         tick(s, t + 32000);
         assert(s.heaterOn());
       }
     }
+    assert(s.commissioningPhase() ==
+           static_cast<uint8_t>(HeaterCommissioning::Phase::Cooldown));
     assert(!s.commissioningComplete());
-    assert(s.coolingRequired(186001));
-    tick(s, 275999);
+    assert(s.coolingRequired(282001));
+    tick(s, 371999);
     assert(!s.commissioningComplete());
-    tick(s, 276001);
+    tick(s, 372001);
     assert(s.commissioningComplete() && !s.heaterOn());
     assert(!s.commissioningCanStart());
   }
@@ -145,8 +157,8 @@ int main() {
     assert(!s.heaterOn() && !s.faultActive());
     assert(s.coolingRequired(606001));
   }
-  std::cout << "PASS STEP09 actual SafetyController GPIO-MOCK: real ON, "
+  std::cout << "PASS STEP09B actual SafetyController GPIO-MOCK: real ON, "
       "SHT45 25C feedback/hysteresis, NTC soft50k/hard40k, "
-      "20s/12s windows, 120s cumulative heat cap, STOP, "
+      "20s/12s windows, old120s budget NOT cutoff, new180s cap, STOP, "
       "cooldown, stale/fault/no restart. NO REAL GPIO.\n";
 }
