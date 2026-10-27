@@ -99,7 +99,7 @@ static void enterState(AppState next, uint32_t nowMs) {
         Serial.println("STATE -> HEATER STEP07 GUARD: 6 x 20 s MAX, NTC 40k abort, fan 100%");
         Serial.println("HOT_CSV,ms,phase,pulses,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else if (AppConfig::kHeaterStep09TrialMode) {
-        Serial.println("STATE -> STEP09 REAL AIR FEEDBACK: 25C target, NTC soft 50/65k, HARD 40k, max 120s heat / 10min, fan100");
+        Serial.println("STATE -> STEP09 REAL AIR FEEDBACK: 25C target, NTC soft 50/65k, HARD 40k, max 200s heat / 10min, fan100");
         Serial.println("HOT_CSV,ms,phase,windows,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else {
         Serial.println(safety.heaterLocked()
@@ -308,7 +308,7 @@ void setup() {
     Serial.println("EXPERIMENTAL 6-PULSE STEP07 NTC-GUARD TEST; no auto-repeat");
     Serial.println("NTC absolute degrees NOT calibrated; experimental raw R_NTC abort at 40k");
   } else if (AppConfig::kHeaterStep09TrialMode) {
-    Serial.println("STEP09 HEATER-CAPABLE CANDIDATE, NOT V1: fixed SHT45 air25C, NTC hard40k, 100% fan, timed windows");
+    Serial.println("STEP09B HEATER-CAPABLE CANDIDATE, NOT V1: fixed SHT45 air25C, NTC hard40k, 100% fan, timed windows");
   } else {
     Serial.println(safety.heaterLocked()
         ? "Heater OUTPUT LOCKED: configuration/calibration not approved."
