@@ -185,8 +185,8 @@ class Ui {
     display_.drawStr(13, 21, "AIR FEEDBACK");
     display_.drawHLine(0, 28, 128);
     display_.setFont(u8g2_font_6x10_tf);
-    display_.drawStr(9, 44, "FW");
-    display_.drawStr(16, 44, FirmwareBuild::kId); // 17 chars * 6px; fits 128px
+    display_.drawStr(2, 44, "FW"); // x2..14; separate from build id
+    display_.drawStr(20, 44, FirmwareBuild::kId); // x20..122; no overlap with FW x2..14
     display_.drawStr(22, 60, FirmwareBuild::kMode);
   }
 
