@@ -238,10 +238,12 @@ class Ui {
     char time[22];
     snprintf(temp, sizeof(temp), "TEMP        %d °C", AppConfig::kHeaterStep09TrialMode ? 25 : settings.targetTempC);
     snprintf(time, sizeof(time), "TIME        %02u:%02u",
-             settings.durationMinutes / 60, settings.durationMinutes % 60);
+             AppConfig::kHeaterStep09TrialMode ? 0 : settings.durationMinutes / 60,
+              AppConfig::kHeaterStep09TrialMode ? 10 : settings.durationMinutes % 60);
     drawSelectableRow(15, temp, selected == SetupField::Temperature);
     drawSelectableRow(31, time, selected == SetupField::Duration);
-    drawSelectableRow(47, "FAN         AUTO", selected == SetupField::Fan);
+    drawSelectableRow(47, AppConfig::kHeaterStep09TrialMode
+        ? "FAN          100%" : "FAN         AUTO", selected == SetupField::Fan);
   }
 
   void drawSettings(SettingsField selected,
