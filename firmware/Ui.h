@@ -186,7 +186,7 @@ class Ui {
     display_.drawHLine(0, 28, 128);
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(9, 44, "FW");
-    display_.drawStr(27, 44, FirmwareBuild::kId);
+    display_.drawStr(16, 44, FirmwareBuild::kId); // 17 chars * 6px; fits 128px
     display_.drawStr(22, 60, FirmwareBuild::kMode);
   }
 
@@ -224,7 +224,7 @@ class Ui {
       display_.drawStr(2, 60, stationIp);
     } else {
       display_.drawStr(2, 60, sensor.valid ? "Ready" : "SHT45 waiting...");
-      display_.drawStr(88, 60, FirmwareBuild::kShortId);
+      display_.drawStr(78, 60, FirmwareBuild::kShortId); // 8 chars * 6px; fits 128px
     }
   }
 
