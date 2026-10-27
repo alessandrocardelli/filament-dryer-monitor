@@ -13,10 +13,10 @@ class ThermalLog {
     float airC = 0, humidity = 0, ntcOhms = 0;
     uint8_t phase = 0, pulses = 0, heater = 0, fan = 0, valid = 0;
   };
-  // 350 seconds x 4 samples/s: capture the entire ~276-second STEP06B
-  // sequence + 90-second cooldown, even when callbacks delay some records.
+  // 3000 entries preserve the complete <=10min STEP09 feedback run +90s
+  // cooldown at 250ms sampling, not only the end of a long session.
   // Do not write flash while the heater can be commanded HIGH.
-  static constexpr size_t kCapacity = 1400; // 350 s at 250 ms
+  static constexpr size_t kCapacity = 3000; // >= 12 min at 250ms; 10m trial + 90s cooling
   void begin() {
     // On the first clean prototype install there is no LittleFS signature.
     mounted_ = LittleFS.begin(false);
