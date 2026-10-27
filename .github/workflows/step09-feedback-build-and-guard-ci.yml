@@ -77,11 +77,32 @@ jobs:
           arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli lib install U8g2@2.36.19
-      - name: Compile actual STEP09 ESP32 image (DO NOT FLASH)
+      - name: Compile actual STEP09B180 ESP32 OTA application (DO NOT FLASH)
         run: |
           set -euo pipefail
-          arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step09b-esp32-build.log"
+          out="$RUNNER_TEMP/s9b180-build"
+          mkdir -p "$out"
+          arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$out" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step09b-esp32-build.log"
           echo "PASS: ESP32 binary linked with no DRAM overflow"
+          app="$out/firmware.ino.bin"
+          test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
+          # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
+          grep -a -q 'HOT-261027-S9B180' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
+          cp "$app" "$RUNNER_TEMP/HOT-261027-S9B180-OTA-app.bin"
+          cd "$RUNNER_TEMP"
+          sha256sum HOT-261027-S9B180-OTA-app.bin | tee HOT-261027-S9B180-OTA-app.sha256
+          echo "OTA application only, HEAT-CAPABLE experiment; no physical test completed." >> "$GITHUB_STEP_SUMMARY"
+          cat HOT-261027-S9B180-OTA-app.sha256 >> "$GITHUB_STEP_SUMMARY"
+      - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: S9B180-HEAT-CAPABLE-OTA-APP
+          path: |
+            ${{ runner.temp }}/HOT-261027-S9B180-OTA-app.bin
+            ${{ runner.temp }}/HOT-261027-S9B180-OTA-app.sha256
+          if-no-files-found: error
+          retention-days: 30
       - name: Upload reproducible results
         if: always()
         uses: actions/upload-artifact@v4
