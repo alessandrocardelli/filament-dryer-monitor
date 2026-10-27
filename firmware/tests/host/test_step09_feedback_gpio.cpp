@@ -151,6 +151,41 @@ int main() {
     assert(s.commissioningComplete() && !s.heaterOn());
     assert(!s.commissioningCanStart());
   }
+  // New S9B regression: SHT45 25C must actually remove a live HEATER
+  // command AFTER more than the old 120s S9A total budget were used.
+  // This reuses only the original GPIO-mock SafetyController, no device heat.
+  {
+    SafetyController s; start(s);
+    const uint32_t firstSevenOn[] = {
+      6000, 38000, 70000, 102000, 134000, 166000, 198000
+    };
+    for (uint32_t t : firstSevenOn) {
+      assert(s.heaterOn());
+      tick(s, t + 20000, 90000, 22.0f);
+      assert(!s.heaterOn() && !s.faultActive());
+      if (t != 198000) {
+        tick(s, t + 32000, 90000, 22.0f);
+        assert(s.heaterOn());
+      }
+    }
+    assert(!s.commissioningComplete());
+    // HEATER can still activate past 120s cumulative command budget.
+    tick(s, 230000, 90000, 24.0f);
+    assert(s.heaterOn() && s.commissioningPhase() ==
+        static_cast<uint8_t>(HeaterCommissioning::Phase::Pulse));
+    // NTC is a healthy 90kOhm, well above the 50k SOFT pause:
+    // only SHT45 25C can explain this immediate ON->OFF transition.
+    tick(s, 230250, 90000, 25.0f);
+    assert(!s.heaterOn() && !s.faultActive());
+    assert(s.commissioningPhase() ==
+        static_cast<uint8_t>(HeaterCommissioning::Phase::Gap));
+    tick(s, 242249, 90000, 24.5f);
+    assert(!s.heaterOn());
+    tick(s, 242500, 90000, 24.0f);
+    assert(s.heaterOn() && !s.faultActive());
+    s.stop();
+    assert(!s.heaterOn() && s.coolingRequired(242501));
+  }
   {
     SafetyController s; start(s);
     tick(s, 606000); // hard overall time bound regardless of air
@@ -159,6 +194,6 @@ int main() {
   }
   std::cout << "PASS STEP09B actual SafetyController GPIO-MOCK: real ON, "
       "SHT45 25C feedback/hysteresis, NTC soft50k/hard40k, "
-      "20s/12s windows, old120s budget NOT cutoff, new180s cap, STOP, "
+      "20s/12s windows, late 25C SHT45 cutoff after >120s ON, new180s cap, STOP, "
       "cooldown, stale/fault/no restart. NO REAL GPIO.\n";
 }
