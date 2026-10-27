@@ -3,7 +3,7 @@
 #include <cstdint>
 #include "HeaterPulseCommissioning.h"
 
-// STEP09: actual HEATER request policy for ONE supervised trial of
+// STEP09B: actual HEATER request policy for ONE supervised trial of
 // SHT45 CHAMBER feedback. Uses NTC resistance as an independent, hard
 // electrical guard; NO unqualified R_NTC -> temperature conversion.
 // This is NOT a certified thermostat, no GPIO and no fan tach input.
@@ -18,7 +18,7 @@ struct Parameters {
   uint32_t minimumOffMs = 12000;
   uint32_t cooldownMs = 90000;
   uint32_t maximumRunMs = 600000;
-  uint32_t maximumTotalHeatMs = 120000;
+  uint32_t maximumTotalHeatMs = 200000; // S9B candidate: 120->200s ONLY, physical review/consent needed
   uint32_t fanStartupTimeoutMs = 12000;
   uint32_t maxNtcAgeMs = 1500;
   uint32_t maxAirAgeMs = 5000;
