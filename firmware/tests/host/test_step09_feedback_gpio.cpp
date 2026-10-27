@@ -52,7 +52,7 @@ int main() {
          settings.ntcHardTripOhms == 40000.0f &&
          settings.maximumOnWindowMs == 20000 &&
          settings.minimumOffMs == 12000 &&
-         settings.maximumTotalHeatMs == 120000 &&
+         settings.maximumTotalHeatMs == 200000 &&
          settings.maximumRunMs == 600000 &&
          settings.cooldownMs == 90000);
   {
@@ -119,23 +119,24 @@ int main() {
   }
   {
     SafetyController s; start(s);
-    // 6 bounded windows * 20 seconds = 120s maximum ON; each
+    // 10 bounded windows * 20 seconds = 200s maximum ON; each
     // minimum 12s rest, no auto-repeat after budget.
-    const uint32_t on[] = {6000,38000,70000,102000,134000,166000};
+    const uint32_t on[] = {6000,38000,70000,102000,134000,166000,
+                           198000,230000,262000,294000};
     for (uint32_t t : on) {
       assert(s.heaterOn());
       tick(s, t + 20000);
       assert(!s.heaterOn() && !s.faultActive());
-      if (t != 166000) {
+      if (t != 294000) {
         tick(s, t + 32000);
         assert(s.heaterOn());
       }
     }
     assert(!s.commissioningComplete());
-    assert(s.coolingRequired(186001));
-    tick(s, 275999);
+    assert(s.coolingRequired(314001));
+    tick(s, 403999);
     assert(!s.commissioningComplete());
-    tick(s, 276001);
+    tick(s, 404001);
     assert(s.commissioningComplete() && !s.heaterOn());
     assert(!s.commissioningCanStart());
   }
@@ -147,6 +148,6 @@ int main() {
   }
   std::cout << "PASS STEP09 actual SafetyController GPIO-MOCK: real ON, "
       "SHT45 25C feedback/hysteresis, NTC soft50k/hard40k, "
-      "20s/12s windows, 120s cumulative heat cap, STOP, "
+       "20s/12s windows, 200s cumulative heat cap, STOP, "
       "cooldown, stale/fault/no restart. NO REAL GPIO.\n";
 }
