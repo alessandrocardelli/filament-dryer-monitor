@@ -23,6 +23,6 @@ inline void digitalWrite(uint8_t,uint8_t x){
 HDR
 g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic \
     -I"$TMP/firmware" "$TMP/firmware/tests/host/test_step09_feedback_gpio.cpp" \
-    -o "$TMP/step09-HEATER-GPIO-MOCK"
-"$TMP/step09-HEATER-GPIO-MOCK"
-echo "PASS STEP09 native fixture. NO ESP32 connected or heater energized."
+    -o "$TMP/step09b-HEATER-GPIO-MOCK"
+"$TMP/step09b-HEATER-GPIO-MOCK"
+echo "PASS STEP09B native fixture. NO ESP32 connected or heater energized."
