@@ -1,12 +1,12 @@
-name: STEP09 - real-feedback candidate (GPIO-mock + ESP32 build)
+name: STEP09B - bounded 200s real-feedback candidate (GPIO-mock + ESP32 build)
 
 on:
   push:
     branches:
-      - experiment/step09-real-sht45-feedback-2026-10-27
+      - experiment/step09b-chamber25-extended-budget-2026-10-27
   pull_request:
     branches:
-      - fix/step07-clear-test-feedback-2026-10-26
+      - experiment/step09-real-sht45-feedback-2026-10-27
   workflow_dispatch:
 
 permissions:
@@ -39,14 +39,18 @@ jobs:
               "ntcResumeOhms = 65000.0f;",
               "maximumOnWindowMs = 20000;",
               "minimumOffMs = 12000;",
-              "maximumTotalHeatMs = 120000;",
+              "maximumTotalHeatMs = 200000;",
               "cooldownMs = 90000;",
               "targetAirC = 25.0f;",
               "kHardwareWindowCeilingUs = 20500000",
           ):
               assert t in h, f"Candidate review required: {t}"
-          assert "HOT-261027-S9A" in Path("firmware/FirmwareBuild.h").read_text()
-          print("PASS: candidate constraints match documented review, no V1 heater approvals")
+          assert "HOT-261027-S9B" in Path("firmware/FirmwareBuild.h").read_text()
+          assert "H27-S9B" in Path("firmware/FirmwareBuild.h").read_text()
+          assert "maximumRunMs = 600000;" in h
+          assert "airHysteresisC = 1.0f;" in h
+          assert "kCapacity = 1400;" in Path("firmware/ThermalLog.h").read_text()
+          print("PASS: S9B candidate constraints checked, hard NTC remains at 40kOhm")
           PY
       - name: Verify known driver/sensor source files unchanged from S7U
         run: |
@@ -59,7 +63,9 @@ jobs:
           done
           echo "PASS: existing sensors/drivers and test trace original"
       - name: Native GPIO-mock with REAL SafetyController, timers and fault tests
-        run: bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step09-mock.log"
+        run: |
+          set -euo pipefail
+          bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step09-mock.log"
       - uses: arduino/setup-arduino-cli@v2
       - name: Install ESP32 core 3.3.12 and U8g2 2.36.19
         run: |
@@ -75,7 +81,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: step09-candidate-logs
+          name: step09b-candidate-logs
           path: |
             ${{ runner.temp }}/step09-mock.log
             ${{ runner.temp }}/step09-esp32-build.log
