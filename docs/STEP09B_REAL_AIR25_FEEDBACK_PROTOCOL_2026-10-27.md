@@ -1,5 +1,7 @@
 # STEP09-B — Primo tentativo mirato di raggiungere 25°C ARIA con feedback SHT45 (HEATER ON)
 
+> **CI S9B SOFTWARE ESEGUITA E PASSATA (non prova fisica):** [Actions run #40562778719](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40562778719), job `122395977499`: test C++ sul `SafetyController` reale con GPIO simulato **PASS** (incluso precedente120s NON termina e nuovo180s termina con cooldown, target aria25°C/isteresi, NTC soft50/resume65/hard40, fault/STOP/stale); compilazione Arduino ESP32 **PASS** con 1.126.854 byte FLASH (85%) e 92.096 byte RAM statica (28%), senza overflow. Commit testato `ca5c0e5bf6ea3f9cccd531456649e384c19eda6e`; SHA blob di tutti i file firmware e workflow verificati identici fra tale commit e il branch dopo le aggiunte dei soli documenti. **Non abilitato né installato su prototipo e nessuna qualifica di sicurezza fisica:** `H27-S9B` è solo l'identità che l'utente dovrà verificare dopo un eventuale flash, previo consenso specifico alla prova. [PR #17 DRAFT](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/17), base branch S9A PR14.
+
 **STATO 27/10/2026: PROTOCOLLO CANDIDATO PREREGISTRATO, PROVA FISICA NON ESEGUITA, NUOVO PROFILO 180s NON ANCORA APPROVATO ESPLICITAMENTE DALL'UTENTE.** Questo è un esperimento fisico con riscaldatore realmente comandato. Non flashare o accendere in base alla sola approvazione concessa per S9A (120s).
 
 ## 0. Introduzione obbligatoria — COSA / PERCHÉ / PRECEDENTE / FUTURO
