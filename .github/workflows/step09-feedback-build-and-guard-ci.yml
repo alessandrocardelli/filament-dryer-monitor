@@ -45,7 +45,9 @@ jobs:
               "kHardwareWindowCeilingUs = 20500000",
           ):
               assert t in h, f"Candidate review required: {t}"
-          assert "HOT-261027-S9B" in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"HOT-261027-S9B180"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"H27-B180"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
           print("PASS: STEP09B 180s budget, same NTC/fan limits, no V1 heater approvals")
           PY
       - name: Verify known driver/sensor source files unchanged from S7U
