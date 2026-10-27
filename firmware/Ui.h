@@ -231,7 +231,7 @@ class Ui {
   void drawSetup(SetupField selected, const CycleSettings &settings) {
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(2, 9, AppConfig::kHeaterStep09TrialMode
-        ? "S09 FIXED AIR TEST" : "SET CYCLE   SAFE MODE");
+        ? "S9B FIXED AIR TEST" : "SET CYCLE   SAFE MODE");
     display_.drawHLine(0, 12, 128);
 
     char temp[22];
@@ -271,7 +271,7 @@ class Ui {
     display_.setFont(u8g2_font_6x10_tf);
     char header[22];
     if (AppConfig::kHeaterStep09TrialMode) {
-      snprintf(header, sizeof(header), "STEP09 AIR FEEDBACK");
+      snprintf(header, sizeof(header), "STEP09B AIR FEEDBACK");
     } else if (AppConfig::kHeaterCommissioningMode) {
       snprintf(header, sizeof(header), "NTC GUARD TEST FAN100");
     } else {
