@@ -1,10 +1,12 @@
 # STEP09-B — Verbale della nuova prova fisica HEATER-ON target ARIA25°C (precompilato)
 
+> **CI S9B SOFTWARE ESEGUITA E PASSATA (non prova fisica):** [Actions run #40562778719](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40562778719), job `122395977499`: test C++ sul `SafetyController` reale con GPIO simulato **PASS** (incluso precedente120s NON termina e nuovo180s termina con cooldown, target aria25°C/isteresi, NTC soft50/resume65/hard40, fault/STOP/stale); compilazione Arduino ESP32 **PASS** con 1.126.854 byte FLASH (85%) e 92.096 byte RAM statica (28%), senza overflow. Commit testato `ca5c0e5bf6ea3f9cccd531456649e384c19eda6e`; SHA blob di tutti i file firmware e workflow verificati identici fra tale commit e il branch dopo le aggiunte dei soli documenti. **Non abilitato né installato su prototipo e nessuna qualifica di sicurezza fisica:** `H27-S9B` è solo l'identità che l'utente dovrà verificare dopo un eventuale flash, previo consenso specifico alla prova. [PR #17 DRAFT](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/17), base branch S9A PR14.
+
 **STATO: NON ESEGUITO, NESSUNA MISURA FISICA S9B ANCORA FORNITA.** Preparato27 ottobre2026 per test proposto che aumenta solamente il budget HEATER ON cumulativo da120s S9A a180s; tutti gli altri limiti/soglie restano invariati. **Non confondere con S9A già eseguita e archiviata**.
 
 **Protocollo indispensabile:** [STEP09B_REAL_AIR25_FEEDBACK_PROTOCOL_2026-10-27.md](../../STEP09B_REAL_AIR25_FEEDBACK_PROTOCOL_2026-10-27.md).
-**Repo branch:** `experiment/step09b-air25-budget180-2026-10-27`; PR STEP09B draft (numero da annotare appena creata). Identità attesa OLED `H27-S9B`, firmware `HOT-261027-S9B` (**non ancora letto su prototipo**).
-**CI compilazione e GPIO-mock:** non ancora riportata qui, da compilare dopo verifica dell'HEAD codice esatto.
+**Repo branch:** `experiment/step09b-air25-budget180-2026-10-27`; PR #17 DRAFT. Identità attesa OLED `H27-S9B`, firmware `HOT-261027-S9B` (**non ancora letto su prototipo**).
+**CI compilazione e GPIO-mock:** PASS su commit firmware esatto (vedi nota CI sopra); NON verifica la temperatura del prototipo.
 **Approvazione utente specifica di 180s cum HEAT:** **NON ANCORA REGISTRATA** al momento creazione modulo. I 120s di S9A erano stati accettati separatamente; "procediamo col prossimo test" non contiene valori di budget/sicurezza esplicitati.
 **Data/ora fisica:** NON FORNITA.
 **Setup:** Sanwa tipo K fissata stessa posizione S9A; SHT45 aria camera; box chiuso, fan libera realmente funzionante, TCO105 in serie e cablaggio/alimentazione integri: **NON CONFERMATI IN S9B**. Non desumere dal passato una verifica attuale.
