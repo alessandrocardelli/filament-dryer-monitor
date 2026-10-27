@@ -269,7 +269,7 @@ class NetworkService {
       j += ",\"fan_percent\":"; j += live_.fanPercent;
       j += ",\"phase\":"; j += live_.phase;
       j += ",\"pulses\":"; j += live_.pulses;
-      j += ",\"pulse_goal\":"; j += HeaterStep07GuardTrial::parameters().pulseCount;
+      j += ",\"pulse_goal\":"; j += (AppConfig::kHeaterStep09TrialMode ? 0 : HeaterStep07GuardTrial::parameters().pulseCount);
       j += ",\"pulse_fault\":"; j += live_.pulseFault;
       j += ",\"saved_log\":"; j += (log_.hasSaved() ? "true" : "false");
       j += ",\"ram_samples\":"; j += (unsigned)log_.size();
