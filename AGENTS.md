@@ -56,6 +56,12 @@ When a substantial checkpoint is reached, update these before handing work to a 
 
 Never conflate **Sanwa contact temperature** with SHT45 camera air or NTC resistance. Software PWM fan100 ≠ RPM; heater command ON/OFF ≠ independently measured current. Earlier S7G CSV is not required. No new HEAT run authorized by this document; preserve separation of HEAT-experimental PR#12 and cold/main.
 
+## Required introduction for every NEW test (user instruction, 2026-10-27)
+
+**Every newly proposed test MUST start with a brief, comprehensible introduction explaining: (1) WHAT will be done, (2) WHY this test matters, (3) HOW it builds directly on the previous completed test and its actual results, and (4) WHICH future project gate/test it unlocks.** Then provide exact actionable steps, measurement timing and instrumentation, safety/abort criteria if physical, expected outputs, persistence paths, and next decisions. This requirement applies to software and analysis tests as well as physical tests.
+
+Do NOT repackage an already completed test as the next task: STEP03 host thermostat simulation **already PASS**; STEP07 S7U heated physical test **already performed and raw CSV archived**. The prepared new STEP08 is a NEW data-grounded S6C/S7U comparison and integrated raw-NTC-guard/thermostat replay. It explicitly requires **no user device operation**, no cold-only retest, no additional heater actuation and no unapproved change of thermal thresholds. See [STEP08](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/main/docs/STEP08_NEXT_TEST_2026-10-27.md). Keep real/claimed timestamps separated from protocol filenames: S7U measurement report and CSV were received in this chat on **2026-10-27**; the exact physical session timestamp was not independently provided.
+
 ## Mandatory experiment recording and cross-chat continuity (2026-10-26)
 
 **User requirement: EVERY physical or software test must be reproducible from GitHub alone.** Do not rely on previous ChatGPT conversations for operating instructions or physical measurements. Summaries alone do not satisfy this rule.
