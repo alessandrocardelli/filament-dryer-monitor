@@ -48,6 +48,11 @@ jobs:
           assert '"HOT-261027-S9B180"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"H27-B180"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
+          ui=Path("firmware/Ui.h").read_text()
+          assert "display_.drawStr(16, 44, FirmwareBuild::kId)" in ui
+          assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
+          assert 16 + 6 * len("HOT-261027-S9B180") <= 128
+          assert 78 + 6 * len("H27-B180") <= 128
           print("PASS: STEP09B 180s budget, same NTC/fan limits, no V1 heater approvals")
           PY
       - name: Verify known driver/sensor source files unchanged from S7U
