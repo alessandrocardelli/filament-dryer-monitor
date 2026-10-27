@@ -55,7 +55,12 @@ constexpr float kNtcOpenThresholdMv = 3000.0f;
 // Six 20s windows are a MAXIMUM; abort if R_NTC <= 40kΩ.
 // Fan100; NOT autonomous air regulation or a qualified NTC model.
 // Do not merge this experiment into main or the operational COLD branch.
-constexpr bool kHeaterCommissioningMode = true;
+constexpr bool kHeaterCommissioningMode = false;
+// STEP09 isolated HEATER-CAPABLE supervised-feedback candidate: NOT production
+// and NOT approved for flashing until the review/gate in docs/STEP09.
+constexpr bool kHeaterStep09TrialMode = true;
+static_assert(!(kHeaterCommissioningMode && kHeaterStep09TrialMode),
+              "Only one supervised heater trial mode can run");
 // STEP05 candidate heater profile is NEVER implicitly approved.
 // Dedicated heater-enabled trial: explicit two review flags and candidate limits.
 constexpr bool kHeaterStage05TrialReviewed = true;
@@ -74,8 +79,9 @@ static_assert(!kHeaterCommissioningMode ||
 // points qualify as a calibrated heater-bead thermometer. Never switch these
 // booleans on simply to make a build heat.
 constexpr bool kHeaterOutputEnabled = false;
-static_assert(!kHeaterCommissioningMode || !kHeaterOutputEnabled,
-              "Do not combine experimental heater pulses and thermostat");
+static_assert(!(kHeaterCommissioningMode || kHeaterStep09TrialMode) ||
+                  !kHeaterOutputEnabled,
+              "Do not combine an experimental trial and production thermostat");
 constexpr bool kHeaterProfileApproved = false;
 constexpr bool kHeaterNtcModelApproved = false;
 
