@@ -412,8 +412,8 @@ function phaseLabel(d){
  const done=Number(d.pulses)||0, total=Number(d.pulse_goal)||0;
  switch(Number(d.phase)){
   case 1: return 'Preparazione ventola';
-  case 2: return 'Riscaldamento · impulso '+Math.min(done+1,total)+' di '+total;
-  case 3: return 'Pausa dopo impulso '+done+' di '+total;
+  case 2: return total ? 'Riscaldamento · impulso '+Math.min(done+1,total)+' di '+total : 'HEATER ON · feedback SHT45';
+  case 3: return total ? 'Pausa dopo impulso '+done+' di '+total : 'HEATER OFF · recupero NTC / aria';
   case 4: return 'Raffreddamento';
   case 5: return 'Test completato';
   case 6: return 'Test interrotto';
