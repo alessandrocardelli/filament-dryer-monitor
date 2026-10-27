@@ -43,6 +43,20 @@ Do not silently revisit or replace an established decision. If new primary-sourc
 - **NEXT:** analyze the S9A budget vs local NTC soft50/65kΩ pause, decide whether to propose a different next experiment S9B that could test real SHT45 feedback on reaching25°C; retain existing NTC hard limit unless separately justified. Review physical setup/TCO105/material/fan before selecting any new bound. **No automatic new HEAT trial or new limits without a NEW documented/approved profile**, no user repetition of S9A or STEP03/08. PR#14 remains draft/unmerged. Firmware code not altered to register evidence.
 - **Time fidelity:** session user report arrived27 Oct2026; exact physical wallclock time not supplied. Do NOT infer dates from `millis()`. Older AGENTS/README/PROJECT_STATE/TODO paragraphs saying S9A “NOT RUN” are **historical and superseded by this checkpoint**. The required WHAT/WHY/PREVIOUS/NEXT pre-test introduction remains mandatory for any new test.
 
+## S9B next physical test (candidate, unrun) — 2026-10-27
+
+**S9A was physically executed** and full authentic 778-line raw CSV+Sanwa13-cycle log are archived on main: `docs/evidence/thermal/2026-10-27-S9A-raw.csv`, `docs/evidence/thermal/2026-10-27-S9A-PHYSICAL-SESSION.md` and `docs/evidence/thermal/2026-10-27-S9A-analysis.md`. SHT45 air max22.97°C, cooling start22.59°C below25°C target, because120s **cumulative** HEATER ON budget exhausted; no FAULT, local NTC minimum48.7167kOhm, Sanwa max observed38°C. Do not repeat S9A or call the physical25°C thermostat validated.
+
+**NEXT NEW S9B CANDIDATE:** [DRAFT PR#17](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/17) on branch `experiment/step09b-air25-budget180-2026-10-27` based on S9A PR#14 branch. **ONE deliberate control parameter changes: cumulative HEATER ON budget120s→180s** (50% longer cumulative exposure, NOT180s continuous); target air25°C, soft NTC pause50k/resume65k, hard NTC FAULT40k, per-window20s/ISR20.5s, OFF>=12s, runtime600s, fan PWM100 and cooldown90s, manual Sanwa50°C STOP, existing TCO105 all unchanged. HEATER-capable image `HOT-261027-S9B`, OLED `H27-S9B`; separate from `main` and must not be silently merged. This extended thermal exposure is a **candidate not yet authorized for physical use**.
+
+**CI REAL PASS:** [GitHub Actions run40562778719](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40562778719), host real SafetyController GPIO-mock confirms no cutoff at former120s, cutoff at180s +cooldown, SHT45 target25/24 hysteresis, sensor/fan/NTC fault/STOP. ESP32 3.3.12 build PASS, flash1,126,854 bytes, RAM92,096 bytes, no DRAM overflow; tested code ref `ca5c0e5bf6ea3f9cccd531456649e384c19eda6e`, all firmware/test/workflow blobs verified unchanged after documentation commits. This is NOT proof of physical heater/RPM/safe materials or thermistor thermal conversion.
+
+**Protocol** https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step09b-air25-budget180-2026-10-27/docs/STEP09B_REAL_AIR25_FEEDBACK_PROTOCOL_2026-10-27.md
+**Risk review** https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step09b-air25-budget180-2026-10-27/docs/STEP09B_ENGINEERING_REVIEW_2026-10-27.md
+**Unrun S9B report template** https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step09b-air25-budget180-2026-10-27/docs/evidence/thermal/2026-10-27-S9B-PHYSICAL-SESSION.md
+
+**SINGLE NEXT ACTION:** user must **expressly accept the new 180s exposure** (previous S9A approval concerned120s), and confirm the unchanged undamaged physical setup (Sanwa on heater plate/NTC, box/cables/TCO105 in series, fan actually rotating, 24V cutoff). ONLY THEN provide physical OTA/test instructions with the mandatory WHAT/WHY/PREVIOUS/NEXT test intro and precise Sanwa readings; no further cold-device retests. No physical S9B has occurred; never say otherwise. No new D0xx decision until explicitly approved.
+
 ## Documentation discipline
 
 Keep the handoff files current:
