@@ -41,10 +41,22 @@ Questi parametri sono una PROPOSTA da revisionare sulla PR, non decisione defini
 3. Segna **Sanwa iniziale**, temperatura e RH SHT45 iniziali; se possibile filma insieme OLED+Sanwa per non dover prendere appunti durante HEAT.
    **Se l'aria SHT45 è già sopra 24,0°C**, il controllo con isteresi della prova può legittimamente non comandare HEATER ON: **non iniziare questa sessione per forzare calore, non cambiare il setpoint e non intervenire sul sensore per raffreddarlo artificialmente**. Riporta la lettura iniziale; il risultato sarebbe non valutabile come prima prova HEATER-ON.
 4. Premi una volta brevemente ON/OFF da STANDBY: deve partire la ventola, seguita dal prerun e dalla scritta evidente **HEATER ON**. Se la ventola non ruota realmente, fermati.
-5. Segna il Sanwa al primo HEATER ON; osserva il primo HEATER OFF e la temperatura aria in quel momento. Il primo OFF potrebbe essere dovuto alla **pausa NTC 50k** o al massimo20s, senza FAULT.
-6. Se appare un nuovo HEATER ON dopo la pausa (R_NTC risalita>=65k, OFF>=12s), registra l'evento; osserva la temperatura aria. A **25°C SHT45** l'HEATER deve andare OFF; può riaccendersi solo quando l'aria scende a <=24°C e sono rispettate tutte le altre condizioni.
-7. Fermati **immediatamente** se il Sanwa raggiunge **50°C** o noti odore anomalo, ventola ferma, danneggiamento, riscaldamento inatteso o qualunque guasto. Durante DRYING tieni ON/OFF premuto lungo circa1,5s per STOP. In emergenza scollega 24V. Non prolungare né modificare al volo le soglie per forzare il raggiungimento25°C.
-8. Attendi il raffreddamento con ventola (fino90s dall'ultimo HEATER ON). Annota **Sanwa a HEATER OFF definitivo**, poi se scende regolarmente e **Sanwa alla fermata ventola**; non cercare un secondo picco obbligatorio.
+5. **Letture Sanwa: esattamente quando annotarle**, in ordine cronologico:
+
+   | Evento che vedi | Lettura da segnare |
+   | --- | --- |
+   | PRIMA di premere ON/OFF, con dryer freddo | Sanwa iniziale (+ aria SHT45 iniziale) |
+   | Appena compare il PRIMO `HEATER ON` | Sanwa al primo ON |
+   | Appena compare il PRIMO `HEATER OFF` | Sanwa al primo OFF (+ aria SHT45) |
+   | Ad OGNI successivo passaggio `HEATER ON` e `HEATER OFF`, se avviene | Sanwa in corrispondenza di quel passaggio |
+   | Se SHT45 raggiunge 25°C | Sanwa nello stesso momento (+ indicazione HEATER ON/OFF) |
+   | Allo spegnimento DEFINITIVO per fine prova / STOP / FAULT | Sanwa all'arresto definitivo |
+   | Quando la ventola si ferma a fine raffreddamento | Sanwa finale |
+
+   **Se primo OFF e OFF definitivo coincidono, basta UNA lettura**: non annotarla due volte. La registrazione video contemporanea di OLED+Sanwa è preferibile a distrarsi per scrivere; dopo la prova trascrivere i valori dal video. Il CSV registra i comandi e l'SHT45 ma NON il Sanwa.
+6. Le pause `HEATER OFF` possono essere dovute a NTC<=50kΩ, fine finestra20s o aria>=25°C, senza necessariamente implicare FAULT. Un nuovo `HEATER ON` è possibile solo con NTC>=65kΩ, OFF>=12s e SHT45 aria<=24°C. **Durante tutto il ciclo sorveglia in continuo il Sanwa**, anche fra gli eventi registrati.
+7. **Se Sanwa raggiunge 50°C NON aspettare l'evento successivo: STOP IMMEDIATO.** Fermati anche per odore anomalo, ventola ferma, danneggiamento, riscaldamento inatteso o altro guasto. Durante DRYING ON/OFF lungo circa1,5s; in emergenza scollega24V. Non prolungare né alterare soglie per raggiungere25°C.
+8. Attendi il raffreddamento con ventola (previsto fino a90s dall'ultimo HEATER ON); controlla che il Sanwa diminuisca o resti stabile. Registra il suo valore **alla fermata effettiva della ventola**, senza cercare un secondo picco obbligatorio.
 9. Solo dopo heater OFF e raffreddamento, scarica il **NUOVO** CSV da http://filament-dryer.local/api/last-test.csv (o usando IP del dryer). Se il download fallisce, descrivi l'errore: non rifare un ciclo HEAT per recuperare un file mancante.
 
 ## 4. Cosa verrà salvato a test completato
