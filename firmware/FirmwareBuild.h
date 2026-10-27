@@ -3,8 +3,8 @@
 // Update this string whenever test behavior changes, including a safety fix.
 // Do not derive it from __DATE__ (two different builds may look identical).
 namespace FirmwareBuild {
-constexpr char kId[] = "HOT-261026-S7U";
-constexpr char kShortId[] = "H26-S7U";
-constexpr char kMode[] = "S7G GUARD / CLEAR UI";
+constexpr char kId[] = "HOT-261027-S9A";
+constexpr char kShortId[] = "H27-S9A";
+constexpr char kMode[] = "S09 AIR FEEDBACK";
 constexpr unsigned long kSplashExtraMs = 3000UL;
 }  // namespace FirmwareBuild
