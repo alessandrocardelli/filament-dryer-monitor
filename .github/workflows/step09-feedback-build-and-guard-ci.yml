@@ -1,0 +1,80 @@
+name: STEP09 - real-feedback candidate (GPIO-mock + ESP32 build)
+
+on:
+  push:
+    branches:
+      - experiment/step09-real-sht45-feedback-2026-10-27
+  pull_request:
+    branches:
+      - fix/step07-clear-test-feedback-2026-10-26
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce STEP09 physical-trial separation and untouched hard NTC guard
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s=Path("firmware/AppConfig.h").read_text()
+          for t in (
+              "kHeaterStep09TrialMode = true;",
+              "kHeaterCommissioningMode = false;",
+              "kHeaterOutputEnabled = false;",
+              "kHeaterProfileApproved = false;",
+              "kHeaterNtcModelApproved = false;",
+              "kFanBringupRunPercent = 100;",
+          ):
+              assert t in s, f"Safety configuration changed: {t}"
+          h=Path("firmware/HeaterStep09AirFeedback.h").read_text()
+          for t in (
+              "ntcHardTripOhms = 40000.0f;",
+              "ntcSoftPauseOhms = 50000.0f;",
+              "ntcResumeOhms = 65000.0f;",
+              "maximumOnWindowMs = 20000;",
+              "minimumOffMs = 12000;",
+              "maximumTotalHeatMs = 120000;",
+              "cooldownMs = 90000;",
+              "targetAirC = 25.0f;",
+              "kHardwareWindowCeilingUs = 20500000",
+          ):
+              assert t in h, f"Candidate review required: {t}"
+          assert "HOT-261027-S9A" in Path("firmware/FirmwareBuild.h").read_text()
+          print("PASS: candidate constraints match documented review, no V1 heater approvals")
+          PY
+      - name: Verify known driver/sensor source files unchanged from S7U
+        run: |
+          git fetch --no-tags origin fix/step07-clear-test-feedback-2026-10-26
+          for path in firmware/NtcSensor.h firmware/Sht45Sensor.h firmware/FanController.h firmware/CycleController.h firmware/HeaterPulseCommissioning.h firmware/HeaterControlPolicy.h; do
+            test "$(git rev-parse FETCH_HEAD:$path)" = "$(git hash-object "$path")" || {
+              echo "::error file=$path::Unreviewed sensor/driver modification"
+              exit 1
+            }
+          done
+          echo "PASS: existing sensors/drivers and test trace original"
+      - name: Native GPIO-mock with REAL SafetyController, timers and fault tests
+        run: bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step09-mock.log"
+      - uses: arduino/setup-arduino-cli@v2
+      - name: Install ESP32 core 3.3.12 and U8g2 2.36.19
+        run: |
+          arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli lib install U8g2@2.36.19
+      - name: Compile actual STEP09 ESP32 image (DO NOT FLASH)
+        run: |
+          arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step09-esp32-build.log"
+      - name: Upload reproducible results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: step09-candidate-logs
+          path: |
+            ${{ runner.temp }}/step09-mock.log
+            ${{ runner.temp }}/step09-esp32-build.log
+          if-no-files-found: warn
