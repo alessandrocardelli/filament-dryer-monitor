@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include <LittleFS.h>
 #include "AppTypes.h"
+#include "AppConfig.h"
 
 // Bounded RAM recorder: no flash writes while the heater can be commanded ON.
 // After a test and its cooldown, save a CSV snapshot in LittleFS. The next
@@ -13,10 +14,11 @@ class ThermalLog {
     float airC = 0, humidity = 0, ntcOhms = 0;
     uint8_t phase = 0, pulses = 0, heater = 0, fan = 0, valid = 0;
   };
-  // 3000 entries preserve the complete <=10min STEP09 feedback run +90s
-  // cooldown at 250ms sampling, not only the end of a long session.
+  // Keep the original 1400-entry RAM budget, REQUIRED for ESP32 DRAM link.
+  // STEP09 records at 500ms: 600s run + 90s cooldown = ~1380 rows;
+  // this fits without losing the beginning. Previous S7U logs use 250ms.
   // Do not write flash while the heater can be commanded HIGH.
-  static constexpr size_t kCapacity = 3000; // >= 12 min at 250ms; 10m trial + 90s cooling
+  static constexpr size_t kCapacity = 1400; // S7U 250ms or STEP09 500ms
   void begin() {
     // On the first clean prototype install there is no LittleFS signature.
     mounted_ = LittleFS.begin(false);
@@ -32,7 +34,8 @@ class ThermalLog {
   void sample(uint32_t nowMs, const SensorSnapshot &air,
               const NtcSnapshot &ntc, bool heaterOn,
               uint8_t fanPercent, uint8_t phase, uint8_t pulses) {
-    if (count_ > 0 && nowMs - lastSampleMs_ < 250) return;
+    const uint32_t intervalMs = AppConfig::kHeaterStep09TrialMode ? 500U : 250U;
+    if (count_ > 0 && nowMs - lastSampleMs_ < intervalMs) return;
     lastSampleMs_ = nowMs;
     Sample &s = records_[head_];
     s.ms = nowMs;
