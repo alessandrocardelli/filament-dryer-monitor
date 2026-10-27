@@ -1,6 +1,6 @@
 # STEP09-A — Prima prova fisica con HEATER ON e feedback SHT45
 
-**STATO: PROTOCOLLO PREPARATO, NON ESEGUITO.** Data preparazione: 27 ottobre 2026. Firmware sperimentale HEAT-CAPABLE. **NON FLASHARE E NON AVVIARE PRIMA DI CI ESP32 PASS CONFERMATA, REVIEW DELLA PR #14 E APPROVAZIONE DEL PROFILO FISICO.** Il testo non autorizza automaticamente alcun riscaldamento.
+**STATO 27 OTTOBRE 2026: TEST FISICO NON ANCORA ESEGUITO; AUTORIZZAZIONE DELL'UTENTE ACQUISITA PER PRIMO TEST HEATER-ON CON TARGET ARIA 25°C E VETO MANUALE SANWA 50°C.** L'utente ha risposto «Confermo» alla domanda esplicita «Confermi di voler eseguire questo primo test a 25 °C, mantenendo il limite manuale Sanwa a 50 °C?». **Il setup fisico corrente (posizione e contatto Sanwa, fan realmente funzionante, cablaggio, TCO105 in serie e 24V scollegabili) NON è stato ancora confermato in questo messaggio:** deve essere verificato sul posto prima del flash/test. Firmware sperimentale HEAT-CAPABLE, non la V1. Ultima CI PR#14 con mock SafetyController e link ESP32 PASS: [run 40486080140](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40486080140), compilazione RAM statica 92096 byte, FLASH1126854 byte. Ultima build testata prima di queste modifiche ai soli documenti. L'autorizzazione a questo test non autorizza modifiche ai limiti/cablaggi né ulteriori cicli o test a temperature superiori.
 
 ## Introduzione obbligatoria: cosa, perché, precedente, futuro
 
@@ -31,7 +31,8 @@ Questi parametri sono una PROPOSTA da revisionare sulla PR, non decisione defini
 - [ ] Leggere il risultato REALE della build ESP32 GitHub Actions su commit esatto della PR #14; verificare **assenza di linker error e DRAM overflow**, non fidarsi del verde superficiale. Il runner deve usare pipefail. Superati anche i nuovi mock del SafetyController.
 - [ ] Verificare firmware, UI, fault, fan, CSV, ISR, OTA e comportamento STOP su quel commit; nessuna modifica pending. Verificare che il CSV registri tutto: per Step09 registra a500ms, 1400 campioni = fino700s (600s run +90s cooling).
 - [ ] Review fisica condivisa: stesso setup chiuso di S7U, SHT45 nell'aria bobina, Sanwa RD701 termocoppia K fissato alla piastra vicino NTC, ventola libera e visibilmente rotante, cavi integri e non schiacciati, TCO105 presente in serie, alimentatore24V rapidamente disconnettibile. Non inventare controlli: segnare quali eseguiti dall'utente.
-- [ ] L'utente approva ESPLICITAMENTE questo nuovo esperimento di riscaldamento con target25°C, guardia40kΩ e soft50/65kΩ, veto Sanwa50°C e tempo/potenza comandati limitati. L'autorizzazione a sviluppare il codice NON equivale all'autorizzazione ad accendere.
+- [x] **L'utente ha confermato il primo test HEATER-ON aria25°C con limite manuale Sanwa50°C** nel messaggio «Confermo» del 27/10/2026. Controllare prima del flash che il profilo specifico del firmware rispetti quanto presentato: NTC soft pausa50k/ripresa65k, guasto40k invariato, tempo cumulativo120s, 20s finestra, ventola100%, cooldown90s. Non interpretare la conferma come autorizzazione a cambiare questi limiti.
+- [ ] **Preflight fisico indipendente non ancora confermato**: stesso montaggio e stato dei componenti dopo S7U; nessuna prova nuova e nessuna misura Sanwa acquisita nel messaggio di conferma.
 
 ## 3. Procedura fisica — da eseguire SOLO dopo quei gate
 
