@@ -1,6 +1,8 @@
 # STEP08 — Prossimo test: fattibilità della regolazione aria e verifica delle protezioni
 
-**STATO: PREPARATO, NON ESEGUITO.** Data piano: 27 ottobre 2026. **Tipo: confronto riproducibile di due CSV reali + NUOVO test integrato di replay tra termostato e guardia NTC, senza prova fisica e senza richiedere all'utente di rifare test heater-OFF.** Lo STEP03 (simulazione standalone del termostato aria 40°C) è GIÀ PASS: **non va ripetuto**. Non abilita alcun riscaldamento né cambia la soglia NTC.
+**STATO AGGIORNATO 27 OTTOBRE 2026: STEP08-A/B ESEGUITI (G2 confronto PASS; G3 review svolta ma qualifica sicurezza OPEN). STEP08-C, replay host integrato, NON ESEGUITO.** [Rapporto con tutti i confronti e limiti](evidence/thermal/2026-10-27-STEP08-analysis-and-simulation.md). **S6C raw ora copiato byte-identico anche su main** in `docs/evidence/thermal/2026-10-25-S6C-fan100.csv`. Nessun firmware né prova fisica modificati.
+
+**Data piano: 27 ottobre 2026.** **Tipo: confronto riproducibile di due CSV reali + NUOVO test integrato di replay tra termostato e guardia NTC, senza prova fisica e senza richiedere all'utente di rifare test heater-OFF.** Lo STEP03 (simulazione standalone del termostato aria 40°C) è GIÀ PASS: **non va ripetuto**. Non abilita alcun riscaldamento né cambia la soglia NTC.
 
 ## Introduzione obbligatoria: cosa, perché, collegamento al progetto
 
