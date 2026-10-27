@@ -68,7 +68,9 @@ jobs:
           arduino-cli lib install U8g2@2.36.19
       - name: Compile actual STEP09 ESP32 image (DO NOT FLASH)
         run: |
+          set -euo pipefail
           arduino-cli compile --fqbn esp32:esp32:esp32 firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step09-esp32-build.log"
+          echo "PASS: ESP32 binary linked with no DRAM overflow"
       - name: Upload reproducible results
         if: always()
         uses: actions/upload-artifact@v4
