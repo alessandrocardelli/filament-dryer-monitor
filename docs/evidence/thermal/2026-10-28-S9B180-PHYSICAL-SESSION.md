@@ -1,5 +1,7 @@
 # S9B180 — Prima sessione fisica reale HEATER ON, 28 ottobre 2026
 
+> **Precisazione temporale ON20:** nel CSV l'ultimo OFF (ciclo19) avviene al `ms=569285`; `phase=6` compare a `ms=575851`, **6,566s dopo**. Il codice `HeaterStep09AirFeedback.h` richiede `minimumOffMs=12000`, quindi **non può aver legalmente iniziato il20° ON nei6,566s successivi** se era installata la build S9B180 prevista. Il20° ON è una osservazione manuale da preservare, ma **non corroborata** dai comandi registrati; possibilità di diversa interpretazione OLED/tempi, firmware differente o altro comportamento da verificare, non di impulso certo sfuggito. Recuperare `pulse_fault` e `firmware` da status; non inventare un ON non mostrato dal CSV. 
+
 **STATO: PROVA FISICA ESEGUITA; ANALISI PRELIMINARE DEI DATI COMPLETATA; CHIUSURA NON REGOLARE (fase 6, ABORTED), CAUSA SPECIFICA ANCORA SCONOSCIUTA.** Questo è un record di evidenza, non un nuovo protocollo di riscaldamento. **NON RIPETERE S9B IDENTICA, NON AUMENTARE IL BUDGET INDEFINITAMENTE E NON ABBASSARE LE SOGLIE NTC PRIMA DELLA DIAGNOSI DELLO STOP.**
 
 ## Cosa / perché / prima / futuro
