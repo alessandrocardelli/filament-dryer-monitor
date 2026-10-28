@@ -6,7 +6,7 @@ on:
       - experiment/step10-heater-diagnostics-air25-2026-10-28
   pull_request:
     branches:
-      - experiment/step10a-air25-budget180-2026-10-27
+      - experiment/step09b-air25-budget180-2026-10-27
   workflow_dispatch:
 
 permissions:
@@ -82,7 +82,7 @@ jobs:
             }
           done
           echo "PASS: existing sensors/drivers and test trace original"
-      - name: Native GPIO-mock with NEW 180s budget, 25C air, NTC FAULT, STOP and cooldown
+      - name: Native GPIO-mock with NEW 300s cap, 25C air, NTC FAULT, STOP and cooldown
         run: |
           set -euo pipefail
           bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step10a-mock.log"
@@ -92,7 +92,7 @@ jobs:
           arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli lib install U8g2@2.36.19
-      - name: Compile actual STEP10A180 ESP32 OTA application (DO NOT FLASH)
+      - name: Compile actual STEP10A25 ESP32 OTA application (DO NOT FLASH)
         run: |
           set -euo pipefail
           out="$RUNNER_TEMP/s10a25-build"
