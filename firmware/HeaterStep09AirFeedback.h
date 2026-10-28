@@ -3,7 +3,7 @@
 #include <cstdint>
 #include "HeaterPulseCommissioning.h"
 
-// STEP09B: actual HEATER request policy for ONE supervised trial of
+// STEP10A: corrected, bounded local-heater envelope for ONE supervised trial of
 // SHT45 CHAMBER feedback. Uses NTC resistance as an independent, hard
 // electrical guard; NO unqualified R_NTC -> temperature conversion.
 // This is NOT a certified thermostat, no GPIO and no fan tach input.
@@ -17,16 +17,16 @@ struct Parameters {
   uint32_t maximumOnWindowMs = 20000;
   uint32_t minimumOffMs = 12000;
   uint32_t cooldownMs = 90000;
-  uint32_t maximumRunMs = 600000;
-  uint32_t maximumTotalHeatMs = 180000; // S9B: 120s S9A was exhausted before 25C air; proposal +60s
+  uint32_t maximumRunMs = 720000;
+  uint32_t maximumTotalHeatMs = 300000; // STEP10A one-shot ceiling, not 300s continuous
   uint32_t fanStartupTimeoutMs = 12000;
   uint32_t maxNtcAgeMs = 1500;
   uint32_t maxAirAgeMs = 5000;
   float targetAirC = 25.0f;
   float airHysteresisC = 1.0f;
   float airFaultCeilingC = 40.0f;
-  float ntcSoftPauseOhms = 50000.0f;
-  float ntcResumeOhms = 65000.0f;
+  float ntcSoftPauseOhms = 45000.0f; // supervised local heater experiment; NOT a production limit
+  float ntcResumeOhms = 60000.0f; // preserve 15kOhm hysteresis; not calibrated Celsius
   float ntcHardTripOhms = 40000.0f;
   float ntcOpenOhms = 250000.0f;
 };
@@ -138,7 +138,7 @@ class Controller {
   void cancel() {
     requestedOn_ = false;
     if (phase_ != Phase::Idle && phase_ != Phase::Complete &&
-        phase_ != Phase::Aborted) phase_ = Phase::Aborted;
+        phase_ != Phase::Aborted) abort(Fault::ManualStop);
   }
   void emergencyStop(Fault reason) { abort(reason); }
   bool canStart() const { return phase_ == Phase::Idle; }
