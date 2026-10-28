@@ -1,0 +1,13 @@
+# STEP10A — Verifica reale host GPIO-mock + compilazione ESP32, 28/10/2026
+
+**STATUS: GitHub Actions completed SUCCESS, NO hardware flashing or thermal test performed.**
+
+- Candidate branch: `experiment/step10-heater-diagnostics-air25-2026-10-28`; HEAD **`05d4c36d2378be9b09664545f37243a5dfa9f477`**; draft stacked [PR#18](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/18), parent of original isolated S9B PR#17.
+- [GitHub Actions run 40737797336 — SUCCESS](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40737797336), job122990941078, workflow `STEP10A - local-heater diagnostic candidate (GPIO-mock + ESP32 build)`.
+- Host real `SafetyController` GPIO-mock: PASS (NTC soft45k/rearm60k and hard40k, upper air fault40C, air25/24C feedback, 20s ON/12s OFF, cumulative300s, overall720s, SHT45 stale fault, NTC stale/invalid, fan missing, STOP manual, cooling90s, no automatic restart). The host mock is **not real hardware**.
+- Safety and trace static gates PASS, original drivers/sensors unchanged against S7U. New CSV fields `pulse_fault,ntc_fault,air_age_ms,ntc_age_ms,loop_gap_ms` and HTTP history stream gating present.
+- Actual Arduino-ESP32 **3.3.12** compile/link PASS with U8g2 **2.36.19** for board **`esp32:esp32:esp32`**. Flash **1,177,662 bytes (89%)** of 1,310,720, static RAM **108,904 bytes (33%)** of327,680, no DRAM link overflow.
+- Produced application-only OTA binary `HOT-261028-S10A25-OTA-app.bin`, **SHA256 `c8544793fefecf88b59b6aeabbcf5462e86e495a85c7a35d1f0671546119526b`**, artifact `S10A25-HEAT-CAPABLE-OTA-APP`, artifact ID12837437883 (ZIP also contains .sha256). This is the **app binary** for OTA only, **not** bootloader, partition table, or merged flash. Do not assume the user has uploaded it.
+- Full protocol: [STEP10A Arduino IDE and physical session](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step10-heater-diagnostics-air25-2026-10-28/docs/STEP10A_HEATER_AND_LOGGING_TEST_2026-10-28.md).
+- **Physical test NOT DONE**. Real Sanwa ON HEATER PLATE, original OEM plate comparison, unchanged installed TCO105, physically rotating fan without tach, 24V accessible stop and new local temperature exposure remain physical review gates; `docs/DECISIONS.md` unchanged.
+- **Single NEXT:** user may obtain branch source in Arduino IDE, confirm compiled identity H28-S10A / HOT-261028-S10A25, verify new thermal profile and actual safety prerequisites then perform **ONE** consented supervised STEP10A session if the revised exposure is accepted. No S9B rerun or temperature limits beyond STEP10A. Archive raw CSV+Sanwa and update project checkpoint after real test.
