@@ -1,5 +1,7 @@
 # STEP10 — Correggere il controllo della zona riscaldante (NON aumentare i cicli)
 
+> **Precisazione temporale ON20:** nel CSV l'ultimo OFF (ciclo19) avviene al `ms=569285`; `phase=6` compare a `ms=575851`, **6,566s dopo**. Il codice `HeaterStep09AirFeedback.h` richiede `minimumOffMs=12000`, quindi **non può aver legalmente iniziato il20° ON nei6,566s successivi** se era installata la build S9B180 prevista. Il20° ON è una osservazione manuale da preservare, ma **non corroborata** dai comandi registrati; possibilità di diversa interpretazione OLED/tempi, firmware differente o altro comportamento da verificare, non di impulso certo sfuggito. Recuperare `pulse_fault` e `firmware` da status; non inventare un ON non mostrato dal CSV. 
+
 **28 ottobre 2026 — DIREZIONE TECNICA PROPOSTA DOPO S9B180 REALE, NON UN NUOVO TEST AUTORIZZATO.** S9A e S9B sono entrambe prove HEATER ON **ESEGUITE** e i CSV/Sanwa originali sono archiviati. Qui non vengono approvate né nuove temperature di piastra né modifiche ai valori di soglia. Non cambiare lo schema/TCO/cablaggi automaticamente.
 
 ## COSA / PERCHÉ / DA DOVE ARRIVIAMO / DOPO
