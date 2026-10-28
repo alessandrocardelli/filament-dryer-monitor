@@ -1,5 +1,12 @@
 # Project working instructions
 
+> **LATEST CHECKPOINT 2026-10-28: S9B180 FAULT IDENTIFIED, STEP10A CANDIDATE IN PR#18.** After the original S9B physical run the operator retrieved ESP32 status: firmware **HOT-261027-S9B180**, phase6, pulses19, pulse_fault**4=AirStale**, fault=true, saved_log=true, and event at575852ms **FAULT ntc=0 pulse=4**. No S9B repeat is required. Original events are preserved in [branch report](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step10-heater-diagnostics-air25-2026-10-28/docs/evidence/thermal/2026-10-28-S9B180-FAULT-RECOVERED.md). Eight progressively long gaps in S9B CSV (up to4.670s), and HTTP CSV streaming during the trial is a possible, NOT conclusively proven, blocker.
+>
+> **SANWA PHYSICALLY ON HEATER PLATE near NTC**: S9B Sanwa35–37C vs OEM eBOX Lite nominal plate105/116/118C comparison is valid in principle; measurement position not identical/verified. OEM air40/50/55C is another zone. Do not say Sanwa measured chamber air. The previous soft NTC50k kept the plate cold.
+>
+> **ONE NEXT CANDIDATE (not production, no physical test yet)**: [PR#18 DRAFT](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/18) on branch **experiment/step10-heater-diagnostics-air25-2026-10-28** based on isolated S9B PR#17; HEAD code distinct from main/COLD. Firmware HOT-261028-S10A25/OLED H28-S10A; local NTC SOFT pause45k/rearm60k, hard FAULT40k unchanged; SHT45 AIR25/24C, max20s ON/20.5s hardware ISR, min12s OFF, cumulative ON300s and runtime720s, fan command100%,90s cooldown, Sanwa on PLATE manual50C abort, TCO105 unchanged; NOT a validated production heater ceiling. Fix streaming HTTP full CSV during test; CSV adds fault/age/loop gap fields and forced observable ON/OFF transitions. [Complete Arduino IDE and physical test protocol](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step10-heater-diagnostics-air25-2026-10-28/docs/STEP10A_HEATER_AND_LOGGING_TEST_2026-10-28.md). CI must PASS on LAST head and exact physical setup/proposed exposure checked before any HEATER ON. The user requested this firmware and protocol; no physical run has occurred. Do not re-run prior S9B. docs/DECISIONS.md unchanged until explicit durable design agreement.
+
+
 ## Authority
 
 GitHub repository `alessandrocardelli/filament-dryer-monitor` is the authoritative project state.
