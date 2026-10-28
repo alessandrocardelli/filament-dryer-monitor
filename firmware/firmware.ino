@@ -41,6 +41,7 @@ PersistentSettings settings;
 uint32_t bootStartedMs = 0;
 uint32_t lastNtcLogMs = 0;
 uint32_t lastCommissionCsvMs = 0;
+uint32_t previousLoopStartMs = 0;
 bool technicalPage = false;
 bool loggingSession = false;
 // The previous /last-test.csv belongs to an earlier trial until this session
@@ -99,7 +100,7 @@ static void enterState(AppState next, uint32_t nowMs) {
         Serial.println("STATE -> HEATER STEP07 GUARD: 6 x 20 s MAX, NTC 40k abort, fan 100%");
         Serial.println("HOT_CSV,ms,phase,pulses,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else if (AppConfig::kHeaterStep09TrialMode) {
-        Serial.println("STATE -> STEP09B REAL AIR FEEDBACK: 25C target, NTC soft 50/65k, HARD 40k, max 180s heat / 10min, fan100");
+        Serial.println("STATE -> STEP10A SUPERVISED: AIR25, NTC soft45/60k, HARD40k, max300s cumulative /12min, fan100");
         Serial.println("HOT_CSV,ms,phase,windows,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else {
         Serial.println(safety.heaterLocked()
@@ -348,6 +349,8 @@ void setup() {
 
 void loop() {
   const uint32_t nowMs = millis();
+  const uint32_t loopGapMs = previousLoopStartMs ? nowMs - previousLoopStartMs : 0;
+  previousLoopStartMs = nowMs;
 
   ntc.update(nowMs);
   sht45.update(nowMs);
@@ -407,7 +410,10 @@ void loop() {
     thermalLog.sample(nowMs, sht45.snapshot(), ntc.snapshot(),
                       safety.heaterOn(), fan.dutyPercent(),
                       safety.commissioningPhase(),
-                      safety.commissioningPulsesDone());
+                      safety.commissioningPulsesDone(),
+                      safety.commissioningFault(),
+                      static_cast<uint8_t>(safety.ntcFault()),
+                      loopGapMs);
   } else if (loggingSession) {
     loggingSession = false;
     csvSavedThisRun = thermalLog.saveWhenSafe();

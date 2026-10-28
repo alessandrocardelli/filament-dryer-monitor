@@ -290,22 +290,35 @@ class NetworkService {
       server_.sendContent("");
     });
     server_.on("/api/history.csv", HTTP_GET, [this]() {
+      // S9B AirStale at 575852ms coincided with increasing multi-second loop
+      // gaps. Never synchronously stream an expanding RAM CSV during a trial
+      // or fan cooldown; status/events are short, bounded endpoints.
+      if (live_.cycle || live_.fanPercent > 0) {
+        server_.send(409, "text/plain", "History available only after cooling");
+        return;
+      }
       server_.setContentLength(CONTENT_LENGTH_UNKNOWN);
       server_.send(200, "text/csv", "");
       server_.sendContent(log_.header());
-      char line[116];
+      char line[192];
       for (size_t i=0; i<log_.size(); ++i) {
         const auto &s = log_.at(i);
-        snprintf(line,sizeof(line),"%lu,%.2f,%.2f,%.1f,%u,%u,%u,%u,%u,%u\n",
+        snprintf(line,sizeof(line),"%lu,%.2f,%.2f,%.1f,%u,%u,%u,%u,%u,%u,%u,%u,%lu,%lu,%lu\n",
                  (unsigned long)s.ms,s.airC,s.humidity,s.ntcOhms,
                  (unsigned)(s.valid&1),(unsigned)((s.valid>>1)&1),
                  (unsigned)s.phase,(unsigned)s.pulses,
-                 (unsigned)s.heater,(unsigned)s.fan);
+                 (unsigned)s.heater,(unsigned)s.fan,
+                 (unsigned)s.pulseFault,(unsigned)s.ntcFault,
+                 (unsigned long)s.airAgeMs,(unsigned long)s.ntcAgeMs,
+                 (unsigned long)s.loopGapMs);
         server_.sendContent(line);
       }
       server_.sendContent("");
     });
     server_.on("/api/last-test.csv", HTTP_GET, [this]() {
+      if (live_.cycle || live_.fanPercent > 0) {
+        server_.send(409, "text/plain", "Download after cooling"); return;
+      }
       if (!log_.hasSaved()) { server_.send(404,"text/plain","No saved test yet"); return; }
       File f = LittleFS.open("/last-test.csv","r");
       if (!f) { server_.send(500,"text/plain","Cannot open CSV"); return; }
@@ -407,7 +420,7 @@ button{padding:9px 14px}
 const $=x=>document.getElementById(x);
 // During heater ON the device deliberately does not service HTTP. Polling
 // must not treat an old OFF reply as proof that GPIO19 is still OFF.
-let statusReceivedAt=0, statusBusy=false;
+let statusReceivedAt=0, statusBusy=false, trialActive=false;
 function phaseLabel(d){
  const done=Number(d.pulses)||0, total=Number(d.pulse_goal)||0;
  switch(Number(d.phase)){
@@ -439,6 +452,7 @@ async function status(){
   const r=await fetch('/api/status',{cache:'no-store',signal:controller.signal});
   if(!r.ok)throw Error(r.status);
   const d=await r.json();
+  trialActive=Boolean(d.cycle)||Number(d.fan_percent)>0;
   $('air').textContent=d.air_valid?d.air_c.toFixed(1)+' °C':'--';
   $('rh').textContent=d.air_valid?d.rh.toFixed(1)+' %':'--';
   $('ntc').textContent=d.ntc_valid?(d.ntc_ohms/1000).toFixed(2)+' kΩ':'--';
@@ -458,6 +472,7 @@ async function status(){
  }
 }
 async function history(){
+ if(trialActive)return;
  try { const r=await fetch('/api/history.csv',{cache:'no-store'});if(!r.ok)return;
  const str=await r.text(),lines=str.trim().split('\n');
  $('rows').textContent=lines.slice(-14).join('\n');

@@ -1,0 +1,129 @@
+name: STEP10A - local-heater diagnostic candidate (GPIO-mock + ESP32 build)
+
+on:
+  push:
+    branches:
+      - experiment/step10-heater-diagnostics-air25-2026-10-28
+  pull_request:
+    branches:
+      - experiment/step09b-air25-budget180-2026-10-27
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce STEP09 physical-trial separation and untouched hard NTC guard
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s=Path("firmware/AppConfig.h").read_text()
+          for t in (
+              "kHeaterStep09TrialMode = true;",
+              "kHeaterCommissioningMode = false;",
+              "kHeaterOutputEnabled = false;",
+              "kHeaterProfileApproved = false;",
+              "kHeaterNtcModelApproved = false;",
+              "kFanBringupRunPercent = 100;",
+          ):
+              assert t in s, f"Safety configuration changed: {t}"
+          h=Path("firmware/HeaterStep09AirFeedback.h").read_text()
+          for t in (
+              "ntcHardTripOhms = 40000.0f;",
+              "ntcSoftPauseOhms = 45000.0f;",
+              "ntcResumeOhms = 60000.0f;",
+              "maximumOnWindowMs = 20000;",
+              "minimumOffMs = 12000;",
+              "maximumTotalHeatMs = 300000;",
+              "cooldownMs = 90000;",
+              "targetAirC = 25.0f;",
+              "kHardwareWindowCeilingUs = 20500000",
+          ):
+              assert t in h, f"Candidate review required: {t}"
+          assert '"HOT-261028-S10A25"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"H28-S10A"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
+          ui=Path("firmware/Ui.h").read_text()
+          assert "display_.drawStr(20, 44, FirmwareBuild::kId)" in ui
+          assert 'display_.drawStr(2, 44, "FW")' in ui
+          assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
+          assert 2 + 6*len("FW") < 20
+          assert 20 + 6 * len("HOT-261028-S10A25") <= 128
+          assert 78 + 6 * len("H28-S10A") <= 128
+          print("PASS: STEP10A 300s cumulative cap, reviewed trial NTC45/60k, hard NTC40k, no V1 heater approvals")
+          PY
+      - name: Verify STEP10A telemetry and no live CSV streaming
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          log=Path("firmware/ThermalLog.h").read_text()
+          net=Path("firmware/NetworkService.h").read_text()
+          app=Path("firmware/firmware.ino").read_text()
+          assert "pulse_fault,ntc_fault,air_age_ms,ntc_age_ms,loop_gap_ms" in log
+          assert "f.print(header());" in log
+          assert "if (live_.cycle || live_.fanPercent > 0)" in net
+          assert "trialActive=Boolean(d.cycle)" in net
+          assert "safety.commissioningFault()," in app
+          assert "loopGapMs);" in app
+          print("PASS: S9B fault root cause observable and expanding live CSV blocked")
+          PY
+      - name: Verify known driver/sensor source files unchanged from S7U
+        run: |
+          git fetch --no-tags origin fix/step07-clear-test-feedback-2026-10-26
+          for path in firmware/NtcSensor.h firmware/Sht45Sensor.h firmware/FanController.h firmware/CycleController.h firmware/HeaterPulseCommissioning.h firmware/HeaterControlPolicy.h; do
+            test "$(git rev-parse FETCH_HEAD:$path)" = "$(git hash-object "$path")" || {
+              echo "::error file=$path::Unreviewed sensor/driver modification"
+              exit 1
+            }
+          done
+          echo "PASS: existing sensors/drivers and test trace original"
+      - name: Native GPIO-mock with NEW 300s cap, 25C air, NTC FAULT, STOP and cooldown
+        run: |
+          set -euo pipefail
+          bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step10a-mock.log"
+      - uses: arduino/setup-arduino-cli@v2
+      - name: Install ESP32 core 3.3.12 and U8g2 2.36.19
+        run: |
+          arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli lib install U8g2@2.36.19
+      - name: Compile actual STEP10A25 ESP32 OTA application (DO NOT FLASH)
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/s10a25-build"
+          mkdir -p "$out"
+          arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$out" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step10a-esp32-build.log"
+          echo "PASS: ESP32 binary linked with no DRAM overflow"
+          app="$out/firmware.ino.bin"
+          test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
+          # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
+          grep -a -q 'HOT-261028-S10A25' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
+          cp "$app" "$RUNNER_TEMP/HOT-261028-S10A25-OTA-app.bin"
+          cd "$RUNNER_TEMP"
+          sha256sum HOT-261028-S10A25-OTA-app.bin | tee HOT-261028-S10A25-OTA-app.sha256
+          echo "OTA application only, HEAT-CAPABLE experiment; no physical test completed." >> "$GITHUB_STEP_SUMMARY"
+          cat HOT-261028-S10A25-OTA-app.sha256 >> "$GITHUB_STEP_SUMMARY"
+      - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: S10A25-HEAT-CAPABLE-OTA-APP
+          path: |
+            ${{ runner.temp }}/HOT-261028-S10A25-OTA-app.bin
+            ${{ runner.temp }}/HOT-261028-S10A25-OTA-app.sha256
+          if-no-files-found: error
+          retention-days: 30
+      - name: Upload reproducible results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: step10a-candidate-logs
+          path: |
+            ${{ runner.temp }}/step10a-mock.log
+            ${{ runner.temp }}/step10a-esp32-build.log
+          if-no-files-found: warn
