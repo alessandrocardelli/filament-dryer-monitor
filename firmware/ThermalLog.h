@@ -12,11 +12,14 @@ class ThermalLog {
   struct Sample {
     uint32_t ms = 0;
     float airC = 0, humidity = 0, ntcOhms = 0;
+    uint32_t airAgeMs = UINT32_MAX, ntcAgeMs = UINT32_MAX, loopGapMs = 0;
     uint8_t phase = 0, pulses = 0, heater = 0, fan = 0, valid = 0;
+    uint8_t pulseFault = 0, ntcFault = 0;
   };
   // Keep the original 1400-entry RAM budget, REQUIRED for ESP32 DRAM link.
-  // STEP09 records at 500ms: 600s run + 90s cooldown = ~1380 rows;
-  // this fits without losing the beginning. Previous S7U logs use 250ms.
+  // STEP10 samples every 750ms, with all observable phase/HEATER edges forced.
+  // 720s run + 90s cooldown + bounded edges fits in 1400 samples.
+  // Prior S7U logs remain at 250ms. No flash writes during heating.
   // Do not write flash while the heater can be commanded HIGH.
   static constexpr size_t kCapacity = 1400; // S7U 250ms or STEP09 500ms
   void begin() {
@@ -33,9 +36,15 @@ class ThermalLog {
   }
   void sample(uint32_t nowMs, const SensorSnapshot &air,
               const NtcSnapshot &ntc, bool heaterOn,
-              uint8_t fanPercent, uint8_t phase, uint8_t pulses) {
-    const uint32_t intervalMs = AppConfig::kHeaterStep09TrialMode ? 500U : 250U;
-    if (count_ > 0 && nowMs - lastSampleMs_ < intervalMs) return;
+              uint8_t fanPercent, uint8_t phase, uint8_t pulses,
+              uint8_t pulseFault, uint8_t ntcFault, uint32_t loopGapMs) {
+    const uint32_t intervalMs = AppConfig::kHeaterStep09TrialMode ? 750U : 250U;
+    if (count_ > 0 && nowMs - lastSampleMs_ < intervalMs) {
+      const Sample &prev = at(count_ - 1);
+      if (prev.phase == phase && prev.heater == (heaterOn ? 1 : 0) &&
+          prev.pulses == pulses && prev.pulseFault == pulseFault &&
+          prev.ntcFault == ntcFault) return;
+    }
     lastSampleMs_ = nowMs;
     Sample &s = records_[head_];
     s.ms = nowMs;
@@ -46,6 +55,11 @@ class ThermalLog {
     s.heater = heaterOn ? 1 : 0;
     s.fan = fanPercent;
     s.valid = (air.valid ? 1 : 0) | (ntc.valid ? 2 : 0);
+    s.airAgeMs = air.lastSuccessMs ? nowMs - air.lastSuccessMs : UINT32_MAX;
+    s.ntcAgeMs = ntc.sampled ? nowMs - ntc.lastSampleMs : UINT32_MAX;
+    s.loopGapMs = loopGapMs;
+    s.pulseFault = pulseFault;
+    s.ntcFault = ntcFault;
     head_ = (head_ + 1) % kCapacity;
     if (count_ < kCapacity) ++count_;
   }
@@ -55,15 +69,18 @@ class ThermalLog {
     // snapshot: write temp, close, then replace only after success.
     File f = LittleFS.open("/pending.csv", "w");
     if (!f) return false;
-    f.println("ms,air_c,rh,ntc_ohms,air_valid,ntc_valid,phase,pulses,heater_command,fan_percent");
-    char row[112];
+    f.println(header());
+    char row[192];
     for (size_t i = 0; i < count_; ++i) {
       const Sample &s = at(i);
       const int n = snprintf(row, sizeof(row),
-          "%lu,%.2f,%.2f,%.1f,%u,%u,%u,%u,%u,%u\n",
+          "%lu,%.2f,%.2f,%.1f,%u,%u,%u,%u,%u,%u,%u,%u,%lu,%lu,%lu\n",
           (unsigned long)s.ms, s.airC, s.humidity, s.ntcOhms,
           (unsigned)(s.valid & 1), (unsigned)((s.valid >> 1) & 1),
-          (unsigned)s.phase, (unsigned)s.pulses, (unsigned)s.heater, (unsigned)s.fan);
+          (unsigned)s.phase, (unsigned)s.pulses, (unsigned)s.heater, (unsigned)s.fan,
+          (unsigned)s.pulseFault, (unsigned)s.ntcFault,
+          (unsigned long)s.airAgeMs, (unsigned long)s.ntcAgeMs,
+          (unsigned long)s.loopGapMs);
       if (n <= 0 || n >= (int)sizeof(row) || f.write((const uint8_t*)row, n) != (size_t)n) {
         f.close(); LittleFS.remove("/pending.csv"); return false;
       }
@@ -82,16 +99,18 @@ class ThermalLog {
     return records_[(head_ + kCapacity - count_ + i) % kCapacity];
   }
   String header() const {
-    return "ms,air_c,rh,ntc_ohms,air_valid,ntc_valid,phase,pulses,heater_command,fan_percent\n";
+    return "ms,air_c,rh,ntc_ohms,air_valid,ntc_valid,phase,pulses,heater_command,fan_percent,pulse_fault,ntc_fault,air_age_ms,ntc_age_ms,loop_gap_ms\n";
   }
   // Used for optional live HTTP CSV export. Memory-only, bounded.
   void writeRow(Print &p, size_t i) const {
     if (i >= count_) return;
     const Sample &s = at(i);
-    p.printf("%lu,%.2f,%.2f,%.1f,%u,%u,%u,%u,%u,%u\n",
+    p.printf("%lu,%.2f,%.2f,%.1f,%u,%u,%u,%u,%u,%u,%u,%u,%lu,%lu,%lu\n",
       (unsigned long)s.ms,s.airC,s.humidity,s.ntcOhms,
       (unsigned)(s.valid & 1),(unsigned)((s.valid >> 1) & 1),
-      (unsigned)s.phase,(unsigned)s.pulses,(unsigned)s.heater,(unsigned)s.fan);
+      (unsigned)s.phase,(unsigned)s.pulses,(unsigned)s.heater,(unsigned)s.fan,
+      (unsigned)s.pulseFault,(unsigned)s.ntcFault,
+      (unsigned long)s.airAgeMs,(unsigned long)s.ntcAgeMs,(unsigned long)s.loopGapMs);
   }
  private:
   Sample records_[kCapacity]{};
