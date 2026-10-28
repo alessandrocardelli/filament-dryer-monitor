@@ -69,7 +69,7 @@ class ThermalLog {
     // snapshot: write temp, close, then replace only after success.
     File f = LittleFS.open("/pending.csv", "w");
     if (!f) return false;
-    f.println(header());
+    f.print(header());
     char row[192];
     for (size_t i = 0; i < count_; ++i) {
       const Sample &s = at(i);
