@@ -71,6 +71,14 @@ The S9B branch has now been consolidated to **PR#17 ONLY**, unique firmware iden
 
 **Only remaining actions are performed by the user at the prototype, not by ChatGPT:** check physical Sanwa probe on heater, real fan, installed TCO105 unchanged in series, cable/enclosure integrity and accessible24V cutoff; upload the `.bin` (not ZIP) via `http://filament-dryer.local/ota` while in STANDBY, verify OLED `H27-B180` or `/api/status` firmware full ID, then ONE monitored HEATER ON session, Sanwa continuously watched and documented every ON/OFF (or simultaneous video), at25°C air and start/end cooldown; STOP immediately at Sanwa>=50°C, then download new CSV after cooling. **Do not claim the operator has already verified any physical preflight or has run S9B.** Earlier S9A is completed and archived; never ask to repeat it.
 
+## Latest actual S9B180 evidence — physical test performed 2026-10-28
+
+S9B180 was actually run by the user. Its original CSV (1,067 samples, 44,461 bytes) and operator Sanwa readings are archived on main: [raw data](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/main/docs/evidence/thermal/2026-10-28-S9B180-raw.csv), [analysis and full Sanwa report](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/main/docs/evidence/thermal/2026-10-28-S9B180-PHYSICAL-SESSION.md), [STEP10 engineering direction](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/main/docs/STEP10_HEATER_LOCAL_TEMP_CONTROL_DIRECTION_2026-10-28.md). Old notes saying S9B is unrun are superseded. SHA256 of CSV: `1e17e6e131ce7cf9074bfe8d23d31f5e8ea1a605833ff36c0a21fe6568314beb`.
+
+CSV: SHT45 16.77C initially, 23.54C at phase change, 23.77C peak; NTC minimum 48.6878 kOhm, heater pauses near 50 kOhm, 19 logged ON windows (~175.332s); user reports 20 cycles and Sanwa ~35-37C in later cycles, 26C at end. **Important: phase=6 ABORTED, not normal phase=4 COOLING. Exact reason unknown because fault code is absent from CSV.** The last logged ON ended 6.566s before abort, less than the configured 12s minimum OFF; 20th ON user observation is not confirmed by file. Do not assert reason for stop or claim 25C chamber target was reached.
+
+Next: retrieve `pulse_fault` and event log from the device if not rebooted, without another heater trial. Stop proposing more time/cycles. Review a warmer, physically calibrated HEATER-local NTC control envelope independent from SHT45 chamber target, with physical safety review; do not change ohmic trip thresholds arbitrarily. Draft PR17 unchanged; no new heat test authorization. Preserve evidence and update ledger/decisions only on agreement.
+
 ## Documentation discipline
 
 Keep the handoff files current:
