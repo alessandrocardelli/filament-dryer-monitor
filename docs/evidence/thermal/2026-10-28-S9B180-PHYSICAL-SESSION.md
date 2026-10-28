@@ -1,5 +1,8 @@
 # S9B180 — Prima sessione fisica reale HEATER ON, 28 ottobre 2026
 
+> **ADDENDUM 28 Oct 2026 — S9B AirStale now IDENTIFIED.** Actual firmware HOT-261027-S9B180; /api/status phase6 fault=true pulses19 pulse_fault4, events at575852ms FAULT ntc=0 pulse=4; fault4=AirStale age SHT45>5000ms. [Full original status/event log](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step10-heater-diagnostics-air25-2026-10-28/docs/evidence/thermal/2026-10-28-S9B180-FAULT-RECOVERED.md). No repeat. Sanwa was ON HEATER PLATE next to NTC, not chamber air. Old unknown cause paragraphs are historical only.
+
+
 > **Precisazione temporale ON20:** nel CSV l'ultimo OFF (ciclo19) avviene al `ms=569285`; `phase=6` compare a `ms=575851`, **6,566s dopo**. Il codice `HeaterStep09AirFeedback.h` richiede `minimumOffMs=12000`, quindi **non può aver legalmente iniziato il20° ON nei6,566s successivi** se era installata la build S9B180 prevista. Il20° ON è una osservazione manuale da preservare, ma **non corroborata** dai comandi registrati; possibilità di diversa interpretazione OLED/tempi, firmware differente o altro comportamento da verificare, non di impulso certo sfuggito. Recuperare `pulse_fault` e `firmware` da status; non inventare un ON non mostrato dal CSV. 
 
 **STATO: PROVA FISICA ESEGUITA; ANALISI PRELIMINARE DEI DATI COMPLETATA; CHIUSURA NON REGOLARE (fase 6, ABORTED), CAUSA SPECIFICA ANCORA SCONOSCIUTA.** Questo è un record di evidenza, non un nuovo protocollo di riscaldamento. **NON RIPETERE S9B IDENTICA, NON AUMENTARE IL BUDGET INDEFINITAMENTE E NON ABBASSARE LE SOGLIE NTC PRIMA DELLA DIAGNOSI DELLO STOP.**
