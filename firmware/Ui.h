@@ -234,7 +234,7 @@ class Ui {
   void drawSetup(SetupField selected, const CycleSettings &settings) {
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(2, 9, AppConfig::kHeaterStep09TrialMode
-        ? "STEP13A AIR30 TEST" : "SET CYCLE   SAFE MODE");
+        ? "STEP13A AIR30 TEST" : "AIR 40-55  HEAT LOCK");
     display_.drawHLine(0, 12, 128);
 
     char temp[22];
@@ -246,7 +246,7 @@ class Ui {
     drawSelectableRow(15, temp, selected == SetupField::Temperature);
     drawSelectableRow(31, time, selected == SetupField::Duration);
     drawSelectableRow(47, AppConfig::kHeaterStep09TrialMode
-        ? "FAN          100%" : "FAN         AUTO", selected == SetupField::Fan);
+        ? "FAN          100%" : "FAN          100%", selected == SetupField::Fan);
   }
 
   void drawSettings(SettingsField selected,
@@ -278,7 +278,7 @@ class Ui {
     } else if (AppConfig::kHeaterCommissioningMode) {
       snprintf(header, sizeof(header), "NTC GUARD TEST FAN100");
     } else {
-      snprintf(header, sizeof(header), "DRYING TEST   %02lu:%02lu",
+      snprintf(header, sizeof(header), "HEAT LOCK %02lu:%02lu",
                static_cast<unsigned long>(remainingSeconds / 3600UL),
                static_cast<unsigned long>((remainingSeconds / 60UL) % 60UL));
     }
