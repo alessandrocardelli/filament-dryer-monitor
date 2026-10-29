@@ -38,7 +38,6 @@ int main() {
     assert(p.ntcHardTripOhms == 30000.0f);
     Controller c{p};
     uint64_t commandedOnMs = 0;
-    uint32_t prevOnTick = 0;
     bool previousOn = false, sawHighAfter3Hours = false;
     bool sawAirTargetOff = false, sawRearmAfter2Hours = false;
     bool sawSaturatedCounter = false;
