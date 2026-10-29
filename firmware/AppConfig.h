@@ -58,7 +58,7 @@ constexpr float kNtcOpenThresholdMv = 3000.0f;
 constexpr bool kHeaterCommissioningMode = false;
 // STEP09 isolated HEATER-CAPABLE supervised-feedback candidate: NOT production
 // and NOT approved for flashing until the review/gate in docs/STEP09.
-constexpr bool kHeaterStep09TrialMode = true;
+constexpr bool kHeaterStep09TrialMode = false; // STEP13 archived; V1 AIR thermostat HEATER locked
 static_assert(!(kHeaterCommissioningMode && kHeaterStep09TrialMode),
               "Only one supervised heater trial mode can run");
 // STEP05 candidate heater profile is NEVER implicitly approved.
@@ -92,13 +92,16 @@ constexpr uint32_t kPostHeatCooldownMs = 45000;
 
 // Zeros intentionally mean UNCONFIGURED, not temperature recommendations.
 // Values must be independently set/reviewed for actual board/materials.
-constexpr float kHeaterMaxMeasuredC = 0.0f;
+constexpr float kHeaterMaxMeasuredC = 0.0f; // hard local thermal fault, UNQUALIFIED
+constexpr float kHeaterSoftPauseMeasuredC = 0.0f; // local soft pause, UNQUALIFIED
+constexpr float kHeaterRearmMeasuredC = 0.0f; // local rearm, UNQUALIFIED
 constexpr float kChamberMaxMeasuredC = 0.0f;
 constexpr float kChamberControlHysteresisC = 0.0f;
 constexpr uint32_t kHeaterNtcMaxAgeMs = 0;
 constexpr uint32_t kHeaterChamberMaxAgeMs = 0;
 constexpr uint32_t kHeaterFanPrerunMs = 0;
-constexpr uint32_t kHeaterMaxContinuousOnMs = 0;
+constexpr uint32_t kHeaterMaxContinuousOnMs = 0; // per-window hard bound; <=20000ms
+constexpr uint32_t kHeaterMinimumOffMs = 0; // per-window dead time; UNQUALIFIED
 constexpr uint32_t kHeaterMaxCycleMs = 0;
 
 // Prevent accidental heater ON by toggling a single flag.
@@ -106,19 +109,23 @@ constexpr uint32_t kHeaterMaxCycleMs = 0;
 static_assert(!kHeaterOutputEnabled ||
               (kHeaterProfileApproved && kHeaterNtcModelApproved &&
                kHeaterMaxMeasuredC > 0.0f &&
+               kHeaterSoftPauseMeasuredC > kHeaterRearmMeasuredC &&
+               kHeaterMaxMeasuredC > kHeaterSoftPauseMeasuredC &&
                kChamberMaxMeasuredC > 0.0f &&
                kChamberControlHysteresisC > 0.0f &&
                kHeaterNtcMaxAgeMs > 0 &&
                kHeaterChamberMaxAgeMs > 0 &&
                kHeaterFanPrerunMs > 0 &&
                kHeaterMaxContinuousOnMs > 0 &&
+               kHeaterMaxContinuousOnMs <= 20000 &&
+               kHeaterMinimumOffMs > 0 &&
                kHeaterMaxCycleMs > 0),
               "Heater cannot be enabled without reviewed calibration, limits and timers.");
 
 // Legacy UI setup temperature bounds are NOT heater safety limits.
 // These UI bounds are provisional and are NOT heater safety limits.
-constexpr int16_t kPrototypeTempMinC = 30;
-constexpr int16_t kPrototypeTempMaxC = 80;
+constexpr int16_t kPrototypeTempMinC = 40;
+constexpr int16_t kPrototypeTempMaxC = 55;
 constexpr int16_t kPrototypeTempStepC = 1;
 constexpr uint16_t kPrototypeDurationMinMinutes = 15;
 constexpr uint16_t kPrototypeDurationMaxMinutes = 12 * 60;
