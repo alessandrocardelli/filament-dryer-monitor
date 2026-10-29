@@ -234,7 +234,7 @@ class Ui {
   void drawSetup(SetupField selected, const CycleSettings &settings) {
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(2, 9, AppConfig::kHeaterStep09TrialMode
-        ? "STEP12P AIR25 TEST" : "SET CYCLE   SAFE MODE");
+        ? "STEP13A AIR30 TEST" : "SET CYCLE   SAFE MODE");
     display_.drawHLine(0, 12, 128);
 
     char temp[22];
@@ -274,7 +274,7 @@ class Ui {
     display_.setFont(u8g2_font_6x10_tf);
     char header[22];
     if (AppConfig::kHeaterStep09TrialMode) {
-      snprintf(header, sizeof(header), "STEP12P AIR25 TEST");
+      snprintf(header, sizeof(header), "STEP13A AIR30 TEST");
     } else if (AppConfig::kHeaterCommissioningMode) {
       snprintf(header, sizeof(header), "NTC GUARD TEST FAN100");
     } else {
@@ -302,7 +302,7 @@ class Ui {
           HeaterCommissioning::Phase::Cooldown)
         snprintf(target, sizeof(target), "COOLING %lu s",
             static_cast<unsigned long>(coolingSecondsLeft));
-      else snprintf(target, sizeof(target), "AIR25 NTC35/50 B30");
+      else snprintf(target, sizeof(target), "AIR30 NTC33/50 B30");
     } else if (AppConfig::kHeaterCommissioningMode) {
       if (static_cast<HeaterCommissioning::Phase>(pulsePhase) ==
           HeaterCommissioning::Phase::Cooldown) {
@@ -326,7 +326,7 @@ class Ui {
           switch (waitReason) {
             case 1: progress = "WAIT 12s OFF"; break;
             case 2: progress = "WAIT NTC 50k"; break;
-            case 3: progress = "WAIT AIR 24C"; break;
+            case 3: progress = "WAIT AIR 29C"; break;
             default: progress = "WAIT CONTROL"; break;
           }
           break;
