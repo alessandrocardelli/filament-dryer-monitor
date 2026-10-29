@@ -7,6 +7,12 @@ on:
     paths:
       - firmware/**
       - .github/workflows/step10-heater-diagnostic-ci.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - firmware/**
+      - .github/workflows/step10-heater-diagnostic-ci.yml
   workflow_dispatch:
 
 permissions:
