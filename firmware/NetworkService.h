@@ -11,6 +11,7 @@
 #include "ThermalLog.h"
 #include "HeaterPlateDiagnostics.h"
 #include "HeaterStep07GuardTrial.h"
+#include "HeaterStep09AirFeedback.h"
 
 // Local-only read-only telemetry + browser OTA. No remote heater controls.
 // Provisioning AP uses a fresh random WPA2 key displayed on the OLED.
