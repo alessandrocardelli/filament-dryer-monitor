@@ -267,10 +267,15 @@ class NetworkService {
       j += ",\"ntc_ohms\":"; j += String(live_.ntcOhms,1);
       // Read-only measured margins; historical Sanwa proxy is intentionally
       // marked separately and never drives PWM or any safety trip.
+      const auto trialLimits = HeaterStep09AirFeedback::parameters();
       const auto margin = HeaterPlateDiagnostics::margin(
-          live_.ntcValid ? live_.ntcOhms : NAN);
+          live_.ntcValid ? live_.ntcOhms : NAN,
+          trialLimits.ntcSoftPauseOhms, trialLimits.ntcHardTripOhms);
       const auto historical = HeaterPlateDiagnostics::historicalOpenBoxContact(
           live_.ntcValid ? live_.ntcOhms : NAN);
+      j += ",\"ntc_soft_pause_ohms\":"; j += String(trialLimits.ntcSoftPauseOhms,1);
+      j += ",\"ntc_resume_ohms\":"; j += String(trialLimits.ntcResumeOhms,1);
+      j += ",\"ntc_backup_trip_ohms\":"; j += String(trialLimits.ntcHardTripOhms,1);
       j += ",\"ntc_above_soft_ohms\":";
       j += margin.valid ? String(margin.aboveSoftOhms,1) : "null";
       j += ",\"ntc_above_hard_ohms\":";
