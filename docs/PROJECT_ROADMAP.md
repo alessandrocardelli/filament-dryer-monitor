@@ -1,5 +1,7 @@
 # Project roadmap from first-article bring-up to assembled eBOX Lite
 
+> Historical strategic roadmap. Current state and next activity are exclusively [PROJECT_STATE](PROJECT_STATE.md) and [TODO](TODO.md); the consolidated route is [execution plan](EXECUTION_PLAN_2026-10-24.md).
+
 > **2026-10-23 — D029 correction of this historical roadmap:** this older stage sequence treats **acquiring/qualifying an added TCO as a compulsory gate for all heater work**. That was an assistant-imposed prerequisite and is **superseded**: the user specifies that no separate TCO was present on the original eBOX Lite and the retrofit TCO is optional as an enhancement. The current prototype physically has a 105 °C TCO in series, which must be accounted for and not bypassed by implication. For the active sequencing prioritize mechanical/sensors A, NTC/fault C, revised heater-control D, then planned/reviewed progressive supervised tests E. Thermal/electrical safety checks remain essential independent of TCO. See [D029](DECISIONS.md) and [updated plan](COMPLETION_PLAN_2026-10-22.md). Historical steps below are preserved as records, **not active gate ordering**.
 
 
