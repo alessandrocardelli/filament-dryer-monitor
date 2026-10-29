@@ -3,11 +3,14 @@
 #include <cstdint>
 #include "HeaterPulseCommissioning.h"
 
-// STEP10A: corrected, bounded local-heater envelope for ONE supervised trial of
-// SHT45 CHAMBER feedback. Uses NTC resistance as an independent, hard
-// electrical guard; NO unqualified R_NTC -> temperature conversion.
-// This is NOT a certified thermostat, no GPIO and no fan tach input.
-// Do not flash HEATER-enabled candidate before physical protocol review.
+// STEP12P: source-only HIGHER PLATE experimental candidate, following STEP10B.
+// 40k (STEP07) was an EARLY TRIAL STOP, not a calibrated safety temperature.
+// This candidate restores the previously demonstrated hotter NTC region, but
+// its 35k/50k/30k values are EXPERIMENTAL proposals, NOT approved limits.
+// S6C (closed box/fan100) had NTC minimum 30.32k and Sanwa PLATE peak53C;
+// the proposed 35k soft pause targets earlier intervention than S6C.
+// Any physical HEATER ON requires NEW approval/preflight/independent Sanwa.
+// No bead Celsius calibration; no GPIO/tach/safety certification in this file.
 namespace HeaterStep09AirFeedback {
 using Phase = HeaterCommissioning::Phase; // 0 Idle;1 Prerun;2 Pulse;3 Gap;4 Cooldown;5 Complete;6 Aborted
 using Fault = HeaterCommissioning::Fault;
@@ -18,16 +21,22 @@ struct Parameters {
   uint32_t minimumOffMs = 12000;
   uint32_t cooldownMs = 90000;
   uint32_t maximumRunMs = 720000;
-  uint32_t maximumTotalHeatMs = 300000; // STEP10A one-shot ceiling, not 300s continuous
+  uint32_t maximumTotalHeatMs = 300000; // unchanged one-shot trial ceiling
   uint32_t fanStartupTimeoutMs = 12000;
   uint32_t maxNtcAgeMs = 1500;
   uint32_t maxAirAgeMs = 5000;
   float targetAirC = 25.0f;
   float airHysteresisC = 1.0f;
   float airFaultCeilingC = 40.0f;
-  float ntcSoftPauseOhms = 45000.0f; // supervised local heater experiment; NOT a production limit
-  float ntcResumeOhms = 60000.0f; // preserve 15kOhm hysteresis; not calibrated Celsius
-  float ntcHardTripOhms = 40000.0f;
+  // All R_NTC boundaries are PROVISIONAL TEST values, not fixed temperatures.
+  // STEP12P: SOFT 35k (above S6C recorded 30.32k minimum), rearm50k,
+  // BACKUP raw cutoff30k (near S6C observed minimum, NOT an independent
+  // thermal protector). The inherited STEP07 40k was an artificial stop.
+  // Sensor invalid/stale, air40C, ISR20.5s, time/energy bounds, STOP and
+  // physically installed series TCO remain independent of these thresholds.
+  float ntcSoftPauseOhms = 35000.0f;
+  float ntcResumeOhms = 50000.0f;
+  float ntcHardTripOhms = 30000.0f;
   float ntcOpenOhms = 250000.0f;
 };
 
@@ -95,8 +104,8 @@ class Controller {
     if (in.airC >= params_.targetAirC) airDemandActive_ = false;
     else if (in.airC <= params_.targetAirC - params_.airHysteresisC)
       airDemandActive_ = true;
-    // Same RAW 40kOhm hard trip demonstrated by physical S7U.
-    // The separate 45kOhm soft PAUSE is experimental, not calibrated.
+    // Raw 30k is a provisional backup trip, NOT a plate-temperature limit.
+    // Previous 40k STEP07 abort proved shutdown logic, not safe Tmax.
     if (in.ntcOhms <= params_.ntcHardTripOhms ||
         in.ntcOhms >= params_.ntcOpenOhms)
       return abort(Fault::NtcResistanceLimit);
