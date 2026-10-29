@@ -2,7 +2,8 @@
 #include <cmath>
 #include <cstdint>
 
-// Read-only diagnostics, NEVER a temperature input to SafetyController.
+// Read-only diagnostics. Thermal thresholds are always passed by the caller,
+// NEVER hidden here as historical defaults. NEVER used in SafetyController.
 // The 7 original pairs are Sanwa PLATE/contact versus heater NTC ohms
 // with BOTH covers OPEN, fan OFF and 120s holds (17 October 2026).
 // They do not establish NTC bead temperature or safe operating limits.
@@ -16,8 +17,8 @@ struct Margin {
 };
 
 inline Margin margin(float resistanceOhms,
-                     float softOhms = 45000.0f,
-                     float hardOhms = 40000.0f) {
+                     float softOhms,
+                     float hardOhms) {
   Margin m{};
   if (!std::isfinite(resistanceOhms) || resistanceOhms <= 0.0f ||
       !std::isfinite(softOhms) || !std::isfinite(hardOhms) ||
