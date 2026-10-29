@@ -1,4 +1,4 @@
-name: STEP13A - AIR30/29 NTC33/50/30 + 15min trial, GPIO-mock and ESP32 build
+name: STEP13A - AIR30 trial plus 4h product-design host test, GPIO mock and ESP32
 
 on:
   push:
@@ -107,6 +107,23 @@ jobs:
         run: |
           set -euo pipefail
           bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step13a-mock.log"
+      - name: Four-hour duration-controlled thermostat DESIGN regression (HOST ONLY, no GPIO)
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic \\
+            firmware/tests/host/test_long_duration_design.cpp \\
+            -o "$RUNNER_TEMP/step13a-4hour-thermostat"
+          "$RUNNER_TEMP/step13a-4hour-thermostat" | tee "$RUNNER_TEMP/step13a-4hour-thermostat.log"
+          python3 - <<'PY'
+          from pathlib import Path
+          ctl=Path("firmware/HeaterStep09AirFeedback.h").read_text()
+          safe=Path("firmware/SafetyController.h").read_text()
+          assert "RunPolicy::SupervisedTrial" in ctl
+          assert "RunPolicy::DurationControlledDesign" in ctl
+          assert "durationControlledDesignParameters()" not in safe, "Do not enable multi-hour heater without physical qualification"
+          assert "feedback_{HeaterStep09AirFeedback::parameters()}" in safe
+          print("PASS: hardware stays supervised trial-only; 4h product regulator verified only in host simulation")
+          PY
       - name: Native plate arithmetic diagnostics (no GPIO)
         run: |
           set -euo pipefail
@@ -193,6 +210,7 @@ jobs:
           name: step13a-candidate-logs
           path: |
             ${{ runner.temp }}/step13a-mock.log
+            ${{ runner.temp }}/step13a-4hour-thermostat.log
             ${{ runner.temp }}/step13a-plate-diagnostic.log
             ${{ runner.temp }}/step13a-esp32-build.log
           if-no-files-found: warn
