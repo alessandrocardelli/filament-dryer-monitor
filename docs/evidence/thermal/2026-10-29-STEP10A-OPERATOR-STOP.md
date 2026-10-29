@@ -22,6 +22,12 @@ La segnalazione arriva dopo il firmware/protocollo STEP10A. **È verosimile che 
 | Ventola reale e stato di raffreddamento | NON COMUNICATI |
 | CSV nuovo | ESISTENZA NON VERIFICATA; nessun CSV allegato o acquisito |
 
+## Precisazione dell'operatore: NON normale pausa ciclica
+
+**Osservazione successiva, da conservare:** «ho visto 18 cicli, heater off dura qualche secondo, qua non finiva più!». Il dettaglio nuovo è la **differenza qualitativa di durata** fra le prime18 pause OFF brevi e la fase OFF dopo il19° ciclo, percepita come persistente/anomala e causa dello spegnimento volontario. **Non caratterizzare l'episodio come una breve pausa ordinaria né affermare che il fault non esistesse.** Tempo OFF finale non quantificato; nessun nuovo CSV STEP10A è stato salvato. La ventola continuava fisicamente a girare.
+
+**Deducibile dal codice, NON osservato:** il ramo `Phase::Gap` non ha un timeout dedicato che produca un'indicazione di attesa esplicita, solo il timeout complessivo di720s; ricomincia a scaldare soltanto con OFF>=12s, R_NTC>=60kΩ e AIR<=24°C. Un'aria che resti sopra24°C (per esempio dopo il primo raggiungimento del target25°C) può prolungare fortemente OFF; non sappiamo se fosse davvero questa la causa al19° ciclo. L'OLED emette semplicemente `HEATER OFF` durante il gap, senza distinguere NTC non recuperato, aria sopra riarmo, o timer. **Priorità software: rendere leggibile la ragione di OFF e la progressione del timeout/uscita e completare il salvataggio sicuro prima di un ulteriore test.**
+
 ## Lettura del codice reale STEP10A — possibilità, non diagnosi
 
 La fonte è `firmware/HeaterStep09AirFeedback.h` sul branch sperimentale STEP10A. Dopo HEATER OFF in `Phase::Gap` (fase3) la ripresa richiede **tutte**: almeno12s di OFF, R_NTC>=60kΩ, aria<=24°C. Qualora l'aria avesse raggiunto25°C oppure l'NTC non fosse risalito a60kΩ, il comando può legittimamente rimanere OFF anche a lungo senza fault, fino al timeout della sessione.
