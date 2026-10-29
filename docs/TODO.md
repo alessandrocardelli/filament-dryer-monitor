@@ -1,21 +1,19 @@
 # Next work
 
-## Unica priorità: verificare STEP10B e caricare il firmware SENZA prova HEATER
+## Unica priorità: dimensionare correttamente la temperatura della PIASTRA heater, SENZA test fisico ripetuto
 
-**Sorgente attivo:** branch unico `experiment/step10-heater-diagnostics-air25-2026-10-28`, PR #18 DRAFT contro `main`. Nuovo firmware `HOT-261029-S10B25`, OLED `H29-S10B`, [protocollo completo](STEP10B_AIR_DEMAND_AND_CSV_TEST_2026-10-29.md). Il codice e' stato modificato dopo l'ultimo GPIO-mock/CI STEP10A: **non attribuire il precedente PASS al nuovo codice**.
+**Ultima prova conclusa, 29 ottobre 2026:** STEP10B `HOT-261029-S10B25` (firmware letto da `/api/status`) ha portato aria SHT45 da17.28°C a picco25.10°C in un ciclo sperimentale max12min, 21 comandi ON e OFF, `cumulative_heat_ms=213939`, nessun fault, massimo gap loop163ms. L'operatore ha trascritto la sequenza delle temperature Sanwa sul contatto PIASTRA heater vicino all'NTC: plateau38–39°C, ultimo COMPLETE26°C. **Raw CSV originale byte-identico già archiviato**: [976 samples](evidence/thermal/2026-10-29-STEP10B-raw.csv), 55,054 byte, SHA256 `f587c40055cdac6103ff0b422f6244453a55ad1221a89f6d4813a8d989adf953`, [verbale con status, Sanwa, eventi e incertezze](evidence/thermal/2026-10-29-STEP10B-PHYSICAL-SESSION.md).
 
-**Cosa è cambiato:** domanda AIR a25°C mantenuta attraverso la pausa NTC45k/riarmo60k, isteresi24°C solo dopo25°C realmente raggiunti; messaggi OLED `WAIT 12s OFF / WAIT NTC 60k / WAIT AIR 24C`, API `wait_reason`, `cumulative_heat_ms`, `session_csv_saved` e `session_csv_final`; checkpoint LittleFS quando HEATER è irrevocabilmente spento e salvataggio finale dopo cooldown. HARD NTC40k, heater timer20.5s, Tmax aria40C, fanPWM100, TCO105 e veto Sanwa50°C restano invariati. Non è un nuovo limite termico qualificato; la correzione può permettere più HEAT vicino ad AIR25°C.
+**Prova raggiunta ma NON ancora thermostat PASS:** ultimo HEATER OFF a+551.196s con AIR24.91°C e NTC44.952kΩ; AIR arriva25.02°C 12s DOPO lo spegnimento per inerzia, max25.10°C. Dopo AIR25, `WAIT AIR 24C` era previsto; non scende mai sotto24°C prima di720s, ultimo24.47°C. La phase5 successiva blocca comunque qualsiasi riavvio one-shot; riavvio termostatico a24°C e spegnimento diretto di heater ON al target25°C non osservati. `air_c=22.89` dello status è successivo, con fan OFF. Non rifare test soltanto per raggiungere24.
 
-**Stato prova precedente:** l'operatore ha riferito18 pause brevi, 19ª HEATER OFF persistente, ventola fisicamente in moto, MAX Sanwa sulla piastra **~38°C** e aria **~23,7°C** allo spegnimento (entrambe stime). Il file allegato era byte-identico al vecchio S9B180; nessun nuovo CSV STEP10A. La condizione esatta del 19º OFF non è provata, ma la prematura richiesta AIR<=24°C dopo ogni pausa NTC è un difetto sorgente dimostrato. [Verbale originale e precisazioni](evidence/thermal/2026-10-29-STEP10A-OPERATOR-STOP.md). Non ripetere S9B o STEP10A.
+**Limitazione attuale, verificata:** heater OFF per R_NTC<=45kΩ, rearm R>=60kΩ + OFF>=12s. Da terzo impulso in poi ON circa8–10s; minima R_NTC **43.738kΩ** dopo OFF: solo3.738kΩ sopra **HARD FAULT40kΩ**. Sanwa PIASTRA38–39°C è una lettura di contatto indipendente, non il valore in °C dell'NTC. L'utente chiede ragionevolmente una piastra più calda: si tratta del prossimo problema di ingegneria V1. Non cambiare soglie numeriche unilateralmente: il test S7U ha già FAULT a40k/Sanwa43°C; S6C ha ottenuto Sanwa53°C con NTC minimo30.32kΩ in condizioni differenti.
 
-**PROSSIMO PASSO UNICO:** controllare il risultato del nuovo workflow host GPIO-mock + ESP32 core3.3.12/U8g2 2.36.19 sul commit della PR#18; correggere eventuali fallimenti. Solo dopo PASS reale, caricare via Arduino IDE da ZIP del branch sperimentale con riscaldatore disalimentato, verificare `H29-S10B` su OLED e `HOT-261029-S10B25` da `/api/status`, **senza premere avvio ciclo HEATER**. Fare riferimento alla procedura Parte A del nuovo protocollo.
-
-**Dopo:** un solo vero test termico potrà essere proposto con autorizzazione specifica alla domanda aria latch, preflight TCO105/ventola/cavi/Sanwa sulla piastra/24V isolabile, istruzioni Parte B già archiviate, acquisizione CSV a15 colonne+Sanwa. NO aumento arbitrario temperatura piastra: SOFT45k e HARD40k distano solo5kΩ e vanno riesaminati con evidenze termiche. Nessun merge su main, nessuna modifica decisione D0xx.
+**PROSSIMA SINGOLA AZIONE:** usare **solo prove storiche già archiviate** e STEP10B per stimare in che misura la soglia NTC SOFT45k, i 20s max, l'isteresi60k, le condizioni fan100%, il TCO105 serie e i materiali limitano la temperatura PIASTRA; sviluppare una proposta motivata per un vero limite LOCALE temperatura/resistenza e una regolazione AIR di durata utente che possa sostenere25 e poi40–55°C in modo sicuro. Documentare in repo la compatibilità dei limiti HARD/soft, inerzia e sicurezza e **ottenere accordo esplicito prima di qualsiasi nuovo HEATER ON o modifica protezioni**. La CI/firmware id nuovi non sono provati sullo stesso hash build; preservare PR#18 DRAFT isolata.
 
 ## Backlog breve
 
-- Qualificare envelope temperatura PIASTRA NTC/Sanwa/materiali e margine TCO per andare verso target aria OEM40/50/55°C.
-- Completare V1 autonoma: mantenimento setpoint, fan AUTO, timer, STOP, latch fault, lunga durata, persistenza robusta anche power loss in HEATER Gap (nessuna scrittura flash mentre un riarmo è possibile).
-- Revisionare la PCB solo con evidenze nuove e decisione esplicita.
+- Dopo revisione termica, una singola prova nuova che qualifichi margini piastra, eventuale ON→OFF a25°C e re-ON a24°C entro durata appropriata (non ripetere l'identico12min).
+- Completa V1: duration, fan AUTO, fault/STOP e cold network/storage/power-cycle, eventuale TCO migliorativo senza bypass automatico, firmware autonomo HEATER.
+- OLED boot e PCB revision solo quando richiesto da evidenze nuove.
 
-Vedi [PROJECT_STATE](PROJECT_STATE.md) per stato autorevole e [ledger](THERMAL_EXPERIMENT_LEDGER.md) per prove originali.
+Vedi [PROJECT_STATE](PROJECT_STATE.md), [DECISIONS](DECISIONS.md) e [THERMAL_EXPERIMENT_LEDGER](THERMAL_EXPERIMENT_LEDGER.md).
