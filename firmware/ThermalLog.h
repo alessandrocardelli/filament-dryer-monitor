@@ -5,7 +5,8 @@
 #include "AppConfig.h"
 
 // Bounded RAM recorder: no flash writes while the heater can be commanded ON.
-// After a test and its cooldown, save a CSV snapshot in LittleFS. The next
+// At irreversible HEATER shutdown save a checkpoint in LittleFS, then
+// overwrite it with full cooldown evidence at normal session completion. The next
 // flash or OTA update preserves it if the partition layout stays unchanged.
 class ThermalLog {
  public:
@@ -26,6 +27,10 @@ class ThermalLog {
     // On the first clean prototype install there is no LittleFS signature.
     mounted_ = LittleFS.begin(false);
     if (!mounted_) mounted_ = LittleFS.begin(true);
+    // Recover previous known-good file if power failed during replacement.
+    if (mounted_ && !LittleFS.exists("/last-test.csv") &&
+        LittleFS.exists("/previous-test.csv"))
+      LittleFS.rename("/previous-test.csv", "/last-test.csv");
     Serial.println(mounted_ ? "LittleFS mounted" : "LittleFS unavailable");
   }
   void start() {
@@ -60,6 +65,7 @@ class ThermalLog {
     s.loopGapMs = loopGapMs;
     s.pulseFault = pulseFault;
     s.ntcFault = ntcFault;
+    dirty_ = true; // a post-checkpoint cooldown sample requires final resave
     head_ = (head_ + 1) % kCapacity;
     if (count_ < kCapacity) ++count_;
   }
@@ -86,8 +92,19 @@ class ThermalLog {
       }
     }
     f.close();
-    LittleFS.remove("/last-test.csv");
-    if (!LittleFS.rename("/pending.csv", "/last-test.csv")) return false;
+    // Replace with rollback: never silently destroy the previous verified
+    // session if the new rename fails or power is lost between two renames.
+    const bool hadOld = LittleFS.exists("/last-test.csv");
+    if (hadOld) {
+      LittleFS.remove("/previous-test.csv");
+      if (!LittleFS.rename("/last-test.csv", "/previous-test.csv"))
+        return false;
+    }
+    if (!LittleFS.rename("/pending.csv", "/last-test.csv")) {
+      if (hadOld) LittleFS.rename("/previous-test.csv", "/last-test.csv");
+      return false;
+    }
+    if (hadOld) LittleFS.remove("/previous-test.csv");
     dirty_ = false;
     return true;
   }
