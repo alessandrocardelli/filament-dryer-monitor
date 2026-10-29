@@ -77,8 +77,20 @@ class Controller {
   bool update(uint32_t nowMs, const Inputs &in) {
     requestedOn_ = false;
     if (!in.cycleActive) {
-      if (phase_ != Phase::Idle && phase_ != Phase::Complete &&
-          phase_ != Phase::Aborted) cancel();
+      if (params_.runPolicy == RunPolicy::DurationControlledDesign) {
+        // Duration selection belongs to the external CycleController, not
+        // an accumulated heater-seconds counter. Reaching the user timer is
+        // a normal finish with cooling, NOT a ManualStop fault.
+        if (phase_ == Phase::Cooldown) {
+          if (!cooldownNeeded(nowMs)) phase_ = Phase::Complete;
+        } else if (phase_ != Phase::Idle && phase_ != Phase::Complete &&
+                   phase_ != Phase::Aborted) {
+          finishHeating(nowMs);
+        }
+      } else if (phase_ != Phase::Idle && phase_ != Phase::Complete &&
+                 phase_ != Phase::Aborted) {
+        cancel(); // historical one-shot experiment
+      }
       return false;
     }
     if (phase_ == Phase::Complete || phase_ == Phase::Aborted) return false;
@@ -191,7 +203,10 @@ class Controller {
   }
   bool finished() const { return phase_ == Phase::Complete; }
   bool heaterRequested() const { return requestedOn_; }
-  uint8_t pulsesDone() const { return windowsDone_; }
+  uint8_t pulsesDone() const {
+    // Exposed status is one byte; multi-hour sessions must not wrap 255->0.
+    return windowsDone_ > 255U ? 255U : static_cast<uint8_t>(windowsDone_);
+  }
   Phase phase() const { return phase_; }
   Fault fault() const { return fault_; }
   uint32_t totalHeatMs() const { return totalHeatMs_; }
@@ -225,7 +240,7 @@ class Controller {
   Fault fault_ = Fault::None;
   bool requestedOn_ = false, fanSeen_ = false, hadHeat_ = false;
   bool airDemandActive_ = false;
-  uint8_t windowsDone_ = 0;
+  uint32_t windowsDone_ = 0;
   uint32_t startedMs_ = 0, phaseSinceMs_ = 0;
   uint32_t heatWindowStartedMs_ = 0, lastOnTickMs_ = 0;
   uint32_t lastHeaterOnMs_ = 0, totalHeatMs_ = 0;
