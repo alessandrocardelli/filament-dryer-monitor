@@ -132,7 +132,7 @@ jobs:
           assert "ntcResumeOhms = 50000.0f;" in h
           assert "tick(s, 6100, 40000.0f)" in Path("firmware/tests/host/test_step09_feedback_gpio.cpp").read_text()
           assert "assert(s.heaterOn() && !s.faultActive());" in Path("firmware/tests/host/test_step09_feedback_gpio.cpp").read_text()
-          print("PASS: plate comparison read-only; STEP13A 35/50/30k candidate checked against source")
+          print("PASS: plate comparison read-only; STEP13A 33/50/30k candidate checked against source")
           PY
       - name: STEP08 selective offline replay regression
         run: bash firmware/tests/host/run_step08_real_trace.sh
@@ -160,7 +160,7 @@ jobs:
           arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli lib install U8g2@2.36.19
-      - name: Compile actual STEP13A25 ESP32 OTA application (DO NOT FLASH)
+      - name: Compile actual STEP13A30 ESP32 application (DO NOT FLASH)
         run: |
           set -euo pipefail
           out="$RUNNER_TEMP/s13a30-build"
