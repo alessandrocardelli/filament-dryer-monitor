@@ -1,0 +1,514 @@
+{
+  "prs": [
+    {
+      "number": 18,
+      "state": "open",
+      "draft": true,
+      "merged_at": null,
+      "head": "experiment/step10-heater-diagnostics-air25-2026-10-28",
+      "sha": "05d4c36d2378be9b09664545f37243a5dfa9f477",
+      "base": "experiment/step09b-air25-budget180-2026-10-27",
+      "title": "STEP10A draft: safer local-NTC experiment, stall fix, persistent fault CSV"
+    },
+    {
+      "number": 17,
+      "state": "open",
+      "draft": true,
+      "merged_at": null,
+      "head": "experiment/step09b-air25-budget180-2026-10-27",
+      "sha": "2cefe18089175694a7d689259d1acbff7d00156f",
+      "base": "experiment/step09-real-sht45-feedback-2026-10-27",
+      "title": "STEP09-B: 180s cumulative HEATER budget to test SHT45 air25C (DRAFT)"
+    },
+    {
+      "number": 16,
+      "state": "closed",
+      "draft": true,
+      "merged_at": null,
+      "head": "experiment/step09b-chamber25-extended-budget-2026-10-27",
+      "sha": "f319fcf437be083e988c1c94d0b76b6a77a43a2d",
+      "base": "experiment/step09-real-sht45-feedback-2026-10-27",
+      "title": "STEP09B: SHT45 air25°C HEATER-ON candidate, cumulative budget200s (S9A data grounded)"
+    },
+    {
+      "number": 15,
+      "state": "closed",
+      "draft": true,
+      "merged_at": null,
+      "head": "experiment/step09-s9b-25c-200s-2026-10-27",
+      "sha": "9a18cdc052853dd823ba752f0b614fff4d81f0be",
+      "base": "experiment/step09-real-sht45-feedback-2026-10-27",
+      "title": "STEP09-B: test 25C SHT45 cutoff with 200s cumulative HEATER budget (draft, no flash)"
+    },
+    {
+      "number": 14,
+      "state": "open",
+      "draft": true,
+      "merged_at": null,
+      "head": "experiment/step09-real-sht45-feedback-2026-10-27",
+      "sha": "608c8fb8de656373b7a8e55370b0165517f22322",
+      "base": "fix/step07-clear-test-feedback-2026-10-26",
+      "title": "STEP09: supervised HEATER-ON candidate with real SHT45 feedback and NTC guard"
+    },
+    {
+      "number": 13,
+      "state": "open",
+      "draft": true,
+      "merged_at": null,
+      "head": "test/step08-ntc-air-replay-2026-10-27",
+      "sha": "1057a633aa1cc75b1c1dac3643a04a94d342e69a",
+      "base": "fix/step07-clear-test-feedback-2026-10-26",
+      "title": "STEP08: offline replay S7U NTC guard vs air thermostat (test only)"
+    },
+    {
+      "number": 12,
+      "state": "open",
+      "draft": true,
+      "merged_at": null,
+      "head": "fix/step07-clear-test-feedback-2026-10-26",
+      "sha": "43cb37ccfceded1c185491f88b010b0b176722f6",
+      "base": "experiment/step07-ntc-guard-verified-history-2026-10-25",
+      "title": "Step07 test usability: unmistakable HEATER OFF, cooling countdown, CSV ready, bounded buzzer"
+    },
+    {
+      "number": 11,
+      "state": "open",
+      "draft": true,
+      "merged_at": null,
+      "head": "experiment/step07-ntc-guard-verified-history-2026-10-25",
+      "sha": "ab17acf4e816a32cc58a4e1d6735ad0c1cb0cdf4",
+      "base": "experiment/step06b-fan100-extended-2026-10-25",
+      "title": "Step07 guard verification — full repo historic audit + earlier raw NTC trip (S7G)"
+    },
+    {
+      "number": 10,
+      "state": "open",
+      "draft": true,
+      "merged_at": null,
+      "head": "experiment/step06b-fan100-extended-2026-10-25",
+      "sha": "faa1ec5e827854d1c0a6d49ed833c685d29bd25e",
+      "base": "experiment/step06-supervised-heat-2026-10-25",
+      "title": "STEP06B: 100% fan + supervised 6×20s thermal response (separate experiment)"
+    },
+    {
+      "number": 9,
+      "state": "closed",
+      "draft": false,
+      "merged_at": "2026-10-25T17:28:09Z",
+      "head": "fix/step06-web-telemetry-2026-10-25",
+      "sha": "34a6c338338f33e2ae1e992f13b959bea64055d0",
+      "base": "experiment/step06-supervised-heat-2026-10-25",
+      "title": "Fix web heater telemetry freshness and misleading 4/3 cooling phase"
+    },
+    {
+      "number": 8,
+      "state": "open",
+      "draft": true,
+      "merged_at": null,
+      "head": "experiment/step06-supervised-heat-2026-10-25",
+      "sha": "5d03c08fe910c40bf95e67a2bfc796eaf9ee3f76",
+      "base": "feature/step06-fan-on-thermal-characterization-2026-10-25",
+      "title": "EXPERIMENT ONLY: supervised 4×10s HEAT firmware + OTA binary, do not merge"
+    },
+    {
+      "number": 7,
+      "state": "open",
+      "draft": true,
+      "merged_at": null,
+      "head": "feature/step06-fan-on-thermal-characterization-2026-10-25",
+      "sha": "ad7e5db9276df15cd64cf990382bb3c845e9928c",
+      "base": "feature/wifi-ota-web-logging-2026-10-24",
+      "title": "Step 06 — meaningful fan-on closed-case thermal trial, prepared OFF"
+    },
+    {
+      "number": 6,
+      "state": "closed",
+      "draft": false,
+      "merged_at": "2026-10-25T13:08:17Z",
+      "head": "feature/step05-heater-safety-preflight-2026-10-25",
+      "sha": "986d1f6639937ef938ad6d6bcb6c7751dd385965",
+      "base": "feature/wifi-ota-web-logging-2026-10-24",
+      "title": "Step 05 — cold safety preflight and bounded thermal-test candidate (heater OFF)"
+    },
+    {
+      "number": 5,
+      "state": "closed",
+      "draft": false,
+      "merged_at": "2026-10-25T12:27:19Z",
+      "head": "feature/step03-heater-locked-thermostat-sim-2026-10-25",
+      "sha": "76eaf430bf4935567a8194b86dad6fd6d72f6bbc",
+      "base": "feature/wifi-ota-web-logging-2026-10-24",
+      "title": "Step 03 — locked-heater ESP32 build and simulated SHT45 thermostat cycle"
+    },
+    {
+      "number": 4,
+      "state": "closed",
+      "draft": false,
+      "merged_at": "2026-10-25T11:33:06Z",
+      "head": "feature/step01-sensor-diagnostics-2026-10-24",
+      "sha": "4ffb599ba19080a1a5703eebd54027076a7f0b5e",
+      "base": "feature/wifi-ota-web-logging-2026-10-24",
+      "title": "Step 01 — clarify SHT45/NTC diagnostics without heater changes"
+    },
+    {
+      "number": 3,
+      "state": "closed",
+      "draft": false,
+      "merged_at": "2026-10-24T15:58:33Z",
+      "head": "feature/heater-policy-cold-tests-2026-10-23",
+      "sha": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "base": "main",
+      "title": "Consolidate heater qualification documentation and non-actuating policy tests"
+    },
+    {
+      "number": 2,
+      "state": "closed",
+      "draft": false,
+      "merged_at": "2026-10-19T20:30:18Z",
+      "head": "archive/recover-tested-firmware-2026-10-19",
+      "sha": "ca375bf048518282236776d386f18c590b5e551e",
+      "base": "main",
+      "title": "Archive original tested firmware and reconstructed hardware test sketches"
+    },
+    {
+      "number": 1,
+      "state": "closed",
+      "draft": false,
+      "merged_at": "2026-09-21T16:46:23Z",
+      "head": "pcb/l7987l-layout",
+      "sha": "4e6e4780d54aacd844f2d0ae81e5cbbf01deb429",
+      "base": "main",
+      "title": "Merge released L7987L PCB layout into main"
+    }
+  ],
+  "ci_latest_per_workflow_branch": [
+    {
+      "id": 40737797336,
+      "branch": "experiment/step10-heater-diagnostics-air25-2026-10-28",
+      "sha": "05d4c36d2378be9b09664545f37243a5dfa9f477",
+      "name": "STEP10A - local-heater diagnostic candidate (GPIO-mock + ESP32 build)",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40737797336"
+    },
+    {
+      "id": 40734331475,
+      "branch": "experiment/step09b-air25-budget180-2026-10-27",
+      "sha": "2cefe18089175694a7d689259d1acbff7d00156f",
+      "name": "STEP09B - 180s air-feedback candidate (GPIO-mock + ESP32 build)",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40734331475"
+    },
+    {
+      "id": 40563449628,
+      "branch": "experiment/step09b-chamber25-extended-budget-2026-10-27",
+      "sha": "f319fcf437be083e988c1c94d0b76b6a77a43a2d",
+      "name": "STEP09B - bounded 200s real-feedback candidate (GPIO-mock + ESP32 build)",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40563449628"
+    },
+    {
+      "id": 40561354174,
+      "branch": "experiment/step09-s9b-25c-200s-2026-10-27",
+      "sha": "9a18cdc052853dd823ba752f0b614fff4d81f0be",
+      "name": "STEP09 - real-feedback candidate (GPIO-mock + ESP32 build)",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40561354174"
+    },
+    {
+      "id": 40556930451,
+      "branch": "experiment/step09-real-sht45-feedback-2026-10-27",
+      "sha": "608c8fb8de656373b7a8e55370b0165517f22322",
+      "name": "STEP09 - real-feedback candidate (GPIO-mock + ESP32 build)",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40556930451"
+    },
+    {
+      "id": 40480927951,
+      "branch": "feature/wifi-ota-web-logging-2026-10-24",
+      "sha": "badf8dc30b9f16949a406feee80fff9a21edbcd7",
+      "name": "ESP32 firmware compile",
+      "conclusion": "failure",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40480927951"
+    },
+    {
+      "id": 40480920161,
+      "branch": "fix/step07-clear-test-feedback-2026-10-26",
+      "sha": "43cb37ccfceded1c185491f88b010b0b176722f6",
+      "name": "Step07 user-facing clear test feedback",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40480920161"
+    },
+    {
+      "id": 40476716231,
+      "branch": "test/step08-ntc-air-replay-2026-10-27",
+      "sha": "1057a633aa1cc75b1c1dac3643a04a94d342e69a",
+      "name": "Step08 - real S7U NTC/air-policy host replay (NO GPIO)",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40476716231"
+    },
+    {
+      "id": 40224936507,
+      "branch": "experiment/step07-ntc-guard-verified-history-2026-10-25",
+      "sha": "ab17acf4e816a32cc58a4e1d6735ad0c1cb0cdf4",
+      "name": "Step07G - conservative NTC shutdown using S6C history",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40224936507"
+    },
+    {
+      "id": 40222064573,
+      "branch": "experiment/step06b-fan100-extended-2026-10-25",
+      "sha": "faa1ec5e827854d1c0a6d49ed833c685d29bd25e",
+      "name": "Step 06B - fan 100% extended supervised heating",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40222064573"
+    },
+    {
+      "id": 40219886624,
+      "branch": "experiment/step06b-fan100-extended-2026-10-25",
+      "sha": "277f3ff70403f2e1d73de38f0f7b3999643ee8e9",
+      "name": "Step 06 - web telemetry UX fix (no heater changes)",
+      "conclusion": "failure",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40219886624"
+    },
+    {
+      "id": 40216615002,
+      "branch": "experiment/step06-supervised-heat-2026-10-25",
+      "sha": "5d03c08fe910c40bf95e67a2bfc796eaf9ee3f76",
+      "name": "Step 06 - approved supervised HEAT experiment (isolated)",
+      "conclusion": "failure",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40216615002"
+    },
+    {
+      "id": 40216224251,
+      "branch": "fix/step06-web-telemetry-2026-10-25",
+      "sha": "34a6c338338f33e2ae1e992f13b959bea64055d0",
+      "name": "Step 06 - web telemetry UX fix (no heater changes)",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40216224251"
+    },
+    {
+      "id": 40198192963,
+      "branch": "feature/step06-fan-on-thermal-characterization-2026-10-25",
+      "sha": "ad7e5db9276df15cd64cf990382bb3c845e9928c",
+      "name": "Step 06 - fan-on characterization candidate (default OFF)",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40198192963"
+    },
+    {
+      "id": 40195971805,
+      "branch": "feature/step05-heater-safety-preflight-2026-10-25",
+      "sha": "986d1f6639937ef938ad6d6bcb6c7751dd385965",
+      "name": "Step 05 - heater safety preflight, COLD default",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40195971805"
+    },
+    {
+      "id": 40192935185,
+      "branch": "feature/step03-heater-locked-thermostat-sim-2026-10-25",
+      "sha": "76eaf430bf4935567a8194b86dad6fd6d72f6bbc",
+      "name": "Step 03 - locked heater and thermostat simulation",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40192935185"
+    },
+    {
+      "id": 40192603024,
+      "branch": "feature/step03-heater-locked-thermostat-sim-2026-10-25",
+      "sha": "eb0daf6b8626c4e5c9afe2f3f1118e2d81210c9f",
+      "name": "Step 01 - ESP32 firmware and host safety tests",
+      "conclusion": "failure",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40192603024"
+    },
+    {
+      "id": 40175557554,
+      "branch": "feature/step01-sensor-diagnostics-2026-10-24",
+      "sha": "4ffb599ba19080a1a5703eebd54027076a7f0b5e",
+      "name": "Step 01 - ESP32 firmware and host safety tests",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40175557554"
+    },
+    {
+      "id": 40113442904,
+      "branch": "feature/thermal-qualification-2026-10-24",
+      "sha": "99b6c838ee18939ac37dbb7e394f608e7949800b",
+      "name": "ESP32 firmware compile",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40113442904"
+    },
+    {
+      "id": 40109675713,
+      "branch": "feature/wifi-ota-web-logging-2026-10-24",
+      "sha": "012451a9036b79623b26f3cd38018e414070078c",
+      "name": "Temporary branch cleanup (verified ancestors only)",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40109675713"
+    },
+    {
+      "id": 40100308906,
+      "branch": "test/closed-case-heater-pulses-2026-10-23",
+      "sha": "609b7bcdcdd06a3b3978d5633be3d1221a08bb19",
+      "name": "ESP32 firmware compile",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40100308906"
+    },
+    {
+      "id": 40010370303,
+      "branch": "feature/integrated-heater-controller-2026-10-23",
+      "sha": "cfda48f7ea87c61ce0b4ea18aafe8f466224076a",
+      "name": "ESP32 firmware compile",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40010370303"
+    },
+    {
+      "id": 34152116747,
+      "branch": "pcb/l7987l-layout",
+      "sha": "446a5da92bd4f42c23cfcb38a44512a749df0a96",
+      "name": "Temporary placement review",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/34152116747"
+    },
+    {
+      "id": 34053567839,
+      "branch": "pcb/l7987l-layout",
+      "sha": "16ffcd438b9e78839d4d246022da9e1e1bc6ec21",
+      "name": "Temporary bottom-side power placement",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/34053567839"
+    },
+    {
+      "id": 33922441366,
+      "branch": "redesign/buck-sourcing",
+      "sha": "6f142d6053d9f27d1c8168751212de31dac26df4",
+      "name": "KiCad schematic ERC",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33922441366"
+    },
+    {
+      "id": 33684939476,
+      "branch": "redesign/buck-sourcing",
+      "sha": "95fb9c818d48fd94cf5fb7255b3e073a498a0542",
+      "name": "Temporary BZX84 KiCad repair",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33684939476"
+    },
+    {
+      "id": 33683978111,
+      "branch": "redesign/buck-sourcing",
+      "sha": "7e830db8264750f75d4c4c3f043c9288fe20d60b",
+      "name": "Temporary post-audit documentation sync",
+      "conclusion": "failure",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33683978111"
+    },
+    {
+      "id": 33683791235,
+      "branch": "redesign/buck-sourcing",
+      "sha": "238886cb272ad06097c7ff5b65ce4c6a9974a15e",
+      "name": "Temporary final strict pinout audit",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33683791235"
+    },
+    {
+      "id": 33683385757,
+      "branch": "redesign/buck-sourcing",
+      "sha": "392ac6bf28c570ed01cfa1a7f321cf7a408a6625",
+      "name": "Temporary strict pinout correction",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33683385757"
+    },
+    {
+      "id": 33681750913,
+      "branch": "redesign/buck-sourcing",
+      "sha": "78006c486f9bffbf57ffe84d00e5478507190f4e",
+      "name": "Temporary pinout and footprint mapping audit",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33681750913"
+    },
+    {
+      "id": 33680159267,
+      "branch": "redesign/buck-sourcing",
+      "sha": "767b5f957a67a7c3fa54b41444a8fe1ab5c4a02e",
+      "name": "Final footprint audit closure",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33680159267"
+    },
+    {
+      "id": 33679375806,
+      "branch": "redesign/buck-sourcing",
+      "sha": "9fd67fe588d78923c512773b9eff3f7d2c27b1c5",
+      "name": "Temporary final footprint inspection",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33679375806"
+    },
+    {
+      "id": 33678972610,
+      "branch": "redesign/buck-sourcing",
+      "sha": "ca08afd15634c89bd31e8a36c58161dc7bca504f",
+      "name": "Temporary buzzer datasheet inspection",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33678972610"
+    },
+    {
+      "id": 33676351320,
+      "branch": "redesign/buck-sourcing",
+      "sha": "4346c61e6f99c612cb23e9f34b71cedbfab965fd",
+      "name": "KiCad footprint sync",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33676351320"
+    },
+    {
+      "id": 33676317304,
+      "branch": "redesign/buck-sourcing",
+      "sha": "bcce421301129d45b5a64ae6e51d9cae1b1b059d",
+      "name": ".github/workflows/kicad-footprint-audit.yml",
+      "conclusion": "failure",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33676317304"
+    },
+    {
+      "id": 33674157237,
+      "branch": "redesign/buck-sourcing",
+      "sha": "3050b18d41dbb4a0f1ba1f03e8923e0723648e78",
+      "name": "KiCad footprint audit",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33674157237"
+    },
+    {
+      "id": 33674071116,
+      "branch": "redesign/buck-sourcing",
+      "sha": "8a5a2eec74b56f52818038996566bce7e204d27e",
+      "name": "Align buck design doc",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33674071116"
+    },
+    {
+      "id": 33665790044,
+      "branch": "redesign/buck-sourcing",
+      "sha": "546c3811202caa1c7d12765507824ac2aa842cd2",
+      "name": "KiCad metadata sync retry",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33665790044"
+    },
+    {
+      "id": 33665694739,
+      "branch": "redesign/buck-sourcing",
+      "sha": "f40fe9dc7d36c713a1dce3fb2d8e480242f66593",
+      "name": "KiCad metadata sync",
+      "conclusion": "failure",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33665694739"
+    },
+    {
+      "id": 33664918085,
+      "branch": "redesign/buck-sourcing",
+      "sha": "6777007d6da52b6d7ccec34d28f1faf41b6f1266",
+      "name": "KiCad metadata audit",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/33664918085"
+    },
+    {
+      "id": 32300245142,
+      "branch": "variant/mouser-footprints",
+      "sha": "bd0321e14adbfb6e44aabad265544cbece80af4d",
+      "name": "Repair Mouser symbol fields",
+      "conclusion": "success",
+      "url": "https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/32300245142"
+    }
+  ]
+}

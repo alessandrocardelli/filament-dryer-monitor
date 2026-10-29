@@ -21,11 +21,11 @@ jobs:
           def git(*a): return subprocess.check_output(['git',*a],text=True).strip()
           remote=dict((ref,sha) for sha,ref in (l.split() for l in git('ls-remote','origin').splitlines()))
           for r in m['branches']:
-              assert remote.get('refs/heads/'+r['branch'])==r['sha'], 'Branch moved; re-audit '+r['branch']
               tag='refs/tags/'+r['tag']
               if tag in remote:
                   assert remote[tag]==r['sha'], 'Archive tag mismatch '+tag
               else:
+                  assert remote.get('refs/heads/'+r['branch'])==r['sha'], 'Branch moved; re-audit '+r['branch']
                   git('push','origin',r['sha']+':'+tag)
           remote=dict((ref,sha) for sha,ref in (l.split() for l in git('ls-remote','origin','refs/tags/archive/2026-10-29/*').splitlines()))
           for r in m['branches']:

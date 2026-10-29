@@ -1,5 +1,7 @@
 # STEP10 — Correggere il controllo della zona riscaldante (NON aumentare i cicli)
 
+> Historical protocol/technical record. Its dated NEXT and pre-test status are not the current work queue; see [PROJECT_STATE](PROJECT_STATE.md) and [TODO](TODO.md). Original checkpoint preserved in archive tags.
+
 > **Precisazione temporale ON20:** nel CSV l'ultimo OFF (ciclo19) avviene al `ms=569285`; `phase=6` compare a `ms=575851`, **6,566s dopo**. Il codice `HeaterStep09AirFeedback.h` richiede `minimumOffMs=12000`, quindi **non può aver legalmente iniziato il20° ON nei6,566s successivi** se era installata la build S9B180 prevista. Il20° ON è una osservazione manuale da preservare, ma **non corroborata** dai comandi registrati; possibilità di diversa interpretazione OLED/tempi, firmware differente o altro comportamento da verificare, non di impulso certo sfuggito. Recuperare `pulse_fault` e `firmware` da status; non inventare un ON non mostrato dal CSV. 
 
 **28 ottobre 2026 — DIREZIONE TECNICA PROPOSTA DOPO S9B180 REALE, NON UN NUOVO TEST AUTORIZZATO.** S9A e S9B sono entrambe prove HEATER ON **ESEGUITE** e i CSV/Sanwa originali sono archiviati. Qui non vengono approvate né nuove temperature di piastra né modifiche ai valori di soglia. Non cambiare lo schema/TCO/cablaggi automaticamente.
@@ -52,4 +54,4 @@ Se il firmware S9B è ancora alimentato dallo stesso avvio e sulla medesima rete
 - [S9B180 CSV originale](evidence/thermal/2026-10-28-S9B180-raw.csv)
 - [S9A confronto](evidence/thermal/2026-10-27-S9A-analysis.md)
 - [NTC analisi e limiti](NTC_CALIBRATION_ANALYSIS.md)
-- [Controllo attuale, solo nel branch sperimentale](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step09b-air25-budget180-2026-10-27/firmware/HeaterStep09AirFeedback.h)
+- [Controllo attuale, solo nel branch sperimentale](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/2cefe18089175694a7d689259d1acbff7d00156f/firmware/HeaterStep09AirFeedback.h)

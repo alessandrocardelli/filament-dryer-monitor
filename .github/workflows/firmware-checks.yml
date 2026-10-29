@@ -1,0 +1,51 @@
+name: Stable non-heating firmware checks
+on:
+  push:
+    branches: [main, cleanup/consolidation-2026-10-29]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: github.head_ref != 'experiment/step10-heater-diagnostics-air25-2026-10-28'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        source: [current, before-consolidation]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Select and verify source
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ '${{ matrix.source }}' = before-consolidation ]; then
+            git checkout a60804d2aadc9cc5c2d0c291c59c54fee0d2c072
+            g++ -std=c++17 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_heater_policy.cpp -o /tmp/policy
+            /tmp/policy
+          else
+            git diff --exit-code a60804d2aadc9cc5c2d0c291c59c54fee0d2c072 -- hardware firmware/firmware.ino firmware/AppConfig.h firmware/SafetyController.h docs/DECISIONS.md
+            bash firmware/tests/host/run_main_checks.sh
+          fi
+      - uses: arduino/setup-arduino-cli@v2
+      - name: Install pinned ESP32 toolchain
+        run: |
+          set -euo pipefail
+          arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli lib install U8g2@2.36.19
+      - name: Compile ESP32 without flashing
+        shell: bash
+        run: |
+          set -euo pipefail
+          arduino-cli compile --fqbn esp32:esp32:esp32 --warnings all firmware 2>&1 | tee "$RUNNER_TEMP/compile-${{ matrix.source }}.log"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stable-compile-${{ matrix.source }}-${{ github.sha }}
+          path: ${{ runner.temp }}/compile-*.log
+          if-no-files-found: warn

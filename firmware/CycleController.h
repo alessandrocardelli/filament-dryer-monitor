@@ -35,6 +35,10 @@ class CycleController {
 
   bool isRunning() const { return running_; }
 
+  uint32_t elapsedMs(uint32_t nowMs) const {
+    return running_ ? static_cast<uint32_t>(nowMs - startedMs_) : 0;
+  }
+
   uint32_t remainingSeconds(uint32_t nowMs) const {
     if (!running_) return 0;
     const uint32_t totalSeconds =

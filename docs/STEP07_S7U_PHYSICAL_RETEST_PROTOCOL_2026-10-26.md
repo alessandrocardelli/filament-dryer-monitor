@@ -1,5 +1,7 @@
 # STEP07-S7U — Protocollo eseguibile, tracciabilità e handoff della NUOVA prova fisica
 
+> Historical protocol/technical record. Its dated NEXT and pre-test status are not the current work queue; see [PROJECT_STATE](PROJECT_STATE.md) and [TODO](TODO.md). Original checkpoint preserved in archive tags.
+
 > **POST-SESSIONE 26 OTTOBRE 2026 — ESEGUITA:** questo documento conserva il protocollo *pre-registrato* e quindi usa espressioni future nelle sezioni storiche, ma la prova descritta **È STATA ESEGUITA**, con `NTC R LIMIT` e dati originali archiviati su **main**: [registro misure S7U](evidence/thermal/2026-10-26-S7U-RETEST-SESSION.md), [CSV raw 717 campioni](evidence/thermal/2026-10-26-S7U-retest-raw.csv), [analisi](evidence/thermal/2026-10-26-S7U-retest-analysis.md). Sanwa17/17/36/43°C, cooling in discesa fino25°C a fermata ventola; NTC39789,3Ω a FAULT, aria18,20→19,52°C a OFF→20,89°C a fine acquisizione, 2×20s +19,25s di HEATER comando ON. **NON RIPETERE la sessione**. NEXT G2/G3, review della guardia termica e protezioni senza nuova accensione. Il testo sotto è conservato immutato come piano iniziale, non come istruzione di prova attuale.
 
 **Data preparazione:** 2026-10-26. **Stato:** protocollo scritto; nuova prova **NON ANCORA ESEGUITA**; nessun nuovo risultato fisico disponibile.
