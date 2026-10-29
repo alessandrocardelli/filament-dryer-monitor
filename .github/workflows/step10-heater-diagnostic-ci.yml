@@ -1,4 +1,4 @@
-name: STEP10A - local-heater diagnostic candidate (GPIO-mock + ESP32 build)
+name: STEP10B - chamber-demand latch and CSV checkpoint (GPIO-mock + ESP32 build)
 
 on:
   push:
@@ -45,19 +45,19 @@ jobs:
               "kHardwareWindowCeilingUs = 20500000",
           ):
               assert t in h, f"Candidate review required: {t}"
-          assert '"HOT-261028-S10A25"' in Path("firmware/FirmwareBuild.h").read_text()
-          assert '"H28-S10A"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"HOT-261029-S10B25"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"H29-S10B"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
           assert "display_.drawStr(20, 44, FirmwareBuild::kId)" in ui
           assert 'display_.drawStr(2, 44, "FW")' in ui
           assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
           assert 2 + 6*len("FW") < 20
-          assert 20 + 6 * len("HOT-261028-S10A25") <= 128
-          assert 78 + 6 * len("H28-S10A") <= 128
-          print("PASS: STEP10A 300s cumulative cap, reviewed trial NTC45/60k, hard NTC40k, no V1 heater approvals")
+          assert 20 + 6 * len("HOT-261029-S10B25") <= 128
+          assert 78 + 6 * len("H29-S10B") <= 128
+          print("PASS: STEP10B 300s cumulative cap, reviewed trial NTC45/60k, hard NTC40k, no V1 heater approvals")
           PY
-      - name: Verify STEP10A telemetry and no live CSV streaming
+      - name: Verify STEP10B telemetry and no live CSV streaming
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -85,51 +85,65 @@ jobs:
       - name: Native GPIO-mock with NEW 300s cap, 25C air, NTC FAULT, STOP and cooldown
         run: |
           set -euo pipefail
-          bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step10a-mock.log"
+          bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step10b-mock.log"
       - name: STEP08 selective offline replay regression
         run: bash firmware/tests/host/run_step08_real_trace.sh
-      - name: Runtime source unchanged by repository consolidation
+      - name: STEP10B behavior and safe checkpoint invariant
         run: |
-          git fetch --no-tags origin 05d4c36d2378be9b09664545f37243a5dfa9f477
-          git diff --exit-code FETCH_HEAD -- firmware ':!firmware/tests'
+          python3 - <<'PY'
+          from pathlib import Path
+          t=Path("firmware/HeaterStep09AirFeedback.h").read_text()
+          f=Path("firmware/firmware.ino").read_text()
+          l=Path("firmware/ThermalLog.h").read_text()
+          ui=Path("firmware/Ui.h").read_text()
+          assert "airDemandActive_" in t
+          assert "in.ntcOhms >= params_.ntcResumeOhms &&\n        airDemandActive_" in t
+          assert "if (in.airC >= params_.targetAirC) airDemandActive_ = false;" in t
+          assert "safety.heaterOn() &&" not in f.split("const bool heaterIrreversiblyOff")[1].split("if (loggingSession")[0]
+          assert "if (loggingSession && !csvCheckpointAttempted && !safety.heaterOn() &&" in f
+          assert "heaterIrreversiblyOff" in f and "thermalLog.saveWhenSafe()" in f
+          assert "dirty_ = true; // a post-checkpoint cooldown" in l
+          assert "WAIT NTC 60k" in ui and "WAIT AIR 24C" in ui
+          print("PASS: independent thermostat latch, explicit wait reason, heater-latched-off checkpoint")
+          PY
       - uses: arduino/setup-arduino-cli@v2
       - name: Install ESP32 core 3.3.12 and U8g2 2.36.19
         run: |
           arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli lib install U8g2@2.36.19
-      - name: Compile actual STEP10A25 ESP32 OTA application (DO NOT FLASH)
+      - name: Compile actual STEP10B25 ESP32 OTA application (DO NOT FLASH)
         run: |
           set -euo pipefail
-          out="$RUNNER_TEMP/s10a25-build"
+          out="$RUNNER_TEMP/s10b25-build"
           mkdir -p "$out"
-          arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$out" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step10a-esp32-build.log"
+          arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$out" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step10b-esp32-build.log"
           echo "PASS: ESP32 binary linked with no DRAM overflow"
           app="$out/firmware.ino.bin"
           test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
           # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
-          grep -a -q 'HOT-261028-S10A25' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
-          cp "$app" "$RUNNER_TEMP/HOT-261028-S10A25-OTA-app.bin"
+          grep -a -q 'HOT-261029-S10B25' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
+          cp "$app" "$RUNNER_TEMP/HOT-261029-S10B25-OTA-app.bin"
           cd "$RUNNER_TEMP"
-          sha256sum HOT-261028-S10A25-OTA-app.bin | tee HOT-261028-S10A25-OTA-app.sha256
+          sha256sum HOT-261029-S10B25-OTA-app.bin | tee HOT-261029-S10B25-OTA-app.sha256
           echo "OTA application only, HEAT-CAPABLE experiment; no physical test completed." >> "$GITHUB_STEP_SUMMARY"
-          cat HOT-261028-S10A25-OTA-app.sha256 >> "$GITHUB_STEP_SUMMARY"
+          cat HOT-261029-S10B25-OTA-app.sha256 >> "$GITHUB_STEP_SUMMARY"
       - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: S10A25-HEAT-CAPABLE-OTA-APP
+          name: S10B25-HEAT-CAPABLE-OTA-APP
           path: |
-            ${{ runner.temp }}/HOT-261028-S10A25-OTA-app.bin
-            ${{ runner.temp }}/HOT-261028-S10A25-OTA-app.sha256
+            ${{ runner.temp }}/HOT-261029-S10B25-OTA-app.bin
+            ${{ runner.temp }}/HOT-261029-S10B25-OTA-app.sha256
           if-no-files-found: error
           retention-days: 30
       - name: Upload reproducible results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: step10a-candidate-logs
+          name: step10b-candidate-logs
           path: |
-            ${{ runner.temp }}/step10a-mock.log
-            ${{ runner.temp }}/step10a-esp32-build.log
+            ${{ runner.temp }}/step10b-mock.log
+            ${{ runner.temp }}/step10b-esp32-build.log
           if-no-files-found: warn
