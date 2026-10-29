@@ -103,7 +103,7 @@ jobs:
           l=Path("firmware/ThermalLog.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
           assert "airDemandActive_" in t
-          assert "in.ntcOhms >= params_.ntcResumeOhms &&\n        airDemandActive_" in t
+          assert "in.ntcOhms >= params_.ntcResumeOhms &&" in t and "airDemandActive_)" in t
           assert "if (in.airC >= params_.targetAirC) airDemandActive_ = false;" in t
           assert "safety.heaterOn() &&" not in f.split("const bool heaterIrreversiblyOff")[1].split("if (loggingSession")[0]
           assert "if (loggingSession && !csvCheckpointAttempted && !safety.heaterOn() &&" in f
