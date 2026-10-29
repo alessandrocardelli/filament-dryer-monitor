@@ -108,7 +108,7 @@ static void enterState(AppState next, uint32_t nowMs) {
         Serial.println("STATE -> HEATER STEP07 GUARD: 6 x 20 s MAX, NTC 40k abort, fan 100%");
         Serial.println("HOT_CSV,ms,phase,pulses,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else if (AppConfig::kHeaterStep09TrialMode) {
-        Serial.println("STATE -> STEP12P UNAPPROVED PLATE ENVELOPE: AIR25, NTC soft35/50k backup30k, max300s/12min, fan100");
+        Serial.println("STATE -> STEP13A UNAPPROVED AIR30 TEST: NTC soft33/50k backup30k, max360s/15min, fan100");
         Serial.println("HOT_CSV,ms,phase,windows,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else {
         Serial.println(safety.heaterLocked()
@@ -317,7 +317,7 @@ void setup() {
     Serial.println("EXPERIMENTAL 6-PULSE STEP07 NTC-GUARD TEST; no auto-repeat");
     Serial.println("NTC absolute degrees NOT calibrated; experimental raw R_NTC abort at 40k");
   } else if (AppConfig::kHeaterStep09TrialMode) {
-    Serial.println("STEP12P UNAPPROVED HEATER PROFILE: SHT45 AIR25, NTC SOFT35/REARM50/BACKUP30k (NOT qualified), 100% fan, timed windows");
+    Serial.println("STEP13A UNAPPROVED HEATER PROFILE: SHT45 AIR30/29, NTC SOFT33/REARM50/BACKUP30k (NOT qualified), 100% fan, timed windows");
   } else {
     Serial.println(safety.heaterLocked()
         ? "Heater OUTPUT LOCKED: configuration/calibration not approved."
