@@ -60,6 +60,9 @@ Before **every** HEATER firmware modification/reuse or thermal-test plan, make a
 
 **CI invariant:** Verify both the currently selected trial parameters **and their classification/provenance**. A unit test that merely asserts an old hard-coded threshold is not evidence that the threshold is a correct engineering decision. Old mock tests must be adapted when replacing a provisional envelope; do not let obsolete CI assertions freeze an arbitrary test value indefinitely. Maintain hard-time hardware watchdog, sensor invalid/stale stops, real STOP, fan-fault response, air ceiling, cooldown, and one-shot bounds independently of the chosen NTC profile.
 
+
+**GitHub Actions evidence retrieval:** `fetch_commit_workflow_runs` is limited to PR-triggered runs and may return an empty list for a genuinely successful **push** run. Before declaring CI unavailable or asking anyone to re-run it, read the repository's `GET /repos/{owner}/{repo}/actions/runs?head_sha=<exact-SHA>&per_page=20` via the connected GitHub fetch action; verify `head_sha`, `event`, `conclusion`, job steps, artifact name, and actual OTA application binary SHA256 from job logs. Document both source commit and any later docs-only HEAD separately. Never interpret an empty filtered PR-run query as failed/missing CI.
+
 ## Required introduction for every NEW test (user instruction, 2026-10-27)
 
 **Every newly proposed test MUST start with a brief, comprehensible introduction explaining: (1) WHAT will be done, (2) WHY this test matters, (3) HOW it builds directly on the previous completed test and its actual results, and (4) WHICH future project gate/test it unlocks.** Then provide exact actionable steps, measurement timing and instrumentation, safety/abort criteria if physical, expected outputs, persistence paths, and next decisions. This requirement applies to software and analysis tests as well as physical tests.
