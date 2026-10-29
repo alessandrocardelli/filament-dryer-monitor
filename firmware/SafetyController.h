@@ -35,7 +35,8 @@ class SafetyController {
         return; // never heat without the independent pulse deadline
       }
       timerAttachInterrupt(pulseTimer_, &SafetyController::pulseTimerIsr);
-      timerAlarm(pulseTimer_, AppConfig::kHeaterStep09TrialMode
+      timerAlarm(pulseTimer_, (AppConfig::kHeaterStep09TrialMode ||
+                               AppConfig::kHeaterOutputEnabled)
                       ? HeaterStep09AirFeedback::kHardwareWindowCeilingUs
                       : HeaterStep07GuardTrial::kPulseHardwareCeilingUs,
                  false, 0); // bounded 20.5 s per window; never continuous
@@ -68,7 +69,7 @@ class SafetyController {
          AppConfig::kHeaterOutputEnabled) && pulseTimerFired_) {
       if (AppConfig::kHeaterStep09TrialMode)
         feedback_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
-      else
+      else if (AppConfig::kHeaterCommissioningMode)
         commission_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
       faultActive_ = true;
       forceHeaterOff();
@@ -284,7 +285,7 @@ class SafetyController {
         if (!pulseTimer_ || pulseTimerFired_) {
           if (AppConfig::kHeaterStep09TrialMode)
             feedback_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
-          else
+          else if (AppConfig::kHeaterCommissioningMode)
             commission_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
           faultActive_ = true;
           forceHeaterOff();
