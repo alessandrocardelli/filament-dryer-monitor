@@ -234,7 +234,7 @@ int main() {
     SafetyController s; start(s);
     tick(s, 906000); // hard overall time bound regardless of air
     assert(!s.heaterOn() && !s.faultActive());
-    assert(s.coolingRequired(726001));
+    assert(s.coolingRequired(906001));
   }
   std::cout << "PASS STEP13A actual SafetyController GPIO-MOCK: real ON, "
       "SHT45 30C feedback/hysteresis, NTC soft33k/rearm50k/backup30k, "
