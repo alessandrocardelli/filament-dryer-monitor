@@ -43,6 +43,23 @@ Do not silently revisit or replace an established decision. If new primary-sourc
 - Preserve unique source, raw data and historical checkpoints with verified reachable commits/tags before deleting branches; update branch-based links to permanent commit URLs. Do not use a closed PR as the only backup.
 - Keep at most one thermal experiment line unless a concrete technical need is documented. Reuse it for small changes; do not create checkpoint/document-only branch chains.
 
+## Anti-regression: experimental limits are NEVER production specifications (2026-10-29)
+
+**Reason: user-requested correction after the STEP07 40kOhm carry-over failure.** The `R_NTC <= 40kOhm` guard was created as an intentionally *EARLY* one-shot STEP07 test stop. It is not a verified NTC temperature calibration, plate setpoint, material safety threshold, OEM specification, or permanent fault boundary. STEP06C previously used an experimental 19.68kOhm stop and observed 30.32kOhm / Sanwa PLATE53C (different conditions); the earlier open-covers/fan-OFF calibration reached 7.12kOhm with Sanwa85C / sketch-indicated90C. **Neither historical extreme independently establishes safe enclosed continuous operation.** See original sources, not a chat summary.
+
+Before **every** HEATER firmware modification/reuse or thermal-test plan, make a short provenance table for EVERY numerical heater-related limit and operating setpoint (NTC pause/resume/trip, plate contact veto, air target/fault ceiling, pulse/total time, fan and TCO), explicitly classifying each as:
+- `ELECTRICAL_OR_HARDWARE` (datasheet / actual wiring / measured, with source),
+- `PROVISIONAL_EXPERIMENT` (which test and purpose; not inherited by default),
+- `MEASURED_CHARACTERIZATION` (actual geometry, sensor/probe and airflow),
+- `APPROVED_OPERATIONAL` (exact approving decision, firmware version and scope), or
+- `UNKNOWN / UNQUALIFIED` (no guessed values).
+
+**Mandatory engineering gate:** Whenever a provisional guard reduces reachable temperatures or prevents the design objective, identify it as a **known artificial limiting factor**, not as a natural/safe thermal maximum. Require an explicit justification or removal/replacement proposal before yet another trial/firmware. A prior CI PASS, a historical test's provisional number or a protection that happened to trip must NEVER be promoted silently to a permanent ceiling. Read original thermal CSV + external Sanwa evidence before changing limits; distinguish NTC bead resistance, Sanwa nearby plate-contact temperature and SHT45 chamber air. Do not invent Celsius calibration from raw NTC.
+
+**Change review:** Any changed thermal envelope must be an explicit, named experimental proposal with source evidence, old vs new numbers, predicted exposure and residual risks, unchanged independent protective mechanisms, exact software test and separate physical authorization/preflight. A request to develop firmware is NOT in itself permission to energize the modified heater or bypass the actually installed TCO. No automatic physical test / no silent heater enable. Keep `main` non-heating. Archive the current physical evidence; preserve new experimental source on the existing experimental branch/PR. Use one concise current-state entry and one next action, not repetitive process documents.
+
+**CI invariant:** Verify both the currently selected trial parameters **and their classification/provenance**. A unit test that merely asserts an old hard-coded threshold is not evidence that the threshold is a correct engineering decision. Old mock tests must be adapted when replacing a provisional envelope; do not let obsolete CI assertions freeze an arbitrary test value indefinitely. Maintain hard-time hardware watchdog, sensor invalid/stale stops, real STOP, fan-fault response, air ceiling, cooldown, and one-shot bounds independently of the chosen NTC profile.
+
 ## Required introduction for every NEW test (user instruction, 2026-10-27)
 
 **Every newly proposed test MUST start with a brief, comprehensible introduction explaining: (1) WHAT will be done, (2) WHY this test matters, (3) HOW it builds directly on the previous completed test and its actual results, and (4) WHICH future project gate/test it unlocks.** Then provide exact actionable steps, measurement timing and instrumentation, safety/abort criteria if physical, expected outputs, persistence paths, and next decisions. This requirement applies to software and analysis tests as well as physical tests.
