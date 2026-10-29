@@ -301,7 +301,7 @@ class Ui {
           HeaterCommissioning::Phase::Cooldown)
         snprintf(target, sizeof(target), "COOLING %lu s",
             static_cast<unsigned long>(coolingSecondsLeft));
-      else snprintf(target, sizeof(target), "AIR25 NTC 45/60k H40k");
+      else snprintf(target, sizeof(target), "AIR25 NTC45/60 H40");
     } else if (AppConfig::kHeaterCommissioningMode) {
       if (static_cast<HeaterCommissioning::Phase>(pulsePhase) ==
           HeaterCommissioning::Phase::Cooldown) {
