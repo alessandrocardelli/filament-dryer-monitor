@@ -1,4 +1,4 @@
-// STEP10A: real SafetyController, GPIO mocked; new bounded local envelope.
+// STEP10B: real SafetyController, GPIO mocked; new bounded local envelope.
 // Fixed 25C SHT45 air target; NTC-ohm soft pause above unchanged 40k fault.
 #include <cassert>
 #include <cstdint>
@@ -75,6 +75,29 @@ int main() {
     assert(s.commissioningFault() == static_cast<uint8_t>(HeaterCommissioning::Fault::ManualStop));
     assert(!s.heaterOn() && !s.commissioningCanStart());
     assert(s.coolingRequired(37251) && s.fanPermitted());
+  }
+  // STEP10B regression for the observed 19th-OFF deadlock class.
+  // Air at 24.6C has NEVER reached the 25C target. After a local NTC
+  // pause, air 24.6C must NOT require falling all the way to 24C.
+  {
+    SafetyController s; start(s);
+    tick(s, 12500, 45000.0f, 23.7f); // local soft pause
+    assert(!s.heaterOn() && !s.faultActive());
+    assert(s.feedbackWaitReason(12501, 45000.0f) == 1); // OFF timer
+    tick(s, 24500, 59000.0f, 24.6f); // >=12s, NTC not recovered
+    assert(!s.heaterOn());
+    assert(s.feedbackWaitReason(24500, 59000.0f) == 2); // NTC
+    tick(s, 24600, 60000.0f, 24.6f); // NTC now recovered
+    assert(s.heaterOn() && !s.faultActive()); // 24C gate was incorrect
+    tick(s, 24700, 60000.0f, 25.0f); // first genuine target cutoff
+    assert(!s.heaterOn());
+    tick(s, 36700, 70000.0f, 24.5f); // demand off until <=24C
+    assert(!s.heaterOn());
+    assert(s.feedbackWaitReason(36700, 70000.0f) == 3); // AIR latch
+    tick(s, 36800, 70000.0f, 24.0f);
+    assert(s.heaterOn() && !s.faultActive());
+    s.stop();
+    assert(!s.heaterOn() && !s.commissioningCanStart());
   }
   {
     SafetyController s; start(s);
@@ -194,7 +217,7 @@ int main() {
     assert(!s.heaterOn() && !s.faultActive());
     assert(s.coolingRequired(726001));
   }
-  std::cout << "PASS STEP09B actual SafetyController GPIO-MOCK: real ON, "
+  std::cout << "PASS STEP10B actual SafetyController GPIO-MOCK: real ON, "
       "SHT45 25C feedback/hysteresis, NTC soft45k/hard40k, "
       "20s/12s windows, late 25C SHT45 cutoff after >120s ON, new300s cap, STOP, "
       "cooldown, stale/fault/no restart. NO REAL GPIO.\n";
