@@ -18,11 +18,13 @@ class ThermalLog {
     uint8_t pulseFault = 0, ntcFault = 0;
   };
   // Keep the original 1400-entry RAM budget, REQUIRED for ESP32 DRAM link.
-  // STEP10 samples every 750ms, with all observable phase/HEATER edges forced.
-  // 720s run + 90s cooldown + bounded edges fits in 1400 samples.
-  // Prior S7U logs remain at 250ms. No flash writes during heating.
-  // Do not write flash while the heater can be commanded HIGH.
-  static constexpr size_t kCapacity = 1400; // S7U 250ms or STEP09 500ms
+  // STEP13A: 900ms baseline plus forced HEATER/phase/fault transitions.
+  // 900s run + 90s cooldown yields ~1100 periodic samples; 1400 RAM
+  // slots leave headroom for all real edges and preserve the full trace.
+  // This is a LOG RATE only: NTC ADC safety sampling remains at 500ms.
+  // Prior S7U standalone logging remains at 250ms.
+  // Never write flash while the heater may be commanded ON again.
+  static constexpr size_t kCapacity = 1400;
   void begin() {
     // On the first clean prototype install there is no LittleFS signature.
     mounted_ = LittleFS.begin(false);
@@ -43,7 +45,7 @@ class ThermalLog {
               const NtcSnapshot &ntc, bool heaterOn,
               uint8_t fanPercent, uint8_t phase, uint8_t pulses,
               uint8_t pulseFault, uint8_t ntcFault, uint32_t loopGapMs) {
-    const uint32_t intervalMs = AppConfig::kHeaterStep09TrialMode ? 750U : 250U;
+    const uint32_t intervalMs = AppConfig::kHeaterStep09TrialMode ? 900U : 250U;
     if (count_ > 0 && nowMs - lastSampleMs_ < intervalMs) {
       const Sample &prev = at(count_ - 1);
       if (prev.phase == phase && prev.heater == (heaterOn ? 1 : 0) &&
