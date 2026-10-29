@@ -44,6 +44,9 @@ struct Inputs {
 
 class Controller {
  public:
+  enum class WaitReason : uint8_t {
+    None = 0, MinimumOff = 1, NtcRecovery = 2, AirHysteresis = 3
+  };
   explicit Controller(Parameters params = Parameters{}) : params_(params) {}
 
   bool update(uint32_t nowMs, const Inputs &in) {
@@ -58,6 +61,9 @@ class Controller {
       phase_ = Phase::Prerun;
       startedMs_ = nowMs;
       phaseSinceMs_ = nowMs;
+      // Initially request heat for any chamber air below target. Hysteresis
+      // is armed only AFTER the chamber actually reaches target.
+      airDemandActive_ = in.airC < params_.targetAirC;
     }
 
     // Cooling always runs to completion; never resume HEAT after maximum
@@ -83,8 +89,14 @@ class Controller {
     if (!in.airValid || !std::isfinite(in.airC)) return abort(Fault::AirInvalid);
     if (in.airAgeMs > params_.maxAirAgeMs) return abort(Fault::AirStale);
     if (in.airC >= params_.airFaultCeilingC) return abort(Fault::AirLimit);
+    // Chamber thermostat is a latch, independent from NTC soft-pause.
+    // Previously every NTC pause required air<=24C to restart even when
+    // chamber had NEVER reached 25C. Keep demand until 25C is first reached.
+    if (in.airC >= params_.targetAirC) airDemandActive_ = false;
+    else if (in.airC <= params_.targetAirC - params_.airHysteresisC)
+      airDemandActive_ = true;
     // Same RAW 40kOhm hard trip demonstrated by physical S7U.
-    // The separate 50kOhm soft PAUSE is deliberately more conservative.
+    // The separate 45kOhm soft PAUSE is experimental, not calibrated.
     if (in.ntcOhms <= params_.ntcHardTripOhms ||
         in.ntcOhms >= params_.ntcOpenOhms)
       return abort(Fault::NtcResistanceLimit);
@@ -110,7 +122,7 @@ class Controller {
       const bool shouldPause =
           nowMs - heatWindowStartedMs_ >= params_.maximumOnWindowMs ||
           in.ntcOhms <= params_.ntcSoftPauseOhms ||
-          in.airC >= params_.targetAirC;
+          !airDemandActive_;
       if (shouldPause) {
         ++windowsDone_;
         phase_ = Phase::Gap;
@@ -123,7 +135,7 @@ class Controller {
     if (phase_ == Phase::Gap &&
         nowMs - phaseSinceMs_ >= params_.minimumOffMs &&
         in.ntcOhms >= params_.ntcResumeOhms &&
-        in.airC <= params_.targetAirC - params_.airHysteresisC) {
+        airDemandActive_) {
       phase_ = Phase::Pulse;
       heatWindowStartedMs_ = nowMs;
       lastOnTickMs_ = nowMs;
@@ -151,6 +163,16 @@ class Controller {
   Phase phase() const { return phase_; }
   Fault fault() const { return fault_; }
   uint32_t totalHeatMs() const { return totalHeatMs_; }
+  bool airDemandActive() const { return airDemandActive_; }
+  WaitReason waitReason(uint32_t nowMs, float ntcOhms) const {
+    if (phase_ != Phase::Gap) return WaitReason::None;
+    if (nowMs - phaseSinceMs_ < params_.minimumOffMs)
+      return WaitReason::MinimumOff;
+    if (!std::isfinite(ntcOhms) || ntcOhms < params_.ntcResumeOhms)
+      return WaitReason::NtcRecovery;
+    if (!airDemandActive_) return WaitReason::AirHysteresis;
+    return WaitReason::None;
+  }
 
  private:
   bool abort(Fault reason) {
@@ -170,6 +192,7 @@ class Controller {
   Phase phase_ = Phase::Idle;
   Fault fault_ = Fault::None;
   bool requestedOn_ = false, fanSeen_ = false, hadHeat_ = false;
+  bool airDemandActive_ = false;
   uint8_t windowsDone_ = 0;
   uint32_t startedMs_ = 0, phaseSinceMs_ = 0;
   uint32_t heatWindowStartedMs_ = 0, lastOnTickMs_ = 0;
