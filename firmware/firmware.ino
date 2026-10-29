@@ -93,12 +93,12 @@ static void enterState(AppState next, uint32_t nowMs) {
       csvCheckpointAttempted = false;
       csvSaveFailed = false;
       minSessionNtcOhms = NAN;
-      // Keep stored user settings unchanged: this isolated physical trial
-      // always uses fixed 25 C air and 15 min cycle guard.
+      // Legacy STEP13 trial remains available in archived history only;
+      // current V1 source runs user-configured 40..55C and 15min..12h.
       if (!AppConfig::kHeaterStep09TrialMode) settingsStore.save(settings);
       if (AppConfig::kHeaterStep09TrialMode) {
         CycleSettings trial{};
-        trial.targetTempC = 25;
+        trial.targetTempC = 30;
         trial.durationMinutes = 15; // > 12m trial + 90s cooling guard
         cycle.start(trial, nowMs);
       } else cycle.start(settings.cycle, nowMs);
@@ -393,9 +393,8 @@ void loop() {
     minSessionNtcOhms = ntc.snapshot().resistanceOhms;
   }
 
-  // Actual controller integration: air is the regulated variable; heater NTC
-  // provides the upper-temperature observation. GPIO19 remains build-locked
-  // until both thermal validation flags and all bounded limits are approved.
+  // V1 target is the user's AIR setpoint; local NTC temperature limits
+  // need independent calibration and approval before GPIO19 is unlocked.
   safety.update(nowMs, ntc.snapshot(), sht45.snapshot(),
                 appState == AppState::Drying && cycle.isRunning(),
                 fan.attached() && fan.phase() == FanPhase::Running,
