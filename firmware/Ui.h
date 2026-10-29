@@ -233,7 +233,7 @@ class Ui {
   void drawSetup(SetupField selected, const CycleSettings &settings) {
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(2, 9, AppConfig::kHeaterStep09TrialMode
-        ? "STEP11D AIR25 TEST" : "SET CYCLE   SAFE MODE");
+        ? "STEP12P AIR25 TEST" : "SET CYCLE   SAFE MODE");
     display_.drawHLine(0, 12, 128);
 
     char temp[22];
@@ -273,7 +273,7 @@ class Ui {
     display_.setFont(u8g2_font_6x10_tf);
     char header[22];
     if (AppConfig::kHeaterStep09TrialMode) {
-      snprintf(header, sizeof(header), "STEP11D AIR25 TEST");
+      snprintf(header, sizeof(header), "STEP12P AIR25 TEST");
     } else if (AppConfig::kHeaterCommissioningMode) {
       snprintf(header, sizeof(header), "NTC GUARD TEST FAN100");
     } else {
@@ -301,7 +301,7 @@ class Ui {
           HeaterCommissioning::Phase::Cooldown)
         snprintf(target, sizeof(target), "COOLING %lu s",
             static_cast<unsigned long>(coolingSecondsLeft));
-      else snprintf(target, sizeof(target), "AIR25 NTC45/60 H40");
+      else snprintf(target, sizeof(target), "AIR25 NTC35/50 B30");
     } else if (AppConfig::kHeaterCommissioningMode) {
       if (static_cast<HeaterCommissioning::Phase>(pulsePhase) ==
           HeaterCommissioning::Phase::Cooldown) {
@@ -324,7 +324,7 @@ class Ui {
         case HeaterCommissioning::Phase::Gap:
           switch (waitReason) {
             case 1: progress = "WAIT 12s OFF"; break;
-            case 2: progress = "WAIT NTC 60k"; break;
+            case 2: progress = "WAIT NTC 50k"; break;
             case 3: progress = "WAIT AIR 24C"; break;
             default: progress = "WAIT CONTROL"; break;
           }
@@ -378,11 +378,11 @@ class Ui {
     // Only the electrical NTC resistance has been validated for diagnostics.
     // SHT45 reads chamber air; the NTC is embedded in the heater assembly.
     if (ntc.valid) {
-      // Technical page: raw resistance plus distance from the confirmed
-      // experimental 40kOhm HARD trip. Not a Celsius thermometer.
-      snprintf(line, sizeof(line), "NTC %.1fk HARD%+.1fk",
+      // Current PROVISIONAL raw NTC backup cutoff (30k). Not a permanent
+      // hard safety temperature, nor a Celsius thermometer.
+      snprintf(line, sizeof(line), "NTC %.1fk BAK%+.1fk",
                ntc.resistanceOhms / 1000.0f,
-               (ntc.resistanceOhms - 40000.0f) / 1000.0f);
+               (ntc.resistanceOhms - HeaterStep09AirFeedback::parameters().ntcHardTripOhms) / 1000.0f);
       display_.drawStr(2, 39, line);
     } else {
       display_.drawStr(2, 39, "NTC R  FAULT");
