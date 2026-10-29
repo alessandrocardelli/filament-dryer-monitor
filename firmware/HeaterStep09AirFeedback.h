@@ -17,13 +17,27 @@ namespace HeaterStep09AirFeedback {
 using Phase = HeaterCommissioning::Phase; // 0 Idle;1 Prerun;2 Pulse;3 Gap;4 Cooldown;5 Complete;6 Aborted
 using Fault = HeaterCommissioning::Fault;
 
+// Distinguish a physically bounded one-off heater experiment from
+// the product design. A cumulative-ON budget must NEVER become a normal
+// drying-cycle limit. LongDuration is currently HOST-TEST ONLY:
+// SafetyController's hardware constructor uses SupervisedTrial exclusively.
+enum class RunPolicy : uint8_t {
+  SupervisedTrial = 0,
+  DurationControlledDesign = 1
+};
+
 struct Parameters {
+  RunPolicy runPolicy = RunPolicy::SupervisedTrial;
   uint32_t prerunMs = 5000;
   uint32_t maximumOnWindowMs = 20000;
   uint32_t minimumOffMs = 12000;
   uint32_t cooldownMs = 90000;
-  uint32_t maximumRunMs = 900000; // 15min provisional; STEP12P 12min truncated 24C rearm
-  uint32_t maximumTotalHeatMs = 360000; // cumulative 6min max; not continuous
+  // SUPERVISED TRIAL ONLY: historical 900s/360s caps exist to bound a
+  // single, separately approved physical test, NOT normal device operation.
+  // DurationControlledDesign ignores these fields: CycleController's
+  // configured user duration ends the cycle through Inputs.cycleActive.
+  uint32_t maximumRunMs = 900000;
+  uint32_t maximumTotalHeatMs = 360000;
   uint32_t fanStartupTimeoutMs = 12000;
   uint32_t maxNtcAgeMs = 1500;
   uint32_t maxAirAgeMs = 5000;
@@ -77,8 +91,9 @@ class Controller {
       airDemandActive_ = in.airC < params_.targetAirC;
     }
 
-    // Cooling always runs to completion; never resume HEAT after maximum
-    // energy/time or STOP, even when the SHT45 still wants warmth.
+    // Cooling always runs to completion after a trial cap or STOP.
+    // Normal drying is governed by user-selected duration, NOT total
+    // accumulated heater ON time; no autonomous hardware mode enabled.
     if (phase_ == Phase::Cooldown) {
       if (!cooldownNeeded(nowMs)) phase_ = Phase::Complete;
       return false;
@@ -90,8 +105,14 @@ class Controller {
       lastOnTickMs_ = nowMs;
       lastHeaterOnMs_ = nowMs;
     }
-    if (nowMs - startedMs_ >= params_.maximumRunMs ||
-        totalHeatMs_ >= params_.maximumTotalHeatMs) {
+    // Trial energy/time caps are NOT product protection thresholds.
+    // DurationControlledDesign is tested offline and must not be selected
+    // on hardware without independently validated thermal protection.
+    // Per-window 20s limit, 20.5s GPIO hardware timer, fan/NTC/air faults
+    // and STOP remain active with either run policy.
+    if (params_.runPolicy == RunPolicy::SupervisedTrial &&
+        (nowMs - startedMs_ >= params_.maximumRunMs ||
+         totalHeatMs_ >= params_.maximumTotalHeatMs)) {
       finishHeating(nowMs);
       return false;
     }
@@ -214,4 +235,13 @@ inline constexpr uint32_t kHardwareWindowCeilingUs = 20500000;
 // Candidate one-shot supervised trial parameters. These are *proposals*,
 // not production ratings and not permission for a physical test.
 inline Parameters parameters() { return Parameters{}; }
+
+// Offline design fixture only: never pass this to the HEATER-capable
+// SafetyController constructor until the product control/safety gate is
+// explicitly qualified and approved. No production enable flag is changed.
+inline Parameters durationControlledDesignParameters() {
+  Parameters p{};
+  p.runPolicy = RunPolicy::DurationControlledDesign;
+  return p;
+}
 }  // namespace HeaterStep09AirFeedback
