@@ -7,8 +7,11 @@ mkdir -p "$TMP/firmware/tests/host"
 cp "$ROOT/firmware/AppConfig.h" "$ROOT/firmware/AppTypes.h" \
    "$ROOT/firmware/HeaterControlPolicy.h" "$ROOT/firmware/HeaterPulseCommissioning.h" \
    "$ROOT/firmware/HeaterStep07GuardTrial.h" "$ROOT/firmware/HeaterStep09AirFeedback.h" \
-   "$ROOT/firmware/SafetyController.h" "$TMP/firmware/"
+   "$ROOT/firmware/HeaterProductAir.h" "$ROOT/firmware/SafetyController.h" "$TMP/firmware/"
 cp "$ROOT/firmware/tests/host/test_step09_feedback_gpio.cpp" "$TMP/firmware/tests/host/"
+# Historical STEP13 test fixture only: enable old heater trial in an ISOLATED
+# temp copy, never in the committed Arduino IDE source or actual PCB.
+sed -i 's/kHeaterStep09TrialMode = false/kHeaterStep09TrialMode = true/' "$TMP/firmware/AppConfig.h"
 cat >"$TMP/firmware/Arduino.h" <<'HDR'
 #pragma once
 #include <cstdint>
