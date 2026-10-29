@@ -2,8 +2,10 @@ name: Stable non-heating firmware checks
 on:
   push:
     branches: [main, cleanup/consolidation-2026-10-29]
+    paths: [firmware/**, .github/workflows/firmware-checks.yml]
   pull_request:
     branches: [main]
+    paths: [firmware/**, .github/workflows/firmware-checks.yml]
 permissions:
   contents: read
 jobs:

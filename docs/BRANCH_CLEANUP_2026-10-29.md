@@ -50,4 +50,10 @@ Sanwa readings remain in their original physical records, distinct from SHT45 ch
 ## Verification and final operations
 Local main host checks PASS:14 policy scenarios,41 thermostat/cycle assertions and actual SafetyController hard-LOW/fault-latch mock. STEP10A existing actual-controller GPIO mock PASS. STEP08 replay717 samples/237 ON records +8 fault injections is rerun after selective integration. Actual ESP32 core3.3.12/U8g2 2.36.19 builds before/after, GitHub run links and final ref/PR counts are recorded below once complete. No physical operation, flash, heating or hardware edit occurred.
 Branch-based links into removed refs are replaced by exact original commit URLs on both retained lines; surviving relative links and evidence hashes are checked. Old closed PR bodies are historical metadata and are not the operating instructions.
-Final operations: PENDING software CI, main integration, PR closures and branch deletion. This line must be replaced by verified results before completion.
+Software verification completed on `f338950b65435510637a3d1d2085a8df1a8869ca`: [push CI40864557554](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40864557554) and [PR CI40864565613](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40864565613) SUCCESS. Actual ESP32 core3.3.12/U8g2 2.36.19 before and after builds each use347,115 flash bytes and25,360 static RAM bytes.14 policy scenarios PASS before; after additionally41 cycle assertions and zero-HIGH GPIO fault-latch checks PASS. No real heater connection.
+
+PRs **7,8,10,11,12,13,14,17 closed without merge** after all original refs were archived and PR18 was retargeted as the isolated cumulative DRAFT. PR15/16 remain closed; PR1–6/9 keep their original historical merge status. PR18 is the only thermal integration proposal retained. The old descriptions remain below an explicit archive notice; no unique description was erased.
+
+Removed inactive hardware-mutating footprint/buzzer workflows from both retained lines; their original files remain in archive tags. Retained KiCad ERC is historical and not run/claimed by this consolidation; no schematic or PCB edit occurred.
+
+Main integration and branch deletion: PENDING verified completion.
