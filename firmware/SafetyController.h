@@ -60,6 +60,8 @@ class SafetyController {
               bool fanPwmRunning, uint32_t elapsedCycleMs,
               float targetChamberC) {
     lastNowMs_ = nowMs;
+    // The user cycle timer owns duration; no accumulated-heat test budget.
+    (void)elapsedCycleMs;
     // Remember the last known physical ON while the loop remains responsive.
     // stop()/FAULT must not erase residual plate heat and fan-overrun needs.
     if (heaterOn_) lastHeaterOnMs_ = nowMs;
