@@ -11,7 +11,7 @@
 | Variable | Present value / purpose | Classification & basis |
 | --- | --- | --- |
 | Chamber AIR target 40–55°C | user-selectable *design capability*, not a heater fault value | UNKNOWN / UNQUALIFIED physical; user requirement, UI range only; actual ability to reach55 not demonstrated |
-| User duration15min–12h | timer selected in existing menu; no cumulative energy budget | APPROVED_OPERATIONAL for UI behavior per D022 design model; physical thermal hold12h remains UNQUALIFIED |
+| User duration15min–12h | timer selected in existing menu; no cumulative energy budget | PROVISIONAL_EXPERIMENT numerical range for UI, consistent with D022 interaction model; D022 leaves final time range open; physical 12h hold UNQUALIFIED |
 | NTC soft pause/rearm/hard Celsius | **0/unconfigured in AppConfig**; require independent local/plate thermal review | UNKNOWN / UNQUALIFIED; historical 33k/35k/40k/45k/50k/60kΩ are **PROVISIONAL_EXPERIMENT**, not operational protection |
 | Chamber AIR fault Celsius | **0/unconfigured** in normal mode; must exceed target and respect actual materials | UNKNOWN / UNQUALIFIED; STEP13 air40°C was an earlier trial-only guard |
 | Per-window max ON20s and hardware ISR20.5s | existing bounded thermal trial design; future product controller also uses ISR | PROVISIONAL_EXPERIMENT / software implementation validated, physical watchdog and heat-transfer approval still pending |
