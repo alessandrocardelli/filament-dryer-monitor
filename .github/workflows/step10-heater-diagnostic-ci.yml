@@ -1,4 +1,4 @@
-name: STEP12P - provisional revised heater envelope, GPIO-mock and ESP32 build
+name: STEP13A - AIR30/29 NTC33/50/30 + 15min trial, GPIO-mock and ESP32 build
 
 on:
   push:
@@ -41,13 +41,14 @@ jobs:
           h=Path("firmware/HeaterStep09AirFeedback.h").read_text()
           for t in (
               "ntcHardTripOhms = 30000.0f;",
-              "ntcSoftPauseOhms = 35000.0f;",
+              "ntcSoftPauseOhms = 33000.0f;",
               "ntcResumeOhms = 50000.0f;",
+              "maximumRunMs = 900000;",
               "maximumOnWindowMs = 20000;",
               "minimumOffMs = 12000;",
-              "maximumTotalHeatMs = 300000;",
+              "maximumTotalHeatMs = 360000;",
               "cooldownMs = 90000;",
-              "targetAirC = 25.0f;",
+              "targetAirC = 30.0f;",
               "kHardwareWindowCeilingUs = 20500000",
           ):
               assert t in h, f"Candidate review required: {t}"
@@ -58,21 +59,26 @@ jobs:
           assert "PROVISIONAL_EXPERIMENT" in agents
           assert "STEP07 40k" in agents
           assert "S6C" in h and "PROVISIONAL" in h
+          assert "STEP12P" in h and "STEP13A" in h
+          assert Path("docs/evidence/thermal/2026-10-29-STEP12P-raw.csv").exists()
+          assert Path("docs/evidence/thermal/2026-10-29-STEP12P-PHYSICAL-SESSION.md").exists()
+          assert "const uint32_t intervalMs = AppConfig::kHeaterStep09TrialMode ? 900U : 250U;" in Path("firmware/ThermalLog.h").read_text()
+          assert "kCapacity = 1400;" in Path("firmware/ThermalLog.h").read_text()
           assert "ntcHardTripOhms = 40000.0f;" not in h
           assert "ntcSoftPauseOhms = 45000.0f;" not in h
-          assert '"HOT-261029-S12P25"' in Path("firmware/FirmwareBuild.h").read_text()
-          assert '"H29-S12P"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"HOT-261029-S13A30"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"H29-S13A"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
           assert "display_.drawStr(20, 44, FirmwareBuild::kId)" in ui
           assert 'display_.drawStr(2, 44, "FW")' in ui
           assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
           assert 2 + 6*len("FW") < 20
-          assert 20 + 6 * len("HOT-261029-S12P25") <= 128
-          assert 78 + 6 * len("H29-S12P") <= 128
-          print("PASS: STEP12P candidate 300s cumulative cap, PROPOSED NTC35/50k and backup30k, no V1 heater approvals")
+          assert 20 + 6 * len("HOT-261029-S13A30") <= 128
+          assert 78 + 6 * len("H29-S13A") <= 128
+          print("PASS: STEP13A candidate 360s cumulative cap/900s session, PROPOSED NTC33/50k and backup30k, no V1 heater approvals")
           PY
-      - name: Verify STEP12P telemetry and no live CSV streaming
+      - name: Verify STEP13A telemetry and no live CSV streaming
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -97,17 +103,17 @@ jobs:
             }
           done
           echo "PASS: existing sensors/drivers and test trace original"
-      - name: Native GPIO-mock with NEW 300s cap, 25C air, NTC FAULT, STOP and cooldown
+      - name: Native GPIO mock with 360s cap, AIR30/29, sensor/NTC faults, STOP and cooldown
         run: |
           set -euo pipefail
-          bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step12p-mock.log"
+          bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step13a-mock.log"
       - name: Native plate arithmetic diagnostics (no GPIO)
         run: |
           set -euo pipefail
           g++ -std=c++17 -Wall -Wextra -Werror -pedantic \
             firmware/tests/host/test_heater_plate_diagnostics.cpp \
-            -o "$RUNNER_TEMP/step12p-plate-diagnostic"
-          "$RUNNER_TEMP/step12p-plate-diagnostic" | tee "$RUNNER_TEMP/step12p-plate-diagnostic.log"
+            -o "$RUNNER_TEMP/step13a-plate-diagnostic"
+          "$RUNNER_TEMP/step13a-plate-diagnostic" | tee "$RUNNER_TEMP/step13a-plate-diagnostic.log"
           python3 - <<'PY'
           from pathlib import Path
           m=Path("firmware/HeaterPlateDiagnostics.h").read_text()
@@ -122,15 +128,15 @@ jobs:
           saf=Path("firmware/SafetyController.h").read_text()
           assert "HeaterPlateDiagnostics" not in h + saf
           assert "ntcHardTripOhms = 30000.0f;" in h
-          assert "ntcSoftPauseOhms = 35000.0f;" in h
+          assert "ntcSoftPauseOhms = 33000.0f;" in h
           assert "ntcResumeOhms = 50000.0f;" in h
           assert "tick(s, 6100, 40000.0f)" in Path("firmware/tests/host/test_step09_feedback_gpio.cpp").read_text()
           assert "assert(s.heaterOn() && !s.faultActive());" in Path("firmware/tests/host/test_step09_feedback_gpio.cpp").read_text()
-          print("PASS: plate comparison read-only; STEP12P 35/50/30k candidate checked against source")
+          print("PASS: plate comparison read-only; STEP13A 35/50/30k candidate checked against source")
           PY
       - name: STEP08 selective offline replay regression
         run: bash firmware/tests/host/run_step08_real_trace.sh
-      - name: STEP12P behavior and safe checkpoint invariant
+      - name: STEP13A behavior and safe checkpoint invariant
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -145,7 +151,7 @@ jobs:
           assert "if (loggingSession && !csvCheckpointAttempted && !safety.heaterOn() &&" in f
           assert "heaterIrreversiblyOff" in f and "thermalLog.saveWhenSafe()" in f
           assert "dirty_ = true; // a post-checkpoint cooldown" in l
-          assert "WAIT NTC 50k" in ui and "WAIT AIR 24C" in ui
+          assert "WAIT NTC 50k" in ui and "WAIT AIR 29C" in ui
           print("PASS: independent thermostat latch, explicit wait reason, heater-latched-off checkpoint")
           PY
       - uses: arduino/setup-arduino-cli@v2
@@ -154,39 +160,39 @@ jobs:
           arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli lib install U8g2@2.36.19
-      - name: Compile actual STEP12P25 ESP32 OTA application (DO NOT FLASH)
+      - name: Compile actual STEP13A25 ESP32 OTA application (DO NOT FLASH)
         run: |
           set -euo pipefail
-          out="$RUNNER_TEMP/s12p25-build"
+          out="$RUNNER_TEMP/s13a30-build"
           mkdir -p "$out"
-          arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$out" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step12p-esp32-build.log"
+          arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$out" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step13a-esp32-build.log"
           echo "PASS: ESP32 binary linked with no DRAM overflow"
           app="$out/firmware.ino.bin"
           test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
           # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
-          grep -a -q 'HOT-261029-S12P25' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
-          cp "$app" "$RUNNER_TEMP/HOT-261029-S12P25-OTA-app.bin"
+          grep -a -q 'HOT-261029-S13A30' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
+          cp "$app" "$RUNNER_TEMP/HOT-261029-S13A30-OTA-app.bin"
           cd "$RUNNER_TEMP"
-          sha256sum HOT-261029-S12P25-OTA-app.bin | tee HOT-261029-S12P25-OTA-app.sha256
-          echo "UNAPPROVED STEP12P candidate only; revised NTC thresholds, no physical clearance. OTA app, DO NOT FLASH for heat." >> "$GITHUB_STEP_SUMMARY"
-          cat HOT-261029-S12P25-OTA-app.sha256 >> "$GITHUB_STEP_SUMMARY"
+          sha256sum HOT-261029-S13A30-OTA-app.bin | tee HOT-261029-S13A30-OTA-app.sha256
+          echo "UNAPPROVED STEP13A candidate only; revised NTC thresholds, no physical clearance. OTA app, DO NOT energize without independent physical preflight." >> "$GITHUB_STEP_SUMMARY"
+          cat HOT-261029-S13A30-OTA-app.sha256 >> "$GITHUB_STEP_SUMMARY"
       - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: S12P25-HEAT-CAPABLE-OTA-APP
+          name: S13A30-HEAT-CAPABLE-OTA-APP
           path: |
-            ${{ runner.temp }}/HOT-261029-S12P25-OTA-app.bin
-            ${{ runner.temp }}/HOT-261029-S12P25-OTA-app.sha256
+            ${{ runner.temp }}/HOT-261029-S13A30-OTA-app.bin
+            ${{ runner.temp }}/HOT-261029-S13A30-OTA-app.sha256
           if-no-files-found: error
           retention-days: 30
       - name: Upload reproducible results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: step12p-candidate-logs
+          name: step13a-candidate-logs
           path: |
-            ${{ runner.temp }}/step12p-mock.log
-            ${{ runner.temp }}/step12p-plate-diagnostic.log
-            ${{ runner.temp }}/step12p-esp32-build.log
+            ${{ runner.temp }}/step13a-mock.log
+            ${{ runner.temp }}/step13a-plate-diagnostic.log
+            ${{ runner.temp }}/step13a-esp32-build.log
           if-no-files-found: warn
