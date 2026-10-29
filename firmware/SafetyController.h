@@ -160,47 +160,7 @@ class SafetyController {
     setHeater(requested && cycleActive);
     return;
 
-    /* Archived STEP03 native-only policy reference:
-    HeaterControl::Inputs in{};
-    in.cycleRequested = cycleActive;
-    // Fan PWM command is only a proxy. The board has no tachometer.
-    in.fanCommandedRunning = fanPwmRunning;
-    in.ntcElectricalValid = ntc.sampled && ntc.valid &&
-                            ntc.fault == NtcFault::None;
-    in.ntcThermallyCalibrated = AppConfig::kHeaterNtcModelApproved &&
-                                in.ntcElectricalValid;
-    in.heaterTemperatureC = ntc.temperatureC;
-    in.ntcAgeMs = ntc.sampled ? static_cast<uint32_t>(nowMs - ntc.lastSampleMs)
-                              : UINT32_MAX;
-    in.chamberValid = chamber.valid;
-    in.chamberTemperatureC = chamber.temperatureC;
-    in.chamberAgeMs = chamber.valid
-                        ? static_cast<uint32_t>(nowMs - chamber.lastSuccessMs)
-                        : UINT32_MAX;
-    in.targetChamberC = targetChamberC;
-    in.elapsedCycleMs = elapsedCycleMs;
 
-    HeaterControl::Limits lim{};
-    lim.approved = AppConfig::kHeaterProfileApproved;
-    lim.maximumHeaterC = AppConfig::kHeaterMaxMeasuredC;
-    lim.maximumChamberC = AppConfig::kChamberMaxMeasuredC;
-    lim.hysteresisC = AppConfig::kChamberControlHysteresisC;
-    lim.maximumNtcAgeMs = AppConfig::kHeaterNtcMaxAgeMs;
-    lim.maximumChamberAgeMs = AppConfig::kHeaterChamberMaxAgeMs;
-    lim.minimumFanPrerunMs = AppConfig::kHeaterFanPrerunMs;
-    lim.maximumContinuousHeatMs = AppConfig::kHeaterMaxContinuousOnMs;
-    lim.maximumCycleMs = AppConfig::kHeaterMaxCycleMs;
-
-    const bool requested = policy_.evaluate(nowMs, lim, in);
-    if (policy_.fault() != HeaterControl::Fault::None) {
-      faultActive_ = true;
-      forceHeaterOff();
-      return;
-    }
-
-    // Compile-time output gate + runtime policy BOTH required.
-    setHeater(requested && cycleActive);
-    */
   }
 
   bool heaterPermitted() const { return !heaterLocked() && !faultActive_; }
