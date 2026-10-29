@@ -21,7 +21,9 @@ class NetworkService {
     float airC = 0, rh = 0, ntcOhms = 0;
     bool airValid = false, ntcValid = false;
     bool heaterCommand = false, cycle = false, fault = false;
-    uint8_t fanPercent = 0, phase = 0, pulses = 0, pulseFault = 0;
+    uint8_t fanPercent = 0, phase = 0, pulses = 0, pulseFault = 0, waitReason = 0;
+    uint32_t cumulativeHeatMs = 0;
+    bool sessionCsvSaved = false, sessionCsvFinal = false;
   };
   explicit NetworkService(ThermalLog &log) : log_(log) {}
 
@@ -271,6 +273,10 @@ class NetworkService {
       j += ",\"pulses\":"; j += live_.pulses;
       j += ",\"pulse_goal\":"; j += (AppConfig::kHeaterStep09TrialMode ? 0 : HeaterStep07GuardTrial::parameters().pulseCount);
       j += ",\"pulse_fault\":"; j += live_.pulseFault;
+      j += ",\"wait_reason\":"; j += live_.waitReason;
+      j += ",\"cumulative_heat_ms\":"; j += live_.cumulativeHeatMs;
+      j += ",\"session_csv_saved\":"; j += (live_.sessionCsvSaved ? "true":"false");
+      j += ",\"session_csv_final\":"; j += (live_.sessionCsvFinal ? "true":"false");
       j += ",\"saved_log\":"; j += (log_.hasSaved() ? "true" : "false");
       j += ",\"ram_samples\":"; j += (unsigned)log_.size();
       j += ",\"ota_idle\":"; j += (safeForOta() ? "true" : "false");
@@ -458,9 +464,15 @@ async function status(){
   $('ntc').textContent=d.ntc_valid?(d.ntc_ohms/1000).toFixed(2)+' kΩ':'--';
   $('heat').textContent=d.heater_command?'ON':'OFF';
   $('fan').textContent=d.fan_percent+' %';
-  $('phase').textContent=phaseLabel(d);
+  const waitNames=['','Minimum OFF 12 s','NTC attende 60 kΩ','Camera attende 24 °C'];
+  $('phase').textContent=Number(d.phase)===3 && d.wait_reason
+    ? 'HEATER OFF · '+(waitNames[Number(d.wait_reason)]||'Attesa controllo')
+    :phaseLabel(d);
   $('ver').textContent='Firmware '+d.firmware+' | campioni '+d.ram_samples+
-    (d.fault?' | FAULT '+d.pulse_fault:'')+' | '+(d.ota_idle?'OTA pronto':'OTA non disponibile');
+    (d.fault?' | FAULT '+d.pulse_fault:'')+
+    ' | ON '+((d.cumulative_heat_ms||0)/1000).toFixed(1)+' s'+
+    ' | CSV '+(d.session_csv_final?'COMPLETO':d.session_csv_saved?'CHECKPOINT':'non salvato in questa sessione')+
+    ' | '+(d.ota_idle?'OTA pronto':'OTA non disponibile');
   statusReceivedAt=Date.now();
   $('net').textContent='Dati aggiornati';
  }catch(e){
