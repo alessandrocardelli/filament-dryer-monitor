@@ -9,6 +9,7 @@
 #include <esp_system.h>
 #include "FirmwareBuild.h"
 #include "ThermalLog.h"
+#include "HeaterPlateDiagnostics.h"
 #include "HeaterStep07GuardTrial.h"
 
 // Local-only read-only telemetry + browser OTA. No remote heater controls.
@@ -24,6 +25,7 @@ class NetworkService {
     uint8_t fanPercent = 0, phase = 0, pulses = 0, pulseFault = 0, waitReason = 0;
     uint32_t cumulativeHeatMs = 0;
     bool sessionCsvSaved = false, sessionCsvFinal = false;
+    float minSessionNtcOhms = NAN; // measured NTC, not a Sanwa temperature
   };
   explicit NetworkService(ThermalLog &log) : log_(log) {}
 
@@ -263,6 +265,21 @@ class NetworkService {
       j += ",\"air_c\":"; j += String(live_.airC,2);
       j += ",\"rh\":"; j += String(live_.rh,2);
       j += ",\"ntc_ohms\":"; j += String(live_.ntcOhms,1);
+      // Read-only measured margins; historical Sanwa proxy is intentionally
+      // marked separately and never drives PWM or any safety trip.
+      const auto margin = HeaterPlateDiagnostics::margin(
+          live_.ntcValid ? live_.ntcOhms : NAN);
+      const auto historical = HeaterPlateDiagnostics::historicalOpenBoxContact(
+          live_.ntcValid ? live_.ntcOhms : NAN);
+      j += ",\"ntc_above_soft_ohms\":";
+      j += margin.valid ? String(margin.aboveSoftOhms,1) : "null";
+      j += ",\"ntc_above_hard_ohms\":";
+      j += margin.valid ? String(margin.aboveHardOhms,1) : "null";
+      j += ",\"session_ntc_min_ohms\":";
+      j += std::isfinite(live_.minSessionNtcOhms)
+           ? String(live_.minSessionNtcOhms,1) : "null";
+      j += ",\"historical_openbox_sanwa_proxy_c\":";
+      j += historical.valid ? String(historical.sanwaEquivalentC,1) : "null";
       j += ",\"air_valid\":"; j += (live_.airValid ? "true" : "false");
       j += ",\"ntc_valid\":"; j += (live_.ntcValid ? "true" : "false");
       j += ",\"heater_command\":"; j += (live_.heaterCommand ? "true" : "false");
@@ -461,7 +478,10 @@ async function status(){
   trialActive=Boolean(d.cycle)||Number(d.fan_percent)>0;
   $('air').textContent=d.air_valid?d.air_c.toFixed(1)+' °C':'--';
   $('rh').textContent=d.air_valid?d.rh.toFixed(1)+' %':'--';
-  $('ntc').textContent=d.ntc_valid?(d.ntc_ohms/1000).toFixed(2)+' kΩ':'--';
+  $('ntc').textContent=d.ntc_valid
+    ? (d.ntc_ohms/1000).toFixed(2)+' kΩ (margine HARD '+
+      (d.ntc_above_hard_ohms/1000).toFixed(2)+' kΩ)'
+    :'--';
   $('heat').textContent=d.heater_command?'ON':'OFF';
   $('fan').textContent=d.fan_percent+' %';
   const waitNames=['','Minimum OFF 12 s','NTC attende 60 kΩ','Camera attende 24 °C'];
@@ -471,6 +491,8 @@ async function status(){
   $('ver').textContent='Firmware '+d.firmware+' | campioni '+d.ram_samples+
     (d.fault?' | FAULT '+d.pulse_fault:'')+
     ' | ON '+((d.cumulative_heat_ms||0)/1000).toFixed(1)+' s'+
+    ' | minimo NTC '+(d.session_ntc_min_ohms===null?'--':
+       (d.session_ntc_min_ohms/1000).toFixed(2)+' kΩ')+
     ' | CSV '+(d.session_csv_final?'COMPLETO':d.session_csv_saved?'CHECKPOINT':'non salvato in questa sessione')+
     ' | '+(d.ota_idle?'OTA pronto':'OTA non disponibile');
   statusReceivedAt=Date.now();
