@@ -110,9 +110,7 @@ jobs:
       - name: Four-hour duration-controlled thermostat DESIGN regression (HOST ONLY, no GPIO)
         run: |
           set -euo pipefail
-          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic \\
-            firmware/tests/host/test_long_duration_design.cpp \\
-            -o "$RUNNER_TEMP/step13a-4hour-thermostat"
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_long_duration_design.cpp -o "$RUNNER_TEMP/step13a-4hour-thermostat"
           "$RUNNER_TEMP/step13a-4hour-thermostat" | tee "$RUNNER_TEMP/step13a-4hour-thermostat.log"
           python3 - <<'PY'
           from pathlib import Path
