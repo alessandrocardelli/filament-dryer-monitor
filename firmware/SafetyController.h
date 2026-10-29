@@ -210,6 +210,13 @@ class SafetyController {
     return static_cast<uint8_t>(AppConfig::kHeaterStep09TrialMode
         ? feedback_.fault() : commission_.fault());
   }
+  uint8_t feedbackWaitReason(uint32_t nowMs, float ntcOhms) const {
+    return AppConfig::kHeaterStep09TrialMode
+      ? static_cast<uint8_t>(feedback_.waitReason(nowMs, ntcOhms)) : 0;
+  }
+  uint32_t feedbackTotalHeatMs() const {
+    return AppConfig::kHeaterStep09TrialMode ? feedback_.totalHeatMs() : 0;
+  }
   bool heaterLocked() const {
     if (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode)
       return false;
