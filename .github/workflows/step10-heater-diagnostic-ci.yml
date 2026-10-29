@@ -1,4 +1,4 @@
-name: STEP13A - AIR30 trial plus 4h product-design host test, GPIO mock and ESP32
+name: V1 SAFE AIR40-55 user-timed regulator, 12h host test and ESP32
 
 on:
   push:
@@ -24,13 +24,13 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-      - name: Enforce physical-trial separation and explicitly proposed NTC envelope provenance
+      - name: Enforce heater lock and distinction from archived STEP13 source
         run: |
           python3 - <<'PY'
           from pathlib import Path
           s=Path("firmware/AppConfig.h").read_text()
           for t in (
-              "kHeaterStep09TrialMode = true;",
+              "kHeaterStep09TrialMode = false;",
               "kHeaterCommissioningMode = false;",
               "kHeaterOutputEnabled = false;",
               "kHeaterProfileApproved = false;",
@@ -39,6 +39,20 @@ jobs:
           ):
               assert t in s, f"Safety configuration changed: {t}"
           h=Path("firmware/HeaterStep09AirFeedback.h").read_text()
+          product=Path("firmware/HeaterProductAir.h").read_text()
+          safe=Path("firmware/SafetyController.h").read_text()
+          for token in ("kPrototypeTempMinC = 40;", "kPrototypeTempMaxC = 55;",
+                        "kHeaterSoftPauseMeasuredC = 0.0f;",
+                        "kHeaterRearmMeasuredC = 0.0f;",
+                        "kHeaterMaxMeasuredC = 0.0f;"):
+              assert token in s, token
+          assert "product_{productLimits()}" in safe
+          assert "HeaterProductAir::Controller" in safe
+          assert "RunPolicy::SupervisedTrial" in h
+          assert "heaterTempC" in product and "ntcThermallyQualified" in product
+          assert "kHeaterOutputEnabled" in safe and "pulseTimerFired_" in safe
+          assert "AppConfig::kHeaterOutputEnabled)" in safe
+          assert "maximumTotalHeatMs" not in product
           for t in (
               "ntcHardTripOhms = 30000.0f;",
               "ntcSoftPauseOhms = 33000.0f;",
@@ -66,19 +80,19 @@ jobs:
           assert "kCapacity = 1400;" in Path("firmware/ThermalLog.h").read_text()
           assert "ntcHardTripOhms = 40000.0f;" not in h
           assert "ntcSoftPauseOhms = 45000.0f;" not in h
-          assert '"HOT-261029-S13A30"' in Path("firmware/FirmwareBuild.h").read_text()
-          assert '"H29-S13A"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"V1-261029-CTRL55"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"V1-C55"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
           assert "display_.drawStr(20, 44, FirmwareBuild::kId)" in ui
           assert 'display_.drawStr(2, 44, "FW")' in ui
           assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
           assert 2 + 6*len("FW") < 20
-          assert 20 + 6 * len("HOT-261029-S13A30") <= 128
-          assert 78 + 6 * len("H29-S13A") <= 128
-          print("PASS: STEP13A candidate 360s cumulative cap/900s session, PROPOSED NTC33/50k and backup30k, no V1 heater approvals")
+          assert 20 + 6 * len("V1-261029-CTRL55") <= 128
+          assert 78 + 6 * len("V1-C55") <= 128
+          print("PASS: V1 AIR40-55 user timer, actual device heater LOCKED, independent local thermal model unqualified")
           PY
-      - name: Verify STEP13A telemetry and no live CSV streaming
+      - name: Verify telemetry and no live CSV streaming while heater may run
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -103,11 +117,11 @@ jobs:
             }
           done
           echo "PASS: existing sensors/drivers and test trace original"
-      - name: Native GPIO mock with 360s cap, AIR30/29, sensor/NTC faults, STOP and cooldown
+      - name: ARCHIVED STEP13A GPIO host regression in isolated mock configuration
         run: |
           set -euo pipefail
           bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step13a-mock.log"
-      - name: Four-hour duration-controlled thermostat DESIGN regression (HOST ONLY, no GPIO)
+      - name: ARCHIVED four-hour trial-policy host regression (no GPIO)
         run: |
           set -euo pipefail
           g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_long_duration_design.cpp -o "$RUNNER_TEMP/step13a-4hour-thermostat"
@@ -122,6 +136,11 @@ jobs:
           assert "feedback_{HeaterStep09AirFeedback::parameters()}" in safe
           print("PASS: hardware stays supervised trial-only; 4h product regulator verified only in host simulation")
           PY
+      - name: New V1 40-55C 12-hour regulator and fault scenarios (no GPIO)
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_product_air_12h.cpp -o "$RUNNER_TEMP/v1-12h-control"
+          "$RUNNER_TEMP/v1-12h-control" | tee "$RUNNER_TEMP/v1-12h-control.log"
       - name: Native plate arithmetic diagnostics (no GPIO)
         run: |
           set -euo pipefail
@@ -175,39 +194,40 @@ jobs:
           arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli lib install U8g2@2.36.19
-      - name: Compile actual STEP13A30 ESP32 application (DO NOT FLASH)
+      - name: Compile actual V1 safe-locked ESP32 firmware for Arduino IDE
         run: |
           set -euo pipefail
-          out="$RUNNER_TEMP/s13a30-build"
+          out="$RUNNER_TEMP/v1-c55-build"
           mkdir -p "$out"
           arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$out" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step13a-esp32-build.log"
           echo "PASS: ESP32 binary linked with no DRAM overflow"
           app="$out/firmware.ino.bin"
           test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
           # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
-          grep -a -q 'HOT-261029-S13A30' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
-          cp "$app" "$RUNNER_TEMP/HOT-261029-S13A30-OTA-app.bin"
+          grep -a -q 'V1-261029-CTRL55' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
+          cp "$app" "$RUNNER_TEMP/V1-261029-CTRL55-app.bin"
           cd "$RUNNER_TEMP"
-          sha256sum HOT-261029-S13A30-OTA-app.bin | tee HOT-261029-S13A30-OTA-app.sha256
-          echo "UNAPPROVED STEP13A candidate only; revised NTC thresholds, no physical clearance. OTA app, DO NOT energize without independent physical preflight." >> "$GITHUB_STEP_SUMMARY"
-          cat HOT-261029-S13A30-OTA-app.sha256 >> "$GITHUB_STEP_SUMMARY"
+          sha256sum V1-261029-CTRL55-app.bin | tee V1-261029-CTRL55-app.sha256
+          echo "V1 SAFE-LOCKED source: user AIR40-55 timer+qualified local heater protection model; default GPIO OFF until calibration and approved limits. Arduino IDE loads firmware.ino." >> "$GITHUB_STEP_SUMMARY"
+          cat V1-261029-CTRL55-app.sha256 >> "$GITHUB_STEP_SUMMARY"
       - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: S13A30-HEAT-CAPABLE-OTA-APP
+          name: V1-CTRL55-HEATER-LOCKED-BUILD-RECEIPT
           path: |
-            ${{ runner.temp }}/HOT-261029-S13A30-OTA-app.bin
-            ${{ runner.temp }}/HOT-261029-S13A30-OTA-app.sha256
+            ${{ runner.temp }}/V1-261029-CTRL55-app.bin
+            ${{ runner.temp }}/V1-261029-CTRL55-app.sha256
           if-no-files-found: error
           retention-days: 30
       - name: Upload reproducible results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: step13a-candidate-logs
+          name: v1-controller-host-and-esp32-logs
           path: |
             ${{ runner.temp }}/step13a-mock.log
+            ${{ runner.temp }}/v1-12h-control.log
             ${{ runner.temp }}/step13a-4hour-thermostat.log
             ${{ runner.temp }}/step13a-plate-diagnostic.log
             ${{ runner.temp }}/step13a-esp32-build.log
