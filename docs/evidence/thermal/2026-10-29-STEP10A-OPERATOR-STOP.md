@@ -55,3 +55,9 @@ Se il file non è nuovo, segnare dati persi, **non replicare la sessione per rec
 
 **Stato finale:** prova fisica STEP10A-context riferita ma non qualificata, ventola riferita in rotazione, stop dall'operatore, **traccia nuova non recuperata**. Non chiedere di ripetere l'esperimento. Unica prossima attivita': correggere in software la chiarezza di OFF/WAIT/COOLDOWN e il percorso di persistenza della sessione *prima* di qualsiasi nuovo HEATER ON; nessun cambio soglie o TCO. 
 
+
+## Nuove misure ricordate dall'operatore — 29/10/2026
+
+L'utente aggiunge: «secondo me la temperatura sull'heater è ancora troppo bassa, arriva al massimo a 38 gradi e quando ho spento mi pare che la camera fosse a 23,7 o giù di li». **Conservare l'incertezza:** Sanwa **sulla PIASTRA** massimo circa38°C (ricordo), camera SHT45 circa23,7°C quando spento (ricordo, non log). Le due temperature sono da sorgenti e punti diversi e **NON sono righe CSV del nuovo test**; non usarle come prova del comportamento del controller in corrispondenza della 19ª pausa. Il fatto di 18 pause brevi e 19ª persistente resta l'osservazione principale. Il nuovo CSV STEP10A non è stato persistito; non rifare la prova per acquisirlo.
+
+**Difetto software dimostrato sul sorgente STEP10A (non necessariamente unica causa fisica):** l'ultima condizione di riavvio in `HeaterStep09AirFeedback::Controller::update` richiede aria <=24°C dopo **ogni** pausa, anche se la camera non ha mai raggiunto25°C. Una correzione della latch della domanda aria, indipendente dal recupero NTC, è stata implementata nella linea sperimentale STEP10B; non è una nuova calibrazione della piastra né autorizzazione a bypassare il limite hard NTC40kΩ.
