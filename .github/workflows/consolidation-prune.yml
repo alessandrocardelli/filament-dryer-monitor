@@ -1,0 +1,22 @@
+name: Finish verified repository consolidation
+on:
+  push:
+    branches: [cleanup/consolidation-2026-10-29]
+    paths: [.github/workflows/consolidation-prune.yml]
+permissions:
+  contents: write
+jobs:
+  prune:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify retained sources, archive tags, document links and exact branch leases
+        run: python3 .github/scripts/consolidation-prune.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: repository-consolidation-result
+          path: consolidation-result.json
+          if-no-files-found: warn
