@@ -63,7 +63,8 @@ class Ui {
               const char *apPassword = nullptr,
               const char *stationIp = nullptr,
               uint32_t coolingSecondsLeft = 0,
-              bool csvReady = false, bool csvSaveFailed = false) {
+              bool csvReady = false, bool csvSaveFailed = false,
+              uint8_t waitReason = 0) {
     if (!awake_) return false;
 
     const uint8_t stage = (state == AppState::Boot)
@@ -105,9 +106,10 @@ class Ui {
                                    pulsePhase, pulsesDone)
                       : drawDrying(settings.cycle, sensor, remainingSeconds,
                                   fanDutyPercent, heaterLocked, heaterOn,
-                                  pulsePhase, pulsesDone, coolingSecondsLeft);
+                                  pulsePhase, pulsesDone, coolingSecondsLeft,
+                                  waitReason);
         break;
-      case AppState::Complete: drawComplete(sensor); break;
+      case AppState::Complete: drawComplete(sensor, csvReady, csvSaveFailed); break;
       case AppState::Fault:
         drawFault(ntc.fault, pulseFault, coolingSecondsLeft,
                   csvReady, csvSaveFailed);
@@ -231,7 +233,7 @@ class Ui {
   void drawSetup(SetupField selected, const CycleSettings &settings) {
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(2, 9, AppConfig::kHeaterStep09TrialMode
-        ? "S9B FIXED AIR TEST" : "SET CYCLE   SAFE MODE");
+        ? "STEP10B AIR25 TEST" : "SET CYCLE   SAFE MODE");
     display_.drawHLine(0, 12, 128);
 
     char temp[22];
@@ -239,7 +241,7 @@ class Ui {
     snprintf(temp, sizeof(temp), "TEMP        %d °C", AppConfig::kHeaterStep09TrialMode ? 25 : settings.targetTempC);
     snprintf(time, sizeof(time), "TIME        %02u:%02u",
              AppConfig::kHeaterStep09TrialMode ? 0 : settings.durationMinutes / 60,
-              AppConfig::kHeaterStep09TrialMode ? 10 : settings.durationMinutes % 60);
+              AppConfig::kHeaterStep09TrialMode ? 12 : settings.durationMinutes % 60);
     drawSelectableRow(15, temp, selected == SetupField::Temperature);
     drawSelectableRow(31, time, selected == SetupField::Duration);
     drawSelectableRow(47, AppConfig::kHeaterStep09TrialMode
@@ -267,11 +269,11 @@ class Ui {
                    uint32_t remainingSeconds, uint8_t fanDutyPercent,
                    bool heaterLocked, bool heaterOn,
                    uint8_t pulsePhase, uint8_t pulsesDone,
-                   uint32_t coolingSecondsLeft) {
+                   uint32_t coolingSecondsLeft, uint8_t waitReason) {
     display_.setFont(u8g2_font_6x10_tf);
     char header[22];
     if (AppConfig::kHeaterStep09TrialMode) {
-      snprintf(header, sizeof(header), "STEP09B AIR FEEDBACK");
+      snprintf(header, sizeof(header), "STEP10B AIR25 TEST");
     } else if (AppConfig::kHeaterCommissioningMode) {
       snprintf(header, sizeof(header), "NTC GUARD TEST FAN100");
     } else {
@@ -299,7 +301,7 @@ class Ui {
           HeaterCommissioning::Phase::Cooldown)
         snprintf(target, sizeof(target), "COOLING %lu s",
             static_cast<unsigned long>(coolingSecondsLeft));
-      else snprintf(target, sizeof(target), "SET 25C NTC HARD 40k");
+      else snprintf(target, sizeof(target), "AIR25 NTC 45/60k H40k");
     } else if (AppConfig::kHeaterCommissioningMode) {
       if (static_cast<HeaterCommissioning::Phase>(pulsePhase) ==
           HeaterCommissioning::Phase::Cooldown) {
@@ -319,7 +321,14 @@ class Ui {
       switch (static_cast<HeaterCommissioning::Phase>(pulsePhase)) {
         case HeaterCommissioning::Phase::Pulse: progress = "HEATER ON"; break;
         case HeaterCommissioning::Phase::Prerun: progress = "FAN PRERUN"; break;
-        case HeaterCommissioning::Phase::Gap: progress = "HEATER OFF"; break;
+        case HeaterCommissioning::Phase::Gap:
+          switch (waitReason) {
+            case 1: progress = "WAIT 12s OFF"; break;
+            case 2: progress = "WAIT NTC 60k"; break;
+            case 3: progress = "WAIT AIR 24C"; break;
+            default: progress = "WAIT CONTROL"; break;
+          }
+          break;
         case HeaterCommissioning::Phase::Cooldown: progress = "COOLING"; break;
         case HeaterCommissioning::Phase::Complete: progress = "TEST COMPLETE"; break;
         default: break;
@@ -401,7 +410,8 @@ class Ui {
     }
   }
 
-  void drawComplete(const SensorSnapshot &sensor) {
+  void drawComplete(const SensorSnapshot &sensor, bool csvReady,
+                    bool csvSaveFailed) {
     display_.setFont(u8g2_font_helvB12_tf);
     display_.drawStr(24, 18, "COMPLETE");
     display_.setFont(u8g2_font_6x10_tf);
@@ -411,7 +421,9 @@ class Ui {
                sensor.temperatureC, sensor.humidityRh);
       display_.drawUTF8(14, 38, line);
     }
-    display_.drawStr(2, 61, "ON/OFF = acknowledge");
+    display_.drawStr(2, 52, csvReady ? "CSV SAVED" :
+                     (csvSaveFailed ? "CSV SAVE ERROR" : "CSV SAVING"));
+    display_.drawStr(2, 63, "ON/OFF = acknowledge");
   }
 
   static const char *commissionFaultText(uint8_t code) {
