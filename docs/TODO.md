@@ -1,21 +1,18 @@
 # Next work
 
-## One priority: STEP10A readiness review
+## One priority: determine STEP10A reported stop and whether any ORIGINAL CSV was saved — NO HEAT
 
-**Action:** review the already prepared `HOT-261028-S10A25` candidate and [existing STEP10A protocol](STEP10A_HEATER_AND_LOGGING_TEST_2026-10-28.md) with the operator. No new firmware/profile, repeated S9B run or repeated fault recovery is needed.
+**Observed report 29 October 2026:** operator reports that around cycle19 display remained `HEATER OFF`, then powered down. This follows STEP10A instructions, but actual flashed firmware identity, phase, sensor temperatures and fault code were **not** supplied. CSV existence is unverified. [Exact evidence and source-code possibilities](evidence/thermal/2026-10-29-STEP10A-OPERATOR-STOP.md).
 
-**Reason:** S9A missed25°C on its120s heat budget; S9B180 also missed25°C and ended in confirmed AirStale. STEP10A combines bounded local-NTC feedback with logging/stall diagnostics; software PASS does not establish physical thermal safety or the cause of the prior loop stalls.
+**NEXT SINGLE ACTION:** after natural cooling, **only if the prototype can be powered safely without starting HEAT**, identify firmware using `/api/status` and check `/api/last-test.csv` (one-time read; no live test) for a genuinely NEW **15-column STEP10A** CSV. Older S9B persisted CSV has10 columns; `saved_log=true` can mean only the old file. A reboot destroys old RAM status/events. User need not repeat S9A, S9B or STEP10A just for missing data.
 
-**Prerequisites:** exact source/image identity and current CI PASS; explicit acceptance of the changed STEP10A exposure; operator checks Sanwa on PLATE near NTC, actual rotating fan, installed series TCO105 unchanged, intact materials/cables and accessible24V isolation. See PROJECT_STATE for current refs and limits. No prototype access or physical test is part of repository consolidation.
-
-**Completion criterion:** record a clear readiness outcome (accepted profile and physical preflight, or the specific unresolved condition). Only if all gates pass, the next physical action is ONE supervised STEP10A session under the existing protocol. That session must then have original CSV/hash, status/events, chronological Sanwa readings and an outcome separating25°C target feedback, faults and remaining uncertainty. Do not call readiness or CI a physical PASS.
+**Then:** if a new file exists, preserve byte-identical raw, hashes, derive phase3=waiting for NTC>=60k AND air<=24, phase4=scheduled cooling after300s cumulative ON/720s runtime, phase6=fault, and correlate with any available Sanwa report. If CSV absent, explicitly record no raw trace and inspect storage/stop and test usability in SOFTWARE (without HEATER ON). Do not assume a fault, attainment of25°C, the hardware state, or operator Sanwa readings. No changes to thermal limits/protections/TCO automatically; no HEATER ON until separate review.
 
 ## Backlog
 
-- Interpret STEP10A data before another thermal change; qualify separate chamber control and heater-local protection, NTC uncertainty, materials/hotspots and actual TCO configuration.
-- Split/review general Wi-Fi/OTA/logging improvements from experimental heater integration; resolve archived cold branch CI mismatch before importing runtime code to main.
-- Implement/qualify V1 thermostat, FAN AUTO/cooldown, approved UI ranges, STOP/fault/power-loss behavior and local autonomy.
-- Storage/OTA/network fault resilience, representative drying cycles and final acceptance. Environmental12h history and material presets remain deferred.
-- OLED startup artifact investigation and deliberate future PCB revision if justified (D020; fresh ERC/DRC/exports only then).
+- Improve robust crash/power-loss and operator-stop data persistence without flash writes under active heating; assess whether periodic checkpoints can be safely deferred or captured via other means.
+- Qualify true heater-local thermal model, physical materials/hotspots, fan and installed TCO105 compatibility; distinguish plate Sanwa from chamber SHT45.
+- Finish safe, autonomous chamber temperature regulation, fan AUTO, user duration, STOP/fault handling, and hardware validation.
+- Continue firmware integration and deferred OLED/startup and future PCB revision only when relevant.
 
-Current facts and passed tests belong in [PROJECT_STATE](PROJECT_STATE.md); immutable records belong in the [ledger](THERMAL_EXPERIMENT_LEDGER.md); approved engineering choices remain in [DECISIONS](DECISIONS.md).
+See [PROJECT_STATE](PROJECT_STATE.md) for the unique current checkpoint; [ledger](THERMAL_EXPERIMENT_LEDGER.md) for archived test evidence.
