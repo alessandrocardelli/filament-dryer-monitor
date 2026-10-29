@@ -47,6 +47,8 @@ bool loggingSession = false;
 // The previous /last-test.csv belongs to an earlier trial until this session
 // has actually finished cooldown and been saved successfully.
 bool csvSavedThisRun = false;
+bool csvFinalSavedThisRun = false;
+bool csvCheckpointAttempted = false;
 bool csvSaveFailed = false;
 uint8_t previousPhaseReported = 255;
 
@@ -84,6 +86,8 @@ static void enterState(AppState next, uint32_t nowMs) {
       thermalLog.start();
       loggingSession = true;
       csvSavedThisRun = false;
+      csvFinalSavedThisRun = false;
+      csvCheckpointAttempted = false;
       csvSaveFailed = false;
       // Keep stored user settings unchanged: this isolated physical trial
       // always uses fixed 25 C air and 15 min cycle guard.
@@ -91,7 +95,7 @@ static void enterState(AppState next, uint32_t nowMs) {
       if (AppConfig::kHeaterStep09TrialMode) {
         CycleSettings trial{};
         trial.targetTempC = 25;
-        trial.durationMinutes = 15; // > 10m trial + 90s cooldown
+        trial.durationMinutes = 15; // > 12m trial + 90s cooling guard
         cycle.start(trial, nowMs);
       } else cycle.start(settings.cycle, nowMs);
       fan.startAuto(nowMs);
@@ -100,7 +104,7 @@ static void enterState(AppState next, uint32_t nowMs) {
         Serial.println("STATE -> HEATER STEP07 GUARD: 6 x 20 s MAX, NTC 40k abort, fan 100%");
         Serial.println("HOT_CSV,ms,phase,pulses,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else if (AppConfig::kHeaterStep09TrialMode) {
-        Serial.println("STATE -> STEP10A SUPERVISED: AIR25, NTC soft45/60k, HARD40k, max300s cumulative /12min, fan100");
+        Serial.println("STATE -> STEP10B SUPERVISED: AIR25 demand latch, NTC soft45/60k, HARD40k, max300s cumulative /12min, fan100");
         Serial.println("HOT_CSV,ms,phase,windows,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else {
         Serial.println(safety.heaterLocked()
@@ -309,7 +313,7 @@ void setup() {
     Serial.println("EXPERIMENTAL 6-PULSE STEP07 NTC-GUARD TEST; no auto-repeat");
     Serial.println("NTC absolute degrees NOT calibrated; experimental raw R_NTC abort at 40k");
   } else if (AppConfig::kHeaterStep09TrialMode) {
-    Serial.println("STEP09 HEATER-CAPABLE CANDIDATE, NOT V1: fixed SHT45 air25C, NTC hard40k, 100% fan, timed windows");
+    Serial.println("STEP10B HEATER-CAPABLE CANDIDATE, NOT V1: fixed SHT45 air25C, NTC hard40k, 100% fan, timed windows");
   } else {
     Serial.println(safety.heaterLocked()
         ? "Heater OUTPUT LOCKED: configuration/calibration not approved."
@@ -415,12 +419,42 @@ void loop() {
                       static_cast<uint8_t>(safety.ntcFault()),
                       loopGapMs);
   } else if (loggingSession) {
+    // Finalize after cooldown, preserving all samples. The first checkpoint
+    // already replaced the old CSV at irrevocable heater shutdown.
     loggingSession = false;
+    const bool completeSave = !thermalLog.dirty() || thermalLog.saveWhenSafe();
+    csvFinalSavedThisRun = completeSave && csvSavedThisRun;
+    if (!csvCheckpointAttempted) {
+      // E.g. an early STOP without ever commanding heater HIGH.
+      csvFinalSavedThisRun = thermalLog.saveWhenSafe();
+    }
+    csvSavedThisRun = csvSavedThisRun || csvFinalSavedThisRun;
+    csvSaveFailed = !csvFinalSavedThisRun;
+    Serial.println(csvFinalSavedThisRun ?
+        "FINAL CSV stored: /last-test.csv" :
+        "Final CSV save failed; previous checkpoint may still exist");
+    network.note(csvFinalSavedThisRun ? "NEW CSV FINAL READY" : "NEW CSV FINAL SAVE FAILED");
+  }
+  // Persist a bounded snapshot ONCE when the heater has irreversibly stopped,
+  // not during a normal NTC/air OFF gap when it may energize again. No FLASH
+  // writes are allowed while HEATER can restart within this session.
+  const auto completedHeatPhase = static_cast<HeaterCommissioning::Phase>(
+      safety.commissioningPhase());
+  const bool heaterIrreversiblyOff =
+      completedHeatPhase == HeaterCommissioning::Phase::Cooldown ||
+      completedHeatPhase == HeaterCommissioning::Phase::Aborted ||
+      completedHeatPhase == HeaterCommissioning::Phase::Complete;
+  if (loggingSession && !csvCheckpointAttempted && !safety.heaterOn() &&
+      heaterIrreversiblyOff) {
+    csvCheckpointAttempted = true;
     csvSavedThisRun = thermalLog.saveWhenSafe();
-    csvSaveFailed = !csvSavedThisRun;
-    Serial.println(csvSavedThisRun ?
-        "CSV stored: /last-test.csv" : "CSV not stored; RAM trace still available");
-    network.note(csvSavedThisRun ? "NEW CSV READY" : "NEW CSV SAVE FAILED");
+    if (csvSavedThisRun) {
+      network.note("NEW CSV CHECKPOINT (HEATER LATCHED OFF)");
+      Serial.println("CSV checkpoint persisted before cooldown completion");
+    } else {
+      network.note("CSV CHECKPOINT FAILED (RAM still available)");
+      csvSaveFailed = true;
+    }
   }
 
   if ((AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) &&
@@ -516,6 +550,10 @@ void loop() {
   telem.phase = safety.commissioningPhase();
   telem.pulses = safety.commissioningPulsesDone();
   telem.pulseFault = safety.commissioningFault();
+  telem.waitReason = safety.feedbackWaitReason(nowMs, ntcNow.resistanceOhms);
+  telem.cumulativeHeatMs = safety.feedbackTotalHeatMs();
+  telem.sessionCsvSaved = csvSavedThisRun;
+  telem.sessionCsvFinal = csvFinalSavedThisRun;
   network.publish(telem);
   const bool canOta = appState == AppState::Standby && !safety.faultActive() &&
        !cycle.isRunning() && !safety.coolingRequired(nowMs) && !safety.heaterOn();
@@ -535,7 +573,8 @@ void loop() {
                 network.setupApActive() ? network.setupPass() : nullptr,
                 network.connected() ? network.address().c_str() : nullptr,
                 safety.coolingSecondsRemaining(nowMs),
-                csvSavedThisRun, csvSaveFailed);
+                csvSavedThisRun, csvSaveFailed,
+                safety.feedbackWaitReason(nowMs, ntc.snapshot().resistanceOhms));
   if (wordmarkJustRevealed) {
     // Trigger the first note only after the fully refreshed wordmark is visible.
     buzzer.playStartup(millis());
