@@ -3,14 +3,16 @@
 #include <cstdint>
 #include "HeaterPulseCommissioning.h"
 
-// STEP12P: source-only HIGHER PLATE experimental candidate, following STEP10B.
-// 40k (STEP07) was an EARLY TRIAL STOP, not a calibrated safety temperature.
-// This candidate restores the previously demonstrated hotter NTC region, but
-// its 35k/50k/30k values are EXPERIMENTAL proposals, NOT approved limits.
-// S6C (closed box/fan100) had NTC minimum 30.32k and Sanwa PLATE peak53C;
-// the proposed 35k soft pause targets earlier intervention than S6C.
-// Any physical HEATER ON requires NEW approval/preflight/independent Sanwa.
-// No bead Celsius calibration; no GPIO/tach/safety certification in this file.
+// STEP13A: candidate AIR30 and less restrictive but still bounded local NTC.
+// Source of change: 2026-10-29 STEP12P real 1089-row CSV and manual table:
+// AIR25 reached at+400s (vs STEP10B+563s), genuine AIR24 rearm at+685s,
+// ON=231.114s at global12min timeout, minNTC34.483k, zero faults.
+// STEP12P soft35k clipped ON windows to13-17.5s; new soft33k retains
+// a *3kOhm* resistance interval above the UNQUALIFIED 30k backup fault.
+// Previous S6C closed/fan100 saw Sanwa PLATE53C at minNTC30.32k.
+// This does not predict the new plate Tmax, NTC bead temperature or materials.
+// ALL numbers below are provisional test inputs, not operational approvals.
+// No automatic heater energization or bypass of installed TCO105 authorized.
 namespace HeaterStep09AirFeedback {
 using Phase = HeaterCommissioning::Phase; // 0 Idle;1 Prerun;2 Pulse;3 Gap;4 Cooldown;5 Complete;6 Aborted
 using Fault = HeaterCommissioning::Fault;
@@ -20,21 +22,21 @@ struct Parameters {
   uint32_t maximumOnWindowMs = 20000;
   uint32_t minimumOffMs = 12000;
   uint32_t cooldownMs = 90000;
-  uint32_t maximumRunMs = 720000;
-  uint32_t maximumTotalHeatMs = 300000; // unchanged one-shot trial ceiling
+  uint32_t maximumRunMs = 900000; // 15min provisional; STEP12P 12min truncated 24C rearm
+  uint32_t maximumTotalHeatMs = 360000; // cumulative 6min max; not continuous
   uint32_t fanStartupTimeoutMs = 12000;
   uint32_t maxNtcAgeMs = 1500;
   uint32_t maxAirAgeMs = 5000;
-  float targetAirC = 25.0f;
+  float targetAirC = 30.0f; // next higher CHAMBER target, not heater-plate target
   float airHysteresisC = 1.0f;
   float airFaultCeilingC = 40.0f;
   // All R_NTC boundaries are PROVISIONAL TEST values, not fixed temperatures.
-  // STEP12P: SOFT 35k (above S6C recorded 30.32k minimum), rearm50k,
-  // BACKUP raw cutoff30k (near S6C observed minimum, NOT an independent
-  // thermal protector). The inherited STEP07 40k was an artificial stop.
+  // STEP13A: SOFT33k (down2k from STEP12P, NOT a calibrated Celsius
+  // ceiling), REARM50k unchanged, BACKUP raw cutoff30k unchanged.
+  // The STEP07 40k experimental early trip is historically retired.
   // Sensor invalid/stale, air40C, ISR20.5s, time/energy bounds, STOP and
   // physically installed series TCO remain independent of these thresholds.
-  float ntcSoftPauseOhms = 35000.0f;
+  float ntcSoftPauseOhms = 33000.0f;
   float ntcResumeOhms = 50000.0f;
   float ntcHardTripOhms = 30000.0f;
   float ntcOpenOhms = 250000.0f;
