@@ -1,4 +1,4 @@
-// STEP12P independent read-only diagnostic: NO GPIO, no HEATER control.
+// STEP13A independent read-only diagnostic: NO GPIO, no HEATER control.
 #include <cassert>
 #include <cmath>
 #include <iostream>
@@ -6,19 +6,19 @@
 
 int main() {
   using namespace HeaterPlateDiagnostics;
-  const auto invalid = margin(NAN, 35000.0f, 30000.0f);
+  const auto invalid = margin(NAN, 33000.0f, 30000.0f);
   assert(!invalid.valid && !historicalOpenBoxContact(NAN).valid);
   assert(!historicalOpenBoxContact(100000.0f).valid);
   assert(!historicalOpenBoxContact(6000.0f).valid);
-  const auto high = margin(35000.0f, 35000.0f, 30000.0f);
+  const auto high = margin(33000.0f, 33000.0f, 30000.0f);
   assert(high.valid);
   assert(std::fabs(high.aboveSoftOhms) < 0.1f);
-  assert(std::fabs(high.aboveHardOhms - 5000.0f) < 0.1f);
-  const auto below = margin(33738.2f, 35000.0f, 30000.0f);
+  assert(std::fabs(high.aboveHardOhms - 3000.0f) < 0.1f);
+  const auto below = margin(31738.2f, 33000.0f, 30000.0f);
   assert(below.valid);
   assert(std::fabs(below.aboveSoftOhms + 1261.8f) < 0.2f);
-  assert(std::fabs(below.aboveHardOhms - 3738.2f) < 0.2f);
-  assert(!margin(35000.0f, 30000.0f, 35000.0f).valid);
+  assert(std::fabs(below.aboveHardOhms - 1738.2f) < 0.2f);
+  assert(!margin(33000.0f, 30000.0f, 35000.0f).valid);
   for (float r : {64620.0f, 42270.0f, 28720.0f, 19680.0f,
                   13730.0f, 9810.0f, 7120.0f}) {
     assert(historicalOpenBoxContact(r).valid);
@@ -31,6 +31,6 @@ int main() {
   assert(mid > 39.0f && mid < 47.0f);
   // These purely arithmetic diagnostics do not establish a safe trip.
   // Candidate cutoff 30k is separately tested in real SafetyController mock.
-  std::cout << "PASS STEP12P historical proxy and real-ohm margins; "
+  std::cout << "PASS STEP13A historical proxy and real-ohm margins; "
                "NON-ACTUATING; no thermistor thermal qualification\n";
 }
