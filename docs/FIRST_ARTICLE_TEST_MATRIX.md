@@ -1,5 +1,7 @@
 # First-article staged population matrix — working draft
 
+> Historical assembly and measurement record. Current state and next work: [PROJECT_STATE](PROJECT_STATE.md) and [TODO](TODO.md).
+
 Status: **first-article assembly and staged bring-up in progress**. Active branch `main`; released hardware source checkpoint `74a3000127371ac6c3b3b7197f9036dec5b58eef`. Derived from the stored 2026-09-17 KiCad netlist, current BOM, `docs/ASSEMBLY.md` and source sheets. This is **not yet a solder-by-reference instruction**: the released PCB has now been read successfully through the GitHub contents endpoint and key pad/net locations below are source-verified, but the exhaustive 94-reference population grouping and bench acceptance limits still require completion before assembly.
 
 ## Verified net relationships relevant to the staging

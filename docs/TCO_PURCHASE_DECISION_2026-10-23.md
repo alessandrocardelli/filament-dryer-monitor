@@ -1,5 +1,7 @@
 # TCO — decisione d'acquisto verificata, 23 ottobre 2026
 
+> Historical protocol/technical record. Its dated NEXT and pre-test status are not the current work queue; see [PROJECT_STATE](PROJECT_STATE.md) and [TODO](TODO.md). Original checkpoint preserved in archive tags.
+
 ## Decisione operativa aggiornata — WTT identificato e carrello verificato (23 ottobre 2026)
 
 **Prima scelta d'acquisto: MICROTEMP / Therm-O-Disc G4A00152C, Tf152 °C, venduto da WTT Elettronica come FT152G / Omega.**

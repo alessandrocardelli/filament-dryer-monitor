@@ -6,7 +6,7 @@ on:
       - experiment/step10-heater-diagnostics-air25-2026-10-28
   pull_request:
     branches:
-      - experiment/step09b-air25-budget180-2026-10-27
+      - main
   workflow_dispatch:
 
 permissions:
@@ -74,7 +74,7 @@ jobs:
           PY
       - name: Verify known driver/sensor source files unchanged from S7U
         run: |
-          git fetch --no-tags origin fix/step07-clear-test-feedback-2026-10-26
+          git fetch --no-tags origin 43cb37ccfceded1c185491f88b010b0b176722f6
           for path in firmware/NtcSensor.h firmware/Sht45Sensor.h firmware/FanController.h firmware/CycleController.h firmware/HeaterPulseCommissioning.h firmware/HeaterControlPolicy.h; do
             test "$(git rev-parse FETCH_HEAD:$path)" = "$(git hash-object "$path")" || {
               echo "::error file=$path::Unreviewed sensor/driver modification"
@@ -86,6 +86,12 @@ jobs:
         run: |
           set -euo pipefail
           bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step10a-mock.log"
+      - name: STEP08 selective offline replay regression
+        run: bash firmware/tests/host/run_step08_real_trace.sh
+      - name: Runtime source unchanged by repository consolidation
+        run: |
+          git fetch --no-tags origin 05d4c36d2378be9b09664545f37243a5dfa9f477
+          git diff --exit-code FETCH_HEAD -- firmware ':!firmware/tests'
       - uses: arduino/setup-arduino-cli@v2
       - name: Install ESP32 core 3.3.12 and U8g2 2.36.19
         run: |

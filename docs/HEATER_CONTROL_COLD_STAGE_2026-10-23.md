@@ -1,5 +1,7 @@
 # NTC e prima logica di controllo termico — checkpoint 2026-10-23
 
+> Historical protocol/technical record. Its dated NEXT and pre-test status are not the current work queue; see [PROJECT_STATE](PROJECT_STATE.md) and [TODO](TODO.md). Original checkpoint preserved in archive tags.
+
 **Scope:** codice di richiesta logica del riscaldamento solo per test nativi, senza GPIO né integrazione nel firmware ESP32. Branch: feature/heater-policy-cold-tests-2026-10-23, derivato da plan/closed-heater-qualification-2026-10-20.
 
 **Decisione D029:** il TCO aggiunto è opzionale, quindi la ricerca commerciale NON blocca lo sviluppo del riscaldamento. Sul prototipo è tuttora installato un fusibile da 105 °C in serie, la cui presenza va considerata per le prove. Questo lavoro non autorizza a bypassarlo o effettuare prove a caldo.
