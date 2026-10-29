@@ -56,6 +56,25 @@ PRs **7,8,10,11,12,13,14,17 closed without merge** after all original refs were 
 
 Removed inactive hardware-mutating footprint/buzzer workflows from both retained lines; their original files remain in archive tags. Retained KiCad ERC is historical and not run/claimed by this consolidation; no schematic or PCB edit occurred.
 
-Main integration and branch deletion: PENDING verified completion.
+**Verified final operations:** [PR19 merged](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/19) at commit [`bbee1b5ebf9fb8e4692d152cba169334299727a6`](https://github.com/alessandrocardelli/filament-dryer-monitor/commit/bbee1b5ebf9fb8e4692d152cba169334299727a6). Post-merge [main CI40865389451](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40865389451) SUCCESS. Experimental selective integration at `615e8945d1c4ee203a1bd0c22f271be69758b550`: [CI40864787188](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40864787188) SUCCESS, replay717/237 +8 injected faults PASS, actual-controller GPIO mock PASS, ESP321,177,662 flash /108,904 RAM bytes, unchanged from original candidate. Final CI-reference/link commit `470f1e5181c9b327292af6a581c0bb407b25591d`: [CI40865576489](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40865576489) **SUCCESS**, including exact source-preservation gates, replay, GPIO mock and actual ESP32 link.
+
+**Pruning [Actions40865664006](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/40865664006) SUCCESS:** verified all22 archive tags, exact retained main/experiment source, all Markdown URLs into removed branches, and exact original candidate branch heads; then deleted20 original branches plus the temporary cleanup branch atomically with per-ref leases. The operation's own source is preserved at tag `archive/2026-10-29/consolidation-execution` → `6e11a3f76b138f2e516952eb46931f2dfbb8560e`. The cleanup workflow/scripts were not added to main.
+
+Independent GitHub API and `git ls-remote --heads` after pruning confirm **22→2 original branches**: `main` plus `experiment/step10-heater-diagnostics-air25-2026-10-28`. **9→1 open PRs**: #18, still DRAFT against main. The temporary PR19 was merged and its branch removed. There are23 new archive tags (22 originals + execution); the pre-existing before-resize tag remains unchanged. Each deleted original branch and its reason is listed in the disposition table above.
+
+Final documentation-only receipt updates the audit on both retained branches; thermal firmware remains byte-identical to05d4c36d and stable heater/entry/config/hardware/decisions remain byte-identical to original main. No pending source merge or physical operation is hidden in this report.
 
 Source audit finding: the old `feature/thermal-qualification` name/comments suggest a cold diagnostic, but its AppConfig enables the pulse commissioning path and SafetyController calls setHeater(pulse). PR13 is likewise test-only in its *own diff* while inheriting HEAT-capable runtime. Branch names, comments and an isolated PR diff are therefore insufficient to certify a full-branch merge as non-heating. Neither full branch was merged.
+
+## Bootstrap acceptance check
+
+A fresh assistant reads AGENTS → README → PROJECT_STATE → DECISIONS → TODO, then the relevant source. It can identify without historical checkpoint traversal:
+
+- Stable code: main, SAFE BRING-UP hard-LOW output, runtime baseline a60804d2 with only the unused elapsed accessor added.
+- Last physical firmware: HOT-261027-S9B180, device status confirms identity; AirStale4 and the original CSV/Sanwa records are linked. Exact flashed binary hash is not independently established.
+- Latest candidate: HOT-261028-S10A25, unchanged thermal source05d4c36d on the single retained experiment. Exact software-tested source refs/runs above; no physical STEP10A record.
+- Software PASS:14 policy cases,41 cycle assertions, main hard-LOW GPIO fault checks,717-sample replay/8 injections, STEP10 GPIO mock and actual ESP32 builds. Physical evidence is separately scoped; no25°C target feedback or V1 safety PASS is inferred.
+- Open issues: physical STEP10A qualification, actual cause of prior loop stalls beyond confirmed AirStale, NTC/thermal/material/fan/TCO qualification and deferred mixed network/safety integration.
+- One next action: existing STEP10A readiness review with the operator, prerequisites and outcome defined in TODO; no repeated S9B or automatic heating.
+
+Main AGENTS70 lines, README22, PROJECT_STATE56, TODO21 replace the previous chronologies (AGENTS~158, README339, PROJECT_STATE1012, TODO309). Older detailed records remain discoverable through the ledger, existing technical files and exact archive tags, not part of the mandatory bootstrap.
