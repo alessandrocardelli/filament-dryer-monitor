@@ -4,6 +4,7 @@
 #include "AppConfig.h"
 #include "AppTypes.h"
 #include "HeaterControlPolicy.h"
+#include "HeaterProductAir.h"
 #include "HeaterPulseCommissioning.h"
 #include "HeaterStep07GuardTrial.h"
 #include "HeaterStep09AirFeedback.h"
@@ -12,8 +13,9 @@
 #endif
 
 // Integrates the real GPIO19 output with the host-tested control policy.
-// STEP07 experimental branch: only one-shot supervised heater pulses are
-// enabled; the normal thermostatic path is explicitly DISABLED.
+// STEP13 historical trial is OFF in the current source. The production AIR
+// controller is integrated but GPIO remains locked by independently required
+// thermal qualification flags and unconfigured local temperature limits.
 // Sensor/thermal qualification and independent physical safeguards are
 // separate from the optional added TCO (D029).
 class SafetyController {
@@ -23,8 +25,10 @@ class SafetyController {
     pinMode(AppConfig::kPinHeaterPwm, OUTPUT);
     forceHeaterOff();
 #ifdef ARDUINO_ARCH_ESP32
-    if (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) {
-      // ESP32 hardware timer cuts the pulse off even if loop() stalls.
+    if (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode ||
+        AppConfig::kHeaterOutputEnabled) {
+      // Product mode MUST have the same independent per-window GPIO hard OFF.
+      // Do not enable a thermal regulator without this ISR and validated limits.
       pulseTimer_ = timerBegin(1000000); // one tick per microsecond
       if (!pulseTimer_) {
         faultActive_ = true;
@@ -45,6 +49,7 @@ class SafetyController {
     forceHeaterOff();
     commission_.cancel();
     feedback_.cancel();
+    product_.stop();
     HeaterControl::Inputs stopped{};
     policy_.evaluate(0, HeaterControl::Limits{}, stopped);
   }
@@ -59,7 +64,8 @@ class SafetyController {
     if (heaterOn_) lastHeaterOnMs_ = nowMs;
 #ifdef ARDUINO_ARCH_ESP32
     if ((AppConfig::kHeaterCommissioningMode ||
-         AppConfig::kHeaterStep09TrialMode) && pulseTimerFired_) {
+         AppConfig::kHeaterStep09TrialMode ||
+         AppConfig::kHeaterOutputEnabled) && pulseTimerFired_) {
       if (AppConfig::kHeaterStep09TrialMode)
         feedback_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
       else
@@ -127,6 +133,34 @@ class SafetyController {
       return;
     }
 
+    // Qualified V1 thermostat: actual user-set chamber AIR temperature,
+    // independent local heater soft/rearm/hard limits and sensor faults.
+    // In the repository all qualification flags and Celsius limits are
+    // deliberately UNSET, so reaching this code cannot energize GPIO19.
+    HeaterProductAir::Inputs in{};
+    in.cycleActive = cycleActive;
+    in.fanCommandedRunning = fanPwmRunning; // PWM only, no tachometer
+    in.ntcElectricalValid = ntc.sampled && ntc.valid &&
+                            ntc.fault == NtcFault::None;
+    in.ntcThermallyQualified = AppConfig::kHeaterNtcModelApproved;
+    in.heaterTempC = ntc.temperatureC;
+    in.ntcAgeMs = ntc.sampled ? nowMs - ntc.lastSampleMs : UINT32_MAX;
+    in.airValid = chamber.valid;
+    in.airC = chamber.temperatureC;
+    in.airAgeMs = chamber.valid ? nowMs - chamber.lastSuccessMs : UINT32_MAX;
+    in.targetAirC = targetChamberC;
+    const bool requested = product_.update(nowMs, in);
+    if (product_.fault() != HeaterProductAir::Fault::None) {
+      faultActive_ = true;
+      forceHeaterOff();
+      return;
+    }
+    // Runtime state + separately approved configuration + independent ISR
+    // are ALL needed. No trial NTC resistance number becomes a V1 limit.
+    setHeater(requested && cycleActive);
+    return;
+
+    /* Archived STEP03 native-only policy reference:
     HeaterControl::Inputs in{};
     in.cycleRequested = cycleActive;
     // Fan PWM command is only a proxy. The board has no tachometer.
@@ -166,6 +200,7 @@ class SafetyController {
 
     // Compile-time output gate + runtime policy BOTH required.
     setHeater(requested && cycleActive);
+    */
   }
 
   bool heaterPermitted() const { return !heaterLocked() && !faultActive_; }
@@ -233,7 +268,24 @@ class SafetyController {
   NtcFault ntcFault() const { return ntcFault_; }
 
  private:
-  HeaterControl::Policy policy_{};
+  HeaterControl::Policy policy_{}; // legacy native replay and stop() only
+  static HeaterProductAir::Limits productLimits() {
+    HeaterProductAir::Limits lim{};
+    lim.qualified = AppConfig::kHeaterProfileApproved &&
+                    AppConfig::kHeaterNtcModelApproved;
+    lim.ntcSoftC = AppConfig::kHeaterSoftPauseMeasuredC;
+    lim.ntcRearmC = AppConfig::kHeaterRearmMeasuredC;
+    lim.ntcHardC = AppConfig::kHeaterMaxMeasuredC;
+    lim.airFaultC = AppConfig::kChamberMaxMeasuredC;
+    lim.airHysteresisC = AppConfig::kChamberControlHysteresisC;
+    lim.fanPrerunMs = AppConfig::kHeaterFanPrerunMs;
+    lim.maxOnWindowMs = AppConfig::kHeaterMaxContinuousOnMs;
+    lim.minOffMs = AppConfig::kHeaterMinimumOffMs;
+    lim.maxNtcAgeMs = AppConfig::kHeaterNtcMaxAgeMs;
+    lim.maxAirAgeMs = AppConfig::kHeaterChamberMaxAgeMs;
+    return lim;
+  }
+  HeaterProductAir::Controller product_{productLimits()};
   HeaterCommissioning::Sequence commission_{HeaterStep07GuardTrial::parameters()};
   HeaterStep09AirFeedback::Controller feedback_{HeaterStep09AirFeedback::parameters()};
   uint32_t lastNowMs_ = 0;
@@ -267,7 +319,8 @@ class SafetyController {
     if (heaterOn_ == desired) return;
     if (desired) {
 #ifdef ARDUINO_ARCH_ESP32
-      if (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) {
+      if (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode ||
+          AppConfig::kHeaterOutputEnabled) {
         if (!pulseTimer_ || pulseTimerFired_) {
           if (AppConfig::kHeaterStep09TrialMode)
             feedback_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
