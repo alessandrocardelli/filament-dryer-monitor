@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - experiment/step10-heater-diagnostics-air25-2026-10-28
-  pull_request:
-    branches:
-      - main
+    paths:
+      - firmware/**
+      - .github/workflows/step10-heater-diagnostic-ci.yml
   workflow_dispatch:
 
 permissions:
