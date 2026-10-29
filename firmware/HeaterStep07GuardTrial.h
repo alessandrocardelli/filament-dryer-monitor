@@ -1,6 +1,9 @@
 #pragma once
 #include "HeaterPulseCommissioning.h"
 
+// HISTORICAL STEP07 ONLY — NOT TO BE INHERITED BY NEW HEATER PROFILES.
+// Its 40kOhm early-abort was an artificial, deliberately low TEST STOP.
+// STEP12P uses separate, reviewed-as-proposal experimental controller values.
 // STEP07-G: RAW NTC RESISTANCE GUARD QUALIFICATION, not V1 temperature
 // regulation, not a calibrated Sanwa/NTC conversion.
 // Origin: physically executed S6C, same FAN 100% and same pulse/time
