@@ -317,7 +317,7 @@ void setup() {
     Serial.println("EXPERIMENTAL 6-PULSE STEP07 NTC-GUARD TEST; no auto-repeat");
     Serial.println("NTC absolute degrees NOT calibrated; experimental raw R_NTC abort at 40k");
   } else if (AppConfig::kHeaterStep09TrialMode) {
-    Serial.println("STEP12P EXPERIMENTAL HEATER CANDIDATE, LIMITS REVISED, NOT APPROVED V1: fixed SHT45 air25C, NTC hard40k, 100% fan, timed windows");
+    Serial.println("STEP12P UNAPPROVED HEATER PROFILE: SHT45 AIR25, NTC SOFT35/REARM50/BACKUP30k (NOT qualified), 100% fan, timed windows");
   } else {
     Serial.println(safety.heaterLocked()
         ? "Heater OUTPUT LOCKED: configuration/calibration not approved."
