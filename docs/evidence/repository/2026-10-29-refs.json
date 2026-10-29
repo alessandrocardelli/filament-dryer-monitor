@@ -1,0 +1,206 @@
+{
+  "date": "2026-10-29",
+  "initial_branches": 22,
+  "experimental_branch": "experiment/step10-heater-diagnostics-air25-2026-10-28",
+  "branches": [
+    {
+      "branch": "diagnostics/fan-gpio16-static-2026-10-20",
+      "sha": "92c29bd35d46b5b30378566a40ca41a0a03f5522",
+      "tag": "archive/2026-10-29/diagnostics/fan-gpio16-static-2026-10-20",
+      "merge_base_main": "539ed88c9993065758c0b814e8d7d5bfdef4f252",
+      "ahead_behind_main": "4\t196",
+      "in_step10": false,
+      "retain": false
+    },
+    {
+      "branch": "experiment/step06-supervised-heat-2026-10-25",
+      "sha": "5d03c08fe910c40bf95e67a2bfc796eaf9ee3f76",
+      "tag": "archive/2026-10-29/experiment/step06-supervised-heat-2026-10-25",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "200\t150",
+      "in_step10": true,
+      "retain": false
+    },
+    {
+      "branch": "experiment/step06b-fan100-extended-2026-10-25",
+      "sha": "faa1ec5e827854d1c0a6d49ed833c685d29bd25e",
+      "tag": "archive/2026-10-29/experiment/step06b-fan100-extended-2026-10-25",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "216\t150",
+      "in_step10": true,
+      "retain": false
+    },
+    {
+      "branch": "experiment/step07-ntc-guard-verified-history-2026-10-25",
+      "sha": "ab17acf4e816a32cc58a4e1d6735ad0c1cb0cdf4",
+      "tag": "archive/2026-10-29/experiment/step07-ntc-guard-verified-history-2026-10-25",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "235\t150",
+      "in_step10": true,
+      "retain": false
+    },
+    {
+      "branch": "experiment/step09-real-sht45-feedback-2026-10-27",
+      "sha": "608c8fb8de656373b7a8e55370b0165517f22322",
+      "tag": "archive/2026-10-29/experiment/step09-real-sht45-feedback-2026-10-27",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "331\t150",
+      "in_step10": true,
+      "retain": false
+    },
+    {
+      "branch": "experiment/step09-s9b-25c-200s-2026-10-27",
+      "sha": "9a18cdc052853dd823ba752f0b614fff4d81f0be",
+      "tag": "archive/2026-10-29/experiment/step09-s9b-25c-200s-2026-10-27",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "347\t150",
+      "in_step10": false,
+      "retain": false
+    },
+    {
+      "branch": "experiment/step09b-air25-budget180-2026-10-27",
+      "sha": "2cefe18089175694a7d689259d1acbff7d00156f",
+      "tag": "archive/2026-10-29/experiment/step09b-air25-budget180-2026-10-27",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "388\t150",
+      "in_step10": true,
+      "retain": false
+    },
+    {
+      "branch": "experiment/step09b-chamber25-extended-budget-2026-10-27",
+      "sha": "f319fcf437be083e988c1c94d0b76b6a77a43a2d",
+      "tag": "archive/2026-10-29/experiment/step09b-chamber25-extended-budget-2026-10-27",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "344\t150",
+      "in_step10": false,
+      "retain": false
+    },
+    {
+      "branch": "experiment/step10-heater-diagnostics-air25-2026-10-28",
+      "sha": "05d4c36d2378be9b09664545f37243a5dfa9f477",
+      "tag": "archive/2026-10-29/experiment/step10-heater-diagnostics-air25-2026-10-28",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "405\t150",
+      "in_step10": true,
+      "retain": true
+    },
+    {
+      "branch": "feature/step01-sensor-diagnostics-2026-10-24",
+      "sha": "4ffb599ba19080a1a5703eebd54027076a7f0b5e",
+      "tag": "archive/2026-10-29/feature/step01-sensor-diagnostics-2026-10-24",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "106\t150",
+      "in_step10": true,
+      "retain": false
+    },
+    {
+      "branch": "feature/step03-heater-locked-thermostat-sim-2026-10-25",
+      "sha": "76eaf430bf4935567a8194b86dad6fd6d72f6bbc",
+      "tag": "archive/2026-10-29/feature/step03-heater-locked-thermostat-sim-2026-10-25",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "131\t150",
+      "in_step10": true,
+      "retain": false
+    },
+    {
+      "branch": "feature/step05-heater-safety-preflight-2026-10-25",
+      "sha": "986d1f6639937ef938ad6d6bcb6c7751dd385965",
+      "tag": "archive/2026-10-29/feature/step05-heater-safety-preflight-2026-10-25",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "164\t150",
+      "in_step10": true,
+      "retain": false
+    },
+    {
+      "branch": "feature/step06-fan-on-thermal-characterization-2026-10-25",
+      "sha": "ad7e5db9276df15cd64cf990382bb3c845e9928c",
+      "tag": "archive/2026-10-29/feature/step06-fan-on-thermal-characterization-2026-10-25",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "188\t150",
+      "in_step10": true,
+      "retain": false
+    },
+    {
+      "branch": "feature/thermal-qualification-2026-10-24",
+      "sha": "99b6c838ee18939ac37dbb7e394f608e7949800b",
+      "tag": "archive/2026-10-29/feature/thermal-qualification-2026-10-24",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "100\t150",
+      "in_step10": false,
+      "retain": false
+    },
+    {
+      "branch": "feature/wifi-ota-web-logging-2026-10-24",
+      "sha": "badf8dc30b9f16949a406feee80fff9a21edbcd7",
+      "tag": "archive/2026-10-29/feature/wifi-ota-web-logging-2026-10-24",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "245\t150",
+      "in_step10": false,
+      "retain": false
+    },
+    {
+      "branch": "fix/isolated-fan-ledc-2026-10-19",
+      "sha": "c3d608b713c4818d014f1b61936a2511ecf502cc",
+      "tag": "archive/2026-10-29/fix/isolated-fan-ledc-2026-10-19",
+      "merge_base_main": "4edd38a55c69e9dc8dca16d160bf6c26e7dcc0db",
+      "ahead_behind_main": "6\t200",
+      "in_step10": false,
+      "retain": false
+    },
+    {
+      "branch": "fix/step06-web-telemetry-2026-10-25",
+      "sha": "34a6c338338f33e2ae1e992f13b959bea64055d0",
+      "tag": "archive/2026-10-29/fix/step06-web-telemetry-2026-10-25",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "199\t150",
+      "in_step10": true,
+      "retain": false
+    },
+    {
+      "branch": "fix/step07-clear-test-feedback-2026-10-26",
+      "sha": "43cb37ccfceded1c185491f88b010b0b176722f6",
+      "tag": "archive/2026-10-29/fix/step07-clear-test-feedback-2026-10-26",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "293\t150",
+      "in_step10": true,
+      "retain": false
+    },
+    {
+      "branch": "main",
+      "sha": "a60804d2aadc9cc5c2d0c291c59c54fee0d2c072",
+      "tag": "archive/2026-10-29/main",
+      "merge_base_main": "a60804d2aadc9cc5c2d0c291c59c54fee0d2c072",
+      "ahead_behind_main": "0\t0",
+      "in_step10": false,
+      "retain": true
+    },
+    {
+      "branch": "pcb/l7987l-layout",
+      "sha": "0988a2cebe175d983ac6423f9e6247febc85cc69",
+      "tag": "archive/2026-10-29/pcb/l7987l-layout",
+      "merge_base_main": "4e6e4780d54aacd844f2d0ae81e5cbbf01deb429",
+      "ahead_behind_main": "2\t429",
+      "in_step10": false,
+      "retain": false
+    },
+    {
+      "branch": "test/step08-ntc-air-replay-2026-10-27",
+      "sha": "1057a633aa1cc75b1c1dac3643a04a94d342e69a",
+      "tag": "archive/2026-10-29/test/step08-ntc-air-replay-2026-10-27",
+      "merge_base_main": "f5a399a134993c0ebdaea79ae1ff739f102ff0a0",
+      "ahead_behind_main": "289\t150",
+      "in_step10": false,
+      "retain": false
+    },
+    {
+      "branch": "variant/mouser-footprints",
+      "sha": "f71f16fe71a977ebe23a76e379296910eba6d0b5",
+      "tag": "archive/2026-10-29/variant/mouser-footprints",
+      "merge_base_main": "31d6edbb19e45fe316e41156c6f97ecd4fb7244d",
+      "ahead_behind_main": "11\t548",
+      "in_step10": false,
+      "retain": false
+    }
+  ],
+  "delete_enabled": false
+}
