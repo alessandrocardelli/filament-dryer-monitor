@@ -76,7 +76,7 @@ class Controller {
       phase_ = Phase::Prerun;
       fanStartedMs_ = nowMs;
       airDemand_ = in.airC < in.targetAirC;
-      localReady_ = in.heaterTempC <= limits_.ntcRearmC;
+      localReady_ = in.heaterTempC < limits_.ntcSoftC;
       return false;
     }
     if (phase_ == Phase::Prerun) {
