@@ -6,6 +6,7 @@
 #include "FirmwareBuild.h"
 #include "HeaterPulseCommissioning.h"
 #include "HeaterStep07GuardTrial.h"
+#include "HeaterStep09AirFeedback.h"
 #include "assets/slewform/slewform_animation_compact.h"
 
 class Ui {
