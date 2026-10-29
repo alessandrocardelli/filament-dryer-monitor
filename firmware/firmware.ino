@@ -51,6 +51,9 @@ bool csvFinalSavedThisRun = false;
 bool csvCheckpointAttempted = false;
 bool csvSaveFailed = false;
 uint8_t previousPhaseReported = 255;
+// Read-only telemetry: capture raw minimum during the active session.
+// The historical contact-temperature proxy NEVER drives this controller.
+float minSessionNtcOhms = NAN;
 
 static void applyBuzzerSettings() {
   buzzer.setVolume(settings.buzzerVolume);
@@ -89,6 +92,7 @@ static void enterState(AppState next, uint32_t nowMs) {
       csvFinalSavedThisRun = false;
       csvCheckpointAttempted = false;
       csvSaveFailed = false;
+      minSessionNtcOhms = NAN;
       // Keep stored user settings unchanged: this isolated physical trial
       // always uses fixed 25 C air and 15 min cycle guard.
       if (!AppConfig::kHeaterStep09TrialMode) settingsStore.save(settings);
@@ -380,6 +384,15 @@ void loop() {
     enterState(AppState::Complete, nowMs);
   }
 
+  // Raw NTC low-water mark is observable even at post-ON thermal overshoot.
+  // Does not influence output or soften the independent hard NTC cutoff.
+  if (loggingSession && ntc.snapshot().valid &&
+      std::isfinite(ntc.snapshot().resistanceOhms) &&
+      (std::isnan(minSessionNtcOhms) ||
+       ntc.snapshot().resistanceOhms < minSessionNtcOhms)) {
+    minSessionNtcOhms = ntc.snapshot().resistanceOhms;
+  }
+
   // Actual controller integration: air is the regulated variable; heater NTC
   // provides the upper-temperature observation. GPIO19 remains build-locked
   // until both thermal validation flags and all bounded limits are approved.
@@ -553,6 +566,7 @@ void loop() {
   telem.cumulativeHeatMs = safety.feedbackTotalHeatMs();
   telem.sessionCsvSaved = csvSavedThisRun;
   telem.sessionCsvFinal = csvFinalSavedThisRun;
+  telem.minSessionNtcOhms = minSessionNtcOhms;
   network.publish(telem);
   const bool canOta = appState == AppState::Standby && !safety.faultActive() &&
        !cycle.isRunning() && !safety.coolingRequired(nowMs) && !safety.heaterOn();
