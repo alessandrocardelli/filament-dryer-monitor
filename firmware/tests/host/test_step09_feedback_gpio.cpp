@@ -1,5 +1,6 @@
-// STEP10B: real SafetyController, GPIO mocked; new bounded local envelope.
-// Fixed 25C SHT45 air target; NTC-ohm soft pause above unchanged 40k fault.
+// STEP12P: real SafetyController, GPIO mocked; explicitly revised bounded
+// PROVISIONAL NTC envelope 35k/50k/30k, NOT an approved safety thermostat.
+// Fixed 25C SHT45 target; old STEP07 40k was merely an early test guard.
 #include <cassert>
 #include <cstdint>
 #include <iostream>
@@ -47,9 +48,9 @@ int main() {
                 "Do not loosen the 20.5s ISR ceiling");
   const auto settings = HeaterStep09AirFeedback::parameters();
   assert(settings.targetAirC == 25.0f &&
-         settings.ntcSoftPauseOhms == 45000.0f &&
-         settings.ntcResumeOhms == 60000.0f &&
-         settings.ntcHardTripOhms == 40000.0f &&
+         settings.ntcSoftPauseOhms == 35000.0f &&
+         settings.ntcResumeOhms == 50000.0f &&
+         settings.ntcHardTripOhms == 30000.0f &&
          settings.maximumOnWindowMs == 20000 &&
          settings.minimumOffMs == 12000 &&
          settings.maximumTotalHeatMs == 300000 &&
@@ -57,13 +58,13 @@ int main() {
          settings.cooldownMs == 90000);
   {
     SafetyController s; start(s);
-    tick(s, 12500, 45000.0f); // SOFT pause, 5k above unchanged hard 40k
+    tick(s, 12500, 35000.0f); // SOFT pause, 5k above candidate backup cutoff 30k
     assert(!s.heaterOn() && !s.faultActive());
     assert(s.commissioningPhase() ==
            static_cast<uint8_t>(HeaterCommissioning::Phase::Gap));
     tick(s, 24499, 90000);
     assert(!s.heaterOn()); // 12s minimum OFF
-    tick(s, 24500, 60000);
+    tick(s, 24500, 50000);
     assert(s.heaterOn() && !s.faultActive());
     tick(s, 25000, 64000, 25.0f); // chamber reaches target
     assert(!s.heaterOn() && !s.faultActive());
@@ -76,18 +77,18 @@ int main() {
     assert(!s.heaterOn() && !s.commissioningCanStart());
     assert(s.coolingRequired(37251) && s.fanPermitted());
   }
-  // STEP10B regression for the observed 19th-OFF deadlock class.
+  // STEP10B demand-latch regression retained after STEP12P profile change.
   // Air at 24.6C has NEVER reached the 25C target. After a local NTC
   // pause, air 24.6C must NOT require falling all the way to 24C.
   {
     SafetyController s; start(s);
-    tick(s, 12500, 45000.0f, 23.7f); // local soft pause
+    tick(s, 12500, 35000.0f, 23.7f); // local soft pause
     assert(!s.heaterOn() && !s.faultActive());
-    assert(s.feedbackWaitReason(12501, 45000.0f) == 1); // OFF timer
-    tick(s, 24500, 59000.0f, 24.6f); // >=12s, NTC not recovered
+    assert(s.feedbackWaitReason(12501, 35000.0f) == 1); // OFF timer
+    tick(s, 24500, 49000.0f, 24.6f); // >=12s, NTC not recovered
     assert(!s.heaterOn());
-    assert(s.feedbackWaitReason(24500, 59000.0f) == 2); // NTC
-    tick(s, 24600, 60000.0f, 24.6f); // NTC now recovered
+    assert(s.feedbackWaitReason(24500, 49000.0f) == 2); // NTC
+    tick(s, 24600, 50000.0f, 24.6f); // NTC now recovered
     assert(s.heaterOn() && !s.faultActive()); // 24C gate was incorrect
     tick(s, 24700, 60000.0f, 25.0f); // first genuine target cutoff
     assert(!s.heaterOn());
@@ -99,9 +100,26 @@ int main() {
     s.stop();
     assert(!s.heaterOn() && !s.commissioningCanStart());
   }
+  // The regression that MUST have caught the original project mistake:
+  // R_NTC40k is no longer an irreversible fault or a soft cut-off.
+  // A physically tested previous S6C region is now reachable in the NEW,
+  // explicitly unapproved candidate. This is GPIO mock, not real heating.
   {
     SafetyController s; start(s);
-    tick(s, 6100, 40000.0f);
+    tick(s, 6100, 40000.0f); // old arbitrary STEP07 trip
+    assert(s.heaterOn() && !s.faultActive());
+    tick(s, 7000, 34999.0f); // NEW soft pause, without persistent fault
+    assert(!s.heaterOn() && !s.faultActive());
+    tick(s, 18999, 49999.0f);
+    assert(!s.heaterOn());
+    tick(s, 19000, 50000.0f);
+    assert(s.heaterOn() && !s.faultActive());
+    s.stop();
+    assert(!s.heaterOn());
+  }
+  {
+    SafetyController s; start(s);
+    tick(s, 6100, 30000.0f);
     assert(!s.heaterOn() && s.faultActive());
     assert(s.commissioningFault() ==
         static_cast<uint8_t>(HeaterCommissioning::Fault::NtcResistanceLimit));
@@ -176,7 +194,7 @@ int main() {
     assert(s.commissioningComplete() && !s.heaterOn());
     assert(!s.commissioningCanStart());
   }
-  // New S9B regression: SHT45 25C must actually remove a live HEATER
+  // Original S9B regression: SHT45 25C must actually remove a live HEATER
   // command AFTER more than the old 120s S9A total budget were used.
   // This reuses only the original GPIO-mock SafetyController, no device heat.
   {
@@ -198,7 +216,7 @@ int main() {
     tick(s, 230000, 90000, 24.0f);
     assert(s.heaterOn() && s.commissioningPhase() ==
         static_cast<uint8_t>(HeaterCommissioning::Phase::Pulse));
-    // NTC is a healthy 90kOhm, well above the 50k SOFT pause:
+    // NTC is a healthy 90kOhm, well above the new35k SOFT pause:
     // only SHT45 25C can explain this immediate ON->OFF transition.
     tick(s, 230250, 90000, 25.0f);
     assert(!s.heaterOn() && !s.faultActive());
@@ -217,8 +235,8 @@ int main() {
     assert(!s.heaterOn() && !s.faultActive());
     assert(s.coolingRequired(726001));
   }
-  std::cout << "PASS STEP10B actual SafetyController GPIO-MOCK: real ON, "
-      "SHT45 25C feedback/hysteresis, NTC soft45k/hard40k, "
+  std::cout << "PASS STEP12P actual SafetyController GPIO-MOCK: real ON, "
+      "SHT45 25C feedback/hysteresis, NTC soft35k/rearm50k/backup30k, "
       "20s/12s windows, late 25C SHT45 cutoff after >120s ON, new300s cap, STOP, "
       "cooldown, stale/fault/no restart. NO REAL GPIO.\n";
 }
