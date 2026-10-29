@@ -422,12 +422,11 @@ void loop() {
     // Finalize after cooldown, preserving all samples. The first checkpoint
     // already replaced the old CSV at irrevocable heater shutdown.
     loggingSession = false;
-    const bool completeSave = !thermalLog.dirty() || thermalLog.saveWhenSafe();
-    csvFinalSavedThisRun = completeSave && csvSavedThisRun;
-    if (!csvCheckpointAttempted) {
-      // E.g. an early STOP without ever commanding heater HIGH.
-      csvFinalSavedThisRun = thermalLog.saveWhenSafe();
-    }
+    // If no checkpoint was possible (e.g. STOP before heating), do one
+    // final safe write. If checkpoint previously failed, successful final
+    // write is still a success. Never infer it from an OLD saved file.
+    csvFinalSavedThisRun = thermalLog.dirty()
+        ? thermalLog.saveWhenSafe() : csvSavedThisRun;
     csvSavedThisRun = csvSavedThisRun || csvFinalSavedThisRun;
     csvSaveFailed = !csvFinalSavedThisRun;
     Serial.println(csvFinalSavedThisRun ?
