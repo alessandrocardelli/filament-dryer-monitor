@@ -92,7 +92,7 @@ int main() {
     assert(s.heaterOn() && !s.faultActive()); // 29C gate was incorrect
     tick(s, 24700, 60000.0f, 30.0f); // first genuine target cutoff
     assert(!s.heaterOn());
-    tick(s, 36700, 70000.0f, 29.5f); // demand off until <=24C
+    tick(s, 36700, 70000.0f, 29.5f); // demand off until <=29C
     assert(!s.heaterOn());
     assert(s.feedbackWaitReason(36700, 70000.0f) == 3); // AIR latch
     tick(s, 36800, 70000.0f, 29.0f);
@@ -100,7 +100,7 @@ int main() {
     s.stop();
     assert(!s.heaterOn() && !s.commissioningCanStart());
   }
-  // The regression that MUST have caught the original project mistake:
+  // Regression against previously inherited 40k early-trip mistake:
   // R_NTC40k is no longer an irreversible fault or a soft cut-off.
   // A physically tested previous S6C region is now reachable in the NEW,
   // explicitly unapproved candidate. This is GPIO mock, not real heating.
