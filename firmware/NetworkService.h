@@ -485,7 +485,7 @@ async function status(){
   $('air').textContent=d.air_valid?d.air_c.toFixed(1)+' °C':'--';
   $('rh').textContent=d.air_valid?d.rh.toFixed(1)+' %':'--';
   $('ntc').textContent=d.ntc_valid
-    ? (d.ntc_ohms/1000).toFixed(2)+' kΩ (margine HARD '+
+    ? (d.ntc_ohms/1000).toFixed(2)+' kΩ (margine backup '+
       (d.ntc_above_hard_ohms/1000).toFixed(2)+' kΩ)'
     :'--';
   $('heat').textContent=d.heater_command?'ON':'OFF';
