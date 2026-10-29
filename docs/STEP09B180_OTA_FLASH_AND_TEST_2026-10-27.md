@@ -1,5 +1,7 @@
 # S9B180 — Caricamento OTA e UN test fisico (pronto, consenso registrato)
 
+> Historical protocol/technical record. Its dated NEXT and pre-test status are not the current work queue; see [PROJECT_STATE](PROJECT_STATE.md) and [TODO](TODO.md). Original checkpoint preserved in archive tags.
+
 **Stato al 27 ottobre 2026:** l'utente ha autorizzato esplicitamente di procedere alla **singola prova S9B180** quando, in risposta alla domanda specifica su180s di HEATER ON cumulativi, aria25°C e Sanwa STOP50°C, ha ordinato di farlo. Non chiedere una nuova conferma degli stessi parametri. **Software pronto/compilato e .bin applicativo reale verificato; caricato sul dryer? NO, non ancora osservato; prova fisica? NO.** Queste azioni richiedono l'operatore presso il dispositivo, non sono eseguibili da GitHub/questa chat.
 
 ## Cosa / perché / precedente / prossimo

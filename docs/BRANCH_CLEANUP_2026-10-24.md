@@ -1,5 +1,7 @@
 # Pulizia e consolidamento branch — 24 ottobre 2026
 
+> Historical protocol/technical record. Its dated NEXT and pre-test status are not the current work queue; see [PROJECT_STATE](PROJECT_STATE.md) and [TODO](TODO.md). Original checkpoint preserved in archive tags.
+
 ## Risultato eseguito
 
 **Prima: 12 branch; dopo: 6 branch.** Operazione deliberatamente conservativa: ogni eliminazione è stata verificata con antenato Git oppure con identità dei file già mergiati. Nessun ref con modifiche hardware o diagnostiche non integrate è stato eliminato.

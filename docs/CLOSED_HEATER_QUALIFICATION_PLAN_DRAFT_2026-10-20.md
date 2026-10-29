@@ -1,5 +1,7 @@
 # Piano PROPOSTO — qualifica termica eBOX Lite chiuso, ventola ON, riscaldatore ON
 
+> Historical protocol/technical record. Its dated NEXT and pre-test status are not the current work queue; see [PROJECT_STATE](PROJECT_STATE.md) and [TODO](TODO.md). Original checkpoint preserved in archive tags.
+
 **Data:** 2026-10-20  
 **Stato:** BOZZA PER DISCUSSIONE, NON AUTORIZZAZIONE AD ALIMENTARE IL RISCALDATORE.  
 **Branch:** `plan/closed-heater-qualification-2026-10-20`, basato su `main` commit `87d24c5f618822b81496f25b4f16d3d7736e08af`.  

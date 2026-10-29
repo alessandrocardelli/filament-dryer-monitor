@@ -1,5 +1,7 @@
 # STEP09-B — Verifica fisica del controllo aria a 25 °C con budget HEATER esteso
 
+> Historical protocol/technical record. Its dated NEXT and pre-test status are not the current work queue; see [PROJECT_STATE](PROJECT_STATE.md) and [TODO](TODO.md). Original checkpoint preserved in archive tags.
+
 **STATO 27/10/2026: PREPARATO, NON ESEGUITO.** Il profilo S9B **NON È AUTORIZZATO** dalla precedente conferma S9A. È necessario consenso esplicito dell'utente alla sola variazione **120 → 200 secondi complessivi di HEATER ON**, dopo CI, review e controllo fisico. **Non caricare il branch S9B e non avviare il dryer finché i gate non sono chiusi.** Nessuna modifica alla PCB, al TCO105, a fan PWM o a guardia NTC.
 
 ## Introduzione obbligatoria in linguaggio chiaro
