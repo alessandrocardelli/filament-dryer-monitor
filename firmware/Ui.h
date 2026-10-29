@@ -233,7 +233,7 @@ class Ui {
   void drawSetup(SetupField selected, const CycleSettings &settings) {
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(2, 9, AppConfig::kHeaterStep09TrialMode
-        ? "STEP10B AIR25 TEST" : "SET CYCLE   SAFE MODE");
+        ? "STEP11D AIR25 TEST" : "SET CYCLE   SAFE MODE");
     display_.drawHLine(0, 12, 128);
 
     char temp[22];
@@ -273,7 +273,7 @@ class Ui {
     display_.setFont(u8g2_font_6x10_tf);
     char header[22];
     if (AppConfig::kHeaterStep09TrialMode) {
-      snprintf(header, sizeof(header), "STEP10B AIR25 TEST");
+      snprintf(header, sizeof(header), "STEP11D AIR25 TEST");
     } else if (AppConfig::kHeaterCommissioningMode) {
       snprintf(header, sizeof(header), "NTC GUARD TEST FAN100");
     } else {
@@ -378,8 +378,11 @@ class Ui {
     // Only the electrical NTC resistance has been validated for diagnostics.
     // SHT45 reads chamber air; the NTC is embedded in the heater assembly.
     if (ntc.valid) {
-      snprintf(line, sizeof(line), "NTC R  %.2f kOhm",
-               ntc.resistanceOhms / 1000.0f);
+      // Technical page: raw resistance plus distance from the confirmed
+      // experimental 40kOhm HARD trip. Not a Celsius thermometer.
+      snprintf(line, sizeof(line), "NTC %.1fk HARD%+.1fk",
+               ntc.resistanceOhms / 1000.0f,
+               (ntc.resistanceOhms - 40000.0f) / 1000.0f);
       display_.drawStr(2, 39, line);
     } else {
       display_.drawStr(2, 39, "NTC R  FAULT");
