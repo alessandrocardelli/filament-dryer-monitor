@@ -44,9 +44,10 @@ class ThermalLog {
   void sample(uint32_t nowMs, const SensorSnapshot &air,
               const NtcSnapshot &ntc, bool heaterOn,
               uint8_t fanPercent, uint8_t phase, uint8_t pulses,
-              uint8_t pulseFault, uint8_t ntcFault, uint32_t loopGapMs) {
+              uint8_t pulseFault, uint8_t ntcFault, uint32_t loopGapMs,
+              bool forceSanwaCheckpoint = false) {
     const uint32_t intervalMs = AppConfig::kHeaterStep09TrialMode ? 5000U : 250U;
-    if (count_ > 0 && nowMs - lastSampleMs_ < intervalMs) {
+    if (!forceSanwaCheckpoint && count_ > 0 && nowMs - lastSampleMs_ < intervalMs) {
       const Sample &prev = at(count_ - 1);
       if (prev.phase == phase && prev.heater == (heaterOn ? 1 : 0) &&
           prev.pulses == pulses && prev.pulseFault == pulseFault &&
