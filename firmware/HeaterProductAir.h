@@ -6,7 +6,9 @@
 // thresholds. Does NOT own GPIO or approve operation. All local temperature
 // limits must be independently characterized and explicitly qualified before
 // the hardware SafetyController may call this with a live heater.
-// No accumulated HEATER ON budget; the user cycle is the time authority.
+// Demand-driven dual thermostat; no periodic heater OFF or accumulated ON cap.
+// The user duration ends the cycle; this source is HEATER-OFF until local
+// NTC temperature model, material envelope and independent protection approved.
 namespace HeaterProductAir {
 
 enum class Fault : uint8_t {
@@ -22,8 +24,8 @@ struct Limits {
   float airFaultC = NAN;  // independent SHT45 chamber fault limit
   float airHysteresisC = NAN;
   uint32_t fanPrerunMs = 0;
-  uint32_t maxOnWindowMs = 0;
-  uint32_t minOffMs = 0;
+  // No max-ON window and no min-OFF gap: these were first-article
+  // commissioning artifacts, not normal thermal-control requirements.
   uint32_t maxNtcAgeMs = 0;
   uint32_t maxAirAgeMs = 0;
 };
@@ -82,7 +84,6 @@ class Controller {
     if (phase_ == Phase::Prerun) {
       if (nowMs - fanStartedMs_ < limits_.fanPrerunMs) return false;
       phase_ = Phase::Gap;
-      lastOffMs_ = nowMs - limits_.minOffMs; // first ON after fan prerun
     }
 
     // AIR thermostat: demand is kept while first warming to target. Once
@@ -96,19 +97,18 @@ class Controller {
     else if (in.heaterTempC <= limits_.ntcRearmC) localReady_ = true;
 
     if (phase_ == Phase::Heat) {
-      if (!airDemand_ || !localReady_ ||
-          nowMs - onStartedMs_ >= limits_.maxOnWindowMs) {
+      // Stop ONLY on AIR thermostat demand loss, local NTC limit or
+      // independent fail-safe error detected earlier. Never stop on elapsed
+      // ON seconds or a synthetic commissioning pulse boundary.
+      if (!airDemand_ || !localReady_) {
         phase_ = Phase::Gap;
-        lastOffMs_ = nowMs;
         return false;
       }
       requestedOn_ = true;
       return true;
     }
-    if (phase_ == Phase::Gap && airDemand_ && localReady_ &&
-        nowMs - lastOffMs_ >= limits_.minOffMs) {
+    if (phase_ == Phase::Gap && airDemand_ && localReady_) {
       phase_ = Phase::Heat;
-      onStartedMs_ = nowMs;
       wasHeating_ = true;
       requestedOn_ = true;
       return true;
@@ -133,8 +133,7 @@ class Controller {
         target >= 40.0f && target <= 55.0f &&
         l.airFaultC > target &&
         l.airHysteresisC > 0.0f && l.airHysteresisC < 5.0f &&
-        l.fanPrerunMs > 0 && l.maxOnWindowMs > 0 &&
-        l.maxOnWindowMs <= 20000 && l.minOffMs > 0 &&
+        l.fanPrerunMs > 0 &&
         l.maxNtcAgeMs > 0 && l.maxAirAgeMs > 0;
   }
   bool abort(Fault reason) {
@@ -148,6 +147,6 @@ class Controller {
   Fault fault_ = Fault::None;
   bool requestedOn_ = false, airDemand_ = false;
   bool localReady_ = true, wasHeating_ = false;
-  uint32_t fanStartedMs_ = 0, onStartedMs_ = 0, lastOffMs_ = 0;
+  uint32_t fanStartedMs_ = 0;
 };
 } // namespace HeaterProductAir
