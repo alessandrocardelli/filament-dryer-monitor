@@ -312,7 +312,7 @@ class Ui {
           HeaterCommissioning::Phase::Cooldown)
         snprintf(target, sizeof(target), "COOLING %lu s",
             static_cast<unsigned long>(coolingSecondsLeft));
-      else snprintf(target, sizeof(target), "SET %dC NTC9.8k", settings.targetTempC);
+      else snprintf(target, sizeof(target), "AIR %dC NTC85/80", settings.targetTempC);
     } else if (AppConfig::kHeaterCommissioningMode) {
       if (static_cast<HeaterCommissioning::Phase>(pulsePhase) ==
           HeaterCommissioning::Phase::Cooldown) {
@@ -334,8 +334,8 @@ class Ui {
         case HeaterCommissioning::Phase::Prerun: progress = "FAN PRERUN"; break;
         case HeaterCommissioning::Phase::Gap:
           switch (waitReason) {
-            case 1: progress = "WAIT 2s OFF"; break;
-            case 2: progress = "WAIT NTC 13.7k"; break;
+            case 1: progress = "WAIT CONTROL"; break;
+            case 2: progress = "WAIT NTC COOL"; break;
             case 3: progress = "WAIT AIR REARM"; break;
             default: progress = "WAIT CONTROL"; break;
           }
