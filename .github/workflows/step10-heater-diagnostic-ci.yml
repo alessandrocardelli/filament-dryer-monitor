@@ -113,7 +113,7 @@ jobs:
           assert "if (live_.cycle || live_.fanPercent > 0)" in net
           assert "trialActive=Boolean(d.cycle)" in net
           assert "safety.commissioningFault()," in app
-          assert "loopGapMs);" in app
+          assert "loopGapMs, sanwaCue);" in app
           print("PASS: S9B fault root cause observable and expanding live CSV blocked")
           PY
       - name: Verify known driver/sensor source files unchanged from S7U
