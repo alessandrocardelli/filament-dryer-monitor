@@ -95,20 +95,17 @@ static void enterState(AppState next, uint32_t nowMs) {
       minSessionNtcOhms = NAN;
       // Legacy STEP13 trial remains available in archived history only;
       // current V1 source runs user-configured 40..55C and 15min..12h.
-      if (!AppConfig::kHeaterStep09TrialMode) settingsStore.save(settings);
-      if (AppConfig::kHeaterStep09TrialMode) {
-        CycleSettings trial{};
-        trial.targetTempC = 30;
-        trial.durationMinutes = 15; // > 12m trial + 90s cooling guard
-        cycle.start(trial, nowMs);
-      } else cycle.start(settings.cycle, nowMs);
+      settingsStore.save(settings);
+      cycle.start(settings.cycle, nowMs); // user-selected air temperature/time
       fan.startAuto(nowMs);
       buzzer.playCycleStart(nowMs);
       if (AppConfig::kHeaterCommissioningMode) {
         Serial.println("STATE -> HEATER STEP07 GUARD: 6 x 20 s MAX, NTC 40k abort, fan 100%");
         Serial.println("HOT_CSV,ms,phase,pulses,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else if (AppConfig::kHeaterStep09TrialMode) {
-        Serial.println("STATE -> STEP13A UNAPPROVED AIR30 TEST: NTC soft33/50k backup30k, max360s/15min, fan100");
+        Serial.print("ATTENDED HOT: AIR "); Serial.print(settings.cycle.targetTempC);
+        Serial.print("C duration "); Serial.print(settings.cycle.durationMinutes);
+        Serial.println("min; NTC SOFT9.81/REARM13.73/HARD7.12k, FAN100, NO energy budget");
         Serial.println("HOT_CSV,ms,phase,windows,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else {
         Serial.println(safety.heaterLocked()
@@ -159,7 +156,6 @@ static void selectNextSettingsField() {
 }
 
 static void adjustSetup(int8_t direction) {
-  if (AppConfig::kHeaterStep09TrialMode) return; // Fixed trial parameters
   if (setupField == SetupField::Temperature) {
     const int16_t next =
         settings.cycle.targetTempC +
@@ -225,7 +221,7 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
       } else if (id == ButtonId::OnOff &&
                  type == ButtonEventType::ShortPress) {
         if ((AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) &&
-            !safety.commissioningCanStart()) {
+            !safety.commissioningCanStart(nowMs)) {
           Serial.println("Heater pulse test already used. Power-cycle to retry.");
         } else {
           enterState(AppState::Drying, nowMs);
@@ -243,7 +239,7 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
       } else if (id == ButtonId::OnOff &&
                  type == ButtonEventType::ShortPress) {
         if ((AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) &&
-            !safety.commissioningCanStart()) {
+            !safety.commissioningCanStart(nowMs)) {
           Serial.println("Heater pulse test already used. Power-cycle to retry.");
         } else {
           enterState(AppState::Drying, nowMs);
@@ -317,7 +313,7 @@ void setup() {
     Serial.println("EXPERIMENTAL 6-PULSE STEP07 NTC-GUARD TEST; no auto-repeat");
     Serial.println("NTC absolute degrees NOT calibrated; experimental raw R_NTC abort at 40k");
   } else if (AppConfig::kHeaterStep09TrialMode) {
-    Serial.println("STEP13A UNAPPROVED HEATER PROFILE: SHT45 AIR30/29, NTC SOFT33/REARM50/BACKUP30k (NOT qualified), 100% fan, timed windows");
+    Serial.println("ATTENDED HOT: AIR40..55 selected; LOCAL NTC 9.81k/13.73k/7.12k research-only, fan100, selected duration");
   } else {
     Serial.println(safety.heaterLocked()
         ? "Heater OUTPUT LOCKED: configuration/calibration not approved."
@@ -399,9 +395,7 @@ void loop() {
                 appState == AppState::Drying && cycle.isRunning(),
                 fan.attached() && fan.phase() == FanPhase::Running,
                 cycle.elapsedMs(nowMs),
-                AppConfig::kHeaterStep09TrialMode
-                    ? HeaterStep09AirFeedback::parameters().targetAirC
-                    : static_cast<float>(settings.cycle.targetTempC));
+                static_cast<float>(settings.cycle.targetTempC));
 
   if (safety.faultActive() && appState != AppState::Fault) {
     char event[60];
