@@ -27,8 +27,8 @@ class SafetyController {
 #ifdef ARDUINO_ARCH_ESP32
     if (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode ||
         AppConfig::kHeaterOutputEnabled) {
-      // Product mode MUST have the same independent per-window GPIO hard OFF.
-      // Do not enable a thermal regulator without this ISR and validated limits.
+      // Independent GPIO hardware fail-OFF deadline; active continuous mode
+      // refreshes it only after safety checks in a healthy loop.
       pulseTimer_ = timerBegin(1000000); // one tick per microsecond
       if (!pulseTimer_) {
         faultActive_ = true;
@@ -39,7 +39,7 @@ class SafetyController {
                                AppConfig::kHeaterOutputEnabled)
                       ? HeaterStep09AirFeedback::kHardwareWindowCeilingUs
                       : HeaterStep07GuardTrial::kPulseHardwareCeilingUs,
-                 false, 0); // bounded 20.5 s per window; never continuous
+                 false, 0); // hardware fails LOW unless live controller refreshes
       timerStop(pulseTimer_);
     }
 #endif
@@ -292,6 +292,21 @@ class SafetyController {
         requested;
     if (heaterOn_ == desired) {
 #ifdef ARDUINO_ARCH_ESP32
+      // ATTENDED 85/80 LOCAL THERMOSTAT: refresh the independent20.5s
+      // GPIO-off deadline only after all NTC/SHT45/fan/STOP safety checks
+      // have passed this iteration. A stalled loop leaves ISR to cut power.
+      // No deliberate 20s heater-OFF pulse is imposed.
+      if (desired && AppConfig::kHeaterStep09TrialMode &&
+          feedback_.continuousThermostatEnabled()) {
+        if (!pulseTimer_ || pulseTimerFired_) {
+          feedback_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
+          faultActive_ = true;
+          forceHeaterOff();
+          return;
+        }
+        timerWrite(pulseTimer_, 0);
+        timerRestart(pulseTimer_);
+      }
       // PRODUCT-ONLY: healthy-loop watchdog refresh during CONTINUOUS
       // thermostat demand. A stalled loop cannot refresh the independent
       // timer ISR, which cuts GPIO19 LOW after 20.5s. Never introduce a
