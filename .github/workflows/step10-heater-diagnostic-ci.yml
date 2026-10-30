@@ -1,4 +1,4 @@
-name: "Attended AIR55 with Sanwa acoustic measurements, 2h host, ESP32"
+name: "HOT-261031-N8580 attended continuous NTC85/80 AIR control watchdog"
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-      - name: Enforce heater lock and distinction from archived STEP13 source
+      - name: Verify attended experimental heater and legacy production lock
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -50,10 +50,11 @@ jobs:
           assert "feedback_{HeaterStep09AirFeedback::attendedAir55Parameters()}" in safe
           assert "t.selectedAirTargetC = targetChamberC;" in safe
           for needle in ("runPolicy = RunPolicy::DurationControlledDesign",
-                         "ntcSoftPauseOhms = 9810.0f;",
-                         "ntcResumeOhms = 13730.0f;",
+                         "continuousLocalThermostat = true;",
+                         "ntcSoftPauseOhms = 7120.0f;",
+                         "ntcResumeOhms = 8236.6f;",
                          "ntcHardTripOhms = 7120.0f;",
-                         "minimumOffMs = 2000;",
+                         "minimumOffMs = 0;",
                          "airFaultCeilingC = 60.0f;"):
               assert needle in h, f"ATTENDED raw-NTC profile mismatch: {needle}"
           assert "HeaterProductAir::Controller" in safe
@@ -89,8 +90,8 @@ jobs:
           assert "kCapacity = 1400;" in Path("firmware/ThermalLog.h").read_text()
           assert "ntcHardTripOhms = 40000.0f;" not in h
           assert "ntcSoftPauseOhms = 45000.0f;" not in h
-          assert '"HOT-261030-SANWA"' in Path("firmware/FirmwareBuild.h").read_text()
-          assert '"H30-SNW"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"HOT-261031-N8580"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"H31-8580"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
           assert "display_.drawStr(20, 44, FirmwareBuild::kId)" in ui
@@ -99,7 +100,7 @@ jobs:
           assert 2 + 6*len("FW") < 20
           assert 20 + 6 * len("HOT-261030-SANWA") <= 128
           assert 78 + 6 * len("H30-SNW") <= 128
-          print("PASS: attended AIR40-55 HEATER-capable experiment, user duration, source based on historical NTC/Sanwa pairs; normal V1 approval remains FALSE")
+          print("PASS: active attended heater 85/80 profile; production approvals remain false")
           PY
       - name: Verify telemetry and no live CSV streaming while heater may run
         run: |
@@ -150,7 +151,7 @@ jobs:
           set -euo pipefail
           g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_product_air_12h.cpp -o "$RUNNER_TEMP/v1-12h-control"
           "$RUNNER_TEMP/v1-12h-control" | tee "$RUNNER_TEMP/v1-12h-control.log"
-      - name: Verify continuous thermostat source + physical HEATER remains disabled
+      - name: Verify attended continuous output, independent ISR and product lock
         run: |
           set -euo pipefail
           python3 - <<'PY'
@@ -172,9 +173,20 @@ jobs:
           assert "kHeaterProfileApproved = false;" in cfg
           assert "kHeaterNtcModelApproved = false;" in cfg
           assert "kHeaterStep09TrialMode = true;" in cfg
-          print("PASS host-only product path: no forced heater pulse, 2 independent thermostats, verified-loop GPIO watchdog refresh, heater product approvals remain OFF; old attended pulse path isolated")
+          attended=Path("firmware/HeaterStep09AirFeedback.h").read_text()
+          assert "continuousLocalThermostat = true;" in attended
+          assert "ntcSoftPauseOhms = 7120.0f;" in attended
+          assert "ntcResumeOhms = 8236.6f;" in attended
+          assert "ntcHardTripOhms = 7120.0f;" in attended
+          assert "if (desired && AppConfig::kHeaterStep09TrialMode &&" in safe
+          assert "feedback_.continuousThermostatEnabled()" in safe
+          assert "feedback_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog)" in safe
+          assert "(!params_.continuousLocalThermostat &&" in attended
+          assert "(params_.continuousLocalThermostat ||" in attended
+          assert "NTC OFF7.120k/REARM8.237k" in Path("firmware/firmware.ino").read_text()
+          print("PASS: 85/80 attended HEATER-capable thermostat, no forced OFF; ISR fail-OFF, V1 locks unchanged")
           PY
-      - name: ATTENDED AIR55 measured-NTC source and 2-hour user-timer regression (HOST)
+      - name: ATTENDED 85/80 continuous NTC and AIR55/54 60min HOST regression
         run: |
           set -euo pipefail
           g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_attended_air55.cpp -o "$RUNNER_TEMP/attended-air55-host"
@@ -188,7 +200,7 @@ jobs:
           assert "static_cast<float>(settings.cycle.targetTempC)" in ino
           assert "if (AppConfig::kHeaterStep09TrialMode) return;" not in ino
           assert "kHeaterOutputEnabled = false;" in cfg
-          print("PASS: selected AIR40..55C and user duration on attended path; production approvals remain false")
+          print("PASS: user AIR40..55 and duration with attended NTC85/80; V1 approvals false")
           PY
       - name: Sanwa measurement cue clock (HOST) and nonblocking safety wiring
         run: |
