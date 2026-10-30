@@ -58,7 +58,9 @@ constexpr float kNtcOpenThresholdMv = 3000.0f;
 constexpr bool kHeaterCommissioningMode = false;
 // STEP09 isolated HEATER-CAPABLE supervised-feedback candidate: NOT production
 // and NOT approved for flashing until the review/gate in docs/STEP09.
-constexpr bool kHeaterStep09TrialMode = false; // STEP13 archived; V1 AIR thermostat HEATER locked
+// Attended heater characterization: explicit HEATER-capable experiment.
+// Host-verified interlocks still mandatory, no unattended production approval.
+constexpr bool kHeaterStep09TrialMode = true;
 static_assert(!(kHeaterCommissioningMode && kHeaterStep09TrialMode),
               "Only one supervised heater trial mode can run");
 // STEP05 candidate heater profile is NEVER implicitly approved.
