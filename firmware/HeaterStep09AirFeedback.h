@@ -65,6 +65,9 @@ struct Inputs {
   bool airValid = false;
   float airC = NAN;
   uint32_t airAgeMs = UINT32_MAX;
+  // External user-selected AIR target for attended long-duration research.
+  // Legacy STEP12/13 one-shot profiles keep their fixed params_.targetAirC.
+  float selectedAirTargetC = NAN;
 };
 
 class Controller {
@@ -76,6 +79,8 @@ class Controller {
 
   bool update(uint32_t nowMs, const Inputs &in) {
     requestedOn_ = false;
+    const bool userDuration = params_.runPolicy == RunPolicy::DurationControlledDesign;
+    const float demandTargetC = userDuration ? in.selectedAirTargetC : params_.targetAirC;
     if (!in.cycleActive) {
       if (params_.runPolicy == RunPolicy::DurationControlledDesign) {
         // Duration selection belongs to the external CycleController, not
@@ -94,13 +99,18 @@ class Controller {
       return false;
     }
     if (phase_ == Phase::Complete || phase_ == Phase::Aborted) return false;
+    // Never energize for a missing/out-of-range menu selection.
+    if (!std::isfinite(demandTargetC) ||
+        (userDuration && (demandTargetC < 40.0f || demandTargetC > 55.0f)) ||
+        demandTargetC >= params_.airFaultCeilingC)
+      return abort(Fault::AirInvalid);
     if (phase_ == Phase::Idle) {
       phase_ = Phase::Prerun;
       startedMs_ = nowMs;
       phaseSinceMs_ = nowMs;
       // Initially request heat for any chamber air below target. Hysteresis
       // is armed only AFTER the chamber actually reaches target.
-      airDemandActive_ = in.airC < params_.targetAirC;
+      airDemandActive_ = in.airC < demandTargetC;
     }
 
     // Cooling always runs to completion after a trial cap or STOP.
@@ -136,8 +146,8 @@ class Controller {
     // Chamber thermostat is a latch, independent from NTC soft-pause.
     // Previously every NTC pause required air<=24C to restart even when
     // chamber had NEVER reached 25C. Keep demand until 25C is first reached.
-    if (in.airC >= params_.targetAirC) airDemandActive_ = false;
-    else if (in.airC <= params_.targetAirC - params_.airHysteresisC)
+    if (in.airC >= demandTargetC) airDemandActive_ = false;
+    else if (in.airC <= demandTargetC - params_.airHysteresisC)
       airDemandActive_ = true;
     // Raw 30k is a provisional backup trip, NOT a plate-temperature limit.
     // Previous 40k STEP07 abort proved shutdown logic, not safe Tmax.
@@ -198,6 +208,17 @@ class Controller {
   }
   void emergencyStop(Fault reason) { abort(reason); }
   bool canStart() const { return phase_ == Phase::Idle; }
+  // After explicit UI acknowledgement and completed post-heat cooldown,
+  // allow a fresh user timer without reboot or auto-resuming after a fault.
+  bool resetForNewSession(uint32_t nowMs) {
+    if (cooldownNeeded(nowMs) || requestedOn_) return false;
+    if (phase_ != Phase::Aborted && phase_ != Phase::Complete) return false;
+    phase_ = Phase::Idle;
+    fault_ = Fault::None;
+    fanSeen_ = hadHeat_ = airDemandActive_ = false;
+    windowsDone_ = totalHeatMs_ = 0;
+    return true;
+  }
   bool cooldownNeeded(uint32_t nowMs) const {
     return hadHeat_ && nowMs - lastHeaterOnMs_ < params_.cooldownMs;
   }
@@ -257,6 +278,30 @@ inline Parameters parameters() { return Parameters{}; }
 inline Parameters durationControlledDesignParameters() {
   Parameters p{};
   p.runPolicy = RunPolicy::DurationControlledDesign;
+  return p;
+}
+// Experimental supervised air-55 characterization, sourced from the seven
+// 2026-10-17 Sanwa-contact/NTC measured pairs (OPEN covers, fan OFF):
+//    R=13.73k -> Sanwa contact64C; 9.81k ->74C; 7.12k ->85C.
+// These are THREE distinct physical sites/conditions; they DO NOT predict
+// Sanwa under closed box/FAN100, nor certify materials/TCO105 body temperature.
+// PAUSE at measured9.81k, resume after R recovers13.73k, independent
+// LATCHED backup at7.12k. No extrapolation below the observed endpoint.
+// An actual Sanwa reading and independent TCO/electrical protections remain
+// necessary for attended heater tests. NOT a production heater profile.
+// Per-ON 20s + ESP32 independent20.5s hardware ISR; min OFF 2s for
+// watchdog re-arm, NOT a 12s arbitrary thermal recovery/energy restriction.
+// No cumulative energy budget or artificial 12/15min overall cutoff:
+// the user-selected cycle duration is the actual timer authority.
+inline Parameters attendedAir55Parameters() {
+  Parameters p{};
+  p.runPolicy = RunPolicy::DurationControlledDesign;
+  p.ntcSoftPauseOhms = 9810.0f;
+  p.ntcResumeOhms = 13730.0f;
+  p.ntcHardTripOhms = 7120.0f;
+  p.minimumOffMs = 2000;
+  p.airFaultCeilingC = 60.0f; // provisional independent AIR sensor fault
+  p.targetAirC = 55.0f;       // display fallback only, not an active setpoint
   return p;
 }
 }  // namespace HeaterStep09AirFeedback
