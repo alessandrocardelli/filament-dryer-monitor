@@ -255,8 +255,6 @@ class SafetyController {
     lim.airFaultC = AppConfig::kChamberMaxMeasuredC;
     lim.airHysteresisC = AppConfig::kChamberControlHysteresisC;
     lim.fanPrerunMs = AppConfig::kHeaterFanPrerunMs;
-    lim.maxOnWindowMs = AppConfig::kHeaterMaxContinuousOnMs;
-    lim.minOffMs = AppConfig::kHeaterMinimumOffMs;
     lim.maxNtcAgeMs = AppConfig::kHeaterNtcMaxAgeMs;
     lim.maxAirAgeMs = AppConfig::kHeaterChamberMaxAgeMs;
     return lim;
@@ -292,7 +290,27 @@ class SafetyController {
         (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode ||
          AppConfig::kHeaterOutputEnabled) &&
         requested;
-    if (heaterOn_ == desired) return;
+    if (heaterOn_ == desired) {
+#ifdef ARDUINO_ARCH_ESP32
+      // PRODUCT-ONLY: healthy-loop watchdog refresh during CONTINUOUS
+      // thermostat demand. A stalled loop cannot refresh the independent
+      // timer ISR, which cuts GPIO19 LOW after 20.5s. Never introduce a
+      // periodic heater OFF pulse merely to rearm this watchdog. The legacy
+      // experimental 20s pulse path remains UNCHANGED and separately gated.
+      if (desired && AppConfig::kHeaterOutputEnabled &&
+          !AppConfig::kHeaterStep09TrialMode &&
+          !AppConfig::kHeaterCommissioningMode) {
+        if (!pulseTimer_ || pulseTimerFired_) {
+          faultActive_ = true;
+          forceHeaterOff();
+          return;
+        }
+        timerWrite(pulseTimer_, 0);
+        timerRestart(pulseTimer_);
+      }
+#endif
+      return;
+    }
     if (desired) {
 #ifdef ARDUINO_ARCH_ESP32
       if (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode ||
