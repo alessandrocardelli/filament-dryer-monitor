@@ -145,11 +145,35 @@ jobs:
           assert "feedback_{HeaterStep09AirFeedback::attendedAir55Parameters()}" in safe
           print("PASS: attended profile isolated from product thermal approval; 4h legacy host regression")
           PY
-      - name: New V1 40-55C 12-hour regulator and fault scenarios (no GPIO)
+      - name: New V1 40-55C 12-hour CONTINUOUS regulator and fault scenarios (no GPIO)
         run: |
           set -euo pipefail
           g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_product_air_12h.cpp -o "$RUNNER_TEMP/v1-12h-control"
           "$RUNNER_TEMP/v1-12h-control" | tee "$RUNNER_TEMP/v1-12h-control.log"
+      - name: Verify continuous thermostat source + physical HEATER remains disabled
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          prod=Path("firmware/HeaterProductAir.h").read_text()
+          safe=Path("firmware/SafetyController.h").read_text()
+          cfg=Path("firmware/AppConfig.h").read_text()
+          assert "nowMs - onStartedMs_" not in prod
+          assert "maximumOnWindowMs" not in prod
+          assert "minOffMs" not in prod
+          assert "if (!airDemand_ || !localReady_)" in prod
+          assert "in.heaterTempC <= limits_.ntcRearmC" in prod
+          assert "in.heaterTempC >= limits_.ntcSoftC" in prod
+          assert "if (desired && AppConfig::kHeaterOutputEnabled" in safe
+          assert "timerWrite(pulseTimer_, 0);" in safe
+          assert "timerRestart(pulseTimer_);" in safe
+          assert "pulseTimerIsr()" in safe and "gpio_set_level" in safe
+          assert "kHeaterOutputEnabled = false;" in cfg
+          assert "kHeaterProfileApproved = false;" in cfg
+          assert "kHeaterNtcModelApproved = false;" in cfg
+          assert "kHeaterStep09TrialMode = true;" in cfg
+          print("PASS host-only product path: no forced heater pulse, 2 independent thermostats, verified-loop GPIO watchdog refresh, heater product approvals remain OFF; old attended pulse path isolated")
+          PY
       - name: ATTENDED AIR55 measured-NTC source and 2-hour user-timer regression (HOST)
         run: |
           set -euo pipefail
