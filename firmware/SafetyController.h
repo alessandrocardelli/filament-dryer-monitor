@@ -172,7 +172,7 @@ class SafetyController {
     return AppConfig::kHeaterStep09TrialMode ? feedback_.finished()
         : AppConfig::kHeaterCommissioningMode && commission_.finished();
   }
-  bool commissioningCanStart(uint32_t nowMs) {
+  bool commissioningCanStart(uint32_t nowMs = 0) {
     if (faultActive_ || coolingRequired(nowMs)) return false;
     if (AppConfig::kHeaterStep09TrialMode && !feedback_.canStart())
       feedback_.resetForNewSession(nowMs); // only invoked on explicit START press
