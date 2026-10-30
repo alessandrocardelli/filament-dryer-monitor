@@ -28,6 +28,9 @@ enum class RunPolicy : uint8_t {
 
 struct Parameters {
   RunPolicy runPolicy = RunPolicy::SupervisedTrial;
+  // Only the new explicitly selected attended 85/80 local-NTC controller.
+  // Legacy STEP12/13 one-shot time-bounded pulses remain isolated.
+  bool continuousLocalThermostat = false;
   uint32_t prerunMs = 5000;
   uint32_t maximumOnWindowMs = 20000;
   uint32_t minimumOffMs = 12000;
@@ -111,6 +114,10 @@ class Controller {
       // Initially request heat for any chamber air below target. Hysteresis
       // is armed only AFTER the chamber actually reaches target.
       airDemandActive_ = in.airC < demandTargetC;
+      // A hot restart cannot bypass the lower NTC rearm threshold.
+      localHeatReady_ = !params_.continuousLocalThermostat ||
+                        (std::isfinite(in.ntcOhms) &&
+                         in.ntcOhms >= params_.ntcResumeOhms);
     }
 
     // Cooling always runs to completion after a trial cap or STOP.
@@ -149,11 +156,24 @@ class Controller {
     if (in.airC >= demandTargetC) airDemandActive_ = false;
     else if (in.airC <= demandTargetC - params_.airHysteresisC)
       airDemandActive_ = true;
-    // Raw 30k is a provisional backup trip, NOT a plate-temperature limit.
-    // Previous 40k STEP07 abort proved shutdown logic, not safe Tmax.
-    if (in.ntcOhms <= params_.ntcHardTripOhms ||
+    // Local NTC raw-resistance boundary; never use the nearby Sanwa as if
+    // the MCU could read it. For this attended 85C-contact research profile:
+    //   R==7.12k -> NORMAL thermostat OFF;
+    //   R <7.12k -> LATCHED FAULT (outside highest measured hot endpoint).
+    // This protects against continuing beyond the empirical range; any
+    // thermal-inertia undershoot may intentionally fault the session.
+    // Historical one-shot trials keep their old <= hard-trip semantics.
+    if ((params_.continuousLocalThermostat
+             ? in.ntcOhms < params_.ntcHardTripOhms
+             : in.ntcOhms <= params_.ntcHardTripOhms) ||
         in.ntcOhms >= params_.ntcOpenOhms)
       return abort(Fault::NtcResistanceLimit);
+    if (params_.continuousLocalThermostat) {
+      if (in.ntcOhms <= params_.ntcSoftPauseOhms)
+        localHeatReady_ = false;
+      else if (in.ntcOhms >= params_.ntcResumeOhms)
+        localHeatReady_ = true;
+    }
     if (!in.fanRunning) {
       if (fanSeen_ || phase_ != Phase::Prerun)
         return abort(Fault::FanLost);
@@ -174,8 +194,11 @@ class Controller {
     }
     if (phase_ == Phase::Pulse) {
       const bool shouldPause =
-          nowMs - heatWindowStartedMs_ >= params_.maximumOnWindowMs ||
-          in.ntcOhms <= params_.ntcSoftPauseOhms ||
+          (!params_.continuousLocalThermostat &&
+           nowMs - heatWindowStartedMs_ >= params_.maximumOnWindowMs) ||
+          (params_.continuousLocalThermostat
+               ? !localHeatReady_
+               : in.ntcOhms <= params_.ntcSoftPauseOhms) ||
           !airDemandActive_;
       if (shouldPause) {
         ++windowsDone_;
@@ -187,8 +210,11 @@ class Controller {
       return true;
     }
     if (phase_ == Phase::Gap &&
-        nowMs - phaseSinceMs_ >= params_.minimumOffMs &&
-        in.ntcOhms >= params_.ntcResumeOhms &&
+        (params_.continuousLocalThermostat ||
+         nowMs - phaseSinceMs_ >= params_.minimumOffMs) &&
+        (params_.continuousLocalThermostat
+             ? localHeatReady_
+             : in.ntcOhms >= params_.ntcResumeOhms) &&
         airDemandActive_) {
       phase_ = Phase::Pulse;
       heatWindowStartedMs_ = nowMs;
@@ -224,6 +250,7 @@ class Controller {
     phase_ = Phase::Idle;
     fault_ = Fault::None;
     fanSeen_ = hadHeat_ = airDemandActive_ = false;
+    localHeatReady_ = false;
     windowsDone_ = totalHeatMs_ = 0;
     return true;
   }
@@ -242,9 +269,12 @@ class Controller {
   bool airDemandActive() const { return airDemandActive_; }
   WaitReason waitReason(uint32_t nowMs, float ntcOhms) const {
     if (phase_ != Phase::Gap) return WaitReason::None;
-    if (nowMs - phaseSinceMs_ < params_.minimumOffMs)
+    if (!params_.continuousLocalThermostat &&
+        nowMs - phaseSinceMs_ < params_.minimumOffMs)
       return WaitReason::MinimumOff;
-    if (!std::isfinite(ntcOhms) || ntcOhms < params_.ntcResumeOhms)
+    if (params_.continuousLocalThermostat
+            ? !localHeatReady_
+            : (!std::isfinite(ntcOhms) || ntcOhms < params_.ntcResumeOhms))
       return WaitReason::NtcRecovery;
     if (!airDemandActive_) return WaitReason::AirHysteresis;
     return WaitReason::None;
@@ -269,6 +299,7 @@ class Controller {
   Fault fault_ = Fault::None;
   bool requestedOn_ = false, fanSeen_ = false, hadHeat_ = false;
   bool airDemandActive_ = false;
+  bool localHeatReady_ = false;
   uint32_t windowsDone_ = 0;
   uint32_t startedMs_ = 0, phaseSinceMs_ = 0;
   uint32_t heatWindowStartedMs_ = 0, lastOnTickMs_ = 0;
@@ -289,28 +320,29 @@ inline Parameters durationControlledDesignParameters() {
   p.airFaultCeilingC = 60.0f; // HOST-ONLY synthetic target40 trial
   return p;
 }
-// Experimental supervised air-55 characterization, sourced from the seven
-// 2026-10-17 Sanwa-contact/NTC measured pairs (OPEN covers, fan OFF):
-//    R=13.73k -> Sanwa contact64C; 9.81k ->74C; 7.12k ->85C.
-// These are THREE distinct physical sites/conditions; they DO NOT predict
-// Sanwa under closed box/FAN100, nor certify materials/TCO105 body temperature.
-// PAUSE at measured9.81k, resume after R recovers13.73k, independent
-// LATCHED backup at7.12k. No extrapolation below the observed endpoint.
-// An actual Sanwa reading and independent TCO/electrical protections remain
-// necessary for attended heater tests. NOT a production heater profile.
-// Per-ON 20s + ESP32 independent20.5s hardware ISR; min OFF 2s for
-// watchdog re-arm, NOT a 12s arbitrary thermal recovery/energy restriction.
-// No cumulative energy budget or artificial 12/15min overall cutoff:
-// the user-selected cycle duration is the actual timer authority.
+// NEW attended source profile: requested continuous heater-local 85/80C
+// thermostat at the independently measured Sanwa PLATE contact, NOT a
+// calibrated NTC-bead Celsius model.
+// ORIGINAL 17 October OPEN covers/FAN OFF:
+//   Sanwa PLATE74C -> NTC9.81k; PLATE85C -> NTC7.12k.
+//   PLATE80C estimated by log(R) interpolation -> 8,236.595 ohm.
+//   PLATE64C ->13.73k was the PREVIOUS mistakenly wide rearm: RETIRED.
+// The current closed-box/FAN100 heater may have DIFFERENT plate-to-bead
+// gradients; these are EXPERIMENTAL operator-approved targets, not qualified
+// local overheat or TCO-body ratings. Stop/FAULT on any sub-7.12k reading.
+// Independent 20.5s GPIO ISR is FED WHILE HEATING by a validated live loop,
+// never used to force repeated 20s heater-OFF windows. Do not bypass TCO105.
+// AIR55/54 is a separate thermostat; operator timer is sole overall duration.
 inline Parameters attendedAir55Parameters() {
   Parameters p{};
   p.runPolicy = RunPolicy::DurationControlledDesign;
-  p.ntcSoftPauseOhms = 9810.0f;
-  p.ntcResumeOhms = 13730.0f;
-  p.ntcHardTripOhms = 7120.0f;
-  p.minimumOffMs = 2000;
-  p.airFaultCeilingC = 60.0f; // provisional independent AIR sensor fault
-  p.targetAirC = 55.0f;       // display fallback only, not an active setpoint
+  p.continuousLocalThermostat = true;
+  p.ntcSoftPauseOhms = 7120.0f; // measured Sanwa PLATE85C
+  p.ntcResumeOhms = 8236.6f; // interpolated Sanwa PLATE80C, NOT measured
+  p.ntcHardTripOhms = 7120.0f; // strictly BELOW this => latching fault
+  p.minimumOffMs = 0; // no timer-driven OFF; only actual two thermostats
+  p.airFaultCeilingC = 60.0f; // provisional independent AIR fault
+  p.targetAirC = 55.0f; // fallback only; user's AIR menu is authoritative
   return p;
 }
 }  // namespace HeaterStep09AirFeedback
