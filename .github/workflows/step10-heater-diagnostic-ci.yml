@@ -98,7 +98,7 @@ jobs:
           assert 'display_.drawStr(2, 44, "FW")' in ui
           assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
           assert 2 + 6*len("FW") < 20
-          assert 20 + 6 * len("HOT-261030-SANWA") <= 128
+          assert 20 + 6 * len("HOT-261031-N8580") <= 128
           assert 78 + 6 * len("H30-SNW") <= 128
           print("PASS: active attended heater 85/80 profile; production approvals remain false")
           PY
@@ -289,27 +289,27 @@ jobs:
           app="$out/firmware.ino.bin"
           test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
           # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
-          grep -a -q 'HOT-261030-SANWA' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
-          cp "$app" "$RUNNER_TEMP/HOT-261030-SANWA-app.bin"
+          grep -a -q 'HOT-261031-N8580' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
+          cp "$app" "$RUNNER_TEMP/HOT-261031-N8580-app.bin"
           cd "$RUNNER_TEMP"
-          sha256sum HOT-261030-SANWA-app.bin | tee HOT-261030-SANWA-app.sha256
+          sha256sum HOT-261031-N8580-app.bin | tee HOT-261031-N8580-app.sha256
           echo "HEATER-capable attended AIR40-55 candidate: provisional 9.81/13.73/7.12k NTC; not product-qualified, no automatic hot-test authorization. Arduino IDE opens firmware/firmware.ino." >> "$GITHUB_STEP_SUMMARY"
-          cat HOT-261030-SANWA-app.sha256 >> "$GITHUB_STEP_SUMMARY"
+          cat HOT-261031-N8580-app.sha256 >> "$GITHUB_STEP_SUMMARY"
       - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: ATTENDED-AIR55-SANWA-CUES-BUILD
+          name: ATTENDED-NTC85-80-AIR55-BUILD
           path: |
-            ${{ runner.temp }}/HOT-261030-SANWA-app.bin
-            ${{ runner.temp }}/HOT-261030-SANWA-app.sha256
+            ${{ runner.temp }}/HOT-261031-N8580-app.bin
+            ${{ runner.temp }}/HOT-261031-N8580-app.sha256
           if-no-files-found: error
           retention-days: 30
       - name: Upload reproducible results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: attended-air55-host-and-esp32-logs
+          name: attended-ntc85-80-host-and-esp32-logs
           path: |
             ${{ runner.temp }}/step13a-mock.log
             ${{ runner.temp }}/v1-12h-control.log
