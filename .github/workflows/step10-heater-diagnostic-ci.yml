@@ -264,14 +264,14 @@ jobs:
           l=Path("firmware/ThermalLog.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
           assert "airDemandActive_" in t
-          assert "in.ntcOhms >= params_.ntcResumeOhms &&" in t and "airDemandActive_)" in t
+          assert "localHeatReady_" in t and "params_.ntcResumeOhms" in t and "airDemandActive_)" in t
           assert "if (in.airC >= demandTargetC) airDemandActive_ = false;" in t
           assert "safety.heaterOn() &&" not in f.split("const bool heaterIrreversiblyOff")[1].split("if (loggingSession")[0]
           assert "if (loggingSession && !csvCheckpointAttempted && !safety.heaterOn() &&" in f
           assert "heaterIrreversiblyOff" in f and "thermalLog.saveWhenSafe()" in f
           assert "dirty_ = true; // a post-checkpoint cooldown" in l
-          assert "WAIT NTC 13.7k" in ui and "WAIT AIR REARM" in ui
-          print("PASS: independent thermostat latch, explicit wait reason, heater-latched-off checkpoint")
+          assert "WAIT NTC COOL" in ui and "WAIT AIR REARM" in ui
+          print("PASS: NTC80/85 and AIR separate latches, correct OLED prompts, safe persisted checkpoint")
           PY
       - uses: arduino/setup-arduino-cli@v2
       - name: Install ESP32 core 3.3.12 and U8g2 2.36.19
