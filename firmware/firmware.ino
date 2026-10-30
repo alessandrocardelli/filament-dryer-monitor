@@ -445,7 +445,8 @@ void loop() {
   }
 
   if (loggingSession &&
-      (appState == AppState::Drying || safety.coolingRequired(nowMs))) {
+      (appState == AppState::Drying || safety.coolingRequired(nowMs) ||
+       sanwaReminder.active() || sanwaCue)) {
     thermalLog.sample(nowMs, sht45.snapshot(), ntc.snapshot(),
                       safety.heaterOn(), fan.dutyPercent(),
                       safety.commissioningPhase(),
