@@ -1,4 +1,4 @@
-name: "Attended AIR40-55 heater profile: source guards, 2h host, ESP32"
+name: "Attended AIR55 with Sanwa acoustic measurements, 2h host, ESP32"
 
 on:
   push:
@@ -89,16 +89,16 @@ jobs:
           assert "kCapacity = 1400;" in Path("firmware/ThermalLog.h").read_text()
           assert "ntcHardTripOhms = 40000.0f;" not in h
           assert "ntcSoftPauseOhms = 45000.0f;" not in h
-          assert '"HOT-261030-AIR55"' in Path("firmware/FirmwareBuild.h").read_text()
-          assert '"H30-A55"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"HOT-261030-SANWA"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"H30-SNW"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
           assert "display_.drawStr(20, 44, FirmwareBuild::kId)" in ui
           assert 'display_.drawStr(2, 44, "FW")' in ui
           assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
           assert 2 + 6*len("FW") < 20
-          assert 20 + 6 * len("HOT-261030-AIR55") <= 128
-          assert 78 + 6 * len("H30-A55") <= 128
+          assert 20 + 6 * len("HOT-261030-SANWA") <= 128
+          assert 78 + 6 * len("H30-SNW") <= 128
           print("PASS: attended AIR40-55 HEATER-capable experiment, user duration, source based on historical NTC/Sanwa pairs; normal V1 approval remains FALSE")
           PY
       - name: Verify telemetry and no live CSV streaming while heater may run
@@ -166,6 +166,30 @@ jobs:
           assert "kHeaterOutputEnabled = false;" in cfg
           print("PASS: selected AIR40..55C and user duration on attended path; production approvals remain false")
           PY
+      - name: Sanwa measurement cue clock (HOST) and nonblocking safety wiring
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_sanwa_reminder.cpp -o "$RUNNER_TEMP/sanwa-reminder-host"
+          "$RUNNER_TEMP/sanwa-reminder-host" | tee "$RUNNER_TEMP/sanwa-reminder-host.log"
+          python3 - <<'PY'
+          from pathlib import Path
+          ino=Path("firmware/firmware.ino").read_text()
+          ui=Path("firmware/Ui.h").read_text()
+          buz=Path("firmware/Buzzer.h").read_text()
+          log=Path("firmware/ThermalLog.h").read_text()
+          assert 'sanwaReminder.start(nowMs);' in ino
+          assert 'sanwaReminder.stop(nowMs);' in ino
+          assert 'sanwaReminder.cancel();' in ino
+          assert 'appState != AppState::Fault && sanwaReminder.due(nowMs)' in ino
+          assert 'buzzer.tryPlaySanwaReminder(nowMs)' in ino
+          assert 'sanwaReminder.secondsUntilNext(nowMs)' in ino
+          assert 'forceSanwaCheckpoint' in log and 'loopGapMs, sanwaCue)' in ino
+          assert 'SANWA NEXT %02lu:%02lu' in ui
+          assert 'if (playing_) return false;' in buz
+          assert 'if (!attached_ || volume_ == BuzzerVolume::Off) return true;' in buz
+          assert 'kHeaterStep09TrialMode = true;' in Path('firmware/AppConfig.h').read_text()
+          print('PASS Sanwa operator cue only in attended mode, fault priority, UI countdown, no blocking delay, timestamped RAM sample')
+          PY
       - name: Native plate arithmetic diagnostics (no GPIO)
         run: |
           set -euo pipefail
@@ -229,20 +253,20 @@ jobs:
           app="$out/firmware.ino.bin"
           test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
           # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
-          grep -a -q 'HOT-261030-AIR55' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
-          cp "$app" "$RUNNER_TEMP/HOT-261030-AIR55-app.bin"
+          grep -a -q 'HOT-261030-SANWA' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
+          cp "$app" "$RUNNER_TEMP/HOT-261030-SANWA-app.bin"
           cd "$RUNNER_TEMP"
-          sha256sum HOT-261030-AIR55-app.bin | tee HOT-261030-AIR55-app.sha256
+          sha256sum HOT-261030-SANWA-app.bin | tee HOT-261030-SANWA-app.sha256
           echo "HEATER-capable attended AIR40-55 candidate: provisional 9.81/13.73/7.12k NTC; not product-qualified, no automatic hot-test authorization. Arduino IDE opens firmware/firmware.ino." >> "$GITHUB_STEP_SUMMARY"
-          cat HOT-261030-AIR55-app.sha256 >> "$GITHUB_STEP_SUMMARY"
+          cat HOT-261030-SANWA-app.sha256 >> "$GITHUB_STEP_SUMMARY"
       - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: ATTENDED-AIR55-HEAT-CAPABLE-BUILD-RECEIPT
+          name: ATTENDED-AIR55-SANWA-CUES-BUILD
           path: |
-            ${{ runner.temp }}/HOT-261030-AIR55-app.bin
-            ${{ runner.temp }}/HOT-261030-AIR55-app.sha256
+            ${{ runner.temp }}/HOT-261030-SANWA-app.bin
+            ${{ runner.temp }}/HOT-261030-SANWA-app.sha256
           if-no-files-found: error
           retention-days: 30
       - name: Upload reproducible results
@@ -254,6 +278,7 @@ jobs:
             ${{ runner.temp }}/step13a-mock.log
             ${{ runner.temp }}/v1-12h-control.log
             ${{ runner.temp }}/attended-air55-host.log
+            ${{ runner.temp }}/sanwa-reminder-host.log
             ${{ runner.temp }}/step13a-4hour-thermostat.log
             ${{ runner.temp }}/step13a-plate-diagnostic.log
             ${{ runner.temp }}/step13a-esp32-build.log
