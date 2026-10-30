@@ -74,7 +74,7 @@ int main() {
     assert(s.heaterOn()); // chamber has cooled to <=29C
     s.stop();
     assert(s.commissioningFault() == static_cast<uint8_t>(HeaterCommissioning::Fault::ManualStop));
-    assert(!s.heaterOn() && !s.commissioningCanStart());
+    assert(!s.heaterOn() && !s.commissioningCanStart(37251));
     assert(s.coolingRequired(37251) && s.fanPermitted());
   }
   // STEP10B demand-latch regression retained after STEP12P profile change.
@@ -98,7 +98,7 @@ int main() {
     tick(s, 36800, 70000.0f, 29.0f);
     assert(s.heaterOn() && !s.faultActive());
     s.stop();
-    assert(!s.heaterOn() && !s.commissioningCanStart());
+    assert(!s.heaterOn() && !s.commissioningCanStart(37251));
   }
   // Regression against previously inherited 40k early-trip mistake:
   // R_NTC40k is no longer an irreversible fault or a soft cut-off.
@@ -193,7 +193,7 @@ int main() {
     assert(!s.commissioningComplete());
     tick(s, 660001);
     assert(s.commissioningComplete() && !s.heaterOn());
-    assert(!s.commissioningCanStart());
+    assert(s.commissioningCanStart(660001)); // explicit new START after cooling
   }
   // Original S9B regression: SHT45 target now30C must actually remove a live HEATER
   // command AFTER more than the old 120s S9A total budget were used.
