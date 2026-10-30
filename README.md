@@ -2,7 +2,7 @@
 
 ESP32 controller for eSUN eBOX Lite: SHT45 chamber air/RH, heater-embedded NTC, Sanwa independent heater PLATE contact reference, fan, OLED/buttons, user timer and CSV.
 
-**CURRENT UPLOADABLE EXPERIMENT: `HOT-261031-N8580` / OLED `H31-8580`.** Code lives on `experiment/step10-heater-diagnostics-air25-2026-10-28`, [PR#18 DRAFT](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/18), **not** on `main` (main HEATER-OFF). Open **`firmware/firmware.ino` from the experimental branch in Arduino IDE**. This is an HEATER-capable attended experimental image, not an approved unattended product. See current [CI evidence and state](docs/PROJECT_STATE.md).
+**CURRENT UPLOADABLE EXPERIMENT: `HOT-261031-N8580` / OLED `H31-8580`.** Code lives on `experiment/step10-heater-diagnostics-air25-2026-10-28`, [PR#18 DRAFT](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/18), **not** on `main` (main HEATER-OFF). Open **`firmware/firmware.ino` from the experimental branch in Arduino IDE**. This is an HEATER-capable attended experimental image, not an approved unattended product. **Exact-source [CI#41142714373 PASS](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/41142714373), source `1cd96dd76500dfb4d161e1b445d8df6c9d8e524b`, Arduino ESP32 core3.3.12/U8g2 2.36.19 build+link (flash1,183,022B 90%, RAM109,000B 33%), NTC85/80 60min host test and Sanwa reminder PASS; app BIN SHA256 `bfd9561b0e452db44c9fa1c3a776e9a20654a9473d71fe365dc42602bf714be8` (build evidence only, upload sketch through Arduino IDE).** See [current state](docs/PROJECT_STATE.md).
 
 ### Exactly what the next firmware does
 
