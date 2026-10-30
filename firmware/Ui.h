@@ -234,15 +234,15 @@ class Ui {
   void drawSetup(SetupField selected, const CycleSettings &settings) {
     display_.setFont(u8g2_font_6x10_tf);
     display_.drawStr(2, 9, AppConfig::kHeaterStep09TrialMode
-        ? "STEP13A AIR30 TEST" : "AIR 40-55  HEAT LOCK");
+        ? "ATTENDED AIR40-55" : "AIR 40-55  HEAT LOCK");
     display_.drawHLine(0, 12, 128);
 
     char temp[22];
     char time[22];
-    snprintf(temp, sizeof(temp), "TEMP        %d °C", AppConfig::kHeaterStep09TrialMode ? 25 : settings.targetTempC);
+    snprintf(temp, sizeof(temp), "TEMP        %d °C", settings.targetTempC);
     snprintf(time, sizeof(time), "TIME        %02u:%02u",
-             AppConfig::kHeaterStep09TrialMode ? 0 : settings.durationMinutes / 60,
-              AppConfig::kHeaterStep09TrialMode ? 12 : settings.durationMinutes % 60);
+             settings.durationMinutes / 60,
+              settings.durationMinutes % 60);
     drawSelectableRow(15, temp, selected == SetupField::Temperature);
     drawSelectableRow(31, time, selected == SetupField::Duration);
     drawSelectableRow(47, AppConfig::kHeaterStep09TrialMode
@@ -274,7 +274,9 @@ class Ui {
     display_.setFont(u8g2_font_6x10_tf);
     char header[22];
     if (AppConfig::kHeaterStep09TrialMode) {
-      snprintf(header, sizeof(header), "STEP13A AIR30 TEST");
+      snprintf(header, sizeof(header), "HOT AIR %02lu:%02lu",
+          static_cast<unsigned long>(remainingSeconds / 3600UL),
+          static_cast<unsigned long>((remainingSeconds / 60UL) % 60UL));
     } else if (AppConfig::kHeaterCommissioningMode) {
       snprintf(header, sizeof(header), "NTC GUARD TEST FAN100");
     } else {
@@ -302,7 +304,7 @@ class Ui {
           HeaterCommissioning::Phase::Cooldown)
         snprintf(target, sizeof(target), "COOLING %lu s",
             static_cast<unsigned long>(coolingSecondsLeft));
-      else snprintf(target, sizeof(target), "AIR30 NTC33/50 B30");
+      else snprintf(target, sizeof(target), "SET %dC NTC9.8k", settings.targetTempC);
     } else if (AppConfig::kHeaterCommissioningMode) {
       if (static_cast<HeaterCommissioning::Phase>(pulsePhase) ==
           HeaterCommissioning::Phase::Cooldown) {
@@ -325,8 +327,8 @@ class Ui {
         case HeaterCommissioning::Phase::Gap:
           switch (waitReason) {
             case 1: progress = "WAIT 12s OFF"; break;
-            case 2: progress = "WAIT NTC 50k"; break;
-            case 3: progress = "WAIT AIR 29C"; break;
+            case 2: progress = "WAIT NTC 13.7k"; break;
+            case 3: progress = "WAIT AIR REARM"; break;
             default: progress = "WAIT CONTROL"; break;
           }
           break;
@@ -383,7 +385,9 @@ class Ui {
       // hard safety temperature, nor a Celsius thermometer.
       snprintf(line, sizeof(line), "NTC %.1fk BAK%+.1fk",
                ntc.resistanceOhms / 1000.0f,
-               (ntc.resistanceOhms - HeaterStep09AirFeedback::parameters().ntcHardTripOhms) / 1000.0f);
+               (ntc.resistanceOhms - (AppConfig::kHeaterStep09TrialMode
+                  ? HeaterStep09AirFeedback::attendedAir55Parameters().ntcHardTripOhms
+                  : HeaterStep09AirFeedback::parameters().ntcHardTripOhms)) / 1000.0f);
       display_.drawStr(2, 39, line);
     } else {
       display_.drawStr(2, 39, "NTC R  FAULT");
@@ -436,7 +440,7 @@ class Ui {
       case HeaterCommissioning::Fault::NtcStale: return "NTC STALE";
       case HeaterCommissioning::Fault::AirInvalid: return "SHT45 INVALID";
       case HeaterCommissioning::Fault::AirStale: return "SHT45 STALE";
-      case HeaterCommissioning::Fault::AirLimit: return "AIR LIMIT 40C";
+      case HeaterCommissioning::Fault::AirLimit: return "AIR LIMIT";
       case HeaterCommissioning::Fault::NtcResistanceLimit: return "NTC R LIMIT";
       case HeaterCommissioning::Fault::FanUnavailable: return "FAN NO START";
       case HeaterCommissioning::Fault::FanLost: return "FAN LOST";
