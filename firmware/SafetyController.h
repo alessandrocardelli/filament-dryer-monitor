@@ -120,6 +120,7 @@ class SafetyController {
       t.airValid = chamber.valid;
       t.airC = chamber.temperatureC;
       t.airAgeMs = chamber.valid ? nowMs - chamber.lastSuccessMs : UINT32_MAX;
+      t.selectedAirTargetC = targetChamberC; // USER menu, 40..55C
       const bool request = feedback_.update(nowMs, t);
       if (feedback_.fault() != HeaterCommissioning::Fault::None) {
         faultActive_ = true;
@@ -171,7 +172,10 @@ class SafetyController {
     return AppConfig::kHeaterStep09TrialMode ? feedback_.finished()
         : AppConfig::kHeaterCommissioningMode && commission_.finished();
   }
-  bool commissioningCanStart() const {
+  bool commissioningCanStart(uint32_t nowMs) {
+    if (faultActive_ || coolingRequired(nowMs)) return false;
+    if (AppConfig::kHeaterStep09TrialMode && !feedback_.canStart())
+      feedback_.resetForNewSession(nowMs); // only invoked on explicit START press
     return AppConfig::kHeaterStep09TrialMode ? feedback_.canStart()
                                               : commission_.canStart();
   }
@@ -250,7 +254,7 @@ class SafetyController {
   }
   HeaterProductAir::Controller product_{productLimits()};
   HeaterCommissioning::Sequence commission_{HeaterStep07GuardTrial::parameters()};
-  HeaterStep09AirFeedback::Controller feedback_{HeaterStep09AirFeedback::parameters()};
+  HeaterStep09AirFeedback::Controller feedback_{HeaterStep09AirFeedback::attendedAir55Parameters()};
   uint32_t lastNowMs_ = 0;
   uint32_t lastHeaterOnMs_ = 0;
   bool everHeated_ = false;
