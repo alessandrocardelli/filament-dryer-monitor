@@ -13,6 +13,7 @@
 #include "ThermalLog.h"
 #include "NetworkService.h"
 #include "SafetyController.h"
+#include "SanwaReminder.h"
 #include "SettingsStore.h"
 #include "Sht45Sensor.h"
 #include "StatusLed.h"
@@ -26,6 +27,7 @@ CycleController cycle;
 FanController fan;
 NtcSensor ntc;
 SafetyController safety;
+SanwaReminder sanwaReminder;
 SettingsStore settingsStore;
 Sht45Sensor sht45(Wire);
 StatusLed statusLed;
@@ -60,6 +62,17 @@ static void applyBuzzerSettings() {
 }
 
 static void enterState(AppState next, uint32_t nowMs) {
+  // Operator measurement clock is completely independent of heater commands.
+  // STOP and normal timer expiry start the 30/60/90/120s post-OFF prompts.
+  if (AppConfig::kHeaterStep09TrialMode) {
+    if (next == AppState::Fault || next == AppState::Boot)
+      sanwaReminder.cancel();
+    else if (next == AppState::Drying)
+      sanwaReminder.start(nowMs);
+    else if (appState == AppState::Drying &&
+             (next == AppState::Standby || next == AppState::Complete))
+      sanwaReminder.stop(nowMs);
+  }
   if (next == AppState::Complete && appState == AppState::Drying)
     safety.completeUserCycle(nowMs); // timer expired: clean end + cooldown
   else if (next != AppState::Drying)
@@ -418,6 +431,19 @@ void loop() {
     enterState(AppState::Complete, nowMs);
   }
 
+  // Nonblocking prompt: defer behind any currently active buzzer sound.
+  // FAULT already cancelled reminders in enterState; never mask its alarm.
+  bool sanwaCue = false;
+  if (AppConfig::kHeaterStep09TrialMode &&
+      appState != AppState::Fault && sanwaReminder.due(nowMs) &&
+      buzzer.tryPlaySanwaReminder(nowMs)) {
+    sanwaReminder.consume(nowMs);
+    sanwaCue = true;
+    Serial.print("SANWA_READ @ms=");
+    Serial.println(nowMs);
+    network.note("SANWA READ NOW");
+  }
+
   if (loggingSession &&
       (appState == AppState::Drying || safety.coolingRequired(nowMs))) {
     thermalLog.sample(nowMs, sht45.snapshot(), ntc.snapshot(),
@@ -426,7 +452,7 @@ void loop() {
                       safety.commissioningPulsesDone(),
                       safety.commissioningFault(),
                       static_cast<uint8_t>(safety.ntcFault()),
-                      loopGapMs);
+                      loopGapMs, sanwaCue);
   } else if (loggingSession) {
     // Finalize after cooldown, preserving all samples. The first checkpoint
     // already replaced the old CSV at irrevocable heater shutdown.
@@ -583,7 +609,10 @@ void loop() {
                 network.connected() ? network.address().c_str() : nullptr,
                 safety.coolingSecondsRemaining(nowMs),
                 csvSavedThisRun, csvSaveFailed,
-                safety.feedbackWaitReason(nowMs, ntc.snapshot().resistanceOhms));
+                safety.feedbackWaitReason(nowMs, ntc.snapshot().resistanceOhms),
+                sanwaReminder.active(),
+                sanwaReminder.secondsUntilNext(nowMs),
+                sanwaReminder.stage() == SanwaReminder::Stage::AfterStop);
   if (wordmarkJustRevealed) {
     // Trigger the first note only after the fully refreshed wordmark is visible.
     buzzer.playStartup(millis());
