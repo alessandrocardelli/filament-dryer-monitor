@@ -11,7 +11,9 @@ cp "$ROOT/firmware/AppConfig.h" "$ROOT/firmware/AppTypes.h" \
 cp "$ROOT/firmware/tests/host/test_step09_feedback_gpio.cpp" "$TMP/firmware/tests/host/"
 # Historical STEP13 test fixture only: enable old heater trial in an ISOLATED
 # temp copy, never in the committed Arduino IDE source or actual PCB.
-sed -i 's/kHeaterStep09TrialMode = false/kHeaterStep09TrialMode = true/' "$TMP/firmware/AppConfig.h"
+# Legacy STEP13 GPIO regression: ONLY the copied test fixture uses old
+# 33/50/30k one-shot settings. Actual source uses attended experimental mode.
+sed -i 's/feedback_{HeaterStep09AirFeedback::attendedAir55Parameters()}/feedback_{HeaterStep09AirFeedback::parameters()}/' "$TMP/firmware/SafetyController.h"
 cat >"$TMP/firmware/Arduino.h" <<'HDR'
 #pragma once
 #include <cstdint>
