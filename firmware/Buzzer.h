@@ -57,6 +57,16 @@ class Buzzer {
     startSequence(kWarning, countOf(kWarning), nowMs, false);
   }
 
+  // Nonblocking operator prompt. Never overwrite active fault, startup,
+  // cycle-complete or any other sound. OFF volume means silent prompt accepted.
+  // Return false only when the caller should retry on a later loop iteration.
+  bool tryPlaySanwaReminder(uint32_t nowMs) {
+    if (!attached_ || volume_ == BuzzerVolume::Off) return true;
+    if (playing_) return false;
+    startSequence(kSanwaReminder, countOf(kSanwaReminder), nowMs, false);
+    return true;
+  }
+
   void startFaultAlarm(uint32_t nowMs) {
     // D022: retain repeating alarm for the eventual normal product mode.
     startSequence(kFaultAlarm, countOf(kFaultAlarm), nowMs, true);
@@ -101,6 +111,10 @@ class Buzzer {
   };
   static constexpr ToneStep kWarning[] = {
       {1200, 100}, {0, 80}, {1200, 100},
+  };
+  // Short distinguishable operator cue; fault alarm remains 900Hz x2.
+  static constexpr ToneStep kSanwaReminder[] = {
+      {1650, 110},
   };
   static constexpr ToneStep kFaultAlarm[] = {
       {900, 140}, {0, 90}, {900, 140}, {0, 900},
