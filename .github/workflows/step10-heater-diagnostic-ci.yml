@@ -1,4 +1,4 @@
-name: V1 SAFE AIR40-55 user-timed regulator, 12h host test and ESP32
+name: Attended AIR40-55 heater profile: source guards, 2h host, ESP32
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
           from pathlib import Path
           s=Path("firmware/AppConfig.h").read_text()
           for t in (
-              "kHeaterStep09TrialMode = false;",
+              "kHeaterStep09TrialMode = true;",
               "kHeaterCommissioningMode = false;",
               "kHeaterOutputEnabled = false;",
               "kHeaterProfileApproved = false;",
@@ -47,6 +47,15 @@ jobs:
                         "kHeaterMaxMeasuredC = 0.0f;"):
               assert token in s, token
           assert "product_{productLimits()}" in safe
+          assert "feedback_{HeaterStep09AirFeedback::attendedAir55Parameters()}" in safe
+          assert "t.selectedAirTargetC = targetChamberC;" in safe
+          for needle in ("runPolicy = RunPolicy::DurationControlledDesign",
+                         "ntcSoftPauseOhms = 9810.0f;",
+                         "ntcResumeOhms = 13730.0f;",
+                         "ntcHardTripOhms = 7120.0f;",
+                         "minimumOffMs = 2000;",
+                         "airFaultCeilingC = 60.0f;"):
+              assert needle in h, f"ATTENDED raw-NTC profile mismatch: {needle}"
           assert "HeaterProductAir::Controller" in safe
           assert "RunPolicy::SupervisedTrial" in h
           assert "heaterTempC" in product and "ntcThermallyQualified" in product
@@ -76,21 +85,21 @@ jobs:
           assert "STEP12P" in h and "STEP13A" in h
           assert Path("docs/evidence/thermal/2026-10-29-STEP12P-raw.csv").exists()
           assert Path("docs/evidence/thermal/2026-10-29-STEP12P-PHYSICAL-SESSION.md").exists()
-          assert "const uint32_t intervalMs = AppConfig::kHeaterStep09TrialMode ? 900U : 250U;" in Path("firmware/ThermalLog.h").read_text()
+          assert "const uint32_t intervalMs = AppConfig::kHeaterStep09TrialMode ? 5000U : 250U;" in Path("firmware/ThermalLog.h").read_text()
           assert "kCapacity = 1400;" in Path("firmware/ThermalLog.h").read_text()
           assert "ntcHardTripOhms = 40000.0f;" not in h
           assert "ntcSoftPauseOhms = 45000.0f;" not in h
-          assert '"V1-261029-CTRL55"' in Path("firmware/FirmwareBuild.h").read_text()
-          assert '"V1-C55"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"HOT-261030-AIR55"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"H30-A55"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
           assert "display_.drawStr(20, 44, FirmwareBuild::kId)" in ui
           assert 'display_.drawStr(2, 44, "FW")' in ui
           assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
           assert 2 + 6*len("FW") < 20
-          assert 20 + 6 * len("V1-261029-CTRL55") <= 128
-          assert 78 + 6 * len("V1-C55") <= 128
-          print("PASS: V1 AIR40-55 user timer, actual device heater LOCKED, independent local thermal model unqualified")
+          assert 20 + 6 * len("HOT-261030-AIR55") <= 128
+          assert 78 + 6 * len("H30-A55") <= 128
+          print("PASS: attended AIR40-55 HEATER-capable experiment, user duration, source based on historical NTC/Sanwa pairs; normal V1 approval remains FALSE")
           PY
       - name: Verify telemetry and no live CSV streaming while heater may run
         run: |
@@ -133,14 +142,30 @@ jobs:
           assert "RunPolicy::SupervisedTrial" in ctl
           assert "RunPolicy::DurationControlledDesign" in ctl
           assert "durationControlledDesignParameters()" not in safe, "Do not enable multi-hour heater without physical qualification"
-          assert "feedback_{HeaterStep09AirFeedback::parameters()}" in safe
-          print("PASS: hardware stays supervised trial-only; 4h product regulator verified only in host simulation")
+          assert "feedback_{HeaterStep09AirFeedback::attendedAir55Parameters()}" in safe
+          print("PASS: attended profile isolated from product thermal approval; 4h legacy host regression")
           PY
       - name: New V1 40-55C 12-hour regulator and fault scenarios (no GPIO)
         run: |
           set -euo pipefail
           g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_product_air_12h.cpp -o "$RUNNER_TEMP/v1-12h-control"
           "$RUNNER_TEMP/v1-12h-control" | tee "$RUNNER_TEMP/v1-12h-control.log"
+      - name: ATTENDED AIR55 measured-NTC source and 2-hour user-timer regression (HOST)
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_attended_air55.cpp -o "$RUNNER_TEMP/attended-air55-host"
+          "$RUNNER_TEMP/attended-air55-host" | tee "$RUNNER_TEMP/attended-air55-host.log"
+          python3 - <<'PY'
+          from pathlib import Path
+          cfg=Path("firmware/AppConfig.h").read_text()
+          ino=Path("firmware/firmware.ino").read_text()
+          assert "kHeaterStep09TrialMode = true;" in cfg
+          assert "cycle.start(settings.cycle, nowMs);" in ino
+          assert "static_cast<float>(settings.cycle.targetTempC)" in ino
+          assert "if (AppConfig::kHeaterStep09TrialMode) return;" not in ino
+          assert "kHeaterOutputEnabled = false;" in cfg
+          print("PASS: selected AIR40..55C and user duration on attended path; production approvals remain false")
+          PY
       - name: Native plate arithmetic diagnostics (no GPIO)
         run: |
           set -euo pipefail
@@ -180,12 +205,12 @@ jobs:
           ui=Path("firmware/Ui.h").read_text()
           assert "airDemandActive_" in t
           assert "in.ntcOhms >= params_.ntcResumeOhms &&" in t and "airDemandActive_)" in t
-          assert "if (in.airC >= params_.targetAirC) airDemandActive_ = false;" in t
+          assert "if (in.airC >= demandTargetC) airDemandActive_ = false;" in t
           assert "safety.heaterOn() &&" not in f.split("const bool heaterIrreversiblyOff")[1].split("if (loggingSession")[0]
           assert "if (loggingSession && !csvCheckpointAttempted && !safety.heaterOn() &&" in f
           assert "heaterIrreversiblyOff" in f and "thermalLog.saveWhenSafe()" in f
           assert "dirty_ = true; // a post-checkpoint cooldown" in l
-          assert "WAIT NTC 50k" in ui and "WAIT AIR 29C" in ui
+          assert "WAIT NTC 13.7k" in ui and "WAIT AIR REARM" in ui
           print("PASS: independent thermostat latch, explicit wait reason, heater-latched-off checkpoint")
           PY
       - uses: arduino/setup-arduino-cli@v2
@@ -194,40 +219,41 @@ jobs:
           arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli lib install U8g2@2.36.19
-      - name: Compile actual V1 safe-locked ESP32 firmware for Arduino IDE
+      - name: Compile HEATER-capable attended AIR55 sketch (Arduino IDE source)
         run: |
           set -euo pipefail
-          out="$RUNNER_TEMP/v1-c55-build"
+          out="$RUNNER_TEMP/attended-air55-build"
           mkdir -p "$out"
           arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$out" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step13a-esp32-build.log"
           echo "PASS: ESP32 binary linked with no DRAM overflow"
           app="$out/firmware.ino.bin"
           test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
           # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
-          grep -a -q 'V1-261029-CTRL55' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
-          cp "$app" "$RUNNER_TEMP/V1-261029-CTRL55-app.bin"
+          grep -a -q 'HOT-261030-AIR55' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
+          cp "$app" "$RUNNER_TEMP/HOT-261030-AIR55-app.bin"
           cd "$RUNNER_TEMP"
-          sha256sum V1-261029-CTRL55-app.bin | tee V1-261029-CTRL55-app.sha256
-          echo "V1 SAFE-LOCKED source: user AIR40-55 timer+qualified local heater protection model; default GPIO OFF until calibration and approved limits. Arduino IDE loads firmware.ino." >> "$GITHUB_STEP_SUMMARY"
-          cat V1-261029-CTRL55-app.sha256 >> "$GITHUB_STEP_SUMMARY"
+          sha256sum HOT-261030-AIR55-app.bin | tee HOT-261030-AIR55-app.sha256
+          echo "HEATER-capable attended AIR40-55 candidate: provisional 9.81/13.73/7.12k NTC; not product-qualified, no automatic hot-test authorization. Arduino IDE opens firmware/firmware.ino." >> "$GITHUB_STEP_SUMMARY"
+          cat HOT-261030-AIR55-app.sha256 >> "$GITHUB_STEP_SUMMARY"
       - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: V1-CTRL55-HEATER-LOCKED-BUILD-RECEIPT
+          name: ATTENDED-AIR55-HEAT-CAPABLE-BUILD-RECEIPT
           path: |
-            ${{ runner.temp }}/V1-261029-CTRL55-app.bin
-            ${{ runner.temp }}/V1-261029-CTRL55-app.sha256
+            ${{ runner.temp }}/HOT-261030-AIR55-app.bin
+            ${{ runner.temp }}/HOT-261030-AIR55-app.sha256
           if-no-files-found: error
           retention-days: 30
       - name: Upload reproducible results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: v1-controller-host-and-esp32-logs
+          name: attended-air55-host-and-esp32-logs
           path: |
             ${{ runner.temp }}/step13a-mock.log
             ${{ runner.temp }}/v1-12h-control.log
+            ${{ runner.temp }}/attended-air55-host.log
             ${{ runner.temp }}/step13a-4hour-thermostat.log
             ${{ runner.temp }}/step13a-plate-diagnostic.log
             ${{ runner.temp }}/step13a-esp32-build.log
