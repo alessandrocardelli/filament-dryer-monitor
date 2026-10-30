@@ -1,4 +1,4 @@
-name: Attended AIR40-55 heater profile: source guards, 2h host, ESP32
+name: "Attended AIR40-55 heater profile: source guards, 2h host, ESP32"
 
 on:
   push:
