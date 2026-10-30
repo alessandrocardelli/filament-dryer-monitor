@@ -60,7 +60,10 @@ static void applyBuzzerSettings() {
 }
 
 static void enterState(AppState next, uint32_t nowMs) {
-  if (next != AppState::Drying) safety.stop();  // Immediate GPIO19 OFF.
+  if (next == AppState::Complete && appState == AppState::Drying)
+    safety.completeUserCycle(nowMs); // timer expired: clean end + cooldown
+  else if (next != AppState::Drying)
+    safety.stop(); // manual STOP, FAULT or BOOT: GPIO19 immediately LOW
   if (appState == AppState::Drying && next != AppState::Drying) {
     cycle.stop();
     fan.stop();
