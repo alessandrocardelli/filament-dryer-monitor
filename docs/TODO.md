@@ -15,10 +15,11 @@ flowchart TD
     D -->|Yes| F[GPIO19 LOW; latched FAULT]
     D -->|No| E{AIR >= 60C or NTC < 7120 ohm?}
     E -->|Yes| F
-    E -->|No| G{SHT45 AIR at requested target?}
-    G -->|Yes| H[Latch AIR heat demand OFF until target minus 1C]
-    H --> C
-    G -->|No or AIR rearmed| I{Local NTC thermal pause latched?}
+    E -->|No| G[Update AIR latch: at target OFF; at target-1C ON; between keep previous]
+    G --> H{AIR heat-demand latch active?}
+    H -->|No| O[GPIO19 LOW; wait AIR target minus1C]
+    O --> C
+    H -->|Yes| I{Local NTC thermal pause latched?}
     I -->|Yes| J{R_NTC >= 8236.6 ohm?}
     J -->|No| K[GPIO19 LOW; wait for actual NTC cooling]
     K --> C
