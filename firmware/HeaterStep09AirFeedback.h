@@ -206,6 +206,14 @@ class Controller {
     if (phase_ != Phase::Idle && phase_ != Phase::Complete &&
         phase_ != Phase::Aborted) abort(Fault::ManualStop);
   }
+  // The user-selected timer expiring is a NORMAL end, never ManualStop.
+  // Keep cooldown and post-OFF sampling distinct from an abort.
+  void finishUserCycle(uint32_t nowMs) {
+    if (params_.runPolicy == RunPolicy::DurationControlledDesign &&
+        phase_ != Phase::Idle && phase_ != Phase::Aborted &&
+        phase_ != Phase::Complete)
+      finishHeating(nowMs);
+  }
   void emergencyStop(Fault reason) { abort(reason); }
   bool canStart() const { return phase_ == Phase::Idle; }
   // After explicit UI acknowledgement and completed post-heat cooldown,
