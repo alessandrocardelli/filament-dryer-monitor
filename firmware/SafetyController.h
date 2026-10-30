@@ -54,6 +54,15 @@ class SafetyController {
     HeaterControl::Inputs stopped{};
     policy_.evaluate(0, HeaterControl::Limits{}, stopped);
   }
+  // Normal cycle timer expiration, as distinct from explicit operator STOP.
+  // The heater is off synchronously before the UI transitions to COMPLETE.
+  void completeUserCycle(uint32_t nowMs) {
+    forceHeaterOff();
+    if (AppConfig::kHeaterStep09TrialMode)
+      feedback_.finishUserCycle(nowMs);
+    else commission_.cancel();
+    product_.stop();
+  }
 
   void update(uint32_t nowMs, const NtcSnapshot &ntc,
               const SensorSnapshot &chamber, bool cycleActive,
