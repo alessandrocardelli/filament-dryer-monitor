@@ -8,6 +8,45 @@
 
 **Already measured, NOT missing:** [2026-10-17 real Sanwa–NTC characterization](NTC_CALIBRATION_ANALYSIS.md), open covers/fanOFF, near-plate Sanwa30/39/47/56/64/74/**85°C** at NTC64.62/42.27/28.72/19.68/13.73/9.81/**7.12kΩ**. When the Sanwa contact read85°C, the old heating sketch indicated90°C; it was **not** a direct bead temperature measurement. This dataset must be used, not requested again. It does not certify 90°C plate contact under the new closed/fan100 setup or determine TCO-body temperature. The user wants a heater-local NTC thermostat with an independently controlled AIR55 target, without fabricated runtime gaps.
 
+## Approved functional logic — flowchart persisted in GitHub
+
+This is the requested **thermostat control flow**, not the old pulse sequence. The diagram specifies behavior only: no new heater exposure, threshold calibration, physical safety approval or numerical rearm choice is implied. The controller **requests heat continuously** until a real thermostat/fault condition changes; a separately refreshed independent GPIO watchdog remains fail-OFF if the loop stalls.
+
+```mermaid
+flowchart TD
+    A([Explicit START]) --> B[Fan prerun; read valid SHT45 AIR and NTC]
+    B --> C{STOP / user timer finished?}
+    C -->|Yes| S[HEATER OFF; fan cooling; finish]
+    C -->|No| D{Sensor / fan-command / watchdog fault?}
+    D -->|Yes| F[HEATER LOW; latched FAULT]
+    D -->|No| E{SHT45 AIR demand active?}
+    E -->|No: target reached| O[HEATER OFF; AIR latch waits target minus 1C]
+    O --> C
+    E -->|Yes: below target or rearmed| H{Local NTC pause latched?}
+    H -->|Yes| R{NTC has cooled to its local rearm threshold?}
+    R -->|No| P[HEATER OFF]
+    P --> C
+    R -->|Yes| L[Clear local NTC pause]
+    H -->|No| L
+    L --> Q{Local NTC at upper thermostat limit?}
+    Q -->|Yes| T[HEATER OFF; latch local NTC pause]
+    T --> C
+    Q -->|No| U[HEATER ON continuously; watchdog healthy-loop refresh]
+    U --> C
+    W[Independent hardware watchdog ISR] -.->|firmware stops refreshing| F
+    X[Installed series 105C TCO] -.->|physical one-shot activation| Y[HEATER supply interrupted independently]
+```
+
+### Exact meanings and limits — no invented calibration
+
+- **AIR thermostat:** setpoint 55°C -> heat request OFF at AIR55, ON again at AIR54 (assuming local NTC is ready). This 1°C AIR hysteresis is currently implemented and STEP12P demonstrated at AIR25/24.
+- **NTC thermostat:** when heater-local upper threshold is reached, heater OFF. Only after real NTC recovery to its **separate lower threshold** can heater ON resume; it must **not** wait for an arbitrary 2s gap or a 20s pulse boundary.
+- The **17 Oct measured pairs** were *Sanwa plate-contact* 64°C→13.73kΩ, 74°C→9.81kΩ, **85°C→7.12kΩ**, with both covers open/fanOFF. Previously proposed "rearm13.73kΩ" means about **64°C at that independent Sanwa contact**, not74°C. That would be roughly **21°C drop from the measured85°C contact**, which the operator explicitly rejected. The old 13.73kΩ is **not adopted as the new rearm threshold**.
+- **Example for discussion only, NOT a programmed/final limit:** contact upper85°C and lower80°C would be a 5°C band. An interpolation *within* the actually sampled Sanwa74°C/9.81kΩ and85°C/7.12kΩ pairs gives **~8.24kΩ at an interpolated Sanwa80°C**, not a measured bead calibration. Open box/fanOFF transfer does not prove the new enclosed FAN100 temperature, TCO105 body margin or an independent hard-fault threshold. Neither 85/80 nor ~8.24kΩ is selected as an actual safe controller setpoint here.
+- **Separate FAULT boundary:** numerical local hard trip must be independently justified, not guessed outside the observed7.12kΩ endpoint. Do not silently equate normal thermostat stop and latched fault.
+- **Watchdog:** its independent GPIO timer interrupt must still force the heater OFF on a blocked/unresponsive controller. During valid continuous heat demand, healthy code refreshes its deadline; it does **not** toggle heater OFF just to reset the watchdog. Arduino firmware must never infer actual fan rotation from PWM command.
+- **Implementation status:** `firmware/HeaterProductAir.h` and `SafetyController.h` now contain the desired continuous-demand product design, with host simulated NTC Celsius limits. **`AppConfig::kHeaterOutputEnabled=false`, `kHeaterProfileApproved=false` and `kHeaterNtcModelApproved=false`: the new control path is not enabled on physical hardware.** The old `HOT-261030-SANWA` experimental pulse mode remains separate/unchanged, not a recommended new physical test. The user must not repeat the failed AIR55 test unchanged.
+
 ### Required design behavior / software verification BEFORE new hot trial
 
 1. When chamber AIR is below selected user target (40..55°C) **and** heater-local NTC demand is below its independently justified thermal limit, command heater ON without a repeating *forced* 20s OFF cycle. Do not merely extend 20s to another arbitrary pulse duration.
