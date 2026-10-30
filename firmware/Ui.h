@@ -326,7 +326,7 @@ class Ui {
         case HeaterCommissioning::Phase::Prerun: progress = "FAN PRERUN"; break;
         case HeaterCommissioning::Phase::Gap:
           switch (waitReason) {
-            case 1: progress = "WAIT 12s OFF"; break;
+            case 1: progress = "WAIT 2s OFF"; break;
             case 2: progress = "WAIT NTC 13.7k"; break;
             case 3: progress = "WAIT AIR REARM"; break;
             default: progress = "WAIT CONTROL"; break;
