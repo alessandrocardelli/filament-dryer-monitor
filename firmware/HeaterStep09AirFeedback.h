@@ -267,6 +267,9 @@ class Controller {
   Fault fault() const { return fault_; }
   uint32_t totalHeatMs() const { return totalHeatMs_; }
   bool airDemandActive() const { return airDemandActive_; }
+  bool continuousThermostatEnabled() const {
+    return params_.continuousLocalThermostat;
+  }
   WaitReason waitReason(uint32_t nowMs, float ntcOhms) const {
     if (phase_ != Phase::Gap) return WaitReason::None;
     if (!params_.continuousLocalThermostat &&
