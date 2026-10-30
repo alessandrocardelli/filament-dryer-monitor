@@ -65,7 +65,10 @@ class Ui {
               const char *stationIp = nullptr,
               uint32_t coolingSecondsLeft = 0,
               bool csvReady = false, bool csvSaveFailed = false,
-              uint8_t waitReason = 0) {
+              uint8_t waitReason = 0,
+              bool sanwaReminderActive = false,
+              uint32_t sanwaSecondsUntilNext = 0,
+              bool sanwaPostStop = false) {
     if (!awake_) return false;
 
     const uint8_t stage = (state == AppState::Boot)
@@ -104,13 +107,18 @@ class Ui {
       case AppState::Drying:
         technicalPage ? drawSystem(sensor, ntc, fanDutyPercent,
                                    heaterLocked, heaterOn,
-                                   pulsePhase, pulsesDone)
+                                   pulsePhase, pulsesDone,
+                                   sanwaReminderActive, sanwaSecondsUntilNext)
                       : drawDrying(settings.cycle, sensor, remainingSeconds,
                                   fanDutyPercent, heaterLocked, heaterOn,
                                   pulsePhase, pulsesDone, coolingSecondsLeft,
                                   waitReason);
         break;
-      case AppState::Complete: drawComplete(sensor, csvReady, csvSaveFailed); break;
+      case AppState::Complete:
+        drawComplete(sensor, csvReady, csvSaveFailed,
+                     sanwaReminderActive && sanwaPostStop,
+                     sanwaSecondsUntilNext);
+        break;
       case AppState::Fault:
         drawFault(ntc.fault, pulseFault, coolingSecondsLeft,
                   csvReady, csvSaveFailed);
@@ -365,9 +373,19 @@ class Ui {
 
   void drawSystem(const SensorSnapshot &sensor, const NtcSnapshot &ntc,
                   uint8_t fanDutyPercent, bool heaterLocked,
-                  bool heaterOn, uint8_t pulsePhase, uint8_t pulsesDone) {
+                  bool heaterOn, uint8_t pulsePhase, uint8_t pulsesDone,
+                  bool sanwaReminderActive,
+                  uint32_t sanwaSecondsUntilNext) {
     display_.setFont(u8g2_font_6x10_tf);
-    display_.drawStr(2, 9, "SYSTEM / HEATER");
+    if (AppConfig::kHeaterStep09TrialMode && sanwaReminderActive) {
+      char countdown[24];
+      snprintf(countdown, sizeof(countdown), "SANWA NEXT %02lu:%02lu",
+               static_cast<unsigned long>(sanwaSecondsUntilNext / 60UL),
+               static_cast<unsigned long>(sanwaSecondsUntilNext % 60UL));
+      display_.drawStr(2, 9, countdown);
+    } else {
+      display_.drawStr(2, 9, "SYSTEM / HEATER");
+    }
     display_.drawHLine(0, 12, 128);
     char line[24];
 
@@ -381,7 +399,7 @@ class Ui {
     // Only the electrical NTC resistance has been validated for diagnostics.
     // SHT45 reads chamber air; the NTC is embedded in the heater assembly.
     if (ntc.valid) {
-      // Current PROVISIONAL raw NTC backup cutoff (30k). Not a permanent
+      // Current PROVISIONAL raw NTC backup cutoff. Not a permanent
       // hard safety temperature, nor a Celsius thermometer.
       snprintf(line, sizeof(line), "NTC %.1fk BAK%+.1fk",
                ntc.resistanceOhms / 1000.0f,
@@ -419,7 +437,8 @@ class Ui {
   }
 
   void drawComplete(const SensorSnapshot &sensor, bool csvReady,
-                    bool csvSaveFailed) {
+                    bool csvSaveFailed, bool sanwaPostStop = false,
+                    uint32_t sanwaSecondsUntilNext = 0) {
     display_.setFont(u8g2_font_helvB12_tf);
     display_.drawStr(24, 18, "COMPLETE");
     display_.setFont(u8g2_font_6x10_tf);
@@ -431,7 +450,14 @@ class Ui {
     }
     display_.drawStr(2, 52, csvReady ? "CSV SAVED" :
                      (csvSaveFailed ? "CSV SAVE ERROR" : "CSV SAVING"));
-    display_.drawStr(2, 63, "ON/OFF = acknowledge");
+    if (sanwaPostStop) {
+      snprintf(line, sizeof(line), "SANWA +OFF %02lu:%02lu",
+               static_cast<unsigned long>(sanwaSecondsUntilNext / 60UL),
+               static_cast<unsigned long>(sanwaSecondsUntilNext % 60UL));
+      display_.drawStr(2, 63, line);
+    } else {
+      display_.drawStr(2, 63, "ON/OFF = acknowledge");
+    }
   }
 
   static const char *commissionFaultText(uint8_t code) {
