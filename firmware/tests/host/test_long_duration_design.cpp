@@ -18,6 +18,7 @@ static Inputs good(float airC, bool active = true) {
   in.ntcAgeMs = 100;
   in.airValid = true;
   in.airC = airC;
+  in.selectedAirTargetC = 40.0f;
   in.airAgeMs = 500;
   return in;
 }
@@ -46,7 +47,7 @@ int main() {
     const uint32_t dryingDuration = 4UL * hour; // user duration, NOT heat budget
     for (uint32_t now = 0; now <= dryingDuration + 100000UL; now += 1000UL) {
       // Simulates a setpoint reached, then chamber cooling. No fake hardware.
-      const float airC = now < hour ? 27.0f : now < 2*hour ? 30.0f : 29.0f;
+      const float airC = now < hour ? 37.0f : now < 2*hour ? 40.0f : 39.0f;
       const bool cycleActive = now < dryingDuration;
       const bool heat = c.update(now, good(airC, cycleActive));
       assert(c.fault() == Fault::None);
@@ -76,7 +77,7 @@ int main() {
   // STOP remains a distinct latched manual abort.
   {
     Controller c{durationControlledDesignParameters()};
-    c.update(0, good(27));
+    c.update(0, good(37));
     c.update(5000, good(27));
     assert(c.heaterRequested());
     c.cancel();
@@ -89,17 +90,17 @@ int main() {
     Controller c{durationControlledDesignParameters()};
     c.update(0, good(27));
     c.update(5000, good(27));
-    auto in = good(27);
+    auto in = good(37);
     in.ntcOhms = 29999.0f;
     assert(!c.update(6000, in));
     assert(c.phase() == Phase::Aborted);
     assert(c.fault() == Fault::NtcResistanceLimit);
   }
-  // Air 40 C abort is independent from the time policy.
+  // Air 60 C abort is independent from the time policy.
   {
     Controller c{durationControlledDesignParameters()};
     c.update(0, good(27));
-    auto in = good(40);
+    auto in = good(60);
     assert(!c.update(6000, in));
     assert(c.fault() == Fault::AirLimit && c.phase() == Phase::Aborted);
   }
