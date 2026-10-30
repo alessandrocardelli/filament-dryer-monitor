@@ -278,6 +278,7 @@ inline Parameters parameters() { return Parameters{}; }
 inline Parameters durationControlledDesignParameters() {
   Parameters p{};
   p.runPolicy = RunPolicy::DurationControlledDesign;
+  p.airFaultCeilingC = 60.0f; // HOST-ONLY synthetic target40 trial
   return p;
 }
 // Experimental supervised air-55 characterization, sourced from the seven
