@@ -121,7 +121,7 @@ static void enterState(AppState next, uint32_t nowMs) {
       } else if (AppConfig::kHeaterStep09TrialMode) {
         Serial.print("ATTENDED HOT: AIR "); Serial.print(settings.cycle.targetTempC);
         Serial.print("C duration "); Serial.print(settings.cycle.durationMinutes);
-        Serial.println("min; NTC SOFT9.81/REARM13.73/HARD7.12k, FAN100, NO energy budget");
+        Serial.println("min; NTC OFF7.120k/REARM8.237k, R<7.120k FAULT, FAN100, HEAT CONTINUOUS");
         Serial.println("HOT_CSV,ms,phase,windows,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else {
         Serial.println(safety.heaterLocked()
@@ -329,7 +329,7 @@ void setup() {
     Serial.println("EXPERIMENTAL 6-PULSE STEP07 NTC-GUARD TEST; no auto-repeat");
     Serial.println("NTC absolute degrees NOT calibrated; experimental raw R_NTC abort at 40k");
   } else if (AppConfig::kHeaterStep09TrialMode) {
-    Serial.println("ATTENDED HOT: AIR40..55 selected; LOCAL NTC 9.81k/13.73k/7.12k research-only, fan100, selected duration");
+    Serial.println("ATTENDED NTC85/80: R<=7.120k pause, >=8.237k resume, R<7.120k FAULT; continuous demand, independent 20.5s watchdog; AIR setpoint/-1C; Sanwa separate");
   } else {
     Serial.println(safety.heaterLocked()
         ? "Heater OUTPUT LOCKED: configuration/calibration not approved."
@@ -405,8 +405,9 @@ void loop() {
     minSessionNtcOhms = ntc.snapshot().resistanceOhms;
   }
 
-  // V1 target is the user's AIR setpoint; local NTC temperature limits
-  // need independent calibration and approval before GPIO19 is unlocked.
+  // Attended research uses the 17 Oct independently measured Sanwa contact
+  // endpoints as raw-NTC hysteresis inputs, not a calibrated bead Celsius
+  // model. Product path keeps its own heater qualification flags OFF.
   safety.update(nowMs, ntc.snapshot(), sht45.snapshot(),
                 appState == AppState::Drying && cycle.isRunning(),
                 fan.attached() && fan.phase() == FanPhase::Running,
@@ -427,7 +428,7 @@ void loop() {
   }
   if ((AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) &&
       safety.commissioningComplete() && appState == AppState::Drying) {
-    Serial.println("HEATER_TEST_DONE: all pulses and cooldown completed");
+    Serial.println("HEATER_TEST_DONE: normal user duration plus cooldown complete");
     enterState(AppState::Complete, nowMs);
   }
 
