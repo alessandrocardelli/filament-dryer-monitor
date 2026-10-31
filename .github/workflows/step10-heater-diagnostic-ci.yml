@@ -86,7 +86,8 @@ jobs:
           assert "STEP12P" in h and "STEP13A" in h
           assert Path("docs/evidence/thermal/2026-10-29-STEP12P-raw.csv").exists()
           assert Path("docs/evidence/thermal/2026-10-29-STEP12P-PHYSICAL-SESSION.md").exists()
-          assert "const uint32_t intervalMs = AppConfig::kHeaterStep09TrialMode ? 5000U : 250U;" in Path("firmware/ThermalLog.h").read_text()
+          assert "LogSamplingPolicy::sampleIntervalMs(AppConfig::kHeaterStep09TrialMode)" in Path("firmware/ThermalLog.h").read_text()
+          assert "kNormalSampleMs=60000U" in Path("firmware/LogSamplingPolicy.h").read_text()
           assert "kCapacity = 1400;" in Path("firmware/ThermalLog.h").read_text()
           assert "ntcHardTripOhms = 40000.0f;" not in h
           assert "ntcSoftPauseOhms = 45000.0f;" not in h
