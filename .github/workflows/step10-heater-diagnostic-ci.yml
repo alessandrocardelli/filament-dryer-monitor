@@ -1,4 +1,4 @@
-name: "HOT-261031-N8580 attended continuous NTC85/80 AIR control watchdog"
+name: "HOT-261031-WEBLOG1 attended continuous NTC85/80 AIR control watchdog"
 
 on:
   push:
@@ -90,15 +90,15 @@ jobs:
           assert "kCapacity = 1400;" in Path("firmware/ThermalLog.h").read_text()
           assert "ntcHardTripOhms = 40000.0f;" not in h
           assert "ntcSoftPauseOhms = 45000.0f;" not in h
-          assert '"HOT-261031-N8580"' in Path("firmware/FirmwareBuild.h").read_text()
-          assert '"H31-8580"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"HOT-261031-WEBLOG1"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"H31-WLOG"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
           assert "display_.drawStr(20, 44, FirmwareBuild::kId)" in ui
           assert 'display_.drawStr(2, 44, "FW")' in ui
           assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
           assert 2 + 6*len("FW") < 20
-          assert 20 + 6 * len("HOT-261031-N8580") <= 128
+          assert 20 + 6 * len("HOT-261031-WEBLOG1") <= 128
           assert 78 + 6 * len("H30-SNW") <= 128
           print("PASS: active attended heater 85/80 profile; production approvals remain false")
           PY
@@ -286,6 +286,30 @@ jobs:
           print("PASS: NTC80/85 and AIR separate latches, correct OLED prompts, safe persisted checkpoint")
           PY
       - uses: arduino/setup-arduino-cli@v2
+      - name: Long-duration 12h logging policy (HOST) and live webpage guard (NODE)
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_log_sampling_policy.cpp -o "$RUNNER_TEMP/log12h-host"
+          "$RUNNER_TEMP/log12h-host"
+          node firmware/tests/host/test_web_freshness.js
+          python3 - <<'PY'
+          from pathlib import Path
+          x=Path("firmware/LiveTelemetryServer.cpp").read_text()
+          ino=Path("firmware/firmware.ino").read_text()
+          n=Path("firmware/NetworkService.h").read_text()
+          log=Path("firmware/ThermalLog.h").read_text()
+          assert "config.server_port=8081;" in x
+          assert "portENTER_CRITICAL" in x and "portEXIT_CRITICAL" in x
+          assert "httpd_start(" in x and "httpd_register_uri_handler" in x
+          assert "liveTelemetry.publish(snapshot);" in ino
+          assert "network.tick(nowMs, !safety.heaterOn(), canOta);" in ino
+          assert "const liveUrl=window.location.protocol+" in n
+          assert "log_truncated" in n
+          assert "if(count_ == kCapacity) truncated_ = true;" in log
+          assert "kHeaterOutputEnabled = false;" in Path("firmware/AppConfig.h").read_text()
+          assert "feedback_{HeaterStep09AirFeedback::attendedAir55Parameters()}" in Path("firmware/SafetyController.h").read_text()
+          print("PASS: separate async read-only telemetry; old OTA interlock and heater profile unchanged")
+          PY
       - name: Install ESP32 core 3.3.12 and U8g2 2.36.19
         run: |
           arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
@@ -301,20 +325,20 @@ jobs:
           app="$out/firmware.ino.bin"
           test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
           # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
-          grep -a -q 'HOT-261031-N8580' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
-          cp "$app" "$RUNNER_TEMP/HOT-261031-N8580-app.bin"
+          grep -a -q 'HOT-261031-WEBLOG1' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
+          cp "$app" "$RUNNER_TEMP/HOT-261031-WEBLOG1-app.bin"
           cd "$RUNNER_TEMP"
-          sha256sum HOT-261031-N8580-app.bin | tee HOT-261031-N8580-app.sha256
+          sha256sum HOT-261031-WEBLOG1-app.bin | tee HOT-261031-WEBLOG1-app.sha256
           echo "HEATER-capable attended AIR40-55 candidate: provisional 9.81/13.73/7.12k NTC; not product-qualified, no automatic hot-test authorization. Arduino IDE opens firmware/firmware.ino." >> "$GITHUB_STEP_SUMMARY"
-          cat HOT-261031-N8580-app.sha256 >> "$GITHUB_STEP_SUMMARY"
+          cat HOT-261031-WEBLOG1-app.sha256 >> "$GITHUB_STEP_SUMMARY"
       - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: ATTENDED-NTC85-80-AIR55-BUILD
           path: |
-            ${{ runner.temp }}/HOT-261031-N8580-app.bin
-            ${{ runner.temp }}/HOT-261031-N8580-app.sha256
+            ${{ runner.temp }}/HOT-261031-WEBLOG1-app.bin
+            ${{ runner.temp }}/HOT-261031-WEBLOG1-app.sha256
           if-no-files-found: error
           retention-days: 30
       - name: Upload reproducible results

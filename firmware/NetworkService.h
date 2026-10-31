@@ -26,6 +26,7 @@ class NetworkService {
     uint8_t fanPercent = 0, phase = 0, pulses = 0, pulseFault = 0, waitReason = 0;
     uint32_t cumulativeHeatMs = 0;
     bool sessionCsvSaved = false, sessionCsvFinal = false;
+    bool logTruncated = false;
     float minSessionNtcOhms = NAN; // measured NTC, not a Sanwa temperature
   };
   explicit NetworkService(ThermalLog &log) : log_(log) {}
@@ -268,7 +269,9 @@ class NetworkService {
       j += ",\"ntc_ohms\":"; j += String(live_.ntcOhms,1);
       // Read-only measured margins; historical Sanwa proxy is intentionally
       // marked separately and never drives PWM or any safety trip.
-      const auto trialLimits = HeaterStep09AirFeedback::parameters();
+      const auto trialLimits = AppConfig::kHeaterStep09TrialMode
+          ? HeaterStep09AirFeedback::attendedAir55Parameters()
+          : HeaterStep09AirFeedback::parameters();
       const auto margin = HeaterPlateDiagnostics::margin(
           live_.ntcValid ? live_.ntcOhms : NAN,
           trialLimits.ntcSoftPauseOhms, trialLimits.ntcHardTripOhms);
@@ -302,6 +305,7 @@ class NetworkService {
       j += ",\"session_csv_final\":"; j += (live_.sessionCsvFinal ? "true":"false");
       j += ",\"saved_log\":"; j += (log_.hasSaved() ? "true" : "false");
       j += ",\"ram_samples\":"; j += (unsigned)log_.size();
+      j += ",\"log_truncated\":"; j += (live_.logTruncated ? "true" : "false");
       j += ",\"ota_idle\":"; j += (safeForOta() ? "true" : "false");
       j += ",\"ide_ota_ready\":"; j += (ideOtaReady() ? "true" : "false");
       j += "}";
@@ -436,7 +440,8 @@ button{padding:9px 14px}
 <div class="card">Test<div class="value" id="phase">--</div></div>
 </div>
 <p class="sub">SHT45: temperatura e umidità dell'aria nella camera. NTC: resistenza del sensore incorporato nel riscaldatore; temperatura locale non ancora validata. Non confrontare direttamente le due temperature.</p>
-<p class="sub">Durante gli impulsi HEATER ON il firmware sospende le richieste HTTP per evitare ritardi del controllo: questa pagina NON visualizza in tempo reale l'accensione. Se mancano aggiornamenti, lo stato è NON AGGIORNATO (non OFF). Consultare il CSV a prova conclusa per la sequenza ON/OFF.</p>
+<p class="sub">Le misure live arrivano dal servizio di sola lettura sulla porta 8081, separato dal controllo di sicurezza. In caso di perdita del collegamento vengono indicate come NON AGGIORNATE. CSV e OTA mantengono le normali restrizioni.</p>
+<p><a id="fastdash" href="#">Apri il pannello rapido (porta 8081)</a></p>
 <p id="ver" class="sub"></p>
 <div class="card"><h2>Misure live (CSV, memoria RAM)</h2>
 <p><a href="/api/history.csv">Scarica campioni live</a> ·
@@ -476,17 +481,17 @@ async function status(){
  if(statusBusy)return;
  statusBusy=true;
  const controller=new AbortController();
+  const liveUrl=window.location.protocol+'//'+window.location.hostname+':8081/api/status';
  const timeout=setTimeout(()=>controller.abort(),1800);
  try{
-  const r=await fetch('/api/status',{cache:'no-store',signal:controller.signal});
+  const r=await fetch(liveUrl,{cache:'no-store',signal:controller.signal});
   if(!r.ok)throw Error(r.status);
   const d=await r.json();
   trialActive=Boolean(d.cycle)||Number(d.fan_percent)>0;
   $('air').textContent=d.air_valid?d.air_c.toFixed(1)+' °C':'--';
   $('rh').textContent=d.air_valid?d.rh.toFixed(1)+' %':'--';
   $('ntc').textContent=d.ntc_valid
-    ? (d.ntc_ohms/1000).toFixed(2)+' kΩ (margine backup '+
-      (d.ntc_above_hard_ohms/1000).toFixed(2)+' kΩ)'
+    ? (d.ntc_ohms/1000).toFixed(2)+' kΩ'
     :'--';
   $('heat').textContent=d.heater_command?'ON':'OFF';
   $('fan').textContent=d.fan_percent+' %';
@@ -499,7 +504,7 @@ async function status(){
     ' | ON '+((d.cumulative_heat_ms||0)/1000).toFixed(1)+' s'+
     ' | minimo NTC '+(d.session_ntc_min_ohms===null?'--':
        (d.session_ntc_min_ohms/1000).toFixed(2)+' kΩ')+
-    ' | CSV '+(d.session_csv_final?'COMPLETO':d.session_csv_saved?'CHECKPOINT':'non salvato in questa sessione')+
+    ' | CSV '+(d.log_truncated?'DATI PARZIALI':d.session_csv_final?'COMPLETO':d.session_csv_saved?'CHECKPOINT':'non salvato in questa sessione')+
     ' | '+(d.ota_idle?'OTA pronto':'OTA non disponibile');
   statusReceivedAt=Date.now();
   $('net').textContent='Dati aggiornati';
@@ -530,7 +535,8 @@ async function history(){
  }catch(e){}
 }
 async function events(){try{let r=await fetch('/api/events',{cache:'no-store'});if(r.ok)$('events').textContent=await r.text();}catch(e){}}
-status();history();events();
+$('fastdash').href=window.location.protocol+'//'+window.location.hostname+':8081/';
+ status();history();events();
 setInterval(()=>{status();refreshTelemetryAge()},1000);
 setInterval(history,4000);setInterval(events,2000);
 </script></html>)HTML";

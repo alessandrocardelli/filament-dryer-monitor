@@ -14,6 +14,7 @@ const element=id=>el[id]||(el[id]={textContent:'OFF',getContext:()=>({})});
 const fakeNow={value:5000};
 const ctx=vm.createContext({
   document:{getElementById:element},
+  window:{location:{protocol:'http:',hostname:'filament-dryer.local'}},
   Date:{now:()=>fakeNow.value},
   setTimeout:()=>1,
   clearTimeout:()=>{},
@@ -38,5 +39,8 @@ element('heat').textContent='OFF';
 vm.runInContext('refreshTelemetryAge()',ctx);
 assert.equal(element('heat').textContent,'OFF'); // fresh response still allowed
 assert.match(header,/server_\.sendHeader\("Cache-Control", "no-store, no-cache, must-revalidate"\)/);
+assert.match(header,/8081\/api\/status/);
+assert.match(header,/log_truncated/);
+assert.match(element('fastdash').href,/8081/);
 assert.match(header,/if \(\(permitHttp \|\| uploadActive_\) && !ideOtaBusy_\)/);
 console.log('PASS: web source JS parses; phase labels, stale OFF and HTML no-cache verified');

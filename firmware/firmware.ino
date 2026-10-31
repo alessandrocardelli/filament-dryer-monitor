@@ -12,6 +12,7 @@
 #include "NtcSensor.h"
 #include "ThermalLog.h"
 #include "NetworkService.h"
+#include "LiveTelemetryServer.h"
 #include "SafetyController.h"
 #include "SanwaReminder.h"
 #include "SettingsStore.h"
@@ -34,6 +35,7 @@ StatusLed statusLed;
 Ui ui(oled);
 ThermalLog thermalLog;
 NetworkService network(thermalLog);
+LiveTelemetryServer liveTelemetry;
 
 AppState appState = AppState::Boot;
 SetupField setupField = SetupField::Temperature;
@@ -353,6 +355,7 @@ void setup() {
     fan.stop();
   });
   network.begin();     // non-blocking Wi-Fi STA or random-key setup AP
+  liveTelemetry.begin(); // dedicated task for read-only HTTP :8081
   network.note(FirmwareBuild::kId);
 
   appState = AppState::Boot;  // Roots grow in silence.
@@ -591,7 +594,23 @@ void loop() {
   telem.sessionCsvSaved = csvSavedThisRun;
   telem.sessionCsvFinal = csvFinalSavedThisRun;
   telem.minSessionNtcOhms = minSessionNtcOhms;
+  telem.logTruncated = thermalLog.truncated();
   network.publish(telem);
+  LiveTelemetryServer::Snapshot snapshot{};
+  snapshot.ms=telem.ms; snapshot.airC=telem.airC; snapshot.rh=telem.rh;
+  snapshot.ntcOhms=telem.ntcOhms; snapshot.airValid=telem.airValid;
+  snapshot.ntcValid=telem.ntcValid; snapshot.heaterCommand=telem.heaterCommand;
+  snapshot.cycle=telem.cycle; snapshot.fault=telem.fault;
+  snapshot.fanPercent=telem.fanPercent; snapshot.phase=telem.phase;
+  snapshot.pulses=telem.pulses; snapshot.pulseFault=telem.pulseFault;
+  snapshot.waitReason=telem.waitReason;
+  snapshot.cumulativeHeatMs=telem.cumulativeHeatMs;
+  snapshot.sessionCsvSaved=telem.sessionCsvSaved;
+  snapshot.sessionCsvFinal=telem.sessionCsvFinal;
+  snapshot.logTruncated=telem.logTruncated;
+  snapshot.ramSamples=static_cast<uint16_t>(thermalLog.size());
+  snapshot.minSessionNtcOhms=telem.minSessionNtcOhms;
+  liveTelemetry.publish(snapshot);
   const bool canOta = appState == AppState::Standby && !safety.faultActive() &&
        !cycle.isRunning() && !safety.coolingRequired(nowMs) && !safety.heaterOn();
   network.tick(nowMs, !safety.heaterOn(), canOta);

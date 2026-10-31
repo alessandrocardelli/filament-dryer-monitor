@@ -3,6 +3,7 @@
 #include <LittleFS.h>
 #include "AppTypes.h"
 #include "AppConfig.h"
+#include "LogSamplingPolicy.h"
 
 // Bounded RAM recorder: no flash writes while the heater can be commanded ON.
 // At irreversible HEATER shutdown save a checkpoint in LittleFS, then
@@ -40,13 +41,14 @@ class ThermalLog {
     head_ = 0;
     lastSampleMs_ = 0;
     dirty_ = true;
+    truncated_ = false;
   }
   void sample(uint32_t nowMs, const SensorSnapshot &air,
               const NtcSnapshot &ntc, bool heaterOn,
               uint8_t fanPercent, uint8_t phase, uint8_t pulses,
               uint8_t pulseFault, uint8_t ntcFault, uint32_t loopGapMs,
               bool forceSanwaCheckpoint = false) {
-    const uint32_t intervalMs = AppConfig::kHeaterStep09TrialMode ? 5000U : 250U;
+    const uint32_t intervalMs = LogSamplingPolicy::sampleIntervalMs(AppConfig::kHeaterStep09TrialMode);
     if (!forceSanwaCheckpoint && count_ > 0 && nowMs - lastSampleMs_ < intervalMs) {
       const Sample &prev = at(count_ - 1);
       if (prev.phase == phase && prev.heater == (heaterOn ? 1 : 0) &&
@@ -54,6 +56,7 @@ class ThermalLog {
           prev.ntcFault == ntcFault) return;
     }
     lastSampleMs_ = nowMs;
+    if(count_ == kCapacity) truncated_ = true;
     Sample &s = records_[head_];
     s.ms = nowMs;
     s.airC = air.valid ? air.temperatureC : 0;
@@ -114,6 +117,7 @@ class ThermalLog {
   bool mounted() const { return mounted_; }
   bool hasSaved() const { return mounted_ && LittleFS.exists("/last-test.csv"); }
   bool dirty() const { return dirty_; }
+  bool truncated() const { return truncated_; }
   size_t size() const { return count_; }
   const Sample &at(size_t i) const {
     return records_[(head_ + kCapacity - count_ + i) % kCapacity];
@@ -136,5 +140,5 @@ class ThermalLog {
   Sample records_[kCapacity]{};
   size_t head_ = 0, count_ = 0;
   uint32_t lastSampleMs_ = 0;
-  bool mounted_ = false, dirty_ = false;
+  bool mounted_ = false, dirty_ = false, truncated_ = false;
 };
