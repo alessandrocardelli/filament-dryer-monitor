@@ -270,7 +270,7 @@ class NetworkService {
       // Read-only measured margins; historical Sanwa proxy is intentionally
       // marked separately and never drives PWM or any safety trip.
       const auto trialLimits = AppConfig::kHeaterStep09TrialMode
-          ? HeaterStep09AirFeedback::attendedAir55Parameters()
+          ? HeaterStep09AirFeedback::attendedSanwa90_85Parameters()
           : HeaterStep09AirFeedback::parameters();
       const auto margin = HeaterPlateDiagnostics::margin(
           live_.ntcValid ? live_.ntcOhms : NAN,

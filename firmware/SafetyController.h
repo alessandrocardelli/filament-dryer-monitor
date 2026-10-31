@@ -261,7 +261,7 @@ class SafetyController {
   }
   HeaterProductAir::Controller product_{productLimits()};
   HeaterCommissioning::Sequence commission_{HeaterStep07GuardTrial::parameters()};
-  HeaterStep09AirFeedback::Controller feedback_{HeaterStep09AirFeedback::attendedAir55Parameters()};
+  HeaterStep09AirFeedback::Controller feedback_{HeaterStep09AirFeedback::attendedSanwa90_85Parameters()};
   uint32_t lastNowMs_ = 0;
   uint32_t lastHeaterOnMs_ = 0;
   bool everHeated_ = false;
@@ -292,7 +292,7 @@ class SafetyController {
         requested;
     if (heaterOn_ == desired) {
 #ifdef ARDUINO_ARCH_ESP32
-      // ATTENDED 85/80 LOCAL THERMOSTAT: refresh the independent20.5s
+      // ATTENDED 90/85 SANWA-CONTACT LOCAL THERMOSTAT: refresh the independent20.5s
       // GPIO-off deadline only after all NTC/SHT45/fan/STOP safety checks
       // have passed this iteration. A stalled loop leaves ISR to cut power.
       // No deliberate 20s heater-OFF pulse is imposed.

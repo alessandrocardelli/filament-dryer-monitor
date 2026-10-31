@@ -349,13 +349,15 @@ inline Parameters attendedAir55Parameters() {
   p.targetAirC = 55.0f; // fallback only; user's AIR menu is authoritative
   return p;
 }
-// Operator-requested 90C-OFF/85C-ON LOCAL THERMOSTAT SOFTWARE CANDIDATE.
+// Operator-selected 90C-OFF/85C-ON ACTIVE EXPERIMENTAL LOCAL THERMOSTAT.
+// Previous 85/80 open-box profile is preserved above only for archived tests.
 // 85C = 9231.9 ohms measured. 90C ~= 7923.8 ohms, extrapolated
 // one degree past highest measured 89C. Existing 7120-ohm hard backup remains
 // provisional, not a qualified safety rating. TCO105 stays wired unchanged.
-// This profile is intentionally NOT selected by SafetyController: no physical
-// heater activation or threshold change until separate thermal safety review.
-inline Parameters candidateSanwa90_85Parameters() {
+// Selected by SafetyController only in HEATER-capable experimental source.
+// Compiling this source does not authorize actual physical energizing/flash;
+// TCO105 and material thermal safety margins remain unqualified.
+inline Parameters attendedSanwa90_85Parameters() {
   Parameters p=attendedAir55Parameters();
   p.ntcSoftPauseOhms=HeaterContactCurve::resistanceAtContactC(90.0f);
   p.ntcResumeOhms=HeaterContactCurve::resistanceAtContactC(85.0f);

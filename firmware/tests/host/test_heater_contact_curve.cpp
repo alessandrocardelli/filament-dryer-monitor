@@ -26,7 +26,7 @@ int main() {
   }
   auto old=attendedAir55Parameters();
   assert(old.ntcSoftPauseOhms==7120.0f && old.ntcResumeOhms==8236.6f);
-  auto p=candidateSanwa90_85Parameters();
+  auto p=attendedSanwa90_85Parameters();
   assert(p.continuousLocalThermostat);
   assert(std::fabs(p.ntcSoftPauseOhms-r90)<0.2f);
   assert(std::fabs(p.ntcResumeOhms-r85)<0.2f);
@@ -40,5 +40,5 @@ int main() {
   assert(c.update(23000,ok(r85)));
   assert(c.update(24000,ok(8500)));
   assert(!c.update(25000,ok(7119)) && c.fault()==Fault::NtcResistanceLimit);
-  std::cout<<"PASS HOST ONLY: 90C estimated pause/85C measured rearm, active physical profile unchanged.\n";
+  std::cout<<"PASS HOST ONLY: 90C estimated pause/85C measured rearm, active source uses 90/85; NO physical HEATER test.\n";
 }

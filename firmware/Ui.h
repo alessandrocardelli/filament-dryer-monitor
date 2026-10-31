@@ -312,7 +312,7 @@ class Ui {
           HeaterCommissioning::Phase::Cooldown)
         snprintf(target, sizeof(target), "COOLING %lu s",
             static_cast<unsigned long>(coolingSecondsLeft));
-      else snprintf(target, sizeof(target), "AIR %dC NTC85/80", settings.targetTempC);
+      else snprintf(target, sizeof(target), "AIR %dC NTC90/85", settings.targetTempC);
     } else if (AppConfig::kHeaterCommissioningMode) {
       if (static_cast<HeaterCommissioning::Phase>(pulsePhase) ==
           HeaterCommissioning::Phase::Cooldown) {
@@ -404,7 +404,7 @@ class Ui {
       snprintf(line, sizeof(line), "NTC %.1fk BAK%+.1fk",
                ntc.resistanceOhms / 1000.0f,
                (ntc.resistanceOhms - (AppConfig::kHeaterStep09TrialMode
-                  ? HeaterStep09AirFeedback::attendedAir55Parameters().ntcHardTripOhms
+                  ? HeaterStep09AirFeedback::attendedSanwa90_85Parameters().ntcHardTripOhms
                   : HeaterStep09AirFeedback::parameters().ntcHardTripOhms)) / 1000.0f);
       display_.drawStr(2, 39, line);
     } else {

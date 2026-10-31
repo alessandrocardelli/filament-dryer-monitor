@@ -123,7 +123,7 @@ static void enterState(AppState next, uint32_t nowMs) {
       } else if (AppConfig::kHeaterStep09TrialMode) {
         Serial.print("ATTENDED HOT: AIR "); Serial.print(settings.cycle.targetTempC);
         Serial.print("C duration "); Serial.print(settings.cycle.durationMinutes);
-        Serial.println("min; NTC OFF7.120k/REARM8.237k, R<7.120k FAULT, FAN100, HEAT CONTINUOUS");
+        Serial.println("min; NTC OFF7.924k/REARM9.232k, R<7.120k FAULT, FAN100, HEAT CONTINUOUS");
         Serial.println("HOT_CSV,ms,phase,windows,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else {
         Serial.println(safety.heaterLocked()
@@ -331,7 +331,7 @@ void setup() {
     Serial.println("EXPERIMENTAL 6-PULSE STEP07 NTC-GUARD TEST; no auto-repeat");
     Serial.println("NTC absolute degrees NOT calibrated; experimental raw R_NTC abort at 40k");
   } else if (AppConfig::kHeaterStep09TrialMode) {
-    Serial.println("ATTENDED NTC85/80: R<=7.120k pause, >=8.237k resume, R<7.120k FAULT; continuous demand, independent 20.5s watchdog; AIR setpoint/-1C; Sanwa separate");
+    Serial.println("ATTENDED NTC90/85: R<=~7.924k pause, >=9.232k resume, R<7.120k FAULT; continuous demand, independent 20.5s watchdog; AIR setpoint/-1C; Sanwa-contact curve 90C estimated");
   } else {
     Serial.println(safety.heaterLocked()
         ? "Heater OUTPUT LOCKED: configuration/calibration not approved."

@@ -14,7 +14,7 @@ cp "$ROOT/firmware/tests/host/test_step09_feedback_gpio.cpp" "$TMP/firmware/test
 # temp copy, never in the committed Arduino IDE source or actual PCB.
 # Legacy STEP13 GPIO regression: ONLY the copied test fixture uses old
 # 33/50/30k one-shot settings. Actual source uses attended experimental mode.
-sed -i 's/feedback_{HeaterStep09AirFeedback::attendedAir55Parameters()}/feedback_{HeaterStep09AirFeedback::parameters()}/' "$TMP/firmware/SafetyController.h"
+sed -i 's/feedback_{HeaterStep09AirFeedback::attendedSanwa90_85Parameters()}/feedback_{HeaterStep09AirFeedback::parameters()}/' "$TMP/firmware/SafetyController.h"
 cat >"$TMP/firmware/Arduino.h" <<'HDR'
 #pragma once
 #include <cstdint>
