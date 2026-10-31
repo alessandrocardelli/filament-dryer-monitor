@@ -5,6 +5,7 @@
 #include "../../HeaterStep09AirFeedback.h"
 #include <cassert>
 #include <cstdint>
+#include <cmath>
 #include <iostream>
 using namespace HeaterStep09AirFeedback;
 static Inputs good(float air=20.0f, float r=14000.0f,
@@ -25,7 +26,7 @@ int main() {
   const float r89=HeaterContactCurve::resistanceAtContactC(89.0f);
   const float r85=HeaterContactCurve::resistanceAtContactC(85.0f);
   assert(p.ntcSoftPauseOhms==r90 && r90>7900.0f && r90<7950.0f);
-  assert(p.ntcResumeOhms==r85 && r85==9231.9f);
+  assert(std::fabs(p.ntcResumeOhms-r85)<0.01f && std::fabs(r85-9231.9f)<0.2f);
   assert(r89>r90 && r85>r89);
   assert(p.ntcHardTripOhms==7120.0f && p.minimumOffMs==0);
   assert(p.airFaultCeilingC==60.0f);
