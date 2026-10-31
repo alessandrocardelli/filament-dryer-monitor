@@ -1,0 +1,42 @@
+phase,time_from_start,sanwa_plate_c,ntc_ohms,air_c,heater_command,origin
+prestart,Prima START,16,139928.7,17.13,0,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,0:00,16,139928.7,17.13,0,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,1:00,45,38856.2,18.42,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,2:00,54,26568.5,21.05,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,3:00,59,21669.6,24.00,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,4:00,62,18757.8,26.80,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,5:00,66,16837.3,29.36,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,6:00,68,15395.0,31.54,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,7:00,71,14280.1,33.56,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,8:00,73,13412.2,35.32,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,9:00,74,12667.8,36.85,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,10:00,76,12093.8,38.18,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,12:00,78,11154.7,40.39,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,14:00,81,10527.4,42.23,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,16:00,82,10030.9,43.75,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,18:00,84,9624.8,44.90,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,20:00,85,9231.9,45.79,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,22:00,86,9012.9,46.51,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,24:00,86,8871.5,47.07,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,26:00,87,8722.2,47.55,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,28:00,87,8600.5,47.88,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,30:00,87,8495.1,48.22,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,32:00,88,8467.3,48.50,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,34:00,88,8382.8,48.72,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,36:00,88,8328.6,48.91,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,38:00,88,8293.8,49.04,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,40:00,89,8251.8,49.17,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,42:00,89,8235.0,49.23,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,44:00,89,8209.8,49.40,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,46:00,89,8181.1,49.45,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,48:00,89,8153.6,49.51,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,50:00,89,8136.9,49.61,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,52:00,89,8120.2,49.68,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,54:00,89,8079.6,49.69,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,56:00,89,8108.2,49.75,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,58:00,89,8089.1,49.77,1,manual_sanwa_and_nearest_5s_ESP32_CSV
+heating,60:00,89,8067.7,49.82,0,manual_sanwa_and_nearest_5s_ESP32_CSV
+cooldown,OFF +0:30,72,15301.7,49.62,0,manual_sanwa_and_nearest_5s_ESP32_CSV
+cooldown,OFF +1:00,64,20778.4,48.91,0,manual_sanwa_and_nearest_5s_ESP32_CSV
+cooldown,OFF +1:30,58,24989.7,47.98,0,manual_sanwa_and_nearest_5s_ESP32_CSV
+cooldown,OFF +2:00,58,26230.7,46.96,0,manual_sanwa_and_nearest_5s_ESP32_CSV

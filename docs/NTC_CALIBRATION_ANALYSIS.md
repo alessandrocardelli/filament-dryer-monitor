@@ -3,6 +3,62 @@
 **Date:** 2026-10-17  
 **Scope:** First-article open-bench measurements; diagnostics only. **No production heater-control conversion or independent thermal protection decision is changed.**
 
+## Curva di riferimento attuale, 31 ottobre 2026 — scatola chiusa e ventola corretta
+
+**Abbiamo concluso la raccolta dati della NTC per la regolazione pratica.** La sonda Sanwa e collocata, secondo l'operatore, a meno di1 cm dalla NTC. Il riferimento in gradi e **la lettura Sanwa sulla piastra**, non una misura al centro del termistore. Una precisione assoluta al singolo grado non e richiesta per usare questa caratteristica.
+
+- [CSV delle 37 letture prerun/riscaldamento e4 di raffreddamento](evidence/thermal/2026-10-31-NTC-SANWA-corrected-fan-pairs.csv) — tutte le coppie manuali Sanwa associate ai campioni NTC/AIR ESP32 piu vicini nel tempo, senza inventare temperature. Allineamento temporale approssimato, non timestamp fisicamente sincronizzati.
+- [Grafico SVG completo, recuperabile in ogni nuova conversazione](evidence/thermal/2026-10-31-NTC-SANWA-corrected-fan-curve.svg) — letture riscaldamento, raffreddamento e 90°C **stimati**.
+- [CSV grezzo originale ESP32](evidence/thermal/2026-10-31-AIR55-FAN-CORRECTED-raw.csv), [verbale cronologico completo](evidence/thermal/2026-10-31-AIR55-FAN-CORRECTED-PHYSICAL-SESSION.md) e [foglio Google originale](https://docs.google.com/spreadsheets/d/1I5utkzGP1zvD168jLghpYB_y_myGjxMb1ccLens4Cks/edit?gid=525622499) rimangono inalterati.
+- [Curva disponibile nel firmware](../firmware/HeaterContactCurve.h): valore mediano della resistenza per ogni temperatura Sanwa intera rilevata e interpolazione in scala logaritmica. Tutte le letture ripetute, specialmente a89°C, rimangono nel CSV.
+
+### Tabella ricavata dai dati reali
+
+| Sanwa piastra (°C) | NTC (ohm, mediana) | Letture |
+| ---: | ---: | ---: |
+| 16 | 139928.7 | 1 |
+| 45 | 38856.2 | 1 |
+| 54 | 26568.5 | 1 |
+| 59 | 21669.6 | 1 |
+| 62 | 18757.8 | 1 |
+| 66 | 16837.3 | 1 |
+| 68 | 15395.0 | 1 |
+| 71 | 14280.1 | 1 |
+| 73 | 13412.2 | 1 |
+| 74 | 12667.8 | 1 |
+| 76 | 12093.8 | 1 |
+| 78 | 11154.7 | 1 |
+| 81 | 10527.4 | 1 |
+| 82 | 10030.9 | 1 |
+| 84 | 9624.8 | 1 |
+| 85 | 9231.9 | 1 |
+| 86 | 8942.2 | 2 |
+| 87 | 8600.5 | 3 |
+| 88 | 8355.7 | 4 |
+| 89 | 8136.9 | 11 |
+| **90, stimati** | **7923.8** | **0** |
+
+**Soglie scelte dall'operatore per la prossima configurazione:** **OFF a90°C / ON a85°C**, equivalenti a circa **7.924 Ω (stima)** e **9.232 Ω (misura)**. Il valore a90°C e ottenuto estrapolando **un solo grado** dalla differenza fra le mediane a88°C (8355.7Ω) e89°C (8136.9Ω). Non e stato misurato un Sanwa90°C. L'errore e il ritardo fra sensori rendono questa una regolazione pratica, non una misura esatta.
+
+**Implementazione:** `HeaterContactCurve.h` e il profilo `candidateSanwa90_85Parameters()` sono disponibili per sviluppo e test software. **Non sono stati ancora selezionati nel firmware attivo sul riscaldatore**, che mantiene i vecchi 7.120/8.236,6Ω e le sue protezioni. L'NTC non richiede altri test soltanto per disegnare la curva; una futura abilitazione del riscaldamento autonomo richiede comunque verifica dei margini termici del TCO e dei materiali, senza assumere sicurezza dal dato Sanwa.
+
+### Provenienza dei limiti del profilo futuro
+
+| Voce | Valore | Classificazione |
+| --- | ---: | --- |
+| Contatto Sanwa a85°C | NTC9231.9Ω | MEASURED_CHARACTERIZATION, scatola chiusa/fan OEM corretta |
+| Contatto Sanwa a89°C | mediana NTC8136.9Ω | MEASURED_CHARACTERIZATION, stabilizzazione riscaldamento |
+| Pausa desiderata | Sanwa-equivalente90°C, NTC circa7924Ω | PROVISIONAL_EXPERIMENT, fuori campioni reali di1°C |
+| Riarmo desiderato | Sanwa-equivalente85°C, NTC circa9232Ω | PROVISIONAL_EXPERIMENT per controllo, punto misurato |
+| Fault NTC storico | <7120Ω | PROVISIONAL_EXPERIMENT, dato da vecchia prova aperta/fan OFF, non approvato come soglia finale |
+| AIR 40–55°C, OFF/ON a target/target−1°C | menu/isteresi | APPROVED OPERATIONAL come intento di regolazione; software provato, non ancora qualifica fisica AIR55 |
+| AIR fault ≥60°C | limite indipendente | PROVISIONAL_EXPERIMENT |
+| Ventola100%, prerun5s, cooldown90s | comando/tempi | MEASURED_CHARACTERIZATION come comportamento osservato, non prova RPM |
+| Watchdog hardware20,5s | GPIO LOW se loop non alimenta timer | ELECTRICAL_OR_HARDWARE + CI software, non prova termica |
+| TCO105°C monouso in serie | riferito presente | ELECTRICAL_OR_HARDWARE, temperatura reale corpo/portata/intervento UNKNOWN/UNQUALIFIED |
+
+---
+
 ## Measurement context and meaning
 
 The embedded heater NTC was read on J7/ESP32 GPIO34 through the calibrated 47 kOhm nominal divider. The separately mounted Sanwa RD701/K-type probe read a **nearby heater contact point**, not the thermistor bead itself. The original eSUN eBOX Lite **bottom closure and top lid were both open and the fan OFF** for the series. Hold duration was 120 s at each nominal NTC test target.

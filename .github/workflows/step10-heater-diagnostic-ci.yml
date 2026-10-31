@@ -202,6 +202,18 @@ jobs:
           assert "kHeaterOutputEnabled = false;" in cfg
           print("PASS: user AIR40..55 and duration with attended NTC85/80; V1 approvals false")
           PY
+      - name: NTC/Sanwa corrected fan 90/85 candidate (HOST ONLY)
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_heater_contact_curve.cpp -o "$RUNNER_TEMP/ntc-sanwa-90-85-host"
+          "$RUNNER_TEMP/ntc-sanwa-90-85-host" | tee "$RUNNER_TEMP/ntc-sanwa-90-85-host.log"
+          python3 - <<'PY'
+          from pathlib import Path
+          assert "candidateSanwa90_85Parameters()" in Path("firmware/HeaterStep09AirFeedback.h").read_text()
+          assert "feedback_{HeaterStep09AirFeedback::attendedAir55Parameters()}" in Path("firmware/SafetyController.h").read_text()
+          assert "kHeaterOutputEnabled = false;" in Path("firmware/AppConfig.h").read_text()
+          print("PASS candidate not activated in physical firmware")
+          PY
       - name: Sanwa measurement cue clock (HOST) and nonblocking safety wiring
         run: |
           set -euo pipefail
@@ -314,6 +326,7 @@ jobs:
             ${{ runner.temp }}/step13a-mock.log
             ${{ runner.temp }}/v1-12h-control.log
             ${{ runner.temp }}/attended-air55-host.log
+            ${{ runner.temp }}/ntc-sanwa-90-85-host.log
             ${{ runner.temp }}/sanwa-reminder-host.log
             ${{ runner.temp }}/step13a-4hour-thermostat.log
             ${{ runner.temp }}/step13a-plate-diagnostic.log

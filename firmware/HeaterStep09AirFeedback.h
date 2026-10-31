@@ -2,6 +2,7 @@
 #include <cmath>
 #include <cstdint>
 #include "HeaterPulseCommissioning.h"
+#include "HeaterContactCurve.h"
 
 // STEP13A: candidate AIR30 and less restrictive but still bounded local NTC.
 // Source of change: 2026-10-29 STEP12P real 1089-row CSV and manual table:
@@ -346,6 +347,18 @@ inline Parameters attendedAir55Parameters() {
   p.minimumOffMs = 0; // no timer-driven OFF; only actual two thermostats
   p.airFaultCeilingC = 60.0f; // provisional independent AIR fault
   p.targetAirC = 55.0f; // fallback only; user's AIR menu is authoritative
+  return p;
+}
+// Operator-requested 90C-OFF/85C-ON LOCAL THERMOSTAT SOFTWARE CANDIDATE.
+// 85C = 9231.9 ohms measured. 90C ~= 7923.8 ohms, extrapolated
+// one degree past highest measured 89C. Existing 7120-ohm hard backup remains
+// provisional, not a qualified safety rating. TCO105 stays wired unchanged.
+// This profile is intentionally NOT selected by SafetyController: no physical
+// heater activation or threshold change until separate thermal safety review.
+inline Parameters candidateSanwa90_85Parameters() {
+  Parameters p=attendedAir55Parameters();
+  p.ntcSoftPauseOhms=HeaterContactCurve::resistanceAtContactC(90.0f);
+  p.ntcResumeOhms=HeaterContactCurve::resistanceAtContactC(85.0f);
   return p;
 }
 }  // namespace HeaterStep09AirFeedback
