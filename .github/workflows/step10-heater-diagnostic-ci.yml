@@ -1,4 +1,4 @@
-name: "HOT-261101-LOG12 full-duration logger + unchanged heater NTC90/85"
+name: "HOT-261101-LAN1 LAN settings/STOP and unchanged heater NTC90/85"
 
 on:
   push:
@@ -93,16 +93,16 @@ jobs:
           assert "kCapacity = 1400;" in Path("firmware/ThermalLog.h").read_text()
           assert "ntcHardTripOhms = 40000.0f;" not in h
           assert "ntcSoftPauseOhms = 45000.0f;" not in h
-          assert '"HOT-261101-LOG12"' in Path("firmware/FirmwareBuild.h").read_text()
-          assert '"H01-L12"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"HOT-261101-LAN1"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"H01-LAN"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
           assert "display_.drawStr(20, 44, FirmwareBuild::kId)" in ui
           assert 'display_.drawStr(2, 44, "FW")' in ui
           assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
           assert 2 + 6*len("FW") < 20
-          assert 20 + 6 * len("HOT-261101-LOG12") <= 128
-          assert 78 + 6 * len("H01-L12") <= 128
+          assert 20 + 6 * len("HOT-261101-LAN1") <= 128
+          assert 78 + 6 * len("H01-LAN") <= 128
           print("PASS: active attended heater 90/85 profile; production approvals remain false")
           PY
       - name: Verify telemetry and no live CSV streaming while heater may run
@@ -360,6 +360,45 @@ jobs:
           assert "kFanBringupRunPercent = 100;" in cfg
           print("PASS: Manual/PLA/PLA+/PVB front panel + persistence, no heater/fan/protection changes")
           PY
+      - name: Authenticated LAN settings and STOP without remote START (HOST)
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_remote_control_policy.cpp -o "$RUNNER_TEMP/lan-control-host"
+          "$RUNNER_TEMP/lan-control-host" | tee "$RUNNER_TEMP/lan-control-host.log"
+          node firmware/tests/host/test_remote_dashboard.js | tee "$RUNNER_TEMP/lan-dashboard-host.log"
+          python3 - <<'PY'
+          from pathlib import Path
+          ino=Path("firmware/firmware.ino").read_text()
+          header=Path("firmware/LiveTelemetryServer.h").read_text()
+          srv=Path("firmware/LiveTelemetryServer.cpp").read_text()
+          net=Path("firmware/NetworkService.h").read_text()
+          cfg=Path("firmware/AppConfig.h").read_text()
+          safe=Path("firmware/SafetyController.h").read_text()
+          assert "liveTelemetry.takeStopRequest()" in ino
+          assert "enterState(AppState::Standby, nowMs);" in ino
+          assert "liveTelemetry.takeSettingsRequest(remote)" in ino
+          assert "appState == AppState::Standby" in ino
+          assert "!safety.heaterOn() && !network.updateBusy()" in ino
+          assert "settingsStore.save(settings);" in ino
+          assert "liveTelemetry.begin(network.controlPasswordForLocalServer())" in ino
+          assert "kHeaterStep09TrialMode = true;" in cfg
+          assert "kHeaterOutputEnabled = false;" in cfg
+          assert "feedback_{HeaterStep09AirFeedback::attendedSanwa90_85Parameters()}" in safe
+          assert "takeStopRequest()" in header and "takeSettingsRequest" in header
+          assert 'config.max_uri_handlers=4;' in srv
+          assert 'stop.uri="/api/stop"' in srv and 'set.uri="/api/settings"' in srv
+          assert '"/api/start"' not in srv and '"/api/start"' not in ino
+          assert "commandsAuthorized(" in srv
+          assert 'httpd_req_get_hdr_value_str(req,"X-Dryer-Command"' in srv
+          assert 'httpd_req_get_hdr_value_str(req,"Authorization"' in srv
+          assert "p->stopPending=true" in srv
+          assert "WiFi.status()!=WL_CONNECTED" in srv
+          assert "portENTER_CRITICAL" in srv and "portEXIT_CRITICAL" in srv
+          assert "safety.stop()" not in srv and "settingsStore.save(" not in srv
+          assert "controlPasswordForLocalServer" in net
+          assert "server_.handleClient();" in net # kept blocked while HEATER ON
+          print("PASS HOST: LAN auth, queued STOP, standby settings, no remote START, heater hardware invariants")
+          PY
       - name: Install ESP32 core 3.3.12 and U8g2 2.36.19
         run: |
           arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
@@ -375,20 +414,20 @@ jobs:
           app="$out/firmware.ino.bin"
           test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
           # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
-          grep -a -q 'HOT-261101-LOG12' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
-          cp "$app" "$RUNNER_TEMP/HOT-261101-LOG12-app.bin"
+          grep -a -q 'HOT-261101-LAN1' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
+          cp "$app" "$RUNNER_TEMP/HOT-261101-LAN1-app.bin"
           cd "$RUNNER_TEMP"
-          sha256sum HOT-261101-LOG12-app.bin | tee HOT-261101-LOG12-app.sha256
-          echo "HEATER-capable experiment now logs the actual selected trial mode at 60s plus immediate heater/phase/fan/sensor-validity/fault changes; 12h baseline fits the 1400-record ring. If event volume exceeds space, truncation is reported. Existing NTC90/85, air, fan control, STOP, watchdog and TCO105 unchanged; no HTTP heater control, no physical heat authorization from CI." >> "$GITHUB_STEP_SUMMARY"
-          cat HOT-261101-LOG12-app.sha256 >> "$GITHUB_STEP_SUMMARY"
+          sha256sum HOT-261101-LAN1-app.bin | tee HOT-261101-LAN1-app.sha256
+          echo "HEATER-capable experiment now logs the actual selected trial mode at 60s plus immediate heater/phase/fan/sensor-validity/fault changes; 12h baseline fits the 1400-record ring. If event volume exceeds space, truncation is reported. Existing NTC90/85, air, fan control, STOP, watchdog and TCO105 unchanged; authenticated remote settings in STANDBY and asynchronous STOP in Drying via LAN port8081; NO remote START, no physical heat authorization from CI." >> "$GITHUB_STEP_SUMMARY"
+          cat HOT-261101-LAN1-app.sha256 >> "$GITHUB_STEP_SUMMARY"
       - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: ATTENDED-NTC90-85-AIR55-BUILD
           path: |
-            ${{ runner.temp }}/HOT-261101-LOG12-app.bin
-            ${{ runner.temp }}/HOT-261101-LOG12-app.sha256
+            ${{ runner.temp }}/HOT-261101-LAN1-app.bin
+            ${{ runner.temp }}/HOT-261101-LAN1-app.sha256
           if-no-files-found: error
           retention-days: 30
       - name: Upload reproducible results
@@ -407,4 +446,6 @@ jobs:
             ${{ runner.temp }}/step13a-esp32-build.log
             ${{ runner.temp }}/material-presets-host.log
             ${{ runner.temp }}/log12h-host.log
+            ${{ runner.temp }}/lan-control-host.log
+            ${{ runner.temp }}/lan-dashboard-host.log
           if-no-files-found: warn

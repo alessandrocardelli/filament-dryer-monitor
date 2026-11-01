@@ -375,7 +375,7 @@ void setup() {
     fan.stop();
   });
   network.begin();     // non-blocking Wi-Fi STA or random-key setup AP
-  liveTelemetry.begin(); // dedicated task for read-only HTTP :8081
+  liveTelemetry.begin(network.controlPasswordForLocalServer()); // authenticated queued LAN controls
   network.note(FirmwareBuild::kId);
 
   appState = AppState::Boot;  // Roots grow in silence.
@@ -397,6 +397,25 @@ void loop() {
 
   ntc.update(nowMs);
   sht45.update(nowMs);
+
+  // Only the main loop applies remote commands; the HTTP task never uses GPIO.
+  if (liveTelemetry.takeStopRequest() && appState == AppState::Drying) {
+    network.note("REMOTE STOP");
+    enterState(AppState::Standby, nowMs); // existing immediate STOP/cooldown
+  }
+  RemoteControlPolicy::Settings remote{};
+  if (liveTelemetry.takeSettingsRequest(remote) &&
+      RemoteControlPolicy::valid(remote) &&
+      appState == AppState::Standby &&
+      !cycle.isRunning() && !safety.coolingRequired(nowMs) &&
+      !safety.heaterOn() && !network.updateBusy()) {
+    settings.cycle.material=MaterialPresets::fromStored(remote.profile);
+    settings.cycle.targetTempC=static_cast<int16_t>(remote.tempC);
+    settings.cycle.durationMinutes=remote.durationMinutes;
+    settingsStore.save(settings); // NVS only in standby, never while heating
+    ui.noteInteraction(nowMs);
+    network.note("REMOTE SETTINGS SAVED");
+  }
 
   // Once an OTA image is accepted, no new heating cycle may start before reboot.
   if (!network.updateBusy()) buttons.update(nowMs, handleButtonEvent);
@@ -630,6 +649,13 @@ void loop() {
   snapshot.logTruncated=telem.logTruncated;
   snapshot.ramSamples=static_cast<uint16_t>(thermalLog.size());
   snapshot.minSessionNtcOhms=telem.minSessionNtcOhms;
+  snapshot.appState=static_cast<uint8_t>(appState);
+  snapshot.profile=static_cast<uint8_t>(settings.cycle.material);
+  snapshot.targetC=static_cast<uint16_t>(settings.cycle.targetTempC);
+  snapshot.durationMinutes=settings.cycle.durationMinutes;
+  snapshot.canEdit=RemoteControlPolicy::canEdit(
+      static_cast<RemoteControlPolicy::State>(snapshot.appState),
+      safety.coolingRequired(nowMs),network.updateBusy(),safety.heaterOn());
   liveTelemetry.publish(snapshot);
   const bool canOta = appState == AppState::Standby && !safety.faultActive() &&
        !cycle.isRunning() && !safety.coolingRequired(nowMs) && !safety.heaterOn();

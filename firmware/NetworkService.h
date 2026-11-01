@@ -133,6 +133,7 @@ class NetworkService {
     return "connecting";
   }
   bool connected() const { return WiFi.status() == WL_CONNECTED; }
+  const char *controlPasswordForLocalServer() const { return adminPass_.c_str(); }
 
  private:
   static constexpr size_t kEventCapacity = 32;
