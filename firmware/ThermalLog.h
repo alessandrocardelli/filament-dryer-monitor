@@ -19,11 +19,12 @@ class ThermalLog {
     uint8_t pulseFault = 0, ntcFault = 0;
   };
   // Keep the original 1400-entry RAM budget, REQUIRED for ESP32 DRAM link.
-  // AIR55 attended study: baseline every 5s plus HEATER/phase/fault edges.
-  // A first <=1h session usually fits 1400 RAM records. Longer sessions
-  // are a tail-retaining ring, NOT falsely reported as full-session evidence.
-  // NTC safety ADC remains 500ms; logs never drive heater protection.
-  // Prior S7U standalone logging remains at 250ms.
+  // ALL current user cycles, including the HEATER-capable experimental
+  // mode, use a 60s baseline + state/actuator/fault/validity transitions.
+  // 12h = 721 baseline samples; the 1400-entry budget allows extra events.
+  // If unusual activity overflows the ring, truncated() explicitly flags
+  // loss of earliest data. Historical 5s experimental CSVs stay unchanged.
+  // NTC safety ADC remains 500ms; logging NEVER drives heater protection.
   // Never write flash while the heater may be commanded ON again.
   static constexpr size_t kCapacity = 1400;
   void begin() {
@@ -49,14 +50,22 @@ class ThermalLog {
               uint8_t pulseFault, uint8_t ntcFault, uint32_t loopGapMs,
               bool forceSanwaCheckpoint = false) {
     const uint32_t intervalMs = LogSamplingPolicy::sampleIntervalMs(AppConfig::kHeaterStep09TrialMode);
-    if (!forceSanwaCheckpoint && count_ > 0 && nowMs - lastSampleMs_ < intervalMs) {
+    bool stateChanged = false;
+    if (count_ > 0) {
       const Sample &prev = at(count_ - 1);
-      if (prev.phase == phase && prev.heater == (heaterOn ? 1 : 0) &&
-          prev.pulses == pulses && prev.pulseFault == pulseFault &&
-          prev.ntcFault == ntcFault) return;
+      const uint8_t valid = (air.valid ? 1U : 0U) | (ntc.valid ? 2U : 0U);
+      stateChanged = prev.phase != phase ||
+                     prev.heater != (heaterOn ? 1U : 0U) ||
+                     prev.fan != fanPercent ||
+                     prev.valid != valid ||
+                     prev.pulses != pulses ||
+                     prev.pulseFault != pulseFault ||
+                     prev.ntcFault != ntcFault;
     }
+    if (!LogSamplingPolicy::shouldCapture(nowMs, lastSampleMs_,
+          count_ > 0, forceSanwaCheckpoint, stateChanged, intervalMs)) return;
     lastSampleMs_ = nowMs;
-    if(count_ == kCapacity) truncated_ = true;
+    if (LogSamplingPolicy::willTruncate(count_, kCapacity)) truncated_ = true;
     Sample &s = records_[head_];
     s.ms = nowMs;
     s.airC = air.valid ? air.temperatureC : 0;

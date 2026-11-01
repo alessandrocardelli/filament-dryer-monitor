@@ -1,4 +1,4 @@
-name: "HOT-261101-PROF1 user material profiles + preserved NTC90/85"
+name: "HOT-261101-LOG12 full-duration logger + unchanged heater NTC90/85"
 
 on:
   push:
@@ -93,7 +93,7 @@ jobs:
           assert "kCapacity = 1400;" in Path("firmware/ThermalLog.h").read_text()
           assert "ntcHardTripOhms = 40000.0f;" not in h
           assert "ntcSoftPauseOhms = 45000.0f;" not in h
-          assert '"HOT-261101-PROF1"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"HOT-261101-LOG12"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"H01-PROF"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
@@ -101,7 +101,7 @@ jobs:
           assert 'display_.drawStr(2, 44, "FW")' in ui
           assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
           assert 2 + 6*len("FW") < 20
-          assert 20 + 6 * len("HOT-261101-PROF1") <= 128
+          assert 20 + 6 * len("HOT-261101-LOG12") <= 128
           assert 78 + 6 * len("H30-SNW") <= 128
           print("PASS: active attended heater 90/85 profile; production approvals remain false")
           PY
@@ -289,11 +289,11 @@ jobs:
           print("PASS: NTC80/85 and AIR separate latches, correct OLED prompts, safe persisted checkpoint")
           PY
       - uses: arduino/setup-arduino-cli@v2
-      - name: Long-duration 12h logging policy (HOST) and live webpage guard (NODE)
+      - name: ACTIVE attended 12-hour log sampling, overflow and web telemetry (HOST / NODE)
         run: |
           set -euo pipefail
           g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_log_sampling_policy.cpp -o "$RUNNER_TEMP/log12h-host"
-          "$RUNNER_TEMP/log12h-host"
+          "$RUNNER_TEMP/log12h-host" | tee "$RUNNER_TEMP/log12h-host.log"
           node firmware/tests/host/test_web_freshness.js
           python3 - <<'PY'
           from pathlib import Path
@@ -308,10 +308,21 @@ jobs:
           assert "network.tick(nowMs, !safety.heaterOn(), canOta);" in ino
           assert "const liveUrl=window.location.protocol+" in n
           assert "log_truncated" in n
-          assert "if(count_ == kCapacity) truncated_ = true;" in log
+          sampling=Path("firmware/LogSamplingPolicy.h").read_text()
+          cfg=Path("firmware/AppConfig.h").read_text()
+          assert "LogSamplingPolicy::willTruncate(count_, kCapacity)" in log
+          assert "LogSamplingPolicy::shouldCapture(" in log
+          assert "kTrialSampleMs=60000U" in sampling
+          assert "kNormalSampleMs=60000U" in sampling
+          assert "kHeaterStep09TrialMode = true;" in cfg, "Check actually selected logging mode"
+          assert "prev.heater != (heaterOn ? 1U : 0U)" in log
+          assert "prev.fan != fanPercent" in log
+          assert "prev.ntcFault != ntcFault" in log
+          assert "saveWhenSafe()" in log
+          assert "thermalLog.saveWhenSafe()" in ino
           assert "kHeaterOutputEnabled = false;" in Path("firmware/AppConfig.h").read_text()
           assert "feedback_{HeaterStep09AirFeedback::attendedSanwa90_85Parameters()}" in Path("firmware/SafetyController.h").read_text()
-          print("PASS: separate async read-only telemetry; old OTA interlock and heater profile unchanged")
+          print("PASS: ACTIVE experiment records 12h at 60s + transitions; web and heater interlocks unchanged")
           PY
       - name: V1 material shortcuts, legacy settings and UI (HOST ONLY)
         run: |
@@ -364,20 +375,20 @@ jobs:
           app="$out/firmware.ino.bin"
           test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
           # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
-          grep -a -q 'HOT-261101-PROF1' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
-          cp "$app" "$RUNNER_TEMP/HOT-261101-PROF1-app.bin"
+          grep -a -q 'HOT-261101-LOG12' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
+          cp "$app" "$RUNNER_TEMP/HOT-261101-LOG12-app.bin"
           cd "$RUNNER_TEMP"
-          sha256sum HOT-261101-PROF1-app.bin | tee HOT-261101-PROF1-app.sha256
-          echo "HEATER-capable experiment with optional MANUALE/PLA/PLA+/PVB UI shortcuts (45C/6h;50C/8h;45C/8h), user-editable, never autonomous RH control. NTC90/85, existing hard R<7120ohm, TCO105 unchanged. No physical heater approval from software CI; use Arduino IDE only after separate physical safety review." >> "$GITHUB_STEP_SUMMARY"
-          cat HOT-261101-PROF1-app.sha256 >> "$GITHUB_STEP_SUMMARY"
+          sha256sum HOT-261101-LOG12-app.bin | tee HOT-261101-LOG12-app.sha256
+          echo "HEATER-capable experiment now logs the actual selected trial mode at 60s plus immediate heater/phase/fan/sensor-validity/fault changes; 12h baseline fits the 1400-record ring. If event volume exceeds space, truncation is reported. Existing NTC90/85, air, fan control, STOP, watchdog and TCO105 unchanged; no HTTP heater control, no physical heat authorization from CI." >> "$GITHUB_STEP_SUMMARY"
+          cat HOT-261101-LOG12-app.sha256 >> "$GITHUB_STEP_SUMMARY"
       - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: ATTENDED-NTC90-85-AIR55-BUILD
           path: |
-            ${{ runner.temp }}/HOT-261101-PROF1-app.bin
-            ${{ runner.temp }}/HOT-261101-PROF1-app.sha256
+            ${{ runner.temp }}/HOT-261101-LOG12-app.bin
+            ${{ runner.temp }}/HOT-261101-LOG12-app.sha256
           if-no-files-found: error
           retention-days: 30
       - name: Upload reproducible results
@@ -395,4 +406,5 @@ jobs:
             ${{ runner.temp }}/step13a-plate-diagnostic.log
             ${{ runner.temp }}/step13a-esp32-build.log
             ${{ runner.temp }}/material-presets-host.log
+            ${{ runner.temp }}/log12h-host.log
           if-no-files-found: warn
