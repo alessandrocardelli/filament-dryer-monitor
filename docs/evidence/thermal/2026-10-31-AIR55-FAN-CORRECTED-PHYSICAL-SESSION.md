@@ -1,6 +1,8 @@
 # AIR55/60min, ventola originale rimontata correttamente — seconda prova fisica del 31 ottobre 2026
 
 ## Identità, ambito e provenienza
+**Integrazione successiva dell'operatore (1 novembre 2026):** durante QUESTA prova con ventola corretta, la temperatura dell'ambiente esterno all'essiccatore era **circa 16°C** (valore approssimativo riferito a posteriori, **non** una misura indipendente strumentalmente documentata). L'AIR massima SHT45 di49,84°C corrisponde quindi a un differenziale indicativo di ~33,84°C sull'ambiente riferito, con incertezza sulla temperatura esterna reale e sul suo andamento. Una mera traslazione a ambiente25°C darebbe ~58,84°C solo come ipotesi semplificata, **non** una previsione validata: il contatto Sanwa era già89°C e il nuovo regolatore NTC90/85 potrebbe limitare il riscaldamento. Non si deducono da ciò né AIR55 garantita né protezione TCO/materiali qualificata.
+
 
 - **Esito tecnico:** prova fisica da 60 minuti completata dal timer, obiettivo AIR55 **NON raggiunto**. Dopo la correzione dell'orientamento della ventola OEM, AIR massima **49,84°C** (circa10 secondi dopo HEATER OFF); AIR all'OFF **49,82°C**. Prima prova con ventola invertita AIR max45,84°C, AIR all'OFF45,82°C; miglioramento AIR massimo circa **+4,00°C**, nelle condizioni non perfettamente identiche dei due test.
 - **Sicurezza:** la misura esterna Sanwa RD701/K su **PIASTRA vicino alla NTC** ha raggiunto **89°C** da circa40 a60 minuti; **limite manuale sperimentale85°C oltrepassato dopo20min**, nessuno STOP anticipato visibile nel CSV. Questa violazione non è un "PASS sicurezza". La misura del corpo TCO105, hotspot, temperature reali dei materiali e margini non sono disponibili.
