@@ -40,6 +40,29 @@ vm.runInContext('refreshTelemetryAge()',ctx);
 assert.equal(element('heat').textContent,'OFF'); // fresh response still allowed
 assert.match(header,/server_\.sendHeader\("Cache-Control", "no-store, no-cache, must-revalidate"\)/);
 assert.match(header,/8081\/api\/status/);
+// The detailed page uses the approved visual design of the :8081 panel.
+// Preserve all runtime IDs, the existing canvas and actual download routes.
+assert.match(header,/class="topbar"/);
+assert.match(header,/class="metrics"/);
+assert.match(header,/class="chartwrap"/);
+assert.match(header,/@media\(max-width:750px\)/);
+assert.match(header,/@media\(max-width:440px\)/);
+assert.match(header,/<canvas id="trend"[^>]*width="850" height="220"/);
+assert.match(header,/id="rows"/);
+assert.match(header,/id="events"/);
+assert.match(header,/id="ver"/);
+assert.match(header,/id="phase"/);
+assert.match(header,/id="fastdash"/);
+assert.match(header,/href="\/api\/history.csv"/);
+assert.match(header,/href="\/api\/last-test.csv"/);
+assert.match(header,/href="\/ota"/);
+assert.match(header,/if\(trialActive\)return/);
+assert.match(header,/setInterval\(history,4000\)/);
+assert.match(header,/setInterval\(events,2000\)/);
+assert.match(header,/g\.strokeStyle='#087b80'/);
+assert.match(header,/server_\.on\("\/api\/history.csv"/);
+assert.match(header,/server_\.on\("\/api\/last-test.csv"/);
+assert.match(header,/server_\.on\("\/ota", HTTP_GET/);
 assert.match(header,/log_truncated/);
 assert.match(element('fastdash').href,/8081/);
 assert.match(header,/if \(\(permitHttp \|\| uploadActive_\) && !ideOtaBusy_\)/);

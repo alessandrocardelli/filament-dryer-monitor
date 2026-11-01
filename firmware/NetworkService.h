@@ -416,41 +416,125 @@ class NetworkService {
   }
 
   static const char *dashboardHtml() {
-    return R"HTML(<!doctype html><html lang="it"><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Filament Dryer</title>
+    return R"HTML(<!doctype html><html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111e2c">
+<title>Filament Dryer | Diagnostica</title>
 <style>
-:root{font-family:system-ui,Arial;color:#17202a;background:#f3f5f7}
-body{max-width:960px;margin:20px auto;padding:0 16px}
-header{display:flex;justify-content:space-between;align-items:center;gap:10px}
-h1{font-size:1.6rem}a{color:#146b85}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
-.card{padding:18px;border-radius:12px;background:white;border:1px solid #e2e6ea}
-.value{font-size:1.9rem;font-weight:700}
-small,.sub{color:#5d6771}
-pre{white-space:pre-wrap;max-height:340px;overflow:auto;font-size:12px}
-button{padding:9px 14px}
-</style>
-<header><h1>Filament Dryer Monitor</h1><small id="net">Connessione...</small></header>
-<div class="grid">
-<div class="card">Temperatura camera (SHT45)<div class="value" id="air">--</div></div>
-<div class="card">Umidità camera (SHT45)<div class="value" id="rh">--</div></div>
-<div class="card">Resistenza piastra (NTC)<div class="value" id="ntc">--</div></div>
-<div class="card">Riscaldatore<div class="value" id="heat">--</div></div>
-<div class="card">Ventola<div class="value" id="fan">--</div></div>
-<div class="card">Test<div class="value" id="phase">--</div></div>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light;
+--ink:#172636;--muted:#607287;--line:#dfe7ed;--bg:#f0f4f7;--white:#fff;--teal:#087b80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-size:15px}
+.shell{max-width:1040px;margin:auto;padding:24px 20px 56px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;
+padding:20px 25px;border-radius:19px;background:#111e2c;color:#fff;box-shadow:0 12px 34px #142a3b18}
+.brand{display:flex;align-items:center;gap:14px;min-width:0}
+.mark{width:47px;height:47px;display:grid;place-items:center;border-radius:13px;
+background:#147c80;font-weight:800;letter-spacing:-.06em;font-size:20px;flex:none}
+.brand strong{display:block;font-size:19px;letter-spacing:-.03em}
+.brand small{display:block;color:#a8bbc8;margin-top:2px;font-size:12px}
+.header-right{display:flex;align-items:center;gap:16px;min-width:0}
+.network{color:#d5e5ed;font-size:12px;text-align:right;line-height:1.5;max-width:320px}
+.back{font-weight:700;font-size:12px;color:#fff;text-decoration:none;border:1px solid #647688;
+border-radius:9px;padding:10px 12px;white-space:nowrap}
+.back:hover{background:#273c4c}
+.section-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+margin:28px 1px 13px}.section-title h2{font-size:16px;letter-spacing:-.025em;margin:0}
+.section-title small{color:var(--muted);font-size:12px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.card{background:#fff;border:1px solid var(--line);border-radius:17px;box-shadow:0 4px 18px #23344609}
+.metric{padding:20px;min-height:134px}
+.metric.main{grid-column:span 2;background:#fff;position:relative;overflow:hidden}
+.metric.main:before{content:"";position:absolute;right:-40px;top:-60px;width:150px;
+height:150px;border-radius:50%;background:#e2f2f1}
+.kicker{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;
+font-weight:650;text-transform:uppercase;letter-spacing:.065em}
+.glyph{display:inline-grid;place-items:center;width:23px;height:23px;border-radius:7px;
+background:#e9f3f4;color:#087b80;font-size:13px}
+.value{margin-top:13px;font-size:27px;line-height:1.16;font-weight:730;
+letter-spacing:-.045em;font-variant-numeric:tabular-nums;position:relative;overflow-wrap:anywhere}
+.main .value{font-size:46px}
+.hint{color:var(--muted);font-size:12px;margin-top:9px;position:relative}
+.panel{padding:22px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;
+border-bottom:1px solid var(--line);padding-bottom:15px;margin-bottom:16px}
+.panel-head h2{font-size:17px;letter-spacing:-.025em;margin:0}
+.tag{border-radius:20px;background:#e1f4f1;color:#066a6f;font-weight:700;
+font-size:11px;padding:6px 10px;white-space:nowrap}
+.description{font-size:12px;line-height:1.6;color:var(--muted);margin:10px 0}
+.linkrow{display:flex;flex-wrap:wrap;gap:9px;margin:15px 0}
+.linkbutton{display:inline-flex;align-items:center;justify-content:center;
+text-align:center;border:1px solid #d3e3e5;color:#096d73;background:#f3fafa;
+text-decoration:none;font-weight:700;font-size:12px;border-radius:10px;min-height:42px;padding:9px 13px}
+.linkbutton:hover{background:#e1f4f1}
+.chartwrap{width:100%;overflow:hidden;background:#fafcfd;border:1px solid #e9eff3;
+border-radius:12px;padding:12px 8px 4px}
+canvas{display:block;width:100%;max-width:100%;height:auto}
+.diagnostics{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:290px;overflow:auto;
+padding:15px;border-radius:11px;background:#f5f8fa;border:1px solid #e5edf2;
+color:#304455;font-size:11px;line-height:1.55;font-variant-numeric:tabular-nums}
+details{margin-top:15px}
+summary{font-size:13px;font-weight:700;color:#096d73;cursor:pointer}
+.panel-meta{font-size:12px;color:var(--muted);line-height:1.6;overflow-wrap:anywhere}
+.footer{color:var(--muted);font-size:11px;line-height:1.65;margin-top:22px}
+@media(max-width:750px){.shell{padding:12px 12px 32px}.topbar{padding:16px;border-radius:14px}
+.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.metric.main{grid-column:span 1}.metric{padding:16px;min-height:117px}
+.main .value{font-size:32px}.value{font-size:23px}.panel{padding:17px}
+.diagnostics{grid-template-columns:1fr}.header-right{gap:9px}.network{max-width:190px}}
+@media(max-width:440px){.mark{width:39px;height:39px;font-size:17px}
+.brand{gap:10px}.brand strong{font-size:16px}.brand small{font-size:10px}
+.header-right{flex-direction:column-reverse;align-items:flex-end;gap:6px}
+.network{font-size:10px;max-width:145px}.back{font-size:10px;padding:7px 9px}
+.main .value{font-size:30px}.kicker{font-size:10px}}
+</style></head><body><main class="shell">
+<header class="topbar"><div class="brand"><span class="mark" aria-hidden="true">FD</span>
+<div><strong>Filament Dryer</strong><small>DIAGNOSTICA / ESP32</small></div></div>
+<div class="header-right"><div class="network" id="net" aria-live="polite">Connessione...</div>
+<a id="fastdash" class="back" href="#">Pannello rapido</a></div></header>
+<div class="section-title"><h2>Panoramica</h2><small>Telemetria in tempo reale</small></div>
+<section class="metrics" aria-label="Misure essiccatore">
+<div class="card metric main"><div class="kicker"><span class="glyph">°</span>Temperatura aria</div>
+<div class="value" id="air">--</div><div class="hint">SHT45 · camera di essiccazione</div></div>
+<div class="card metric main"><div class="kicker"><span class="glyph">%</span>Umidità relativa</div>
+<div class="value" id="rh">--</div><div class="hint">SHT45 · camera di essiccazione</div></div>
+<div class="card metric"><div class="kicker"><span class="glyph">Ω</span>NTC piastra</div>
+<div class="value" id="ntc">--</div><div class="hint">Resistenza misurata</div></div>
+<div class="card metric"><div class="kicker"><span class="glyph">H</span>Riscaldatore</div>
+<div class="value" id="heat">--</div><div class="hint">Stato del comando</div></div>
+<div class="card metric"><div class="kicker"><span class="glyph">F</span>Ventola</div>
+<div class="value" id="fan">--</div><div class="hint">Percentuale comandata</div></div>
+<div class="card metric"><div class="kicker"><span class="glyph">C</span>Fase del ciclo</div>
+<div class="value" id="phase">--</div><div class="hint">Stato del controllo</div></div>
+</section>
+<div class="section-title"><h2>Storico e grafico</h2><small>Registro RAM e CSV</small></div>
+<section class="card panel">
+<div class="panel-head"><h2>Andamento temperatura aria</h2><span class="tag">SHT45</span></div>
+<p class="description">Andamento dei campioni registrati. Il grafico si aggiorna quando il
+servizio HTTP principale è disponibile; durante il riscaldamento lo storico può restare sospeso.</p>
+<div class="chartwrap"><canvas id="trend" width="850" height="220" role="img"
+aria-label="Grafico temperatura aria registrata nel tempo"></canvas></div>
+<div class="linkrow">
+<a class="linkbutton" href="/api/history.csv">Esporta campioni CSV</a>
+<a class="linkbutton" href="/api/last-test.csv">Ultimo test salvato</a>
+<a class="linkbutton" href="/ota">Aggiornamento OTA</a>
 </div>
-<p class="sub">SHT45: temperatura e umidità dell'aria nella camera. NTC: resistenza del sensore incorporato nel riscaldatore; temperatura locale non ancora validata. Non confrontare direttamente le due temperature.</p>
-<p class="sub">Le misure live arrivano dal servizio di sola lettura sulla porta 8081, separato dal controllo di sicurezza. In caso di perdita del collegamento vengono indicate come NON AGGIORNATE. CSV e OTA mantengono le normali restrizioni.</p>
-<p><a id="fastdash" href="#">Apri il pannello rapido (porta 8081)</a></p>
-<p id="ver" class="sub"></p>
-<div class="card"><h2>Misure live (CSV, memoria RAM)</h2>
-<p><a href="/api/history.csv">Scarica campioni live</a> ·
-<a href="/api/last-test.csv">Scarica ultimo test salvato</a> ·
-<a href="/ota">Aggiorna firmware OTA</a></p>
-<canvas id="trend" width="850" height="220" style="width:100%;max-width:850px"></canvas>
-<pre id="rows">...</pre>
-<h3>Console eventi</h3><pre id="events">...</pre></div>
+<div id="ver" class="panel-meta"></div>
+<details><summary>Ultimi campioni CSV (dati grezzi)</summary>
+<pre id="rows">...</pre></details>
+</section>
+<div class="section-title"><h2>Diagnostica</h2><small>Eventi e messaggi</small></div>
+<section class="card panel">
+<div class="panel-head"><h2>Console eventi</h2><span class="tag">LOG</span></div>
+<pre id="events">...</pre>
+<p class="description">I valori NTC sono resistenze, non temperature della piastra.
+La temperatura AIR è quella del sensore SHT45. Il grafico non sostituisce le
+protezioni locali del riscaldatore.</p>
+</section>
+<footer class="footer">Filament Dryer Monitor · Dati in sola lettura nella pagina diagnostica.
+I comandi ciclo e STOP sono disponibili sul pannello rapido; gli aggiornamenti OTA
+mantengono le limitazioni del firmware.</footer>
+</main>
 <script>
 const $=x=>document.getElementById(x);
 // During heater ON the device deliberately does not service HTTP. Polling
@@ -531,7 +615,7 @@ async function history(){
  if(max<=min)max=min+1;
  g.strokeStyle='#d5dce3';g.beginPath();g.moveTo(35,12);g.lineTo(35,200);g.lineTo(830,200);g.stroke();
  g.fillStyle='#52626c';g.font='12px sans-serif';g.fillText(max+' °C',3,20);g.fillText(min+' °C',3,200);
- g.strokeStyle='#08769a';g.lineWidth=2;g.beginPath();
+ g.strokeStyle='#087b80';g.lineWidth=2;g.beginPath();
  vals.forEach((v,i)=>{let x=35+(795*i/(vals.length-1)),y=200-180*(v-min)/(max-min);if(!i)g.moveTo(x,y);else g.lineTo(x,y)});g.stroke();
  }catch(e){}
 }

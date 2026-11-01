@@ -1,4 +1,4 @@
-name: "HOT-261101-UI2 responsive dashboard and unchanged LAN/HEATER controls"
+name: "HOT-261101-UI3 matched detailed dashboard and preserved controls"
 
 on:
   push:
@@ -93,16 +93,16 @@ jobs:
           assert "kCapacity = 1400;" in Path("firmware/ThermalLog.h").read_text()
           assert "ntcHardTripOhms = 40000.0f;" not in h
           assert "ntcSoftPauseOhms = 45000.0f;" not in h
-          assert '"HOT-261101-UI2"' in Path("firmware/FirmwareBuild.h").read_text()
-          assert '"H01-UI2"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"HOT-261101-UI3"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"H01-UI3"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
           assert "display_.drawStr(20, 44, FirmwareBuild::kId)" in ui
           assert 'display_.drawStr(2, 44, "FW")' in ui
           assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
           assert 2 + 6*len("FW") < 20
-          assert 20 + 6 * len("HOT-261101-UI2") <= 128
-          assert 78 + 6 * len("H01-UI2") <= 128
+          assert 20 + 6 * len("HOT-261101-UI3") <= 128
+          assert 78 + 6 * len("H01-UI3") <= 128
           print("PASS: active attended heater 90/85 profile; production approvals remain false")
           PY
       - name: Verify telemetry and no live CSV streaming while heater may run
@@ -414,20 +414,20 @@ jobs:
           app="$out/firmware.ino.bin"
           test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
           # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
-          grep -a -q 'HOT-261101-UI2' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
-          cp "$app" "$RUNNER_TEMP/HOT-261101-UI2-app.bin"
+          grep -a -q 'HOT-261101-UI3' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
+          cp "$app" "$RUNNER_TEMP/HOT-261101-UI3-app.bin"
           cd "$RUNNER_TEMP"
-          sha256sum HOT-261101-UI2-app.bin | tee HOT-261101-UI2-app.sha256
+          sha256sum HOT-261101-UI3-app.bin | tee HOT-261101-UI3-app.sha256
           echo "HEATER-capable experiment now logs the actual selected trial mode at 60s plus immediate heater/phase/fan/sensor-validity/fault changes; 12h baseline fits the 1400-record ring. If event volume exceeds space, truncation is reported. Existing NTC90/85, air, fan control, STOP, watchdog and TCO105 unchanged; authenticated remote settings in STANDBY and asynchronous STOP in Drying via LAN port8081; NO remote START, no physical heat authorization from CI." >> "$GITHUB_STEP_SUMMARY"
-          cat HOT-261101-UI2-app.sha256 >> "$GITHUB_STEP_SUMMARY"
+          cat HOT-261101-UI3-app.sha256 >> "$GITHUB_STEP_SUMMARY"
       - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: ATTENDED-NTC90-85-AIR55-BUILD
           path: |
-            ${{ runner.temp }}/HOT-261101-UI2-app.bin
-            ${{ runner.temp }}/HOT-261101-UI2-app.sha256
+            ${{ runner.temp }}/HOT-261101-UI3-app.bin
+            ${{ runner.temp }}/HOT-261101-UI3-app.sha256
           if-no-files-found: error
           retention-days: 30
       - name: Upload reproducible results
