@@ -21,45 +21,126 @@ struct LiveTelemetryServer::Internal {
   RemoteControlPolicy::Settings requested{};
 };
 
-static const char kLivePage[] = R"HTML(<!doctype html><html lang="it">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Filament Dryer - Controllo</title>
+static const char kLivePage[] = R"HTML(<!doctype html><html lang="it"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111e2c">
+<title>Filament Dryer | Monitor</title>
 <style>
-body{font-family:system-ui;margin:1.2rem auto;padding:0 1rem;max-width:690px;color:#223;background:#f5f7f8}
-h1{font-size:1.5rem}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{padding:16px;background:white;border-radius:10px}.value{font-size:1.55rem;font-weight:700}
-small{color:#52606d}label{display:block;margin:.8rem 0}input,select{padding:.55rem;font-size:1rem;max-width:100%;box-sizing:border-box}
-button{padding:.65rem 1rem;font-size:1rem;margin:.5rem .4rem .5rem 0;border:0;border-radius:6px;background:#22516e;color:white}
-button:disabled{opacity:.5}#stop{background:#a02121}#result{min-height:1.5rem}
-</style></head><body>
-<h1>Filament Dryer</h1><p id="age">Connessione...</p>
-<div class="grid">
-<div class="card">Aria<div class="value" id="air">--</div></div>
-<div class="card">Umidita<div class="value" id="rh">--</div></div>
-<div class="card">NTC piastra<div class="value" id="ntc">--</div></div>
-<div class="card">Riscaldatore<div class="value" id="heat">--</div></div>
-<div class="card">Ventola<div class="value" id="fan">--</div></div>
-<div class="card">Ciclo<div class="value" id="cycle">--</div></div>
-</div>
-<div class="card" style="margin-top:12px">
-<h2>Comandi in rete locale</h2>
-<small>Le impostazioni possono cambiare solo in STANDBY, senza raffreddamento.
-STOP è disponibile durante un ciclo. Nessun avvio remoto.</small>
-<label>Password amministratore (quella gia usata per OTA)
-<input id="password" type="password" autocomplete="off" maxlength="63"></label>
-<label>Profilo
-<select id="profile"><option value="0">Manuale</option><option value="1">PLA</option><option value="2">PLA+</option><option value="3">PVB</option></select></label>
-<label>Temperatura aria (40-55 C)
-<input id="temp" type="number" min="40" max="55" step="1"></label>
-<label>Durata (minuti, multipli di 15, massimo 720)
-<input id="duration" type="number" min="15" max="720" step="15"></label>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light;
+--ink:#172636;--muted:#607287;--line:#dfe7ed;--bg:#f0f4f7;--white:#fff;
+--teal:#087b80;--tealLight:#e1f4f1;--red:#ac3443}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-size:15px}
+.shell{max-width:1040px;margin:auto;padding:24px 20px 56px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:20px;
+padding:20px 25px;border-radius:19px;background:#111e2c;color:#fff;box-shadow:0 12px 34px #142a3b18}
+.brand{display:flex;align-items:center;gap:14px}.mark{width:47px;height:47px;
+display:grid;place-items:center;border-radius:13px;background:#147c80;font-weight:800;
+letter-spacing:-.06em;font-size:20px}.brand strong{display:block;font-size:19px;letter-spacing:-.03em}
+.brand small{display:block;color:#a8bbc8;margin-top:2px;font-size:12px}
+.net{min-width:155px;text-align:right}.net strong{display:block;font-size:13px}
+.net small{color:#9fb1bf;font-size:12px}.dot{display:inline-block;width:8px;height:8px;
+border-radius:50%;background:#ffc475;margin-right:5px}
+h2{font-size:16px;letter-spacing:-.025em;margin:0}.section-title{display:flex;
+align-items:baseline;justify-content:space-between;gap:12px;margin:28px 1px 13px}
+.section-title small{color:var(--muted);font-size:12px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:17px;
+box-shadow:0 4px 18px #23344609}
+.metric{padding:20px;min-height:134px}.metric.main{grid-column:span 2;background:#fff;
+position:relative;overflow:hidden}.metric.main:before{content:"";position:absolute;
+right:-40px;top:-60px;width:150px;height:150px;border-radius:50%;background:#e2f2f1}
+.kicker{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;font-weight:650;
+text-transform:uppercase;letter-spacing:.065em}.glyph{display:inline-grid;place-items:center;
+width:23px;height:23px;border-radius:7px;background:#e9f3f4;color:#087b80;font-size:13px}
+.value{margin-top:13px;font-size:27px;line-height:1.16;font-weight:730;letter-spacing:-.045em;
+font-variant-numeric:tabular-nums;position:relative}.main .value{font-size:46px}
+.hint{color:var(--muted);font-size:12px;margin-top:9px;position:relative}
+.workspace{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(275px,1fr);gap:14px}
+.panel{padding:23px}.panel-head{display:flex;align-items:start;justify-content:space-between;gap:8px;
+border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:16px}
+.panel-head p{margin:5px 0 0;font-size:12px;color:var(--muted);line-height:1.5}
+.tag{border-radius:20px;background:var(--tealLight);color:#066a6f;font-weight:700;
+font-size:11px;padding:6px 10px;white-space:nowrap}
+.field{display:block;color:#4d6376;font-size:12px;font-weight:650;margin-bottom:13px}
+.field select,.field input{display:block;width:100%;border:1px solid #d4dee6;
+border-radius:10px;padding:11px 12px;background:#fbfcfd;color:var(--ink);font:inherit;
+font-size:15px;margin-top:6px;min-height:44px}
+.field input:focus,.field select:focus{outline:2px solid #68afb0;outline-offset:1px;
+border-color:var(--teal)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+button{font:inherit;border:0;border-radius:10px;min-height:46px;padding:10px 16px;
+font-weight:700;cursor:pointer;transition:filter .15s,transform .15s}
+button:hover:enabled{filter:brightness(.94)}button:active:enabled{transform:translateY(1px)}
+button:disabled{opacity:.5;cursor:not-allowed}
+#save{width:100%;background:var(--teal);color:#fff}
+#stop{width:100%;background:#b43746;color:#fff;font-size:16px;margin:12px 0}
+.stophint{font-size:12px;color:var(--muted);line-height:1.55;margin:0}
+.status-line{margin:13px 0 0;border-radius:9px;background:#f2f6f8;padding:10px 11px;
+font-size:12px;min-height:36px;color:#496176;overflow-wrap:anywhere}
+.info{font-size:12px;color:var(--muted);line-height:1.65;margin-top:16px}
+.details{border-top:1px solid var(--line);padding-top:13px;margin-top:15px}
+.details a{font-weight:700;color:#087b80;text-decoration:none}
+.details a:hover{text-decoration:underline}
+.footer{margin-top:18px;color:#708195;font-size:11px;line-height:1.55}
+@media(max-width:750px){.shell{padding:12px 12px 34px}.topbar{padding:16px;
+border-radius:14px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.metric.main{grid-column:span 1}.metric{padding:16px;min-height:117px}
+.main .value{font-size:32px}.value{font-size:23px}
+.workspace{grid-template-columns:1fr}.panel{padding:18px}.section-title{margin-top:23px}}
+@media(max-width:440px){.mark{width:39px;height:39px;font-size:17px}.brand{gap:10px}
+.brand strong{font-size:16px}.brand small{font-size:10px}
+.net{min-width:0}.net strong{font-size:11px}.net small{font-size:10px}
+.metric.main .value{font-size:30px}.kicker{font-size:10px}.field-row{gap:9px}}
+@media(prefers-reduced-motion:reduce){button{transition:none}}
+</style></head><body><main class="shell">
+<header class="topbar"><div class="brand"><span class="mark" aria-hidden="true">FD</span>
+<div><strong>Filament Dryer</strong><small>MONITOR / ESP32</small></div></div>
+<div class="net"><strong><span class="dot" id="connectionDot"></span><span id="connection">Connessione...</span></strong>
+<small id="age" aria-live="polite">Attesa dati</small></div></header>
+<div class="section-title"><h2>Panoramica</h2><small>Dati in tempo reale</small></div>
+<section class="metrics" aria-label="Stato essiccatore">
+<div class="card metric main"><div class="kicker"><span class="glyph">°</span>Temperatura aria</div>
+<div class="value" id="air">--</div><div class="hint">Sensore camera SHT45</div></div>
+<div class="card metric main"><div class="kicker"><span class="glyph">%</span>Umidità relativa</div>
+<div class="value" id="rh">--</div><div class="hint">Sensore camera SHT45</div></div>
+<div class="card metric"><div class="kicker"><span class="glyph">Ω</span>NTC piastra</div>
+<div class="value" id="ntc">--</div><div class="hint">Resistenza, non temperatura</div></div>
+<div class="card metric"><div class="kicker"><span class="glyph">H</span>Riscaldatore</div>
+<div class="value" id="heat">--</div><div class="hint">Comando elettronico</div></div>
+<div class="card metric"><div class="kicker"><span class="glyph">F</span>Ventola</div>
+<div class="value" id="fan">--</div><div class="hint">Percentuale comandata</div></div>
+<div class="card metric"><div class="kicker"><span class="glyph">C</span>Stato ciclo</div>
+<div class="value" id="cycle">--</div><div class="hint">Protezione locale indipendente</div></div>
+</section>
+<div class="section-title"><h2>Gestione</h2><small>Rete locale</small></div>
+<section class="workspace">
+<div class="card panel"><div class="panel-head"><div><h2>Impostazioni ciclo</h2>
+<p>Modificabili soltanto in STANDBY, senza raffreddamento in corso.</p></div>
+<span class="tag">PROFILI</span></div>
+<label class="field">Materiale
+<select id="profile"><option value="0">Manuale</option><option value="1">PLA</option>
+<option value="2">PLA+</option><option value="3">PVB</option></select></label>
+<div class="field-row"><label class="field">Temperatura aria (°C)
+<input id="temp" type="number" min="40" max="55" step="1" inputmode="numeric"></label>
+<label class="field">Durata (minuti)
+<input id="duration" type="number" min="15" max="720" step="15" inputmode="numeric"></label></div>
 <button type="button" id="save" disabled>Salva impostazioni</button>
-<button type="button" id="stop" disabled>STOP ciclo</button>
-<p id="result"></p>
-<small>I comandi sono inviati tramite HTTP solo nella rete Wi-Fi fidata.
-Non aprire porte del router verso Internet. Per fuori casa usare VPN.
-La password non viene memorizzata nel browser.</small>
-</div><p><a href="http://filament-dryer.local/">Dashboard storica, CSV e OTA</a></p>
+<div class="status-line" id="result" role="status" aria-live="polite">Nessun comando inviato.</div>
+</div>
+<div class="card panel"><div class="panel-head"><div><h2>Accesso e arresto</h2>
+<p>Usa la stessa password amministratore configurata per OTA.</p></div>
+<span class="tag">LAN</span></div>
+<label class="field">Password amministratore
+<input id="password" type="password" autocomplete="off" maxlength="63" placeholder="Password OTA"></label>
+<button type="button" id="stop" disabled>Interrompi ciclo (STOP)</button>
+<p class="stophint">Disponibile durante un ciclo. Non è presente alcuna funzione di avvio remoto.</p>
+<div class="details"><a id="historyLink" href="http://filament-dryer.local/">Storico, CSV e OTA</a></div>
+<p class="info">Comandi consentiti solo sulla tua rete privata. La password non viene salvata dal browser.
+Non esporre l'ESP32 direttamente a Internet: per accessi esterni usa una VPN.</p>
+</div></section>
+<footer class="footer">Il valore NTC è espresso in ohm. Le letture web non sostituiscono le protezioni del dispositivo.
+<span id="notes"></span></footer>
+</main>
 <script>
 'use strict';
 const el=id=>document.getElementById(id);
@@ -127,7 +208,8 @@ async function refresh(){
   el('heat').textContent=d.heater_command?'ON':'OFF';
   el('fan').textContent=d.fan_percent+'%';
   el('cycle').textContent=d.fault?'FAULT':d.cycle?'IN CORSO':'FERMO';
-  el('notes');
+  el('connection').textContent=d.fault?'GUASTO':d.cycle?'Ciclo attivo':'Connesso';
+  el('connectionDot').style.background=d.fault?'#ef7676':d.cycle?'#7fdec2':'#7fdec2';
   if(syncPending){syncPending=false;editing=false;}
   setInputs(d);
   el('save').disabled=!d.can_edit;
@@ -137,6 +219,8 @@ async function refresh(){
  }catch(e){}finally{
   clearTimeout(timer);
   if(Date.now()-last>2500){
+   el('connection').textContent='Non aggiornato';
+   el('connectionDot').style.background='#ffc475';
    el('age').textContent='Collegamento NON AGGIORNATO';
    el('heat').textContent='NON AGGIORNATO';
    el('save').disabled=true;el('stop').disabled=true;

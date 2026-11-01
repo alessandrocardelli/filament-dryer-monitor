@@ -11,7 +11,7 @@ const script=html.match(/<script>([\s\S]*?)<\/script>/);
 assert.ok(script,'Inline script missing');
 new vm.Script(script[1],{filename:'remote-dashboard.js'});
 const els={};
-const get=id=>els[id]||(els[id]={value:'',textContent:'',disabled:false,handlers:{},
+const get=id=>els[id]||(els[id]={value:'',textContent:'',disabled:false,style:{},handlers:{},
   addEventListener:function(type,fn){this.handlers[type]=fn;}});
 const ctx=vm.createContext({
  document:{getElementById:get},
@@ -27,6 +27,18 @@ assert.equal(get('temp').value,50);
 assert.equal(get('duration').value,480);
 get('temp').value='51';get('temp').handlers.input();
 assert.equal(get('profile').value,'0'); // manual override
+assert.match(html,/class="topbar"/);
+assert.match(html,/class="metrics"/);
+assert.match(html,/class="workspace"/);
+assert.match(html,/@media\(max-width:750px\)/);
+assert.match(html,/@media\(max-width:440px\)/);
+assert.match(html,/name="viewport"/);
+assert.match(html,/id="connectionDot"/);
+assert.match(html,/id="historyLink"/);
+assert.ok(html.length<17000,'Keep fixed ESP32 HTML lightweight');
+for(const id of ['air','rh','ntc','heat','fan','cycle','profile',
+  'temp','duration','save','stop','password','result','age'])
+  assert.match(html,new RegExp('id="'+id+'"'),'Missing '+id);
 assert.match(src,/stop\.uri="\/api\/stop"/);
 assert.match(src,/set\.uri="\/api\/settings"/);
 assert.doesNotMatch(src,/\.uri="\/api\/start"/);
