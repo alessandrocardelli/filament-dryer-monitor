@@ -5,6 +5,6 @@
 namespace FirmwareBuild {
 constexpr char kId[] = "HOT-261101-PROF1";
 constexpr char kShortId[] = "H01-PROF";
-constexpr char kMode[] = "NTC90/85 + USER PROFILES";
+constexpr char kMode[] = "NTC90/85 PROFILES";
 constexpr unsigned long kSplashExtraMs = 3000UL;
 }  // namespace FirmwareBuild
