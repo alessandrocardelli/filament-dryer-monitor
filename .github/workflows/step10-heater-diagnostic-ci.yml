@@ -94,7 +94,7 @@ jobs:
           assert "ntcHardTripOhms = 40000.0f;" not in h
           assert "ntcSoftPauseOhms = 45000.0f;" not in h
           assert '"HOT-261101-LOG12"' in Path("firmware/FirmwareBuild.h").read_text()
-          assert '"H01-PROF"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"H01-L12"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
           assert "display_.drawStr(20, 44, FirmwareBuild::kId)" in ui
@@ -102,7 +102,7 @@ jobs:
           assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
           assert 2 + 6*len("FW") < 20
           assert 20 + 6 * len("HOT-261101-LOG12") <= 128
-          assert 78 + 6 * len("H30-SNW") <= 128
+          assert 78 + 6 * len("H01-L12") <= 128
           print("PASS: active attended heater 90/85 profile; production approvals remain false")
           PY
       - name: Verify telemetry and no live CSV streaming while heater may run

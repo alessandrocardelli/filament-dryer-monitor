@@ -4,7 +4,7 @@
 // Do not derive it from __DATE__ (two different builds may look identical).
 namespace FirmwareBuild {
 constexpr char kId[] = "HOT-261101-LOG12";
-constexpr char kShortId[] = "H01-LOG12";
+constexpr char kShortId[] = "H01-L12";
 constexpr char kMode[] = "NTC90/85 12H LOG";
 constexpr unsigned long kSplashExtraMs = 3000UL;
 }  // namespace FirmwareBuild
