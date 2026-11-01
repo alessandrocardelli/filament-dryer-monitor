@@ -245,16 +245,16 @@ class Ui {
         ? "ATTENDED AIR40-55" : "AIR 40-55  HEAT LOCK");
     display_.drawHLine(0, 12, 128);
 
-    char temp[22];
-    char time[22];
-    snprintf(temp, sizeof(temp), "TEMP        %d °C", settings.targetTempC);
-    snprintf(time, sizeof(time), "TIME        %02u:%02u",
-             settings.durationMinutes / 60,
-              settings.durationMinutes % 60);
-    drawSelectableRow(15, temp, selected == SetupField::Temperature);
-    drawSelectableRow(31, time, selected == SetupField::Duration);
-    drawSelectableRow(47, AppConfig::kHeaterStep09TrialMode
-        ? "FAN          100%" : "FAN          100%", selected == SetupField::Fan);
+    char profile[22], temp[22], time[22];
+    snprintf(profile,sizeof(profile),"PROFILO     %s",
+             MaterialPresets::label(settings.material));
+    snprintf(temp,sizeof(temp),"TEMP        %d C",settings.targetTempC);
+    snprintf(time,sizeof(time),"DURATA      %02u:%02u",
+             static_cast<unsigned>(settings.durationMinutes/60),
+             static_cast<unsigned>(settings.durationMinutes%60));
+    drawSelectableRow(15,profile,selected==SetupField::Profile);
+    drawSelectableRow(31,temp,selected==SetupField::Temperature);
+    drawSelectableRow(47,time,selected==SetupField::Duration);
   }
 
   void drawSettings(SettingsField selected,
@@ -312,7 +312,11 @@ class Ui {
           HeaterCommissioning::Phase::Cooldown)
         snprintf(target, sizeof(target), "COOLING %lu s",
             static_cast<unsigned long>(coolingSecondsLeft));
-      else snprintf(target, sizeof(target), "AIR %dC NTC90/85", settings.targetTempC);
+      else if(settings.material==MaterialProfile::Manual)
+        snprintf(target,sizeof(target),"AIR %dC NTC90/85",settings.targetTempC);
+      else
+        snprintf(target,sizeof(target),"%s AIR%d NTC90/85",
+                 MaterialPresets::label(settings.material),settings.targetTempC);
     } else if (AppConfig::kHeaterCommissioningMode) {
       if (static_cast<HeaterCommissioning::Phase>(pulsePhase) ==
           HeaterCommissioning::Phase::Cooldown) {

@@ -1,5 +1,6 @@
 #pragma once
 #include <Arduino.h>
+#include "MaterialPresets.h"
 
 enum class AppState : uint8_t {
   Boot,
@@ -12,9 +13,9 @@ enum class AppState : uint8_t {
 };
 
 enum class SetupField : uint8_t {
+  Profile,
   Temperature,
   Duration,
-  Fan,
 };
 
 enum class SettingsField : uint8_t {
@@ -39,6 +40,7 @@ enum class NtcFault : uint8_t {
 struct CycleSettings {
   int16_t targetTempC = 55;
   uint16_t durationMinutes = 240;
+  MaterialProfile material = MaterialProfile::Manual; // label, no heater authority
 };
 
 struct PersistentSettings {

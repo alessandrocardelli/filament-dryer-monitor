@@ -22,6 +22,8 @@ class SettingsStore {
         prefs_.getShort("tempC", settings.cycle.targetTempC);
     settings.cycle.durationMinutes =
         prefs_.getUShort("durMin", settings.cycle.durationMinutes);
+    // Backwards compatible with existing schema 1: missing key is MANUALE.
+    settings.cycle.material = MaterialPresets::fromStored(prefs_.getUChar("mat", 0));
 
     uint8_t volume = prefs_.getUChar(
         "buzzVol", static_cast<uint8_t>(settings.buzzerVolume));
@@ -48,6 +50,7 @@ class SettingsStore {
     prefs_.putUShort("schema", AppConfig::kSettingsSchemaVersion);
     prefs_.putShort("tempC", settings.cycle.targetTempC);
     prefs_.putUShort("durMin", settings.cycle.durationMinutes);
+    prefs_.putUChar("mat", static_cast<uint8_t>(settings.cycle.material));
     prefs_.putUChar("buzzVol", static_cast<uint8_t>(settings.buzzerVolume));
     prefs_.putBool("keyClick", settings.keyClick);
 
@@ -62,6 +65,8 @@ class SettingsStore {
   PersistentSettings cached_{};
 
   static void clamp(PersistentSettings &settings) {
+    settings.cycle.material = MaterialPresets::fromStored(
+        static_cast<uint8_t>(settings.cycle.material));
     settings.cycle.targetTempC = constrain(
         settings.cycle.targetTempC,
         AppConfig::kPrototypeTempMinC,
@@ -77,6 +82,7 @@ class SettingsStore {
                     const PersistentSettings &b) {
     return a.cycle.targetTempC == b.cycle.targetTempC &&
            a.cycle.durationMinutes == b.cycle.durationMinutes &&
+           a.cycle.material == b.cycle.material &&
            a.buzzerVolume == b.buzzerVolume &&
            a.keyClick == b.keyClick;
   }

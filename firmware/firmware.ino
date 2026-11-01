@@ -38,7 +38,7 @@ NetworkService network(thermalLog);
 LiveTelemetryServer liveTelemetry;
 
 AppState appState = AppState::Boot;
-SetupField setupField = SetupField::Temperature;
+SetupField setupField = SetupField::Profile;
 SettingsField settingsField = SettingsField::BuzzerVolume;
 PersistentSettings settings;
 
@@ -114,7 +114,9 @@ static void enterState(AppState next, uint32_t nowMs) {
       // Legacy STEP13 trial remains available in archived history only;
       // current V1 source runs user-configured 40..55C and 15min..12h.
       settingsStore.save(settings);
-      cycle.start(settings.cycle, nowMs); // user-selected air temperature/time
+      Serial.print("CYCLE PROFILE: ");
+      Serial.println(MaterialPresets::label(settings.cycle.material));
+      cycle.start(settings.cycle, nowMs); // selected time/temp, safety unchanged
       fan.startAuto(nowMs);
       buzzer.playCycleStart(nowMs);
       if (AppConfig::kHeaterCommissioningMode) {
@@ -161,9 +163,9 @@ static void enterState(AppState next, uint32_t nowMs) {
 
 static void selectNextSetupField() {
   switch (setupField) {
+    case SetupField::Profile: setupField = SetupField::Temperature; break;
     case SetupField::Temperature: setupField = SetupField::Duration; break;
-    case SetupField::Duration: setupField = SetupField::Fan; break;
-    case SetupField::Fan: setupField = SetupField::Temperature; break;
+    case SetupField::Duration: setupField = SetupField::Profile; break;
   }
 }
 
@@ -174,6 +176,22 @@ static void selectNextSettingsField() {
 }
 
 static void adjustSetup(int8_t direction) {
+  if (setupField == SetupField::Profile) {
+    const MaterialProfile profile=MaterialPresets::next(settings.cycle.material,direction);
+    settings.cycle.material=profile;
+    const auto preset=MaterialPresets::suggestion(profile);
+    if (profile!=MaterialProfile::Manual) {
+      settings.cycle.targetTempC=constrain(preset.airTargetC,
+          AppConfig::kPrototypeTempMinC,AppConfig::kPrototypeTempMaxC);
+      settings.cycle.durationMinutes=static_cast<uint16_t>(constrain(
+          static_cast<int32_t>(preset.durationMinutes),
+          static_cast<int32_t>(AppConfig::kPrototypeDurationMinMinutes),
+          static_cast<int32_t>(AppConfig::kPrototypeDurationMaxMinutes)));
+    }
+    // MANUALE retains previous target/time, including saved legacy settings.
+    // Applying a preset NEVER starts the cycle or touches the safety controller.
+    return;
+  }
   if (setupField == SetupField::Temperature) {
     const int16_t next =
         settings.cycle.targetTempC +
@@ -181,6 +199,7 @@ static void adjustSetup(int8_t direction) {
     settings.cycle.targetTempC =
         constrain(next, AppConfig::kPrototypeTempMinC,
                   AppConfig::kPrototypeTempMaxC);
+    settings.cycle.material=MaterialProfile::Manual; // modified preset is a manual cycle
   } else if (setupField == SetupField::Duration) {
     const int32_t next =
         static_cast<int32_t>(settings.cycle.durationMinutes) +
@@ -190,6 +209,7 @@ static void adjustSetup(int8_t direction) {
         next,
         static_cast<int32_t>(AppConfig::kPrototypeDurationMinMinutes),
         static_cast<int32_t>(AppConfig::kPrototypeDurationMaxMinutes)));
+    settings.cycle.material=MaterialProfile::Manual; // modified preset is a manual cycle
   }
 }
 
@@ -231,7 +251,7 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
 
     case AppState::Standby:
       if (id == ButtonId::Mode && type == ButtonEventType::ShortPress) {
-        setupField = SetupField::Temperature;
+        setupField = SetupField::Profile;
         enterState(AppState::Setup, nowMs);
       } else if (id == ButtonId::Mode &&
                  type == ButtonEventType::LongPress) {

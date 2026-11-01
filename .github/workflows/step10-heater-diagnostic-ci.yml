@@ -1,4 +1,4 @@
-name: "HOT-261031-N9085 attended continuous NTC90/85 AIR control watchdog"
+name: "HOT-261101-PROF1 user material profiles + preserved NTC90/85"
 
 on:
   push:
@@ -93,15 +93,15 @@ jobs:
           assert "kCapacity = 1400;" in Path("firmware/ThermalLog.h").read_text()
           assert "ntcHardTripOhms = 40000.0f;" not in h
           assert "ntcSoftPauseOhms = 45000.0f;" not in h
-          assert '"HOT-261031-N9085"' in Path("firmware/FirmwareBuild.h").read_text()
-          assert '"H31-9085"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"HOT-261101-PROF1"' in Path("firmware/FirmwareBuild.h").read_text()
+          assert '"H01-PROF"' in Path("firmware/FirmwareBuild.h").read_text()
           assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
           ui=Path("firmware/Ui.h").read_text()
           assert "display_.drawStr(20, 44, FirmwareBuild::kId)" in ui
           assert 'display_.drawStr(2, 44, "FW")' in ui
           assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
           assert 2 + 6*len("FW") < 20
-          assert 20 + 6 * len("HOT-261031-N9085") <= 128
+          assert 20 + 6 * len("HOT-261101-PROF1") <= 128
           assert 78 + 6 * len("H30-SNW") <= 128
           print("PASS: active attended heater 90/85 profile; production approvals remain false")
           PY
@@ -313,6 +313,42 @@ jobs:
           assert "feedback_{HeaterStep09AirFeedback::attendedSanwa90_85Parameters()}" in Path("firmware/SafetyController.h").read_text()
           print("PASS: separate async read-only telemetry; old OTA interlock and heater profile unchanged")
           PY
+      - name: V1 material shortcuts, legacy settings and UI (HOST ONLY)
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_material_presets.cpp -o "$RUNNER_TEMP/material-presets-host"
+          "$RUNNER_TEMP/material-presets-host" | tee "$RUNNER_TEMP/material-presets-host.log"
+          python3 - <<'PY'
+          from pathlib import Path
+          ino=Path("firmware/firmware.ino").read_text()
+          ui=Path("firmware/Ui.h").read_text()
+          s=Path("firmware/SettingsStore.h").read_text()
+          a=Path("firmware/AppTypes.h").read_text()
+          p=Path("firmware/MaterialPresets.h").read_text()
+          cfg=Path("firmware/AppConfig.h").read_text()
+          safety=Path("firmware/SafetyController.h").read_text()
+          assert "enum class SetupField" in a and "  Profile," in a
+          assert "enum class MaterialProfile" in p and 'return "MANUALE"' in p
+          assert 'prefs_.getUChar("mat", 0)' in s
+          assert 'prefs_.putUChar("mat", static_cast<uint8_t>(settings.cycle.material))' in s
+          assert "kSettingsSchemaVersion = 1" in cfg, "Do not erase existing NVS on migration"
+          assert "settings.cycle.material=MaterialProfile::Manual" in ino
+          assert "settings.cycle.targetTempC=constrain(" in ino
+          assert "settings.cycle.durationMinutes=static_cast<uint16_t>(constrain(" in ino
+          assert "MaterialPresets::suggestion(profile)" in ino
+          assert "cycle.start(settings.cycle, nowMs);" in ino
+          assert "drawSelectableRow(15,profile,selected==SetupField::Profile)" in ui
+          assert "drawSelectableRow(31,temp,selected==SetupField::Temperature)" in ui
+          assert "drawSelectableRow(47,time,selected==SetupField::Duration)" in ui
+          assert "MaterialPresets::label(settings.material)" in ui
+          assert "feedback_{HeaterStep09AirFeedback::attendedSanwa90_85Parameters()}" in safety
+          assert "kHeaterStep09TrialMode = true;" in cfg
+          assert "kHeaterOutputEnabled = false;" in cfg
+          assert "kPrototypeTempMinC = 40;" in cfg and "kPrototypeTempMaxC = 55;" in cfg
+          assert "kPrototypeDurationMaxMinutes = 12 * 60;" in cfg
+          assert "kFanBringupRunPercent = 100;" in cfg
+          print("PASS: Manual/PLA/PLA+/PVB front panel + persistence, no heater/fan/protection changes")
+          PY
       - name: Install ESP32 core 3.3.12 and U8g2 2.36.19
         run: |
           arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
@@ -328,20 +364,20 @@ jobs:
           app="$out/firmware.ino.bin"
           test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
           # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
-          grep -a -q 'HOT-261031-N9085' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
-          cp "$app" "$RUNNER_TEMP/HOT-261031-N9085-app.bin"
+          grep -a -q 'HOT-261101-PROF1' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
+          cp "$app" "$RUNNER_TEMP/HOT-261101-PROF1-app.bin"
           cd "$RUNNER_TEMP"
-          sha256sum HOT-261031-N9085-app.bin | tee HOT-261031-N9085-app.sha256
-          echo "HEATER-capable attended AIR40-55: 90C contact OFF ~7924ohm estimated / 85C ON 9231.9ohm measured. Existing hard R<7120ohm provisional; TCO105 unchanged. Source compile NOT physical heater authorization. Use Arduino IDE for upload after separate approved preflight." >> "$GITHUB_STEP_SUMMARY"
-          cat HOT-261031-N9085-app.sha256 >> "$GITHUB_STEP_SUMMARY"
+          sha256sum HOT-261101-PROF1-app.bin | tee HOT-261101-PROF1-app.sha256
+          echo "HEATER-capable experiment with optional MANUALE/PLA/PLA+/PVB UI shortcuts (45C/6h;50C/8h;45C/8h), user-editable, never autonomous RH control. NTC90/85, existing hard R<7120ohm, TCO105 unchanged. No physical heater approval from software CI; use Arduino IDE only after separate physical safety review." >> "$GITHUB_STEP_SUMMARY"
+          cat HOT-261101-PROF1-app.sha256 >> "$GITHUB_STEP_SUMMARY"
       - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: ATTENDED-NTC90-85-AIR55-BUILD
           path: |
-            ${{ runner.temp }}/HOT-261031-N9085-app.bin
-            ${{ runner.temp }}/HOT-261031-N9085-app.sha256
+            ${{ runner.temp }}/HOT-261101-PROF1-app.bin
+            ${{ runner.temp }}/HOT-261101-PROF1-app.sha256
           if-no-files-found: error
           retention-days: 30
       - name: Upload reproducible results
@@ -358,4 +394,5 @@ jobs:
             ${{ runner.temp }}/step13a-4hour-thermostat.log
             ${{ runner.temp }}/step13a-plate-diagnostic.log
             ${{ runner.temp }}/step13a-esp32-build.log
+            ${{ runner.temp }}/material-presets-host.log
           if-no-files-found: warn

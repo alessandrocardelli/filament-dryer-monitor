@@ -104,7 +104,7 @@ V1 editable fields:
 2. cycle duration;
 3. fan mode, initially `AUTO`.
 
-Material presets are intentionally deferred until their actual values and safety/control implications are agreed. A later `PROFILE` field may provide PLA/PETG/TPU/etc. plus `MANUAL`.
+**Experimental V1 UI proposal now implemented as source, NOT physically validated:** SETUP has exactly three selections: PROFILE, TEMP, DURATION (fan remains fixed 100% for the current experimental heater). PROFILE cycles MANUALE / PLA / PLA+ / PVB using UP/DOWN. The preliminary brand-specific suggestions from Work are PLA45C/6h, PLA+50C/8h, PVB45C/8h; each choice only fills the existing temperature/time settings within the same 40–55C/15min–12h bounds. A manual change to TEMP/DURATION changes the profile label to MANUALE, preserving the new values. Selecting MANUALE directly retains prior values; switching to a named preset loads that preset's original suggestion. M short cycles PROFILE→TEMP→DURATION; M long saves and returns. ON/OFF short starts the displayed cycle subject to unchanged safety checks. `SettingsStore` uses optional NVS `mat` in existing schema1, avoiding reset of saved settings. This is **not a manufacturer-approved universal drying recipe or new heater limit**. RH still has no automatic stop function; no fan or heater-control change.
 
 | Button | Short press | Long press |
 |---|---|---|
