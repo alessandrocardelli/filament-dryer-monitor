@@ -1,8 +1,7 @@
 # Front-panel UI specification
 
 Status: **V1 interaction model accepted 2026-10-08**.  
-Applies to the current first-article hardware on branch `main`.  
-A first SAFE BRING-UP implementation now exists; actuator control and final safety integration remain pending.
+Historical V1 interaction model shared with `main`; the experimental branch has implemented later controls/services. See [PROJECT_STATE](PROJECT_STATE.md) for software/operator/physical distinctions. Final autonomous thermal qualification remains pending.
 
 This document defines the intended user interaction for the 1.54-inch SSD1309 128×64 OLED, the four front-panel buttons, the passive buzzer and the internal diagnostic LED. It does not define final heater-control gains, safety thresholds, temperature/time ranges or material-profile values; those remain gated by thermal/NTC validation.
 
@@ -100,11 +99,13 @@ M short selects the next setting; UP/DOWN modify it; M long saves and returns to
 
 V1 editable fields:
 
-1. target chamber temperature;
-2. cycle duration;
-3. fan mode, initially `AUTO`.
+1. PROFILE;
+2. target chamber temperature;
+3. cycle duration.
 
-**Experimental V1 UI proposal now implemented as source, NOT physically validated:** SETUP has exactly three selections: PROFILE, TEMP, DURATION (fan remains fixed 100% for the current experimental heater). PROFILE cycles MANUALE / PLA / PLA+ / PVB using UP/DOWN. The preliminary brand-specific suggestions from Work are PLA45C/6h, PLA+50C/8h, PVB45C/8h; each choice only fills the existing temperature/time settings within the same 40–55C/15min–12h bounds. A manual change to TEMP/DURATION changes the profile label to MANUALE, preserving the new values. Selecting MANUALE directly retains prior values; switching to a named preset loads that preset's original suggestion. M short cycles PROFILE→TEMP→DURATION; M long saves and returns. ON/OFF short starts the displayed cycle subject to unchanged safety checks. `SettingsStore` uses optional NVS `mat` in existing schema1, avoiding reset of saved settings. This is **not a manufacturer-approved universal drying recipe or new heater limit**. RH still has no automatic stop function; no fan or heater-control change.
+Fan remains fixed by the selected experimental policy, rather than an editable field.
+
+**Implemented experimental UI; persistence and START/STOP operator-reported, exact board image unconfirmed (see PROJECT_STATE):** SETUP has exactly three selections: PROFILE, TEMP, DURATION (fan remains fixed 100% for the current experimental heater). PROFILE cycles MANUALE / PLA / PLA+ / PVB using UP/DOWN. The preliminary brand-specific suggestions from Work are PLA45C/6h, PLA+50C/8h, PVB45C/8h; each choice only fills the existing temperature/time settings within the same 40–55C/15min–12h bounds. A manual change to TEMP/DURATION changes the profile label to MANUALE, preserving the new values. Selecting MANUALE directly retains prior values; switching to a named preset loads that preset's original suggestion. M short cycles PROFILE→TEMP→DURATION; M long saves and returns. ON/OFF short starts the displayed cycle subject to unchanged safety checks. `SettingsStore` uses optional NVS `mat` in existing schema1, avoiding reset of saved settings. This is **not a manufacturer-approved universal drying recipe or new heater limit**. RH still has no automatic stop function; no fan or heater-control change.
 
 | Button | Short press | Long press |
 |---|---|---|
@@ -115,17 +116,9 @@ V1 editable fields:
 
 The selected value is visually highlighted/inverted.
 
-### Contextual button hints
+### Contextual button hints — rejected trial
 
-Because the four physical buttons flank the OLED (ON/OFF upper-left, M lower-left, UP upper-right, DOWN lower-right), V1 should show very small context-sensitive action labels at the corresponding screen edges when useful. Initial first-article trial:
-
-- STANDBY: `START` / `SET` on the left;
-- SETUP: `START` / `NEXT` on the left and `+` / `-` on the right;
-- DRYING / SYSTEM: `STOP` / `PAGE` on the left;
-- COMPLETE: `OK` at upper-left;
-- FAULT: `MUTE` at lower-left.
-
-The hints use a very small font and must remain secondary to measurements/status. If first-article readability is poor or the display feels crowded, remove or abbreviate them rather than shrinking primary data.
+[D024](DECISIONS.md#d024--setup-back-action-contextual-button-label-trial-rejected) records that small context-sensitive labels at the four button edges were tried and rejected: they crowd/overlap primary content on128×64. Do not reserve persistent hint space in normal V1 screens. Preserve the rejection rationale in D024.
 
 ### DRYING
 
@@ -162,9 +155,9 @@ The display is 128×64 monochrome. Layouts below are functional wireframes, not 
 
 ### 6.1 BOOT
 
-On power-up/reset, show the selected **Slewform logo with wordmark** centered on the OLED. The current branding asset is `firmware/assets/slewform/slewform_logo_128x64.h` (90×60 px).
+On power-up/reset, show the D023 root-growth sequence followed by the separate SLEWFORM wordmark. Active asset: `firmware/assets/slewform/slewform_animation_compact.h`; the combined static bitmap is legacy.
 
-The splash is accompanied by a **short original two-step rising startup chime**, intentionally giving a classic handheld-console startup feel without reproducing the Game Boy sound note-for-note. After first-article use testing, the splash duration is **3.5 s**; 1.5 s was judged too brief to read the branding comfortably.
+The splash is accompanied by a **short original two-step rising startup chime**, intentionally giving a classic handheld-console startup feel without reproducing the Game Boy sound note-for-note. The implemented sequence lasts **4.15s** after OLED initialization; D023 preserves timing revisions and the original short-splash feedback.
 
 Safety-critical initialization and safe output defaults happen before/under the splash; the branding sequence must not delay putting heater/fan outputs into their safe state. OLED initialization should blank the display before the first visible frame to suppress random power-up RAM artifacts. Initialization should remain non-blocking where practical.
 
@@ -189,14 +182,14 @@ After an inactivity timeout (initial target about 60 s), the OLED may blank/slee
 ```text
  SET CYCLE
 
+ PROFILE     MANUALE
  TEMP       [55 C]
  TIME        04:00
- FAN         AUTO
 ```
 
 M moves the highlight. UP/DOWN modify the highlighted field.
 
-Final allowed ranges, increments and defaults are **TBD** and must be set only after heater/NTC/control validation.
+Implemented UI bounds:40–55°C in1°C steps,15min–12h in15min steps (`AppConfig.h`). These are selectable software values, not physical qualification of the range.
 
 ### 6.4 DRYING main page
 
@@ -298,7 +291,7 @@ V1 completion is therefore time/control based. Humidity-driven or trend-driven c
 
 V1 exposes the fan as `AUTO` to the normal user.
 
-The already measured first-article 25 kHz fan thresholds are 25% as the first tested start-from-rest duty and 15% as the lowest tested sustained-running duty. The current SAFE BRING-UP policy deliberately retains margin: 100% for 1 s at cycle start, then 40% for the remainder of the DRYING test cycle. This is a validation policy, not the final FAN AUTO algorithm. The fan stops immediately on cycle stop/completion for now; post-cycle cooldown remains open.
+The already measured first-article 25 kHz fan thresholds are 25% as the first tested start-from-rest duty and 15% as the lowest tested sustained-running duty. The historical main SAFE BRING-UP policy deliberately retains margin: 100% for 1 s at cycle start, then 40% for the remainder of the DRYING test cycle. This is a validation policy, not the final FAN AUTO algorithm. That historical policy stops the fan at stop/completion. The selected experimental policy commands100%,5s prerun and90s post-heat cooling; final qualified FAN AUTO behavior remains open.
 
 Manual fan percentage can remain available only on a technical/service page if needed for development. It is not a normal V1 cycle-setting requirement.
 
@@ -370,17 +363,15 @@ Do **not** persist an active-cycle state in a way that causes automatic heater r
 
 The following are not decided by this UI specification:
 
-- allowed target-temperature range;
-- temperature adjustment step;
-- minimum/maximum cycle duration and adjustment step;
+- physical qualification of the implemented target-temperature and duration ranges;
 - final heater control algorithm and gains;
 - NTC conversion/calibration and all safety thresholds;
 - fan AUTO policy and post-cycle cooldown duration;
-- material profile list and profile values;
+- physical drying validation of implemented advisory MANUALE/PLA/PLA+/PVB shortcuts;
 - humidity/trend-based automatic completion;
 - exact fonts, pixel coordinates and iconography;
 - exact buzzer PWM duty values for LOW/MED/HIGH;
-- web UI structure;
-- CSV/log format.
+- further web UI requirements beyond the implemented and visually accepted dashboards;
+- CSV identity/completeness metadata; existing logging/history is implemented.
 
 These must be resolved from hardware/safety validation and later application requirements rather than guessed from the panel design.

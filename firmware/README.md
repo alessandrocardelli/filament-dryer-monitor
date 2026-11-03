@@ -1,6 +1,6 @@
 # Filament Dryer Monitor firmware
 
-Current application phase: **SAFE BRING-UP with real fan control**.
+This branch contains **HEATER-capable experimental firmware**. `main` remains the SAFE BRING-UP non-heating reference. See [PROJECT_STATE](../docs/PROJECT_STATE.md) for current source, physical evidence and installed-image uncertainty.
 
 ## Implemented
 
@@ -10,32 +10,21 @@ Current application phase: **SAFE BRING-UP with real fan control**.
 - BOOT, STANDBY, SETUP, SETTINGS, DRYING-test, COMPLETE and FAULT presentation;
 - `CycleController` for countdown/completion;
 - `FanController` for the real first-article fan;
-- `SafetyController` that continuously forces the heater output OFF;
+- `SafetyController` with the selected experimental AIR/NTC thermostat and independent fault/STOP/watchdog handling;
 - Preferences/NVS persistence for last cycle UI values, buzzer volume and key-click preference;
 - buzzer OFF/LOW/MED/HIGH, optional key click, startup/start/complete/warning/fault sequences;
 - D021 diagnostic LED patterns;
 - cooperative/non-blocking main loop.
 
-## Fan bring-up policy
+## Fan and heater paths
 
-The current fan policy is intentionally provisional:
+The historical D025 non-heating bring-up policy was 25kHz, 100% for1s then40%, OFF at stop/completion/fault. It is not this branch's selected heating policy. The experimental path commands100%, with5s prerun and90s post-heat cooling; these provisional settings are not qualified FAN AUTO specifications or measured airflow.
 
-- 25 kHz PWM;
-- 100% duty for 1 s when a DRYING test cycle starts;
-- 40% duty after kick-start;
-- 0% on stop, completion or fault.
+`kHeaterStep09TrialMode=true` selects a real GPIO19 heater-control path **before** the production approval checks in `SafetyController`. Therefore `kHeaterOutputEnabled=false` does not make this branch heater-off. The selected D030 90/85 profile controls raw NTC resistance; its90°C Sanwa-equivalent point is estimated. See [D030](../docs/DECISIONS.md) and [current state](../docs/PROJECT_STATE.md), not historical upload instructions.
 
-This retains margin over the measured first-article thresholds (25% first tested start duty, 15% lowest tested sustained duty). It is **not** the final FAN AUTO algorithm. Post-cycle cooldown remains undecided.
+The separate product controller is disabled, its approvals false and operational limits unconfigured. No physical90/85 qualification or unattended approval follows from CI. Existing series TCO105 remains unchanged. Boot/STANDBY force heater OFF; an explicit cycle can request experimental heating subject to interlocks.
 
-## Heater safety status
-
-This is still **not heater-control firmware**.
-
-GPIO19 / HEATER_PWM is configured as an output by `SafetyController` and forced LOW on every main-loop pass. There is no heater-enable path in this phase.
-
-Do not add heater control until the real NTC/J7 path, NTC conversion/fault handling, independent TCO and heater safety gates are validated and recorded.
-
-The target-temperature values visible in SETUP are UI prototype values only; they are not accepted heater limits.
+Implemented experimental services include advisory material presets, live telemetry, CSV/LittleFS history, 12h host-tested logging and authenticated LAN STANDBY settings/STOP with no remote START. These have different software/operator/physical evidence levels in PROJECT_STATE.
 
 ## Persistence
 
@@ -43,6 +32,7 @@ ESP32 Preferences/NVS stores:
 
 - last target-temperature UI value;
 - last duration;
+- selected advisory material profile (optional NVS `mat`, existing schema);
 - buzzer volume;
 - key-click preference.
 
@@ -72,7 +62,7 @@ The OLED boot sequence lasts **4.15 s** after initialization:
 - **2.40–2.75 s:** complete emblem held, still silent.
 - **2.75–4.15 s:** separate solo SLEWFORM wordmark; the rising chime starts
   immediately **after** the complete wordmark has been sent and revealed.
-- **4.15 s:** STANDBY. The heater stays hard-locked OFF.
+- **4.15 s:** STANDBY, heater OFF. This does not disable the experimental heating path on a later explicit cycle.
 
 The 1-bit XBM/PROGMEM bitmap masks are: upper symbol 54×60 (420 bytes),
 root geometry 54×60 (420 bytes), and wordmark 122×18 (288 bytes).
