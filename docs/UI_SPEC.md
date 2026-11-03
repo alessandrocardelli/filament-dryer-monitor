@@ -115,17 +115,9 @@ Material presets are intentionally deferred until their actual values and safety
 
 The selected value is visually highlighted/inverted.
 
-### Contextual button hints
+### Contextual button hints — rejected trial
 
-Because the four physical buttons flank the OLED (ON/OFF upper-left, M lower-left, UP upper-right, DOWN lower-right), V1 should show very small context-sensitive action labels at the corresponding screen edges when useful. Initial first-article trial:
-
-- STANDBY: `START` / `SET` on the left;
-- SETUP: `START` / `NEXT` on the left and `+` / `-` on the right;
-- DRYING / SYSTEM: `STOP` / `PAGE` on the left;
-- COMPLETE: `OK` at upper-left;
-- FAULT: `MUTE` at lower-left.
-
-The hints use a very small font and must remain secondary to measurements/status. If first-article readability is poor or the display feels crowded, remove or abbreviate them rather than shrinking primary data.
+[D024](DECISIONS.md#d024--setup-back-action-contextual-button-label-trial-rejected) records that small context-sensitive labels at the four button edges were tried and rejected because they crowd/overlap primary content on128×64. Do not reserve persistent hint space in normal V1 screens. The trial and rejection rationale remain in D024 and Git history.
 
 ### DRYING
 

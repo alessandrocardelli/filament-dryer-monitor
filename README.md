@@ -1,38 +1,9 @@
 # Filament Dryer Monitor
 
-ESP32 controller for eSUN eBOX Lite: SHT45 chamber air/RH, heater-embedded NTC, Sanwa independent heater PLATE contact reference, fan, OLED/buttons, user timer and CSV.
+ESP32 controller for eSUN eBOX Lite. **`main` is the non-heating SAFE BRING-UP reference; its heater output remains locked OFF.**
 
-**CURRENT UPLOADABLE EXPERIMENT: `HOT-261031-N8580` / OLED `H31-8580`.** Code lives on `experiment/step10-heater-diagnostics-air25-2026-10-28`, [PR#18 DRAFT](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/18), **not** on `main` (main HEATER-OFF). Open **`firmware/firmware.ino` from the experimental branch in Arduino IDE**. This is an HEATER-capable attended experimental image, not an approved unattended product. **Exact-source [CI#41142714373 PASS](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/41142714373), source `1cd96dd76500dfb4d161e1b445d8df6c9d8e524b`, Arduino ESP32 core3.3.12/U8g2 2.36.19 build+link (flash1,183,022B 90%, RAM109,000B 33%), NTC85/80 60min host test and Sanwa reminder PASS; app BIN SHA256 `bfd9561b0e452db44c9fa1c3a776e9a20654a9473d71fe365dc42602bf714be8` (build evidence only, upload sketch through Arduino IDE).** See [current state](docs/PROJECT_STATE.md).
+Current development continues exclusively on [`experiment/step10-heater-diagnostics-air25-2026-10-28`](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step10-heater-diagnostics-air25-2026-10-28/docs/PROJECT_STATE.md), [PR #18 DRAFT](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/18). Read that branch's [PROJECT_STATE](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step10-heater-diagnostics-air25-2026-10-28/docs/PROJECT_STATE.md) for current source, physical evidence, installed-image uncertainty and unresolved qualification, and [TODO](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step10-heater-diagnostics-air25-2026-10-28/docs/TODO.md) for its priority. The experimental branch is HEATER-capable and is not an autonomous-use approval. No experimental code is integrated here.
 
-### Exactly what the next firmware does
+Main's local menu, cycle timer, settings, branding and recorded peripheral bring-up remain available. Read [AGENTS](AGENTS.md), [main state](docs/PROJECT_STATE.md), [decisions](docs/DECISIONS.md), [firmware](firmware/README.md), [assembly](docs/ASSEMBLY.md) and [buck design](docs/BUCK_L7987L_DESIGN.md).
 
-- **Independent thermostats:** SHT45 AIR target40..55°C user-selected, demand OFF upon reaching target, ON again at target−1°C. Local embedded NTC commands HEATER **OFF at R_NTC<=7.120kΩ** (previous measured *nearby Sanwa* contact85°C) and **ON again at R_NTC>=8.2366kΩ** (log-resistance interpolation of Sanwa80°C, NOT a measured 80°C point). When either thermostat demands OFF, GPIO19 turns OFF; both must permit heat to restart. A **reading below7.120kΩ causes a latched FAULT**, rather than assuming safe operation beyond the last observed hot endpoint.
-- **No forced 20-second OFF:** when AIR needs heat and NTC has not reached its local ceiling, GPIO19 remains ON continuously. The independent **20.5s fail-OFF ESP32 timer is refreshed on each verified healthy loop**; if firmware stalls, ISR forces HEATER LOW and subsequently latches the fault. No cumulative heater-energy budget or arbitrary OFF interval. User timer15min..12h unchanged.
-- **Existing features retained:** actual FAN command100%, fan prerun5s, post-HEATER cooling90s, real STOP, NTC/SHT45 sensor electrical/invalid/stale faults, AIR60°C provisional FAULT, display/menu/settings, web/CSV, fault sounds, Sanwa acoustic reading reminders at1..10min,12/14/...min and postSTOP30/60/90/120s.
-- **Measured provenance:** 17 Oct two-covers-open/fan-OFF series: Sanwa PLATE74°C→NTC9.81kΩ, Sanwa PLATE85°C→NTC7.12kΩ; interpolated80°C→**8.2366kΩ**. Other observed Sanwa64°C→13.73kΩ was the **too-wide old NTC rearm; NOT used** now. The thermocouple is external, on the documented nearby plate contact, **not read by the ESP32**. Because the bead/probe thermal gradient in the closed box with fan ON is uncalibrated, this is a **resistance-based experimental target**, **NOT a guarantee that the plate will stop precisely at85°C**.
-- **Physical safety:** existing independent series105°C one-shot TCO is retained and **not bypassed**. Its physical body temperature/DC suitability, prototype materials and any hotspots are not qualified just because OEM plate was reported near118°C. An attended test requires inspection of real fan rotation, TCO/wiring and accessible manual STOP; stop on external Sanwa85°C or earlier adverse indications, do not operate unattended.
-
-**Previous physical HOT-261030-SANWA trial (30 Oct) FAILED to reach AIR55:** [unaltered 850-row CSV](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/09ff8d3749683642027e0eb977f0ec66818bfbde/docs/evidence/thermal/2026-10-30-AIR55-SANWA-raw.csv), [37 original Sanwa readings and root cause](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/09ff8d3749683642027e0eb977f0ec66818bfbde/docs/evidence/thermal/2026-10-30-AIR55-SANWA-PHYSICAL-SESSION.md): AIR max41.16°C, Sanwa plate max69°C, repeated forced20s ON windows/NTC13.73k rearm despite no NTC soft-limit event. **This prior controller is superseded**. The new 85/80 image has **not** been physically run; software build status is recorded separately.
-
-**One next operating/protocol gate with requested flowchart:** [TODO](docs/TODO.md). **Only one active experiment branch; main stays locked off.**
-
-**Prior physical run: STEP12P** — [original 1,089-row CSV](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/61ef20b2e1b2b8cde145509f2a0c5ff0d306dd5d/docs/evidence/thermal/2026-10-29-STEP12P-raw.csv) and [full chronology](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/61ef20b2e1b2b8cde145509f2a0c5ff0d306dd5d/docs/evidence/thermal/2026-10-29-STEP12P-PHYSICAL-SESSION.md). AIR25°C at+400.232s, actual AIR24 rearm+684.979s, peak25.43°C, commanded total ON231.114s, minR34.4829kΩ, no logged faults. That proof is NOT a physical test of the new AIR55 firmware.
-
-[Current state](docs/PROJECT_STATE.md) · [single next gate / operating protocol](docs/TODO.md) · [safety, traceability and source rules](AGENTS.md).
-
-The assembled prototype has functional power, USB/UART (D020 bodge), OLED/buttons, buzzer, sensors, fan and heater switching tests within recorded limits. Local menu, cycle timer, settings persistence and branding are implemented on main. Wi-Fi/OTA, CSV logging and thermal experiments exist on the experimental line; they have not been merged into main.
-
-Read [AGENTS.md](AGENTS.md) before working, then:
-
-| Document | Purpose |
-| --- | --- |
-| [PROJECT_STATE](docs/PROJECT_STATE.md) | Current code, tested firmware, evidence, limitations |
-| [TODO](docs/TODO.md) | One next activity and concise backlog |
-| [DECISIONS](docs/DECISIONS.md) | Approved decisions D001–D029 |
-| [Thermal experiment ledger](docs/THERMAL_EXPERIMENT_LEDGER.md) | Original protocols, CSV and Sanwa records |
-| [Execution plan](docs/EXECUTION_PLAN_2026-10-24.md) | Remaining route to V1 |
-| [Consolidation audit](docs/BRANCH_CLEANUP_2026-10-29.md) | Branch/PR disposition and archive refs |
-| [Firmware](firmware/README.md) / [UI](docs/UI_SPEC.md) | Software structure and interaction specification |
-| [Assembly](docs/ASSEMBLY.md) / [buck design](docs/BUCK_L7987L_DESIGN.md) | Hardware implementation and bring-up records |
-
-Actual `hardware/*.kicad_*` sources define the released board. The prototype's physical D020 collector-cross correction is documented, not retroactively applied to these sources. The installed series TCO105 remains unchanged; D029 treats an additional TCO as optional, not permission to bypass the installed one.
+The former detailed README is preserved in the [historical snapshot](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/5a805d7ed5a74a13dc89a412c7981aae5ce8958b/README.md). Its N8580 upload/next-test instructions are superseded by the active branch's state; do not execute them as a current plan. D020 belongs to a deliberate future hardware revision; installed series TCO105 remains unchanged (D029).
