@@ -5,7 +5,7 @@
 
 ## Curva di riferimento attuale, 31 ottobre 2026 — scatola chiusa e ventola corretta
 
-**Abbiamo concluso la raccolta dati della NTC per la regolazione pratica.** La sonda Sanwa e collocata, secondo l'operatore, a meno di1 cm dalla NTC. Il riferimento in gradi e **la lettura Sanwa sulla piastra**, non una misura al centro del termistore. Una precisione assoluta al singolo grado non e richiesta per usare questa caratteristica.
+**Historical contact-equivalent correlation, NOT verified NTC R(T).** The earlier statement that NTC characterization was completed is superseded by the 22 November evidence. The values below correlate the NTC's electrical resistance with the *Sanwa probe's separate heater-plate contact temperature* in the OEM-fan test and cannot independently establish the thermistor body's own temperature. They must not be used as a universal R(T) curve or as the sole provenance for a calibrated absolute-temperature safety threshold. The discrepancy with the new airflow geometry means the earlier operational correlation lacks demonstrated transferability/repeatability. La sonda Sanwa e collocata, secondo l'operatore, a meno di1 cm dalla NTC. Il riferimento in gradi e **la lettura Sanwa sulla piastra**, non una misura al centro del termistore. Una precisione assoluta al singolo grado non e richiesta per usare questa caratteristica.
 
 - [CSV delle 37 letture prerun/riscaldamento e4 di raffreddamento](evidence/thermal/2026-10-31-NTC-SANWA-corrected-fan-pairs.csv) — tutte le coppie manuali Sanwa associate ai campioni NTC/AIR ESP32 piu vicini nel tempo, senza inventare temperature. Allineamento temporale approssimato, non timestamp fisicamente sincronizzati.
 - [Grafico SVG completo, recuperabile in ogni nuova conversazione](evidence/thermal/2026-10-31-NTC-SANWA-corrected-fan-curve.svg) — letture riscaldamento, raffreddamento e 90°C **stimati**.
@@ -58,6 +58,16 @@
 | TCO105°C monouso in serie | riferito presente | ELECTRICAL_OR_HARDWARE, temperatura reale corpo/portata/intervento UNKNOWN/UNQUALIFIED |
 
 ---
+
+## 22 November 2026 contradiction and metrological gap
+
+- 31 October OEM corrected fan, minute12: Sanwa78°C, NTC11,154.7Ω.
+- 22 November Noctua + ASA duct, minute12: manually recorded Sanwa78°C, NTC approximately7,550Ω; 13m39.8s FAULT at NTC7,089.7Ω while AIR45.22°C. Same Sanwa contact placement by operator report, same historical on-device firmware ID HOT-261031-N8580. The exact physical NTC bead temperature was never measured in either run.
+- The Sanwa is **not proven defective**; the measurements do **not** establish which thermal or electrical factor changed.
+- Existing ESP32 ADC calibration used substituted resistors ~33.03k–99.9kΩ, not the decisive 7–12kΩ range. Its low-ohm measurement transfer must be verified before drawing a thermal conclusion from the difference.
+- The cold NTC resistance 122.3kΩ direct DMM near20°C is consistent with, but does **not** prove, a common 100kΩ/β3950 part; R25 and β are still unidentified.
+- To obtain true intrinsic R(T), measure at independently known, **spatially uniform and stable thermistor-body temperatures**, with a calibrated reference and adequate error budget. If the embedded NTC cannot be made sufficiently isothermal with the reference, a superficial external-contact curve is only an operational proxy, not a precision NTC calibration. Do not heat the assembled plastic dryer in an oven or immerse connected heater/electronics; these are not acceptable shortcuts.
+- The single current priority and test acceptance criteria are in [TODO](TODO.md). No heater guard or D030 decision has been changed, and no further physical HEATER trial is implicitly approved.
 
 ## Measurement context and meaning
 
