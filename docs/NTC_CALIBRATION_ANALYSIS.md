@@ -1,5 +1,23 @@
 # Heater NTC versus nearby Sanwa reference: diagnostic study
 
+## Vishay 0603 replacement ordered — published intrinsic R(T), 23 November 2026
+
+**Status:** Operator reports ordering a Vishay-branded NTC referred to in previous purchasing discussion as `NTCS0603E3104FXT`; exact delivered MPN/packaging still to be confirmed. The OEM heater SMD NTC is still installed and its original measurements remain preserved below. Do **not** describe the replacement's manufacturer curve as measurements of the OEM NTC, or describe the replacement as installed.
+
+**Primary datasheet:** Vishay `NTCS0603E3.....T`, document `29056`, current published specifications [vishay.com/docs/29056/ntcs0603e3t.pdf](https://www.vishay.com/docs/29056/ntcs0603e3t.pdf). `NTCS0603E3104FXT`: nominal R25=100,000Ω, R25 tolerance ±1% (`F` suffix), B25/85=4100K with ±1% B tolerance; 0603 1.6 x 0.8 x 0.8mm; maximum +150°C operating zero power. Older full Vishay document `29056` revision **25-Feb-2013**, [reproduced by TME](https://www.tme.eu/Document/63b44cc9baac41e748fd1c8b8eb951ac/ntcs0603.pdf) **page 5, specific part `NTCS0603E3104*XT`**, provides the *nominal manufacturer R(T) table every 5°C* from −40 through +150°C. These part-specific points supersede a crude single-beta formula as the nominal curve basis; the current short-form PDF confirms product identity/specifications but no longer prints full R(T).
+
+**Full reference data:** [`evidence/thermal/NTCS0603E3104FXT-Vishay-RT-1C.csv`](evidence/thermal/NTCS0603E3104FXT-Vishay-RT-1C.csv), 191 integer-temperature rows −40..+150°C, with `temperatura_C`, `resistenza_nominale_ohm`, `origine`. The **39 manufacturer table entries** every 5°C are marked `VISHAY_TABLE_5C`; the **152 derived 1°C intermediate values** are marked `INTERPOLATED_LOG_R`, generated using
+
+`ln(R(T)) = ln(R(T0)) + (T-T0)/(T1-T0) * (ln(R(T1))-ln(R(T0)))`.
+
+The figures are tabulated/derived nominal values, **not observations, not per-unit calibrated values**, and the interpolated rows are not claimed manufacturer-certified discrete measurements. Selected manufacturer anchors (Ω): 20°C 125851; 25°C 100000; 50°C 34879; 70°C 16597; 80°C 11780; 85°C 9988.4; 90°C 8504.3; 95°C 7269.4; 100°C 6237.5; 105°C 5371.7; 120°C 3502.7. SHA256 of exported CSV `e2a15482c5d7c56909164b09126808ef98f718b9899002486d3605663231804a`.
+
+**Engineering meaning:** The user accepts the published nominal manufacturer table and its factory tolerances as the intended *sensor R(T) model*, avoiding a redundant self-performed physical thermistor-temperature calibration after installing the specified part. This **does not** mean the entire thermometer has ±1% resistance/±1°C accuracy: R25 and B each have their own ±1% specification; ADC/divider chain, component mounting thermal gradients, wire/joint integrity, and uncertainty of protective thresholds remain separate. The ADC path has previously been measured at 33–100kΩ substitute resistors, **not** at the original fault zone 7–12kΩ. Manufacturer R(T) is also independent of the previously inconsistent *Sanwa external contact vs OEM-NTC* relation.
+
+**Firmware/safety gate:** Neither old `NtcSensor.h` donor R25=82500/B4100 nor the Sanwa contact-equivalent 90/85 profile represents the replacement's R(T); do not silently carry over historic raw-ohm guard thresholds. E.g. when applied to the NEW Vishay part only, 7120Ω corresponds to approximately 95.7°C, 7923.8Ω to ~92.3°C, and 9231.9Ω to ~87.4°C; these are calculations, **not proposed safety settings**. Determine separately justified NTC control/trip Celsius limits for the actual installation, retain independent faults/TCO and separate physical authorization, and validate any firmware changes off-device before running the heater. The chip has been ordered, not physically mounted or tested.
+
+---
+
 **Date:** 2026-10-17  
 **Scope:** First-article open-bench measurements; diagnostics only. **No production heater-control conversion or independent thermal protection decision is changed.**
 
