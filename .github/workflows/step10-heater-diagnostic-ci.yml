@@ -1,16 +1,11 @@
-name: "NTC UI4 Vishay and editable thermal thresholds (HEATER OFF)"
+name: "HOT UI5 Vishay thermistor and configurable HEATER experiment"
 on:
   push:
-    branches:
-      - experiment/step10-heater-diagnostics-air25-2026-10-28
-    paths:
-      - firmware/**
-      - .github/workflows/step10-heater-diagnostic-ci.yml
+    branches: [experiment/step10-heater-diagnostics-air25-2026-10-28]
+    paths: [firmware/**, .github/workflows/step10-heater-diagnostic-ci.yml]
   pull_request:
     branches: [main]
-    paths:
-      - firmware/**
-      - .github/workflows/step10-heater-diagnostic-ci.yml
+    paths: [firmware/**, .github/workflows/step10-heater-diagnostic-ci.yml]
   workflow_dispatch:
 permissions:
   contents: read
@@ -20,38 +15,40 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-      - name: Check actual heater locks, menu wiring and NTC source
+      - name: Confirm HEATER-CAPABLE experiment, no legacy NTC guards or production enable
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          c=Path("firmware/AppConfig.h").read_text()
-          s=Path("firmware/SafetyController.h").read_text()
-          i=Path("firmware/firmware.ino").read_text()
-          ns=Path("firmware/NtcSensor.h").read_text()
-          st=Path("firmware/SettingsStore.h").read_text()
-          for t in ("kHeaterStep09TrialMode = false;",
+          cfg=Path("firmware/AppConfig.h").read_text()
+          safety=Path("firmware/SafetyController.h").read_text()
+          app=Path("firmware/firmware.ino").read_text()
+          for x in ("kHeaterStep09TrialMode = true;",
                     "kHeaterCommissioningMode = false;",
                     "kHeaterOutputEnabled = false;",
                     "kHeaterProfileApproved = false;",
-                    "kHeaterNtcModelApproved = false;",
-                    "kHeaterThermalMenuQualified = false;"):
-            assert t in c,t
-          assert "kHeaterThermalMenuQualified" in s
-          assert "ntc.fault != NtcFault::None" in s
-          assert "pulseTimerFired_" in s and "gpio_set_level" in s
-          assert "configureThermalSettings(settings.thermal)" in i
-          assert "VishayNtcCurve::temperatureC" in ns
-          assert "empiricalTemperatureC" not in ns
-          for key in ("nPause","nRearm","nFault","aFault"):
-            assert key in st
-          assert "kSettingsSchemaVersion = 1;" in c
-          assert "NTC-261126-UI4" in Path("firmware/FirmwareBuild.h").read_text()
-          assert "ntc_c" in Path("firmware/LiveTelemetryServer.cpp").read_text()
-          assert "ntc_c" in Path("firmware/NetworkService.h").read_text()
+                    "kHeaterNtcModelApproved = false;"):
+            assert x in cfg,x
+          assert "HeaterProductAir::Inputs t{};" in safety
+          assert "t.heaterTempC=ntc.temperatureC;" in safety
+          assert "setHeater(request && cycleActive && trialMenuReady_);" in safety
+          assert "ThermalSettings::validForTarget(v,targetAirC)" in safety
+          assert "if(AppConfig::kHeaterStep09TrialMode)return !trialMenuReady_;" in safety
+          assert "pulseTimerFired_" in safety and "gpio_set_level" in safety
+          assert "trialWatchdogFault_=true;" in safety
+          assert "kHardwareWindowCeilingUs==20500000" in Path("firmware/tests/host/test_ui5_heater_gpio.cpp").read_text()
+          assert "configureThermalSettings(settings.thermal,settings.cycle.targetTempC)" in app
+          assert 'HOT-261126-UI5' in Path("firmware/FirmwareBuild.h").read_text()
+          assert 'VishayNtcCurve::temperatureC' in Path("firmware/NtcSensor.h").read_text()
+          assert "attendedSanwa90_85Parameters()" in safety # archived object; NEVER used for GPIO
+          assert "feedback_.update(nowMs" not in safety
+          assert "ntcSoftPauseOhms" not in safety
+          assert "ntcHardTripOhms" not in safety
           assert '"/api/start"' not in Path("firmware/LiveTelemetryServer.cpp").read_text()
-          print("PASS source review: all heater gates OFF; new NTC and menus wired")
+          print("PASS source: actual experimental GPIO uses four NVS Celsius thresholds; production still isolated")
           PY
-      - name: Host-only curve, menu, product, history and web regressions
+      - name: GPIO HEATER ON/OFF and fault mocks (NO HARDWARE)
+        run: bash firmware/tests/host/run_ui5_gpio_mock.sh
+      - name: Host-only Vishay, menu, long-duration, dashboard and trace tests
         run: |
           set -euo pipefail
           for src in firmware/tests/host/test_vishay_ntc_curve.cpp firmware/tests/host/test_thermal_settings.cpp firmware/tests/host/test_product_air_12h.cpp firmware/tests/host/test_material_presets.cpp firmware/tests/host/test_remote_control_policy.cpp firmware/tests/host/test_log_sampling_policy.cpp; do
@@ -63,29 +60,29 @@ jobs:
           node firmware/tests/host/test_remote_dashboard.js
           bash firmware/tests/host/run_step08_real_trace.sh
       - uses: arduino/setup-arduino-cli@v2
-      - name: Install exact ESP32 toolchain and U8g2
+      - name: Install exact Arduino ESP32 core and U8g2
         run: |
           arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli lib install U8g2@2.36.19
-      - name: Compile Arduino IDE sketch, no physical GPIO
+      - name: Compile HEATER-CAPABLE UI5 Arduino IDE source, not physical qualification
         run: |
           set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/ntc-ui4"
-          arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$RUNNER_TEMP/ntc-ui4" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/ntc-ui4-build.log"
-          app="$RUNNER_TEMP/ntc-ui4/firmware.ino.bin"
+          mkdir -p "$RUNNER_TEMP/hot-ui5"
+          arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$RUNNER_TEMP/hot-ui5" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/ui5-build.log"
+          app="$RUNNER_TEMP/hot-ui5/firmware.ino.bin"
           test -s "$app"
-          grep -a -q 'NTC-261126-UI4' "$app"
-          sha256sum "$app" | tee "$RUNNER_TEMP/ntc-ui4.sha256"
-          echo "UI4 source: Vishay 39 nominal knots, four persisted menu thermal thresholds, all heater approvals and experimental mode disabled; no physical authorization." >> "$GITHUB_STEP_SUMMARY"
-          cat "$RUNNER_TEMP/ntc-ui4.sha256" >> "$GITHUB_STEP_SUMMARY"
-      - name: Store reproducible compilation evidence (not flashed)
+          grep -a -q 'HOT-261126-UI5' "$app"
+          sha256sum "$app" | tee "$RUNNER_TEMP/ui5-app.sha256"
+          echo "HEATER-CAPABLE experimental UI5 (4 NVS thermal thresholds + Vishay nominal NTC). Source/build only; physical test requires explicit authorization and confirmed NTC installation." >> "$GITHUB_STEP_SUMMARY"
+          cat "$RUNNER_TEMP/ui5-app.sha256" >> "$GITHUB_STEP_SUMMARY"
+      - name: Archive non-flashed UI5 firmware for reproducibility
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: NTC-UI4-HEATER-OFF-BUILD
+          name: HOT-UI5-HEATER-CAPABLE-BUILD-NOT-FLASHED
           path: |
-            ${{ runner.temp }}/ntc-ui4/firmware.ino.bin
-            ${{ runner.temp }}/ntc-ui4.sha256
+            ${{ runner.temp }}/hot-ui5/firmware.ino.bin
+            ${{ runner.temp }}/ui5-app.sha256
           retention-days: 30
           if-no-files-found: error
