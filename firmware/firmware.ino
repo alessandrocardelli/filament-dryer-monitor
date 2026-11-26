@@ -269,7 +269,9 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
       } else if (id == ButtonId::OnOff &&
                  type == ButtonEventType::ShortPress) {
         if ((AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) &&
-            !safety.commissioningCanStart(nowMs)) {
+            ((AppConfig::kHeaterStep09TrialMode &&
+              !safety.configureThermalSettings(settings.thermal,settings.cycle.targetTempC)) ||
+             !safety.commissioningCanStart(nowMs))) {
           Serial.println("START BLOCKED: configure coherent thermal limits or finish cooldown.");
         } else {
           enterState(AppState::Drying, nowMs);
@@ -288,7 +290,9 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
       } else if (id == ButtonId::OnOff &&
                  type == ButtonEventType::ShortPress) {
         if ((AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) &&
-            !safety.commissioningCanStart(nowMs)) {
+            ((AppConfig::kHeaterStep09TrialMode &&
+              !safety.configureThermalSettings(settings.thermal,settings.cycle.targetTempC)) ||
+             !safety.commissioningCanStart(nowMs))) {
           Serial.println("START BLOCKED: configure coherent thermal limits or finish cooldown.");
         } else {
           enterState(AppState::Drying, nowMs);

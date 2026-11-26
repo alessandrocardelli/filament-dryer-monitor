@@ -341,10 +341,9 @@ class SafetyController {
         requested;
     if (heaterOn_ == desired) {
 #ifdef ARDUINO_ARCH_ESP32
-      // ATTENDED 90/85 SANWA-CONTACT LOCAL THERMOSTAT: refresh the independent20.5s
-      // GPIO-off deadline only after all NTC/SHT45/fan/STOP safety checks
-      // have passed this iteration. A stalled loop leaves ISR to cut power.
-      // No deliberate 20s heater-OFF pulse is imposed.
+      // UI5 Vishay-Celsius experiment: refresh the independent 20.5s
+      // GPIO-off watchdog only after a valid NTC/AIR/fan/control cycle.
+      // No forced OFF window, and no archived OEM/Sanwa temperature proxy.
       if (desired && AppConfig::kHeaterStep09TrialMode) {
         if (!pulseTimer_ || pulseTimerFired_) {
           trialWatchdogFault_=true;
