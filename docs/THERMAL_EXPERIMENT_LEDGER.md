@@ -2,6 +2,29 @@
 
 Index of original protocols, raw data, manual readings and derived analyses. Current state and one next activity are in [PROJECT_STATE](PROJECT_STATE.md) and [TODO](TODO.md). Historical reports retain their original conclusions and missing fields; later evidence can supersede them without editing the raw measurements.
 
+## 26 November 2026 — J7 known-resistor ADC check (physical, non-heating)
+
+**Purpose and relation to prior test:** the 22-Nov Noctua+ASA AIR55 trial stopped with the old OEM thermistor reporting 7,089.7 Ω. Earlier electrical ADC first-article calibration had only characterized ~33–100 kΩ. The pre-existing [J7 test protocol](../TODO.md) specified known ±1% resistors, an independent multimeter reading, three HTTP readings for each point and a **provisional** ±2% mean-error acceptance target, preferably ±1% near 6.8–10 kΩ. The result informs the forthcoming new Vishay NTC cold checkout, **not** a new hot-test authorization.
+
+**Source/image/assembly evidence:** protocol and code state at branch `experiment/step10-heater-diagnostics-air25-2026-10-28`, parent source/docs HEAD `22d56e1a5fdd08ae473512d735e9270b79517706` before results were committed. Operator last identified on-device firmware as `HOT-261031-N8580` on 22-Nov; no new upload reported, but the build ID was **not re-read** during these resistance measurements. UI5 HEATER-capable code is only CI-tested, **not flashed**. PCB netlist `hardware/Filament_Dryer_Monitor.net`: J7 pin1 GND, pin2 NTC to GPIO34/R28 47 kΩ pullup; protocol instructs a well-insulated JST-GH adapter and **J5 physically disconnected** while injecting substitution resistors, STANDBY and no START. **Actual J5 disconnected state, adapter used and screen mode were instructed but not explicitly reconfirmed by operator**; no heating, fan run or faults were reported. Independent resistance instrument: Sanwa multimeter (exact model, range, accuracy specifications and serial not reconfirmed); Sanwa heater contact **probe is removed** and unrelated to this DMM resistance reading. Operator supplied the DMM readings and three successive `ntc_ohms` HTTP readings per resistor from the ESP32 via `http://10.95.219.150/api/status` (port80); name `filament-dryer.local` failed to resolve in this session, raw IP succeeded.
+
+**Original operator data, retained in the order received, all resistances in Ω** (the three ESP32 values below are verbatim readings, not synthetic test fixtures):
+
+| Nominal resistor | Sanwa DMM | ESP32 #1 | ESP32 #2 | ESP32 #3 | ESP32 mean | Mean error vs DMM | Max–min span |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 100,000 | 99,900 | 100,154.4 | 100,853.5 | 100,017.1 | 100,341.7 | +0.442% | 836.4 |
+| 47,000 | 46,800 | 47,433.7 | 47,444.2 | 47,170.0 | 47,349.3 | +1.174% | 274.2 |
+| 22,000 | 21,930 | 22,018.8 | 21,928.9 | 22,092.1 | 22,013.3 | +0.380% | 163.2 |
+| 10,000 | 9,970 | 10,111.6 | 10,096.2 | 10,105.2 | 10,104.3 | +1.347% | 15.4 |
+| 8,200 | 8,170 | 8,256.6 | 8,262.6 | 8,225.4 | 8,248.2 | +0.957% | 37.2 |
+| 6,800 | 6,770 | 6,919.1 | 6,922.5 | 6,883.7 | 6,908.4 | **+2.045%** | 38.8 |
+
+**Derivation:** `mean = (R1+R2+R3)/3`; `error% = 100*(mean - Sanwa_DMM)/Sanwa_DMM`. All 6 mean biases are positive, range +0.380% to +2.045%. **5 of 6 points satisfy the provisional ±2% target; the 6,770 Ω point narrowly exceeds it** (+138.4 Ω). The local 10 kΩ point also exceeds the *preferred* ±1% goal (+1.347%). A single marginal threshold exceedance, without DMM uncertainty characterization or raw node-voltage data, does **not** prove that the ESP32 ADC is faulty or that a firmware coefficient should be changed. Do not silently call the full range PASS; likewise do not regress into repeated firmware/thermal trials. The 6.8–10 kΩ region has now been directly observed electrically.
+
+**Missing original fields and limitations:** chat text contains all 18 submitted ESP32 resistance readings and six DMM readings above; no exported original HTTP JSON file, CSV, serial `adc/corr` mV, DMM node voltages, power supply/ambient temperature logs, sample timestamps beyond chronological order, fault/status fields, photos or numeric air measurements were supplied. No raw-data file hash exists to claim. Date is the chat's 2026-11-26 local session date (Europe/Stockholm UTC+01:00); exact sample times not recorded. No electrical correction, physical heater enable, new NTC installation, flash or safety threshold change was performed by the assistant.
+
+**Assessment and next gate:** The readout is numerically close over 6.77–99.9 kΩ with slight positive bias, but a formal ±2%-all-points acceptance is **not achieved**. Retain the current ADC correction until corroborated; optionally use an existing 4.7 kΩ ±1% resistor as a single low-end extension if readily available, without requiring repeated measurements already captured. Next critical task is receipt/MPN verification and cold installation of Vishay `NTCS0603E3104FXT`, then compare actual physical R at ambient and displayed nominal °C, all with J5 heater disconnected. Any later AIR55/Noctua run remains a separately reviewed, attended physical/safety gate without Sanwa probe.
+
 ## Latest completed physical sessions and candidate
 
 | Session | Protocol / source identity | Evidence and result |
