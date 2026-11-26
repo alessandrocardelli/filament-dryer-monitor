@@ -78,6 +78,7 @@ class SafetyController {
   // Normal cycle timer expiration, as distinct from explicit operator STOP.
   // The heater is off synchronously before the UI transitions to COMPLETE.
   void completeUserCycle(uint32_t nowMs) {
+    (void)nowMs;
     forceHeaterOff();
     if(AppConfig::kHeaterStep09TrialMode){
       trialCompleted_=true;
@@ -246,7 +247,7 @@ class SafetyController {
       if(trialActive_){
         if(heaterOn_)return 2;
         if(static_cast<uint32_t>(lastNowMs_-trialStartMs_) <
-           HeaterStep09AirFeedback::attendedAir55Parameters().fanPrerunMs)
+           HeaterStep09AirFeedback::attendedAir55Parameters().prerunMs)
           return 1;
         return 3;
       }
@@ -297,7 +298,7 @@ class SafetyController {
     lim.airHysteresisC=AppConfig::kHeaterStep09TrialMode
         ? p.airHysteresisC : AppConfig::kChamberControlHysteresisC;
     lim.fanPrerunMs=AppConfig::kHeaterStep09TrialMode
-        ? p.fanPrerunMs : AppConfig::kHeaterFanPrerunMs;
+        ? p.prerunMs : AppConfig::kHeaterFanPrerunMs;
     lim.maxNtcAgeMs=AppConfig::kHeaterStep09TrialMode
         ? p.maxNtcAgeMs : AppConfig::kHeaterNtcMaxAgeMs;
     lim.maxAirAgeMs=AppConfig::kHeaterStep09TrialMode
