@@ -60,7 +60,7 @@ constexpr bool kHeaterCommissioningMode = false;
 // and NOT approved for flashing until the review/gate in docs/STEP09.
 // Attended heater characterization: explicit HEATER-capable experiment.
 // Host-verified interlocks still mandatory, no unattended production approval.
-constexpr bool kHeaterStep09TrialMode = false; // archived OEM trial is NOT compatible with new NTC
+constexpr bool kHeaterStep09TrialMode = true; // archived OEM trial is NOT compatible with new NTC
 static_assert(!(kHeaterCommissioningMode && kHeaterStep09TrialMode),
               "Only one supervised heater trial mode can run");
 // STEP05 candidate heater profile is NEVER implicitly approved.

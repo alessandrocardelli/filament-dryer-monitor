@@ -47,13 +47,21 @@ class SafetyController {
 
   // Reconfigure ONLY during safe, non-heating menu use/startup.
   // This does not grant heater enable or certify selected temperatures.
-  bool configureThermalSettings(const ThermalSettings::Values &v){
-    if(heaterOn_||faultActive_)return false;
+  bool configureThermalSettings(const ThermalSettings::Values &v,
+                                int16_t targetAirC) {
+    if(heaterOn_ || faultActive_ || trialActive_)return false;
+    const bool coherent=ThermalSettings::validForTarget(v,targetAirC);
     auto lim=productLimits();
     lim.ntcSoftC=v.ntcPauseC;lim.ntcRearmC=v.ntcRearmC;
     lim.ntcHardC=v.ntcFaultC;lim.airFaultC=v.airFaultC;
-    lim.qualified=lim.qualified&&AppConfig::kHeaterThermalMenuQualified;
-    return product_.configure(lim);
+    lim.qualified=coherent &&
+        (AppConfig::kHeaterStep09TrialMode ||
+        (AppConfig::kHeaterProfileApproved &&
+         AppConfig::kHeaterNtcModelApproved &&
+         AppConfig::kHeaterThermalMenuQualified));
+    if(!product_.configure(lim))return false;
+    trialMenuReady_=coherent;
+    return true;
   }
 
   // Synchronous immediate shutdown for STOP / COMPLETE / FAULT / BOOT.
@@ -62,6 +70,8 @@ class SafetyController {
     commission_.cancel();
     feedback_.cancel();
     product_.stop();
+    trialActive_=false;
+    trialCompleted_=false;
     HeaterControl::Inputs stopped{};
     policy_.evaluate(0, HeaterControl::Limits{}, stopped);
   }
@@ -69,9 +79,10 @@ class SafetyController {
   // The heater is off synchronously before the UI transitions to COMPLETE.
   void completeUserCycle(uint32_t nowMs) {
     forceHeaterOff();
-    if (AppConfig::kHeaterStep09TrialMode)
-      feedback_.finishUserCycle(nowMs);
-    else commission_.cancel();
+    if(AppConfig::kHeaterStep09TrialMode){
+      trialCompleted_=true;
+      trialActive_=false;
+    }else commission_.cancel();
     product_.stop();
   }
 
@@ -79,6 +90,8 @@ class SafetyController {
               const SensorSnapshot &chamber, bool cycleActive,
               bool fanPwmRunning, uint32_t elapsedCycleMs,
               float targetChamberC) {
+    if(AppConfig::kHeaterStep09TrialMode && heaterOn_ && trialActive_)
+      trialTotalHeatMs_+=static_cast<uint32_t>(nowMs-lastNowMs_);
     lastNowMs_ = nowMs;
     // The user cycle timer owns duration; no accumulated-heat test budget.
     (void)elapsedCycleMs;
@@ -90,7 +103,7 @@ class SafetyController {
          AppConfig::kHeaterStep09TrialMode ||
          AppConfig::kHeaterOutputEnabled) && pulseTimerFired_) {
       if (AppConfig::kHeaterStep09TrialMode)
-        feedback_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
+        trialWatchdogFault_=true;
       else if (AppConfig::kHeaterCommissioningMode)
         commission_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
       faultActive_ = true;
@@ -130,24 +143,32 @@ class SafetyController {
       return;
     }
 
-    if (AppConfig::kHeaterStep09TrialMode) {
-      HeaterStep09AirFeedback::Inputs t{};
-      t.cycleActive = cycleActive;
-      t.fanRunning = fanPwmRunning; // command only, no tachometer
-      t.ntcValid = ntc.sampled && ntc.valid && ntc.fault == NtcFault::None;
-      t.ntcOhms = ntc.resistanceOhms; // RAW OHMS, NO Celsius conversion
-      t.ntcAgeMs = ntc.sampled ? nowMs - ntc.lastSampleMs : UINT32_MAX;
-      t.airValid = chamber.valid;
-      t.airC = chamber.temperatureC;
-      t.airAgeMs = chamber.valid ? nowMs - chamber.lastSuccessMs : UINT32_MAX;
-      t.selectedAirTargetC = targetChamberC; // USER menu, 40..55C
-      const bool request = feedback_.update(nowMs, t);
-      if (feedback_.fault() != HeaterCommissioning::Fault::None) {
-        faultActive_ = true;
+    if(AppConfig::kHeaterStep09TrialMode){
+      if(cycleActive && !trialActive_){
+        trialStartMs_=nowMs;
+        trialTotalHeatMs_=0;
+        trialCompleted_=false;
+        trialWatchdogFault_=false;
+      }
+      trialActive_=cycleActive;
+      HeaterProductAir::Inputs t{};
+      t.cycleActive=cycleActive;
+      t.fanCommandedRunning=fanPwmRunning;
+      t.ntcElectricalValid=ntc.sampled && ntc.valid && ntc.fault==NtcFault::None;
+      t.ntcThermallyQualified=true; // firmware uses nominal new Vishay R(T)
+      t.heaterTempC=ntc.temperatureC;
+      t.ntcAgeMs=ntc.sampled?nowMs-ntc.lastSampleMs:UINT32_MAX;
+      t.airValid=chamber.valid;
+      t.airC=chamber.temperatureC;
+      t.airAgeMs=chamber.valid?nowMs-chamber.lastSuccessMs:UINT32_MAX;
+      t.targetAirC=targetChamberC;
+      const bool request=product_.update(nowMs,t);
+      if(product_.fault()!=HeaterProductAir::Fault::None){
+        faultActive_=true;
         forceHeaterOff();
         return;
       }
-      setHeater(request);
+      setHeater(request && cycleActive && trialMenuReady_);
       return;
     }
 
@@ -189,15 +210,13 @@ class SafetyController {
 
   bool heaterPermitted() const { return !heaterLocked() && !faultActive_; }
   bool commissioningComplete() const {
-    return AppConfig::kHeaterStep09TrialMode ? feedback_.finished()
+    return AppConfig::kHeaterStep09TrialMode ? trialCompleted_
         : AppConfig::kHeaterCommissioningMode && commission_.finished();
   }
-  bool commissioningCanStart(uint32_t nowMs = 0) {
-    if (faultActive_ || coolingRequired(nowMs)) return false;
-    if (AppConfig::kHeaterStep09TrialMode && !feedback_.canStart())
-      feedback_.resetForNewSession(nowMs); // only invoked on explicit START press
-    return AppConfig::kHeaterStep09TrialMode ? feedback_.canStart()
-                                              : commission_.canStart();
+  bool commissioningCanStart(uint32_t nowMs=0) {
+    if(faultActive_ || coolingRequired(nowMs) || heaterLocked())return false;
+    if(AppConfig::kHeaterStep09TrialMode)return true;
+    return commission_.canStart();
   }
   // Display-only estimate of the fan cooling countdown. No control decision
   // relies on this value; coolingRequired() below remains authoritative.
@@ -205,7 +224,7 @@ class SafetyController {
     if (!coolingRequired(nowMs) || !everHeated_) return 0;
     const uint32_t elapsed = nowMs - lastHeaterOnMs_;
     const uint32_t total = AppConfig::kHeaterStep09TrialMode
-        ? HeaterStep09AirFeedback::parameters().cooldownMs
+        ? HeaterStep09AirFeedback::attendedAir55Parameters().cooldownMs
         : (AppConfig::kHeaterCommissioningMode
             ? HeaterStep07GuardTrial::parameters().cooldownMs
             : AppConfig::kPostHeatCooldownMs);
@@ -213,35 +232,49 @@ class SafetyController {
   }
   bool coolingRequired(uint32_t nowMs) const {
     const bool commissioningCooldown =
-        (AppConfig::kHeaterCommissioningMode && commission_.cooldownNeeded(nowMs)) ||
-        (AppConfig::kHeaterStep09TrialMode && feedback_.cooldownNeeded(nowMs));
-    const bool recentPhysicalHeating = everHeated_ &&
-        static_cast<uint32_t>(nowMs - lastHeaterOnMs_) <
-            AppConfig::kPostHeatCooldownMs;
+        AppConfig::kHeaterCommissioningMode && commission_.cooldownNeeded(nowMs);
+    const uint32_t cooldownMs=AppConfig::kHeaterStep09TrialMode
+        ? HeaterStep09AirFeedback::attendedAir55Parameters().cooldownMs
+        : AppConfig::kPostHeatCooldownMs;
+    const bool recentPhysicalHeating=everHeated_ &&
+        static_cast<uint32_t>(nowMs-lastHeaterOnMs_)<cooldownMs;
     return commissioningCooldown || recentPhysicalHeating;
   }
   uint8_t commissioningPhase() const {
-    return static_cast<uint8_t>(AppConfig::kHeaterStep09TrialMode
-        ? feedback_.phase() : commission_.phase());
+    if(AppConfig::kHeaterStep09TrialMode){
+      if(faultActive_)return 6;
+      if(trialActive_){
+        if(heaterOn_)return 2;
+        if(static_cast<uint32_t>(lastNowMs_-trialStartMs_) <
+           HeaterStep09AirFeedback::attendedAir55Parameters().fanPrerunMs)
+          return 1;
+        return 3;
+      }
+      if(coolingRequired(lastNowMs_))return 4;
+      return trialCompleted_?5:0;
+    }
+    return static_cast<uint8_t>(commission_.phase());
   }
   uint8_t commissioningPulsesDone() const {
-    return AppConfig::kHeaterStep09TrialMode
-        ? feedback_.pulsesDone() : commission_.pulsesDone();
+    return AppConfig::kHeaterStep09TrialMode?0:commission_.pulsesDone();
   }
   uint8_t commissioningFault() const {
-    return static_cast<uint8_t>(AppConfig::kHeaterStep09TrialMode
-        ? feedback_.fault() : commission_.fault());
+    if(AppConfig::kHeaterStep09TrialMode)
+      return trialWatchdogFault_?8:static_cast<uint8_t>(product_.fault());
+    return static_cast<uint8_t>(commission_.fault());
   }
-  uint8_t feedbackWaitReason(uint32_t nowMs, float ntcOhms) const {
-    return AppConfig::kHeaterStep09TrialMode
-      ? static_cast<uint8_t>(feedback_.waitReason(nowMs, ntcOhms)) : 0;
+  uint8_t feedbackWaitReason(uint32_t, float) const {
+    if(!AppConfig::kHeaterStep09TrialMode || !trialActive_ || heaterOn_)return 0;
+    if(!product_.localReady())return 2;
+    if(!product_.airDemand())return 3;
+    return 0;
   }
   uint32_t feedbackTotalHeatMs() const {
-    return AppConfig::kHeaterStep09TrialMode ? feedback_.totalHeatMs() : 0;
+    return AppConfig::kHeaterStep09TrialMode?trialTotalHeatMs_:0;
   }
   bool heaterLocked() const {
-    if (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode)
-      return false;
+    if(AppConfig::kHeaterStep09TrialMode)return !trialMenuReady_;
+    if(AppConfig::kHeaterCommissioningMode)return false;
     return !AppConfig::kHeaterOutputEnabled ||
            !AppConfig::kHeaterProfileApproved ||
            !AppConfig::kHeaterNtcModelApproved ||
@@ -259,13 +292,16 @@ class SafetyController {
   HeaterControl::Policy policy_{}; // legacy native replay and stop() only
   static HeaterProductAir::Limits productLimits() {
     HeaterProductAir::Limits lim{};
-    lim.qualified = AppConfig::kHeaterProfileApproved &&
-                    AppConfig::kHeaterNtcModelApproved;
-    // Four operational thresholds loaded from NVS, not fixed constants.
-    lim.airHysteresisC = AppConfig::kChamberControlHysteresisC;
-    lim.fanPrerunMs = AppConfig::kHeaterFanPrerunMs;
-    lim.maxNtcAgeMs = AppConfig::kHeaterNtcMaxAgeMs;
-    lim.maxAirAgeMs = AppConfig::kHeaterChamberMaxAgeMs;
+    lim.qualified=false; // no user profile is pre-approved
+    const auto p=HeaterStep09AirFeedback::attendedAir55Parameters();
+    lim.airHysteresisC=AppConfig::kHeaterStep09TrialMode
+        ? p.airHysteresisC : AppConfig::kChamberControlHysteresisC;
+    lim.fanPrerunMs=AppConfig::kHeaterStep09TrialMode
+        ? p.fanPrerunMs : AppConfig::kHeaterFanPrerunMs;
+    lim.maxNtcAgeMs=AppConfig::kHeaterStep09TrialMode
+        ? p.maxNtcAgeMs : AppConfig::kHeaterNtcMaxAgeMs;
+    lim.maxAirAgeMs=AppConfig::kHeaterStep09TrialMode
+        ? p.maxAirAgeMs : AppConfig::kHeaterChamberMaxAgeMs;
     return lim;
   }
   HeaterProductAir::Controller product_{productLimits()};
@@ -274,6 +310,9 @@ class SafetyController {
   uint32_t lastNowMs_ = 0;
   uint32_t lastHeaterOnMs_ = 0;
   bool everHeated_ = false;
+  bool trialMenuReady_=false,trialActive_=false,trialCompleted_=false;
+  bool trialWatchdogFault_=false;
+  uint32_t trialStartMs_=0,trialTotalHeatMs_=0;
 #ifdef ARDUINO_ARCH_ESP32
   hw_timer_t *pulseTimer_ = nullptr;
   inline static volatile bool pulseTimerFired_ = false;
@@ -296,8 +335,8 @@ class SafetyController {
 
   void setHeater(bool requested) {
     const bool desired =
-        (AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode ||
-         AppConfig::kHeaterOutputEnabled) &&
+        ((AppConfig::kHeaterStep09TrialMode && trialMenuReady_) ||
+         AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterOutputEnabled) &&
         requested;
     if (heaterOn_ == desired) {
 #ifdef ARDUINO_ARCH_ESP32
@@ -305,10 +344,9 @@ class SafetyController {
       // GPIO-off deadline only after all NTC/SHT45/fan/STOP safety checks
       // have passed this iteration. A stalled loop leaves ISR to cut power.
       // No deliberate 20s heater-OFF pulse is imposed.
-      if (desired && AppConfig::kHeaterStep09TrialMode &&
-          feedback_.continuousThermostatEnabled()) {
+      if (desired && AppConfig::kHeaterStep09TrialMode) {
         if (!pulseTimer_ || pulseTimerFired_) {
-          feedback_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
+          trialWatchdogFault_=true;
           faultActive_ = true;
           forceHeaterOff();
           return;
@@ -341,7 +379,7 @@ class SafetyController {
           AppConfig::kHeaterOutputEnabled) {
         if (!pulseTimer_ || pulseTimerFired_) {
           if (AppConfig::kHeaterStep09TrialMode)
-            feedback_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
+            trialWatchdogFault_=true;
           else if (AppConfig::kHeaterCommissioningMode)
             commission_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog);
           faultActive_ = true;
