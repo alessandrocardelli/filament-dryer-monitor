@@ -257,21 +257,42 @@ class Ui {
     drawSelectableRow(47,time,selected==SetupField::Duration);
   }
 
-  void drawSettings(SettingsField selected,
-                    const PersistentSettings &settings) {
+  void drawSettings(SettingsField selected, const PersistentSettings &settings) {
     display_.setFont(u8g2_font_6x10_tf);
-    display_.drawStr(35, 9, "SETTINGS");
-    display_.drawHLine(0, 12, 128);
-
-    char volume[22];
-    char click[22];
-    snprintf(volume, sizeof(volume), "BUZZER      %s",
-             volumeName(settings.buzzerVolume));
-    snprintf(click, sizeof(click), "KEY CLICK   %s",
-             settings.keyClick ? "ON" : "OFF");
-
-    drawSelectableRow(20, volume, selected == SettingsField::BuzzerVolume);
-    drawSelectableRow(39, click, selected == SettingsField::KeyClick);
+    char header[24];
+    snprintf(header,sizeof(header),"SETTINGS %u/6",
+             static_cast<unsigned>(selected)+1U);
+    display_.drawStr(2,9,header);
+    display_.drawHLine(0,12,128);
+    const char *label="";
+    char value[24]{};
+    int16_t c=0;
+    switch(selected){
+      case SettingsField::BuzzerVolume:
+        label="VOLUME BUZZER";
+        snprintf(value,sizeof(value),"%s",volumeName(settings.buzzerVolume));break;
+      case SettingsField::KeyClick:
+        label="CLICK TASTI";
+        snprintf(value,sizeof(value),"%s",settings.keyClick?"ON":"OFF");break;
+      case SettingsField::NtcPause:label="NTC PAUSA HEAT";
+        c=settings.thermal.ntcPauseC;break;
+      case SettingsField::NtcRearm:label="NTC RIAVVIO";
+        c=settings.thermal.ntcRearmC;break;
+      case SettingsField::NtcFault:label="NTC GUASTO MAX";
+        c=settings.thermal.ntcFaultC;break;
+      case SettingsField::AirFault:label="ARIA GUASTO MAX";
+        c=settings.thermal.airFaultC;break;
+    }
+    if(static_cast<uint8_t>(selected)>=static_cast<uint8_t>(SettingsField::NtcPause)){
+      if(c)snprintf(value,sizeof(value),"%d C",c);
+      else snprintf(value,sizeof(value),"NON IMPOSTATA");
+    }
+    display_.drawStr(2,26,label);
+    display_.setFont(u8g2_font_helvB10_tf);
+    display_.drawStr(2,44,value);
+    display_.setFont(u8g2_font_5x8_tf);
+    display_.drawStr(2,56,"M:AVANTI  +/-:CAMBIA");
+    display_.drawStr(2,64,"M LUNGO:SALVA/ESCI");
   }
 
   void drawDrying(const CycleSettings &settings, const SensorSnapshot &sensor,
@@ -400,20 +421,12 @@ class Ui {
       display_.drawStr(2, 27, "Air SHT45 WAIT");
     }
 
-    // Only the electrical NTC resistance has been validated for diagnostics.
-    // SHT45 reads chamber air; the NTC is embedded in the heater assembly.
-    if (ntc.valid) {
-      // Current PROVISIONAL raw NTC backup cutoff. Not a permanent
-      // hard safety temperature, nor a Celsius thermometer.
-      snprintf(line, sizeof(line), "NTC %.1fk BAK%+.1fk",
-               ntc.resistanceOhms / 1000.0f,
-               (ntc.resistanceOhms - (AppConfig::kHeaterStep09TrialMode
-                  ? HeaterStep09AirFeedback::attendedSanwa90_85Parameters().ntcHardTripOhms
-                  : HeaterStep09AirFeedback::parameters().ntcHardTripOhms)) / 1000.0f);
-      display_.drawStr(2, 39, line);
-    } else {
-      display_.drawStr(2, 39, "NTC R  FAULT");
-    }
+    // Temperature uses new Vishay model, valid only after replacement.
+    if(ntc.valid){
+      snprintf(line,sizeof(line),"NTC %.1fC %.1fk",
+               ntc.temperatureC,ntc.resistanceOhms/1000.0f);
+      display_.drawStr(2,39,line);
+    } else display_.drawStr(2,39,"NTC R FAULT");
 
     if (sensor.valid) {
       snprintf(line, sizeof(line), "H %.0f%%       F %u%%",

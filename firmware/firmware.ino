@@ -170,9 +170,7 @@ static void selectNextSetupField() {
 }
 
 static void selectNextSettingsField() {
-  settingsField = (settingsField == SettingsField::BuzzerVolume)
-                      ? SettingsField::KeyClick
-                      : SettingsField::BuzzerVolume;
+  settingsField=static_cast<SettingsField>((static_cast<uint8_t>(settingsField)+1U)%6U);
 }
 
 static void adjustSetup(int8_t direction) {
@@ -221,9 +219,21 @@ static void adjustSettings(int8_t direction, uint32_t nowMs) {
     settings.buzzerVolume = static_cast<BuzzerVolume>(value);
     applyBuzzerSettings();
     buzzer.playVolumePreview(nowMs);
+  } else if(settingsField==SettingsField::KeyClick){
+    settings.keyClick=!settings.keyClick;
+    if(settings.keyClick)buzzer.playKeyClick(nowMs);
   } else {
-    settings.keyClick = !settings.keyClick;
-    if (settings.keyClick) buzzer.playKeyClick(nowMs);
+    int16_t *value=nullptr; bool air=false;
+    switch(settingsField){
+      case SettingsField::NtcPause:value=&settings.thermal.ntcPauseC;break;
+      case SettingsField::NtcRearm:value=&settings.thermal.ntcRearmC;break;
+      case SettingsField::NtcFault:value=&settings.thermal.ntcFaultC;break;
+      case SettingsField::AirFault:value=&settings.thermal.airFaultC;air=true;break;
+      default:break;
+    }
+    if(value)*value=ThermalSettings::adjust(*value,direction,
+         air?ThermalSettings::kAirMinC:ThermalSettings::kNtcMinC,
+         air?ThermalSettings::kAirMaxC:ThermalSettings::kNtcMaxC);
   }
 }
 
@@ -273,6 +283,7 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
       } else if (id == ButtonId::Mode &&
                  type == ButtonEventType::LongPress) {
         settingsStore.save(settings);
+        safety.configureThermalSettings(settings.thermal);
         enterState(AppState::Standby, nowMs);
       } else if (id == ButtonId::OnOff &&
                  type == ButtonEventType::ShortPress) {
@@ -342,7 +353,7 @@ void setup() {
 
   Serial.begin(115200);
   Serial.println();
-  Serial.println("Filament Dryer Monitor - integrated heater-control firmware");
+  Serial.println("Filament Dryer Monitor - Vishay UI4, HEATER LOCKED OFF");
   Serial.print("FW BUILD: ");
   Serial.println(FirmwareBuild::kId);
   Serial.print("FW MODE: ");
@@ -363,6 +374,7 @@ void setup() {
     Serial.println("WARNING: Preferences/NVS unavailable; using defaults");
   }
 
+  safety.configureThermalSettings(settings.thermal);
   ntc.begin(nowMs);
   sht45.begin(nowMs);
   buzzer.begin();
@@ -447,9 +459,8 @@ void loop() {
     minSessionNtcOhms = ntc.snapshot().resistanceOhms;
   }
 
-  // Attended research uses the 17 Oct independently measured Sanwa contact
-  // endpoints as raw-NTC hysteresis inputs, not a calibrated bead Celsius
-  // model. Product path keeps its own heater qualification flags OFF.
+  // UI4 nominal Vishay curve, menu limits, old heater trial disabled.
+  // Firmware heater output remains locked until separately qualified.
   safety.update(nowMs, ntc.snapshot(), sht45.snapshot(),
                 appState == AppState::Drying && cycle.isRunning(),
                 fan.attached() && fan.phase() == FanPhase::Running,
