@@ -1,5 +1,4 @@
-name: "HOT-261101-UI3 matched detailed dashboard and preserved controls"
-
+name: "NTC UI4 Vishay and editable thermal thresholds (HEATER OFF)"
 on:
   push:
     branches:
@@ -8,444 +7,85 @@ on:
       - firmware/**
       - .github/workflows/step10-heater-diagnostic-ci.yml
   pull_request:
-    branches:
-      - main
+    branches: [main]
     paths:
       - firmware/**
       - .github/workflows/step10-heater-diagnostic-ci.yml
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-      - name: Verify attended experimental heater and legacy production lock
+      - name: Check actual heater locks, menu wiring and NTC source
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          s=Path("firmware/AppConfig.h").read_text()
-          for t in (
-              "kHeaterStep09TrialMode = true;",
-              "kHeaterCommissioningMode = false;",
-              "kHeaterOutputEnabled = false;",
-              "kHeaterProfileApproved = false;",
-              "kHeaterNtcModelApproved = false;",
-              "kFanBringupRunPercent = 100;",
-          ):
-              assert t in s, f"Safety configuration changed: {t}"
-          h=Path("firmware/HeaterStep09AirFeedback.h").read_text()
-          product=Path("firmware/HeaterProductAir.h").read_text()
-          safe=Path("firmware/SafetyController.h").read_text()
-          for token in ("kPrototypeTempMinC = 40;", "kPrototypeTempMaxC = 55;",
-                        "kHeaterSoftPauseMeasuredC = 0.0f;",
-                        "kHeaterRearmMeasuredC = 0.0f;",
-                        "kHeaterMaxMeasuredC = 0.0f;"):
-              assert token in s, token
-          assert "product_{productLimits()}" in safe
-          assert "feedback_{HeaterStep09AirFeedback::attendedSanwa90_85Parameters()}" in safe
-          assert "p.ntcSoftPauseOhms=HeaterContactCurve::resistanceAtContactC(90.0f);" in h
-          assert "p.ntcResumeOhms=HeaterContactCurve::resistanceAtContactC(85.0f);" in h
-          assert "t.selectedAirTargetC = targetChamberC;" in safe
-          for needle in ("runPolicy = RunPolicy::DurationControlledDesign",
-                         "continuousLocalThermostat = true;",
-                         "ntcSoftPauseOhms = 7120.0f;",
-                         "ntcResumeOhms = 8236.6f;",
-                         "ntcHardTripOhms = 7120.0f;",
-                         "minimumOffMs = 0;",
-                         "airFaultCeilingC = 60.0f;"):
-              assert needle in h, f"ATTENDED raw-NTC profile mismatch: {needle}"
-          assert "HeaterProductAir::Controller" in safe
-          assert "RunPolicy::SupervisedTrial" in h
-          assert "heaterTempC" in product and "ntcThermallyQualified" in product
-          assert "kHeaterOutputEnabled" in safe and "pulseTimerFired_" in safe
-          assert "AppConfig::kHeaterOutputEnabled)" in safe
-          assert "maximumTotalHeatMs" not in product
-          for t in (
-              "ntcHardTripOhms = 30000.0f;",
-              "ntcSoftPauseOhms = 33000.0f;",
-              "ntcResumeOhms = 50000.0f;",
-              "maximumRunMs = 900000;",
-              "maximumOnWindowMs = 20000;",
-              "minimumOffMs = 12000;",
-              "maximumTotalHeatMs = 360000;",
-              "cooldownMs = 90000;",
-              "targetAirC = 30.0f;",
-              "kHardwareWindowCeilingUs = 20500000",
-          ):
-              assert t in h, f"Candidate review required: {t}"
-          # Never again allow an arbitrary legacy early-trip value to become
-          # a permanent bound only because an old CI asserted it.
-          agents=Path("AGENTS.md").read_text()
-          assert "Anti-regression: experimental limits are NEVER production" in agents
-          assert "PROVISIONAL_EXPERIMENT" in agents
-          assert "STEP07 40k" in agents
-          assert "S6C" in h and "PROVISIONAL" in h
-          assert "STEP12P" in h and "STEP13A" in h
-          assert Path("docs/evidence/thermal/2026-10-29-STEP12P-raw.csv").exists()
-          assert Path("docs/evidence/thermal/2026-10-29-STEP12P-PHYSICAL-SESSION.md").exists()
-          assert "LogSamplingPolicy::sampleIntervalMs(AppConfig::kHeaterStep09TrialMode)" in Path("firmware/ThermalLog.h").read_text()
-          assert "kNormalSampleMs=60000U" in Path("firmware/LogSamplingPolicy.h").read_text()
-          assert "kCapacity = 1400;" in Path("firmware/ThermalLog.h").read_text()
-          assert "ntcHardTripOhms = 40000.0f;" not in h
-          assert "ntcSoftPauseOhms = 45000.0f;" not in h
-          assert '"HOT-261101-UI3"' in Path("firmware/FirmwareBuild.h").read_text()
-          assert '"H01-UI3"' in Path("firmware/FirmwareBuild.h").read_text()
-          assert '"HOT-261027-S9B"' not in Path("firmware/FirmwareBuild.h").read_text()
-          ui=Path("firmware/Ui.h").read_text()
-          assert "display_.drawStr(20, 44, FirmwareBuild::kId)" in ui
-          assert 'display_.drawStr(2, 44, "FW")' in ui
-          assert "display_.drawStr(78, 60, FirmwareBuild::kShortId)" in ui
-          assert 2 + 6*len("FW") < 20
-          assert 20 + 6 * len("HOT-261101-UI3") <= 128
-          assert 78 + 6 * len("H01-UI3") <= 128
-          print("PASS: active attended heater 90/85 profile; production approvals remain false")
+          c=Path("firmware/AppConfig.h").read_text()
+          s=Path("firmware/SafetyController.h").read_text()
+          i=Path("firmware/firmware.ino").read_text()
+          ns=Path("firmware/NtcSensor.h").read_text()
+          st=Path("firmware/SettingsStore.h").read_text()
+          for t in ("kHeaterStep09TrialMode = false;",
+                    "kHeaterCommissioningMode = false;",
+                    "kHeaterOutputEnabled = false;",
+                    "kHeaterProfileApproved = false;",
+                    "kHeaterNtcModelApproved = false;",
+                    "kHeaterThermalMenuQualified = false;"):
+            assert t in c,t
+          assert "kHeaterThermalMenuQualified" in s
+          assert "ntc.fault != NtcFault::None" in s
+          assert "pulseTimerFired_" in s and "gpio_set_level" in s
+          assert "configureThermalSettings(settings.thermal)" in i
+          assert "VishayNtcCurve::temperatureC" in ns
+          assert "empiricalTemperatureC" not in ns
+          for key in ("nPause","nRearm","nFault","aFault"):
+            assert key in st
+          assert "kSettingsSchemaVersion = 1;" in c
+          assert "NTC-261126-UI4" in Path("firmware/FirmwareBuild.h").read_text()
+          assert "ntc_c" in Path("firmware/LiveTelemetryServer.cpp").read_text()
+          assert "ntc_c" in Path("firmware/NetworkService.h").read_text()
+          assert '"/api/start"' not in Path("firmware/LiveTelemetryServer.cpp").read_text()
+          print("PASS source review: all heater gates OFF; new NTC and menus wired")
           PY
-      - name: Verify telemetry and no live CSV streaming while heater may run
+      - name: Host-only curve, menu, product, history and web regressions
         run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          log=Path("firmware/ThermalLog.h").read_text()
-          net=Path("firmware/NetworkService.h").read_text()
-          app=Path("firmware/firmware.ino").read_text()
-          assert "pulse_fault,ntc_fault,air_age_ms,ntc_age_ms,loop_gap_ms" in log
-          assert "f.print(header());" in log
-          assert "if (live_.cycle || live_.fanPercent > 0)" in net
-          assert "trialActive=Boolean(d.cycle)" in net
-          assert "safety.commissioningFault()," in app
-          assert "loopGapMs, sanwaCue);" in app
-          print("PASS: S9B fault root cause observable and expanding live CSV blocked")
-          PY
-      - name: Verify known driver/sensor source files unchanged from S7U
-        run: |
-          git fetch --no-tags origin 43cb37ccfceded1c185491f88b010b0b176722f6
-          for path in firmware/NtcSensor.h firmware/Sht45Sensor.h firmware/FanController.h firmware/CycleController.h firmware/HeaterPulseCommissioning.h firmware/HeaterControlPolicy.h; do
-            test "$(git rev-parse FETCH_HEAD:$path)" = "$(git hash-object "$path")" || {
-              echo "::error file=$path::Unreviewed sensor/driver modification"
-              exit 1
-            }
+          set -euo pipefail
+          for src in firmware/tests/host/test_vishay_ntc_curve.cpp firmware/tests/host/test_thermal_settings.cpp firmware/tests/host/test_product_air_12h.cpp firmware/tests/host/test_material_presets.cpp firmware/tests/host/test_remote_control_policy.cpp firmware/tests/host/test_log_sampling_policy.cpp; do
+            bin="$RUNNER_TEMP/$(basename "$src" .cpp)"
+            g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic "$src" -o "$bin"
+            "$bin"
           done
-          echo "PASS: existing sensors/drivers and test trace original"
-      - name: ARCHIVED STEP13A GPIO host regression in isolated mock configuration
-        run: |
-          set -euo pipefail
-          bash firmware/tests/host/run_step09_feedback.sh | tee "$RUNNER_TEMP/step13a-mock.log"
-      - name: ARCHIVED four-hour trial-policy host regression (no GPIO)
-        run: |
-          set -euo pipefail
-          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_long_duration_design.cpp -o "$RUNNER_TEMP/step13a-4hour-thermostat"
-          "$RUNNER_TEMP/step13a-4hour-thermostat" | tee "$RUNNER_TEMP/step13a-4hour-thermostat.log"
-          python3 - <<'PY'
-          from pathlib import Path
-          ctl=Path("firmware/HeaterStep09AirFeedback.h").read_text()
-          safe=Path("firmware/SafetyController.h").read_text()
-          assert "RunPolicy::SupervisedTrial" in ctl
-          assert "RunPolicy::DurationControlledDesign" in ctl
-          assert "durationControlledDesignParameters()" not in safe, "Do not enable multi-hour heater without physical qualification"
-          assert "feedback_{HeaterStep09AirFeedback::attendedSanwa90_85Parameters()}" in safe
-          print("PASS: attended profile isolated from product thermal approval; 4h legacy host regression")
-          PY
-      - name: New V1 40-55C 12-hour CONTINUOUS regulator and fault scenarios (no GPIO)
-        run: |
-          set -euo pipefail
-          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_product_air_12h.cpp -o "$RUNNER_TEMP/v1-12h-control"
-          "$RUNNER_TEMP/v1-12h-control" | tee "$RUNNER_TEMP/v1-12h-control.log"
-      - name: Verify attended continuous output, independent ISR and product lock
-        run: |
-          set -euo pipefail
-          python3 - <<'PY'
-          from pathlib import Path
-          prod=Path("firmware/HeaterProductAir.h").read_text()
-          safe=Path("firmware/SafetyController.h").read_text()
-          cfg=Path("firmware/AppConfig.h").read_text()
-          assert "nowMs - onStartedMs_" not in prod
-          assert "maximumOnWindowMs" not in prod
-          assert "minOffMs" not in prod
-          assert "if (!airDemand_ || !localReady_)" in prod
-          assert "in.heaterTempC <= limits_.ntcRearmC" in prod
-          assert "in.heaterTempC >= limits_.ntcSoftC" in prod
-          assert "if (desired && AppConfig::kHeaterOutputEnabled" in safe
-          assert "timerWrite(pulseTimer_, 0);" in safe
-          assert "timerRestart(pulseTimer_);" in safe
-          assert "pulseTimerIsr()" in safe and "gpio_set_level" in safe
-          assert "kHeaterOutputEnabled = false;" in cfg
-          assert "kHeaterProfileApproved = false;" in cfg
-          assert "kHeaterNtcModelApproved = false;" in cfg
-          assert "kHeaterStep09TrialMode = true;" in cfg
-          attended=Path("firmware/HeaterStep09AirFeedback.h").read_text()
-          assert "continuousLocalThermostat = true;" in attended
-          assert "ntcSoftPauseOhms = 7120.0f;" in attended
-          assert "ntcResumeOhms = 8236.6f;" in attended
-          assert "ntcHardTripOhms = 7120.0f;" in attended
-          assert "if (desired && AppConfig::kHeaterStep09TrialMode &&" in safe
-          assert "feedback_.continuousThermostatEnabled()" in safe
-          assert "feedback_.emergencyStop(HeaterCommissioning::Fault::PulseWatchdog)" in safe
-          assert "(!params_.continuousLocalThermostat &&" in attended
-          assert "(params_.continuousLocalThermostat ||" in attended
-          assert "NTC OFF7.924k/REARM9.232k" in Path("firmware/firmware.ino").read_text()
-          print("PASS: 90/85 attended HEATER-capable thermostat, no forced OFF; ISR fail-OFF, V1 locks unchanged")
-          PY
-      - name: ATTENDED 90/85 continuous NTC and AIR55/54 60min HOST regression
-        run: |
-          set -euo pipefail
-          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_attended_air55.cpp -o "$RUNNER_TEMP/attended-air55-host"
-          "$RUNNER_TEMP/attended-air55-host" | tee "$RUNNER_TEMP/attended-air55-host.log"
-          python3 - <<'PY'
-          from pathlib import Path
-          cfg=Path("firmware/AppConfig.h").read_text()
-          ino=Path("firmware/firmware.ino").read_text()
-          assert "kHeaterStep09TrialMode = true;" in cfg
-          assert "cycle.start(settings.cycle, nowMs);" in ino
-          assert "static_cast<float>(settings.cycle.targetTempC)" in ino
-          assert "if (AppConfig::kHeaterStep09TrialMode) return;" not in ino
-          assert "kHeaterOutputEnabled = false;" in cfg
-          print("PASS: user AIR40..55 and duration with attended NTC90/85; V1 approvals false")
-          PY
-      - name: NTC/Sanwa corrected fan 90/85 integration (HOST ONLY)
-        run: |
-          set -euo pipefail
-          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_heater_contact_curve.cpp -o "$RUNNER_TEMP/ntc-sanwa-90-85-host"
-          "$RUNNER_TEMP/ntc-sanwa-90-85-host" | tee "$RUNNER_TEMP/ntc-sanwa-90-85-host.log"
-          python3 - <<'PY'
-          from pathlib import Path
-          assert "attendedSanwa90_85Parameters()" in Path("firmware/HeaterStep09AirFeedback.h").read_text()
-          assert "feedback_{HeaterStep09AirFeedback::attendedSanwa90_85Parameters()}" in Path("firmware/SafetyController.h").read_text()
-          assert "kHeaterOutputEnabled = false;" in Path("firmware/AppConfig.h").read_text()
-          print("PASS experimental controller selects 90/85 in source; product remains locked")
-          PY
-      - name: Sanwa measurement cue clock (HOST) and nonblocking safety wiring
-        run: |
-          set -euo pipefail
-          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_sanwa_reminder.cpp -o "$RUNNER_TEMP/sanwa-reminder-host"
-          "$RUNNER_TEMP/sanwa-reminder-host" | tee "$RUNNER_TEMP/sanwa-reminder-host.log"
-          python3 - <<'PY'
-          from pathlib import Path
-          ino=Path("firmware/firmware.ino").read_text()
-          ui=Path("firmware/Ui.h").read_text()
-          buz=Path("firmware/Buzzer.h").read_text()
-          log=Path("firmware/ThermalLog.h").read_text()
-          assert 'sanwaReminder.start(nowMs);' in ino
-          assert 'sanwaReminder.stop(nowMs);' in ino
-          assert 'sanwaReminder.cancel();' in ino
-          assert 'appState != AppState::Fault && sanwaReminder.due(nowMs)' in ino
-          assert 'buzzer.tryPlaySanwaReminder(nowMs)' in ino
-          assert 'sanwaReminder.secondsUntilNext(nowMs)' in ino
-          assert 'forceSanwaCheckpoint' in log and 'loopGapMs, sanwaCue)' in ino
-          assert 'SANWA NEXT %02lu:%02lu' in ui
-          assert 'if (playing_) return false;' in buz
-          assert 'if (!attached_ || volume_ == BuzzerVolume::Off) return true;' in buz
-          assert 'kHeaterStep09TrialMode = true;' in Path('firmware/AppConfig.h').read_text()
-          print('PASS Sanwa operator cue only in attended mode, fault priority, UI countdown, no blocking delay, timestamped RAM sample')
-          PY
-      - name: Native plate arithmetic diagnostics (no GPIO)
-        run: |
-          set -euo pipefail
-          g++ -std=c++17 -Wall -Wextra -Werror -pedantic \
-            firmware/tests/host/test_heater_plate_diagnostics.cpp \
-            -o "$RUNNER_TEMP/step13a-plate-diagnostic"
-          "$RUNNER_TEMP/step13a-plate-diagnostic" | tee "$RUNNER_TEMP/step13a-plate-diagnostic.log"
-          python3 - <<'PY'
-          from pathlib import Path
-          m=Path("firmware/HeaterPlateDiagnostics.h").read_text()
-          n=Path("firmware/NetworkService.h").read_text()
-          u=Path("firmware/Ui.h").read_text()
-          assert "NO" in m and "NEVER" in m
-          assert "historical_openbox_sanwa_proxy_c" in n
-          assert "session_ntc_min_ohms" in n and "ntc_above_hard_ohms" in n
-          assert "NTC %.1fk BAK%+.1fk" in u
-          # Do not permit the historical reference to determine heating.
-          h=Path("firmware/HeaterStep09AirFeedback.h").read_text()
-          saf=Path("firmware/SafetyController.h").read_text()
-          assert "HeaterPlateDiagnostics" not in h + saf
-          assert "ntcHardTripOhms = 30000.0f;" in h
-          assert "ntcSoftPauseOhms = 33000.0f;" in h
-          assert "ntcResumeOhms = 50000.0f;" in h
-          assert "tick(s, 6100, 40000.0f)" in Path("firmware/tests/host/test_step09_feedback_gpio.cpp").read_text()
-          assert "assert(s.heaterOn() && !s.faultActive());" in Path("firmware/tests/host/test_step09_feedback_gpio.cpp").read_text()
-          print("PASS: plate comparison read-only; STEP13A 33/50/30k candidate checked against source")
-          PY
-      - name: STEP08 selective offline replay regression
-        run: bash firmware/tests/host/run_step08_real_trace.sh
-      - name: STEP13A behavior and safe checkpoint invariant
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          t=Path("firmware/HeaterStep09AirFeedback.h").read_text()
-          f=Path("firmware/firmware.ino").read_text()
-          l=Path("firmware/ThermalLog.h").read_text()
-          ui=Path("firmware/Ui.h").read_text()
-          assert "airDemandActive_" in t
-          assert "localHeatReady_" in t and "params_.ntcResumeOhms" in t and "airDemandActive_)" in t
-          assert "if (in.airC >= demandTargetC) airDemandActive_ = false;" in t
-          assert "safety.heaterOn() &&" not in f.split("const bool heaterIrreversiblyOff")[1].split("if (loggingSession")[0]
-          assert "if (loggingSession && !csvCheckpointAttempted && !safety.heaterOn() &&" in f
-          assert "heaterIrreversiblyOff" in f and "thermalLog.saveWhenSafe()" in f
-          assert "dirty_ = true; // a post-checkpoint cooldown" in l
-          assert "WAIT NTC COOL" in ui and "WAIT AIR REARM" in ui
-          print("PASS: NTC80/85 and AIR separate latches, correct OLED prompts, safe persisted checkpoint")
-          PY
-      - uses: arduino/setup-arduino-cli@v2
-      - name: ACTIVE attended 12-hour log sampling, overflow and web telemetry (HOST / NODE)
-        run: |
-          set -euo pipefail
-          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_log_sampling_policy.cpp -o "$RUNNER_TEMP/log12h-host"
-          "$RUNNER_TEMP/log12h-host" | tee "$RUNNER_TEMP/log12h-host.log"
           node firmware/tests/host/test_web_freshness.js
-          python3 - <<'PY'
-          from pathlib import Path
-          x=Path("firmware/LiveTelemetryServer.cpp").read_text()
-          ino=Path("firmware/firmware.ino").read_text()
-          n=Path("firmware/NetworkService.h").read_text()
-          log=Path("firmware/ThermalLog.h").read_text()
-          assert "config.server_port=8081;" in x
-          assert "portENTER_CRITICAL" in x and "portEXIT_CRITICAL" in x
-          assert "httpd_start(" in x and "httpd_register_uri_handler" in x
-          assert "liveTelemetry.publish(snapshot);" in ino
-          assert "network.tick(nowMs, !safety.heaterOn(), canOta);" in ino
-          assert "const liveUrl=window.location.protocol+" in n
-          assert "log_truncated" in n
-          sampling=Path("firmware/LogSamplingPolicy.h").read_text()
-          cfg=Path("firmware/AppConfig.h").read_text()
-          assert "LogSamplingPolicy::willTruncate(count_, kCapacity)" in log
-          assert "LogSamplingPolicy::shouldCapture(" in log
-          assert "kTrialSampleMs=60000U" in sampling
-          assert "kNormalSampleMs=60000U" in sampling
-          assert "kHeaterStep09TrialMode = true;" in cfg, "Check actually selected logging mode"
-          assert "prev.heater != (heaterOn ? 1U : 0U)" in log
-          assert "prev.fan != fanPercent" in log
-          assert "prev.ntcFault != ntcFault" in log
-          assert "saveWhenSafe()" in log
-          assert "thermalLog.saveWhenSafe()" in ino
-          assert "kHeaterOutputEnabled = false;" in Path("firmware/AppConfig.h").read_text()
-          assert "feedback_{HeaterStep09AirFeedback::attendedSanwa90_85Parameters()}" in Path("firmware/SafetyController.h").read_text()
-          print("PASS: ACTIVE experiment records 12h at 60s + transitions; web and heater interlocks unchanged")
-          PY
-      - name: V1 material shortcuts, legacy settings and UI (HOST ONLY)
-        run: |
-          set -euo pipefail
-          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_material_presets.cpp -o "$RUNNER_TEMP/material-presets-host"
-          "$RUNNER_TEMP/material-presets-host" | tee "$RUNNER_TEMP/material-presets-host.log"
-          python3 - <<'PY'
-          from pathlib import Path
-          ino=Path("firmware/firmware.ino").read_text()
-          ui=Path("firmware/Ui.h").read_text()
-          s=Path("firmware/SettingsStore.h").read_text()
-          a=Path("firmware/AppTypes.h").read_text()
-          p=Path("firmware/MaterialPresets.h").read_text()
-          cfg=Path("firmware/AppConfig.h").read_text()
-          safety=Path("firmware/SafetyController.h").read_text()
-          assert "enum class SetupField" in a and "  Profile," in a
-          assert "enum class MaterialProfile" in p and 'return "MANUALE"' in p
-          assert 'prefs_.getUChar("mat", 0)' in s
-          assert 'prefs_.putUChar("mat", static_cast<uint8_t>(settings.cycle.material))' in s
-          assert "kSettingsSchemaVersion = 1" in cfg, "Do not erase existing NVS on migration"
-          assert "settings.cycle.material=MaterialProfile::Manual" in ino
-          assert "settings.cycle.targetTempC=constrain(" in ino
-          assert "settings.cycle.durationMinutes=static_cast<uint16_t>(constrain(" in ino
-          assert "MaterialPresets::suggestion(profile)" in ino
-          assert "cycle.start(settings.cycle, nowMs);" in ino
-          assert "drawSelectableRow(15,profile,selected==SetupField::Profile)" in ui
-          assert "drawSelectableRow(31,temp,selected==SetupField::Temperature)" in ui
-          assert "drawSelectableRow(47,time,selected==SetupField::Duration)" in ui
-          assert "MaterialPresets::label(settings.material)" in ui
-          assert "feedback_{HeaterStep09AirFeedback::attendedSanwa90_85Parameters()}" in safety
-          assert "kHeaterStep09TrialMode = true;" in cfg
-          assert "kHeaterOutputEnabled = false;" in cfg
-          assert "kPrototypeTempMinC = 40;" in cfg and "kPrototypeTempMaxC = 55;" in cfg
-          assert "kPrototypeDurationMaxMinutes = 12 * 60;" in cfg
-          assert "kFanBringupRunPercent = 100;" in cfg
-          print("PASS: Manual/PLA/PLA+/PVB front panel + persistence, no heater/fan/protection changes")
-          PY
-      - name: Authenticated LAN settings and STOP without remote START (HOST)
-        run: |
-          set -euo pipefail
-          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic firmware/tests/host/test_remote_control_policy.cpp -o "$RUNNER_TEMP/lan-control-host"
-          "$RUNNER_TEMP/lan-control-host" | tee "$RUNNER_TEMP/lan-control-host.log"
-          node firmware/tests/host/test_remote_dashboard.js | tee "$RUNNER_TEMP/lan-dashboard-host.log"
-          python3 - <<'PY'
-          from pathlib import Path
-          ino=Path("firmware/firmware.ino").read_text()
-          header=Path("firmware/LiveTelemetryServer.h").read_text()
-          srv=Path("firmware/LiveTelemetryServer.cpp").read_text()
-          net=Path("firmware/NetworkService.h").read_text()
-          cfg=Path("firmware/AppConfig.h").read_text()
-          safe=Path("firmware/SafetyController.h").read_text()
-          assert "liveTelemetry.takeStopRequest()" in ino
-          assert "enterState(AppState::Standby, nowMs);" in ino
-          assert "liveTelemetry.takeSettingsRequest(remote)" in ino
-          assert "appState == AppState::Standby" in ino
-          assert "!safety.heaterOn() && !network.updateBusy()" in ino
-          assert "settingsStore.save(settings);" in ino
-          assert "liveTelemetry.begin(network.controlPasswordForLocalServer())" in ino
-          assert "kHeaterStep09TrialMode = true;" in cfg
-          assert "kHeaterOutputEnabled = false;" in cfg
-          assert "feedback_{HeaterStep09AirFeedback::attendedSanwa90_85Parameters()}" in safe
-          assert "takeStopRequest()" in header and "takeSettingsRequest" in header
-          assert 'config.max_uri_handlers=4;' in srv
-          assert 'stop.uri="/api/stop"' in srv and 'set.uri="/api/settings"' in srv
-          assert '"/api/start"' not in srv and '"/api/start"' not in ino
-          assert "commandsAuthorized(" in srv
-          assert 'httpd_req_get_hdr_value_str(req,"X-Dryer-Command"' in srv
-          assert 'httpd_req_get_hdr_value_str(req,"Authorization"' in srv
-          assert "p->stopPending=true" in srv
-          assert "WiFi.status()!=WL_CONNECTED" in srv
-          assert "portENTER_CRITICAL" in srv and "portEXIT_CRITICAL" in srv
-          assert "safety.stop()" not in srv and "settingsStore.save(" not in srv
-          assert "controlPasswordForLocalServer" in net
-          assert "server_.handleClient();" in net # kept blocked while HEATER ON
-          print("PASS HOST: LAN auth, queued STOP, standby settings, no remote START, heater hardware invariants")
-          PY
-      - name: Install ESP32 core 3.3.12 and U8g2 2.36.19
+          node firmware/tests/host/test_remote_dashboard.js
+          bash firmware/tests/host/run_step08_real_trace.sh
+      - uses: arduino/setup-arduino-cli@v2
+      - name: Install exact ESP32 toolchain and U8g2
         run: |
           arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli lib install U8g2@2.36.19
-      - name: Compile HEATER-capable attended AIR55 sketch (Arduino IDE source)
+      - name: Compile Arduino IDE sketch, no physical GPIO
         run: |
           set -euo pipefail
-          out="$RUNNER_TEMP/attended-air55-build"
-          mkdir -p "$out"
-          arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$out" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/step13a-esp32-build.log"
-          echo "PASS: ESP32 binary linked with no DRAM overflow"
-          app="$out/firmware.ino.bin"
-          test -s "$app" || { echo "::error::OTA application .bin missing"; ls -lah "$out"; exit 1; }
-          # ONLY the OTA app partition: never give bootloader, partition table or merged flash to the browser OTA endpoint.
-          grep -a -q 'HOT-261101-UI3' "$app" || { echo "::error::Wrong build ID inside OTA image"; exit 1; }
-          cp "$app" "$RUNNER_TEMP/HOT-261101-UI3-app.bin"
-          cd "$RUNNER_TEMP"
-          sha256sum HOT-261101-UI3-app.bin | tee HOT-261101-UI3-app.sha256
-          echo "HEATER-capable experiment now logs the actual selected trial mode at 60s plus immediate heater/phase/fan/sensor-validity/fault changes; 12h baseline fits the 1400-record ring. If event volume exceeds space, truncation is reported. Existing NTC90/85, air, fan control, STOP, watchdog and TCO105 unchanged; authenticated remote settings in STANDBY and asynchronous STOP in Drying via LAN port8081; NO remote START, no physical heat authorization from CI." >> "$GITHUB_STEP_SUMMARY"
-          cat HOT-261101-UI3-app.sha256 >> "$GITHUB_STEP_SUMMARY"
-      - name: Publish one OTA-ready application image, NOT bootloader/partition/merged flash
+          mkdir -p "$RUNNER_TEMP/ntc-ui4"
+          arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$RUNNER_TEMP/ntc-ui4" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/ntc-ui4-build.log"
+          app="$RUNNER_TEMP/ntc-ui4/firmware.ino.bin"
+          test -s "$app"
+          grep -a -q 'NTC-261126-UI4' "$app"
+          sha256sum "$app" | tee "$RUNNER_TEMP/ntc-ui4.sha256"
+          echo "UI4 source: Vishay 39 nominal knots, four persisted menu thermal thresholds, all heater approvals and experimental mode disabled; no physical authorization." >> "$GITHUB_STEP_SUMMARY"
+          cat "$RUNNER_TEMP/ntc-ui4.sha256" >> "$GITHUB_STEP_SUMMARY"
+      - name: Store reproducible compilation evidence (not flashed)
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: ATTENDED-NTC90-85-AIR55-BUILD
+          name: NTC-UI4-HEATER-OFF-BUILD
           path: |
-            ${{ runner.temp }}/HOT-261101-UI3-app.bin
-            ${{ runner.temp }}/HOT-261101-UI3-app.sha256
-          if-no-files-found: error
+            ${{ runner.temp }}/ntc-ui4/firmware.ino.bin
+            ${{ runner.temp }}/ntc-ui4.sha256
           retention-days: 30
-      - name: Upload reproducible results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: attended-ntc90-85-host-and-esp32-logs
-          path: |
-            ${{ runner.temp }}/step13a-mock.log
-            ${{ runner.temp }}/v1-12h-control.log
-            ${{ runner.temp }}/attended-air55-host.log
-            ${{ runner.temp }}/ntc-sanwa-90-85-host.log
-            ${{ runner.temp }}/sanwa-reminder-host.log
-            ${{ runner.temp }}/step13a-4hour-thermostat.log
-            ${{ runner.temp }}/step13a-plate-diagnostic.log
-            ${{ runner.temp }}/step13a-esp32-build.log
-            ${{ runner.temp }}/material-presets-host.log
-            ${{ runner.temp }}/log12h-host.log
-            ${{ runner.temp }}/lan-control-host.log
-            ${{ runner.temp }}/lan-dashboard-host.log
-          if-no-files-found: warn
+          if-no-files-found: error

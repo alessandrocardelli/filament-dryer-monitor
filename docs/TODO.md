@@ -1,4 +1,6 @@
-# One priority — verify ESP32 NTC resistance readout with known 1% resistors
+# One priority — verify J7 resistance measurement with known 1% resistors (UI4 source now prepared)
+
+**26 November source update:** OLED UI4 + nominal Vishay converter now coded, all four thermal thresholds editable and persisted with zero/unconfigured defaults, heater modes OFF, historical UI3 preserved. Product thermal limits are fed through saved settings but never enabled without separate qualification. **CI/build are software evidence only, no replacement installed or physical heating authorized.** Avoid reflashing the old OEM NTC and interpreting its reading as Vishay °C. D033 records the agreement.
 
 **Operator update 23 Nov 2026:** The original unmarked OEM NTC is replaceable. User reports an order of the selected Vishay SMD thermistor (previously chosen **`NTCS0603E3104FXT`**, 0603 1.6x0.8mm, nominal 100kΩ R25, B25/85=4100K, ±1% on each parameter) and an MG Chemicals desoldering braid. Actual new part number/packaging and physical replacement are **not yet verified**. The existing Sanwa contact probe is fixed in place; **do not request to move it, take more photos or repeat old 60-minute trials**.
 
@@ -33,14 +35,13 @@ Resistor "temperature" equivalents are **nominal values from the new Vishay publ
 
 **Expected output / next gate:** a small nominal-versus-DMM-versus-ESP32 table and statement whether the analog resistance readout is accurate enough from ~4.7 to100kΩ to support the *new Vishay* published R(T) conversion. This does not validate NTC thermal contact, TCO, fan airflow or material temperatures. It addresses the critical electrical uncertainty without another AIR55 heating cycle. Retain original 22-Nov failure CSV, no changes to 7120Ω fault or other thermostat/protection code and no automatic physical authorization. The 60min heater experiment remains ABORTED.
 
-## Next software work after the readout check — host-only Vishay temperature conversion
+## Next gate after the readout check — actual Vishay replacement and thermal qualification
 
-1. Check actual ordered/delivered MPN is precisely `NTCS0603E3104FXT` when package becomes available. Do **not** silently use this table for a different Vishay or non-Vishay thermistor.
-2. On the existing experimental branch, prepare a deterministic lookup converting measured NTC Ω to Celsius using **the 5°C Vishay manufacturer knots and log-R interpolation**, with explicit electrical-invalid/out-of-table bounds. Verify host-side monotonicity and exact 5°C manufacturer anchor reproduction; independently test 1°C interpolated points. **Do not substitute a generic beta=4100 curve when the manufacturer-specific R(T) table is available.**
-3. BEFORE physically enabling the heater with the new NTC, review the already-known ESP32 R28 divider and ADC error in the critical 7–12kΩ range (previous calibration covered33–100kΩ only). Decide minimal proportionate verification after the part arrives; do not mistake R25±1%/B±1% for total system accuracy.
-4. **Thermal safety envelope remains separate:** once new sensor exists, identify appropriate experimental local pause/rearm and independent hard over-temperature limits in °C based on TCO/material/installation constraints. Historic OEM thresholds `7120/7924/9232Ω` and D030 Sanwa90/85 belong to the **previous OEM NTC** and may not be carried over automatically. Sensor invalid/stale, air fault, STOP, fan/ON watchdog, cooldown, and installed 105°C TCO are retained; do not bypass or re-rate. Require deliberate operator authorization and documented preflight before a new heated test.
-
-**Completion criterion:** an approved host-tested temperature conversion for confirmed replacement MPN, with a separately reviewed safe thermal-control envelope and actual replacement still tracked as pending until the hardware has been changed. No code was changed, compiled or flashed by the 23-Nov source-table collection.
+1. Confirm delivered package MPN `NTCS0603E3104FXT`. Install it replacing original SMD NTC, avoiding changes to fixed Sanwa probe.
+2. Finish J7 resistor test with actual DMM values (especially 6.8/8.2/10kΩ) and correct ADC parameters *only if evidence warrants* before trusting nominal Vishay °C.
+3. Verify the OLED six SETTINGS pages, NVS retention and :8081/port80 live `ntc_c`, raw `ntc_ohms` and saved thermal values with heater electrically disconnected. The new curve is **not valid on the old OEM sensor**.
+4. All four menu temperatures are user editable; `0` is unconfigured, and incoherent `NTC rearm >= pause`, `pause >= hard fault`, or `AIR fault <= AIR target` cannot pass product controller validity checks. No numerical temperatures were approved as safe.
+5. Confirm component mounting, material/TCO105/duct thermal limits and independent faults, then explicitly review a later HEATER-enabled test image and single supervised Noctua AIR55 run. Retain old raw evidence, old firmware and independent protections. A successful CI does not authorize physical heating.
 
 ## Historical evidence and deferred work
 

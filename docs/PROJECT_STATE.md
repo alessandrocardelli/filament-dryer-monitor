@@ -1,6 +1,6 @@
 # Current project state
 
-State updated 2026-11-23 after operator ordered a specified Vishay replacement NTC; no replacement installed and no new thermal test. The 2026-11-22 Noctua+ASA AIR55 test remains an ABORTED NTC R LIMIT trial. This is the single current-state snapshot for `experiment/step10-heater-diagnostics-air25-2026-10-28`; no subsequent heating test or production qualification has occurred.
+State updated 2026-11-26 for UI4 source (Vishay nominal NTC curve and user-configurable thermal limits); new NTC installation and physical heating remain unverified. The 2026-11-22 Noctua+ASA AIR55 test remains an ABORTED NTC R LIMIT trial. This is the single current-state snapshot for `experiment/step10-heater-diagnostics-air25-2026-10-28`; no subsequent heating test or production qualification has occurred.
 
 ## Current firmware and evidence
 
@@ -68,7 +68,14 @@ On 1 November the operator reported persistence and START/STOP functioning with 
 - AIR rose only49.61→49.82°C between50–60min: near-plateau in those conditions, not a global ceiling. Ambient ~16°C is the operator's retrospective estimate, not an independent trace; initial AIR17.13°C was inside the box. A guaranteed ambient25°C prediction is unsupported.
 - Exact board image and CSV metadata remain uncertain; flash use is95%. Do not reconstruct missing observations retroactively.
 
-**Next action (23 November, user-requested resistor verification):** verify ESP32/GPIO34 NTC resistance readout on original board around **6.8–10kΩ** with pre-measured ±1% resistors, extending toward ~4.7–100kΩ where available. The 22-Nov fault occurred at7,089.7Ω, while first-article ADC calibration used 33–100kΩ substitutions only. The current historical `HOT-261031-N8580` firmware already exposes raw `ntc_ohms` via `/api/status` in STANDBY and `NTC adc/corr/R` via USB Serial every2s, so NO new sketch/upload required. Use a safe J7 2-pin JST-GH test adapter; disconnect J5 heater electrically while substituting NTC; never press START. Confirm exact instructions, samples, acceptance/error calculations in [TODO](TODO.md) before executing. The replacement Vishay NTCS0603E3104FXT is reportedly ordered but not installed. Its archived manufacturer R(T) table will be used for a host-only conversion later; no thermal thresholds or TCO decisions changed; no physical test yet.
+**Next action (26 November, user-requested resistor verification; still pending):** verify ESP32/GPIO34 NTC resistance readout on original board around **6.8–10kΩ** with pre-measured ±1% resistors, extending toward ~4.7–100kΩ where available. The 22-Nov fault occurred at7,089.7Ω, while first-article ADC calibration used 33–100kΩ substitutions only. The current historical `HOT-261031-N8580` firmware already exposes raw `ntc_ohms` via `/api/status` in STANDBY and `NTC adc/corr/R` via USB Serial every2s, so NO new sketch/upload required. Use a safe J7 2-pin JST-GH test adapter; disconnect J5 heater electrically while substituting NTC; never press START. Confirm exact instructions, samples, acceptance/error calculations in [TODO](TODO.md) before executing. The replacement Vishay NTCS0603E3104FXT is reportedly ordered but not installed. Its archived manufacturer R(T) table will be used for a host-only conversion later; no thermal thresholds or TCO decisions changed; no physical test yet.
+
+## 26 November UI4 source, not a physical thermal PASS
+
+- UI3 remains the basis, including material presets, NVS cycle settings, OLED graphics, LAN dashboard at port 80/8081, read-only logs and remote STOP. New OLED SETTINGS pages now include NTC PAUSA, NTC RIAVVIO, NTC GUASTO MAX and ARIA GUASTO MAX, all saved in additive schema-1 NVS keys. All four start at 0/unconfigured; menu edit ranges are not certified safe temperatures.
+- `VishayNtcCurve.h` contains the 39 *manufacturer nominal* R(T) anchors and inverse log-R interpolation; NTC °C and raw ohms are exposed on OLED and both web dashboards. This curve is only correct for the **ordered new Vishay** after physical replacement; the original OEM NTC is not thereby calibrated.
+- UI4 candidate flags explicitly disable the old HEATER-capable OEM experimental mode and leave V1 heater approvals OFF. `main` unchanged. Legacy raw-ohm thermostat code retained only in archive/test sources. New NVS thresholds feed `HeaterProductAir` only when otherwise independently approved; no current heater authorization.
+- 1%-resistor J7 ADC verification, actual NTC installation, physical thermal/material safety envelope and new attended Noctua comparison remain **NOT DONE**. The 22 November AIR55 trial remains ABORTED at NTC R LIMIT. See D033 and TODO.
 
 ## Historical detail and provenance
 

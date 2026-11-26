@@ -8,6 +8,8 @@ Use [PROJECT_STATE](docs/PROJECT_STATE.md) for the sole current checkpoint: sour
 
 The former README's detailed build hashes, chronological results and historical operating text remain in the [pre-correction snapshot](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/95aa47740f1992970135f6278dee8f85a0dfe508/README.md); its NEXT/unflashed/manual-veto text describes earlier checkpoints, not current instructions.
 
+The experimental branch now contains the UI4 candidate with Vishay NTCS0603E3104FXT nominal Celsius conversion, four user-configurable OLED thermal thresholds saved in NVS, and the existing UI3 dashboard/presets. **This new source has heater GPIO disabled pending sensor installation, ADC verification and separate safety qualification; it is not the physical image installed in the last run.**
+
 The assembled prototype has functional power, USB/UART (D020 bodge), OLED/buttons, buzzer, sensors, fan and heater switching tests within recorded limits. Local menu, cycle timer, settings persistence and branding are implemented on main. Wi-Fi/OTA, CSV logging and thermal experiments exist on the experimental line; they have not been merged into main.
 
 Read [AGENTS.md](AGENTS.md) before working, then:
