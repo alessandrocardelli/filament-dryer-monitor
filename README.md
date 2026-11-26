@@ -1,6 +1,6 @@
 # Filament Dryer Monitor
 
-ESP32 controller for eSUN eBOX Lite: SHT45 chamber air/RH, heater-embedded NTC, independent Sanwa plate-contact reference, fan, OLED/buttons, user timer and CSV.
+ESP32 controller for eSUN eBOX Lite: SHT45 chamber air/RH, heater-embedded NTC, fan, OLED/buttons, user timer and CSV. The independent Sanwa plate-contact probe was used for historical experiments but **has been removed from the current assembly** (operator confirmation, 26 Nov 2026); future planned tests use SHT45 AIR and the new Vishay heater NTC.
 
 Development continues on [`experiment/step10-heater-diagnostics-air25-2026-10-28`](https://github.com/alessandrocardelli/filament-dryer-monitor/blob/experiment/step10-heater-diagnostics-air25-2026-10-28/docs/PROJECT_STATE.md), [PR #18 DRAFT](https://github.com/alessandrocardelli/filament-dryer-monitor/pull/18). This branch has a real HEATER-capable experimental path; `kHeaterOutputEnabled=false` alone does not disable it. `main` is the non-heating reference. Software CI and operator UI feedback do not qualify autonomous heated operation.
 
