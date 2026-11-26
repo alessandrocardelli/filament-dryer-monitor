@@ -358,7 +358,7 @@ void setup() {
 
   Serial.begin(115200);
   Serial.println();
-  Serial.println("Filament Dryer Monitor - Vishay UI5, heater-capable attended source");
+  Serial.println("Filament Dryer Monitor - Vishay UI6, heater-capable attended source");
   Serial.print("FW BUILD: ");
   Serial.println(FirmwareBuild::kId);
   Serial.print("FW MODE: ");
@@ -367,7 +367,7 @@ void setup() {
     Serial.println("EXPERIMENTAL 6-PULSE STEP07 NTC-GUARD TEST; no auto-repeat");
     Serial.println("NTC absolute degrees NOT calibrated; experimental raw R_NTC abort at 40k");
   } else if (AppConfig::kHeaterStep09TrialMode) {
-    Serial.println("ATTENDED UI5: Vishay Celsius NTC, user NVS thermal limits, 20.5s GPIO watchdog; NO old OEM ohm cutoffs");
+    Serial.println("ATTENDED UI6: Vishay Celsius NTC, user NVS thermal limits, 20.5s GPIO watchdog; NO old OEM ohm cutoffs");
   } else {
     Serial.println(safety.heaterLocked()
         ? "Heater OUTPUT LOCKED: configuration/calibration not approved."
@@ -465,7 +465,7 @@ void loop() {
     minSessionNtcOhms = ntc.snapshot().resistanceOhms;
   }
 
-  // UI5 HEATER-capable experimental path uses nominal Vishay Celsius and
+  // UI6 HEATER-capable experimental path uses nominal Vishay Celsius and
   // four user-editable limits; physical thermal qualification remains open.
   safety.update(nowMs, ntc.snapshot(), sht45.snapshot(),
                 appState == AppState::Drying && cycle.isRunning(),

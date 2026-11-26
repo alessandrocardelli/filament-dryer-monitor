@@ -4,6 +4,7 @@
 #include "AppConfig.h"
 #include "AppTypes.h"
 #include "VishayNtcCurve.h"
+#include "NtcReadoutCalibration.h"
 
 class NtcSensor {
  public:
@@ -32,9 +33,8 @@ class NtcSensor {
   }
 
   static float resistanceFromMillivolts(float nodeMv) {
-    const float denominator = AppConfig::kNtcDividerSupplyMv - nodeMv;
-    if (denominator <= 0.0f) return NAN;
-    return AppConfig::kNtcEffectivePullupOhms * nodeMv / denominator;
+    return NtcReadoutCalibration::resistanceOhms(
+        nodeMv, AppConfig::kNtcDividerSupplyMv, AppConfig::kNtcEffectivePullupOhms);
   }
 
   void sample(uint32_t nowMs) {
@@ -50,6 +50,7 @@ class NtcSensor {
     snapshot_ = {};
     snapshot_.sampled = true;
     snapshot_.reportedMv = reportedMv;
+    // Legacy calibrated voltage retained for diagnostics and unchanged fault windows.
     snapshot_.correctedMv = correctedMv;
     snapshot_.lastSampleMs = nowMs;
     lastSampleMs_ = nowMs;

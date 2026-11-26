@@ -1,4 +1,4 @@
-name: "HOT UI5 Vishay thermistor and configurable HEATER experiment"
+name: "HOT UI6 Vishay thermistor and configurable HEATER experiment"
 on:
   push:
     branches: [experiment/step10-heater-diagnostics-air25-2026-10-28]
@@ -37,8 +37,16 @@ jobs:
           assert "trialWatchdogFault_=true;" in safety
           assert "kHardwareWindowCeilingUs==20500000" in Path("firmware/tests/host/test_ui5_heater_gpio.cpp").read_text()
           assert "configureThermalSettings(settings.thermal,settings.cycle.targetTempC)" in app
-          assert 'HOT-261126-UI5' in Path("firmware/FirmwareBuild.h").read_text()
-          assert 'VishayNtcCurve::temperatureC' in Path("firmware/NtcSensor.h").read_text()
+          assert 'HOT-261126-UI6' in Path("firmware/FirmwareBuild.h").read_text()
+          ntc=Path("firmware/NtcSensor.h").read_text()
+          assert 'VishayNtcCurve::temperatureC' in ntc
+          assert 'NtcReadoutCalibration::resistanceOhms' in ntc
+          assert ntc.index('if (correctedMv <= AppConfig::kNtcShortThresholdMv)') < ntc.index('const float resistanceOhms = resistanceFromMillivolts(correctedMv)')
+          assert ntc.index('if (correctedMv >= AppConfig::kNtcOpenThresholdMv)') < ntc.index('const float resistanceOhms = resistanceFromMillivolts(correctedMv)')
+          assert 'kNtcShortThresholdMv = 150.0f;' in cfg
+          assert 'kNtcOpenThresholdMv = 3000.0f;' in cfg
+          assert 'kNtcDividerSupplyMv = 3311.0f;' in cfg
+          assert 'kNtcEffectivePullupOhms = 46572.0f;' in cfg
           assert "attendedSanwa90_85Parameters()" in safety # archived object; NEVER used for GPIO
           assert "feedback_.update(nowMs" not in safety
           assert "ntcSoftPauseOhms" not in safety
@@ -51,7 +59,7 @@ jobs:
       - name: Host-only Vishay, menu, long-duration, dashboard and trace tests
         run: |
           set -euo pipefail
-          for src in firmware/tests/host/test_vishay_ntc_curve.cpp firmware/tests/host/test_thermal_settings.cpp firmware/tests/host/test_product_air_12h.cpp firmware/tests/host/test_material_presets.cpp firmware/tests/host/test_remote_control_policy.cpp firmware/tests/host/test_log_sampling_policy.cpp; do
+          for src in firmware/tests/host/test_ntc_readout_calibration.cpp firmware/tests/host/test_vishay_ntc_curve.cpp firmware/tests/host/test_thermal_settings.cpp firmware/tests/host/test_product_air_12h.cpp firmware/tests/host/test_material_presets.cpp firmware/tests/host/test_remote_control_policy.cpp firmware/tests/host/test_log_sampling_policy.cpp; do
             bin="$RUNNER_TEMP/$(basename "$src" .cpp)"
             g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic "$src" -o "$bin"
             "$bin"
@@ -65,24 +73,24 @@ jobs:
           arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli lib install U8g2@2.36.19
-      - name: Compile HEATER-CAPABLE UI5 Arduino IDE source, not physical qualification
+      - name: Compile HEATER-CAPABLE UI6 Arduino IDE source, not physical qualification
         run: |
           set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/hot-ui5"
-          arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$RUNNER_TEMP/hot-ui5" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/ui5-build.log"
-          app="$RUNNER_TEMP/hot-ui5/firmware.ino.bin"
+          mkdir -p "$RUNNER_TEMP/hot-ui6"
+          arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir "$RUNNER_TEMP/hot-ui6" firmware --warnings all 2>&1 | tee "$RUNNER_TEMP/ui6-build.log"
+          app="$RUNNER_TEMP/hot-ui6/firmware.ino.bin"
           test -s "$app"
-          grep -a -q 'HOT-261126-UI5' "$app"
-          sha256sum "$app" | tee "$RUNNER_TEMP/ui5-app.sha256"
-          echo "HEATER-CAPABLE experimental UI5 (4 NVS thermal thresholds + Vishay nominal NTC). Source/build only; physical test requires explicit authorization and confirmed NTC installation." >> "$GITHUB_STEP_SUMMARY"
-          cat "$RUNNER_TEMP/ui5-app.sha256" >> "$GITHUB_STEP_SUMMARY"
-      - name: Archive non-flashed UI5 firmware for reproducibility
+          grep -a -q 'HOT-261126-UI6' "$app"
+          sha256sum "$app" | tee "$RUNNER_TEMP/ui6-app.sha256"
+          echo "HEATER-CAPABLE experimental UI6 (4 NVS thermal thresholds + Vishay nominal NTC). Source/build only; physical test requires explicit authorization and confirmed NTC installation." >> "$GITHUB_STEP_SUMMARY"
+          cat "$RUNNER_TEMP/ui6-app.sha256" >> "$GITHUB_STEP_SUMMARY"
+      - name: Archive non-flashed UI6 firmware for reproducibility
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: HOT-UI5-HEATER-CAPABLE-BUILD-NOT-FLASHED
+          name: HOT-UI6-HEATER-CAPABLE-BUILD-NOT-FLASHED
           path: |
-            ${{ runner.temp }}/hot-ui5/firmware.ino.bin
-            ${{ runner.temp }}/ui5-app.sha256
+            ${{ runner.temp }}/hot-ui6/firmware.ino.bin
+            ${{ runner.temp }}/ui6-app.sha256
           retention-days: 30
           if-no-files-found: error
