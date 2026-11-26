@@ -60,7 +60,7 @@ constexpr bool kHeaterCommissioningMode = false;
 // and NOT approved for flashing until the review/gate in docs/STEP09.
 // Attended heater characterization: explicit HEATER-capable experiment.
 // Host-verified interlocks still mandatory, no unattended production approval.
-constexpr bool kHeaterStep09TrialMode = true;
+constexpr bool kHeaterStep09TrialMode = false; // archived OEM trial is NOT compatible with new NTC
 static_assert(!(kHeaterCommissioningMode && kHeaterStep09TrialMode),
               "Only one supervised heater trial mode can run");
 // STEP05 candidate heater profile is NEVER implicitly approved.
@@ -86,6 +86,7 @@ static_assert(!(kHeaterCommissioningMode || kHeaterStep09TrialMode) ||
               "Do not combine an experimental trial and production thermostat");
 constexpr bool kHeaterProfileApproved = false;
 constexpr bool kHeaterNtcModelApproved = false;
+constexpr bool kHeaterThermalMenuQualified = false;
 
 // Provisional POST-HEAT fan-overrun ceiling for development and host tests.
 // This is a minimum candidate, NOT validation that the heater is safe after
@@ -94,10 +95,7 @@ constexpr uint32_t kPostHeatCooldownMs = 45000;
 
 // Zeros intentionally mean UNCONFIGURED, not temperature recommendations.
 // Values must be independently set/reviewed for actual board/materials.
-constexpr float kHeaterMaxMeasuredC = 0.0f; // hard local thermal fault, UNQUALIFIED
-constexpr float kHeaterSoftPauseMeasuredC = 0.0f; // local soft pause, UNQUALIFIED
-constexpr float kHeaterRearmMeasuredC = 0.0f; // local rearm, UNQUALIFIED
-constexpr float kChamberMaxMeasuredC = 0.0f;
+// NTC pause/rearm/trip and air trip are NVS/menu values, no fixed constants.
 constexpr float kChamberControlHysteresisC = 0.0f;
 constexpr uint32_t kHeaterNtcMaxAgeMs = 0;
 constexpr uint32_t kHeaterChamberMaxAgeMs = 0;
@@ -110,10 +108,7 @@ constexpr uint32_t kHeaterMaxCycleMs = 0;
 // These are compile-time guards, while the policy has additional runtime ones.
 static_assert(!kHeaterOutputEnabled ||
               (kHeaterProfileApproved && kHeaterNtcModelApproved &&
-               kHeaterMaxMeasuredC > 0.0f &&
-               kHeaterSoftPauseMeasuredC > kHeaterRearmMeasuredC &&
-               kHeaterMaxMeasuredC > kHeaterSoftPauseMeasuredC &&
-               kChamberMaxMeasuredC > 0.0f &&
+               kHeaterThermalMenuQualified &&
                kChamberControlHysteresisC > 0.0f &&
                kHeaterNtcMaxAgeMs > 0 &&
                kHeaterChamberMaxAgeMs > 0 &&

@@ -46,6 +46,10 @@ struct Inputs {
 class Controller {
  public:
   explicit Controller(Limits limits = Limits{}) : limits_(limits) {}
+  bool configure(Limits x){
+    if(phase_!=Phase::Idle||requestedOn_||fault_!=Fault::None)return false;
+    limits_=x;return true;
+  }
   bool update(uint32_t nowMs, const Inputs& in) {
     requestedOn_ = false;
     if (fault_ != Fault::None) return false;

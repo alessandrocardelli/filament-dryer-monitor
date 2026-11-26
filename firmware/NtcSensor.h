@@ -3,6 +3,7 @@
 #include <math.h>
 #include "AppConfig.h"
 #include "AppTypes.h"
+#include "VishayNtcCurve.h"
 
 class NtcSensor {
  public:
@@ -34,46 +35,6 @@ class NtcSensor {
     const float denominator = AppConfig::kNtcDividerSupplyMv - nodeMv;
     if (denominator <= 0.0f) return NAN;
     return AppConfig::kNtcEffectivePullupOhms * nodeMv / denominator;
-  }
-
-  static float betaTemperatureC(float resistanceOhms) {
-    constexpr float kReferenceTempK = 25.0f + 273.15f;
-    constexpr float kReferenceResistanceOhms = 82500.0f;
-    constexpr float kBetaK = 4100.0f;
-
-    const float invT =
-        (1.0f / kReferenceTempK) +
-        logf(resistanceOhms / kReferenceResistanceOhms) / kBetaK;
-    if (!(invT > 0.0f)) return NAN;
-    return (1.0f / invT) - 273.15f;
-  }
-
-  static float empiricalTemperatureC(float resistanceOhms,
-                                     bool &insideEmpiricalRange) {
-    // Original eSUN heater NTC characterization from README.md.
-    constexpr float kTempC[] = {25.0f, 28.0f, 30.0f, 35.0f,
-                                40.0f, 44.0f, 50.0f};
-    constexpr float kResistanceOhms[] = {82500.0f, 75500.0f, 67400.0f,
-                                         51700.0f, 43600.0f, 35930.0f,
-                                         28800.0f};
-    constexpr size_t kCount = sizeof(kTempC) / sizeof(kTempC[0]);
-
-    insideEmpiricalRange = false;
-    for (size_t i = 0; i + 1 < kCount; ++i) {
-      if (resistanceOhms <= kResistanceOhms[i] &&
-          resistanceOhms >= kResistanceOhms[i + 1]) {
-        const float fraction =
-            (kResistanceOhms[i] - resistanceOhms) /
-            (kResistanceOhms[i] - kResistanceOhms[i + 1]);
-        insideEmpiricalRange = true;
-        return kTempC[i] + fraction * (kTempC[i + 1] - kTempC[i]);
-      }
-    }
-
-    // Outside the measured 25-50 C interval, provide a service/diagnostic
-    // estimate from the previously recorded beta~=4100 K model. This
-    // extrapolation is not a validated heater safety limit.
-    return betaTemperatureC(resistanceOhms);
   }
 
   void sample(uint32_t nowMs) {
@@ -115,9 +76,8 @@ class NtcSensor {
       return;
     }
 
-    bool insideEmpiricalRange = false;
-    const float temperatureC =
-        empiricalTemperatureC(resistanceOhms, insideEmpiricalRange);
+    const float temperatureC=VishayNtcCurve::temperatureC(resistanceOhms);
+    const bool insideEmpiricalRange=isfinite(temperatureC);
     if (!isfinite(temperatureC)) {
       snapshot_.fault = NtcFault::InvalidReading;
       return;

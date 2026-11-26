@@ -45,6 +45,17 @@ class SafetyController {
 #endif
   }
 
+  // Reconfigure ONLY during safe, non-heating menu use/startup.
+  // This does not grant heater enable or certify selected temperatures.
+  bool configureThermalSettings(const ThermalSettings::Values &v){
+    if(heaterOn_||faultActive_)return false;
+    auto lim=productLimits();
+    lim.ntcSoftC=v.ntcPauseC;lim.ntcRearmC=v.ntcRearmC;
+    lim.ntcHardC=v.ntcFaultC;lim.airFaultC=v.airFaultC;
+    lim.qualified=lim.qualified&&AppConfig::kHeaterThermalMenuQualified;
+    return product_.configure(lim);
+  }
+
   // Synchronous immediate shutdown for STOP / COMPLETE / FAULT / BOOT.
   void stop() {
     forceHeaterOff();
@@ -233,7 +244,8 @@ class SafetyController {
       return false;
     return !AppConfig::kHeaterOutputEnabled ||
            !AppConfig::kHeaterProfileApproved ||
-           !AppConfig::kHeaterNtcModelApproved;
+           !AppConfig::kHeaterNtcModelApproved ||
+           !AppConfig::kHeaterThermalMenuQualified;
   }
   bool heaterOn() const { return heaterOn_; }
   HeaterControl::Fault heaterFault() const { return policy_.fault(); }
@@ -249,10 +261,7 @@ class SafetyController {
     HeaterProductAir::Limits lim{};
     lim.qualified = AppConfig::kHeaterProfileApproved &&
                     AppConfig::kHeaterNtcModelApproved;
-    lim.ntcSoftC = AppConfig::kHeaterSoftPauseMeasuredC;
-    lim.ntcRearmC = AppConfig::kHeaterRearmMeasuredC;
-    lim.ntcHardC = AppConfig::kHeaterMaxMeasuredC;
-    lim.airFaultC = AppConfig::kChamberMaxMeasuredC;
+    // Four operational thresholds loaded from NVS, not fixed constants.
     lim.airHysteresisC = AppConfig::kChamberControlHysteresisC;
     lim.fanPrerunMs = AppConfig::kHeaterFanPrerunMs;
     lim.maxNtcAgeMs = AppConfig::kHeaterNtcMaxAgeMs;

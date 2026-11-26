@@ -1,6 +1,7 @@
 #pragma once
 #include <Arduino.h>
 #include "MaterialPresets.h"
+#include "ThermalSettings.h"
 
 enum class AppState : uint8_t {
   Boot,
@@ -19,8 +20,7 @@ enum class SetupField : uint8_t {
 };
 
 enum class SettingsField : uint8_t {
-  BuzzerVolume,
-  KeyClick,
+  BuzzerVolume, KeyClick, NtcPause, NtcRearm, NtcFault, AirFault,
 };
 
 enum class BuzzerVolume : uint8_t {
@@ -47,6 +47,7 @@ struct PersistentSettings {
   CycleSettings cycle{};
   BuzzerVolume buzzerVolume = BuzzerVolume::Low;
   bool keyClick = false;
+  ThermalSettings::Values thermal{};
 };
 
 struct SensorSnapshot {

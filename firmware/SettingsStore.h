@@ -32,6 +32,11 @@ class SettingsStore {
     }
     settings.buzzerVolume = static_cast<BuzzerVolume>(volume);
     settings.keyClick = prefs_.getBool("keyClick", settings.keyClick);
+    // Additive schema-1 NVS keys; preserve existing cycle, profile, sound.
+    settings.thermal.ntcPauseC=prefs_.getShort("nPause",0);
+    settings.thermal.ntcRearmC=prefs_.getShort("nRearm",0);
+    settings.thermal.ntcFaultC=prefs_.getShort("nFault",0);
+    settings.thermal.airFaultC=prefs_.getShort("aFault",0);
 
     clamp(settings);
     cached_ = settings;
@@ -53,6 +58,10 @@ class SettingsStore {
     prefs_.putUChar("mat", static_cast<uint8_t>(settings.cycle.material));
     prefs_.putUChar("buzzVol", static_cast<uint8_t>(settings.buzzerVolume));
     prefs_.putBool("keyClick", settings.keyClick);
+    prefs_.putShort("nPause",settings.thermal.ntcPauseC);
+    prefs_.putShort("nRearm",settings.thermal.ntcRearmC);
+    prefs_.putShort("nFault",settings.thermal.ntcFaultC);
+    prefs_.putShort("aFault",settings.thermal.airFaultC);
 
     cached_ = settings;
     cacheValid_ = true;
@@ -76,6 +85,7 @@ class SettingsStore {
         static_cast<int32_t>(settings.cycle.durationMinutes),
         static_cast<int32_t>(AppConfig::kPrototypeDurationMinMinutes),
         static_cast<int32_t>(AppConfig::kPrototypeDurationMaxMinutes)));
+    ThermalSettings::sanitize(settings.thermal);
   }
 
   static bool equal(const PersistentSettings &a,
@@ -84,6 +94,7 @@ class SettingsStore {
            a.cycle.durationMinutes == b.cycle.durationMinutes &&
            a.cycle.material == b.cycle.material &&
            a.buzzerVolume == b.buzzerVolume &&
-           a.keyClick == b.keyClick;
+           a.keyClick == b.keyClick &&
+           ThermalSettings::equal(a.thermal,b.thermal);
   }
 };
