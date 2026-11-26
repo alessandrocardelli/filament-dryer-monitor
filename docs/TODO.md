@@ -1,5 +1,7 @@
 # One priority — verify J7 resistance measurement with known 1% resistors (UI4 source now prepared)
 
+**26 November CI receipt:** source `ac00240d9f254345334bd2d468fae1d29650ed59`, [Actions PASS](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/45771758263), Arduino core3.3.12/U8g2 2.36.19, flash1,251,994B (95%), RAM109,024B (33%), application SHA256 `2bff31b3c40077e9e07a7301d5dbe5525edd3885319d8c761a0273ea824c7bb8`. NOT a physical PASS; later docs-only commits do not alter source or build.
+
 **26 November source update:** OLED UI4 + nominal Vishay converter now coded, all four thermal thresholds editable and persisted with zero/unconfigured defaults, heater modes OFF, historical UI3 preserved. Product thermal limits are fed through saved settings but never enabled without separate qualification. **CI/build are software evidence only, no replacement installed or physical heating authorized.** Avoid reflashing the old OEM NTC and interpreting its reading as Vishay °C. D033 records the agreement.
 
 **Operator update 23 Nov 2026:** The original unmarked OEM NTC is replaceable. User reports an order of the selected Vishay SMD thermistor (previously chosen **`NTCS0603E3104FXT`**, 0603 1.6x0.8mm, nominal 100kΩ R25, B25/85=4100K, ±1% on each parameter) and an MG Chemicals desoldering braid. Actual new part number/packaging and physical replacement are **not yet verified**. The existing Sanwa contact probe is fixed in place; **do not request to move it, take more photos or repeat old 60-minute trials**.
