@@ -1,8 +1,6 @@
-# One priority — verify J7 resistance measurement with known 1% resistors (UI4 source now prepared)
+# One priority — verify J7 resistance measurement with known 1% resistors (HEATER-capable UI5 source ready)
 
-**26 November CI receipt:** source `ac00240d9f254345334bd2d468fae1d29650ed59`, [Actions PASS](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/45771758263), Arduino core3.3.12/U8g2 2.36.19, flash1,251,994B (95%), RAM109,024B (33%), application SHA256 `2bff31b3c40077e9e07a7301d5dbe5525edd3885319d8c761a0273ea824c7bb8`. NOT a physical PASS; later docs-only commits do not alter source or build.
-
-**26 November source update:** OLED UI4 + nominal Vishay converter now coded, all four thermal thresholds editable and persisted with zero/unconfigured defaults, heater modes OFF, historical UI3 preserved. Product thermal limits are fed through saved settings but never enabled without separate qualification. **CI/build are software evidence only, no replacement installed or physical heating authorized.** Avoid reflashing the old OEM NTC and interpreting its reading as Vishay °C. D033 records the agreement.
+**26 November source/CI status:** `HOT-261126-UI5`, exact source `e87f3f5ff2dfb142f542259cbe8a597bdcbd7910`, [push CI #45791581697 PASS](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/45791581697), ESP32 core3.3.12/U8g2 2.36.19, flash1,260,850B (96%), RAM109,056B (33%), app SHA256 `17711e93976cc062cba583f258768a80cd94b84bfed76c670dda37c78beebbda`. **The experimental heater GPIO path IS ACTIVE** when operator configures all four coherent OLED thermal thresholds: see `SafetyController` and the new host GPIO mock. The previously introduced HEATER-OFF UI4 regression is corrected, not a design feature. Main remains HEATER-off. The historic UI4/older OEM experiment remains recoverable from Git. **No physical upload or hardware heat qualification.**
 
 **Operator update 23 Nov 2026:** The original unmarked OEM NTC is replaceable. User reports an order of the selected Vishay SMD thermistor (previously chosen **`NTCS0603E3104FXT`**, 0603 1.6x0.8mm, nominal 100kΩ R25, B25/85=4100K, ±1% on each parameter) and an MG Chemicals desoldering braid. Actual new part number/packaging and physical replacement are **not yet verified**. The existing Sanwa contact probe is fixed in place; **do not request to move it, take more photos or repeat old 60-minute trials**.
 
@@ -37,12 +35,12 @@ Resistor "temperature" equivalents are **nominal values from the new Vishay publ
 
 **Expected output / next gate:** a small nominal-versus-DMM-versus-ESP32 table and statement whether the analog resistance readout is accurate enough from ~4.7 to100kΩ to support the *new Vishay* published R(T) conversion. This does not validate NTC thermal contact, TCO, fan airflow or material temperatures. It addresses the critical electrical uncertainty without another AIR55 heating cycle. Retain original 22-Nov failure CSV, no changes to 7120Ω fault or other thermostat/protection code and no automatic physical authorization. The 60min heater experiment remains ABORTED.
 
-## Next gate after the readout check — actual Vishay replacement and thermal qualification
+## Next gate after the readout check — install Vishay and qualify temperature limits
 
 1. Confirm delivered package MPN `NTCS0603E3104FXT`. Install it replacing original SMD NTC, avoiding changes to fixed Sanwa probe.
 2. Finish J7 resistor test with actual DMM values (especially 6.8/8.2/10kΩ) and correct ADC parameters *only if evidence warrants* before trusting nominal Vishay °C.
 3. Verify the OLED six SETTINGS pages, NVS retention and :8081/port80 live `ntc_c`, raw `ntc_ohms` and saved thermal values with heater electrically disconnected. The new curve is **not valid on the old OEM sensor**.
-4. All four menu temperatures are user editable; `0` is unconfigured, and incoherent `NTC rearm >= pause`, `pause >= hard fault`, or `AIR fault <= AIR target` cannot pass product controller validity checks. No numerical temperatures were approved as safe.
+4. The active experimental UI5 path is **HEATER-CAPABLE** with the four OLED/NVS thresholds. All four menu temperatures are user editable; `0` is unconfigured, and incoherent `NTC rearm >= pause`, `pause >= hard fault`, or `AIR fault <= AIR target` cannot pass product controller validity checks. No numerical temperatures were approved as safe.
 5. Confirm component mounting, material/TCO105/duct thermal limits and independent faults, then explicitly review a later HEATER-enabled test image and single supervised Noctua AIR55 run. Retain old raw evidence, old firmware and independent protections. A successful CI does not authorize physical heating.
 
 ## Historical evidence and deferred work

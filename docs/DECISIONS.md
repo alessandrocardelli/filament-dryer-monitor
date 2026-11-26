@@ -479,3 +479,27 @@ User explicitly requires **all four** temperatures to be editable through the ph
 Keep all existing UI3 profile/menu/web/STOP features, additive NVS schema1 compatibility, and `main` non-heating. The Vishay table R(T) replaces the old OEM `NtcSensor` conversion only in new UI4 source; manufacturer curve is nominal, not a completed calibration of ADC or installed thermal system. The old trial raw-ohm 7.120/7.924/9.232k boundaries are historical, NOT inherited by the product regulator.
 
 **Independent protection remains separate from operator settings:** sensor open/short/stale handling, fault latch, hardware watchdog, fan/STOP/cooldown, and the 105°C series TCO are not menu-disable options. The previous experimental heater-capable path is explicitly disabled in UI4 (`kHeaterStep09TrialMode=false`); V1 product-output, profile, model and thermal-menu qualification gates remain false. No physical heater use or 60min Noctua run is authorized by compiling or editing these settings.
+
+
+## D034 — Restore HEATER-capable experimental UI5; use NVS Celsius thresholds, not OEM guards (26 November 2026)
+
+**Explicit operator correction (this conversation):** A firmware that always has the heater disabled cannot serve the intended thermal development. Retain the complete UI3 features and new Vishay NTC conversion but make the CURRENT EXPERIMENTAL firmware `HOT-261126-UI5` actually capable of commanding GPIO19 in a supervised cycle with **all four OLED-adjustable and saved NTC/AIR thresholds** (D033). The previous `NTC-261126-UI4` HEATER-OFF branch state was an implementation error, now superseded. Preserve `main` HEATER-off, historical trials and data; no new branch or PR.
+
+**Implemented:** `kHeaterStep09TrialMode=true` selects the separate experimental path (production `kHeaterOutputEnabled=false` deliberately remains). This route feeds the same `HeaterProductAir` AIR+NTC dual-thermostat architecture with the Vishay `NTCS0603E3104FXT` nominal Celsius model and `ThermalSettings` persisted values. Four coherent temperatures are required before physical button START; no fixed temperature thresholds are secretly enforced in the trial and **no unsafe 90/85 Sanwa/OEM raw-ohm boundary is inherited**. Controls on source: watchdog GPIO19 LOW after20.5s unless refreshed by live loop; NTC open/short/stale, SHT45 invalid/stale, AIR/NTC hard-fault latch, fan-command loss, STOP, 90s fan cooldown and installed series105°C TCO unchanged. No remote START. Actual fan RPM is not measured.
+
+**Numeric envelope provenance (not a blanket safety approval):**
+
+| Parameter | Value/status | Classification and evidence |
+| --- | --- | --- |
+| NTC heater PAUSE / REARM / HARD fault | OLED/NVS configurable, all 0/UNCONFIGURED by default; rearm < pause < hard | **UNKNOWN / UNQUALIFIED** for physically safe numerical temperatures; publisher's nominal Vishay R(T) is not enclosure/material temperature qualification |
+| SHT45 chamber hard fault | OLED/NVS configurable, 0/UNCONFIGURED by default, required above AIR target | **UNKNOWN / UNQUALIFIED**, operator has not approved a numeric rating |
+| Requested AIR target | 40..55°C (existing OLED profiles/manual) | **APPROVED_OPERATIONAL as a user-selectable interface range**, not proof every AIR target is attainable or safe in the modified enclosure |
+| AIR restart hysteresis | 1°C | **PROVISIONAL_EXPERIMENT** carried over from prior attended AIR55/54 thermostat (D030), not a heater safety trip |
+| Fan prerun, command duty | 5s / 100% | **PROVISIONAL_EXPERIMENT** from 31-Oct/22-Nov AIR55 trials, not actual RPM or airflow measurement |
+| NTC/SHT45 maximum age | 1.5s / 5s | **PROVISIONAL_EXPERIMENT** existing STEP09 independent stale-data cutoffs, fail OFF on stale/invalid |
+| Hardware timer watchdog | 20.5s independent GPIO LOW ISR | **ELECTRICAL_OR_HARDWARE**, pre-existing current source/hardware watchdog implementation and previously host-tested; not forced 20s periodic OFF |
+| Fan post-HEAT cooldown | 90s | **PROVISIONAL_EXPERIMENT** from historical attended tests; material/TCO cool-down sufficiency remains unqualified |
+| Series TCO | physically installed 105°C thermal cutoff | **ELECTRICAL_OR_HARDWARE**, original protected assembly; never bypass, replace, rerate or infer enclosure safe temperature from its nominal fuse point |
+| 31-Oct OEM baseline /22-Nov Noctua trial | AIR max49.84°C completed OEM, AIR45.22°C on ABORTED Noctua test | **MEASURED_CHARACTERIZATION**, different fan/geometries/ambient conditions; neither qualifies UI5 future temperatures |
+
+**Software evidence:** source `e87f3f5ff2dfb142f542259cbe8a597bdcbd7910`, [GitHub Actions CI PASS](https://github.com/alessandrocardelli/filament-dryer-monitor/actions/runs/45791581697), mock HIGH/LOW GPIO and faults, 12h AIR+NTC host cycles, exact ESP32 core build and SHA256 `17711e93976cc062cba583f258768a80cd94b84bfed76c670dda37c78beebbda`. **Physical test gate remains separate**: previously ordered new NTC not known installed; original old OEM NTC cannot be interpreted as Vishay; finish J7 ADC known-resistor test, verify real NTC installation and safe heater/material/TCO thermal margins before a new explicitly authorized supervised Noctua trial. Compiling the HEATER-capable firmware does not authorize flashing or energizing the heater now.
