@@ -9,6 +9,7 @@
 #include <esp_system.h>
 #include "FirmwareBuild.h"
 #include "ThermalLog.h"
+#include "ThermalSettings.h"
 #include "HeaterPlateDiagnostics.h"
 #include "HeaterStep07GuardTrial.h"
 #include "HeaterStep09AirFeedback.h"
@@ -20,7 +21,9 @@ class NetworkService {
  public:
   struct Status {
     uint32_t ms = 0;
-    float airC = 0, rh = 0, ntcOhms = 0;
+    float airC = 0, rh = 0, ntcOhms = 0, ntcTempC = 0;
+    ThermalSettings::Values thermal{};
+    bool thermalValid=false;
     bool airValid = false, ntcValid = false;
     bool heaterCommand = false, cycle = false, fault = false;
     uint8_t fanPercent = 0, phase = 0, pulses = 0, pulseFault = 0, waitReason = 0;
@@ -268,28 +271,19 @@ class NetworkService {
       j += ",\"air_c\":"; j += String(live_.airC,2);
       j += ",\"rh\":"; j += String(live_.rh,2);
       j += ",\"ntc_ohms\":"; j += String(live_.ntcOhms,1);
-      // Read-only measured margins; historical Sanwa proxy is intentionally
-      // marked separately and never drives PWM or any safety trip.
-      const auto trialLimits = AppConfig::kHeaterStep09TrialMode
-          ? HeaterStep09AirFeedback::attendedSanwa90_85Parameters()
-          : HeaterStep09AirFeedback::parameters();
-      const auto margin = HeaterPlateDiagnostics::margin(
-          live_.ntcValid ? live_.ntcOhms : NAN,
-          trialLimits.ntcSoftPauseOhms, trialLimits.ntcHardTripOhms);
-      const auto historical = HeaterPlateDiagnostics::historicalOpenBoxContact(
-          live_.ntcValid ? live_.ntcOhms : NAN);
-      j += ",\"ntc_soft_pause_ohms\":"; j += String(trialLimits.ntcSoftPauseOhms,1);
-      j += ",\"ntc_resume_ohms\":"; j += String(trialLimits.ntcResumeOhms,1);
-      j += ",\"ntc_backup_trip_ohms\":"; j += String(trialLimits.ntcHardTripOhms,1);
-      j += ",\"ntc_above_soft_ohms\":";
-      j += margin.valid ? String(margin.aboveSoftOhms,1) : "null";
-      j += ",\"ntc_above_hard_ohms\":";
-      j += margin.valid ? String(margin.aboveHardOhms,1) : "null";
+      // Active Vishay model and menu values, never previous OEM raw-ohm guards.
+      j += ",\"ntc_c\":";
+      j += live_.ntcValid ? String(live_.ntcTempC,2) : "null";
+      j += ",\"ntc_model\":\"NTCS0603E3104FXT\"";
+      j += ",\"ntc_pause_c\":";j += live_.thermal.ntcPauseC;
+      j += ",\"ntc_rearm_c\":";j += live_.thermal.ntcRearmC;
+      j += ",\"ntc_fault_c\":";j += live_.thermal.ntcFaultC;
+      j += ",\"air_fault_c\":";j += live_.thermal.airFaultC;
+      j += ",\"thermal_limits_valid\":";
+      j += live_.thermalValid?"true":"false";
       j += ",\"session_ntc_min_ohms\":";
       j += std::isfinite(live_.minSessionNtcOhms)
            ? String(live_.minSessionNtcOhms,1) : "null";
-      j += ",\"historical_openbox_sanwa_proxy_c\":";
-      j += historical.valid ? String(historical.sanwaEquivalentC,1) : "null";
       j += ",\"air_valid\":"; j += (live_.airValid ? "true" : "false");
       j += ",\"ntc_valid\":"; j += (live_.ntcValid ? "true" : "false");
       j += ",\"heater_command\":"; j += (live_.heaterCommand ? "true" : "false");
@@ -499,7 +493,7 @@ summary{font-size:13px;font-weight:700;color:#096d73;cursor:pointer}
 <div class="card metric main"><div class="kicker"><span class="glyph">%</span>Umidità relativa</div>
 <div class="value" id="rh">--</div><div class="hint">SHT45 · camera di essiccazione</div></div>
 <div class="card metric"><div class="kicker"><span class="glyph">Ω</span>NTC piastra</div>
-<div class="value" id="ntc">--</div><div class="hint">Resistenza misurata</div></div>
+<div class="value" id="ntc">--</div><div class="hint" id="ntcR">NTC Vishay · -- kΩ</div></div>
 <div class="card metric"><div class="kicker"><span class="glyph">H</span>Riscaldatore</div>
 <div class="value" id="heat">--</div><div class="hint">Stato del comando</div></div>
 <div class="card metric"><div class="kicker"><span class="glyph">F</span>Ventola</div>
@@ -575,12 +569,13 @@ async function status(){
   trialActive=Boolean(d.cycle)||Number(d.fan_percent)>0;
   $('air').textContent=d.air_valid?d.air_c.toFixed(1)+' °C':'--';
   $('rh').textContent=d.air_valid?d.rh.toFixed(1)+' %':'--';
-  $('ntc').textContent=d.ntc_valid
-    ? (d.ntc_ohms/1000).toFixed(2)+' kΩ'
-    :'--';
+  $('ntc').textContent=d.ntc_valid?d.ntc_c.toFixed(1)+' °C':'--';
+  $('ntcR').textContent=d.ntc_valid
+    ? (d.ntc_ohms/1000).toFixed(2)+' kΩ · Vishay nominale'
+    :'NTC non valida';
   $('heat').textContent=d.heater_command?'ON':'OFF';
   $('fan').textContent=d.fan_percent+' %';
-  const waitNames=['','Minimum OFF 12 s','NTC attende 60 kΩ','Camera attende 24 °C'];
+  const waitNames=['','Pausa minima','Attesa NTC','Attesa aria'];
   $('phase').textContent=Number(d.phase)===3 && d.wait_reason
     ? 'HEATER OFF · '+(waitNames[Number(d.wait_reason)]||'Attesa controllo')
     :phaseLabel(d);

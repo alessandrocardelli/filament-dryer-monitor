@@ -104,7 +104,7 @@ border-radius:14px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:10
 <div class="card metric main"><div class="kicker"><span class="glyph">%</span>Umidità relativa</div>
 <div class="value" id="rh">--</div><div class="hint">Sensore camera SHT45</div></div>
 <div class="card metric"><div class="kicker"><span class="glyph">Ω</span>NTC piastra</div>
-<div class="value" id="ntc">--</div><div class="hint">Resistenza, non temperatura</div></div>
+<div class="value" id="ntc">--</div><div class="hint" id="ntcR">NTC Vishay · -- kΩ</div></div>
 <div class="card metric"><div class="kicker"><span class="glyph">H</span>Riscaldatore</div>
 <div class="value" id="heat">--</div><div class="hint">Comando elettronico</div></div>
 <div class="card metric"><div class="kicker"><span class="glyph">F</span>Ventola</div>
@@ -138,7 +138,7 @@ border-radius:14px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:10
 <p class="info">Comandi consentiti solo sulla tua rete privata. La password non viene salvata dal browser.
 Non esporre l'ESP32 direttamente a Internet: per accessi esterni usa una VPN.</p>
 </div></section>
-<footer class="footer">Il valore NTC è espresso in ohm. Le letture web non sostituiscono le protezioni del dispositivo.
+<footer class="footer">NTC in gradi Celsius dalla curva nominale Vishay (valida solo dopo sostituzione). Menu e web non qualificano la sicurezza del riscaldatore.
 <span id="notes"></span></footer>
 </main>
 <script>
@@ -204,7 +204,10 @@ async function refresh(){
   const d=await r.json();
   el('air').textContent=d.air_valid?d.air_c.toFixed(1)+' °C':'--';
   el('rh').textContent=d.air_valid?d.rh.toFixed(1)+' %':'--';
-  el('ntc').textContent=d.ntc_valid?(d.ntc_ohms/1000).toFixed(2)+' kΩ':'--';
+  el('ntc').textContent=d.ntc_valid?d.ntc_c.toFixed(1)+' °C':'--';
+  el('ntcR').textContent=d.ntc_valid
+    ? (d.ntc_ohms/1000).toFixed(2)+' kΩ · Vishay nominale'
+    :'NTC non valida';
   el('heat').textContent=d.heater_command?'ON':'OFF';
   el('fan').textContent=d.fan_percent+'%';
   el('cycle').textContent=d.fault?'FAULT':d.cycle?'IN CORSO':'FERMO';
@@ -318,7 +321,7 @@ void LiveTelemetryServer::begin(const char *adminPassword) {
     char body[880];
     const int n=snprintf(body,sizeof(body),
       "{\"firmware\":\"%s\",\"ms\":%lu,\"air_c\":%.2f,\"rh\":%.2f,"
-      "\"ntc_ohms\":%.1f,\"air_valid\":%s,\"ntc_valid\":%s,"
+      "\"ntc_ohms\":%.1f,\"ntc_c\":%.2f,\"air_valid\":%s,\"ntc_valid\":%s,"
       "\"heater_command\":%s,\"cycle\":%s,\"fault\":%s,"
       "\"fan_percent\":%u,\"phase\":%u,\"pulses\":%u,\"pulse_goal\":0,"
       "\"pulse_fault\":%u,\"wait_reason\":%u,\"cumulative_heat_ms\":%lu,"
@@ -326,9 +329,12 @@ void LiveTelemetryServer::begin(const char *adminPassword) {
       "\"ram_samples\":%u,\"log_truncated\":%s,"
       "\"session_ntc_min_ohms\":%.1f,\"ota_idle\":false,"
       "\"app_state\":%u,\"profile\":%u,\"target_c\":%u,"
-      "\"duration_min\":%u,\"can_edit\":%s,\"can_stop\":%s}",
+      "\"duration_min\":%u,\"ntc_pause_c\":%d,\"ntc_rearm_c\":%d,"
+      "\"ntc_fault_c\":%d,\"air_fault_c\":%d,\"thermal_limits_valid\":%s,"
+      "\"can_edit\":%s,\"can_stop\":%s}",
       FirmwareBuild::kId,(unsigned long)s.ms,
       s.airValid?s.airC:0.0f,s.airValid?s.rh:0.0f,s.ntcValid?s.ntcOhms:0.0f,
+      s.ntcValid?s.ntcTempC:0.0f,
       s.airValid?"true":"false",s.ntcValid?"true":"false",
       s.heaterCommand?"true":"false",s.cycle?"true":"false",s.fault?"true":"false",
       (unsigned)s.fanPercent,(unsigned)s.phase,(unsigned)s.pulses,
@@ -339,7 +345,9 @@ void LiveTelemetryServer::begin(const char *adminPassword) {
       s.logTruncated?"true":"false",
       std::isfinite(s.minSessionNtcOhms)?s.minSessionNtcOhms:0.0f,
       (unsigned)s.appState,(unsigned)s.profile,(unsigned)s.targetC,
-      (unsigned)s.durationMinutes,s.canEdit?"true":"false",
+      (unsigned)s.durationMinutes,
+      (int)s.ntcPauseC,(int)s.ntcRearmC,(int)s.ntcFaultC,(int)s.airFaultC,
+      s.thermalLimitsValid?"true":"false",s.canEdit?"true":"false",
       RemoteControlPolicy::canStop(
         static_cast<RemoteControlPolicy::State>(s.appState))?"true":"false");
     if(n<=0||n>=(int)sizeof(body))

@@ -11,7 +11,9 @@ class LiveTelemetryServer {
  public:
   struct Snapshot {
     uint32_t ms=0,cumulativeHeatMs=0;
-    float airC=0,rh=0,ntcOhms=0,minSessionNtcOhms=0;
+    float airC=0,rh=0,ntcOhms=0,ntcTempC=0,minSessionNtcOhms=0;
+    int16_t ntcPauseC=0,ntcRearmC=0,ntcFaultC=0,airFaultC=0;
+    bool thermalLimitsValid=false;
     uint16_t ramSamples=0;
     uint8_t appState=0, profile=0;
     uint16_t targetC=0, durationMinutes=0;

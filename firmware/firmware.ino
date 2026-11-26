@@ -632,6 +632,10 @@ void loop() {
   telem.rh = airNow.valid ? airNow.humidityRh : 0;
   telem.ntcValid = ntcNow.valid;
   telem.ntcOhms = ntcNow.valid ? ntcNow.resistanceOhms : 0;
+  telem.ntcTempC = ntcNow.valid ? ntcNow.temperatureC : 0;
+  telem.thermal = settings.thermal;
+  telem.thermalValid = ThermalSettings::validForTarget(
+      settings.thermal, settings.cycle.targetTempC);
   telem.heaterCommand = safety.heaterOn();
   telem.fanPercent = fan.dutyPercent();
   telem.cycle = appState == AppState::Drying;
@@ -648,7 +652,13 @@ void loop() {
   network.publish(telem);
   LiveTelemetryServer::Snapshot snapshot{};
   snapshot.ms=telem.ms; snapshot.airC=telem.airC; snapshot.rh=telem.rh;
-  snapshot.ntcOhms=telem.ntcOhms; snapshot.airValid=telem.airValid;
+  snapshot.ntcOhms=telem.ntcOhms; snapshot.ntcTempC=telem.ntcTempC;
+  snapshot.ntcPauseC=settings.thermal.ntcPauseC;
+  snapshot.ntcRearmC=settings.thermal.ntcRearmC;
+  snapshot.ntcFaultC=settings.thermal.ntcFaultC;
+  snapshot.airFaultC=settings.thermal.airFaultC;
+  snapshot.thermalLimitsValid=telem.thermalValid;
+  snapshot.airValid=telem.airValid;
   snapshot.ntcValid=telem.ntcValid; snapshot.heaterCommand=telem.heaterCommand;
   snapshot.cycle=telem.cycle; snapshot.fault=telem.fault;
   snapshot.fanPercent=telem.fanPercent; snapshot.phase=telem.phase;
