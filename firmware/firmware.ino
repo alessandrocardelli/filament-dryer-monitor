@@ -125,7 +125,7 @@ static void enterState(AppState next, uint32_t nowMs) {
       } else if (AppConfig::kHeaterStep09TrialMode) {
         Serial.print("ATTENDED HOT: AIR "); Serial.print(settings.cycle.targetTempC);
         Serial.print("C duration "); Serial.print(settings.cycle.durationMinutes);
-        Serial.println("min; NTC OFF7.924k/REARM9.232k, R<7.120k FAULT, FAN100, HEAT CONTINUOUS");
+        Serial.println("min; menu NTC PAUSE/REARM/HARD and AIR HARD, FAN100, 20.5s GPIO watchdog");
         Serial.println("HOT_CSV,ms,phase,windows,heater,NTC_kOhm,air_C,RH,fan_pct");
       } else {
         Serial.println(safety.heaterLocked()
@@ -270,7 +270,7 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
                  type == ButtonEventType::ShortPress) {
         if ((AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) &&
             !safety.commissioningCanStart(nowMs)) {
-          Serial.println("Heater pulse test already used. Power-cycle to retry.");
+          Serial.println("START BLOCKED: configure coherent thermal limits or finish cooldown.");
         } else {
           enterState(AppState::Drying, nowMs);
         }
@@ -283,13 +283,13 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
       } else if (id == ButtonId::Mode &&
                  type == ButtonEventType::LongPress) {
         settingsStore.save(settings);
-        safety.configureThermalSettings(settings.thermal);
+        safety.configureThermalSettings(settings.thermal,settings.cycle.targetTempC);
         enterState(AppState::Standby, nowMs);
       } else if (id == ButtonId::OnOff &&
                  type == ButtonEventType::ShortPress) {
         if ((AppConfig::kHeaterCommissioningMode || AppConfig::kHeaterStep09TrialMode) &&
             !safety.commissioningCanStart(nowMs)) {
-          Serial.println("Heater pulse test already used. Power-cycle to retry.");
+          Serial.println("START BLOCKED: configure coherent thermal limits or finish cooldown.");
         } else {
           enterState(AppState::Drying, nowMs);
         }
@@ -306,6 +306,7 @@ static void handleButtonEvent(ButtonId id, ButtonEventType type) {
       } else if (id == ButtonId::Mode &&
                  type == ButtonEventType::LongPress) {
         settingsStore.save(settings);
+        safety.configureThermalSettings(settings.thermal,settings.cycle.targetTempC);
         enterState(AppState::Standby, nowMs);
       } else if ((id == ButtonId::Up || id == ButtonId::Down) &&
                  (type == ButtonEventType::ShortPress ||
@@ -353,7 +354,7 @@ void setup() {
 
   Serial.begin(115200);
   Serial.println();
-  Serial.println("Filament Dryer Monitor - Vishay UI4, HEATER LOCKED OFF");
+  Serial.println("Filament Dryer Monitor - Vishay UI5, heater-capable attended source");
   Serial.print("FW BUILD: ");
   Serial.println(FirmwareBuild::kId);
   Serial.print("FW MODE: ");
@@ -362,7 +363,7 @@ void setup() {
     Serial.println("EXPERIMENTAL 6-PULSE STEP07 NTC-GUARD TEST; no auto-repeat");
     Serial.println("NTC absolute degrees NOT calibrated; experimental raw R_NTC abort at 40k");
   } else if (AppConfig::kHeaterStep09TrialMode) {
-    Serial.println("ATTENDED NTC90/85: R<=~7.924k pause, >=9.232k resume, R<7.120k FAULT; continuous demand, independent 20.5s watchdog; AIR setpoint/-1C; Sanwa-contact curve 90C estimated");
+    Serial.println("ATTENDED UI5: Vishay Celsius NTC, user NVS thermal limits, 20.5s GPIO watchdog; NO old OEM ohm cutoffs");
   } else {
     Serial.println(safety.heaterLocked()
         ? "Heater OUTPUT LOCKED: configuration/calibration not approved."
@@ -374,7 +375,7 @@ void setup() {
     Serial.println("WARNING: Preferences/NVS unavailable; using defaults");
   }
 
-  safety.configureThermalSettings(settings.thermal);
+  safety.configureThermalSettings(settings.thermal,settings.cycle.targetTempC);
   ntc.begin(nowMs);
   sht45.begin(nowMs);
   buzzer.begin();
@@ -425,6 +426,7 @@ void loop() {
     settings.cycle.targetTempC=static_cast<int16_t>(remote.tempC);
     settings.cycle.durationMinutes=remote.durationMinutes;
     settingsStore.save(settings); // NVS only in standby, never while heating
+    safety.configureThermalSettings(settings.thermal,settings.cycle.targetTempC);
     ui.noteInteraction(nowMs);
     network.note("REMOTE SETTINGS SAVED");
   }
@@ -459,8 +461,8 @@ void loop() {
     minSessionNtcOhms = ntc.snapshot().resistanceOhms;
   }
 
-  // UI4 nominal Vishay curve, menu limits, old heater trial disabled.
-  // Firmware heater output remains locked until separately qualified.
+  // UI5 HEATER-capable experimental path uses nominal Vishay Celsius and
+  // four user-editable limits; physical thermal qualification remains open.
   safety.update(nowMs, ntc.snapshot(), sht45.snapshot(),
                 appState == AppState::Drying && cycle.isRunning(),
                 fan.attached() && fan.phase() == FanPhase::Running,
