@@ -66,6 +66,27 @@ Operator reports the new Vishay NTC installed. The original complete HTTP status
 
 At uptime 528075ms (~8min48s), AIR17.02°C / RH67.24%, NTC139782.7Ω / nominal17.79°C, difference +0.77°C, both valid, fault=false, heater_command=false, fan0. **Cold electrical/plausibility observation PASS**: no open/short/invalid indication and nominal R/T consistent with near-ambient sensor. No claim of independent absolute temperature calibration, stabilized equilibrium from a single sample, exact package marking verification, or hot thermal qualification. The resistance exceeds the upper 99.9kΩ resistor calibration reference; accuracy there has not been independently measured. All four thermal settings are zero and thermal_limits_valid=false; UI6 intentionally blocks START until coherent settings are supplied. No thermal values approved or selected by this observation. Next: review the actual four thermal settings and safe attended test envelope (TCO105, ASA duct, heater/local NTC relationship, historical data), then verify the OLED edit/save/readback with J5 disconnected. Do not start heating until a separate reviewed authorization and physical prerequisites.
 
+### 28 November 2026 — UI6 thermal settings persistence PASS; proposed AIR55 envelope (not released for heating)
+
+Operator reported setting the four OLED values, then supplied the HTTP fragment verbatim: `"ntc_pause_c":90,"ntc_rearm_c":85,"ntc_fault_c":95,"air_fault_c":60`. After being asked to power-cycle with heater J5 disconnected, operator reported: "ho riavviato e le soglie rimangono, c'è anche `"thermal_limits_valid":true`". PASS for operator-reported NVS persistence and software coherence. Full post-reboot JSON, exact sample time, J5 state and independent physical interlock/START check were not supplied. Operator expressed intent to start the trial; no actual heater run, log or outcome was reported at this checkpoint. The assistant advised not to begin before the physical preflight. No firmware changes.
+
+Engineering question for the proposed next supervised trial: can the current Noctua/ASA configuration reach and regulate AIR55 with the new Vishay NTC, and is any plateau explained by local NTC limiting versus continuous heat demand? Original corrected OEM trial plateaued at AIR49.84 with 3594s commanded ON; Noctua trial was stopped by historical raw-ohm guard at AIR45.22, so its steady-state capacity is unknown. The old D030 90/85°C values were Sanwa-equivalent, not direct Vishay readings; they cannot qualify the current thermal envelope.
+
+| Parameter | Proposed or existing value | Classification / provenance |
+| --- | --- | --- |
+| AIR target / duration | 55°C / 60min proposed comparison | APPROVED_OPERATIONAL interface range D034; PROVISIONAL_EXPERIMENT duration, same as previous comparative trials |
+| AIR hysteresis | 1°C | PROVISIONAL_EXPERIMENT D034 existing 55/54 |
+| NTC pause / rearm | 90 / 85°C | PROVISIONAL_EXPERIMENT proposed UI6 values; historical D030 precedent measured nearby plate, not transferable calibration |
+| NTC fault / AIR fault | 95 / 60°C | PROVISIONAL_EXPERIMENT proposed, physical safe envelope UNKNOWN / UNQUALIFIED |
+| Fan / prerun / cooldown | 100% command / 5s / 90s | PROVISIONAL_EXPERIMENT D034; no tach, no actual airflow proof |
+| NTC/AIR stale | 1.5s / 5s | PROVISIONAL_EXPERIMENT existing independent stop checks D034 |
+| GPIO watchdog | 20.5s | ELECTRICAL_OR_HARDWARE existing timer LOW path, host verified only; not a periodic heat interruption |
+| Cumulative heat cap | none in normal controller | D034 normal duration-controlled cycle, not evidence of physical continuous-use safety |
+| TCO | 105°C installed series, reported | ELECTRICAL_OR_HARDWARE per D029; never bypass; exact suitability and body temperature margin unqualified |
+| Sanwa plate-contact veto | no probe installed | UNKNOWN / UNQUALIFIED for new geometry; no invented external readings |
+
+**Release blocker / preflight:** with all power removed and heater disconnected, confirm new thermistor is correctly fixed in original sensing site and insulated, heater/TCO series wiring intact, ASA duct secure and clear of hot surfaces and airflow unobstructed. Confirm an independent basis to monitor/bound TCO-body and vulnerable material temperatures in the actual geometry, including the potential hotspot and post-OFF rise. Fan-command percentage is not airflow evidence. No reinstallation of removed Sanwa probe required by this record. The 10°C nominal difference between NTC fault and TCO rating is not a measured physical margin. An actual heated test protocol and release still require a separately agreed safe envelope and verified physical prerequisites; settings are not permission to START. No automatic changes to the chosen settings or existing protections.
+
 ## Latest completed physical sessions and candidate
 
 | Session | Protocol / source identity | Evidence and result |
